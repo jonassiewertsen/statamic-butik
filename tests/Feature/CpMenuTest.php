@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class CpMenuTest extends TestCase
 {

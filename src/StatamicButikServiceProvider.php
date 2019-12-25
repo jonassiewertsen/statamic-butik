@@ -7,16 +7,20 @@ use Statamic\Providers\AddonServiceProvider;
 
 class StatamicButikServiceProvider extends AddonServiceProvider
 {
+    protected $routes = [
+        'cp' => __DIR__.'/../routes/cp.php',
+//        'web' => __DIR__.'/routes/web.php',
+    ];
+
     public function boot()
     {
-//         parent::boot();
+         parent::boot();
         // TODO: Does throw an BindingResolutionException error
 
          $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'statamic-butik');
          $this->loadViewsFrom(__DIR__.'/../resources/views', 'statamic-butik');
          $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
-        $this->createNavigation();
+         $this->createNavigation();
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
@@ -60,7 +64,8 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     private function createNavigation(): void {
         Nav::extend(function ($nav) {
             $nav->create(__('statamic-butik::menu.cp.products'))
-                ->section('Butik');
+                ->section('Butik')
+                ->route('butik.product.create');
 //            $nav->create('Orders')
 //                ->section('Butik');
         });
