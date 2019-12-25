@@ -1,0 +1,71 @@
+{
+    "name": "jonassiewertsen/statamic-butik",
+    "description": "",
+    "keywords": [
+        "Statamic",
+        "commerce",
+        "ecommerce",
+        "Shop",
+        "Store",
+        "PayPal",
+        "Jonas",
+        "Siewertsen"
+    ],
+    "homepage": "https://jonassiewertsen.com",
+    "license": "proprietary",
+    "type": "statamic-addon",
+    "authors": [
+        {
+            "name": "Jonas Siewertsen",
+            "email": "mail@jonassiewertsen.com",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "mail@jonassiewertsen.com"
+    },
+    "require": {
+        "php": "^7.2",
+        "illuminate/support": "^6.0",
+        "statamic/cms": "^3.0@beta"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.0",
+        "phpunit/phpunit": "^8.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jonassiewertsen\\StatamicButik\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Jonassiewertsen\\StatamicButik\\Tests\\": "tests"
+        },
+        "files": [
+            "tests/Utilities/functions.php"
+        ]
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "statamic": {
+            "name": "Statamic Butik",
+            "description": "Description for the Statamic Butik"
+        },
+        "laravel": {
+            "providers": [
+                "Jonassiewertsen\\StatamicButik\\StatamicButikServiceProvider"
+            ],
+            "aliases": {
+                "StatamicButik": "Jonassiewertsen\\StatamicButik\\StatamicButikFacade"
+            }
+        }
+    }
+}
