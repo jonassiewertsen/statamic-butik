@@ -8,5 +8,10 @@ class Product extends Model
 {
     protected $table = 'products';
 
+    protected $casts = [
+        'description' => 'array',
+        'images'      => 'array',
+    ];
+
     protected $guarded = [];
 }
