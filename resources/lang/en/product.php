@@ -23,11 +23,12 @@ return [
     ],
 
     'form' => [
-        'form_title'  => 'Add your amazing product',
-        'title'       => 'Title',
-        'description' => 'Description',
-        'images'      => 'Images',
-        'slug'        => 'Slug',
+        'form_title'       => 'Add your amazing product',
+        'title'            => 'Title',
+        'description'      => 'Description',
+        'images'           => 'Images',
+        'slug'             => 'Slug',
+        'slug_description' => 'The slug is the product identifier, needs to be unique and may not include spaces.',
     ],
 
 

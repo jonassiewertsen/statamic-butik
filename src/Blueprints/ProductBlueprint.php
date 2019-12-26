@@ -16,26 +16,28 @@ class ProductBlueprint
                         [
                             'handle' => 'title',
                             'field'  => [
-                                'type'    => 'text',
-                                'display' => __('statamic-butik::product.form.creating.title'),
+                                'type'     => 'text',
+                                'display'  => __('statamic-butik::product.form.title'),
+                                'validate' => 'required',
+                            ],
+                        ],
+                        [
+                            'handle' => 'slug',
+                            'field'  => [
+                                'type'         => 'slug',
+                                'display'      => __('statamic-butik::product.form.slug'),
+                                'validate'     => 'required',
+                                'instructions' => __('statamic-butik::product.form.slug_description'),
                             ],
                         ],
                         [
                             'handle' => 'description',
                             'field'  => [
                                 'type'    => 'bard',
-                                'display' => __('statamic-butik::product.form.creating.description'),
+                                'display' => __('statamic-butik::product.form.description'),
                                 'buttons' => [
                                     'h2', 'bold', 'italic', 'underline', 'strikethrough', 'unorderedlist', 'orderedlist', 'anchor', 'quote',
                                 ],
-                            ],
-                        ],
-                        [
-                            'handle' => 'images',
-                            'field'  => [
-                                'type'    => 'assets',
-                                'mode' => 'list',
-                                'display' => __('statamic-butik::product.form.creating.images'),
                             ],
                         ],
                     ],
@@ -43,10 +45,12 @@ class ProductBlueprint
                 'sidebar' => [
                     'fields' => [
                         [
-                            'handle' => 'slug',
+                            'handle' => 'images',
                             'field'  => [
-                                'type'    => 'slug',
-                                'display' => __('statamic-butik::product.form.creating.slug'),
+                                'type'     => 'assets',
+                                'display'  => __('statamic-butik::product.form.images'),
+                                'validate' => 'required',
+                                'mode'     => 'grid',
                             ],
                         ],
                     ],

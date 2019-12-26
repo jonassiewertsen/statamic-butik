@@ -3,7 +3,7 @@
 
 @section('content')
     <publish-form
-        title="{{ __('statamic-butik::product.form.creating.form_title') }}"
+        title="{{ __('statamic-butik::product.form.form_title') }}"
         action="{{ cp_route('butik.product.store') }}"
         :blueprint='@json($blueprint)'
         :meta='@json($meta)'
