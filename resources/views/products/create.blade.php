@@ -1,4 +1,5 @@
 @extends('statamic::layout')
+@section('title', __('statamic-butik::product.navigation.create'))
 
 @section('content')
     <publish-form

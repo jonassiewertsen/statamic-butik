@@ -11,14 +11,23 @@ return [
     |
     */
 
+    'name'        => [
+        'singular' => 'Product',
+        'plural'   => 'Products',
+    ],
+    'description' => 'Amazing products will make your customers happy! You just need to add them here.',
+
+    'navigation' => [
+        'index'  => 'Product overview',
+        'create' => 'Create a amazing product',
+    ],
+
     'form' => [
-        'creating' => [
-            'form_title'  => 'Add your amazing product',
-            'title'       => 'Title',
-            'description' => 'Description',
-            'images'      => 'Images',
-            'slug'        => 'Slug',
-        ],
+        'form_title'  => 'Add your amazing product',
+        'title'       => 'Title',
+        'description' => 'Description',
+        'images'      => 'Images',
+        'slug'        => 'Slug',
     ],
 
 

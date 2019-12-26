@@ -12,7 +12,8 @@ return [
     */
 
     'cp' => [
-        'products' => 'Products'
+        'products' => 'Products',
+        'create_product' => 'Create',
     ]
 
 ];
