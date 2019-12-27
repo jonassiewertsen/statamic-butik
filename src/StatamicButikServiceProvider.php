@@ -15,7 +15,6 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     public function boot()
     {
          parent::boot();
-        // TODO: Does throw an BindingResolutionException error
 
          $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'statamic-butik');
          $this->loadViewsFrom(__DIR__.'/../resources/views', 'statamic-butik');
