@@ -9,9 +9,11 @@ class DatabaseTest extends TestCase
 {
     public function testing_the_database_with_the_product_table()
     {
+        $this->assertEquals(0, Product::count());
+
         $product = raw(Product::class);
         Product::create($product);
 
-        $this->assertDatabaseHas('products', $product);
+        $this->assertEquals(1, Product::count());
     }
 }
