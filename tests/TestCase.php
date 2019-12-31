@@ -4,6 +4,8 @@ namespace Jonassiewertsen\StatamicButik\Tests;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Statamic\Facades\AssetContainer;
+use Statamic\Facades\Blueprint;
 use Statamic\Statamic;
 
 class TestCase extends OrchestraTestCase
@@ -20,6 +22,8 @@ class TestCase extends OrchestraTestCase
         parent::setUp();
 
         $this->withFactories(__DIR__.'/../database/factories');
+
+        $this->createContainer();
     }
 
     /**
@@ -46,5 +50,20 @@ class TestCase extends OrchestraTestCase
             'Statamic' => Statamic::class,
 //            'Cinema51' => \Jonassiewertsen\Cinema51\Cinema51Facade::class,
         ];
+    }
+
+    protected function createContainer()
+    {
+        $container = AssetContainer::make('testcontainer')
+            ->title('Test Container')
+            ->disk('local')
+            ->blueprint(Blueprint::makeFromFields([
+                'title' =>  'Assets',
+                'disk' => 'assets',
+            ]))
+            ->allowUploads(true)
+            ->createFolders('test');
+
+        $container->save();
     }
 }
