@@ -16,7 +16,7 @@ class CreatingProductsTest extends TestCase
             ->assertOK();
     }
 
-    // test -> cant access route without login
+    // TODO: test -> cant access route without login
 
     /** @test */
     public function a_product_will_be_stored_in_the_database()
