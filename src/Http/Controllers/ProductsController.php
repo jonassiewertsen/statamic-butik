@@ -41,10 +41,10 @@ class ProductsController extends Controller
             'columns' => [
                 Column::make('title')->label(__('statamic-butik::product.form.title')),
                 // TODO: Show Image !
-                Column::make('images')->label(__('statamic-butik::product.form.images')),
+//                Column::make('images')->label(__('statamic-butik::product.form.images')),
                 Column::make('slug')->label(__('statamic-butik::product.form.slug')),
                 // TODO: Parse description into array
-                Column::make('description')->label(__('statamic-butik::product.form.description')),
+//                Column::make('description')->label(__('statamic-butik::product.form.description')),
             ],
         ]);
     }
