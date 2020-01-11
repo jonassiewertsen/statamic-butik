@@ -23,7 +23,15 @@ class TestCase extends OrchestraTestCase
 
         $this->withFactories(__DIR__.'/../database/factories');
 
-        $this->createContainer();
+        // TODO: Can the container part be removed
+        // $this->createContainer();
+    }
+
+    protected function signIn()
+    {
+        $user = \Statamic\Facades\User::make();
+        $user->id(1)->email('test@mail.de')->makeSuper();
+        $this->be($user);
     }
 
     /**
@@ -48,8 +56,36 @@ class TestCase extends OrchestraTestCase
     {
         return [
             'Statamic' => Statamic::class,
-//            'Cinema51' => \Jonassiewertsen\Cinema51\Cinema51Facade::class,
         ];
+    }
+
+    protected function getEnvironmentSetUp($app)
+    {
+        parent::getEnvironmentSetUp($app);
+
+        $app->make(\Statamic\Extend\Manifest::class)->manifest = [
+            'jonassiewertsen/statamic-butik' => [
+                'id' => 'jonassiewertsen/statamic-butik',
+                'namespace' => 'Jonassiewertsen\\StatamicButik\\',
+            ],
+        ];
+    }
+
+    protected function resolveApplicationConfiguration($app)
+    {
+        parent::resolveApplicationConfiguration($app);
+
+        $configs = [
+            'assets', 'cp', 'forms', 'routes', 'static_caching',
+            'sites', 'stache', 'system', 'users'
+        ];
+
+        foreach ($configs as $config) {
+            $app['config']->set("statamic.$config", require(__DIR__."/../vendor/statamic/cms/config/{$config}.php"));
+        }
+
+        // Setting the user repository to the default flat file system
+        $app['config']->set('statamic.users.repository', 'file');
     }
 
     protected function createContainer()
