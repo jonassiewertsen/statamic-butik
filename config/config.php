@@ -7,4 +7,12 @@ return [
     // TODO: Remember To enable foreign key constraints
     // https://laravel.com/docs/6.x/database
 
+    /**
+     * Define your shops currency
+     */
+    'currency' => [
+        'name' => 'Euro',
+        'symbol' => '€',
+        'delimiter' => ',',
+    ]
 ];

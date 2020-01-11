@@ -23,7 +23,7 @@ class ProductsController extends Controller
                 'slug' => $product->slug,
                 'images' => $product->images[0] ?? null,
                 'description' => $product->description,
-                'base_price' => $product->base_price,
+                'base_price' => $product->base_price_with_currency_symbol,
 
                 // TODO: Add edit url
                 // 'edit_url' => $collection->editUrl(),

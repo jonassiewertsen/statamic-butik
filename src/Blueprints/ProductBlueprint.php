@@ -38,7 +38,7 @@ class ProductBlueprint
                                 'display'      => __('statamic-butik::product.form.base_price'),
                                 'validate'     => 'required',
                                 'width'         => '33',
-                                'validate' => 'required|integer:min:0',
+                                'validate'      => 'required|integer:min:0',
                             ],
                         ],
                         [
