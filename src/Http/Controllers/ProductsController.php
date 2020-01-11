@@ -75,4 +75,8 @@ class ProductsController extends Controller
 
         Product::create($validatedData);
     }
+
+    public function destroy(Product $product) {
+        $product->delete();
+    }
 }

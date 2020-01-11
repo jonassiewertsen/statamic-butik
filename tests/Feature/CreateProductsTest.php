@@ -5,7 +5,7 @@ namespace Tests\Unit;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
-class CreatingProductsTest extends TestCase
+class CreateProductsTest extends TestCase
 {
     public function setUp(): void {
         parent::setUp();
@@ -27,6 +27,7 @@ class CreatingProductsTest extends TestCase
     /** @test */
     public function A_product_can_be_created()
     {
+        $this->withoutExceptionHandling();
         $product = raw(Product::class);
         $this->post(route('statamic.cp.butik.product.store'), $product);
         $this->assertEquals(1, Product::count());
