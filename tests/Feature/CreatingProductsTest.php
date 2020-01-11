@@ -33,19 +33,19 @@ class CreatingProductsTest extends TestCase
     }
 
     /** @test */
-    public function name_is_required()
+    public function title_is_required()
     {
-        $product = raw(Product::class, ['name' => null]);
+        $product = raw(Product::class, ['title' => null]);
         $this->post(route('statamic.cp.butik.product.store'), $product)
-            ->assertSessionHasErrors('name');
+            ->assertSessionHasErrors('title');
     }
 
     /** @test */
-    public function name_must_be_a_string()
+    public function title_must_be_a_string()
     {
-        $product = raw(Product::class, ['name' => 123 ]);
+        $product = raw(Product::class, ['title' => 123 ]);
         $this->post(route('statamic.cp.butik.product.store'), $product)
-            ->assertSessionHasErrors('name');
+            ->assertSessionHasErrors('title');
     }
 
     /** @test */

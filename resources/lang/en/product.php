@@ -24,9 +24,11 @@ return [
 
     'form' => [
         'form_title'       => 'Add your amazing product',
-        'title'            => 'Title',
+        'title'            => 'Name',
         'description'      => 'Description',
         'images'           => 'Images',
+        'base_price'       => 'Base Price',
+        'type'             => 'Type',
         'slug'             => 'Slug',
         'slug_description' => 'The slug is the product identifier, needs to be unique and may not include spaces.',
     ],

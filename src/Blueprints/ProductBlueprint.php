@@ -28,6 +28,30 @@ class ProductBlueprint
                                 'display'      => __('statamic-butik::product.form.slug'),
                                 'validate'     => 'required',
                                 'instructions' => __('statamic-butik::product.form.slug_description'),
+                                'validate' => 'required',
+                            ],
+                        ],
+                        [
+                            'handle' => 'base_price',
+                            'field'  => [
+                                'type'         => 'integer',
+                                'display'      => __('statamic-butik::product.form.base_price'),
+                                'validate'     => 'required',
+                                'width'         => '33',
+                                'validate' => 'required|integer:min:0',
+                            ],
+                        ],
+                        [
+                            'handle' => 'type',
+                            'field'  => [
+                                'type'         => 'select',
+                                'display'      => __('statamic-butik::product.form.type'),
+                                'validate'     => 'required',
+                                'width'         => '66',
+                                'default' => 'physical',
+                                'options' => [
+                                    'physical' => 'physical',
+                                ]
                             ],
                         ],
                         [

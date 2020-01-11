@@ -22,12 +22,12 @@
     @else
 
         @include('statamic::partials.create-first', [
-            'resource' => __('statamic-butik::product.name'),
+            'resource' => __('statamic-butik::product.name.singular'),
             'description' => __('statamic-butik::product.description'),
             'svg' => 'empty/collection',
             'route' => cp_route('butik.product.create'),
             // TODO: I should set permissions right here
-            {{-- 'can' => $user->can('create', 'Statamic\Contracts\Entries\Collection') --}}
+             'can' => auth()->user()->can('create', 'Statamic\Contracts\Entries\Collection')
         ])
 
     @endunless

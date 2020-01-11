@@ -13,8 +13,6 @@ class ProductsController extends Controller
 {
     public function index() {
         // TODO: Do not use all !!!
-//        $products = Product::all();
-
         $products = Product::all()->filter(function ($collection) {
             return true;
             // TODO: Add permissions
@@ -25,6 +23,7 @@ class ProductsController extends Controller
                 'slug' => $product->slug,
                 'images' => $product->images[0] ?? null,
                 'description' => $product->description,
+                'base_price' => $product->base_price,
 
                 // TODO: Add edit url
                 // 'edit_url' => $collection->editUrl(),
@@ -40,6 +39,7 @@ class ProductsController extends Controller
             'products' => $products,
             'columns' => [
                 Column::make('title')->label(__('statamic-butik::product.form.title')),
+                Column::make('base_price')->label(__('statamic-butik::product.form.base_price')),
                 // TODO: Show Image !
 //                Column::make('images')->label(__('statamic-butik::product.form.images')),
                 Column::make('slug')->label(__('statamic-butik::product.form.slug')),
@@ -65,7 +65,7 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name'       => 'required|string',
+            'title'       => 'required|string',
             'slug'        => 'required|string|unique:products,slug',
             'description' => 'required',
             'images'      => 'required',
