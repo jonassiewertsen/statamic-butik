@@ -65,10 +65,12 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'title'       => 'required|string',
+            'name'       => 'required|string',
             'slug'        => 'required|string|unique:products,slug',
-            'description' => 'nullable',
+            'description' => 'required',
             'images'      => 'required',
+            'base_price'  => 'required|integer|min:0',
+            'type'        => 'required|string',
         ]);
 
         Product::create($validatedData);
