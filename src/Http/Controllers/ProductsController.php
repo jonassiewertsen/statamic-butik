@@ -33,7 +33,7 @@ class ProductsController extends Controller
             ];
         })->values();
 
-        return view('statamic-butik::products.index', [
+        return view('statamic-butik::cp.products.index', [
             'products' => $products,
             'columns' => [
                 Column::make('title')->label(__('statamic-butik::product.form.title')),
@@ -52,7 +52,7 @@ class ProductsController extends Controller
         $blueprint = new ProductBlueprint();
         $fields = $blueprint()->fields()->preProcess();
 
-        return view('statamic-butik::products.create', [
+        return view('statamic-butik::cp.products.create', [
             'blueprint' => $blueprint()->toPublishArray(),
             'values'    => $fields->values(),
             'meta'      => $fields->meta(),
@@ -73,7 +73,7 @@ class ProductsController extends Controller
         $blueprint = new ProductBlueprint();
         $fields = $blueprint()->fields()->addValues($values)->preProcess();
 
-        return view('statamic-butik::products.edit', [
+        return view('statamic-butik::cp.products.edit', [
             'blueprint' => $blueprint()->toPublishArray(),
             'values'    => $fields->values(),
             'meta'      => $fields->meta(),
