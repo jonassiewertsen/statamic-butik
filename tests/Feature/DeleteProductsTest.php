@@ -17,7 +17,7 @@ class DeleteProductsTest extends TestCase
 
         $this->delete(route('statamic.cp.butik.products.destroy', $product->first()))
             ->assertOk();
-        
+
         $this->assertEquals(0, Product::count());
     }
 }

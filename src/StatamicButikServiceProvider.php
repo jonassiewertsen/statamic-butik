@@ -71,9 +71,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
             $nav->create(__('statamic-butik::menu.cp.products'))
                 ->section('Butik')
                 ->route('butik.product.index')
-                ->children([
-                    __('statamic-butik::menu.cp.create_product') => cp_route('butik.product.create')
-                ]);
+                ->icon('tags');
 
             // Orders
 //            $nav->create('Orders')
