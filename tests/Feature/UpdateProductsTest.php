@@ -28,7 +28,7 @@ class UpdateProductsTest extends TestCase
     {
         $product = create(Product::class)->first();
         $product->title = 'Updated Name';
-        $this->updateProduct($product);
+        $this->updateProduct($product)->assertSessionHasNoErrors();
         $this->assertDatabaseHas('products', ['title' => 'Updated Name']);
     }
 
@@ -54,9 +54,11 @@ class UpdateProductsTest extends TestCase
     public function the_base_price_can_be_updated()
     {
         $product = create(Product::class)->first();
-        $product->base_price = 88888888;
+        $product->base_price = 4321;
         $this->updateProduct($product);
-        $this->assertDatabaseHas('products', ['base_price' => 88888888 ]);
+        $this->assertDatabaseHas('products', [
+            'base_price' => 432100 // To zeros added because of the mutation
+        ]);
     }
 
     /** @test */
@@ -69,6 +71,6 @@ class UpdateProductsTest extends TestCase
     }
 
     private function updateProduct($product) {
-        $this->patch(route('statamic.cp.butik.products.update', $product), $product->toArray());
+        return $this->patch(route('statamic.cp.butik.products.update', $product), $product->toArray());
     }
 }
