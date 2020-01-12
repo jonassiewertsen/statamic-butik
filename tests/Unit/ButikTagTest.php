@@ -26,4 +26,15 @@ class ButikTagTest extends TestCase
             Product::all()
         );
     }
+
+    /** @test */
+    public function it_can_return_the_currency_symbol()
+    {
+        create(Product::class, [], 10);
+
+        $this->assertEquals(
+            $this->butik->currencySymbol(),
+            config('statamic-butik.currency.symbol')
+        );
+    }
 }

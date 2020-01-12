@@ -11,4 +11,9 @@ class Butik extends StatamicTags
     {
          return Product::all();
     }
+
+    public function currencySymbol()
+    {
+        return config('statamic-butik.currency.symbol');
+    }
 }
