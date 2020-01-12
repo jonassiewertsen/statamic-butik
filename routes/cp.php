@@ -2,15 +2,12 @@
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| CP routes
 |--------------------------------------------------------------------------
 */
 
-use Jonassiewertsen\StatamicButik\Http\Controllers\ProductsController;
-
-Route::prefix('butik/')->name('butik.')->group(function() {
-    Route::get('products/', [ProductsController::class, 'index'])->name('product.index');
-    Route::get('products/create', [ProductsController::class, 'create'])->name('product.create');
-    Route::post('products/create', [ProductsController::class, 'store'])->name('product.store');
-    Route::delete('products/{product}', [ProductsController::class, 'destroy'])->name('products.destroy');
+Route::prefix('butik/')->name('butik.')->namespace('Http\\Controllers\\')->group(function() {
+    Route::resource('products', 'ProductsController')->only([
+       'index', 'create', 'store', 'destroy'
+    ]);
 });

@@ -9,7 +9,7 @@
             <h1 class="flex-1">{{ __('statamic-butik::product.name.plural') }}</h1>
                 {{-- TODO: add permissions --}}
 {{--            @can('create', 'Statamic\Contracts\Entries\Collection')--}}
-                <a href="{{ cp_route('butik.product.create') }}" class="btn-primary">{{ __('statamic-butik::product.navigation.create') }}</a>
+                <a href="{{ cp_route('butik.products.create') }}" class="btn-primary">{{ __('statamic-butik::product.navigation.create') }}</a>
 {{--            @endcan--}}
         </div>
 

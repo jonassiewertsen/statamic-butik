@@ -29,7 +29,7 @@ class CreateProductsTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $product = raw(Product::class);
-        $this->post(route('statamic.cp.butik.product.store'), $product);
+        $this->post(route('statamic.cp.butik.products.store'), $product);
         $this->assertEquals(1, Product::count());
     }
 
@@ -37,7 +37,7 @@ class CreateProductsTest extends TestCase
     public function title_is_required()
     {
         $product = raw(Product::class, ['title' => null]);
-        $this->post(route('statamic.cp.butik.product.store'), $product)
+        $this->post(route('statamic.cp.butik.products.store'), $product)
             ->assertSessionHasErrors('title');
     }
 
@@ -45,7 +45,7 @@ class CreateProductsTest extends TestCase
     public function title_must_be_a_string()
     {
         $product = raw(Product::class, ['title' => 123 ]);
-        $this->post(route('statamic.cp.butik.product.store'), $product)
+        $this->post(route('statamic.cp.butik.products.store'), $product)
             ->assertSessionHasErrors('title');
     }
 
@@ -53,7 +53,7 @@ class CreateProductsTest extends TestCase
     public function slug_is_required()
     {
         $product = raw(Product::class, ['slug' => null]);
-        $this->post(route('statamic.cp.butik.product.store'), $product)
+        $this->post(route('statamic.cp.butik.products.store'), $product)
             ->assertSessionHasErrors('slug');
     }
 
@@ -61,7 +61,7 @@ class CreateProductsTest extends TestCase
     public function slug_must_be_a_string()
     {
         $product = raw(Product::class, ['slug' => 123 ]);
-        $this->post(route('statamic.cp.butik.product.store'), $product)
+        $this->post(route('statamic.cp.butik.products.store'), $product)
             ->assertSessionHasErrors('slug');
     }
     /** @test */
@@ -71,12 +71,12 @@ class CreateProductsTest extends TestCase
 
         // First Product
         $product = raw(Product::class, ['slug' => $slug ]);
-        $this->post(route('statamic.cp.butik.product.store'), $product)
+        $this->post(route('statamic.cp.butik.products.store'), $product)
             ->assertOk();
 
         // Another product with the same slug
         $product = raw(Product::class, ['slug' => $slug ]);
-        $this->post(route('statamic.cp.butik.product.store'), $product)
+        $this->post(route('statamic.cp.butik.products.store'), $product)
             ->assertSessionHasErrors('slug');
     }
 
@@ -84,7 +84,7 @@ class CreateProductsTest extends TestCase
     public function description_is_required()
     {
         $product = raw(Product::class, ['description' => null]);
-        $this->post(route('statamic.cp.butik.product.store'), $product)
+        $this->post(route('statamic.cp.butik.products.store'), $product)
             ->assertSessionHasErrors('description');
     }
 
@@ -92,7 +92,7 @@ class CreateProductsTest extends TestCase
     public function images_is_required()
     {
         $product = raw(Product::class, ['images' => null]);
-        $this->post(route('statamic.cp.butik.product.store'), $product)
+        $this->post(route('statamic.cp.butik.products.store'), $product)
             ->assertSessionHasErrors('images');
     }
 
@@ -100,7 +100,7 @@ class CreateProductsTest extends TestCase
     public function base_price_is_required()
     {
         $product = raw(Product::class, ['base_price' => null]);
-        $this->post(route('statamic.cp.butik.product.store'), $product)
+        $this->post(route('statamic.cp.butik.products.store'), $product)
             ->assertSessionHasErrors('base_price');
     }
 
@@ -108,7 +108,7 @@ class CreateProductsTest extends TestCase
     public function base_price_must_be_an_integer()
     {
         $product = raw(Product::class, ['base_price' => 'ten']);
-        $this->post(route('statamic.cp.butik.product.store'), $product)
+        $this->post(route('statamic.cp.butik.products.store'), $product)
             ->assertSessionHasErrors('base_price');
     }
 
@@ -116,7 +116,7 @@ class CreateProductsTest extends TestCase
     public function base_price_cant_be_lower_then_zero()
     {
         $product = raw(Product::class, ['base_price' => -3 ]);
-        $this->post(route('statamic.cp.butik.product.store'), $product)
+        $this->post(route('statamic.cp.butik.products.store'), $product)
             ->assertSessionHasErrors('base_price');
     }
 
@@ -124,7 +124,7 @@ class CreateProductsTest extends TestCase
     public function product_type_is_required()
     {
         $product = raw(Product::class, ['type' => null ]);
-        $this->post(route('statamic.cp.butik.product.store'), $product)
+        $this->post(route('statamic.cp.butik.products.store'), $product)
             ->assertSessionHasErrors('type');
     }
 
@@ -132,7 +132,7 @@ class CreateProductsTest extends TestCase
     public function product_type_is_a_string()
     {
         $product = raw(Product::class, ['type' => 12 ]);
-        $this->post(route('statamic.cp.butik.product.store'), $product)
+        $this->post(route('statamic.cp.butik.products.store'), $product)
             ->assertSessionHasErrors('type');
     }
 }
