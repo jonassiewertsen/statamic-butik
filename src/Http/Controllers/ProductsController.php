@@ -86,7 +86,7 @@ class ProductsController extends Controller
         $fields = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
         $values = $fields->process()->values();
-        $product->update($values);
+        $product->update($values->toArray());
     }
 
     public function destroy(Product $product)

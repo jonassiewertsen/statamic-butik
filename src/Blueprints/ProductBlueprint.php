@@ -57,14 +57,13 @@ class ProductBlueprint
                         [
                             'handle' => 'description',
                             'field'  => [
-                                'type'    => 'bard',
+                                'type'    => 'textarea',
                                 'display' => __('statamic-butik::product.form.description'),
-                                'validate' => 'sometimes',
+                                'validate' => 'nullable',
                                 'buttons' => [
                                     'h2', 'bold', 'italic', 'underline', 'strikethrough', 'unorderedlist', 'orderedlist', 'anchor', 'quote',
                                 ],
                             ],
-
                         ],
                     ],
                 ],

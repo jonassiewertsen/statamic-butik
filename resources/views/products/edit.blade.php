@@ -5,6 +5,7 @@
     <publish-form
         title="{{ __('statamic-butik::product.form.form_title') }}"
         action="{{ cp_route('butik.products.update', ['product' => $values['slug']]) }}"
+        method="patch"
         :blueprint='@json($blueprint)'
         :meta='@json($meta)'
         :values='@json($values)'

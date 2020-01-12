@@ -27,6 +27,7 @@ class CreateProductsTest extends TestCase
     /** @test */
     public function A_product_can_be_created()
     {
+        $this->withoutExceptionHandling();
         $product = raw(Product::class);
         $this->post(route('statamic.cp.butik.products.store'), $product)->assertSessionHasNoErrors();
         $this->assertEquals(1, Product::count());

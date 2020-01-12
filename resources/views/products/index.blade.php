@@ -19,18 +19,6 @@
             :endpoints="{}">
         ></butik-product-list>
 
-{{--                <statamic-product-list--}}
-{{--                    :initial-rows="{{ json_encode($products) }}"--}}
-{{--                    :columns="{{ json_encode($columns) }}"--}}
-{{--                    :endpoints="{}">--}}
-{{--                </statamic-product-list>--}}
-
-{{--        <collection-list--}}
-{{--            :initial-rows="{{ json_encode($products) }}"--}}
-{{--            :columns="{{ json_encode($columns) }}"--}}
-{{--            :endpoints="{}">--}}
-{{--        </collection-list>--}}
-
     @else
 
         @include('statamic::partials.create-first', [

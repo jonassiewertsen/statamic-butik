@@ -13,7 +13,6 @@ class UpdateProductsTest extends TestCase
         $this->signIn();
     }
 
-
 //    TODO: Add test back in again, if composer test has been resolved
 //    /** @test */
 //    public function the_update_form_will_be_displayed()
@@ -25,11 +24,51 @@ class UpdateProductsTest extends TestCase
 //    }
 
     /** @test */
-    public function A_product_can_be_updated()
+    public function the_name_can_be_updated()
     {
-        $this->withoutExceptionHandling();
-        $product = raw(Product::class);
-        $this->post(route('statamic.cp.butik.products.store'), $product);
-        $this->assertEquals(1, Product::count());
+        $product = create(Product::class)->first();
+        $product->title = 'Updated Name';
+        $this->updateProduct($product);
+        $this->assertDatabaseHas('products', ['title' => 'Updated Name']);
+    }
+
+    /** @test */
+    public function the_description_can_be_updated()
+    {
+        $product = create(Product::class)->first();
+        $product->description = 'Updated Description';
+        $this->updateProduct($product);
+        $this->assertDatabaseHas('products', ['description' => json_encode('Updated Description')]);
+    }
+    // TODO: Fix this test
+//    /** @test */
+//    public function images_can_be_updated()
+//    {
+//        $product = create(Product::class)->first();
+//        $product->images = array('new/image/path.png');
+//        $this->updateProduct($product);
+//        $this->assertDatabaseHas('products', ['images' =>  'new/image/path.png']);
+//    }
+
+    /** @test */
+    public function the_base_price_can_be_updated()
+    {
+        $product = create(Product::class)->first();
+        $product->base_price = 88888888;
+        $this->updateProduct($product);
+        $this->assertDatabaseHas('products', ['base_price' => 88888888 ]);
+    }
+
+    /** @test */
+    public function the_type_can_be_updated()
+    {
+        $product = create(Product::class)->first();
+        $product->type = 'new_type';
+        $this->updateProduct($product);
+        $this->assertDatabaseHas('products', ['type' => 'new_type' ]);
+    }
+
+    private function updateProduct($product) {
+        $this->patch(route('statamic.cp.butik.products.update', $product), $product->toArray());
     }
 }
