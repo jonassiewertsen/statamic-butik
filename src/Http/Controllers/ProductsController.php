@@ -52,7 +52,6 @@ class ProductsController extends Controller
     public function create()
     {
         $blueprint = new ProductBlueprint();
-
         $fields = $blueprint()->fields()->preProcess();
 
         return view('statamic-butik::products.create', [
@@ -64,20 +63,36 @@ class ProductsController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $validatedData = $request->validate($this->rules());
+
+        Product::create($validatedData);
+    }
+
+    public function edit(Product $product) {
+        $values = $product->toArray();
+        $blueprint = new ProductBlueprint();
+        $fields = $blueprint()->fields()->addValues($values)->preProcess();
+
+        return view('statamic-butik::products.edit', [
+            'blueprint' => $blueprint()->toPublishArray(),
+            'values'    => $fields->values(),
+            'meta'      => $fields->meta(),
+        ]);
+    }
+
+    public function destroy(Product $product) {
+        // TODO: Add Permissions
+        $product->delete();
+    }
+
+    private function rules() {
+        return [
             'title'       => 'required|string',
             'slug'        => 'required|string|unique:products,slug',
             'description' => 'required',
             'images'      => 'nullable',
             'base_price'  => 'required|integer|min:0',
             'type'        => 'required|string',
-        ]);
-
-        Product::create($validatedData);
-    }
-
-    public function destroy(Product $product) {
-        // TODO: Add Permissions
-        $product->delete();
+        ];
     }
 }
