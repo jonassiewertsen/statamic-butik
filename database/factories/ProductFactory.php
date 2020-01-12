@@ -8,7 +8,6 @@ $factory->define(Product::class, function (Faker $faker) {
         'title'          => $faker->name,
         'slug'           => $faker->unique()->slug,
         'description'    => $faker->paragraph(3),
-//        'images'         => array($faker->imageUrl()), // TODO: Does throw error on testing
         'base_price'     => $faker->numberBetween(100, 20000),
         'type'           => $faker->randomElement(['download', 'physical'])
     ];
