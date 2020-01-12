@@ -22,10 +22,14 @@ class Product extends Model
     {
         return 'slug';
     }
-    public function getbasePriceAttribute($value) {
-        $value = $value / 100;
-        return number_format($value , 2, config('statamic-butik.currency.delimiter'), '');
-    }
+//    public function getbasePriceAttribute($value) {
+//        $value = $value / 100;
+//        return number_format($value , 2, config('statamic-butik.currency.delimiter'), '');
+//    }
+
+//    public function setbasePriceAttribute($value) {
+//        $this->attributes['base_price'] = $value * 100;
+//    }
 
     public function getbasePriceWithCurrencySymbolAttribute($value) {
         return $this->base_price .' '.config('statamic-butik.currency.symbol');

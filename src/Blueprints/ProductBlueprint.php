@@ -18,7 +18,7 @@ class ProductBlueprint
                             'field'  => [
                                 'type'     => 'text',
                                 'display'  => __('statamic-butik::product.form.title'),
-                                'validate' => 'required',
+                                'validate' => 'required|string',
                             ],
                         ],
                         [
@@ -28,7 +28,7 @@ class ProductBlueprint
                                 'display'      => __('statamic-butik::product.form.slug'),
                                 'validate'     => 'required',
                                 'instructions' => __('statamic-butik::product.form.slug_description'),
-                                'validate' => 'required',
+                                'validate' => 'required|string|unique:products,slug',
                             ],
                         ],
                         [
@@ -38,7 +38,7 @@ class ProductBlueprint
                                 'display'      => __('statamic-butik::product.form.base_price'),
                                 'validate'     => 'required',
                                 'width'         => '33',
-                                'validate'      => 'required|integer:min:0',
+                                'validate'      => 'required|integer|min:0',
                             ],
                         ],
                         [
@@ -46,12 +46,12 @@ class ProductBlueprint
                             'field'  => [
                                 'type'         => 'select',
                                 'display'      => __('statamic-butik::product.form.type'),
-                                'validate'     => 'required',
                                 'width'         => '66',
                                 'default' => 'physical',
                                 'options' => [
                                     'physical' => 'physical',
-                                ]
+                                ],
+                                'validate'     => 'required|string',
                             ],
                         ],
                         [
@@ -59,10 +59,12 @@ class ProductBlueprint
                             'field'  => [
                                 'type'    => 'bard',
                                 'display' => __('statamic-butik::product.form.description'),
+                                'validate' => 'sometimes',
                                 'buttons' => [
                                     'h2', 'bold', 'italic', 'underline', 'strikethrough', 'unorderedlist', 'orderedlist', 'anchor', 'quote',
                                 ],
                             ],
+
                         ],
                     ],
                 ],

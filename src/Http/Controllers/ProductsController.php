@@ -63,9 +63,11 @@ class ProductsController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate($this->rules());
-
-        Product::create($validatedData);
+        $blueprint = new ProductBlueprint();
+        $fields = $blueprint()->fields()->addValues($request->all());
+        $fields->validate();
+        $values = $fields->process()->values();
+        Product::create($values->toArray());
     }
 
     public function edit(Product $product) {
@@ -79,20 +81,17 @@ class ProductsController extends Controller
             'meta'      => $fields->meta(),
         ]);
     }
-
-    public function destroy(Product $product) {
-        // TODO: Add Permissions
-        $product->delete();
+    public function update(Request $request, Product $product) {
+        $blueprint = new ProductBlueprint();
+        $fields = $blueprint()->fields()->addValues($request->all());
+        $fields->validate();
+        $values = $fields->process()->values();
+        $product->update($values);
     }
 
-    private function rules() {
-        return [
-            'title'       => 'required|string',
-            'slug'        => 'required|string|unique:products,slug',
-            'description' => 'required',
-            'images'      => 'nullable',
-            'base_price'  => 'required|integer|min:0',
-            'type'        => 'required|string',
-        ];
+    public function destroy(Product $product)
+    {
+        // TODO: Add Permissions
+        $product->delete();
     }
 }

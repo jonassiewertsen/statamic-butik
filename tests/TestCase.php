@@ -24,7 +24,7 @@ class TestCase extends OrchestraTestCase
         $this->withFactories(__DIR__.'/../database/factories');
 
         // TODO: Can the container part be removed
-        // $this->createContainer();
+//         $this->createContainer();
     }
 
     protected function signIn()
