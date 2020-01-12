@@ -9,7 +9,6 @@ class ProductBlueprint
     public function __invoke()
     {
         return Blueprint::make()->setContents([
-
             'sections' => [
                 'main'    => [
                     'fields' => [
@@ -28,7 +27,8 @@ class ProductBlueprint
                                 'display'      => __('statamic-butik::product.form.slug'),
                                 'validate'     => 'required',
                                 'instructions' => __('statamic-butik::product.form.slug_description'),
-                                'validate' => 'required|string|unique:products,slug',
+                                'validate' => 'required|string|unique:products,slug,id,'.request()->id,
+                                'read_only' => $this->slugReadOnly(),
                             ],
                         ],
                         [
@@ -83,5 +83,15 @@ class ProductBlueprint
                 ],
             ],
         ]);
+    }
+
+    /**
+     * In case the Product will be edited, the slug will be read only
+     */
+    private function slugReadOnly() {
+        if (request()->route()->action['as'] === 'statamic.cp.butik.products.edit') {
+            return true;
+        }
+        return false;
     }
 }
