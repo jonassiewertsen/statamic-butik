@@ -68,7 +68,7 @@ class ProductsController extends Controller
             'title'       => 'required|string',
             'slug'        => 'required|string|unique:products,slug',
             'description' => 'required',
-            'images'      => 'required',
+            'images'      => 'nullable',
             'base_price'  => 'required|integer|min:0',
             'type'        => 'required|string',
         ]);

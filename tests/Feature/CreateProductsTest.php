@@ -89,11 +89,11 @@ class CreateProductsTest extends TestCase
     }
 
     /** @test */
-    public function images_is_required()
+    public function images_can_be_null()
     {
         $product = raw(Product::class, ['images' => null]);
         $this->post(route('statamic.cp.butik.products.store'), $product)
-            ->assertSessionHasErrors('images');
+            ->assertSessionhasNoErrors();
     }
 
     /** @test */

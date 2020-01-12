@@ -73,7 +73,7 @@ class ProductBlueprint
                             'field'  => [
                                 'type'     => 'assets',
                                 'display'  => __('statamic-butik::product.form.images'),
-                                'validate' => 'required',
+                                'validate' => 'nullable',
                                 'mode'     => 'grid',
                             ],
                         ],
