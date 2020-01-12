@@ -12,5 +12,8 @@
     "devDependencies": {
         "cross-env": "^5.1",
         "laravel-mix": "^2.0"
+    },
+    "dependencies": {
+        "braintree": "^2.21.0"
     }
 }
