@@ -23,6 +23,12 @@ class Product extends Model
     {
         return 'slug';
     }
+
+    public function editUrl() {
+        $cp_route = config('statamic.cp.route');
+        return "/{$cp_route}/butik/products/{$this->slug}/edit";
+    }
+
     public function getBasePriceAttribute($value) {
         $value = floatval($value) / 100;
         return number_format($value , 2, config('statamic-butik.currency.delimiter'), '');
@@ -33,7 +39,7 @@ class Product extends Model
         $this->attributes['base_price'] = number_format(floatval($value) * 100, 0, '', '');
     }
 
-    public function getbasePriceWithCurrencySymbolAttribute($value) {
+    public function getBasePriceWithCurrencySymbolAttribute($value) {
         return $this->base_price .' '.config('statamic-butik.currency.symbol');
     }
 }

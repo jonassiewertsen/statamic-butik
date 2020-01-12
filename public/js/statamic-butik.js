@@ -246,7 +246,7 @@ module.exports = function normalizeComponent (
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DeletesListingRow_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DeletesListingRow_js__ = __webpack_require__(5);
 //
 //
 //
@@ -297,7 +297,55 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 5 */,
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+    data: function data() {
+        return {
+            deletingRow: false
+        };
+    },
+
+
+    computed: {
+        deletingModalTitle: function deletingModalTitle() {
+            return this.deletingModalTitleFromRowKey('title');
+        }
+    },
+
+    methods: {
+        confirmDeleteRow: function confirmDeleteRow(id, index) {
+            this.deletingRow = { id: id, index: index };
+        },
+        deletingModalTitleFromRowKey: function deletingModalTitleFromRowKey(key) {
+            return __('Delete') + ' ' + this.rows[this.deletingRow.index][key];
+        },
+        deleteRow: function deleteRow(resourceRoute, message) {
+            var _this = this;
+
+            var id = this.deletingRow.id;
+            message = message || __('Deleted');
+
+            this.$axios.delete(resourceRoute + '/' + id).then(function () {
+                var i = _.indexOf(_this.rows, _.findWhere(_this.rows, { id: id }));
+                _this.rows.splice(i, 1);
+                _this.deletingRow = false;
+                _this.$toast.success(message);
+
+                if (_this.rows.length === 0) location.reload();
+            }).catch(function (e) {
+                _this.$toast.error(e.response ? e.response.data.message : __('Something went wrong'));
+            });
+        },
+        cancelDeleteRow: function cancelDeleteRow() {
+            this.deletingRow = false;
+        }
+    }
+});
+
+/***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -325,16 +373,9 @@ var render = function() {
                       fn: function(ref) {
                         var collection = ref.row
                         return [
-                          _c(
-                            "a",
-                            {
-                              attrs: {
-                                href:
-                                  "/intern/cp/butik/products/" + collection.slug
-                              }
-                            },
-                            [_vm._v(_vm._s(collection.title))]
-                          )
+                          _c("a", { attrs: { href: collection.edit_url } }, [
+                            _vm._v(_vm._s(collection.title))
+                          ])
                         ]
                       }
                     },
@@ -415,55 +456,6 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-24d71684", module.exports)
   }
 }
-
-/***/ }),
-/* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony default export */ __webpack_exports__["a"] = ({
-    data: function data() {
-        return {
-            deletingRow: false
-        };
-    },
-
-
-    computed: {
-        deletingModalTitle: function deletingModalTitle() {
-            return this.deletingModalTitleFromRowKey('title');
-        }
-    },
-
-    methods: {
-        confirmDeleteRow: function confirmDeleteRow(id, index) {
-            this.deletingRow = { id: id, index: index };
-        },
-        deletingModalTitleFromRowKey: function deletingModalTitleFromRowKey(key) {
-            return __('Delete') + ' ' + this.rows[this.deletingRow.index][key];
-        },
-        deleteRow: function deleteRow(resourceRoute, message) {
-            var _this = this;
-
-            var id = this.deletingRow.id;
-            message = message || __('Deleted');
-
-            this.$axios.delete(resourceRoute + '/' + id).then(function () {
-                var i = _.indexOf(_this.rows, _.findWhere(_this.rows, { id: id }));
-                _this.rows.splice(i, 1);
-                _this.deletingRow = false;
-                _this.$toast.success(message);
-
-                if (_this.rows.length === 0) location.reload();
-            }).catch(function (e) {
-                _this.$toast.error(e.response ? e.response.data.message : __('Something went wrong'));
-            });
-        },
-        cancelDeleteRow: function cancelDeleteRow() {
-            this.deletingRow = false;
-        }
-    }
-});
 
 /***/ })
 /******/ ]);

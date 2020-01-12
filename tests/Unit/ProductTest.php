@@ -27,4 +27,15 @@ class ProductTest extends TestCase
         $product = create(Product::class, ['base_price' => 2 ]);
         $this->assertEquals('2,00 €', $product->first()->basePriceWithCurrencySymbol);
     }
+
+    /** @test */
+    public function it_has_a_edit_url()
+    {
+        $product = create(Product::class)->first();
+
+        $this->assertEquals(
+            $product->editUrl(),
+            '/'.config('statamic.cp.route')."/butik/products/{$product->slug}/edit"
+            );
+    }
 }
