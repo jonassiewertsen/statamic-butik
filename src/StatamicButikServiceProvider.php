@@ -12,6 +12,10 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 //        'web' => __DIR__.'/routes/web.php',
     ];
 
+    protected $scripts = [
+        __DIR__ . '/../public/js/statamic-butik.js',
+    ];
+
     public function boot()
     {
          parent::boot();

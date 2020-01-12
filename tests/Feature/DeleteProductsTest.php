@@ -13,12 +13,11 @@ class DeleteProductsTest extends TestCase
         $this->signIn();
 
         $product = create(Product::class);
-
         $this->assertEquals(1, $product->count());
+
         $this->delete(route('statamic.cp.butik.products.destroy', $product->first()))
             ->assertOk();
-
-        // TODO: Fix this text. What the fuck is going on?
-        $this->assertEquals(0, $product->fresh()->count());
+        
+        $this->assertEquals(0, Product::count());
     }
 }

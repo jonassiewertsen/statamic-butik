@@ -7,13 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $table = 'products';
+    public $incrementing = false;
+    protected $primaryKey = 'slug';
+    protected $keyType = 'string';
+
+    protected $guarded = [];
 
     protected $casts = [
         'description' => 'array',
         'images'      => 'array',
     ];
-
-    protected $guarded = [];
 
     public function getRouteKeyName()
     {
