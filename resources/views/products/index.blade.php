@@ -25,7 +25,7 @@
             'resource' => __('statamic-butik::product.name.singular'),
             'description' => __('statamic-butik::product.description'),
             'svg' => 'empty/collection',
-            'route' => cp_route('butik.product.create'),
+            'route' => cp_route('butik.products.create'),
             // TODO: I should set permissions right here
              'can' => auth()->user()->can('create', 'Statamic\Contracts\Entries\Collection')
         ])
