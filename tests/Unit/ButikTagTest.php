@@ -17,6 +17,12 @@ class ButikTagTest extends TestCase
     }
 
     /** @test */
+    public function the_batiks_tag_has_been_registered()
+    {
+        $this->assertTrue(isset(app()['statamic.tags']['butik']));
+    }
+
+    /** @test */
     public function the_products_map_is_returning_the_product_collection()
     {
         create(Product::class, [], 10);
