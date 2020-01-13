@@ -22,5 +22,8 @@ return [
      */
     'uri' => [
         'prefix' => 'shop',
+        'checkout' => [
+            'express' => 'express-checkout',
+        ]
     ]
 ];
