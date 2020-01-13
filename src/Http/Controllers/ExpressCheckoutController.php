@@ -15,8 +15,13 @@ class ExpressCheckoutController extends Controller
 
     public function customerData(Product $product) {
         $validatedData = request()->validate($this->rules());
-
         Session::put('butik.customer', $validatedData);
+    }
+
+    public function payment(Product $product) {
+        return (new \Statamic\View\View())
+            ->template('statamic-butik::web.checkout.express.payment')
+            ->with($product->toArray());
     }
 
     private function rules() {

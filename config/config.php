@@ -23,7 +23,10 @@ return [
     'uri' => [
         'prefix' => 'shop',
         'checkout' => [
-            'express' => 'express-checkout',
+            'express' => [
+                'delivery' => 'express-checkout/delivery',
+                'payment' => 'express-checkout/payment',
+            ]
         ]
     ]
 ];
