@@ -13,8 +13,17 @@
         <testsuite name="Unit">
             <directory suffix="Test.php">tests/Unit/</directory>
         </testsuite>
-        <testsuite name="Feature">
-            <directory suffix="Test.php">tests/Feature/</directory>
+        <testsuite name="Checkout">
+            <directory suffix="Test.php">tests/Checkout/</directory>
+        </testsuite>
+        <testsuite name="CP">
+            <directory suffix="Test.php">tests/CP/</directory>
+        </testsuite>
+        <testsuite name="Products">
+            <directory suffix="Test.php">tests/Products/</directory>
+        </testsuite>
+        <testsuite name="Shop">
+            <directory suffix="Test.php">tests/Shop/</directory>
         </testsuite>
     </testsuites>
     <filter>

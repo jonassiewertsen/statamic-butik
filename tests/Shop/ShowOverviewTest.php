@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Shop;
 
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
-class ShopOverviewTest extends TestCase
+class ShowOverviewTest extends TestCase
 {
     /** @test */
     public function The_shop_overview_page_does_exist()
