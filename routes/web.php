@@ -14,6 +14,6 @@ Route::prefix(config('statamic-butik.uri.prefix'))->name('butik.')->namespace('H
     Route::post(config('statamic-butik.uri.checkout.express.delivery').'/{product}', 'ExpressCheckoutController@customerData')->name('checkout.express.delivery');
 
     Route::get(config('statamic-butik.uri.checkout.express.payment').'/{product}', 'ExpressCheckoutController@payment')->name('checkout.express.payment');
+
+    Route::get(config('statamic-butik.uri.payment.process'), 'PaymentGatewayController@handle')->name('payment.handle');
 });
-// shop/express-checkout/delivery/north-jaime-9-2020/delivery
-// shop/express-checkout/payment/north-jaime-9-2020/delivery

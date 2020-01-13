@@ -2,6 +2,7 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Controllers;
 
+use Braintree_ClientToken;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 
@@ -19,9 +20,12 @@ class ExpressCheckoutController extends Controller
     }
 
     public function payment(Product $product) {
-        return (new \Statamic\View\View())
-            ->template('statamic-butik::web.checkout.express.payment')
-            ->with($product->toArray());
+        return view('statamic-butik::web.checkout.express.payment', [
+            'product' => $product->toArray(),
+        ]);
+//        return (new \Statamic\View\View())
+//            ->template('statamic-butik::web.checkout.express.payment')
+//            ->with($product->toArray());
     }
 
     private function rules() {
