@@ -5,7 +5,7 @@ namespace Tests\Shop;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
-class ExpressCheckoutDeliverTest extends TestCase
+class ExpressCheckoutDeliveryTest extends TestCase
 {
     protected $product;
 
