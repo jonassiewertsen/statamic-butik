@@ -14,5 +14,13 @@ return [
         'name' => 'Euro',
         'symbol' => '€',
         'delimiter' => ',',
+    ],
+
+    /**
+     * Define your own custom route name to view the Statamic Butik
+     * on the front-end.
+     */
+    'uri' => [
+        'prefix' => 'shop',
     ]
 ];
