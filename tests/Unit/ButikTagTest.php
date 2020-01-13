@@ -8,7 +8,7 @@ use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class ButikTagTest extends TestCase
 {
-    public $tag;
+    public $butik;
 
     public function setUp(): void {
         parent::setUp();
