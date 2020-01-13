@@ -21,8 +21,8 @@ class ShopOverviewTest extends TestCase
         $product = create(Product::class, [], 10)->first();
 
         $this->get(route('butik.shop'))
-            ->assertSee($product->title)
-            ->assertSee($product->description)
-            ->assertSee($product->base_price);
+            ->assertSee($product->title);
+//            ->assertSee($product->description)
+//            ->assertSee($product->base_price);
     }
 }

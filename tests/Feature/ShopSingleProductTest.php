@@ -9,7 +9,8 @@ class ShopSingleProductTest extends TestCase
 {
     protected $product;
 
-    public function setUp(): void {
+    public function setUp(): void
+    {
         parent::setUp();
         $this->product = create(Product::class)->first();
     }
@@ -20,5 +21,14 @@ class ShopSingleProductTest extends TestCase
         $this->get(route('butik.shop.product', $this->product))
             ->assertOk()
             ->assertViewIs('statamic-butik::web.shop.show');
+    }
+
+    /** @test */
+    public function product_information_will_be_shown()
+    {
+        $this->get(route('butik.shop.product', $this->product))
+            ->assertSee($this->product->title)
+            ->assertSee($this->product->description)
+            ->assertSee($this->product->base_price);
     }
 }
