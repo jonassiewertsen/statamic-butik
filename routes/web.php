@@ -15,5 +15,5 @@ Route::prefix(config('statamic-butik.uri.prefix'))->name('butik.')->namespace('H
 
     Route::get(config('statamic-butik.uri.checkout.express.payment').'/{product}', 'ExpressCheckoutController@payment')->name('checkout.express.payment');
 
-    Route::get(config('statamic-butik.uri.payment.process'), 'PaymentGatewayController@handle')->name('payment.handle');
+    Route::get(config('statamic-butik.uri.payment.process'), 'PaymentGatewayController@processPayment')->name('payment.handle');
 });
