@@ -8,9 +8,12 @@ use Statamic\View\View;
 class ShopController extends Controller
 {
     public function index() {
+        $layout = config('statamic-butik.frontend.layout.overview', 'statamic-butik::web.layouts.shop');
+        $template = config('statamic-butik.layout.overview', 'statamic-butik::web.shop.overview');
+
         return (new \Statamic\View\View())
-            ->layout('statamic-butik::web.layouts.shop')
-            ->template('statamic-butik::web.shop.index')
+            ->layout($layout)
+            ->template($template)
             ->with(['title' => 'Overview']);
     }
 

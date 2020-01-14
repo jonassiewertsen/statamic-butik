@@ -45,5 +45,14 @@ return [
             'process' => 'payment/process',
             'receipt' => 'express-checkout/receipt',
         ]
+    ],
+
+    'frontend' => [
+        'layout' => [
+            'overview' => 'statamic-butik::web.layouts.shop',
+        ],
+        'template' => [
+            'overview' => 'statamic-butik::web.shop.overview',
+        ]
     ]
 ];
