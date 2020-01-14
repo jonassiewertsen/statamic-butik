@@ -24,7 +24,6 @@ class ShowOverviewTest extends TestCase
 
         $this->get(route('butik.shop'))
             ->assertSee($product->title)
-            ->assertSee($product->description)
             ->assertSee($product->base_price);
     }
 }
