@@ -1,14 +1,16 @@
-{{ butik:products }}
+<div class="butik-flex butik-flex-wrap butik-pr-5">
+    {{ butik:products }}
 
-    <div class="butik-block butik-mb-10 butik-pl-5 butik-w-1/2 md:butik-w-1/3">
-        <a href="{{ show_url }}" class="butik-block butik-text-xl butik-trans butik-w-full hover:butik-opacity-75">
-            {{ images limit="1" }}
-                <img class="butik-w-full" src="/assets/{{ value }}">
-            {{ /images }}
+        <div class="butik-block butik-mb-10 butik-pl-5 butik-w-1/2 md:butik-w-1/3">
+            <a href="{{ show_url }}" class="butik-block butik-text-xl butik-trans butik-w-full hover:butik-opacity-75">
+                {{ images limit="1" }}
+                    <img class="butik-w-full" src="/assets/{{ value }}">
+                {{ /images }}
 
-            <h1 class="butik-mt-2">{{ title }}</h1>
-            <span class="butik-text-gray-500 butik-text-sm">{{ butik:currency_symbol }} {{ base_price }}</span>
-        </a>
-    </div>
+                <h1 class="butik-mt-2">{{ title }}</h1>
+                <span class="butik-text-gray-500 butik-text-sm">{{ butik:currency_symbol }} {{ base_price }}</span>
+            </a>
+        </div>
 
-{{ /butik:products }}
+    {{ /butik:products }}
+</div>

@@ -1,3 +1,27 @@
-<h1>{{ title }}</h1>
-<div>{{ description }}</div>
-<div>{{ base_price }}</div>
+<div class="butik-block md:butik-flex">
+    {{ images limit="1" }}
+        <img class="butik-w-full md:butik-w-1/2" src="/assets/{{ value }}">
+    {{ /images }}
+
+    <div class="butik-px-5 butik-w-full">
+        <h1 class="butik-mt-2 butik-text-2xl">{{ title }}</h1>
+        <span class="butik-text-gray-500 butik-text-sm">{{ butik:currency_symbol }} {{ base_price }}</span>
+
+        <a class="butik-bg-gray-900 butik-block butik-mt-5 butik-py-2 butik-rounded butik-text-center butik-text-white butik-text-xl hover:butik-bg-gray-800"
+           href="#"
+        >
+            Express Checkout
+        </a>
+
+        {{ if description }}
+        <p class="butik-mt-8">{{ description }}</p>
+        {{ /if }}
+
+        <a class="lg:butik-hidden butik--mb-3 butik-block butik-flex butik-mt-8 butik-text-gray-400 hover:butik-text-gray-500" href="{{ butik:overview }}">
+            <svg class="butik-fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M5.41 11H21a1 1 0 0 1 0 2H5.41l5.3 5.3a1 1 0 0 1-1.42 1.4l-7-7a1 1 0 0 1 0-1.4l7-7a1 1 0 0 1 1.42 1.4L5.4 11z"/></svg>
+            <span>Zurück</span>
+        </a>
+    </div>
+</div>
+
+
