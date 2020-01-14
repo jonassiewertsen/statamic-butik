@@ -9,7 +9,17 @@ class Butik extends StatamicTags
 {
     public function products()
     {
-         return Product::all();
+        $products = Product::all();
+        $products->transform(function($product) {
+            return [
+                'title' => $product->title,
+                'description' => $product->description,
+                'images' => $product->images,
+                'base_price' => $product->base_price,
+                'show_url' => $product->showUrl(),
+            ];
+        });
+         return $products;
     }
 
     public function currencySymbol()

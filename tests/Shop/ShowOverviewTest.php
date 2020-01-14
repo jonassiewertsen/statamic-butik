@@ -10,9 +10,11 @@ class ShowOverviewTest extends TestCase
     /** @test */
     public function The_shop_overview_page_does_exist()
     {
-        $this->get(route('butik.shop'))
-            ->assertOk()
-            ->assertViewIs('statamic-butik::web.shop.index');
+        create(Product::class, [], 10);
+        $this->get(route('butik.shop'))->assertOk();
+
+        $this->assertStatamicLayoutIs('statamic-butik::web.layouts.shop', route('butik.shop'));
+        $this->assertStatamicTemplateIs('statamic-butik::web.shop.overview', route('butik.shop'));
     }
 
     /** @test */

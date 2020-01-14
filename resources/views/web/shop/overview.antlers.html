@@ -16,13 +16,13 @@
         {{ butik:products }}
 
             <div class="butik-block butik-mb-10 butik-pl-5 butik-w-1/2 md:butik-w-1/3">
-                <a href="#" class="butik-block butik-w-full butik-text-xl">
+                <a href="{{ show_url }}" class="butik-block butik-w-full butik-text-xl">
                     {{ images limit="1" }}
                         <img class="butik-w-full" src="/assets/{{ value }}">
                     {{ /images }}
 
                     <h1 class="butik-mt-2">{{ title }}</h1>
-                    <span class="butik-text-gray-500 butik-text-sm">{{ base_price }} €</span>
+                    <span class="butik-text-gray-500 butik-text-sm">{{ butik:currency_symbol }} {{ base_price }}</span>
                 </a>
             </div>
 

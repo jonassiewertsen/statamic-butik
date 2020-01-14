@@ -29,6 +29,11 @@ class Product extends Model
         return "/{$cp_route}/butik/products/{$this->slug}/edit";
     }
 
+    public function showUrl() {
+        $web_route = config('statamic-butik.uri.prefix');
+        return "/{$web_route}/{$this->slug}";
+    }
+
     public function getBasePriceAttribute($value) {
         $value = floatval($value) / 100;
         return number_format($value , 2, config('statamic-butik.currency.delimiter'), '');

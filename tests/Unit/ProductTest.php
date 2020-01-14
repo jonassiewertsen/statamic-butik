@@ -38,4 +38,16 @@ class ProductTest extends TestCase
             '/'.config('statamic.cp.route')."/butik/products/{$product->slug}/edit"
             );
     }
+
+    /** @test */
+    public function it_has_a_show_url()
+    {
+        $product = create(Product::class)->first();
+
+        $uri_prefix = config('statamic-butik.uri.prefix');
+        $this->assertEquals(
+            "/{$uri_prefix}/{$product->slug}",
+            $product->showUrl()
+        );
+    }
 }

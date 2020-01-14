@@ -17,20 +17,19 @@ class ButikTagTest extends TestCase
     }
 
     /** @test */
-    public function the_batiks_tag_has_been_registered()
+    public function the_butik_tag_has_been_registered()
     {
         $this->assertTrue(isset(app()['statamic.tags']['butik']));
     }
 
     /** @test */
-    public function the_products_map_is_returning_the_product_collection()
+    public function the_products_value_is_returning_the_product_collection()
     {
-        create(Product::class, [], 10);
-
-        $this->assertEquals(
-            $this->butik->products(),
-            Product::all()
-        );
+        $product = create(Product::class)->first();
+        $this->assertStringContainsString($product->title, $this->butik->products());
+//        $this->assertStringContainsString($product->images[0], $this->butik->products()->toJson()); // Image not tested
+        $this->assertStringContainsString($product->base_price, $this->butik->products());
+        $this->assertStringContainsString(json_encode($product->showUrl()), $this->butik->products());
     }
 
     /** @test */
