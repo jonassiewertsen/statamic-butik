@@ -25,14 +25,15 @@ class BraintreePaymentGateway extends Controller implements PaymentGatewayInterf
     public function handle(Request $request) {
         $payload = $request->input('payload', false);
         $nonce = $payload['nonce'];
+        // TODO: Passing the amount like this is shit !!! SECURITY ....
         $amount = $payload['amount'];
 
-        $status = $this->braintree->transaction()->sale([
+        $response = $this->braintree->transaction()->sale([
             'amount' => $amount,
             'paymentMethodNonce' => $nonce,
             'options' => [ 'submitForSettlement' => true ]
         ]);
 
-        return response()->json($status);
+        return $response;
     }
 }

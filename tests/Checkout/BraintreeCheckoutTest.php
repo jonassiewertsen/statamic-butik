@@ -25,6 +25,12 @@ class BraintreeCheckoutTest extends TestCase
     }
 
     /** @test */
+    public function redirected_after_a_successfully_payment() {
+        $this->makePayment($this->accepted())
+            ->assertRedirect(route('butik.payment.receipt'));
+    }
+
+    /** @test */
     public function a_payment_can_be_declined() {
         $this->makePayment($this->declined())
             ->assertJsonFragment(['message' => 'Processor Declined']);
@@ -43,8 +49,9 @@ class BraintreeCheckoutTest extends TestCase
     }
 
     private function makePayment($amount, $nonce = 'fake-valid-nonce') {
+        $this->withoutExceptionHandling();
         $payload = ['payload' => ['nonce' => $nonce, 'amount' => $amount ]];
-        return $this->get(route('butik.payment.handle', $payload));
+        return $this->get(route('butik.payment.process', $payload));
     }
 
     private function accepted() {
