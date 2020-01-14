@@ -34,7 +34,7 @@ return [
      * on the front-end.
      */
     'uri' => [
-        'prefix' => 'shop',
+        'shop' => '/shop',
         'checkout' => [
             'express' => [
                 'delivery' => 'express-checkout/delivery',

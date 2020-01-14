@@ -46,7 +46,7 @@ class ProductTest extends TestCase
 
         $uri_prefix = config('statamic-butik.uri.prefix');
         $this->assertEquals(
-            "/{$uri_prefix}/{$product->slug}",
+            "/shop/{$product->slug}",
             $product->showUrl()
         );
     }

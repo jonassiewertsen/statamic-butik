@@ -30,8 +30,8 @@ class Product extends Model
     }
 
     public function showUrl() {
-        $web_route = config('statamic-butik.uri.prefix');
-        return "/{$web_route}/{$this->slug}";
+        $web_route = config('statamic-butik.uri.shop');
+        return "{$web_route}/{$this->slug}";
     }
 
     public function getBasePriceAttribute($value) {
