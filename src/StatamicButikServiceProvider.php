@@ -40,9 +40,14 @@ class StatamicButikServiceProvider extends AddonServiceProvider
             ], 'views');*/
 
             // Publishing assets.
-            /*$this->publishes([
-                __DIR__.'/../resources/assets' => public_path('vendor/statamic-butik'),
-            ], 'assets');*/
+            $this->publishes([
+                __DIR__.'/../public/images' => public_path('vendor/statamic-butik/images'),
+            ], 'images');
+
+            // Publishing assets.
+            $this->publishes([
+                __DIR__.'/../public/css' => public_path('vendor/statamic-butik/css/'),
+            ], 'resources');
 
             // Publishing the translation files.
             /*$this->publishes([

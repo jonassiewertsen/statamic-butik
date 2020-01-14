@@ -8,7 +8,10 @@ use Statamic\View\View;
 class ShopController extends Controller
 {
     public function index() {
-        return view('statamic-butik::web.shop.index');
+        return (new \Statamic\View\View())
+            ->layout('statamic-butik::web.layouts.shop')
+            ->template('statamic-butik::web.shop.index')
+            ->with(['title' => 'Overview']);
     }
 
     public function show(Product $product) {

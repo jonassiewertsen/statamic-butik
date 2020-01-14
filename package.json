@@ -11,9 +11,11 @@
     },
     "devDependencies": {
         "cross-env": "^5.1",
-        "laravel-mix": "^2.0"
+        "laravel-mix": "^2.0",
+        "laravel-mix-purgecss": "^4.2.0"
     },
     "dependencies": {
-        "braintree": "^2.21.0"
+        "braintree": "^2.21.0",
+        "tailwindcss": "^1.2.0-canary.5"
     }
 }
