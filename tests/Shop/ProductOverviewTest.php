@@ -5,7 +5,7 @@ namespace Tests\Shop;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
-class ShowOverviewTest extends TestCase
+class ProductOverviewTest extends TestCase
 {
     /** @test */
     public function The_shop_overview_page_does_exist()

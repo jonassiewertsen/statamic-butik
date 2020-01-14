@@ -5,7 +5,7 @@ namespace Tests\Shop;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
-class ShowProductTest extends TestCase
+class ProductShowTest extends TestCase
 {
     protected $product;
 
@@ -18,10 +18,10 @@ class ShowProductTest extends TestCase
     /** @test */
     public function the_view_of_a_single_product_does_exist()
     {
-        $this->get(route('butik.shop.product', $this->product))
-            ->assertOk()
-            ->assertSee($this->product->title);
-        // TODO: Add a test to check the view?
+        $route = route('butik.shop.product', $this->product);
+
+        $this->assertStatamicLayoutIs('statamic-butik::web.layouts.shop', $route);
+        $this->assertStatamicTemplateIs('statamic-butik::web.shop.show', $route);
     }
 
     /** @test */

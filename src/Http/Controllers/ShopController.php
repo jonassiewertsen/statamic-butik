@@ -18,8 +18,12 @@ class ShopController extends Controller
     }
 
     public function show(Product $product) {
+        $layout = config('statamic-butik.frontend.layout.show', 'statamic-butik::web.layouts.shop');
+        $template = config('statamic-butik.frontend.template.show', 'statamic-butik::web.shop.show');
+
         return (new \Statamic\View\View())
-                ->template('statamic-butik::web.shop.show')
-                ->with($product->toArray());
+            ->layout($layout)
+            ->template($template)
+            ->with($product->toArray());
     }
 }
