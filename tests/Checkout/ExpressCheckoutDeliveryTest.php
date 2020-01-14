@@ -18,9 +18,11 @@ class ExpressCheckoutDeliveryTest extends TestCase
     /** @test */
     public function The_express_delivery_page_does_exist()
     {
-        $this->get(route('butik.checkout.express.delivery', $this->product))
-            ->assertOk()
-            ->assertSee('Express Checkout');
+        dd(config('database'));
+        $route = route('butik.checkout.express.delivery', $this->product);
+
+        $this->assertStatamicLayoutIs('statamic-butik::web.layouts.express-checkout', $route);
+        $this->assertStatamicTemplateIs('statamic-butik::web.checkout.express.delivery', $route);
     }
 
     // TODO: Check if item will be displayed correctly as well

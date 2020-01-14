@@ -51,10 +51,20 @@ return [
         'layout' => [
             'overview' => 'statamic-butik::web.layouts.shop',
             'show'     => 'statamic-butik::web.layouts.shop',
+            'checkout' => [
+                'express' => [
+                    'delivery' => 'statamic-butik::web.layouts.express-checkout'
+                ]
+            ]
         ],
         'template' => [
             'overview' => 'statamic-butik::web.shop.overview',
             'show'     => 'statamic-butik::web.shop.show',
+            'checkout' => [
+                'express' => [
+                    'delivery' => 'statamic-butik::web.checkout.express.delivery',
+                ]
+]
         ]
     ]
 ];

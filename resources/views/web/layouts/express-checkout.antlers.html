@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="{{ site_short_locale }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>{{ title }} | {{ site_name }}</title>
+
+        <link rel="stylesheet" href="/vendor/statamic-butik/css/statamic-butik.css">
+    </head>
+
+    <body>
+        <div class="butik-max-w-6xl butik-mx-auto">
+            <header class="butik-flex butik-px-5 butik-py-8 md:butik-py-10">
+                <a class="butik-block butik-w-3/5 butik-flex butik-text-gray-400 hover:butik-text-gray-500" href="{{ butik:overview }}">
+                    <svg class="butik-fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M5.41 11H21a1 1 0 0 1 0 2H5.41l5.3 5.3a1 1 0 0 1-1.42 1.4l-7-7a1 1 0 0 1 0-1.4l7-7a1 1 0 0 1 1.42 1.4L5.4 11z"/></svg>
+                    <span>Back to Shop</span>
+                </a>
+                <a class="butik-block butik-flex butik-justify-end butik-w-2/5" href="{{ butik:overview }}">
+                    <img class="butik-w-3/5" style="max-width: 200px;" src="/vendor/statamic-butik/images/logo.svg">
+                </a>
+            </header>
+
+            <main class="butik-w-full">
+
+                {{ template_content }}
+
+            </main>
+        </div>
+
+        <hr class="butik-mt-8">
+
+        <footer class="butik-flex butik-justify-center butik-max-w-6xl butik-mx-auto butik-py-10">
+            <div class="butik-flex butik-flex-wrap butik-justify-center butik-text-gray-600">
+                <a class="butik-mx-6 butik-mb-2" href="#">Impressum</a>
+                <a class="butik-mx-6 butik-mb-2" href="#">Datenschutzerklaerung</a>
+                <a class="butik-mx-6 butik-mb-2" href="#">Kontakt</a>
+                <a class="butik-mx-6 butik-mb-2" href="#">Versand</a>
+                <a class="butik-mx-6 butik-mb-2" href="#">AGB</a>
+            </div>
+        </footer>
+    </body>
+</html>
