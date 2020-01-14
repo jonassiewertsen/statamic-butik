@@ -39,11 +39,11 @@ return [
             'express' => [
                 'delivery' => 'express-checkout/delivery',
                 'payment' => 'express-checkout/payment',
-                'receipt' => 'express-checkout/receipt',
             ]
         ],
         'payment' => [
             'process' => 'payment/process',
+            'receipt' => 'express-checkout/receipt',
         ]
     ]
 ];

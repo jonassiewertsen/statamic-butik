@@ -18,7 +18,6 @@ class ExpressCheckoutPaymentTestTest extends TestCase
     /** @test */
     public function The_express_payment_page_does_exist()
     {
-        $this->withoutExceptionHandling();
         $this->get(route('butik.checkout.express.payment', $this->product))
             ->assertOk()
             ->assertSee('Express Payment');

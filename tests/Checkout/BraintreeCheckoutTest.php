@@ -24,16 +24,18 @@ class BraintreeCheckoutTest extends TestCase
             ->assertJsonFragment(['success' => true]);
     }
 
-    /** @test */
-    public function redirected_after_a_successfully_payment() {
-        $this->makePayment($this->accepted())
-            ->assertRedirect(route('butik.payment.receipt'));
-    }
+//    /** @test */
+//    public function redirected_after_a_successfully_payment() {
+//        $this->makePayment($this->accepted())
+//            ->assertRedirect(route('butik.payment.receipt'));
+//    }
 
     /** @test */
     public function a_payment_can_be_declined() {
         $this->makePayment($this->declined())
             ->assertJsonFragment(['message' => 'Processor Declined']);
+        // TODO: This does not work like this. The Response is json ... so vue needs to handle this.
+        // What about a popup with all the information? That would be cool. From there the user can go to another site or whatever ...
     }
 
     /** @test */
@@ -49,7 +51,6 @@ class BraintreeCheckoutTest extends TestCase
     }
 
     private function makePayment($amount, $nonce = 'fake-valid-nonce') {
-        $this->withoutExceptionHandling();
         $payload = ['payload' => ['nonce' => $nonce, 'amount' => $amount ]];
         return $this->get(route('butik.payment.process', $payload));
     }

@@ -20,7 +20,8 @@ class ShowProductTest extends TestCase
     {
         $this->get(route('butik.shop.product', $this->product))
             ->assertOk()
-            ->assertViewIs('statamic-butik::web.shop.show');
+            ->assertSee($this->product->title);
+        // TODO: Add a test to check the view?
     }
 
     /** @test */

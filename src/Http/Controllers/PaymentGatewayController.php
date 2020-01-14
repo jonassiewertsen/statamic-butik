@@ -17,10 +17,14 @@ class PaymentGatewayController extends Controller
     public function processPayment(Request $request) {
         $response = $this->gateway->handle($request);
 
-        if ($response->success) {
-            return redirect()->route('butik.payment.receipt');
-        }
+//        if ($response->success) {
+//            return redirect()->route('butik.payment.receipt');
+//        }
 
         return response()->json($response);
+    }
+
+    public function receipt() {
+        // Do something
     }
 }
