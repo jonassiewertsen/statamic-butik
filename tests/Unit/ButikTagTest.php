@@ -42,4 +42,13 @@ class ButikTagTest extends TestCase
             config('statamic-butik.currency.symbol')
         );
     }
+
+    /** @test */
+    public function it_can_return_the_shop_link_link()
+    {
+        $this->assertEquals(
+            $this->butik->overview(),
+            config('statamic-butik.uri.shop')
+        );
+    }
 }

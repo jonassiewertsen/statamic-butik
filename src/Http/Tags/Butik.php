@@ -26,4 +26,9 @@ class Butik extends StatamicTags
     {
         return config('statamic-butik.currency.symbol');
     }
+
+    public function overview()
+    {
+        return config('statamic-butik.uri.shop');
+    }
 }
