@@ -8,9 +8,12 @@ use Jonassiewertsen\StatamicButik\Http\Models\Product;
 class ExpressCheckoutController extends Controller
 {
     public function delivery(Product $product) {
+        // Adding checkout routes to the product
+        $product = $this->addingProductRoutes($product);
+
         // In case a customer goes back to edit, we will load his previews information
         $formData = session('butik.customer');
-        $viewData = array_merge($product->toArray(), $formData);
+        $viewData = array_merge($product, $formData);
 
        return (new \Statamic\View\View())
            ->layout(config('statamic-butik.frontend.layout.checkout.express.delivery'))
@@ -27,9 +30,12 @@ class ExpressCheckoutController extends Controller
     }
 
     public function payment(Product $product) {
+        // Adding checkout routes to the product
+        $product = $this->addingProductRoutes($product);
+
         // In case a customer goes back to edit, we will load his previews information
         $formData = session('butik.customer');
-        $viewData = array_merge($product->toArray(), $formData);
+        $viewData = array_merge($product, $formData);
 
         return (new \Statamic\View\View())
             ->layout(config('statamic-butik.frontend.layout.checkout.express.payment'))

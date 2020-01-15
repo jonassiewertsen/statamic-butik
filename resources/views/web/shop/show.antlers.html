@@ -8,13 +8,13 @@
         <span class="butik-text-gray-500 butik-text-sm">{{ butik:currency_symbol }} {{ base_price }}</span>
 
         <a class="butik-bg-gray-900 butik-block butik-mt-5 butik-py-2 butik-rounded butik-text-center butik-text-white butik-text-xl hover:butik-bg-gray-800"
-           href="#"
+           href="{{ express_delivery_url }}"
         >
             Express Checkout
         </a>
 
         {{ if description }}
-        <p class="butik-mt-8">{{ description }}</p>
+            <p class="butik-mt-8">{{ description }}</p>
         {{ /if }}
 
         <a class="lg:butik-hidden butik--mb-3 butik-block butik-flex butik-mt-8 butik-text-gray-400 hover:butik-text-gray-500" href="{{ butik:overview }}">

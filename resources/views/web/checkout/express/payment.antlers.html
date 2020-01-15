@@ -1,14 +1,13 @@
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://js.braintreegateway.com/web/dropin/1.8.1/js/dropin.min.js"></script>
-
+<!-- TODO: Refactor to vue component maybe? -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://js.braintreegateway.com/web/dropin/1.8.1/js/dropin.min.js"></script>
 
 <div class="butik-mx-5">
     <div class="butik-flex butik-justify-around">
-        <div class="butik-text-xs butik-flex butik-flex-col butik-items-center">
+        <a href="{{ express_delivery_url }}" class="butik-block butik-text-xs butik-flex butik-flex-col butik-items-center">
             <div class="butik-border-2 butik-border-green-500 butik-flex butik-h-8 butik-items-center butik-justify-center butik-rounded-full butik-w-8">1</div>
             <span class="butik-text-green-500 butik-mt-1">Delivery</span>
-        </div>
+        </a>
         <div class="butik-text-xs butik-flex butik-flex-col butik-items-center">
             <div class="butik-border-2 butik-border-green-500 butik-flex butik-h-8 butik-items-center butik-justify-center butik-rounded-full butik-w-8">2</div>
             <span class="butik-text-green-500 butik-mt-1">Review & Payment</span>

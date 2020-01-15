@@ -17,6 +17,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         \Jonassiewertsen\StatamicButik\Http\Tags\Butik::class,
         \Jonassiewertsen\StatamicButik\Http\Tags\Braintree::class,
         \Jonassiewertsen\StatamicButik\Http\Tags\Error::class,
+        \Jonassiewertsen\StatamicButik\Http\Tags\Route::class,
     ];
 
     protected $scripts = [

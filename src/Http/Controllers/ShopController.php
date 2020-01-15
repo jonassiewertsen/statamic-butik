@@ -14,10 +14,13 @@ class ShopController extends Controller
             ->with(['title' => 'Overview']);
     }
 
-    public function show(Product $product) {
+    public function show(Product $product)
+    {
+        $product = $this->addingProductRoutes($product);
+
         return (new \Statamic\View\View())
             ->layout(config('statamic-butik.frontend.layout.show'))
             ->template(config('statamic-butik.frontend.template.show'))
-            ->with($product->toArray());
+            ->with($product);
     }
 }

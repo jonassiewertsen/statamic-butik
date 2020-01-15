@@ -34,6 +34,18 @@ class Product extends Model
         return "{$web_route}/{$this->slug}";
     }
 
+    public function expressDeliveryUrl() {
+        $web_route = config('statamic-butik.uri.shop');
+        $checkout = config('statamic-butik.uri.checkout.express.delivery');
+        return "{$web_route}/{$checkout}/{$this->slug}";
+    }
+
+    public function expressPaymentUrl() {
+        $web_route = config('statamic-butik.uri.shop');
+        $checkout = config('statamic-butik.uri.checkout.express.payment');
+        return "{$web_route}/{$checkout}/{$this->slug}";
+    }
+
     public function getBasePriceAttribute($value) {
         $value = floatval($value) / 100;
         return number_format($value , 2, config('statamic-butik.currency.delimiter'), '');

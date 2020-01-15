@@ -50,4 +50,28 @@ class ProductTest extends TestCase
             $product->showUrl()
         );
     }
+
+    /** @test */
+    public function it_has_a_express_checkout_delivery_url()
+    {
+        $product = create(Product::class)->first();
+
+        $uri_prefix = config('statamic-butik.uri.prefix');
+        $this->assertEquals(
+            "/shop/express-checkout/delivery/{$product->slug}",
+            $product->expressDeliveryUrl()
+        );
+    }
+
+    /** @test */
+    public function it_has_a_express_checkout_payment_url()
+    {
+        $product = create(Product::class)->first();
+
+        $uri_prefix = config('statamic-butik.uri.prefix');
+        $this->assertEquals(
+            "/shop/express-checkout/payment/{$product->slug}",
+            $product->expressPaymentUrl()
+        );
+    }
 }
