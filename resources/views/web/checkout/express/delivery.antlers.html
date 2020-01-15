@@ -25,19 +25,16 @@
 
         {{ csrf_field }}
 
-        <!-- TODO: cleaner styling after issue has been solved -->
-        <!-- https://github.com/statamic/cms/issues/1213 -->
-
         <label for="name" class="butik-block butik-my-3">
             <div class="butik-font-bold butik-text-g butik-text-xs">Name</div>
             <input id="name" name="name" type="text" autofocus class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
-            <span class="butik-text-red-600 butik-text-xs">{{ error:name }}</span>
+            {{ if {error:name} }}<span class="butik-text-red-600 butik-text-xs">{{ error:name }}</span>{{ /if }}
         </label>
 
         <label for="mail" class="butik-block butik-my-3">
             <div class="butik-font-bold butik-text-g butik-text-xs">Mail</div>
             <input id="mail" name="mail" type="mail" class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
-            <span class="butik-text-red-600 butik-text-xs">{{ error:mail }}</span>
+            {{ if {error:mail} }}<span class="butik-text-red-600 butik-text-xs">{{ error:mail }}</span>{{ /if }}
         </label>
 
         <div class="butik-mb-6 butik-text-gray-600 butik-text-xs">
@@ -49,31 +46,31 @@
         <label for="country" class="butik-block butik-my-3 butik-cursor-not-allowed">
             <div class="butik-font-bold butik-text-g butik-text-xs">Country</div>
             <input id="country" name="country" type="text" readonly value="Germaninien" class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
-            <span class="butik-text-red-600 butik-text-xs">{{ error:country }}</span>
+            {{ if {error:country} }}<span class="butik-text-red-600 butik-text-xs">{{ error:country }}</span>{{ /if }}
         </label>
 
         <label for="address_1" class="butik-block butik-my-3">
             <div class="butik-font-bold butik-text-g butik-text-xs">Address 1</div>
             <input id="address_1" name="address_1" type="text" readonly class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
-            <span class="butik-text-red-600 butik-text-xs">{{ error:address_1 }}</span>
+            {{ if {error:address_1} }}<span class="butik-text-red-600 butik-text-xs">{{ error:address_1 }}</span>{{ /if }}
         </label>
 
         <label for="address_2" class="butik-block butik-my-3">
             <div class="butik-font-bold butik-text-g butik-text-xs">Address 2</div>
             <input id="address_2" name="address_1" type="text" readonly class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
-            <span class="butik-text-red-600 butik-text-xs">{{ error:address_2 }}</span>
+            {{ if {error:addres_2} }}<span class="butik-text-red-600 butik-text-xs">{{ error:addres_2 }}</span>{{ /if }}
         </label>
 
         <label for="city" class="butik-block butik-my-3">
             <div class="butik-font-bold butik-text-g butik-text-xs">City</div>
             <input id="city" name="city" type="text" readonly class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
-            <span class="butik-text-red-600 butik-text-xs">{{ error:city }}</span>
+            {{ if {error:city} }}<span class="butik-text-red-600 butik-text-xs">{{ error:city }}</span>{{ /if }}
         </label>
 
         <label for="zip" class="butik-block butik-my-3">
             <div class="butik-font-bold butik-text-g butik-text-xs">Zip</div>
             <input id="zip" name="zip" type="text" readonly class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
-            <span class="butik-text-red-600 butik-text-xs">{{ error:zip }}</span>
+            {{ if {error:zip} }}<span class="butik-text-red-600 butik-text-xs">{{ error:zip }}</span>{{ /if }}
         </label>
 
         <div class="butik-flex butik-justify-end flex">
