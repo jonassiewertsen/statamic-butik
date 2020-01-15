@@ -200,10 +200,9 @@ class ExpressCheckoutDeliveryTest extends TestCase
 
         $this->get(route('butik.checkout.express.delivery', $this->product))
             ->assertSee($customer['name'])
-            ->assertSee($customer['country'])
             ->assertSee($customer['mail'])
             ->assertSee($customer['address_1'])
-            ->assertSee($customer['addres_2'])
+            ->assertSee($customer['address_2'])
             ->assertSee($customer['city'])
             ->assertSee($customer['zip']);
     }
