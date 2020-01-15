@@ -24,12 +24,13 @@ class ExpressCheckoutController extends Controller
     }
 
     public function payment(Product $product) {
-        return view('statamic-butik::web.checkout.express.payment', [
-            'product' => $product->toArray(),
-        ]);
-//        return (new \Statamic\View\View())
-//            ->template('statamic-butik::web.checkout.express.payment')
-//            ->with($product->toArray());
+        $layout = config('statamic-butik.frontend.layout.checkout.express.payment', 'statamic-butik::web.layouts.express-checkout');
+        $template = config('statamic-butik.frontend.template.checkout.express.payment', 'statamic-butik::web.checkout.express.payment');
+
+        return (new \Statamic\View\View())
+            ->layout($layout)
+            ->template($template)
+            ->with($product->toArray());
     }
 
     private function rules() {

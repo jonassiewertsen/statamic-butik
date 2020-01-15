@@ -53,7 +53,8 @@ return [
             'show'     => 'statamic-butik::web.layouts.shop',
             'checkout' => [
                 'express' => [
-                    'delivery' => 'statamic-butik::web.layouts.express-checkout'
+                    'delivery' => 'statamic-butik::web.layouts.express-checkout',
+                    'payment' => 'statamic-butik::web.layouts.express-checkout',
                 ]
             ]
         ],
@@ -63,8 +64,9 @@ return [
             'checkout' => [
                 'express' => [
                     'delivery' => 'statamic-butik::web.checkout.express.delivery',
+                    'payment' => 'statamic-butik::web.checkout.express.payment',
                 ]
-]
+            ]
         ]
     ]
 ];

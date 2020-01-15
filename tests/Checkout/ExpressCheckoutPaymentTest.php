@@ -18,9 +18,10 @@ class ExpressCheckoutPaymentTestTest extends TestCase
     /** @test */
     public function The_express_payment_page_does_exist()
     {
-        $this->get(route('butik.checkout.express.payment', $this->product))
-            ->assertOk()
-            ->assertSee('Express Payment');
+        $route = route('butik.checkout.express.payment', $this->product);
+
+        $this->assertStatamicLayoutIs('statamic-butik::web.layouts.express-checkout', $route);
+        $this->assertStatamicTemplateIs('statamic-butik::web.checkout.express.payment', $route);
     }
 
     // TODO: Check if item will be displayed correctly as well
