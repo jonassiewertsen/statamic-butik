@@ -17,6 +17,7 @@ class ExpressCheckoutController extends Controller
 
     public function customerData(Product $product) {
         $validatedData = request()->validate($this->rules());
+
         Session::put('butik.customer', $validatedData);
     }
 

@@ -24,7 +24,12 @@ class ExpressCheckoutDeliveryTest extends TestCase
         $this->assertStatamicTemplateIs('statamic-butik::web.checkout.express.delivery', $route);
     }
 
-    // TODO: Check if item will be displayed correctly as well
+    /** @test */
+    public function the_product_information_will_be_displayed(){
+        $this->get(route('butik.checkout.express.delivery', $this->product))
+            ->assertSee($this->product->title)
+            ->assertSee($this->product->base_price);
+    }
 
     /** @test */
     public function user_data_will_be_saved_inside_the_session() {
@@ -164,6 +169,12 @@ class ExpressCheckoutDeliveryTest extends TestCase
         $data = $this->createUserData('phone', str_repeat('a', 51));
         $this->post(route('butik.checkout.express.delivery', $this->product), $data)
             ->assertSessionHasErrors('phone');
+    }
+
+    /** @test */
+    public function after_a_valid_form_the_user_will_be_redirected_to_the_payment_page() {
+        $this->post(route('butik.checkout.express.delivery', $this->product), $this->createUserData())
+            ->assertRedirect(route('butik.checkout.express.payment', $this->product));
     }
 
     private function createUserData($key = null, $value = null) {
