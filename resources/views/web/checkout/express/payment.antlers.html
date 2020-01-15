@@ -1,37 +1,91 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Butik Shop</title>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://js.braintreegateway.com/web/dropin/1.8.1/js/dropin.min.js"></script>
-</head>
-<body>
-    <h1>Express Payment</h1>
 
-    <div id="dropin-container"></div>
-    <button id="submit-button">Request payment method</button>
-    <script>
-        var button = document.querySelector('#submit-button');
 
-        braintree.dropin.create({
-            authorization: 'sandbox_8hc4ttnw_8t2hkkd3nn7yqncp',
-            container: '#dropin-container'
-        }, function (createErr, instance) {
-            button.addEventListener('click', function () {
-                instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
-                    $.get('{{ braintree:route name="payment.process" }}', {payload}, function (response) {
-                        if (response.success) {
-                            alert('Payment successfull!');
-                        } else {
-                            alert('Payment failed');
-                        }
-                    }, 'json');
+<div class="butik-mx-5">
+    <div class="butik-flex butik-justify-around">
+        <div class="butik-text-xs butik-flex butik-flex-col butik-items-center">
+            <div class="butik-border-2 butik-border-green-500 butik-flex butik-h-8 butik-items-center butik-justify-center butik-rounded-full butik-w-8">1</div>
+            <span class="butik-text-green-500 butik-mt-1">Delivery</span>
+        </div>
+        <div class="butik-text-xs butik-flex butik-flex-col butik-items-center">
+            <div class="butik-border-2 butik-border-green-500 butik-flex butik-h-8 butik-items-center butik-justify-center butik-rounded-full butik-w-8">2</div>
+            <span class="butik-text-green-500 butik-mt-1">Review & Payment</span>
+        </div>
+        <div class="butik-text-xs butik-flex butik-flex-col butik-items-center">
+            <div class="butik-border-2 butik-border-gray-400 butik-flex butik-h-8 butik-items-center butik-justify-center butik-rounded-full butik-w-8">3</div>
+            <span class="butik-text-gray-500 butik-mt-1">Receipt</span>
+        </div>
+    </div>
+</div>
+
+<hr class="butik-mb-5 butik-mt-8">
+
+<h1 class="butik-block butik-mb-10 md:butik-mb-20 butik-text-center butik-font-bold butik-text-xl">Express Checkout</h1>
+
+<div class="butik-mt-6 butik-mb-20 md:butik-flex">
+    <div class="butik-w-1/2">
+        <h2>Choose your payment method</h2>
+        <div id="dropin-container" style="min-height: 200px;"></div>
+        <button id="submit-button">Request payment method</button>
+        <script>
+            var button = document.querySelector('#submit-button');
+
+            braintree.dropin.create({
+                authorization: 'sandbox_8hc4ttnw_8t2hkkd3nn7yqncp',
+                container: '#dropin-container'
+            }, function (createErr, instance) {
+                button.addEventListener('click', function () {
+                    instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
+                        $.get('{{ braintree:route name="payment.process" }}', {payload}, function (response) {
+                            if (response.success) {
+                                alert('Payment successfull!');
+                            } else {
+                                alert('Payment failed');
+                            }
+                        }, 'json');
+                    });
                 });
             });
-        });
-    </script>
-</body>
-</html>
+        </script>
+    </div>
+
+
+    <div class="butik-bg-gray-200 butik-hidden butik-items-center butik-w-1/2 md:butik-flex">
+        <div>
+            <div class="butik-flex butik-justify-center butik-mt-5">
+                {{ images limit="1" }}
+                <img class="butik-w-2/5 butik-rounded" src="/assets/{{ value }}">
+                {{ /images }}
+            </div>
+
+            <section class="butik-px-10">
+                <h3 class="butik-font-bold butik-block butik-mt-5 butik-text-3xl butik-text-center">{{ title }}</h3>
+
+                <hr class="butik-border-white butik-my-5">
+
+                <div class="butik-flex butik-my-3 butik-justify-between butik-max-w-sm butik-mx-auto">
+                    <span>Subtotal</span>
+                    <span>{{ butik:currency_symbol }} {{ base_price }}</span>
+                </div>
+
+                <div class="butik-flex butik-my-3 butik-justify-between butik-max-w-sm butik-mx-auto">
+                    <span>Shipping</span>
+                    <span>{{ butik:currency_symbol }} 5,00</span>
+                </div>
+
+                <hr class="butik-border-white butik-my-5">
+
+                <div class="butik-flex butik-my-3 butik-justify-between butik-max-w-sm butik-mx-auto">
+                    <span>Total</span>
+                    <span class="butik-font-black">{{ butik:currency_symbol }} 1402,00</span>
+                </div>
+
+            </section>
+        </div>
+    </div>
+</div>
+
+
+
