@@ -2,6 +2,7 @@
 
 namespace Tests\Shop;
 
+use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
@@ -24,7 +25,26 @@ class ExpressCheckoutPaymentTestTest extends TestCase
         $this->assertStatamicTemplateIs('statamic-butik::web.checkout.express.payment', $route);
     }
 
-    // TODO: Check if item will be displayed correctly as well
+    /** @test */
+    public function the_product_information_will_be_displayed(){
+        $this->get(route('butik.checkout.express.payment', $this->product))
+            ->assertSee($this->product->title)
+            ->assertSee($this->product->base_price);
+    }
+
+    /** @test */
+    public function customer_data_will_be_displayed_inside_the_view() {
+        $customer = $this->createUserData();
+        Session::put('butik.customer', $customer);
+
+        $this->get(route('butik.checkout.express.payment', $this->product))
+            ->assertSee($customer['name'])
+            ->assertSee($customer['mail'])
+            ->assertSee($customer['address_1'])
+            ->assertSee($customer['address_2'])
+            ->assertSee($customer['city'])
+            ->assertSee($customer['zip']);
+    }
 
     private function createUserData($key = null, $value = null) {
         $data = [

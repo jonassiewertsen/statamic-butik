@@ -27,10 +27,14 @@ class ExpressCheckoutController extends Controller
     }
 
     public function payment(Product $product) {
+        // In case a customer goes back to edit, we will load his previews information
+        $formData = session('butik.customer');
+        $viewData = array_merge($product->toArray(), $formData);
+
         return (new \Statamic\View\View())
             ->layout(config('statamic-butik.frontend.layout.checkout.express.payment'))
             ->template(config('statamic-butik.frontend.template.checkout.express.payment'))
-            ->with($product->toArray());
+            ->with($viewData);
     }
 
     private function rules() {

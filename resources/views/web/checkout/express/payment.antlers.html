@@ -27,11 +27,23 @@
 <div class="butik-flex butik-flex-col-reverse lg:butik-flex-row butik-px-5 lg:butik-px-0  butik-mb-20 butik-mt-6">
     <div class="butik-w-full lg:butik-ml-5 lg:butik-px-0 lg:butik-w-1/2 xl:butik-ml-0">
 
-        <h3 class="butik-hidden lg:butik-block butik-font-bold">Choose your payment method</h3>
+        <div class="butik-bordeer butik-border butik-border-gray-500 butik-px-6 butik-py-3 butik-mt-8 lg:butik-mt-0 butik-rounded-md">
+            <h3 class="butik-font-bold">Ship to</h3>
+            <div>{{ name }}</div>
+            <div class="butik-mb-2">{{ mail }}</div>
+
+            <div>{{ address_1 }}</div>
+            {{if address_2 }}
+                <div>{{ address_2 }}</div>
+            {{ /if }}
+            <div>{{ city }}</div>
+            <div>{{ zip }}</div>
+            <div>{{ country }}</div>
+        </div>
 
         <div id="dropin-container" style="min-height: 200px;"></div>
         <button id="submit-button" class="butik-block butik-w-full butik-mt-3 butik-bg-gray-900 butik-mt-6 butik-py-2 butik-rounded butik-text-center butik-text-white butik-text-xl hover:butik-bg-gray-800">
-            Pay now & Enjoy
+            Pay now & Confirm
         </button>
         <script>
             var button = document.querySelector('#submit-button');
