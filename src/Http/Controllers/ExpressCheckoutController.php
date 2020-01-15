@@ -9,12 +9,9 @@ use Jonassiewertsen\StatamicButik\Http\Models\Product;
 class ExpressCheckoutController extends Controller
 {
     public function delivery(Product $product) {
-        $layout = config('statamic-butik.frontend.layout.checkout.express.delivery', 'statamic-butik::web.layouts.express-checkout');
-        $template = config('statamic-butik.frontend.template.checkout.express.delivery', 'statamic-butik::web.checkout.express.delivery');
-
        return (new \Statamic\View\View())
-           ->layout($layout)
-           ->template($template)
+           ->layout(config('statamic-butik.frontend.layout.checkout.express.delivery'))
+           ->template(config('statamic-butik.frontend.template.checkout.express.delivery'))
            ->with($product->toArray());
     }
 
@@ -24,12 +21,9 @@ class ExpressCheckoutController extends Controller
     }
 
     public function payment(Product $product) {
-        $layout = config('statamic-butik.frontend.layout.checkout.express.payment', 'statamic-butik::web.layouts.express-checkout');
-        $template = config('statamic-butik.frontend.template.checkout.express.payment', 'statamic-butik::web.checkout.express.payment');
-
         return (new \Statamic\View\View())
-            ->layout($layout)
-            ->template($template)
+            ->layout(config('statamic-butik.frontend.layout.checkout.express.payment'))
+            ->template(config('statamic-butik.frontend.template.checkout.express.payment'))
             ->with($product->toArray());
     }
 

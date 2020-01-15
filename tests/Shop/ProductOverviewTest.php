@@ -10,6 +10,7 @@ class ProductOverviewTest extends TestCase
     /** @test */
     public function The_shop_overview_page_does_exist()
     {
+        $this->withoutExceptionHandling();
         create(Product::class, [], 10);
         $this->get(route('butik.shop'))->assertOk();
 
