@@ -22,13 +22,17 @@
 
 <hr class="butik-mb-5 butik-mt-8">
 
-<h1 class="butik-block butik-mb-10 md:butik-mb-20 butik-text-center butik-font-bold butik-text-xl">Express Checkout</h1>
+<h1 class="butik-block butik-mb-6 butik-text-center butik-font-bold butik-text-xl">Express Checkout</h1>
 
-<div class="butik-mt-6 butik-mb-20 md:butik-flex">
-    <div class="butik-w-1/2">
-        <h2>Choose your payment method</h2>
+<div class="butik-flex butik-flex-col-reverse lg:butik-flex-row butik-px-5 lg:butik-px-0  butik-mb-20 butik-mt-6">
+    <div class="butik-w-full lg:butik-ml-5 lg:butik-px-0 lg:butik-w-1/2 xl:butik-ml-0">
+
+        <h3 class="butik-hidden lg:butik-block butik-font-bold">Choose your payment method</h3>
+
         <div id="dropin-container" style="min-height: 200px;"></div>
-        <button id="submit-button">Request payment method</button>
+        <button id="submit-button" class="butik-block butik-w-full butik-mt-3 butik-bg-gray-900 butik-mt-6 butik-py-2 butik-rounded butik-text-center butik-text-white butik-text-xl hover:butik-bg-gray-800">
+            Pay now & Enjoy
+        </button>
         <script>
             var button = document.querySelector('#submit-button');
 
@@ -52,8 +56,8 @@
     </div>
 
 
-    <div class="butik-bg-gray-200 butik-hidden butik-items-center butik-w-1/2 md:butik-flex">
-        <div>
+    <div class="butik-flex butik-items-center lg:butik-pl-10 butik-w-full lg:butik-w-1/2">
+        <div class="butik-bg-gray-200 butik-rounded butik-py-6 lg:butik-py-12">
             <div class="butik-flex butik-justify-center butik-mt-5">
                 {{ images limit="1" }}
                 <img class="butik-w-2/5 butik-rounded" src="/assets/{{ value }}">

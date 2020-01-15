@@ -20,8 +20,10 @@
 <h1 class="butik-block butik-mb-10 md:butik-mb-20 butik-text-center butik-font-bold butik-text-xl">Express Checkout</h1>
 
 <div class="butik-mt-6 butik-mb-20 md:butik-flex">
-    <form class="butik-px-5 butik-w-full md:butik-w-1/2">
-        <h2 class="butik-text-md butik-uppercase">Your Information</h2>
+    <form method="post" action="#heading" class="butik-px-5 butik-w-full md:butik-w-1/2">
+        <h2 class="butik-text-md butik-uppercase" id="heading">Your Information</h2>
+
+        {{ csrf_field }}
 
         <label for="name" class="butik-block butik-my-3">
             <div class="butik-font-bold butik-text-g butik-text-xs">Name</div>
@@ -34,7 +36,7 @@
         </label>
 
         <div class="butik-mb-6 butik-text-gray-600 butik-text-xs">
-            We will <span class="butik-underline">not</span> ask you to create an account.
+            We will <span class="butik-underline">not</span> ask you to create an account. Nobody likes doing that ...
         </div>
 
         <h2 class="butik-text-md butik-uppercase">Delivery Address</h2>
@@ -71,7 +73,7 @@
         </div>
     </form>
 
-    <div class="butik-bg-gray-200 butik-hidden butik-items-center butik-w-1/2 md:butik-flex">
+    <div class="butik-bg-gray-200 butik-rounded butik-hidden butik-items-center butik-w-1/2 md:butik-flex">
         <div>
             <div class="butik-flex butik-justify-center butik-mt-5">
                 {{ images limit="1" }}
