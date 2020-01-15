@@ -25,14 +25,19 @@
 
         {{ csrf_field }}
 
+        <!-- TODO: cleaner styling after issue has been solved -->
+        <!-- https://github.com/statamic/cms/issues/1213 -->
+
         <label for="name" class="butik-block butik-my-3">
             <div class="butik-font-bold butik-text-g butik-text-xs">Name</div>
             <input id="name" name="name" type="text" autofocus class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
+            <span class="butik-text-red-600 butik-text-xs">{{ error:name }}</span>
         </label>
 
         <label for="mail" class="butik-block butik-my-3">
             <div class="butik-font-bold butik-text-g butik-text-xs">Mail</div>
             <input id="mail" name="mail" type="mail" class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
+            <span class="butik-text-red-600 butik-text-xs">{{ error:mail }}</span>
         </label>
 
         <div class="butik-mb-6 butik-text-gray-600 butik-text-xs">
@@ -44,26 +49,31 @@
         <label for="country" class="butik-block butik-my-3 butik-cursor-not-allowed">
             <div class="butik-font-bold butik-text-g butik-text-xs">Country</div>
             <input id="country" name="country" type="text" readonly value="Germaninien" class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
+            <span class="butik-text-red-600 butik-text-xs">{{ error:country }}</span>
         </label>
 
         <label for="address_1" class="butik-block butik-my-3">
             <div class="butik-font-bold butik-text-g butik-text-xs">Address 1</div>
-            <input id="address_1" name="addres_1" type="text" readonly class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
+            <input id="address_1" name="address_1" type="text" readonly class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
+            <span class="butik-text-red-600 butik-text-xs">{{ error:address_1 }}</span>
         </label>
 
         <label for="address_2" class="butik-block butik-my-3">
             <div class="butik-font-bold butik-text-g butik-text-xs">Address 2</div>
-            <input id="address_2" name="addres_1" type="text" readonly class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
+            <input id="address_2" name="address_1" type="text" readonly class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
+            <span class="butik-text-red-600 butik-text-xs">{{ error:address_2 }}</span>
         </label>
 
         <label for="city" class="butik-block butik-my-3">
             <div class="butik-font-bold butik-text-g butik-text-xs">City</div>
             <input id="city" name="city" type="text" readonly class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
+            <span class="butik-text-red-600 butik-text-xs">{{ error:city }}</span>
         </label>
 
         <label for="zip" class="butik-block butik-my-3">
             <div class="butik-font-bold butik-text-g butik-text-xs">Zip</div>
             <input id="zip" name="zip" type="text" readonly class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
+            <span class="butik-text-red-600 butik-text-xs">{{ error:zip }}</span>
         </label>
 
         <div class="butik-flex butik-justify-end flex">
@@ -77,7 +87,7 @@
         <div>
             <div class="butik-flex butik-justify-center butik-mt-5">
                 {{ images limit="1" }}
-                    <img class="butik-w-2/5 butik-rounded" src="/assets/{{ value }}">
+                <img class="butik-w-2/5 butik-rounded" src="/assets/{{ value }}">
                 {{ /images }}
             </div>
 

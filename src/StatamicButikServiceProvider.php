@@ -4,6 +4,7 @@ namespace Jonassiewertsen\StatamicButik;
 
 use Statamic\Facades\Nav;
 use Statamic\Providers\AddonServiceProvider;
+use Statamic\Tags\Errors;
 
 class StatamicButikServiceProvider extends AddonServiceProvider
 {
@@ -14,6 +15,8 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
     protected $tags = [
         \Jonassiewertsen\StatamicButik\Http\Tags\Butik::class,
+        \Jonassiewertsen\StatamicButik\Http\Tags\Braintree::class,
+        \Jonassiewertsen\StatamicButik\Http\Tags\Error::class,
     ];
 
     protected $scripts = [
