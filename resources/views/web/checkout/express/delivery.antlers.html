@@ -27,13 +27,13 @@
 
         <label for="name" class="butik-block butik-my-3">
             <div class="butik-font-bold butik-text-g butik-text-xs">Name</div>
-            <input id="name" name="name" type="text" autofocus class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
+            <input id="name" name="name" type="text" value="{{ old:name ?? name }}" autofocus class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
             {{ if {error:name} }}<span class="butik-text-red-600 butik-text-xs">{{ error:name }}</span>{{ /if }}
         </label>
 
         <label for="mail" class="butik-block butik-my-3">
             <div class="butik-font-bold butik-text-g butik-text-xs">Mail</div>
-            <input id="mail" name="mail" type="mail" class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
+            <input id="mail" name="mail" type="mail" value="{{ old:mail ?? mail }}" class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
             {{ if {error:mail} }}<span class="butik-text-red-600 butik-text-xs">{{ error:mail }}</span>{{ /if }}
         </label>
 
@@ -51,25 +51,25 @@
 
         <label for="address_1" class="butik-block butik-my-3">
             <div class="butik-font-bold butik-text-g butik-text-xs">Address 1</div>
-            <input id="address_1" name="address_1" type="text" class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
+            <input id="address_1" name="address_1" type="text" value="{{ old:address_1 ?? address_1 }}" class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
             {{ if {error:address_1} }}<span class="butik-text-red-600 butik-text-xs">{{ error:address_1 }}</span>{{ /if }}
         </label>
 
         <label for="address_2" class="butik-block butik-my-3">
             <div class="butik-font-bold butik-text-g butik-text-xs">Address 2</div>
-            <input id="address_2" name="address_1" type="text" class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
+            <input id="address_2" name="address_2" type="text" value="{{ old:address_2 ?? address_2 }}" class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
             {{ if {error:addres_2} }}<span class="butik-text-red-600 butik-text-xs">{{ error:addres_2 }}</span>{{ /if }}
         </label>
 
         <label for="city" class="butik-block butik-my-3">
             <div class="butik-font-bold butik-text-g butik-text-xs">City</div>
-            <input id="city" name="city" type="text" class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
+            <input id="city" name="city" type="text" value="{{ old:city ?? city }}" class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
             {{ if {error:city} }}<span class="butik-text-red-600 butik-text-xs">{{ error:city }}</span>{{ /if }}
         </label>
 
         <label for="zip" class="butik-block butik-my-3">
             <div class="butik-font-bold butik-text-g butik-text-xs">Zip</div>
-            <input id="zip" name="zip" type="text" class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
+            <input id="zip" name="zip" type="text" value="{{ old:zip ?? zip }}" class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
             {{ if {error:zip} }}<span class="butik-text-red-600 butik-text-xs">{{ error:zip }}</span>{{ /if }}
         </label>
 

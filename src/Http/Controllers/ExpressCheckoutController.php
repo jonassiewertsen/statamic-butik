@@ -2,23 +2,28 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Controllers;
 
-use Braintree_ClientToken;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 
 class ExpressCheckoutController extends Controller
 {
     public function delivery(Product $product) {
+        // In case a customer goes back to edit, we will load his previews information
+        $formData = session('butik.customer');
+        $viewData = array_merge($product->toArray(), $formData);
+
        return (new \Statamic\View\View())
            ->layout(config('statamic-butik.frontend.layout.checkout.express.delivery'))
            ->template(config('statamic-butik.frontend.template.checkout.express.delivery'))
-           ->with($product->toArray());
+           ->with($viewData);
     }
 
-    public function customerData(Product $product) {
+    public function saveCustomerData(Product $product) {
         $validatedData = request()->validate($this->rules());
 
         Session::put('butik.customer', $validatedData);
+
+        return redirect()->route('butik.checkout.express.payment', $product);
     }
 
     public function payment(Product $product) {

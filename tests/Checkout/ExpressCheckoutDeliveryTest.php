@@ -2,6 +2,7 @@
 
 namespace Tests\Shop;
 
+use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
@@ -175,6 +176,36 @@ class ExpressCheckoutDeliveryTest extends TestCase
     public function after_a_valid_form_the_user_will_be_redirected_to_the_payment_page() {
         $this->post(route('butik.checkout.express.delivery', $this->product), $this->createUserData())
             ->assertRedirect(route('butik.checkout.express.payment', $this->product));
+    }
+
+    /** @test */
+    public function existing_data_from_the_session_will_be_passed_to_the_delivery_view() {
+        Session::put('butik.customer', $this->createUserData());
+        $page = $this->get(route('butik.checkout.express.delivery', $this->product))->getOriginalContent()->data();
+        $session = session('butik.customer');
+
+        $this->assertEquals($page['name'], $session['name']);
+        $this->assertEquals($page['country'], $session['country']);
+        $this->assertEquals($page['mail'], $session['mail']);
+        $this->assertEquals($page['address_1'], $session['address_1']);
+        $this->assertEquals($page['address_2'], $session['address_2']);
+        $this->assertEquals($page['city'], $session['city']);
+        $this->assertEquals($page['zip'], $session['zip']);
+    }
+
+    /** @test */
+    public function existing_data_will_be_displayed_in_the_form() {
+        $customer = $this->createUserData();
+        Session::put('butik.customer', $customer);
+
+        $this->get(route('butik.checkout.express.delivery', $this->product))
+            ->assertSee($customer['name'])
+            ->assertSee($customer['country'])
+            ->assertSee($customer['mail'])
+            ->assertSee($customer['address_1'])
+            ->assertSee($customer['addres_2'])
+            ->assertSee($customer['city'])
+            ->assertSee($customer['zip']);
     }
 
     private function createUserData($key = null, $value = null) {
