@@ -22,7 +22,7 @@
         }, function (createErr, instance) {
             button.addEventListener('click', function () {
                 instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
-                    $.get('{{ route('butik.payment.process') }}', {payload}, function (response) {
+                    $.get('{{ braintree:route name="payment.process" }}', {payload}, function (response) {
                         if (response.success) {
                             alert('Payment successfull!');
                         } else {
