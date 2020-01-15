@@ -89,30 +89,30 @@ class ExpressCheckoutDeliveryTest extends TestCase
 
     /** @test */
     public function address_line_1_is_required() {
-        $data = $this->createUserData('address_line_1', '');
+        $data = $this->createUserData('address_1', '');
         $this->post(route('butik.checkout.express.delivery', $this->product), $data)
-            ->assertSessionHasErrors('address_line_1');
+            ->assertSessionHasErrors('address_1');
     }
 
     /** @test */
     public function address_line_1_cant_be_to_long() {
-        $data = $this->createUserData('address_line_1', str_repeat('a', 81));
+        $data = $this->createUserData('address_1', str_repeat('a', 81));
         $this->post(route('butik.checkout.express.delivery', $this->product), $data)
-            ->assertSessionHasErrors('address_line_1');
+            ->assertSessionHasErrors('address_1');
     }
 
     /** @test */
     public function address_line_2_is_optional() {
-        $data = $this->createUserData('address_line_2', '');
+        $data = $this->createUserData('address_2', '');
         $this->post(route('butik.checkout.express.delivery', $this->product), $data)
             ->assertSessionHasNoErrors();
     }
 
     /** @test */
     public function address_line_2_cant_be_to_long() {
-        $data = $this->createUserData('address_line_1', str_repeat('a', 81));
+        $data = $this->createUserData('address_2', str_repeat('a', 81));
         $this->post(route('butik.checkout.express.delivery', $this->product), $data)
-            ->assertSessionHasErrors('address_line_1');
+            ->assertSessionHasErrors('address_2');
     }
 
     /** @test */
@@ -182,8 +182,8 @@ class ExpressCheckoutDeliveryTest extends TestCase
             'country' => 'Germany',
             'name' => 'John Doe',
             'mail' => 'johndoe@mail.de',
-            'address_line_1' => 'Main Street 2',
-            'address_line_2' => '',
+            'address_1' => 'Main Street 2',
+            'address_2' => '',
             'city' => 'Flensburg',
             'state_region' => '',
             'zip' => '24579',
