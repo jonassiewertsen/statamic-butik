@@ -12,13 +12,15 @@ class ExpressCheckoutController extends Controller
         $product = $this->addingProductRoutes($product);
 
         // In case a customer goes back to edit, we will load his previews information
-        $formData = session('butik.customer');
-        $viewData = array_merge($product, $formData);
+        if (session()->has('butik.customer')) {
+            $formData = session('butik.customer');
+            $viewData = array_merge($formData, $product);
+        }
 
        return (new \Statamic\View\View())
            ->layout(config('statamic-butik.frontend.layout.checkout.express.delivery'))
            ->template(config('statamic-butik.frontend.template.checkout.express.delivery'))
-           ->with($viewData);
+           ->with($viewData ?? $product);
     }
 
     public function saveCustomerData(Product $product) {
@@ -34,13 +36,15 @@ class ExpressCheckoutController extends Controller
         $product = $this->addingProductRoutes($product);
 
         // In case a customer goes back to edit, we will load his previews information
-        $formData = session('butik.customer');
-        $viewData = array_merge($product, $formData);
+        if (session()->has('butik.customer')) {
+            $formData = session('butik.customer');
+            $viewData = array_merge($formData, $product);
+        }
 
         return (new \Statamic\View\View())
             ->layout(config('statamic-butik.frontend.layout.checkout.express.payment'))
             ->template(config('statamic-butik.frontend.template.checkout.express.payment'))
-            ->with($viewData);
+            ->with($viewData ?? $product);
     }
 
     private function rules() {

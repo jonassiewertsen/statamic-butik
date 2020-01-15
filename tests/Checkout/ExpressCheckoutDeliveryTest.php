@@ -19,6 +19,7 @@ class ExpressCheckoutDeliveryTest extends TestCase
     /** @test */
     public function The_express_delivery_page_does_exist()
     {
+        $this->withoutExceptionHandling();
         $route = route('butik.checkout.express.delivery', $this->product);
 
         $this->assertStatamicLayoutIs('statamic-butik::web.layouts.express-checkout', $route);
@@ -35,7 +36,6 @@ class ExpressCheckoutDeliveryTest extends TestCase
     /** @test */
     public function user_data_will_be_saved_inside_the_session() {
         $this->post(route('butik.checkout.express.delivery', $this->product), $this->createUserData())
-            ->assertOk()
             ->assertSessionHas('butik.customer');
     }
 
