@@ -8,6 +8,7 @@ use Jonassiewertsen\StatamicButik\Http\Models\Product;
 class ExpressCheckoutController extends Controller
 {
     public function delivery(Product $product) {
+
         // Adding checkout routes to the product
         $product = $this->addingProductRoutes($product);
 
@@ -25,7 +26,6 @@ class ExpressCheckoutController extends Controller
 
     public function saveCustomerData(Product $product) {
         $validatedData = request()->validate($this->rules());
-
 
         Session::put('butik.customer', $validatedData);
 
