@@ -2,7 +2,6 @@
 
 namespace Tests\Shop;
 
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
@@ -17,6 +16,7 @@ class ReceiptCheckoutPaymentTest extends TestCase
 
         $this->product = create(Product::class)->first();
 
+        // Setting up a dummy transaction
         Session::put('butik.transaction', collect(
             [
                 'success'         => true,
@@ -27,6 +27,7 @@ class ReceiptCheckoutPaymentTest extends TestCase
                 'created_at'      => now(),
             ]));
 
+        // Setting up a dummy customer
         Session::put(
             'butik.customer', [
             'country'      => 'Germany',

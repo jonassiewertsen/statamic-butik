@@ -23,6 +23,7 @@ class BraintreeCheckoutTest extends TestCase
     /** @test */
     public function a_payment_can_be_accepted()
     {
+        $this->withoutExceptionHandling();
         $this->makePayment($this->accepted())->assertJsonFragment(['success' => true]);
     }
 
@@ -68,7 +69,6 @@ class BraintreeCheckoutTest extends TestCase
     private function makePayment($amount, $nonce = 'fake-valid-nonce')
     {
         $payload = ['payload' => ['nonce' => $nonce, 'amount' => $amount]];
-
         return $this->get(route('butik.payment.process', $payload));
     }
 
