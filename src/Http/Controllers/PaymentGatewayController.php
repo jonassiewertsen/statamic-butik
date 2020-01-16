@@ -26,15 +26,11 @@ class PaymentGatewayController extends Controller
         return response()->json($response);
     }
 
-    public function receipt()
-    {
-        // Do something
-    }
-
     private function saveTransactionInSession($response) {
         Session::put(
             'butik.transaction', collect(
             [
+                // TODO: save the product slug as well
                 'success'         => $response->success,
                 'id'              => $response->transaction->id,
                 'type'            => $response->transaction->type,

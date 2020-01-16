@@ -52,6 +52,27 @@ class ExpressCheckoutController extends Controller
             ->with($viewData ?? $product);
     }
 
+    public function receipt(Product $product) {
+        if ($this->transactionSuccessful()) {
+            return redirect($product->expressDeliveryUrl());
+        }
+//
+//        // Adding checkout routes to the product
+//        $product = $this->addingProductRoutes($product);
+//
+//        // In case a customer goes back to edit, we will load his previews information
+//        if (session()->has('butik.customer')) {
+//            $formData = session('butik.customer');
+//            $viewData = array_merge($formData, $product);
+//        }
+
+        // TODO: Product still needed here? What about the view data?
+        return (new \Statamic\View\View())
+            ->layout(config('statamic-butik.frontend.layout.checkout.express.receipt'))
+            ->template(config('statamic-butik.frontend.template.checkout.express.receipt'))
+            ->with($viewData ?? $product->toArray());
+    }
+
     private function rules() {
         return [
             'country'           => 'required|max:50',
@@ -83,5 +104,10 @@ class ExpressCheckoutController extends Controller
         }
 
         return true;
+    }
+
+    private function transactionSuccessful() {
+        return ! session()->has('butik.transaction.success')
+        || ! session()->get('butik.transaction.success') === true;
     }
 }
