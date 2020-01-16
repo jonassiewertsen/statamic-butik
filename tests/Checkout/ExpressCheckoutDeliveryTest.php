@@ -34,6 +34,27 @@ class ExpressCheckoutDeliveryTest extends TestCase
     }
 
     /** @test */
+    public function translations_will_be_displayed(){
+        $this->get(route('butik.checkout.express.delivery', $this->product))
+            ->assertSee('Express Checkout')
+            ->assertSee('Subtotal')
+            ->assertSee('Shipping')
+            ->assertSee('Total')
+            ->assertSee('To payment')
+            ->assertSee('Your Information')
+            ->assertSee('Delivery Address')
+            ->assertSee('We will <span class="butik-underline">not</span> ask you to create an account. Nobody likes doing that ...')
+            ->assertSee('Name')
+            ->assertSee('Mail')
+            ->assertSee('Country')
+            ->assertSee('Address 1')
+            ->assertSee('Address 2')
+            ->assertSee('City')
+            ->assertSee('Zip');
+    }
+
+
+    /** @test */
     public function user_data_will_be_saved_inside_the_session() {
         $this->post(route('butik.checkout.express.delivery', $this->product), $this->createUserData())
             ->assertSessionHas('butik.customer');
