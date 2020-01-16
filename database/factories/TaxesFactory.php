@@ -1,11 +1,11 @@
 <?php
 
 use Faker\Generator as Faker;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 
-$factory->define(Product::class, function (Faker $faker) {
+$factory->define(Tax::class, function (Faker $faker) {
     return [
         'title'         => $faker->name,
-        'percentage'    => $faker->numberBetween(0, 25),
+        'price'         => $faker->numberBetween(0, 12),
     ];
 });
