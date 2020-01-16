@@ -12,11 +12,17 @@ return [
     */
     'express_checkout' => 'Express Checkout',
 
+    'delivery'       => 'Delivery',
+    'review_payment' => 'Review & Payment',
+    'receipt'        => 'Receipt',
+
     'subtotal'  => 'Subtotal',
     'shipping'  => 'Shipping',
+    'ship_to'  => 'Ship to',
     'total'     => 'Total',
 
     'to_payment' => 'To payment',
+    'pay_now'    => 'Pay now & confirm',
 
     'your_information' => 'Your Information',
     'delivery_address' => 'Delivery Address',

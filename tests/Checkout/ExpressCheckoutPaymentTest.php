@@ -26,6 +26,27 @@ class ExpressCheckoutPaymentTestTest extends TestCase
     }
 
     /** @test */
+    public function translations_will_be_displayed(){
+        Session::put('butik.customer', $this->createUserData());
+
+        $this->get(route('butik.checkout.express.payment', $this->product))
+            ->assertSee('Delivery')
+            ->assertSee('Review & Payment')
+            ->assertSee('Receipt')
+            ->assertSee('Subtotal')
+            ->assertSee('Shipping')
+            ->assertSee('Total')
+            ->assertSee('Ship to')
+            ->assertSee('Pay now & confirm')
+            ->assertSee('Name')
+            ->assertSee('Mail')
+            ->assertSee('Country')
+            ->assertSee('Address 1')
+            ->assertSee('City')
+            ->assertSee('Zip');
+    }
+
+    /** @test */
     public function the_payment_page_will_redirect_back_without_a_mail() {
         $customer = $this->createUserData('mail', '');
         Session::put('butik.customer', $customer);

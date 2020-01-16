@@ -36,6 +36,9 @@ class ExpressCheckoutDeliveryTest extends TestCase
     /** @test */
     public function translations_will_be_displayed(){
         $this->get(route('butik.checkout.express.delivery', $this->product))
+            ->assertSee('Delivery')
+            ->assertSee('Review & Payment')
+            ->assertSee('Receipt')
             ->assertSee('Express Checkout')
             ->assertSee('Subtotal')
             ->assertSee('Shipping')
@@ -52,7 +55,6 @@ class ExpressCheckoutDeliveryTest extends TestCase
             ->assertSee('City')
             ->assertSee('Zip');
     }
-
 
     /** @test */
     public function user_data_will_be_saved_inside_the_session() {
