@@ -37,7 +37,6 @@ class BraintreeCheckoutTest extends TestCase
     /** @test */
     public function a_payment_can_be_accepted()
     {
-        $this->withoutExceptionHandling();
         $this->makePayment($this->accepted())->assertJsonFragment(['success' => true]);
     }
 
@@ -64,11 +63,6 @@ class BraintreeCheckoutTest extends TestCase
             ->assertSessionHas('butik.transaction.customer', $this->customer);
     }
 
-    //    /** @test */
-    //    public function redirected_after_a_successfully_payment() {
-    //        $this->makePayment($this->accepted())
-    //            ->assertRedirect(route('butik.payment.receipt'));
-    //    }
     /** @test */
     public function a_payment_can_be_declined()
     {
