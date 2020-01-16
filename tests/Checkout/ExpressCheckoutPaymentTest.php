@@ -17,9 +17,64 @@ class ExpressCheckoutPaymentTestTest extends TestCase
     }
 
     /** @test */
+    public function the_payment_page_will_redirect_back_without_a_name() {
+        $customer = $this->createUserData('name', '');
+        Session::put('butik.customer', $customer);
+
+        $this->get($this->product->expressPaymentUrl())
+           ->assertRedirect($this->product->expressDeliveryUrl());
+    }
+
+    /** @test */
+    public function the_payment_page_will_redirect_back_without_a_mail() {
+        $customer = $this->createUserData('mail', '');
+        Session::put('butik.customer', $customer);
+
+        $this->get($this->product->expressPaymentUrl())
+            ->assertRedirect($this->product->expressDeliveryUrl());
+    }
+
+    /** @test */
+    public function the_payment_page_will_redirect_back_without_a_country() {
+        $customer = $this->createUserData('country', '');
+        Session::put('butik.customer', $customer);
+
+        $this->get($this->product->expressPaymentUrl())
+            ->assertRedirect($this->product->expressDeliveryUrl());
+    }
+
+    /** @test */
+    public function the_payment_page_will_redirect_back_without_a_address_1() {
+        $customer = $this->createUserData('address_1', '');
+        Session::put('butik.customer', $customer);
+
+        $this->get($this->product->expressPaymentUrl())
+            ->assertRedirect($this->product->expressDeliveryUrl());
+    }
+
+    /** @test */
+    public function the_payment_page_will_redirect_back_without_a_city() {
+        $customer = $this->createUserData('city', '');
+        Session::put('butik.customer', $customer);
+
+        $this->get($this->product->expressPaymentUrl())
+            ->assertRedirect($this->product->expressDeliveryUrl());
+    }
+
+    /** @test */
+    public function the_payment_page_will_redirect_back_without_a_zip() {
+        $customer = $this->createUserData('zip', '');
+        Session::put('butik.customer', $customer);
+
+        $this->get($this->product->expressPaymentUrl())
+            ->assertRedirect($this->product->expressDeliveryUrl());
+    }
+
+    /** @test */
     public function The_express_payment_page_does_exist()
     {
-        $route = route('butik.checkout.express.payment', $this->product);
+        Session::put('butik.customer', $this->createUserData());
+        $route = $this->product->expressPaymentUrl();
 
         $this->assertStatamicLayoutIs('statamic-butik::web.layouts.express-checkout', $route);
         $this->assertStatamicTemplateIs('statamic-butik::web.checkout.express.payment', $route);
@@ -27,7 +82,9 @@ class ExpressCheckoutPaymentTestTest extends TestCase
 
     /** @test */
     public function the_product_information_will_be_displayed(){
-        $this->get(route('butik.checkout.express.payment', $this->product))
+        Session::put('butik.customer', $this->createUserData());
+
+        $this->get($this->product->expressPaymentUrl())
             ->assertSee($this->product->title)
             ->assertSee($this->product->base_price);
     }

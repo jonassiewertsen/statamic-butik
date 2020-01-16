@@ -26,12 +26,17 @@ class ExpressCheckoutController extends Controller
     public function saveCustomerData(Product $product) {
         $validatedData = request()->validate($this->rules());
 
+
         Session::put('butik.customer', $validatedData);
 
         return redirect()->route('butik.checkout.express.payment', $product);
     }
 
     public function payment(Product $product) {
+        if (! $this->customerDataComplete()) {
+            return redirect($product->expressDeliveryUrl());
+        }
+
         // Adding checkout routes to the product
         $product = $this->addingProductRoutes($product);
 
@@ -59,5 +64,24 @@ class ExpressCheckoutController extends Controller
             'zip'               => 'required|max:20',
             'phone'             => 'nullable|max:50',
         ];
+    }
+
+    private function customerDataComplete() {
+        if (! session()->has('butik.customer')) {
+            return false;
+        }
+
+        $session = session()->get('butik.customer');
+
+        $keys = collect(['name', 'mail', 'country', 'address_1', 'city', 'zip']);
+
+        foreach ($keys as $key) {
+            // Return false in case one of the keys does not exist inside the session data
+            if (empty($session[$key])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
