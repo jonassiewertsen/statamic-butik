@@ -30,7 +30,7 @@ class BraintreePaymentGateway extends Controller implements PaymentGatewayInterf
         // TODO: What THE Fu .... get it done!
 
         $response = $this->braintree->transaction()->sale([
-            'amount' => $amount,
+            'amount' => 2000,
             'paymentMethodNonce' => $nonce,
             'options' => [ 'submitForSettlement' => true ]
         ]);
