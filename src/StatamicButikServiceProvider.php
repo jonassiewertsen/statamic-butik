@@ -89,9 +89,15 @@ class StatamicButikServiceProvider extends AddonServiceProvider
                 ->route('butik.products.index')
                 ->icon('tags');
 
-            // Orders
-//            $nav->create('Orders')
-//                ->section('Butik');
+            // Settings
+            $nav->create('Settings')
+                ->section('Butik')
+                ->route('butik.taxes.store')
+                ->icon('settings-slider')
+                ->children([
+                   'Taxes'    => cp_route(''),
+                   'Shipping' => cp_route(''),
+               ]);
         });
     }
 

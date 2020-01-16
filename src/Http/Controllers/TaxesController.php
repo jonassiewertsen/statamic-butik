@@ -4,7 +4,6 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Jonassiewertsen\StatamicButik\Blueprints\TaxBlueprint;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Statamic\Contracts\Auth\User;
 use Statamic\CP\Column;
@@ -15,18 +14,18 @@ class TaxesController extends Controller
     // TODO: !
 //    public function index() {
 //        // TODO: Do not use all !!!
-//        $products = Product::all()->filter(function ($collection) {
+//        $taxes = Tax::all()->filter(function ($collection) {
 //            return true;
 //            // TODO: Add permissions
 //            //return User::current()->can('view', $collection);
-//        })->map(function ($product) {
+//        })->map(function ($tax) {
 //            return [
-//                'title' => $product->title,
-//                'slug' => $product->slug,
-//                'images' => $product->images[0] ?? null,
-//                'description' => $product->description,
-//                'base_price' => $product->base_price_with_currency_symbol,
-//                'edit_url' => $product->editUrl(),
+//                'title' => $tax->title,
+//                'slug' => $tax->slug,
+//                'images' => $tax->images[0] ?? null,
+//                'description' => $tax->description,
+//                'base_price' => $tax->base_price_with_currency_symbol,
+//                'edit_url' => $tax->editUrl(),
 //
 //                // TODO: Add permissions
 //                // 'deleteable' => User::current()->can('delete', $collection)
@@ -35,8 +34,8 @@ class TaxesController extends Controller
 //            ];
 //        })->values();
 //
-//        return view('statamic-butik::cp.products.index', [
-//            'products' => $products,
+//        return view('statamic-butik::cp.Taxs.index', [
+//            'products' => $taxes,
 //            'columns' => [
 //                Column::make('title')->label(__('statamic-butik::product.form.title')),
 //                Column::make('base_price')->label(__('statamic-butik::product.form.base_price')),
@@ -52,7 +51,7 @@ class TaxesController extends Controller
     // TODO: !
 //    public function create()
 //    {
-//        $blueprint = new ProductBlueprint();
+//        $blueprint = new TaxBlueprint();
 //        $fields = $blueprint()->fields()->preProcess();
 //
 //        return view('statamic-butik::cp.products.create', [
@@ -72,9 +71,9 @@ class TaxesController extends Controller
     }
 
     // TODO: !
-//    public function edit(Product $product) {
-//        $values = $product->toArray();
-//        $blueprint = new ProductBlueprint();
+//    public function edit(Product $tax) {
+//        $values = $tax->toArray();
+//        $blueprint = new TaxBlueprint();
 //        $fields = $blueprint()->fields()->addValues($values)->preProcess();
 //
 //        return view('statamic-butik::cp.products.edit', [
@@ -83,17 +82,18 @@ class TaxesController extends Controller
 //            'meta'      => $fields->meta(),
 //        ]);
 //    }
-//    public function update(Request $request, Product $product) {
-//        $blueprint = new ProductBlueprint();
-//        $fields = $blueprint()->fields()->addValues($request->all());
-//        $fields->validate();
-//        $values = $fields->process()->values();
-//        $product->update($values->toArray());
-//    }
-//
-//    public function destroy(Product $product)
-//    {
-//        // TODO: Add Permissions
-//        $product->delete();
-//    }
+
+    public function update(Request $request, Tax $tax) {
+        $blueprint = new TaxBlueprint();
+        $fields = $blueprint()->fields()->addValues($request->all());
+        $fields->validate();
+        $values = $fields->process()->values();
+        $tax->update($values->toArray());
+    }
+
+    public function destroy(Tax $tax)
+    {
+        // TODO: Add Permissions
+        $tax->delete();
+    }
 }
