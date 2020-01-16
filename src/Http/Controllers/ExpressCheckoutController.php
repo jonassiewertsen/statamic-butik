@@ -99,9 +99,8 @@ class ExpressCheckoutController extends Controller
 
     private function transactionDataComplete() {
         $keys = ['success', 'id', 'type', 'currencyIsoCode', 'amount', 'created_at', 'customer'];
-
         foreach ($keys as $key) {
-            if (session()->has("butik.transaction.{$key}")) {
+            if (! session()->has("butik.transaction.{$key}")) {
                 return false;
             }
         }

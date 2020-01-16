@@ -2,6 +2,7 @@
 
 namespace Jonassiewertsen\StatamicButik;
 
+use Jonassiewertsen\StatamicButik\Http\Middleware\DeletingTransactionData;
 use Statamic\Facades\Nav;
 use Statamic\Providers\AddonServiceProvider;
 use Statamic\Tags\Errors;
@@ -31,6 +32,8 @@ class StatamicButikServiceProvider extends AddonServiceProvider
          $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'statamic-butik');
          $this->loadViewsFrom(__DIR__.'/../resources/views', 'statamic-butik');
          $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+
+         $this->registerMiddleware();
          $this->createNavigation();
 
         if ($this->app->runningInConsole()) {
@@ -90,5 +93,10 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 //            $nav->create('Orders')
 //                ->section('Butik');
         });
+    }
+
+    private function registerMiddleware() {
+        $router = $this->app['router'];
+        $router->pushMiddlewareToGroup('web', DeletingTransactionData::class);
     }
 }

@@ -81,13 +81,35 @@ class ExpressCheckoutReceiptTest extends TestCase
     }
 
     /** @test */
-    public function redirect_without_a_existing_transaction_in_the_session_()
+    public function incomplete_transaction_data_will_throw_an_exception()
     {
         $this->withoutExceptionHandling();
         $this->expectException(TransactionSessionDataIncomplete::class);
-        Session::put('butik.transaction', ['success' => true ]);
+        Session::put('butik.transaction', [
+            'success' => true,
+            'created_at' => now(),
+        ]);
 
         $this->get($this->product->expressReceiptUrl());
+    }
+
+    /** @test */
+    public function middleware_will_delete_transaction_data_after_x_minutes()
+    {
+        $this->withoutExceptionHandling();
+        $created_at = config('statamic-butik.transaction_data_cache');
+        Session::put('butik.transaction', collect([
+            'success'         => true,
+            'id'              => str_random(8),
+            'type'            => 'sale',
+            'currencyIsoCode' => 'EUR',
+            'amount'          => 1233,
+            'created_at'      => now()->subMinutes($created_at),
+            'customer'        => []
+        ]));
+
+        $this->get($this->product->expressReceiptUrl())
+            ->assertSessionMissing('butik.transaction');
     }
 
     /** @test */

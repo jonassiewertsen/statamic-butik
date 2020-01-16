@@ -17,6 +17,7 @@ return [
             'private_key' => env('BRAINTREE_PRIVATE_KEY', null),
         ],
     ],
+
     /**
      * Define your shops currency
      */
@@ -25,6 +26,11 @@ return [
         'symbol'    => '€',
         'delimiter' => ',',
     ],
+    /**
+     * Value in Minutes
+     */
+    'transaction_data_cache' => 2,
+
     /**
      * Define your own custom route name to view the Statamic Butik
      * on the front-end.

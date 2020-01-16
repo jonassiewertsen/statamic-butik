@@ -30,8 +30,7 @@ class PaymentGatewayController extends Controller
         $customer = session()->pull('butik.customer');
 
         Session::put(
-            'butik.transaction', collect(
-            [
+            'butik.transaction', collect([
                 // TODO: save the product slug as well
                 'success'         => $response->success,
                 'id'              => $response->transaction->id,
