@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Products;
+namespace Tests\CP;
 
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
-class DeleteTest extends TestCase
+class ProductDeleteTest extends TestCase
 {
     /** @test */
     public function A_product_can_be_deleted()

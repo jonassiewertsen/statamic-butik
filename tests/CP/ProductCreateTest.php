@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Products;
+namespace Tests\CP;
 
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
-class CreateTest extends TestCase
+class ProductCreateTest extends TestCase
 {
     public function setUp(): void {
         parent::setUp();
