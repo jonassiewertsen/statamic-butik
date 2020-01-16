@@ -9,6 +9,7 @@ use Jonassiewertsen\StatamicButik\Tests\TestCase;
 class ReceiptCheckoutPaymentTest extends TestCase
 {
     protected $product;
+    protected $customer;
 
     public function setUp(): void
     {
@@ -28,8 +29,7 @@ class ReceiptCheckoutPaymentTest extends TestCase
             ]));
 
         // Setting up a dummy customer
-        Session::put(
-            'butik.customer', [
+        $this->customer = [
             'country'      => 'Germany',
             'name'         => 'John Doe',
             'mail'         => 'johndoe@mail.de',
@@ -39,7 +39,8 @@ class ReceiptCheckoutPaymentTest extends TestCase
             'state_region' => '',
             'zip'          => '24579',
             'phone'        => '013643-23837',
-        ]);
+        ];
+        Session::put('butik.customer', $this->customer);
     }
 
     /** @test */

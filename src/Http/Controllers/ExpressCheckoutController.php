@@ -53,7 +53,7 @@ class ExpressCheckoutController extends Controller
     }
 
     public function receipt(Product $product) {
-        if ($this->transactionSuccessful()) {
+        if (! $this->transactionSuccessful()) {
             return redirect($product->expressDeliveryUrl());
         }
 //
@@ -107,7 +107,7 @@ class ExpressCheckoutController extends Controller
     }
 
     private function transactionSuccessful() {
-        return ! session()->has('butik.transaction.success')
-        || ! session()->get('butik.transaction.success') === true;
+        return session()->has('butik.transaction.success')
+        && session()->get('butik.transaction.success') === true;
     }
 }

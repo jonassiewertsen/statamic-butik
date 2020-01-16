@@ -27,6 +27,8 @@ class PaymentGatewayController extends Controller
     }
 
     private function saveTransactionInSession($response) {
+        $customer = session()->pull('butik.customer');
+
         Session::put(
             'butik.transaction', collect(
             [
@@ -37,6 +39,7 @@ class PaymentGatewayController extends Controller
                 'currencyIsoCode' => $response->transaction->currencyIsoCode,
                 'amount'          => $response->transaction->amount,
                 'created_at'      => Carbon::parse($response->transaction->createdAt),
+                'customer'        => $customer,
             ]));
     }
 }

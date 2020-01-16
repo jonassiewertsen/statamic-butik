@@ -18,6 +18,20 @@ class BraintreeCheckoutTest extends TestCase
         $this->app['config']->set($configPath.'merchant_id', '8t2hkkd3nn7yqncp');
         $this->app['config']->set($configPath.'public_key', 'j3txsgnhkx8q4cdp');
         $this->app['config']->set($configPath.'private_key', '020f0a4c1d7db142d33e40c04f9a4799');
+
+        // Setting up a dummy customer
+        $this->customer = [
+            'country'      => 'Germany',
+            'name'         => 'John Doe',
+            'mail'         => 'johndoe@mail.de',
+            'address_1'    => 'Main Street 2',
+            'address_2'    => '',
+            'city'         => 'Flensburg',
+            'state_region' => '',
+            'zip'          => '24579',
+            'phone'        => '013643-23837',
+        ];
+        Session::put('butik.customer', $this->customer);
     }
 
     /** @test */
@@ -39,6 +53,15 @@ class BraintreeCheckoutTest extends TestCase
         $this->assertEquals($session['currencyIsoCode'], $response->transaction->currencyIsoCode);
         $this->assertEquals($session['amount'], $response->transaction->amount);
         $this->assertEquals($session['created_at'], Carbon::parse($response->transaction->createdAt->date));
+    }
+
+    /** @test */
+    public function customer_informations_will_be_transfered_into_the_payment_session(){
+        $amount = $this->accepted();
+        $response = $this->makePayment($amount);
+
+        $response->assertSessionMissing('butik.customer')
+            ->assertSessionHas('butik.transaction.customer', $this->customer);
     }
 
     //    /** @test */
