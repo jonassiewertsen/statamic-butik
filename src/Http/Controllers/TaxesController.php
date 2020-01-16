@@ -38,18 +38,17 @@ class TaxesController extends Controller
         ]);
     }
 
-    // TODO: !
-//    public function create()
-//    {
-//        $blueprint = new TaxBlueprint();
-//        $fields = $blueprint()->fields()->preProcess();
-//
-//        return view('statamic-butik::cp.products.create', [
-//            'blueprint' => $blueprint()->toPublishArray(),
-//            'values'    => $fields->values(),
-//            'meta'      => $fields->meta(),
-//        ]);
-//    }
+    public function create()
+    {
+        $blueprint = new TaxBlueprint();
+        $fields = $blueprint()->fields()->preProcess();
+
+        return view('statamic-butik::cp.taxes.create', [
+            'blueprint' => $blueprint()->toPublishArray(),
+            'values'    => $fields->values(),
+            'meta'      => $fields->meta(),
+        ]);
+    }
 
     public function store(Request $request)
     {

@@ -1,10 +1,10 @@
 @extends('statamic::layout')
-@section('title', __('statamic-butik::product.navigation.create'))
+@section('title', __('statamic-butik::taxes.navigation.create'))
 
 @section('content')
     <publish-form
-        title="{{ __('statamic-butik::product.form.form_title') }}"
-        action="{{ cp_route('butik.products.store') }}"
+        title="{{ __('statamic-butik::tax.singular') }}"
+        action="{{ cp_route('butik.taxes.store') }}"
         :blueprint='@json($blueprint)'
         :meta='@json($meta)'
         :values='@json($values)'

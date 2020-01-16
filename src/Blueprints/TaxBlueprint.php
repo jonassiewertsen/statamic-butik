@@ -16,7 +16,8 @@ class TaxBlueprint
                             'handle' => 'title',
                             'field'  => [
                                 'type'     => 'text',
-                                'display'  => __('statamic-butik::product.form.title'),
+                                'width'    => '66',
+                                'display'  => __('statamic-butik::tax.form.title'),
                                 'validate' => 'required',
                             ],
                         ],
@@ -24,8 +25,8 @@ class TaxBlueprint
                             'handle' => 'percentage',
                             'field'  => [
                                 'type'         => 'integer',
-                                'display'      => __('statamic-butik::product.form.base_price'),
-                                'width'         => '100',
+                                'display'      => __('statamic-butik::tax.percentage'),
+                                'width'         => '33',
                                 'validate'      => 'required|integer|min:0|max:100',
                             ],
                         ],
