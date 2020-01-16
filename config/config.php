@@ -22,10 +22,12 @@ return [
      * Define your shops currency
      */
     'currency' => [
-        'name'      => 'Euro',
-        'symbol'    => '€',
-        'delimiter' => ',',
+        'name'            => 'Euro',
+        'currencyIsoCode' => 'EUR',
+        'symbol'          => '€',
+        'delimiter'       => ',',
     ],
+
     /**
      * Value in Minutes
      */
