@@ -11,42 +11,32 @@ use Statamic\Facades\Blueprint;
 
 class TaxesController extends Controller
 {
-    // TODO: !
-//    public function index() {
-//        // TODO: Do not use all !!!
-//        $taxes = Tax::all()->filter(function ($collection) {
-//            return true;
-//            // TODO: Add permissions
-//            //return User::current()->can('view', $collection);
-//        })->map(function ($tax) {
-//            return [
-//                'title' => $tax->title,
-//                'slug' => $tax->slug,
-//                'images' => $tax->images[0] ?? null,
-//                'description' => $tax->description,
-//                'base_price' => $tax->base_price_with_currency_symbol,
+
+    public function index() {
+        $taxes = Tax::all()->filter(function ($collection) {
+            return true;
+            // TODO: Add permissions
+            //return User::current()->can('view', $collection);
+        })->map(function ($tax) {
+            return [
+                'title' => $tax->title,
+                'percentage' => $tax->percentage,
 //                'edit_url' => $tax->editUrl(),
-//
-//                // TODO: Add permissions
-//                // 'deleteable' => User::current()->can('delete', $collection)
-//                'deleteable' => true,
-//
-//            ];
-//        })->values();
-//
-//        return view('statamic-butik::cp.Taxs.index', [
-//            'products' => $taxes,
-//            'columns' => [
-//                Column::make('title')->label(__('statamic-butik::product.form.title')),
-//                Column::make('base_price')->label(__('statamic-butik::product.form.base_price')),
-//                // TODO: Show Image !
-////                Column::make('images')->label(__('statamic-butik::product.form.images')),
-//                Column::make('slug')->label(__('statamic-butik::product.form.slug')),
-//                // TODO: Parse description into array
-////                Column::make('description')->label(__('statamic-butik::product.form.description')),
-//            ],
-//        ]);
-//    }
+
+                // TODO: Add permissions
+                // 'deleteable' => User::current()->can('delete', $collection)
+                'deleteable' => true,
+            ];
+        })->values();
+
+        return view('statamic-butik::cp.taxes.index', [
+            'taxes' => $taxes,
+            'columns' => [
+                Column::make('title')->label(__('statamic-butik::tax.singular')),
+                Column::make('percentage')->label(__('statamic-butik::tax.percentage')),
+            ],
+        ]);
+    }
 
     // TODO: !
 //    public function create()
