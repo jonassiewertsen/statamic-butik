@@ -74,7 +74,8 @@
                     instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
                         $.get('{{ braintree:route name="payment.process" }}', {payload}, function (response) {
                             if (response.success) {
-                                alert('Payment successfull!');
+                                // TODO: add redirect dynamically
+                                window.location.href = "/shop/express-checkout/receipt/nort-jaime-2020";
                             } else {
                                 alert('Payment failed');
                             }

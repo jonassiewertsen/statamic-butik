@@ -2,15 +2,17 @@
 
 namespace Tests\Shop;
 
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class BraintreeCheckoutTest extends TestCase
 {
     protected $payload;
 
-    public function setUp(): void {
+    public function setUp(): void
+    {
         parent::setUp();
-
         $configPath = 'statamic-butik.payment.braintree.';
         $this->app['config']->set($configPath.'env', 'sandbox');
         $this->app['config']->set($configPath.'merchant_id', '8t2hkkd3nn7yqncp');
@@ -19,55 +21,74 @@ class BraintreeCheckoutTest extends TestCase
     }
 
     /** @test */
-    public function a_payment_can_be_accepted() {
-        $this->makePayment($this->accepted())
-            ->assertJsonFragment(['success' => true]);
+    public function a_payment_can_be_accepted()
+    {
+        $this->makePayment($this->accepted())->assertJsonFragment(['success' => true]);
     }
 
-//    /** @test */
-//    public function redirected_after_a_successfully_payment() {
-//        $this->makePayment($this->accepted())
-//            ->assertRedirect(route('butik.payment.receipt'));
-//    }
-
     /** @test */
-    public function a_payment_can_be_declined() {
-        $this->makePayment($this->declined())
-            ->assertJsonFragment(['message' => 'Processor Declined']);
+    public function a_successfully_payment_will_be_saved_in_the_session()
+    {
+        $amount = $this->accepted();
+        $response = $this->makePayment($amount)->getData();
+        $session = Session::get('butik.transaction');
+
+        $this->assertEquals($session['success'], $response->success);
+        $this->assertEquals($session['id'], $response->transaction->id);
+        $this->assertEquals($session['currencyIsoCode'], $response->transaction->currencyIsoCode);
+        $this->assertEquals($session['amount'], $response->transaction->amount);
+        $this->assertEquals($session['created_at'], Carbon::parse($response->transaction->createdAt->date));
+    }
+
+    //    /** @test */
+    //    public function redirected_after_a_successfully_payment() {
+    //        $this->makePayment($this->accepted())
+    //            ->assertRedirect(route('butik.payment.receipt'));
+    //    }
+    /** @test */
+    public function a_payment_can_be_declined()
+    {
+        $this->makePayment($this->declined())->assertJsonFragment(['message' => 'Processor Declined']);
         // TODO: This does not work like this. The Response is json ... so vue needs to handle this.
         // What about a popup with all the information? That would be cool. From there the user can go to another site or whatever ...
     }
 
     /** @test */
-    public function a_payment_can_fail() {
-        $this->makePayment($this->failed())
-            ->assertJsonFragment(['message' => 'Processor Network Unavailable - Try Again']);
+    public function a_payment_can_fail()
+    {
+        $this->makePayment($this->failed())->assertJsonFragment(['message' => 'Processor Network Unavailable - Try Again']);
     }
 
     /** @test */
-    public function a_payment_can_fail_because_of_the_gateway() {
-        $this->makePayment($this->gateway())
-            ->assertJsonFragment(['message' => 'Gateway Rejected: application_incomplete']);
+    public function a_payment_can_fail_because_of_the_gateway()
+    {
+        $this->makePayment($this->gateway())->assertJsonFragment(['message' => 'Gateway Rejected: application_incomplete']);
     }
 
-    private function makePayment($amount, $nonce = 'fake-valid-nonce') {
-        $payload = ['payload' => ['nonce' => $nonce, 'amount' => $amount ]];
+    private function makePayment($amount, $nonce = 'fake-valid-nonce')
+    {
+        $payload = ['payload' => ['nonce' => $nonce, 'amount' => $amount]];
+
         return $this->get(route('butik.payment.process', $payload));
     }
 
-    private function accepted() {
+    private function accepted()
+    {
         return mt_rand(0.01, 1999.99);
     }
 
-    private function declined() {
+    private function declined()
+    {
         return mt_rand(2000.00, 2999.99);
     }
 
-    private function failed() {
+    private function failed()
+    {
         return mt_rand(3000.00, 3000.99);
     }
 
-    private function gateway() {
+    private function gateway()
+    {
         return 5001;
     }
 }
