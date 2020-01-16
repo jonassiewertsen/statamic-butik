@@ -61,11 +61,12 @@ class ExpressCheckoutController extends Controller
         if (! $this->transactionDataComplete()) {
             throw new TransactionSessionDataIncomplete();
         }
-        
+
         $session = session()->get('butik.transaction')->toArray();
         $viewData = array_merge($product->toArray(), $session['customer']);
 
-        // TODO: Product still needed here? What about the view data?
+        // TODO: In theory another product slug could be called. The transaction itself would be correct, but
+        // displaying funny things. We don't want that. It's not urgent, but should be fixed.
         return (new \Statamic\View\View())
             ->layout(config('statamic-butik.frontend.layout.checkout.express.receipt'))
             ->template(config('statamic-butik.frontend.template.checkout.express.receipt'))
