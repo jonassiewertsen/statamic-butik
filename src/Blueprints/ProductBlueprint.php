@@ -25,7 +25,6 @@ class ProductBlueprint
                             'field'  => [
                                 'type'         => 'slug',
                                 'display'      => __('statamic-butik::product.form.slug'),
-                                'validate'     => 'required',
                                 'instructions' => __('statamic-butik::product.form.slug_description'),
                                 'validate' => 'required|string|unique:products,slug,id,'.request()->id,
                                 'read_only' => $this->slugReadOnly(),
@@ -36,7 +35,6 @@ class ProductBlueprint
                             'field'  => [
                                 'type'         => 'integer',
                                 'display'      => __('statamic-butik::product.form.base_price'),
-                                'validate'     => 'required',
                                 'width'         => '33',
                                 'validate'      => 'required|min:0',
                             ],
