@@ -74,4 +74,16 @@ class ProductTest extends TestCase
             $product->expressPaymentUrl()
         );
     }
+
+    /** @test */
+    public function it_has_a_express_checkout_receipt_url()
+    {
+        $product = create(Product::class)->first();
+
+        $uri_prefix = config('statamic-butik.uri.prefix');
+        $this->assertEquals(
+            "/shop/express-checkout/receipt/{$product->slug}",
+            $product->expressReceiptUrl()
+        );
+    }
 }

@@ -46,6 +46,12 @@ class Product extends Model
         return "{$web_route}/{$checkout}/{$this->slug}";
     }
 
+    public function expressReceiptUrl() {
+        $web_route = config('statamic-butik.uri.shop');
+        $checkout = config('statamic-butik.uri.checkout.express.receipt');
+        return "{$web_route}/{$checkout}/{$this->slug}";
+    }
+
     public function getBasePriceAttribute($value) {
         $value = floatval($value) / 100;
         return number_format($value , 2, config('statamic-butik.currency.delimiter'), '');
