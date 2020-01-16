@@ -3,6 +3,7 @@
 namespace Tests\Shop;
 
 use Illuminate\Support\Facades\Session;
+use Jonassiewertsen\StatamicButik\Exceptions\TransactionSessionDataIncomplete;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
@@ -77,6 +78,16 @@ class ExpressCheckoutReceiptTest extends TestCase
     {
         Session::forget('butik.transaction');
         $this->get(create(Product::class)->first()->expressReceiptUrl())->assertRedirect();
+    }
+
+    /** @test */
+    public function redirect_without_a_existing_transaction_in_the_session_()
+    {
+        $this->withoutExceptionHandling();
+        $this->expectException(TransactionSessionDataIncomplete::class);
+        Session::put('butik.transaction', ['success' => true ]);
+
+        $this->get($this->product->expressReceiptUrl());
     }
 
     /** @test */

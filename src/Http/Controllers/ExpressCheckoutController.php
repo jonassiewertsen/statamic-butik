@@ -3,6 +3,7 @@
 namespace Jonassiewertsen\StatamicButik\Http\Controllers;
 
 use Illuminate\Support\Facades\Session;
+use Jonassiewertsen\StatamicButik\Exceptions\TransactionSessionDataIncomplete;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 
 class ExpressCheckoutController extends Controller
@@ -57,7 +58,10 @@ class ExpressCheckoutController extends Controller
             return redirect($product->expressDeliveryUrl());
         }
 
-        // TODO: throw a exception in case the transaction session does not exist
+        if (! $this->transactionDataComplete()) {
+            throw new TransactionSessionDataIncomplete();
+        }
+        
         $session = session()->get('butik.transaction')->toArray();
         $viewData = array_merge($product->toArray(), $session['customer']);
 
@@ -66,20 +70,6 @@ class ExpressCheckoutController extends Controller
             ->layout(config('statamic-butik.frontend.layout.checkout.express.receipt'))
             ->template(config('statamic-butik.frontend.template.checkout.express.receipt'))
             ->with($viewData);
-    }
-
-    private function rules() {
-        return [
-            'country'           => 'required|max:50',
-            'name'              => 'required|min:5|max:50',
-            'mail'              => 'required|email',
-            'address_1'         => 'required|max:80',
-            'address_2'         => 'nullable|max:80',
-            'city'              => 'required|max:80',
-            'state_region'      => 'nullable|max:80',
-            'zip'               => 'required|max:20',
-            'phone'             => 'nullable|max:50',
-        ];
     }
 
     private function customerDataComplete() {
@@ -104,5 +94,31 @@ class ExpressCheckoutController extends Controller
     private function transactionSuccessful() {
         return session()->has('butik.transaction.success')
         && session()->get('butik.transaction.success') === true;
+    }
+
+    private function transactionDataComplete() {
+        $keys = ['success', 'id', 'type', 'currencyIsoCode', 'amount', 'created_at', 'customer'];
+
+        foreach ($keys as $key) {
+            if (session()->has("butik.transaction.{$key}")) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private function rules() {
+        return [
+            'country'           => 'required|max:50',
+            'name'              => 'required|min:5|max:50',
+            'mail'              => 'required|email',
+            'address_1'         => 'required|max:80',
+            'address_2'         => 'nullable|max:80',
+            'city'              => 'required|max:80',
+            'state_region'      => 'nullable|max:80',
+            'zip'               => 'required|max:20',
+            'phone'             => 'nullable|max:50',
+        ];
     }
 }
