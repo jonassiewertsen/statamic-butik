@@ -16,6 +16,11 @@ return [
     'review_payment' => 'Review & Payment',
     'receipt'        => 'Receipt',
 
+    'successful'    => 'Payment Successful',
+    'thank_you'     => 'Thank you for your trust',
+    'mail_sent'     => 'A confirmation mail has been sent to :mail',
+
+    'order_id'  => 'Order ID',
     'subtotal'  => 'Subtotal',
     'shipping'  => 'Shipping',
     'ship_to'  => 'Ship to',
