@@ -56,21 +56,16 @@ class ExpressCheckoutController extends Controller
         if (! $this->transactionSuccessful()) {
             return redirect($product->expressDeliveryUrl());
         }
-//
-//        // Adding checkout routes to the product
-//        $product = $this->addingProductRoutes($product);
-//
-//        // In case a customer goes back to edit, we will load his previews information
-//        if (session()->has('butik.customer')) {
-//            $formData = session('butik.customer');
-//            $viewData = array_merge($formData, $product);
-//        }
+
+        // TODO: throw a exception in case the transaction session does not exist
+        $session = session()->get('butik.transaction')->toArray();
+        $viewData = array_merge($product->toArray(), $session['customer']);
 
         // TODO: Product still needed here? What about the view data?
         return (new \Statamic\View\View())
             ->layout(config('statamic-butik.frontend.layout.checkout.express.receipt'))
             ->template(config('statamic-butik.frontend.template.checkout.express.receipt'))
-            ->with($viewData ?? $product->toArray());
+            ->with($viewData);
     }
 
     private function rules() {

@@ -15,6 +15,7 @@ return [
     'delivery'       => 'Delivery',
     'review_payment' => 'Review & Payment',
     'receipt'        => 'Receipt',
+    'go_back'        => 'Back to our shop',
 
     'successful'    => 'Payment Successful',
     'thank_you'     => 'Thank you for your trust',
