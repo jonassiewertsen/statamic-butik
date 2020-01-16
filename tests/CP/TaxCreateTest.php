@@ -12,16 +12,12 @@ class TaxCreateTest extends TestCase
 
         $this->signIn();
     }
-
-
+    
 //    TODO: Add test back in again, if composer test has been resolve
-//    Change to TAX View of course.
 //    /** @test */
 //    public function the_publish_form_will_be_displayed()
 //    {
-//        $this->withoutExceptionHandling();
-//
-//        $this->get(route('statamic.cp.butik.product.create'))
+//        $this->get(route('statamic.cp.butik.taxes.create'))
 //            ->assertOK();
 //    }
 
