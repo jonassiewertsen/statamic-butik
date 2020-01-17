@@ -9,7 +9,9 @@ class Order extends Model
     protected $table = 'orders';
 
     protected $casts = [
-        'products' => 'array',
+        'products'   => 'array',
+        'paid_at'    => 'datetime',
+        'shipped_at' => 'datetime',
     ];
     protected $guarded = [];
 }
