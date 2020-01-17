@@ -65,10 +65,19 @@
         </button>
         <script>
             var button = document.querySelector('#submit-button');
-
+            // TODO: Prepare PayPal but dont ship it as default
             braintree.dropin.create({
                 authorization: 'sandbox_8hc4ttnw_8t2hkkd3nn7yqncp',
-                container: '#dropin-container'
+                container: '#dropin-container',
+                locale: '{{ site_locale }}',
+                paypal: {
+                    flow: 'vault',
+                },
+                card: {
+                    cardholderName: {
+                        required: true,
+                    }
+                }
             }, function (createErr, instance) {
                 button.addEventListener('click', function () {
                     instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
@@ -77,6 +86,8 @@
                                 // TODO: add redirect dynamically
                                 window.location.href = "/shop/express-checkout/receipt/nort-jaime-2020";
                             } else {
+                                instance.clearSelectedPaymentMethod();
+
                                 alert('{{ trans key="statamic-butik::payment.process_failed" }}.\n\n' +
                                     '{{ trans key="statamic-butik::payment.error_message" }}\n ' +
                                     response.message);

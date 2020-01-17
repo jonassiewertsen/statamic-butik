@@ -21,7 +21,7 @@ return [
     'thank_you'     => 'Thank you for your trust',
     'mail_sent'     => 'A confirmation mail has been sent to :mail',
 
-    'process_failed'    => 'Sorry! The payment could not be processed. Please try again ...',
+    'process_failed'    => 'Sorry! The payment could not be processed. Please try again.',
     'error_message'     => 'Error Message',
 
     'order_id'  => 'Order ID',
