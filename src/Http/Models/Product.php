@@ -27,6 +27,10 @@ class Product extends Model
         return $this->belongsTo(Tax::class, 'taxes_id', 'slug');
     }
 
+    public function shipping() {
+        return $this->belongsTo(Shipping::class, 'shipping_id', 'slug');
+    }
+
     public function editUrl()
     {
         $cp_route = config('statamic.cp.route');
