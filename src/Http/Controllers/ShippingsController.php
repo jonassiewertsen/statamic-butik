@@ -5,6 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers;
 use Illuminate\Http\Request;
 use Jonassiewertsen\StatamicButik\Blueprints\ShippingBlueprint;
 use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
+use Scrumpy\HtmlToProseMirror\Test\TestCase;
 use Statamic\Contracts\Auth\User;
 use Statamic\CP\Column;
 use Statamic\Facades\Blueprint;
@@ -60,18 +61,18 @@ class ShippingsController extends Controller
         Shipping::create($values->toArray());
     }
 
-//    public function edit(Tax $tax) {
-//        $values = $tax->toArray();
-//        $blueprint = new TaxBlueprint();
-//        $fields = $blueprint()->fields()->addValues($values)->preProcess();
-//
-//        return view('statamic-butik::cp.taxes.edit', [
-//            'blueprint' => $blueprint()->toPublishArray(),
-//            'values'    => $fields->values(),
-//            'id'        => $tax->id,
-//            'meta'      => $fields->meta(),
-//        ]);
-//    }
+    public function edit(Shipping $shipping) {
+        $values = $shipping->toArray();
+        $blueprint = new ShippingBlueprint();
+        $fields = $blueprint()->fields()->addValues($values)->preProcess();
+
+        return view('statamic-butik::cp.shippings.edit', [
+            'blueprint' => $blueprint()->toPublishArray(),
+            'values'    => $fields->values(),
+            'id'        => $shipping->id,
+            'meta'      => $fields->meta(),
+        ]);
+    }
 
     public function update(Request $request, Shipping $shipping) {
         $blueprint = new ShippingBlueprint();
