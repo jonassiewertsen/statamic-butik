@@ -21,6 +21,12 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         \Jonassiewertsen\StatamicButik\Http\Tags\Route::class,
     ];
 
+    protected $listen = [
+        \Jonassiewertsen\StatamicButik\Events\PaymentSuccessful::class => [
+            \Jonassiewertsen\StatamicButik\Listeners\CreateOrder::class,
+        ],
+    ];
+
     protected $scripts = [
         __DIR__ . '/../public/js/statamic-butik.js',
     ];

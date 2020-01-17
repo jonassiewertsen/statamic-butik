@@ -5,6 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
 use Jonassiewertsen\StatamicButik\Http\PaymentGateways\BraintreePaymentGateway;
 
 class PaymentGatewayController extends Controller
@@ -21,6 +22,7 @@ class PaymentGatewayController extends Controller
         $response = $this->gateway->handle($request);
         if ($response->success) {
             $this->saveTransactionInSession($response);
+            event(new PaymentSuccessful($response->transaction));
         }
 
         return response()->json($response);

@@ -3,7 +3,9 @@
 namespace Tests\Shop;
 
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Session;
+use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class BraintreeCheckoutTest extends TestCase
@@ -41,7 +43,17 @@ class BraintreeCheckoutTest extends TestCase
     }
 
     /** @test */
-    public function a_successfully_payment_will_be_saved_in_the_session()
+    public function a_succesful_will_fire_an_event()
+    {
+        Event::fake();
+
+        $transaction = $this->makePayment($this->accepted());
+
+        Event::assertDispatched(PaymentSuccessful::class);
+    }
+
+    /** @test */
+    public function a_successful_payment_will_be_saved_in_the_session()
     {
         $amount = $this->accepted();
         $response = $this->makePayment($amount)->getData();
