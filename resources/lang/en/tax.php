@@ -17,20 +17,7 @@ return [
 
     'navigation' => [
         'index'  => 'Taxes overview',
-        'create' => 'Create taxes',
+        'create' => 'Create a new tax rate',
     ],
-
-    // TODO: Moving to a general translation file. Maybe to 'form' ?
-//    'form' => [
-//        'form_title'       => 'Add your amazing product',
-//        'title'            => 'Name',
-//        'description'      => 'Description',
-//        'images'           => 'Images',
-//        'base_price'       => 'Base Price',
-//        'type'             => 'Type',
-//        'slug'             => 'Slug',
-//        'slug_description' => 'The slug is the product identifier, needs to be unique and may not include spaces.',
-//    ],
-
 
 ];

@@ -33,7 +33,7 @@ class TaxesController extends Controller
             'taxes' => $taxes,
             'columns' => [
                 Column::make('title')->label(__('statamic-butik::tax.singular')),
-                Column::make('percentage')->label(__('statamic-butik::tax.percentage')),
+                Column::make('percentage')->label(__('statamic-butik::cp.percentage')),
             ],
         ]);
     }

@@ -1,5 +1,5 @@
 @extends('statamic::layout')
-@section('title', __('statamic-butik::product.navigation.index'))
+@section('title', __('statamic-butik::tax.navigation.index'))
 
 @section('content')
 
