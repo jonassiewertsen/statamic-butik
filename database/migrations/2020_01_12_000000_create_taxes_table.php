@@ -9,8 +9,8 @@ class CreateTaxesTable extends Migration
     public function up()
     {
         Schema::create('taxes', function (Blueprint $table) {
-            $table->bigIncrements('id');
             $table->string('title');
+            $table->string('slug')->unique()->primary();
             $table->integer('percentage');
 
             $table->timestamps();

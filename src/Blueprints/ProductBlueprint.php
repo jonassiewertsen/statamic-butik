@@ -2,6 +2,7 @@
 
 namespace Jonassiewertsen\StatamicButik\Blueprints;
 
+use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Statamic\Facades\Blueprint;
 
 class ProductBlueprint
@@ -40,11 +41,21 @@ class ProductBlueprint
                             ],
                         ],
                         [
+                            'handle' => 'taxes_id',
+                            'field'  => [
+                                'type'         => 'select',
+                                'display'      => __('statamic-butik::cp.taxes'),
+                                'options'      => $this->fetchTaxOptions(),
+                                'width'         => '33',
+                                'validate'      => 'required|exists:taxes,slug'
+                            ],
+                        ],
+                        [
                             'handle' => 'type',
                             'field'  => [
                                 'type'         => 'select',
                                 'display'      => __('statamic-butik::product.form.type'),
-                                'width'         => '66',
+                                'width'         => '33',
                                 'default' => 'physical',
                                 'options' => [
                                     'physical' => 'physical',
@@ -90,5 +101,9 @@ class ProductBlueprint
             return true;
         }
         return false;
+    }
+
+    private function fetchTaxOptions() {
+        return Tax::pluck('title', 'slug')->toArray();
     }
 }

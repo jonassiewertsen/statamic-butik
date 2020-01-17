@@ -4,7 +4,7 @@
 @section('content')
     <publish-form
         title="{{ __('statamic-butik::cp.title') }}"
-        action="{{ cp_route('butik.taxes.update', ['tax' => $id]) }}"
+        action="{{ cp_route('butik.taxes.update', ['tax' => $slug]) }}"
         method="patch"
         :blueprint='@json($blueprint)'
         :meta='@json($meta)'

@@ -32,6 +32,19 @@ class TaxBlueprint
                         ],
                     ],
                 ],
+                'sidebar' => [
+                    'fields' => [
+                        [
+                            'handle' => 'slug',
+                            'field'  => [
+                                'type'     => 'slug',
+                                'display'  => __('statamic-butik::cp.slug'),
+                                'validate' => 'required|unique:taxes,slug,id,'.request()->id,
+                                'read_only' => $this->slugReadOnly(),
+                            ],
+                        ],
+                    ]
+                ]
             ],
         ]);
     }
@@ -40,7 +53,7 @@ class TaxBlueprint
      * In case the Product will be edited, the slug will be read only
      */
     private function slugReadOnly() {
-        if (request()->route()->action['as'] === 'statamic.cp.butik.products.edit') {
+        if (request()->route()->action['as'] === 'statamic.cp.butik.taxes.edit') {
             return true;
         }
         return false;

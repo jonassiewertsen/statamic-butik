@@ -3,6 +3,7 @@
 namespace Tests\CP;
 
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class ProductCreateTest extends TestCase
@@ -94,6 +95,22 @@ class ProductCreateTest extends TestCase
         $product = raw(Product::class, ['images' => null]);
         $this->post(route('statamic.cp.butik.products.store'), $product)
             ->assertSessionhasNoErrors();
+    }
+
+    /** @test */
+    public function taxes_is_required()
+    {
+        $product = raw(Product::class, ['taxes_id' => '']);
+        $this->post(route('statamic.cp.butik.products.store'), $product)
+            ->assertSessionHasErrors('taxes_id');
+    }
+
+    /** @test */
+    public function taxes_relation_must_exist_required()
+    {
+        $product = raw(Product::class, ['taxes_id' => 44]);
+        $this->post(route('statamic.cp.butik.products.store'), $product)
+            ->assertSessionHasErrors('taxes_id');
     }
 
     /** @test */

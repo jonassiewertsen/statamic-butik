@@ -226,7 +226,7 @@ module.exports = function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(3);
-module.exports = __webpack_require__(10);
+module.exports = __webpack_require__(13);
 
 
 /***/ }),
@@ -239,7 +239,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_products_Listing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_products_Listing__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_taxes_Listing__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_taxes_Listing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_taxes_Listing__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_shippings_Listing__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_shippings_Listing__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_shippings_Listing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_shippings_Listing__);
 
 
@@ -626,7 +626,7 @@ var render = function() {
                                     on: {
                                       click: function($event) {
                                         return _vm.confirmDeleteRow(
-                                          collection.id,
+                                          collection.slug,
                                           index
                                         )
                                       }
@@ -683,24 +683,14 @@ if (false) {
 
 /***/ }),
 /* 10 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(16)
+var __vue_script__ = __webpack_require__(11)
 /* template */
-var __vue_template__ = __webpack_require__(17)
+var __vue_template__ = __webpack_require__(12)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -739,7 +729,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 16 */
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -795,7 +785,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 17 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -905,6 +895,12 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-169cd9c2", module.exports)
   }
 }
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

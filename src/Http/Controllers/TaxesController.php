@@ -22,7 +22,7 @@ class TaxesController extends Controller
                 'title'      => $tax->title,
                 'percentage' => $tax->percentage,
                 'edit_url'   => $tax->editUrl(),
-                'id'         => $tax->id,
+                'slug'         => $tax->slug,
 
                 // TODO: Add permissions
                 // 'deleteable' => User::current()->can('delete', $collection)
@@ -68,7 +68,7 @@ class TaxesController extends Controller
         return view('statamic-butik::cp.taxes.edit', [
             'blueprint' => $blueprint()->toPublishArray(),
             'values'    => $fields->values(),
-            'id'        => $tax->id,
+            'slug'        => $tax->slug,
             'meta'      => $fields->meta(),
         ]);
     }

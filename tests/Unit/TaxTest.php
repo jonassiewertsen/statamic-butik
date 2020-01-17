@@ -14,7 +14,7 @@ class TaxTest extends TestCase
 
         $this->assertEquals(
             $tax->editUrl(),
-            '/'.config('statamic.cp.route')."/butik/taxes/{$tax->id}/edit"
+            '/'.config('statamic.cp.route')."/butik/taxes/{$tax->slug}/edit"
             );
     }
 }

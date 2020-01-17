@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class ProductTest extends TestCase
@@ -85,5 +86,13 @@ class ProductTest extends TestCase
             "/shop/express-checkout/receipt/{$product->slug}",
             $product->expressReceiptUrl()
         );
+    }
+
+    /** @test */
+    public function it_has_taxes(){
+        $this->withoutExceptionHandling();
+        $product = create(Product::class)->first();
+
+        $this->assertInstanceOf(Tax::class, $product->taxes);
     }
 }

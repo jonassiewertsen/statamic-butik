@@ -12,6 +12,7 @@ class CreateProductsTable extends Migration
             $table->string('title');
             $table->string('slug')->unique()->primary();
             $table->integer('base_price');
+            $table->bigInteger('taxes_id');
             $table->json('description')->nullable();
             $table->json('images')->nullable();
             $table->string('type', 20)->default('physical');
