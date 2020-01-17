@@ -98,19 +98,35 @@ class ProductCreateTest extends TestCase
     }
 
     /** @test */
-    public function taxes_is_required()
+    public function tax_is_required()
     {
-        $product = raw(Product::class, ['taxes_id' => '']);
+        $product = raw(Product::class, ['tax_id' => '']);
         $this->post(route('statamic.cp.butik.products.store'), $product)
-            ->assertSessionHasErrors('taxes_id');
+            ->assertSessionHasErrors('tax_id');
     }
 
     /** @test */
     public function taxes_relation_must_exist_required()
     {
-        $product = raw(Product::class, ['taxes_id' => 44]);
+        $product = raw(Product::class, ['tax_id' => 44]);
         $this->post(route('statamic.cp.butik.products.store'), $product)
-            ->assertSessionHasErrors('taxes_id');
+            ->assertSessionHasErrors('tax_id');
+    }
+
+    /** @test */
+    public function shipping_is_required()
+    {
+        $product = raw(Product::class, ['shipping_id' => '']);
+        $this->post(route('statamic.cp.butik.products.store'), $product)
+            ->assertSessionHasErrors('shipping_id');
+    }
+
+    /** @test */
+    public function shipping_relation_must_exist_required()
+    {
+        $product = raw(Product::class, ['shipping_id' => 44]);
+        $this->post(route('statamic.cp.butik.products.store'), $product)
+            ->assertSessionHasErrors('shipping_id');
     }
 
     /** @test */

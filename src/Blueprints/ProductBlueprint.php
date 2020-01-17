@@ -2,6 +2,7 @@
 
 namespace Jonassiewertsen\StatamicButik\Blueprints;
 
+use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Statamic\Facades\Blueprint;
 
@@ -36,18 +37,28 @@ class ProductBlueprint
                             'field'  => [
                                 'type'         => 'integer',
                                 'display'      => __('statamic-butik::product.form.base_price'),
-                                'width'         => '33',
+                                'width'         => '25',
                                 'validate'      => 'required|min:0',
                             ],
                         ],
                         [
-                            'handle' => 'taxes_id',
+                            'handle' => 'tax_id',
                             'field'  => [
                                 'type'         => 'select',
                                 'display'      => __('statamic-butik::cp.taxes'),
                                 'options'      => $this->fetchTaxOptions(),
-                                'width'         => '33',
+                                'width'         => '25',
                                 'validate'      => 'required|exists:taxes,slug'
+                            ],
+                        ],
+                        [
+                            'handle' => 'shipping_id',
+                            'field'  => [
+                                'type'         => 'select',
+                                'display'      => __('statamic-butik::cp.shipping'),
+                                'options'      => $this->fetchShippingOptions(),
+                                'width'         => '25',
+                                'validate'      => 'required|exists:shippings,slug'
                             ],
                         ],
                         [
@@ -55,7 +66,7 @@ class ProductBlueprint
                             'field'  => [
                                 'type'         => 'select',
                                 'display'      => __('statamic-butik::product.form.type'),
-                                'width'         => '33',
+                                'width'         => '25',
                                 'default' => 'physical',
                                 'options' => [
                                     'physical' => 'physical',
@@ -105,5 +116,9 @@ class ProductBlueprint
 
     private function fetchTaxOptions() {
         return Tax::pluck('title', 'slug')->toArray();
+    }
+
+    private function fetchShippingOptions() {
+        return Shipping::pluck('title', 'slug')->toArray();
     }
 }
