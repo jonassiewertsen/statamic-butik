@@ -72,15 +72,15 @@ class ShippingsController extends Controller
 //            'meta'      => $fields->meta(),
 //        ]);
 //    }
-//
-//    public function update(Request $request, Tax $tax) {
-//        $blueprint = new TaxBlueprint();
-//        $fields = $blueprint()->fields()->addValues($request->all());
-//        $fields->validate();
-//        $values = $fields->process()->values();
-//        $tax->update($values->toArray());
-//    }
-//
+
+    public function update(Request $request, Shipping $shipping) {
+        $blueprint = new ShippingBlueprint();
+        $fields = $blueprint()->fields()->addValues($request->all());
+        $fields->validate();
+        $values = $fields->process()->values();
+        $shipping->update($values->toArray());
+    }
+
     public function destroy(Shipping $shipping)
     {
         // TODO: Add Permissions
