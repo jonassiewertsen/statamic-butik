@@ -14,4 +14,8 @@ Route::prefix('butik/')->name('butik.')->namespace('Http\\Controllers\\')->group
     Route::resource('taxes', 'TaxesController')->only([
         'index', 'create', 'store', 'edit', 'update', 'destroy'
     ]);
+
+    Route::resource('shippings', 'ShippingsController')->only([
+        'store'
+    ]);
 });
