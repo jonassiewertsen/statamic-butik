@@ -22,7 +22,7 @@ class Tax extends Model
     }
 
     public function products() {
-        return $this->hasMany(Product::class, 'taxes_id');
+        return $this->hasMany(Product::class, 'tax_id');
     }
 
     public function editUrl()

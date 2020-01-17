@@ -32,6 +32,19 @@ class ShippingBlueprint
                         ],
                     ],
                 ],
+                'sidebar' => [
+                    'fields' => [
+                        [
+                            'handle' => 'slug',
+                            'field'  => [
+                                'type'     => 'slug',
+                                'display'  => __('statamic-butik::cp.slug'),
+                                'validate' => 'required|unique:taxes,slug,id,'.request()->id,
+                                'read_only' => $this->slugReadOnly(),
+                            ],
+                        ],
+                    ]
+                ]
             ],
         ]);
     }
