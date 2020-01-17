@@ -24,7 +24,7 @@ class ProductsController extends Controller
                 'images' => $product->images[0] ?? null,
                 'description' => $product->description,
                 'base_price' => $product->base_price_with_currency_symbol,
-                'edit_url' => $product->editUrl(),
+                'edit_url' => $product->editUrl,
 
                 // TODO: Add permissions
                 // 'deleteable' => User::current()->can('delete', $collection)

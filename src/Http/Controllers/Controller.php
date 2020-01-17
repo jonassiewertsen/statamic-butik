@@ -12,9 +12,9 @@ class Controller extends LaravelController
             'description' => $product->description,
             'images' => $product->images,
             'base_price' => $product->base_price,
-            'show_url' => $product->showUrl(),
-            'express_delivery_url' => $product->expressDeliveryUrl(),
-            'express_payment_url' => $product->expressPaymentUrl(),
+            'show_url' => $product->showUrl,
+            'express_delivery_url' => $product->expressDeliveryUrl,
+            'express_payment_url' => $product->expressPaymentUr,
         ];
     }
 }

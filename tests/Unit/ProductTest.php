@@ -36,7 +36,7 @@ class ProductTest extends TestCase
         $product = create(Product::class)->first();
 
         $this->assertEquals(
-            $product->editUrl(),
+            $product->editUrl,
             '/'.config('statamic.cp.route')."/butik/products/{$product->slug}/edit"
             );
     }
@@ -49,7 +49,7 @@ class ProductTest extends TestCase
         $uri_prefix = config('statamic-butik.uri.prefix');
         $this->assertEquals(
             "/shop/{$product->slug}",
-            $product->showUrl()
+            $product->showUrl
         );
     }
 
@@ -61,7 +61,7 @@ class ProductTest extends TestCase
         $uri_prefix = config('statamic-butik.uri.prefix');
         $this->assertEquals(
             "/shop/express-checkout/delivery/{$product->slug}",
-            $product->expressDeliveryUrl()
+            $product->expressDeliveryUrl
         );
     }
 
@@ -73,7 +73,7 @@ class ProductTest extends TestCase
         $uri_prefix = config('statamic-butik.uri.prefix');
         $this->assertEquals(
             "/shop/express-checkout/payment/{$product->slug}",
-            $product->expressPaymentUrl()
+            $product->expressPaymentUrl
         );
     }
 
@@ -85,7 +85,7 @@ class ProductTest extends TestCase
         $uri_prefix = config('statamic-butik.uri.prefix');
         $this->assertEquals(
             "/shop/express-checkout/receipt/{$product->slug}",
-            $product->expressReceiptUrl()
+            $product->expressReceiptUrl
         );
     }
 

@@ -15,6 +15,9 @@ class BraintreeCheckoutTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
+        Event::fake();
+
         $configPath = 'statamic-butik.payment.braintree.';
         $this->app['config']->set($configPath.'env', 'sandbox');
         $this->app['config']->set($configPath.'merchant_id', '8t2hkkd3nn7yqncp');
@@ -45,8 +48,6 @@ class BraintreeCheckoutTest extends TestCase
     /** @test */
     public function a_succesful_will_fire_an_event()
     {
-        Event::fake();
-
         $transaction = $this->makePayment($this->accepted());
 
         Event::assertDispatched(PaymentSuccessful::class);

@@ -11,6 +11,14 @@ class Product extends Model
     protected $primaryKey   = 'slug';
     protected $keyType      = 'string';
 
+    protected $appends = [
+        'editUrl',
+        'showUrl',
+        'ExpressDeliveryUrl',
+        'ExpressPaymentUrl',
+        'ExpressReceiptUrl',
+    ];
+
     protected $casts = [
         'description' => 'array',
         'images'      => 'array',
@@ -31,21 +39,21 @@ class Product extends Model
         return $this->belongsTo(Shipping::class, 'shipping_id', 'slug');
     }
 
-    public function editUrl()
+    public function getEditUrlAttribute()
     {
         $cp_route = config('statamic.cp.route');
 
         return "/{$cp_route}/butik/products/{$this->slug}/edit";
     }
 
-    public function showUrl()
+    public function getShowUrlAttribute()
     {
         $web_route = config('statamic-butik.uri.shop');
 
         return "{$web_route}/{$this->slug}";
     }
 
-    public function expressDeliveryUrl()
+    public function getExpressDeliveryUrlAttribute()
     {
         $web_route = config('statamic-butik.uri.shop');
         $checkout = config('statamic-butik.uri.checkout.express.delivery');
@@ -53,7 +61,7 @@ class Product extends Model
         return "{$web_route}/{$checkout}/{$this->slug}";
     }
 
-    public function expressPaymentUrl()
+    public function getExpressPaymentUrlAttribute()
     {
         $web_route = config('statamic-butik.uri.shop');
         $checkout = config('statamic-butik.uri.checkout.express.payment');
@@ -61,7 +69,7 @@ class Product extends Model
         return "{$web_route}/{$checkout}/{$this->slug}";
     }
 
-    public function expressReceiptUrl()
+    public function getExpressReceiptUrlAttribute()
     {
         $web_route = config('statamic-butik.uri.shop');
         $checkout = config('statamic-butik.uri.checkout.express.receipt');

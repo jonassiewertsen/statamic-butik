@@ -29,7 +29,7 @@ class ButikTagTest extends TestCase
         $this->assertStringContainsString($product->title, $this->butik->products());
 //        $this->assertStringContainsString($product->images[0], $this->butik->products()->toJson()); // Image not tested
         $this->assertStringContainsString($product->base_price, $this->butik->products());
-        $this->assertStringContainsString(json_encode($product->showUrl()), $this->butik->products());
+        $this->assertStringContainsString(json_encode($product->showUrl), $this->butik->products());
     }
 
     /** @test */

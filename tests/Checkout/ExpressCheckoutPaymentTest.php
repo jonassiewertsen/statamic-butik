@@ -20,8 +20,8 @@ class ExpressCheckoutPaymentTestTest extends TestCase
     public function the_payment_page_will_redirect_back_without_a_name() {
         Session::put('butik.customer', $this->createUserData('name', ''));
 
-        $this->get($this->product->expressPaymentUrl())
-           ->assertRedirect($this->product->expressDeliveryUrl());
+        $this->get($this->product->expressPaymentUrl)
+           ->assertRedirect($this->product->expressDeliveryUrl);
     }
 
     /** @test */
@@ -49,40 +49,40 @@ class ExpressCheckoutPaymentTestTest extends TestCase
     public function the_payment_page_will_redirect_back_without_a_mail() {
         Session::put('butik.customer', $this->createUserData('mail', ''));
 
-        $this->get($this->product->expressPaymentUrl())
-            ->assertRedirect($this->product->expressDeliveryUrl());
+        $this->get($this->product->expressPaymentUrl)
+            ->assertRedirect($this->product->expressDeliveryUrl);
     }
 
     /** @test */
     public function the_payment_page_will_redirect_back_without_a_country() {
         Session::put('butik.customer', $this->createUserData('country', ''));
 
-        $this->get($this->product->expressPaymentUrl())
-            ->assertRedirect($this->product->expressDeliveryUrl());
+        $this->get($this->product->expressPaymentUrl)
+            ->assertRedirect($this->product->expressDeliveryUrl);
     }
 
     /** @test */
     public function the_payment_page_will_redirect_back_without_a_address_1() {
         Session::put('butik.customer', $this->createUserData('address_1', ''));
 
-        $this->get($this->product->expressPaymentUrl())
-            ->assertRedirect($this->product->expressDeliveryUrl());
+        $this->get($this->product->expressPaymentUrl)
+            ->assertRedirect($this->product->expressDeliveryUrl);
     }
 
     /** @test */
     public function the_payment_page_will_redirect_back_without_a_city() {
         Session::put('butik.customer', $this->createUserData('city', ''));
 
-        $this->get($this->product->expressPaymentUrl())
-            ->assertRedirect($this->product->expressDeliveryUrl());
+        $this->get($this->product->expressPaymentUrl)
+            ->assertRedirect($this->product->expressDeliveryUrl);
     }
 
     /** @test */
     public function the_payment_page_will_redirect_back_without_a_zip() {
         Session::put('butik.customer', $this->createUserData('zip', ''));
 
-        $this->get($this->product->expressPaymentUrl())
-            ->assertRedirect($this->product->expressDeliveryUrl());
+        $this->get($this->product->expressPaymentUrl)
+            ->assertRedirect($this->product->expressDeliveryUrl);
     }
 
     /** @test */

@@ -35,7 +35,7 @@ class ExpressCheckoutController extends Controller
 
     public function payment(Product $product) {
         if (! $this->customerDataComplete()) {
-            return redirect($product->expressDeliveryUrl());
+            return redirect($product->expressDeliveryUrl);
         }
 
         // Adding checkout routes to the product
@@ -55,7 +55,7 @@ class ExpressCheckoutController extends Controller
 
     public function receipt(Product $product) {
         if (! $this->transactionSuccessful()) {
-            return redirect($product->expressDeliveryUrl());
+            return redirect($product->expressDeliveryUrl);
         }
 
         if (! $this->transactionDataComplete()) {

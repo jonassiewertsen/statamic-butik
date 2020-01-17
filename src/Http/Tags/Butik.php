@@ -16,7 +16,7 @@ class Butik extends StatamicTags
                 'description' => $product->description,
                 'images' => $product->images,
                 'base_price' => $product->base_price,
-                'show_url' => $product->showUrl(),
+                'show_url' => $product->showUrl,
             ];
         });
          return $products;
