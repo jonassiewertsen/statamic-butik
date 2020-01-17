@@ -42,14 +42,14 @@ class OrdersController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate(
-            [
-                'id'           => 'required|unique:orders,id',
-                'products'     => 'required',
-                'total_amount' => 'required|integer',
-                'paid_at'      => 'required|date',
-                'shipped_at'   => 'nullable|date',
-            ]);
+        $validatedData = $request->validate([
+            'id'           => 'required|unique:orders,id',
+            'products'     => 'required',
+            'total_amount' => 'required|integer',
+            'paid_at'      => 'required|date',
+            'shipped_at'   => 'nullable|date',
+        ]);
+
         Order::create($validatedData);
     }
 
