@@ -14,7 +14,7 @@ class ShippingTest extends TestCase
 
         $this->assertEquals(
             $shipping->editUrl(),
-            '/'.config('statamic.cp.route')."/butik/shippings/{$shipping->id}/edit"
+            '/'.config('statamic.cp.route')."/butik/shippings/{$shipping->slug}/edit"
             );
     }
 }

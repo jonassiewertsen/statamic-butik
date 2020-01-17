@@ -16,6 +16,7 @@ return [
     'images'           => 'Images',
     'percentage'       => 'percentage',
     'price'            => 'price',
+    'shipping'         => 'Shipping',
     'slug'             => 'Slug',
     'slug_description' => 'The slug is the product identifier, needs to be unique and may not include spaces.',
     'taxes'            => 'Taxes',

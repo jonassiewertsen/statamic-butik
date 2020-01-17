@@ -841,7 +841,7 @@ var render = function() {
                                     on: {
                                       click: function($event) {
                                         return _vm.confirmDeleteRow(
-                                          collection.id,
+                                          collection.slug,
                                           index
                                         )
                                       }

@@ -23,7 +23,7 @@ class ShippingsController extends Controller
                 'title'      => $shipping->title,
                 'price'      => $shipping->price,
                 'edit_url'   => $shipping->editUrl(),
-                'id'         => $shipping->id,
+                'id'         => $shipping->slug,
 
                 // TODO: Add permissions
                 // 'deleteable' => User::current()->can('delete', $collection)
@@ -69,7 +69,7 @@ class ShippingsController extends Controller
         return view('statamic-butik::cp.shippings.edit', [
             'blueprint' => $blueprint()->toPublishArray(),
             'values'    => $fields->values(),
-            'id'        => $shipping->id,
+            'id'        => $shipping->slug,
             'meta'      => $fields->meta(),
         ]);
     }
