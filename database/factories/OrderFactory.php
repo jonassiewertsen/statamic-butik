@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
-user Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\Product;
 
 $factory->define(Order::class, function (Faker $faker) {
     return [
