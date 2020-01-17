@@ -21,6 +21,10 @@ class Tax extends Model
         return 'slug';
     }
 
+    public function products() {
+        return $this->hasMany(Product::class, 'taxes_id');
+    }
+
     public function editUrl()
     {
         $cp_route = config('statamic.cp.route');
