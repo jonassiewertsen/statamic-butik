@@ -12,8 +12,7 @@ class CreateOrder implements ShouldQueue
 
     public function handle($transaction)
     {
-        // Getting the transaction data from inside the nested object
-        $transaction = $transaction->transaction;
+        $transaction = $transaction->transaction; // Getting the transaction data from inside the nested object
 
         Order::create([
               'id'           => now()->format('y').'_'.$transaction->id,

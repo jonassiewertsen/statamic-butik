@@ -4,6 +4,8 @@ namespace Tests\Checkout;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Mail;
+use Jonassiewertsen\StatamicButik\Mail\CustomerPurchaseConfirmation;
 use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Listeners\CreateOrder;
@@ -55,6 +57,17 @@ class CreateOrderTest extends TestCase
         $createdAt = Carbon::parse($createdAt)->format('Y-m-d H:i:s');
 
         $this->assertDatabaseHas('orders', ['paid_at' => $createdAt]);
+    }
+
+    /** @test */
+    public function a_purchase_confirmation_mail_will_be_sent_to_the_customer(){
+        $this->withoutExceptionHandling();
+        Event::fake([CreateOrder::class]);
+        Mail::fake();
+
+        $amount = $this->makePayment();
+
+        Mail::assertQueued(CustomerPurchaseConfirmation::class);
     }
 
     private function makePayment()
