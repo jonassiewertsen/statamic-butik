@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class CustomerPurchaseConfirmation extends Mailable implements ShouldQueue
+class PurchaseConfirmationForSeller extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 

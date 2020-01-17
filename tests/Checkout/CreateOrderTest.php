@@ -5,10 +5,11 @@ namespace Tests\Checkout;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
-use Jonassiewertsen\StatamicButik\Mail\CustomerPurchaseConfirmation;
+use Jonassiewertsen\StatamicButik\Mail\PurchaseConfirmationForCustomer;
 use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Listeners\CreateOrder;
+use Jonassiewertsen\StatamicButik\Mail\PurchaseConfirmationForSeller;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class CreateOrderTest extends TestCase
@@ -61,13 +62,23 @@ class CreateOrderTest extends TestCase
 
     /** @test */
     public function a_purchase_confirmation_mail_will_be_sent_to_the_customer(){
+        Event::fake([CreateOrder::class]);
+        Mail::fake();
+
+        $amount = $this->makePayment();
+
+        Mail::assertQueued(PurchaseConfirmationForCustomer::class);
+    }
+
+    /** @test */
+    public function a_purchase_confirmation_mail_will_be_sent_to_the_seller(){
         $this->withoutExceptionHandling();
         Event::fake([CreateOrder::class]);
         Mail::fake();
 
         $amount = $this->makePayment();
 
-        Mail::assertQueued(CustomerPurchaseConfirmation::class);
+        Mail::assertQueued(PurchaseConfirmationForSeller::class);
     }
 
     private function makePayment()

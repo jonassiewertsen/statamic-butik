@@ -5,7 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Listeners;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
-use Jonassiewertsen\StatamicButik\Mail\CustomerPurchaseConfirmation;
+use Jonassiewertsen\StatamicButik\Mail\PurchaseConfirmationForCustomer;
 
 class SendPurchaseConfirmationToCustomer implements ShouldQueue
 {
@@ -13,6 +13,6 @@ class SendPurchaseConfirmationToCustomer implements ShouldQueue
 
     public function handle($transaction)
     {
-        Mail::queue(new CustomerPurchaseConfirmation());
+        Mail::queue(new PurchaseConfirmationForCustomer());
     }
 }
