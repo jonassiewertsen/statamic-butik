@@ -12,10 +12,10 @@ class TaxDeleteTest extends TestCase
     {
         $this->signIn();
 
-        $product = create(Tax::class);
-        $this->assertEquals(1, $product->count());
+        $tax = create(Tax::class);
+        $this->assertEquals(1, $tax->count());
 
-        $this->delete(route('statamic.cp.butik.taxes.destroy', $product->first()))
+        $this->delete(route('statamic.cp.butik.taxes.destroy', $tax->first()))
             ->assertOk();
 
         $this->assertEquals(0, Tax::count());
