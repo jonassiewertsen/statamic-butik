@@ -36,6 +36,7 @@ class PurchaseConfirmationForSeller extends Mailable implements ShouldQueue
      */
     public function build()
     {
+        // TODO: Get a nice view into place !!!
 //        return $this->view('emails.orders.shipped');
     }
 }
