@@ -19,9 +19,10 @@ class TaxesController extends Controller
             //return User::current()->can('view', $collection);
         })->map(function ($tax) {
             return [
-                'title' => $tax->title,
+                'title'      => $tax->title,
                 'percentage' => $tax->percentage,
-//                'edit_url' => $tax->editUrl(),
+                'edit_url'   => $tax->editUrl(),
+                'id'         => $tax->id,
 
                 // TODO: Add permissions
                 // 'deleteable' => User::current()->can('delete', $collection)
@@ -59,18 +60,18 @@ class TaxesController extends Controller
         Tax::create($values->toArray());
     }
 
-    // TODO: !
-//    public function edit(Product $tax) {
-//        $values = $tax->toArray();
-//        $blueprint = new TaxBlueprint();
-//        $fields = $blueprint()->fields()->addValues($values)->preProcess();
-//
-//        return view('statamic-butik::cp.products.edit', [
-//            'blueprint' => $blueprint()->toPublishArray(),
-//            'values'    => $fields->values(),
-//            'meta'      => $fields->meta(),
-//        ]);
-//    }
+    public function edit(Tax $tax) {
+        $values = $tax->toArray();
+        $blueprint = new TaxBlueprint();
+        $fields = $blueprint()->fields()->addValues($values)->preProcess();
+
+        return view('statamic-butik::cp.taxes.edit', [
+            'blueprint' => $blueprint()->toPublishArray(),
+            'values'    => $fields->values(),
+            'id'        => $tax->id,
+            'meta'      => $fields->meta(),
+        ]);
+    }
 
     public function update(Request $request, Tax $tax) {
         $blueprint = new TaxBlueprint();

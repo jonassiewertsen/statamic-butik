@@ -13,11 +13,11 @@
 {{--            @endcan--}}
         </div>
 
-        <butik-product-list
+        <butik-tax-list
             :initial-rows="{{ json_encode($taxes) }}"
             :columns="{{ json_encode($columns) }}"
             :endpoints="{}">
-        ></butik-product-list>
+        ></butik-tax-list>
 
     @else
 
