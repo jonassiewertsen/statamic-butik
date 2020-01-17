@@ -12,4 +12,11 @@ class Shipping extends Model
         'price' => 'integer',
     ];
     protected $guarded = [];
+
+    public function editUrl()
+    {
+        $cp_route = config('statamic.cp.route');
+
+        return "/{$cp_route}/butik/shippings/{$this->id}/edit";
+    }
 }
