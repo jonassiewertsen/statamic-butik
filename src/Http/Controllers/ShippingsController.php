@@ -81,9 +81,9 @@ class ShippingsController extends Controller
 //        $tax->update($values->toArray());
 //    }
 //
-//    public function destroy(Tax $tax)
-//    {
-//        // TODO: Add Permissions
-//        $tax->delete();
-//    }
+    public function destroy(Shipping $shipping)
+    {
+        // TODO: Add Permissions
+        $shipping->delete();
+    }
 }
