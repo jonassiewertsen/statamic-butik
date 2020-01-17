@@ -12,8 +12,7 @@ class CreateProductsTable extends Migration
             $table->string('title');
             $table->string('slug')->unique()->primary();
             $table->integer('base_price');
-            $table->bigInteger('taxes_id'); // TODO: rename into tax_id
-            // TODO: Nb big integer !!!!
+            $table->string('tax_id');
             $table->string('shipping_id');
             $table->json('description')->nullable();
             $table->json('images')->nullable();

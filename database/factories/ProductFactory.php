@@ -11,7 +11,7 @@ $factory->define(Product::class, function (Faker $faker) {
         'slug'           => $faker->unique()->slug,
         'description'    => $faker->paragraph(3),
         'base_price'     => $faker->numberBetween(100, 20000),
-        'taxes_id'       => create(Tax::class)->first(),
+        'tax_id'         => create(Tax::class)->first(),
         'shipping_id'    => create(Shipping::class)->first(),
         'type'           => $faker->randomElement(['download', 'physical'])
     ];

@@ -23,8 +23,8 @@ class Product extends Model
         return 'slug';
     }
 
-    public function taxes() {
-        return $this->belongsTo(Tax::class, 'taxes_id', 'slug');
+    public function tax() {
+        return $this->belongsTo(Tax::class, 'tax_id', 'slug');
     }
 
     public function shipping() {

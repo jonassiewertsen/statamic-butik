@@ -90,14 +90,14 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function it_has_taxes(){
+    public function it_has_a_tax(){
         $product = create(Product::class)->first();
 
-        $this->assertInstanceOf(Tax::class, $product->taxes);
+        $this->assertInstanceOf(Tax::class, $product->tax);
     }
 
     /** @test */
-    public function it_has_shippings(){
+    public function it_has_a_shipping(){
         $this->withoutExceptionHandling();
         $product = create(Product::class)->first();
 
