@@ -5,6 +5,22 @@
 return [
     // TODO: Remember To enable foreign key constraints
     // https://laravel.com/docs/6.x/database
+
+    /**
+     * Put your shop information here. Those will fx be shown on the
+     * website and the email templates.
+     */
+    'shop' => [
+        'name' => 'Statamic Butik',
+        'address_1' => '132 Main Street',
+        'address_2' => 'Sea view, Fahrensodde', // can be left empty
+        'zip_city' => '24937 Flensburg',
+        'country'   => 'Germany',
+
+        'phone' => '+49 1294 238474934',
+        'email' => 'butik@shop.com',
+    ],
+
     /**
      * All of your Payment Gateway options. If you need to adjust them, it's best
      * to do so in your .env file.
