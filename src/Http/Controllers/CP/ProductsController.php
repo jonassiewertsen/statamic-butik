@@ -15,12 +15,8 @@ class ProductsController extends CpController
 {
     public function index() {
         $this->authorize('view', Product::class);
-        // TODO: Do not use all !!!
-        $products = Product::all()->filter(function ($collection) {
-            return true;
-            // TODO: Add permissions
-            //return User::current()->can('view', $collection);
-        })->map(function ($product) {
+
+        $products = Product::all()->map(function ($product) {
             return [
                 'title' => $product->title,
                 'slug' => $product->slug,
@@ -28,11 +24,7 @@ class ProductsController extends CpController
                 'description' => $product->description,
                 'base_price' => $product->base_price_with_currency_symbol,
                 'edit_url' => $product->editUrl,
-
-                // TODO: Add permissions
-                // 'deleteable' => User::current()->can('delete', $collection)
-                'deleteable' => true,
-
+                'deleteable' => auth()->user()->can('delete', $product),
             ];
         })->values();
 
@@ -52,6 +44,8 @@ class ProductsController extends CpController
 
     public function create()
     {
+        $this->authorize('create', Product::class);
+
         $blueprint = new ProductBlueprint();
         $fields = $blueprint()->fields()->preProcess();
 
@@ -64,6 +58,8 @@ class ProductsController extends CpController
 
     public function store(Request $request)
     {
+        $this->authorize('create', Product::class);
+
         $blueprint = new ProductBlueprint();
         $fields = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
@@ -72,6 +68,8 @@ class ProductsController extends CpController
     }
 
     public function edit(Product $product) {
+        $this->authorize('edit', Product::class);
+
         $values = $product->toArray();
         $blueprint = new ProductBlueprint();
         $fields = $blueprint()->fields()->addValues($values)->preProcess();
@@ -83,6 +81,8 @@ class ProductsController extends CpController
         ]);
     }
     public function update(Request $request, Product $product) {
+        $this->authorize('edit', Product::class);
+
         $blueprint = new ProductBlueprint();
         $fields = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
@@ -92,7 +92,9 @@ class ProductsController extends CpController
 
     public function destroy(Product $product)
     {
-        // TODO: Add Permissions
+        $this->authorize('delete', Product::class);
+
+        // TODO: Only deletable if ?
         $product->delete();
     }
 }

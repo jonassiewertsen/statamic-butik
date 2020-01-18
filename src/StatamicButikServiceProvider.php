@@ -104,6 +104,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
             // Products
             $nav->create(__('statamic-butik::menu.cp.products'))
                 ->section('Butik')
+                ->can(auth()->user()->can('view products'))
                 ->route('butik.products.index')
                 ->icon('tags');
 

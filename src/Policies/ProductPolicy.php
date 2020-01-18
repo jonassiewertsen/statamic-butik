@@ -10,8 +10,34 @@ class ProductPolicy
 {
     use HandlesAuthorization;
 
-    public function view(User $user) {
+    public function index(User $user, $ability)
+    {
         return $user->hasPermission('view products');
+    }
+
+    public function create(User $user, $ability)
+    {
+        return $user->hasPermission('create products');
+    }
+
+    public function store($user, $ability)
+    {
+        return $user->hasPermission('create products');
+    }
+
+    public function edit($user, Product $procts)
+    {
+        return $user->hasPermission('edit products');
+    }
+
+    public function update(User $user, Product $product)
+    {
+        return $user->hasPermission('update products');
+    }
+
+    public function delete(User $user, Product $product)
+    {
+        return $user->hasPermission('delete collections');
     }
 
 }

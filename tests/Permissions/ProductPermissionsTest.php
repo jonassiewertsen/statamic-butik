@@ -12,7 +12,7 @@ class ProductPermissionsTest extends TestCase
     public function a_view_permission_is_needed(){
         // TODO: Get tests in place, after the Statamic issue has been resolved
         // that cp views will throw 500 errors.
-        
+
         // $this->signInUser();
         // $this->get(cp_route('butik.products.index'))->assertUnauthorized();
 
