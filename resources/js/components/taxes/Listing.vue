@@ -15,6 +15,8 @@
                             @click="confirmDeleteRow(collection.slug, index)" />
                     </dropdown-list>
 
+                    <!-- TODO: A really nice toast notification would be great, if the product cant be deleted -->
+
                     <confirmation-modal
                         v-if="deletingRow !== false"
                         :title="deletingModalTitle"
