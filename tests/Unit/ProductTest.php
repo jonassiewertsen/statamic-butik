@@ -12,7 +12,7 @@ class ProductTest extends TestCase
     /** @test */
     public function it_has_a_shipping_amount(){
         $product = create(Product::class)->first();
-        $this->assertEquals($product->shipping->price, $product->shipping_amount);
+        $this->assertEquals($product->makeAmountHuman($product->shipping->price), $product->shipping_amount);
     }
 
 //    /** @test */
@@ -26,8 +26,10 @@ class ProductTest extends TestCase
     /** @test */
     public function it_has_a_total_price(){
         $product = create(Product::class)->first();
+        $amount = $product->getOriginal('base_price') + $product->getOriginal('shipping_amount');
+
         $this->assertEquals(
-            $product->getOriginal('base_price') + $product->getOriginal('shipping_amount'),
+            $product->makeAmountHuman($amount),
             $product->total_price
         );
     }

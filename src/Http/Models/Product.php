@@ -57,8 +57,7 @@ class Product extends Model
      */
     public function getShippingAmountAttribute()
     {
-        // Not formatted correctly
-        return $this->shipping->price;
+        return $this->makeAmountHuman($this->shipping->price);
     }
 
     /**
@@ -66,8 +65,8 @@ class Product extends Model
      */
     public function getTotalPriceAttribute()
     {
-        // Not formatted correctly
-        return $this->getOriginal('base_price') + $this->getOriginal('shipping_amount');
+        $amount = $this->getOriginal('base_price') + $this->getOriginal('shipping_amount');
+        return $this->makeAmountHuman($amount);
     }
 
     /**
@@ -94,7 +93,7 @@ class Product extends Model
         return $this->base_price.' '.config('statamic-butik.currency.symbol');
     }
 
-    private function makeAmountHuman($value)
+    public function makeAmountHuman($value)
     {
         $value = floatval($value) / 100;
 
