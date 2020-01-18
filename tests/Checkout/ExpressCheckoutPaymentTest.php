@@ -101,7 +101,11 @@ class ExpressCheckoutPaymentTestTest extends TestCase
 
         $this->get($this->product->expressPaymentUrl)
             ->assertSee($this->product->title)
-            ->assertSee($this->product->base_price);
+            ->assertSee($this->product->base_price)
+            ->assertSee($this->product->total_price)
+            ->assertSee($this->product->taxes_amount)
+            ->assertSee($this->product->taxes_percentage)
+            ->assertSee($this->product->shipping_amount);
     }
 
     /** @test */
