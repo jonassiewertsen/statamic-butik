@@ -10,6 +10,29 @@ use Jonassiewertsen\StatamicButik\Tests\TestCase;
 class ProductTest extends TestCase
 {
     /** @test */
+    public function it_has_a_shipping_amount(){
+        $product = create(Product::class)->first();
+        $this->assertEquals($product->shipping->price, $product->shipping_amount);
+    }
+
+    /** @test */
+    public function it_has_tax_amount(){
+        $product = create(Product::class)->first();
+        dd($product->tax->percentage, $product->tax_amount);
+        $this->assertEquals($product->tax, $product->tax_amount);
+        // TODO: Calculate the tax amount
+    }
+
+    /** @test */
+    public function it_has_a_total_price(){
+        $product = create(Product::class)->first();
+        $this->assertEquals(
+            $product->getOriginal('base_price') + $product->getOriginal('shipping_amount'),
+            $product->total_price
+        );
+    }
+    
+    /** @test */
     public function the_currency_will_be_converted_correctly()
     {
         $product = create(Product::class, ['base_price' => 2 ]);

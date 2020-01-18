@@ -21,6 +21,9 @@ class Product extends Model
     ];
 
     protected $appends = [
+        'total_price',
+        'tax_amount',
+        'shipping_amount',
         'editUrl',
         'showUrl',
         'ExpressDeliveryUrl',
@@ -47,6 +50,24 @@ class Product extends Model
      */
     public function shipping() {
         return $this->belongsTo(Shipping::class, 'shipping_id', 'slug');
+    }
+
+    /**
+     * Will return the shipping price
+     */
+    public function getShippingAmountAttribute()
+    {
+        // Not formatted correctly
+        return $this->shipping->price;
+    }
+
+    /**
+     * Will return the shipping price for this item
+     */
+    public function getTotalPriceAttribute()
+    {
+        // Not formatted correctly
+        return $this->getOriginal('base_price') + $this->getOriginal('shipping_amount');
     }
 
     /**
