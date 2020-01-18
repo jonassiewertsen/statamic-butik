@@ -38,7 +38,7 @@ class ProductTest extends TestCase
     /** @test */
     public function it_has_a_total_price(){
         $product = create(Product::class)->first();
-        $amount = $product->getOriginal('base_price') + $product->getOriginal('shipping_amount');
+        $amount = $product->getOriginal('base_price') + $product->makeAmountSaveable($product->shipping_amount);
 
         $this->assertEquals(
             $product->makeAmountHuman($amount),

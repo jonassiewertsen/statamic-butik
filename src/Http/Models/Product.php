@@ -58,7 +58,7 @@ class Product extends Model
      */
     public function getTotalPriceAttribute()
     {
-        $amount = $this->getOriginal('base_price') + $this->getOriginal('shipping_amount');
+        $amount = $this->getOriginal('base_price') + $this->makeAmountSaveable($this->shipping_amount);
         return $this->makeAmountHuman($amount);
     }
 
@@ -121,7 +121,7 @@ class Product extends Model
         return number_format($value, 2, $delimiter, '');
     }
 
-    private function makeAmountSaveable($value)
+    public function makeAmountSaveable($value)
     {
         return number_format(floatval($value) * 100, 0, '', '');
     }
