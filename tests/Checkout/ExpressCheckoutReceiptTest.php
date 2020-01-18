@@ -46,7 +46,7 @@ class ExpressCheckoutReceiptTest extends TestCase
     /** @test */
     public function the_correct_template_and_layout_will_be_loaded()
     {
-        $route = $this->product->expressReceiptUrl();
+        $route = $this->product->expressReceiptUrl;
         $this->assertStatamicLayoutIs('statamic-butik::web.layouts.express-checkout', $route);
         $this->assertStatamicTemplateIs('statamic-butik::web.checkout.express.receipt', $route);
     }
@@ -54,7 +54,7 @@ class ExpressCheckoutReceiptTest extends TestCase
     /** @test */
     public function it_can_be_visited_with_successful_transaction()
     {
-        $this->get($this->product->expressReceiptUrl())->assertOk();
+        $this->get($this->product->expressReceiptUrl)->assertOk();
     }
 
     /** @test */
@@ -70,14 +70,14 @@ class ExpressCheckoutReceiptTest extends TestCase
                 'amount'          => 1233,
                 'created_at'      => now(),
             ]));
-        $this->get(create(Product::class)->first()->expressReceiptUrl())->assertRedirect();
+        $this->get(create(Product::class)->first()->expressReceiptUrl)->assertRedirect();
     }
 
     /** @test */
     public function redirect_without_a_existing_transaction_in_the_session()
     {
         Session::forget('butik.transaction');
-        $this->get(create(Product::class)->first()->expressReceiptUrl())->assertRedirect();
+        $this->get(create(Product::class)->first()->expressReceiptUrl)->assertRedirect();
     }
 
     /** @test */
@@ -90,7 +90,7 @@ class ExpressCheckoutReceiptTest extends TestCase
             'created_at' => now(),
         ]);
 
-        $this->get($this->product->expressReceiptUrl());
+        $this->get($this->product->expressReceiptUrl);
     }
 
     /** @test */
@@ -108,7 +108,7 @@ class ExpressCheckoutReceiptTest extends TestCase
             'customer'        => []
         ]));
 
-        $this->get($this->product->expressReceiptUrl())
+        $this->get($this->product->expressReceiptUrl)
             ->assertSessionMissing('butik.transaction');
     }
 

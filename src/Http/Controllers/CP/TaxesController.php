@@ -1,9 +1,10 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Controllers;
+namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
 
 use Illuminate\Http\Request;
 use Jonassiewertsen\StatamicButik\Blueprints\TaxBlueprint;
+use Jonassiewertsen\StatamicButik\Http\Controllers\Controller;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Statamic\Contracts\Auth\User;
 use Statamic\CP\Column;

@@ -7,6 +7,7 @@ use Illuminate\Routing\Controller as LaravelController;
 class Controller extends LaravelController
 {
     protected function addingProductRoutes($product): array {
+        // Todo: This needs a refactor
         return [
             'title' => $product->title,
             'description' => $product->description,

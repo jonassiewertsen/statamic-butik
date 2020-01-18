@@ -89,7 +89,7 @@ class ExpressCheckoutPaymentTestTest extends TestCase
     public function The_express_payment_page_does_exist()
     {
         Session::put('butik.customer', $this->createUserData());
-        $route = $this->product->expressPaymentUrl();
+        $route = $this->product->expressPaymentUrl;
 
         $this->assertStatamicLayoutIs('statamic-butik::web.layouts.express-checkout', $route);
         $this->assertStatamicTemplateIs('statamic-butik::web.checkout.express.payment', $route);
@@ -99,7 +99,7 @@ class ExpressCheckoutPaymentTestTest extends TestCase
     public function the_product_information_will_be_displayed(){
         Session::put('butik.customer', $this->createUserData());
 
-        $this->get($this->product->expressPaymentUrl())
+        $this->get($this->product->expressPaymentUrl)
             ->assertSee($this->product->title)
             ->assertSee($this->product->base_price);
     }

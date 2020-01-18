@@ -6,7 +6,7 @@
 |--------------------------------------------------------------------------
 */
 
-Route::prefix(config('statamic-butik.uri.shop'))->name('butik.')->namespace('Http\\Controllers\\')->group(function() {
+Route::prefix(config('statamic-butik.uri.shop'))->name('butik.')->namespace('Http\\Controllers\\Web\\')->group(function() {
     Route::get('/', 'ShopController@index')->name('shop');
     Route::get('{product}', 'ShopController@show')->name('shop.product');
 

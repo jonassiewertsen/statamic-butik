@@ -1,7 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Controllers;
+namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 
+use Jonassiewertsen\StatamicButik\Http\Controllers\Controller;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Statamic\View\View;
 

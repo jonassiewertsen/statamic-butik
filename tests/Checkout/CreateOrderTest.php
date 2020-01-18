@@ -22,10 +22,13 @@ class CreateOrderTest extends TestCase
         $this->app['config']->set($configPath.'merchant_id', '8t2hkkd3nn7yqncp');
         $this->app['config']->set($configPath.'public_key', 'j3txsgnhkx8q4cdp');
         $this->app['config']->set($configPath.'private_key', '020f0a4c1d7db142d33e40c04f9a4799');
+
+        Mail::fake();
     }
 
     /** @test */
     public function a_order_will_be_created(){
+        $this->withoutExceptionHandling();
         Event::fake([CreateOrder::class]);
 
         $this->makePayment();

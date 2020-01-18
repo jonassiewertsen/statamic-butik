@@ -31,7 +31,6 @@ class ProductCreateTest extends TestCase
         $this->withoutExceptionHandling();
         $product = raw(Product::class);
         $this->post(route('statamic.cp.butik.products.store'), $product)->assertSessionHasNoErrors();
-        dd(Product::first());
         $this->assertEquals(1, Product::count());
     }
 

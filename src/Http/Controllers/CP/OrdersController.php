@@ -1,9 +1,10 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Controllers;
+namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
 
 use Illuminate\Http\Request;
 use Jonassiewertsen\StatamicButik\Blueprints\ShippingBlueprint;
+use Jonassiewertsen\StatamicButik\Http\Controllers\Controller;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
 use Scrumpy\HtmlToProseMirror\Test\TestCase;

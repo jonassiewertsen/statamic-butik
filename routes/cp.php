@@ -6,7 +6,7 @@
 |--------------------------------------------------------------------------
 */
 
-Route::prefix('butik/')->name('butik.')->namespace('Http\\Controllers\\')->group(function() {
+Route::prefix('butik/')->name('butik.')->namespace('Http\\Controllers\\CP\\')->group(function() {
     Route::resource('products', 'ProductsController')->only([
        'index', 'create', 'store', 'edit',  'update', 'destroy',
     ]);
