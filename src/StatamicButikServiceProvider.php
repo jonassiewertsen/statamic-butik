@@ -143,6 +143,22 @@ class StatamicButikServiceProvider extends AddonServiceProvider
                         ])
                     ]);
                 });
+                Permission::register('view taxes', function ($permission) {
+                    $permission->children([
+                        Permission::make('edit taxes')->children([
+                            Permission::make('create taxes'),
+                            Permission::make('delete taxes')
+                        ])
+                    ]);
+                });
+                Permission::register('view shippings', function ($permission) {
+                    $permission->children([
+                        Permission::make('edit shippings')->children([
+                            Permission::make('create shippings'),
+                            Permission::make('delete shippings'),
+                         ]),
+                    ]);
+                });
             });
         });
     }

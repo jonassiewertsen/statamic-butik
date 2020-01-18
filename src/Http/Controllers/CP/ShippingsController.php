@@ -5,30 +5,21 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
 use Illuminate\Http\Request;
 use Jonassiewertsen\StatamicButik\Blueprints\ShippingBlueprint;
 use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
+use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
-use Scrumpy\HtmlToProseMirror\Test\TestCase;
-use Statamic\Contracts\Auth\User;
 use Statamic\CP\Column;
-use Statamic\Facades\Blueprint;
 
 class ShippingsController extends CpController
 {
 
     public function index() {
-        $shippings = Shipping::all()->filter(function ($collection) {
-            return true;
-            // TODO: Add permissions
-            //return User::current()->can('view', $collection);
-        })->map(function ($shipping) {
+        $shippings = Shipping::all()->map(function ($shipping) {
             return [
                 'title'      => $shipping->title,
                 'price'      => $shipping->price,
                 'edit_url'   => $shipping->editUrl(),
                 'id'         => $shipping->slug,
-
-                // TODO: Add permissions
-                // 'deleteable' => User::current()->can('delete', $collection)
-                'deleteable' => true,
+                'deleteable' => auth()->user()->can('delete', Shipping::class),
             ];
         })->values();
 
@@ -43,6 +34,8 @@ class ShippingsController extends CpController
 
     public function create()
     {
+        $this->authorize('create', Shipping::class);
+
         $blueprint = new ShippingBlueprint();
         $fields = $blueprint()->fields()->preProcess();
 
@@ -55,6 +48,8 @@ class ShippingsController extends CpController
 
     public function store(Request $request)
     {
+        $this->authorize('store', Shipping::class);
+
         $blueprint = new ShippingBlueprint();
         $fields = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
@@ -63,6 +58,8 @@ class ShippingsController extends CpController
     }
 
     public function edit(Shipping $shipping) {
+        $this->authorize('edit', $shipping);
+
         $values = $shipping->toArray();
         $blueprint = new ShippingBlueprint();
         $fields = $blueprint()->fields()->addValues($values)->preProcess();
@@ -76,6 +73,8 @@ class ShippingsController extends CpController
     }
 
     public function update(Request $request, Shipping $shipping) {
+        $this->authorize('update', $shipping);
+
         $blueprint = new ShippingBlueprint();
         $fields = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
@@ -85,7 +84,8 @@ class ShippingsController extends CpController
 
     public function destroy(Shipping $shipping)
     {
-        // TODO: Add Permissions
+        $this->authorize('delete', $shipping);
+
         $shipping->delete();
     }
 }
