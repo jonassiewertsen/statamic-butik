@@ -33,7 +33,7 @@ class TestCase extends OrchestraTestCase
         $role = Role::make()->handle('test')->title('Test')->addPermission($permissions)->save();
 
         $user = \Statamic\Facades\User::make();
-        $user->id(1)->email('test@mail.de')->makeSuper()->assignRole($role);
+        $user->id(1)->email('test@mail.de')->assignRole($role);
         $this->be($user);
         return $user;
     }
@@ -41,7 +41,7 @@ class TestCase extends OrchestraTestCase
     protected function signInAdmin()
     {
         $user = \Statamic\Facades\User::make();
-        $user->id(1)->email('test@mail.de')->makeSuper()->assignRole([]);
+        $user->id(1)->email('test@mail.de')->makeSuper();
         $this->be($user);
         return $user;
     }
