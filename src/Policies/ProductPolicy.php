@@ -25,7 +25,7 @@ class ProductPolicy
         return $user->hasPermission('create products');
     }
 
-    public function edit($user, Product $procts)
+    public function edit($user, Product $product)
     {
         return $user->hasPermission('edit products');
     }
@@ -37,7 +37,7 @@ class ProductPolicy
 
     public function delete(User $user, Product $product)
     {
-        return $user->hasPermission('delete collections');
+        return $user->hasPermission('delete products');
     }
 
 }
