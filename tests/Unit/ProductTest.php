@@ -15,13 +15,19 @@ class ProductTest extends TestCase
         $this->assertEquals($product->makeAmountHuman($product->shipping->price), $product->shipping_amount);
     }
 
-//    /** @test */
-//    public function it_has_tax_amount(){
-//        $product = create(Product::class)->first();
-//        dd($product->tax->percentage, $product->tax_amount); // WIP
-//        $this->assertEquals($product->tax, $product->tax_amount);
-//        // TODO: Calculate the tax amount
-//    }
+    /** @test */
+    public function it_has_tax_amount(){
+        $product = create(Product::class)->first();
+
+        $divisor            = $product->tax->percentage + 100;
+        $base_price         = $product->getOriginal('base_price');
+        $shipping_amount    = $product->shipping->price;
+        $total_amount       = $base_price + $shipping_amount;
+
+        $totalPriceWithoutTax = $total_amount / $divisor * 100;
+        $tax = round($total_amount - $totalPriceWithoutTax, 2);
+        $this->assertEquals($tax, $product->tax_amount);
+    }
 
     /** @test */
     public function it_has_a_total_price(){

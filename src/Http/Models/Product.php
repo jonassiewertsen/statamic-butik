@@ -69,12 +69,14 @@ class Product extends Model
         return $this->makeAmountHuman($amount);
     }
 
-    /**
-     * Mutating from a whole number into the correct amount
-     */
-    public function getBasePriceAttribute($value)
-    {
-        return $this->makeAmountHuman($value);
+    public function getTaxAmountAttribute() {
+        $divisor            = $this->tax->percentage + 100;
+        $base_price         = $this->getOriginal('base_price');
+        $shipping_amount    = $this->shipping->price;
+        $total_amount       = $base_price + $shipping_amount;
+
+        $totalPriceWithoutTax = $total_amount / $divisor * 100;
+        return round($total_amount - $totalPriceWithoutTax, 2);
     }
 
     /**
