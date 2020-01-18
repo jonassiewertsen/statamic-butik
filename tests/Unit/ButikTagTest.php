@@ -30,6 +30,10 @@ class ButikTagTest extends TestCase
 //        $this->assertStringContainsString($product->images[0], $this->butik->products()->toJson()); // Image not tested
         $this->assertStringContainsString($product->base_price, $this->butik->products());
         $this->assertStringContainsString(json_encode($product->showUrl), $this->butik->products());
+        $this->assertStringContainsString(json_encode($product->shipping_amount), $this->butik->products());
+        $this->assertStringContainsString(json_encode($product->tax_amount), $this->butik->products());
+        $this->assertStringContainsString(json_encode($product->tax_percentage), $this->butik->products());
+        $this->assertStringContainsString(json_encode($product->total_price), $this->butik->products());
     }
 
     /** @test */

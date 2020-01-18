@@ -12,13 +12,19 @@ class Butik extends StatamicTags
         $products = Product::all();
         $products->transform(function($product) {
             return [
-                'title' => $product->title,
-                'description' => $product->description,
-                'images' => $product->images,
-                'base_price' => $product->base_price,
-                'show_url' => $product->showUrl,
+                'title'           => $product->title,
+                'description'     => $product->description,
+                'images'          => $product->images,
+                'base_price'      => $product->base_price,
+                'total_price'     => $product->total_price,
+                'shipping_amount' => $product->shipping_amount,
+                'tax_amount'      => $product->tax_amount,
+                'tax_percentage'  => $product->tax_percentage,
+                'show_url'        => $product->showUrl,
             ];
+
         });
+
          return $products;
     }
 
