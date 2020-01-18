@@ -13,6 +13,10 @@ class SendPurchaseConfirmationToCustomer implements ShouldQueue
 
     public function handle($transaction)
     {
-//        Mail::queue(new PurchaseConfirmationForCustomer());
+        try {
+            Mail::queue(new PurchaseConfirmationForCustomer());
+        } catch(\Exception $e) {
+            // TODO: Do something
+        }
     }
 }
