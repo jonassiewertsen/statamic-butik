@@ -16,6 +16,12 @@ class ProductTest extends TestCase
     }
 
     /** @test */
+    public function it_has_a_tax_percentage(){
+        $product = create(Product::class)->first();
+        $this->assertEquals($product->tax->percentage, $product->tax_percentage);
+    }
+
+    /** @test */
     public function it_has_tax_amount(){
         $product = create(Product::class)->first();
 
@@ -25,7 +31,7 @@ class ProductTest extends TestCase
         $total_amount       = $base_price + $shipping_amount;
 
         $totalPriceWithoutTax = $total_amount / $divisor * 100;
-        $tax = round($total_amount - $totalPriceWithoutTax, 2);
+        $tax = $product->makeAmountHuman($total_amount - $totalPriceWithoutTax);
         $this->assertEquals($tax, $product->tax_amount);
     }
 

@@ -23,6 +23,7 @@ class Product extends Model
     protected $appends = [
         'total_price',
         'tax_amount',
+        'tax_percentage',
         'shipping_amount',
         'editUrl',
         'showUrl',
@@ -77,6 +78,14 @@ class Product extends Model
         return $this->makeAmountHuman($this->shipping->price);
     }
 
+    /**
+     * Will return the shipping price
+     */
+    public function getTaxPercentageAttribute()
+    {
+        return $this->tax->percentage;
+    }
+
     public function getTaxAmountAttribute() {
         $divisor            = $this->tax->percentage + 100;
         $base_price         = $this->getOriginal('base_price');
@@ -84,7 +93,8 @@ class Product extends Model
         $total_amount       = $base_price + $shipping_amount;
 
         $totalPriceWithoutTax = $total_amount / $divisor * 100;
-        return round($total_amount - $totalPriceWithoutTax, 2);
+        $tax = $total_amount - $totalPriceWithoutTax;
+        return $this->makeAmountHuman($tax);
     }
 
     /**
