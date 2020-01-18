@@ -100,14 +100,17 @@
 
                 <div class="butik-flex butik-my-3 butik-justify-between butik-max-w-sm butik-mx-auto">
                     <span>{{ trans key="statamic-butik::payment.shipping" }}</span>
-                    <span>{{ butik:currency_symbol }} 5,00</span>
+                    <span>{{ butik:currency_symbol }} {{ shipping_amount }}</span>
                 </div>
 
                 <hr class="butik-border-white butik-my-5">
 
-                <div class="butik-flex butik-my-3 butik-justify-between butik-max-w-sm butik-mx-auto">
+                <div class="butik-flex butik-mt-3 butik-justify-between butik-max-w-sm butik-mx-auto">
                     <span>{{ trans key="statamic-butik::payment.total" }}</span>
-                    <span class="butik-font-black">{{ butik:currency_symbol }} 1402,00</span>
+                    <span class="butik-font-black">{{ butik:currency_symbol }} {{ total_price }}</span>
+                </div>
+                <div class="butik-max-w-sm butik-mx-auto butik-pb-3 butik-text-gray-500 butik-text-right butik-text-sm">
+                    Including {{ tax_percentage }}% taxes ({{ tax_amount }} {{ butik:currency_symbol }})
                 </div>
 
             </section>

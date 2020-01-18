@@ -30,7 +30,10 @@ class ExpressCheckoutDeliveryTest extends TestCase
     public function the_product_information_will_be_displayed(){
         $this->get(route('butik.checkout.express.delivery', $this->product))
             ->assertSee($this->product->title)
-            ->assertSee($this->product->base_price);
+            ->assertSee($this->product->base_price)
+            ->assertSee($this->product->total_price)
+            ->assertSee($this->product->tax_amount)
+            ->assertSee($this->product->tax_percentage);
     }
 
     /** @test */
