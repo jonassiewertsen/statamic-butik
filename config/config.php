@@ -11,7 +11,7 @@ return [
      * website and the email templates.
      */
     'name' => 'Statamic Butik',
-    'slogan' => '"Butik" is a Scandinavian term for a small or medium-sized shop. Exactly what this Statamic addon is standing for.',
+    'thank_you' => 'Thank you!',
 
     'address_1' => '132 Main Street',
     'address_2' => 'Sea view, Fahrensodde', // can be left empty
