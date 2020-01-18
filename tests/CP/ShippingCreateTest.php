@@ -10,7 +10,7 @@ class ShippingCreateTest extends TestCase
     public function setUp(): void {
         parent::setUp();
 
-        $this->signIn();
+        $this->signInAdmin();
     }
 
 //    TODO: Add test back in again, if composer test has been resolve

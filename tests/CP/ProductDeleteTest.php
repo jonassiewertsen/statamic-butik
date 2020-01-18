@@ -10,7 +10,7 @@ class ProductDeleteTest extends TestCase
     /** @test */
     public function A_product_can_be_deleted()
     {
-        $this->signIn();
+        $this->signInAdmin();
 
         $product = create(Product::class);
         $this->assertEquals(1, $product->count());

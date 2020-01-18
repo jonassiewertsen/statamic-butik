@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Statamic\Facades\AssetContainer;
 use Statamic\Facades\Blueprint;
+use Statamic\Facades\Role;
 use Statamic\Statamic;
 
 class TestCase extends OrchestraTestCase
@@ -27,11 +28,22 @@ class TestCase extends OrchestraTestCase
 //         $this->createContainer();
     }
 
-    protected function signIn()
+    protected function signInUser($permissions = [])
+    {
+        $role = Role::make()->handle('test')->title('Test')->addPermission($permissions)->save();
+
+        $user = \Statamic\Facades\User::make();
+        $user->id(1)->email('test@mail.de')->makeSuper()->assignRole($role);
+        $this->be($user);
+        return $user;
+    }
+
+    protected function signInAdmin()
     {
         $user = \Statamic\Facades\User::make();
-        $user->id(1)->email('test@mail.de')->makeSuper();
+        $user->id(1)->email('test@mail.de')->makeSuper()->assignRole([]);
         $this->be($user);
+        return $user;
     }
 
     protected function assertStatamicTemplateIs($template, $route) {

@@ -11,7 +11,7 @@ class ShippingDeleteTest extends TestCase
     /** @test */
     public function shippings_can_be_deleted()
     {
-        $this->signIn();
+        $this->signInAdmin();
 
         $shipping = create(Shipping::class);
         $this->assertEquals(1, $shipping->count());

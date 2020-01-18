@@ -2,8 +2,12 @@
 
 namespace Jonassiewertsen\StatamicButik;
 
+use Illuminate\Support\Facades\Gate;
 use Jonassiewertsen\StatamicButik\Http\Middleware\DeletingTransactionData;
+use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Policies\ProductPolicy;
 use Statamic\Facades\Nav;
+use Statamic\Facades\Permission;
 use Statamic\Providers\AddonServiceProvider;
 use Statamic\Tags\Errors;
 
@@ -33,6 +37,10 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         __DIR__ . '/../public/js/statamic-butik.js',
     ];
 
+    protected $policies = [
+        Product::class => ProductPolicy::class,
+    ];
+
     public function boot()
     {
          parent::boot();
@@ -41,6 +49,8 @@ class StatamicButikServiceProvider extends AddonServiceProvider
          $this->loadViewsFrom(__DIR__.'/../resources/views', 'statamic-butik');
          $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
+         $this->registerPolicies();
+         $this->registerPermissions();
          $this->registerMiddleware();
          $this->createNavigation();
 
@@ -108,8 +118,30 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         });
     }
 
+    public function registerPolicies()
+    {
+        foreach ($this->policies as $key => $value) {
+            Gate::policy($key, $value);
+        }
+    }
+
     private function registerMiddleware() {
         $router = $this->app['router'];
         $router->pushMiddlewareToGroup('web', DeletingTransactionData::class);
+    }
+
+    private function registerPermissions() {
+        $this->app->booted(function () {
+            Permission::group('butik', 'Statamic Butik', function () {
+                Permission::register('view products', function ($permission) {
+                    $permission->children([
+                        Permission::make('edit products')->children([
+                            Permission::make('create products'),
+                            Permission::make('delete products')
+                        ])
+                    ]);
+                });
+            });
+        });
     }
 }

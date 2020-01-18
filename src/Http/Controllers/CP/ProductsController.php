@@ -3,6 +3,7 @@
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Jonassiewertsen\StatamicButik\Blueprints\ProductBlueprint;
 use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
@@ -13,6 +14,7 @@ use Statamic\Facades\Blueprint;
 class ProductsController extends CpController
 {
     public function index() {
+        dd(auth()->user()->permissions());
         // TODO: Do not use all !!!
         $products = Product::all()->filter(function ($collection) {
             return true;

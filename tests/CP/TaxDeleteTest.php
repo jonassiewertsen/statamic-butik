@@ -10,7 +10,7 @@ class TaxDeleteTest extends TestCase
     /** @test */
     public function taxes_can_be_deleted()
     {
-        $this->signIn();
+        $this->signInAdmin();
 
         $tax = create(Tax::class);
         $this->assertEquals(1, $tax->count());

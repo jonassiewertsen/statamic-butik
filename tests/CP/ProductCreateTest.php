@@ -11,7 +11,7 @@ class ProductCreateTest extends TestCase
     public function setUp(): void {
         parent::setUp();
 
-        $this->signIn();
+        $this->signInAdmin();
     }
 
 
