@@ -53,20 +53,28 @@ class Product extends Model
     }
 
     /**
-     * Will return the shipping price
-     */
-    public function getShippingAmountAttribute()
-    {
-        return $this->makeAmountHuman($this->shipping->price);
-    }
-
-    /**
      * Will return the shipping price for this item
      */
     public function getTotalPriceAttribute()
     {
         $amount = $this->getOriginal('base_price') + $this->getOriginal('shipping_amount');
         return $this->makeAmountHuman($amount);
+    }
+
+    /**
+     * Will return the base price for this item
+     */
+    public function getBasePriceAttribute($value)
+    {
+        return $this->makeAmountHuman($value);
+    }
+
+    /**
+     * Will return the shipping price
+     */
+    public function getShippingAmountAttribute()
+    {
+        return $this->makeAmountHuman($this->shipping->price);
     }
 
     public function getTaxAmountAttribute() {
