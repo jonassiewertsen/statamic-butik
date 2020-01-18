@@ -30,6 +30,8 @@ class ProductShowTest extends TestCase
         $this->get(route('butik.shop.product', $this->product))
             ->assertSee($this->product->title)
             ->assertSee($this->product->description)
-            ->assertSee($this->product->base_price);
+            ->assertSee($this->product->base_price)
+            ->assertSee($this->product->total_price)
+            ->assertSee($this->product->shippin_amount);
     }
 }
