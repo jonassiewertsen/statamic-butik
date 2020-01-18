@@ -22,7 +22,7 @@ class Shipping extends Model
     }
 
     public function products() {
-        return $this->hasMany(Shipping::class, 'shipping_id');
+        return $this->hasMany(Product::class, 'shipping_id');
     }
 
     public function editUrl()

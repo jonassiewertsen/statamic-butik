@@ -90,6 +90,10 @@ class ShippingsController extends CpController
     {
         $this->authorize('delete', $shipping);
 
+        if ($shipping->products->count() !== 0) {
+            return response('You can\'t delete this shipping. It is used by some products', 403);
+        }
+
         $shipping->delete();
     }
 }
