@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class PurchaseConfirmationForCustomer extends Mailable implements ShouldQueue
+class OrderConfirmationForSeller extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -36,7 +36,7 @@ class PurchaseConfirmationForCustomer extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        // TODO: Get a nice view into place
+        // TODO: Get a nice view into place !!!
 //        return $this->view('emails.orders.shipped');
     }
 }
