@@ -10,5 +10,8 @@ class ProductPolicy
 {
     use HandlesAuthorization;
 
+    public function view(User $user) {
+        return $user->hasPermission('view products');
+    }
 
 }

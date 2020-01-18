@@ -14,7 +14,7 @@ use Statamic\Facades\Blueprint;
 class ProductsController extends CpController
 {
     public function index() {
-        dd(auth()->user()->permissions());
+        $this->authorize('view', Product::class);
         // TODO: Do not use all !!!
         $products = Product::all()->filter(function ($collection) {
             return true;
