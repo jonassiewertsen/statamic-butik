@@ -26,7 +26,6 @@ class ShippingDeleteTest extends TestCase
     /** @test */
     public function a_shipping_cant_be_deleted_if_it_related_to_any_existing_product()
     {
-        $this->withoutExceptionHandling();
         $this->signInAdmin();
 
         $product = create(Product::class)->first();
