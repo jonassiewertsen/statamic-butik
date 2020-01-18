@@ -90,6 +90,10 @@ class TaxesController extends CpController
     {
         $this->authorize('delete', $tax);
 
+        if ($tax->products->count() !== 0) {
+            return response('You can\'t delete this tax. It is used by some products', 403);
+        }
+
         $tax->delete();
     }
 }
