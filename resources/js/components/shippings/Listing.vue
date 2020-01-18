@@ -18,10 +18,10 @@
                     <confirmation-modal
                         v-if="deletingRow !== false"
                         :title="deletingModalTitle"
-                        :bodyText="__('Are you sure you want to delete this shipping?')"
+                        :bodyText="__('Are you sure you want to delete this shipping? You will not be able to delete this shipping if used by any product.')"
                         :buttonText="__('Delete')"
                         :danger="true"
-                        @confirm="deleteRow('/cp/butik/shippings')"
+                        @confirm="deleteRow('/cp/butik/settings/shippings')"
                         @cancel="cancelDeleteRow"
                     >
                     </confirmation-modal>

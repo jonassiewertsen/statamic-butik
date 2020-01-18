@@ -27,8 +27,6 @@ class Shipping extends Model
 
     public function editUrl()
     {
-        $cp_route = config('statamic.cp.route');
-
-        return "/{$cp_route}/butik/shippings/{$this->slug}/edit";
+        return cp_route('butik.shippings.edit', $this);
     }
 }

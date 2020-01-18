@@ -12,10 +12,10 @@ class ShippingTest extends TestCase
     {
         $shipping = create(Shipping::class)->first();
 
-        $this->assertEquals(
+        $this->assertStringContainsString(
             $shipping->editUrl(),
-            '/'.config('statamic.cp.route')."/butik/shippings/{$shipping->slug}/edit"
-            );
+            cp_route('butik.shippings.edit', $shipping)
+        );
     }
 
     /** @test */

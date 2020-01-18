@@ -24,9 +24,9 @@ class TaxTest extends TestCase
     /** @test */
     public function taxes_have_a_edit_url()
     {
-        $this->assertEquals(
+        $this->assertStringContainsString(
             $this->tax->editUrl(),
-            '/'.config('statamic.cp.route')."/butik/taxes/{$this->tax->slug}/edit"
-            );
+            cp_route('butik.taxes.edit', $this->tax)
+        );
     }
 }

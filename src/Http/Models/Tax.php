@@ -27,8 +27,6 @@ class Tax extends Model
 
     public function editUrl()
     {
-        $cp_route = config('statamic.cp.route');
-
-        return "/{$cp_route}/butik/taxes/{$this->slug}/edit";
+        return cp_route('butik.taxes.edit', $this);
     }
 }

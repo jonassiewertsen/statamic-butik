@@ -642,14 +642,16 @@ var render = function() {
                                 attrs: {
                                   title: _vm.deletingModalTitle,
                                   bodyText: _vm.__(
-                                    "Are you sure you want to delete this tax?"
+                                    "Are you sure you want to delete this tax? You will not be able to delete this shipping if used by any product."
                                   ),
                                   buttonText: _vm.__("Delete"),
                                   danger: true
                                 },
                                 on: {
                                   confirm: function($event) {
-                                    return _vm.deleteRow("/cp/butik/taxes")
+                                    return _vm.deleteRow(
+                                      "/cp/butik/settings/taxes"
+                                    )
                                   },
                                   cancel: _vm.cancelDeleteRow
                                 }
@@ -857,14 +859,16 @@ var render = function() {
                                 attrs: {
                                   title: _vm.deletingModalTitle,
                                   bodyText: _vm.__(
-                                    "Are you sure you want to delete this shipping?"
+                                    "Are you sure you want to delete this shipping? You will not be able to delete this shipping if used by any product."
                                   ),
                                   buttonText: _vm.__("Delete"),
                                   danger: true
                                 },
                                 on: {
                                   confirm: function($event) {
-                                    return _vm.deleteRow("/cp/butik/shippings")
+                                    return _vm.deleteRow(
+                                      "/cp/butik/settings/shippings"
+                                    )
                                   },
                                   cancel: _vm.cancelDeleteRow
                                 }
