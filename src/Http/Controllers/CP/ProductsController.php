@@ -4,13 +4,13 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
 
 use Illuminate\Http\Request;
 use Jonassiewertsen\StatamicButik\Blueprints\ProductBlueprint;
-use Jonassiewertsen\StatamicButik\Http\Controllers\Controller;
+use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Statamic\Contracts\Auth\User;
 use Statamic\CP\Column;
 use Statamic\Facades\Blueprint;
 
-class ProductsController extends Controller
+class ProductsController extends CpController
 {
     public function index() {
         // TODO: Do not use all !!!

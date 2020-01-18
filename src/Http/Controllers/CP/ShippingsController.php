@@ -4,14 +4,14 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
 
 use Illuminate\Http\Request;
 use Jonassiewertsen\StatamicButik\Blueprints\ShippingBlueprint;
-use Jonassiewertsen\StatamicButik\Http\Controllers\Controller;
+use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
 use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
 use Scrumpy\HtmlToProseMirror\Test\TestCase;
 use Statamic\Contracts\Auth\User;
 use Statamic\CP\Column;
 use Statamic\Facades\Blueprint;
 
-class ShippingsController extends Controller
+class ShippingsController extends CpController
 {
 
     public function index() {
