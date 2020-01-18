@@ -6,28 +6,21 @@ use Illuminate\Http\Request;
 use Jonassiewertsen\StatamicButik\Blueprints\TaxBlueprint;
 use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
-use Statamic\Contracts\Auth\User;
 use Statamic\CP\Column;
-use Statamic\Facades\Blueprint;
 
 class TaxesController extends CpController
 {
 
     public function index() {
-        $taxes = Tax::all()->filter(function ($collection) {
-            return true;
-            // TODO: Add permissions
-            //return User::current()->can('view', $collection);
-        })->map(function ($tax) {
+        $this->authorize('view taxes', Tax::class);
+
+        $taxes = Tax::all()->map(function ($tax) {
             return [
                 'title'      => $tax->title,
                 'percentage' => $tax->percentage,
                 'edit_url'   => $tax->editUrl(),
                 'slug'         => $tax->slug,
-
-                // TODO: Add permissions
-                // 'deleteable' => User::current()->can('delete', $collection)
-                'deleteable' => true,
+                'deleteable' => auth()->user()->can('delete', $tax),
             ];
         })->values();
 
@@ -42,6 +35,8 @@ class TaxesController extends CpController
 
     public function create()
     {
+        $this->authorize('create taxes', Tax::class);
+
         $blueprint = new TaxBlueprint();
         $fields = $blueprint()->fields()->preProcess();
 
@@ -54,6 +49,8 @@ class TaxesController extends CpController
 
     public function store(Request $request)
     {
+        $this->authorize('create taxes', Tax::class);
+
         $blueprint = new TaxBlueprint();
         $fields = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
@@ -62,6 +59,8 @@ class TaxesController extends CpController
     }
 
     public function edit(Tax $tax) {
+        $this->authorize('edit taxes', $tax);
+
         $values = $tax->toArray();
         $blueprint = new TaxBlueprint();
         $fields = $blueprint()->fields()->addValues($values)->preProcess();
@@ -75,6 +74,8 @@ class TaxesController extends CpController
     }
 
     public function update(Request $request, Tax $tax) {
+        $this->authorize('edit taxes', $tax);
+
         $blueprint = new TaxBlueprint();
         $fields = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
@@ -84,7 +85,8 @@ class TaxesController extends CpController
 
     public function destroy(Tax $tax)
     {
-        // TODO: Add Permissions
+        $this->authorize('delete taxes', $tax);
+
         $tax->delete();
     }
 }

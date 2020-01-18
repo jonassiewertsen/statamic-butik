@@ -112,9 +112,10 @@ class StatamicButikServiceProvider extends AddonServiceProvider
             $nav->create('Settings')
                 ->section('Butik')
                 ->icon('settings-slider')
+                ->route('butik.taxes.index')
                 ->children([
-                   'Taxes'    => cp_route('butik.taxes.index'),
-                   'Shippings' => cp_route('butik.shippings.index'),
+                   'Taxes'    => cp_route('butik.taxes.index')->can('view taxes'),
+                   'Shippings' => cp_route('butik.shippings.index')->can('view shippings'),
                ]);
         });
     }
