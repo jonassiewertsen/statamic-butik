@@ -75,9 +75,7 @@ class Product extends Model
      */
     public function getBasePriceAttribute($value)
     {
-        $value = floatval($value) / 100;
-
-        return number_format($value, 2, config('statamic-butik.currency.delimiter'), '');
+        return $this->makeAmountHuman($value);
     }
 
     /**
@@ -85,8 +83,7 @@ class Product extends Model
      */
     public function setBasePriceAttribute($value)
     {
-        // Converting string to integer and removing decimals
-        $this->attributes['base_price'] = number_format(floatval($value) * 100, 0, '', '');
+        $this->attributes['base_price'] = $this->makeAmountSaveable($value);
     }
 
     /**
@@ -95,6 +92,19 @@ class Product extends Model
     public function getBasePriceWithCurrencySymbolAttribute($value)
     {
         return $this->base_price.' '.config('statamic-butik.currency.symbol');
+    }
+
+    private function makeAmountHuman($value)
+    {
+        $value = floatval($value) / 100;
+
+        $delimiter = config('statamic-butik.currency.delimiter');
+        return number_format($value, 2, $delimiter, '');
+    }
+
+    private function makeAmountSaveable($value)
+    {
+        return number_format(floatval($value) * 100, 0, '', '');
     }
 
     /**
