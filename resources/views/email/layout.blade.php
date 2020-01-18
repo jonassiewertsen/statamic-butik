@@ -333,7 +333,7 @@
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
                         <tr>
                             <td class="logo" style="text-align: center;">
-                                <h1><a href="#">Agency</a></h1>
+                                <h1><a href="#">{{ config('statamic-butik.name', '') }}</a></h1>
                             </td>
                         </tr>
                     </table>
@@ -345,7 +345,7 @@
                         <tr>
                             <td>
                                 <div class="text" style="padding: 0 3em; text-align: center;">
-                                    <h2>We Are Portfolio Agency, We Create <span>Functional</span> &amp; <span>Beautiful</span> Website</h2>
+                                    <h2>{{ config('statamic-butik.slogan', '') }}</h2>
                                 </div>
                             </td>
                         </tr>
@@ -358,93 +358,22 @@
                         <tr>
                             <td class="bg_white email-section">
                                 <div class="heading-section" style="text-align: center; padding: 0 30px;">
-                                    <h2>Projects</h2>
-                                    <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+                                    <h2>{{ $heading ?? 'Information' }}</h2>
+                                    @isset($subheading)
+                                        <p>{{ $subheading }}</p>
+                                    @endisset
                                 </div>
+
+                                <div class="text-project" style="text-align: center;">
+
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
                                     <tr>
-                                        <td valign="top" width="50%">
-                                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                                                <tr>
-                                                    <td style="padding-top: 20px; padding-right: 10px;">
-                                                        <a href="#"><img src="images/work-1.jpg" alt="" style="width: 100%; max-width: 600px; height: auto; margin: auto; display: block;"></a>
-                                                        <div class="text-project" style="text-align: center;">
-                                                            <h3><a href="#">Work name</a></h3>
-                                                            <span>Printing</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="padding-top: 20px; padding-right: 10px;">
-                                                        <a href="#"><img src="images/work-2.jpg" alt="" style="width: 100%; max-width: 600px; height: auto; margin: auto; display: block;"></a>
-                                                        <div class="text-project" style="text-align: center;">
-                                                            <h3><a href="#">Work name</a></h3>
-                                                            <span>Printing</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="padding-top: 20px; padding-right: 10px;">
-                                                        <a href="#"><img src="images/work-3.jpg" alt="" style="width: 100%; max-width: 600px; height: auto; margin: auto; display: block;"></a>
-                                                        <div class="text-project" style="text-align: center;">
-                                                            <h3><a href="#">Work</a></h3>
-                                                            <span>Printing</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="padding-top: 20px; padding-right: 10px;">
-                                                        <a href="#"><img src="images/work-4.jpg" alt="" style="width: 100%; max-width: 600px; height: auto; margin: auto; display: block;"></a>
-                                                        <div class="text-project" style="text-align: center;">
-                                                            <h3><a href="#">Work</a></h3>
-                                                            <span>Printing</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </table>
+                                        <td valign="top" width="33%" style="text-align: right; padding-right: 12px; font-weight: 600;">
+                                            Text
                                         </td>
 
-
-
-                                        <td valign="top" width="50%">
-                                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                                                <tr>
-                                                    <td style="padding-top: 20px; padding-left: 10px;">
-                                                        <a href="#"><img src="images/work-5.jpg" alt="" style="width: 100%; max-width: 600px; height: auto; margin: auto; display: block;"></a>
-                                                        <div class="text-project" style="text-align: center;">
-                                                            <h3><a href="#">Work name</a></h3>
-                                                            <span>Branding</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="padding-top: 20px; padding-left: 10px;">
-                                                        <a href="#"><img src="images/work-6.jpg" alt="" style="width: 100%; max-width: 600px; height: auto; margin: auto; display: block;"></a>
-                                                        <div class="text-project" style="text-align: center;">
-                                                            <h3><a href="#">Work name</a></h3>
-                                                            <span>Branding</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="padding-top: 20px; padding-left: 10px;">
-                                                        <a href="#"><img src="images/work-7.jpg" alt="" style="width: 100%; max-width: 600px; height: auto; margin: auto; display: block;"></a>
-                                                        <div class="text-project" style="text-align: center;">
-                                                            <h3><a href="#">Work name</a></h3>
-                                                            <span>Branding</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="padding-top: 20px; padding-left: 10px;">
-                                                        <a href="#"><img src="images/work-8.jpg" alt="" style="width: 100%; max-width: 600px; height: auto; margin: auto; display: block;"></a>
-                                                        <div class="text-project" style="text-align: center;">
-                                                            <h3><a href="#">Work name</a></h3>
-                                                            <span>Branding</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </table>
+                                        <td valign="top" width="67%" style="text-align: left;">
+                                          Rechts
                                         </td>
                                     </tr>
                                 </table>
@@ -462,44 +391,43 @@
                 <td valign="middle" class="bg_black footer email-section">
                     <table>
                         <tr>
-                            <td valign="top" width="33.333%" style="padding-top: 20px;">
-                                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                                    <tr>
-                                        <td style="text-align: left; padding-right: 10px;">
-                                            <h3 class="heading">About</h3>
-                                            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td valign="top" width="33.333%" style="padding-top: 20px;">
+                            <td valign="top" width="50%" style="padding-top: 20px;">
                                 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                                     <tr>
                                         <td style="text-align: left; padding-left: 5px; padding-right: 5px;">
                                             <h3 class="heading">Contact Info</h3>
                                             <ul>
-                                                <li><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
-                                                <li><span class="text"><a href="tel:+2 392 3929 210">+2 392 3929 210</span></a></li>
+                                                <li>
+                                                    <div class="text">{{ config('statamic-butik.address_1', '') }}</div>
+                                                    @if (config('statamic-butik.address_2') !== null)
+                                                        <div class="text">{{ config('statamic-butik.address_2', '') }}</div>
+                                                    @endif
+                                                    <div class="text">{{ config('statamic-butik.zip_city', '') }}</div>
+                                                    <div class="text">{{ config('statamic-butik.country', '') }}</div>
+                                                </li>
+                                                <li><span class="text"><a href="tel:{{ config('statamic-butik.phone', '') }}">{{ config('statamic-butik.phone', '') }}</span></a></li>
+                                                <li><span class="text"><a href="mailto:{{ config('statamic-butik.mail', '') }}">{{ config('statamic-butik.mail', '') }}</span></a></li>
                                             </ul>
                                         </td>
                                     </tr>
                                 </table>
                             </td>
-                            <td valign="top" width="33.333%" style="padding-top: 20px;">
-                                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                                    <tr>
-                                        <td style="text-align: left; padding-left: 10px;">
-                                            <h3 class="heading">Useful Links</h3>
-                                            <ul>
-                                                <li><a href="#">Home</a></li>
-                                                <li><a href="#">About</a></li>
-                                                <li><a href="#">Services</a></li>
-                                                <li><a href="#">Work</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
+                            @if (count(config('statamic-butik.useful_links')) > 0)
+                                <td valign="top" width="50%" style="padding-top: 20px;">
+                                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                        <tr>
+                                            <td style="text-align: left; padding-left: 10px;">
+                                                <h3 class="heading">Useful Links</h3>
+                                                <ul>
+                                                    @foreach(config('statamic-butik.useful_links') as $link => $name)
+                                                    <li><a target="_blank" href="{{ $link }}">{{ $name }}</a></li>
+                                                    @endforeach
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            @endif
                         </tr>
                     </table>
                 </td>
@@ -508,20 +436,11 @@
                 <td valign="middle" class="bg_black footer email-section">
                     <table>
                         <tr>
-                            <td valign="top" width="33.333%">
+                            <td valign="top" width="100%">
                                 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                                     <tr>
                                         <td style="text-align: left; padding-right: 10px;">
-                                            <p>&copy; 2018 Agency. All Rights Reserved</p>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td valign="top" width="33.333%">
-                                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                                    <tr>
-                                        <td style="text-align: right; padding-left: 5px; padding-right: 5px;">
-                                            <p><a href="#" style="color: rgba(255,255,255,.4);">Unsubcribe</a></p>
+                                            <p>&copy; {{ now()->format('Y') }} {{ config('statamic-butik.name') }}. All Rights Reserved</p>
                                         </td>
                                     </tr>
                                 </table>

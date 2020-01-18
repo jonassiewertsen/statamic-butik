@@ -10,16 +10,26 @@ return [
      * Put your shop information here. Those will fx be shown on the
      * website and the email templates.
      */
-    'shop' => [
-        'name' => 'Statamic Butik',
-        'address_1' => '132 Main Street',
-        'address_2' => 'Sea view, Fahrensodde', // can be left empty
-        'zip_city' => '24937 Flensburg',
-        'country'   => 'Germany',
+    'name' => 'Statamic Butik',
+    'slogan' => '"Butik" is a Scandinavian term for a small or medium-sized shop. Exactly what this Statamic addon is standing for.',
 
-        'phone' => '+49 1294 238474934',
-        'email' => 'butik@shop.com',
+    'address_1' => '132 Main Street',
+    'address_2' => 'Sea view, Fahrensodde', // can be left empty
+    'zip_city' => '24937 Flensburg',
+    'country'   => 'Germany',
+
+    'phone' => '+49 1294 238474934',
+    'mail' => 'butik@shop.com',
+    /**
+     * useful links here
+     * 'link' => 'name',
+     */
+    'useful_links' => [
+//        'https://jonassiewertsen.com'  => 'Jonas Siwertsen',
+//        'https://statamic.com'  => 'Statamic',
+//        'https://laravel.com'   => 'Laravel',
     ],
+
 
     /**
      * All of your Payment Gateway options. If you need to adjust them, it's best
