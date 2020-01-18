@@ -28,7 +28,6 @@ class CreateOrderTest extends TestCase
 
     /** @test */
     public function a_order_will_be_created(){
-        $this->withoutExceptionHandling();
         Event::fake([CreateOrder::class]);
 
         $this->makePayment();
