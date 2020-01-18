@@ -11,8 +11,9 @@ use Statamic\CP\Column;
 class TaxesController extends CpController
 {
 
-    public function index() {
-        $this->authorize('view taxes', Tax::class);
+    public function index()
+    {
+        $this->authorize('index', Tax::class);
 
         $taxes = Tax::all()->map(function ($tax) {
             return [
@@ -35,7 +36,7 @@ class TaxesController extends CpController
 
     public function create()
     {
-        $this->authorize('create taxes', Tax::class);
+        $this->authorize('create', Tax::class);
 
         $blueprint = new TaxBlueprint();
         $fields = $blueprint()->fields()->preProcess();
@@ -49,7 +50,7 @@ class TaxesController extends CpController
 
     public function store(Request $request)
     {
-        $this->authorize('create taxes', Tax::class);
+        $this->authorize('store', Tax::class);
 
         $blueprint = new TaxBlueprint();
         $fields = $blueprint()->fields()->addValues($request->all());
@@ -58,8 +59,9 @@ class TaxesController extends CpController
         Tax::create($values->toArray());
     }
 
-    public function edit(Tax $tax) {
-        $this->authorize('edit taxes', $tax);
+    public function edit(Tax $tax)
+    {
+        $this->authorize('edit', $tax);
 
         $values = $tax->toArray();
         $blueprint = new TaxBlueprint();
@@ -73,8 +75,9 @@ class TaxesController extends CpController
         ]);
     }
 
-    public function update(Request $request, Tax $tax) {
-        $this->authorize('edit taxes', $tax);
+    public function update(Request $request, Tax $tax)
+    {
+        $this->authorize('update', $tax);
 
         $blueprint = new TaxBlueprint();
         $fields = $blueprint()->fields()->addValues($request->all());
@@ -85,7 +88,7 @@ class TaxesController extends CpController
 
     public function destroy(Tax $tax)
     {
-        $this->authorize('delete taxes', $tax);
+        $this->authorize('delete', $tax);
 
         $tax->delete();
     }

@@ -5,14 +5,16 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
 use Illuminate\Http\Request;
 use Jonassiewertsen\StatamicButik\Blueprints\ShippingBlueprint;
 use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
 use Statamic\CP\Column;
 
 class ShippingsController extends CpController
 {
 
-    public function index() {
+    public function index()
+    {
+        $this->authorize('index', Shipping::class);
+
         $shippings = Shipping::all()->map(function ($shipping) {
             return [
                 'title'      => $shipping->title,
@@ -57,7 +59,8 @@ class ShippingsController extends CpController
         Shipping::create($values->toArray());
     }
 
-    public function edit(Shipping $shipping) {
+    public function edit(Shipping $shipping)
+    {
         $this->authorize('edit', $shipping);
 
         $values = $shipping->toArray();
@@ -72,7 +75,8 @@ class ShippingsController extends CpController
         ]);
     }
 
-    public function update(Request $request, Shipping $shipping) {
+    public function update(Request $request, Shipping $shipping)
+    {
         $this->authorize('update', $shipping);
 
         $blueprint = new ShippingBlueprint();

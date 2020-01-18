@@ -3,18 +3,16 @@
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Jonassiewertsen\StatamicButik\Blueprints\ProductBlueprint;
 use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
-use Statamic\Contracts\Auth\User;
 use Statamic\CP\Column;
-use Statamic\Facades\Blueprint;
 
 class ProductsController extends CpController
 {
-    public function index() {
-        $this->authorize('view', Product::class);
+    public function index()
+    {
+        $this->authorize('index', Product::class);
 
         $products = Product::all()->map(function ($product) {
             return [
@@ -58,7 +56,7 @@ class ProductsController extends CpController
 
     public function store(Request $request)
     {
-        $this->authorize('create', Product::class);
+        $this->authorize('store', Product::class);
 
         $blueprint = new ProductBlueprint();
         $fields = $blueprint()->fields()->addValues($request->all());
@@ -67,7 +65,8 @@ class ProductsController extends CpController
         Product::create($values->toArray());
     }
 
-    public function edit(Product $product) {
+    public function edit(Product $product)
+    {
         $this->authorize('edit', Product::class);
 
         $values = $product->toArray();
@@ -80,8 +79,9 @@ class ProductsController extends CpController
             'meta'      => $fields->meta(),
         ]);
     }
-    public function update(Request $request, Product $product) {
-        $this->authorize('edit', Product::class);
+    public function update(Request $request, Product $product)
+    {
+        $this->authorize('update', Product::class);
 
         $blueprint = new ProductBlueprint();
         $fields = $blueprint()->fields()->addValues($request->all());
