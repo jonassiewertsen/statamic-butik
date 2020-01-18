@@ -2,11 +2,11 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 
-use Jonassiewertsen\StatamicButik\Http\Controllers\Controller;
+use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Statamic\View\View;
 
-class ShopController extends Controller
+class ShopController extends WebController
 {
     public function index() {
         return (new \Statamic\View\View())

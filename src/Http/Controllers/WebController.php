@@ -4,7 +4,7 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers;
 
 use Illuminate\Routing\Controller as LaravelController;
 
-class Controller extends LaravelController
+class WebController extends LaravelController
 {
     protected function addingProductRoutes($product): array {
         // Todo: This needs a refactor

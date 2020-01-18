@@ -6,10 +6,10 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
-use Jonassiewertsen\StatamicButik\Http\Controllers\Controller;
+use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 use Jonassiewertsen\StatamicButik\Http\PaymentGateways\BraintreePaymentGateway;
 
-class PaymentGatewayController extends Controller
+class PaymentGatewayController extends WebController
 {
     protected $gateway;
 

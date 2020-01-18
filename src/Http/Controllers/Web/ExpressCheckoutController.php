@@ -4,10 +4,10 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Exceptions\TransactionSessionDataIncomplete;
-use Jonassiewertsen\StatamicButik\Http\Controllers\Controller;
+use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 
-class ExpressCheckoutController extends Controller
+class ExpressCheckoutController extends WebController
 {
     public function delivery(Product $product) {
 

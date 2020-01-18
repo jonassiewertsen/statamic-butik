@@ -4,9 +4,9 @@ namespace Jonassiewertsen\StatamicButik\Http\PaymentGateways;
 
 use Illuminate\Http\Request;
 use Braintree_Gateway;
-use Jonassiewertsen\StatamicButik\Http\Controllers\Controller;
+use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 
-class BraintreePaymentGateway extends Controller implements PaymentGatewayInterface
+class BraintreePaymentGateway extends WebController implements PaymentGatewayInterface
 {
     protected $braintree;
 
