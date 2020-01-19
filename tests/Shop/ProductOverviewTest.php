@@ -25,6 +25,7 @@ class ProductOverviewTest extends TestCase
 
         $this->get(route('butik.shop'))
             ->assertSee($product->title)
-            ->assertSee($product->total_price);
+            ->assertSee($product->total_price)
+            ->assertSee($product->show_url);
     }
 }
