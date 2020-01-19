@@ -1,115 +1,115 @@
-<div class="butik-mx-5">
-    <div class="butik-flex butik-justify-around">
-        <div class="butik-text-xs butik-flex butik-flex-col butik-items-center">
-            <div class="butik-border-2 butik-border-green-500 butik-flex butik-h-8 butik-items-center butik-justify-center butik-rounded-full butik-w-8">1</div>
-            <span class="butik-text-green-500 butik-mt-1">{{ trans key="statamic-butik::payment.delivery" }}</span>
+<div class="b-mx-5">
+    <div class="b-flex b-justify-around">
+        <div class="b-text-xs b-flex b-flex-col b-items-center">
+            <div class="b-border-2 b-border-green-500 b-flex b-h-8 b-items-center b-justify-center b-rounded-full b-w-8">1</div>
+            <span class="b-text-green-500 b-mt-1">{{ trans key="statamic-butik::payment.delivery" }}</span>
         </div>
-        <div class="butik-text-xs butik-flex butik-flex-col butik-items-center">
-            <div class="butik-border-2 butik-border-gray-400 butik-flex butik-h-8 butik-items-center butik-justify-center butik-rounded-full butik-w-8">2</div>
-            <span class="butik-text-gray-400 butik-mt-1">{{ trans key="statamic-butik::payment.review_payment" }}</span>
+        <div class="b-text-xs b-flex b-flex-col b-items-center">
+            <div class="b-border-2 b-border-gray-400 b-flex b-h-8 b-items-center b-justify-center b-rounded-full b-w-8">2</div>
+            <span class="b-text-gray-400 b-mt-1">{{ trans key="statamic-butik::payment.review_payment" }}</span>
         </div>
-        <div class="butik-text-xs butik-flex butik-flex-col butik-items-center">
-            <div class="butik-border-2 butik-border-gray-400 butik-flex butik-h-8 butik-items-center butik-justify-center butik-rounded-full butik-w-8">3</div>
-            <span class="butik-text-gray-500 butik-mt-1">{{ trans key="statamic-butik::payment.receipt" }}</span>
+        <div class="b-text-xs b-flex b-flex-col b-items-center">
+            <div class="b-border-2 b-border-gray-400 b-flex b-h-8 b-items-center b-justify-center b-rounded-full b-w-8">3</div>
+            <span class="b-text-gray-500 b-mt-1">{{ trans key="statamic-butik::payment.receipt" }}</span>
         </div>
     </div>
 </div>
 
-<hr class="butik-mb-5 butik-mt-8">
+<hr class="b-mb-5 b-mt-8">
 
-<h1 class="butik-block butik-mb-10 md:butik-mb-20 butik-text-center butik-font-bold butik-text-xl">{{ trans key="statamic-butik::payment.express_checkout" }}</h1>
+<h1 class="b-block b-mb-10 md:b-mb-20 b-text-center b-font-bold b-text-xl">{{ trans key="statamic-butik::payment.express_checkout" }}</h1>
 
-<div class="butik-mt-6 butik-mb-20 md:butik-flex">
-    <form method="post" action="#heading" class="butik-px-5 butik-w-full md:butik-w-1/2">
-        <h2 class="butik-text-md butik-uppercase" id="heading">{{ trans key="statamic-butik::payment.your_information" }}</h2>
+<div class="b-mt-6 b-mb-20 md:b-flex">
+    <form method="post" action="#heading" class="b-px-5 b-w-full md:b-w-1/2">
+        <h2 class="b-text-md b-uppercase" id="heading">{{ trans key="statamic-butik::payment.your_information" }}</h2>
 
         {{ csrf_field }}
 
-        <label for="name" class="butik-block butik-my-3">
-            <div class="butik-font-bold butik-text-g butik-text-xs">{{ trans key="statamic-butik::payment.name" }}</div>
-            <input id="name" name="name" type="text" value="{{ old:name ?? name }}" autofocus class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
-            {{ if {error:name} }}<span class="butik-text-red-600 butik-text-xs">{{ error:name }}</span>{{ /if }}
+        <label for="name" class="b-block b-my-3">
+            <div class="b-font-bold b-text-g b-text-xs">{{ trans key="statamic-butik::payment.name" }}</div>
+            <input id="name" name="name" type="text" value="{{ old:name ?? name }}" autofocus class="b-border b-border-gray-900 b-px-2 b-py-1 b-rounded b-w-full">
+            {{ if {error:name} }}<span class="b-text-red-600 b-text-xs">{{ error:name }}</span>{{ /if }}
         </label>
 
-        <label for="mail" class="butik-block butik-my-3">
-            <div class="butik-font-bold butik-text-g butik-text-xs">{{ trans key="statamic-butik::payment.mail" }}</div>
-            <input id="mail" name="mail" type="mail" value="{{ old:mail ?? mail }}" class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
-            {{ if {error:mail} }}<span class="butik-text-red-600 butik-text-xs">{{ error:mail }}</span>{{ /if }}
+        <label for="mail" class="b-block b-my-3">
+            <div class="b-font-bold b-text-g b-text-xs">{{ trans key="statamic-butik::payment.mail" }}</div>
+            <input id="mail" name="mail" type="mail" value="{{ old:mail ?? mail }}" class="b-border b-border-gray-900 b-px-2 b-py-1 b-rounded b-w-full">
+            {{ if {error:mail} }}<span class="b-text-red-600 b-text-xs">{{ error:mail }}</span>{{ /if }}
         </label>
 
-        <div class="butik-mb-6 butik-text-gray-600 butik-text-xs">
+        <div class="b-mb-6 b-text-gray-600 b-text-xs">
             {{ trans key="statamic-butik::payment.account_creation" }}
         </div>
 
-        <h2 class="butik-text-md butik-uppercase">{{ trans key="statamic-butik::payment.delivery_address" }}</h2>
+        <h2 class="b-text-md b-uppercase">{{ trans key="statamic-butik::payment.delivery_address" }}</h2>
 
-        <label for="country" class="butik-block butik-my-3 butik-cursor-not-allowed">
-            <div class="butik-font-bold butik-text-g butik-text-xs">{{ trans key="statamic-butik::payment.country" }}</div>
-            <input id="country" name="country" type="text" readonly value="Germaninien" class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
-            {{ if {error:country} }}<span class="butik-text-red-600 butik-text-xs">{{ error:country }}</span>{{ /if }}
+        <label for="country" class="b-block b-my-3 b-cursor-not-allowed">
+            <div class="b-font-bold b-text-g b-text-xs">{{ trans key="statamic-butik::payment.country" }}</div>
+            <input id="country" name="country" type="text" readonly value="Germaninien" class="b-border b-border-gray-900 b-px-2 b-py-1 b-rounded b-w-full">
+            {{ if {error:country} }}<span class="b-text-red-600 b-text-xs">{{ error:country }}</span>{{ /if }}
         </label>
 
-        <label for="address_1" class="butik-block butik-my-3">
-            <div class="butik-font-bold butik-text-g butik-text-xs">{{ trans key="statamic-butik::payment.address_1" }}</div>
-            <input id="address_1" name="address_1" type="text" value="{{ old:address_1 ?? address_1 }}" class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
-            {{ if {error:address_1} }}<span class="butik-text-red-600 butik-text-xs">{{ error:address_1 }}</span>{{ /if }}
+        <label for="address_1" class="b-block b-my-3">
+            <div class="b-font-bold b-text-g b-text-xs">{{ trans key="statamic-butik::payment.address_1" }}</div>
+            <input id="address_1" name="address_1" type="text" value="{{ old:address_1 ?? address_1 }}" class="b-border b-border-gray-900 b-px-2 b-py-1 b-rounded b-w-full">
+            {{ if {error:address_1} }}<span class="b-text-red-600 b-text-xs">{{ error:address_1 }}</span>{{ /if }}
         </label>
 
-        <label for="address_2" class="butik-block butik-my-3">
-            <div class="butik-font-bold butik-text-g butik-text-xs">{{ trans key="statamic-butik::payment.address_2" }}</div>
-            <input id="address_2" name="address_2" type="text" value="{{ old:address_2 ?? address_2 }}" class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
-            {{ if {error:address_2} }}<span class="butik-text-red-600 butik-text-xs">{{ error:address_2 }}</span>{{ /if }}
+        <label for="address_2" class="b-block b-my-3">
+            <div class="b-font-bold b-text-g b-text-xs">{{ trans key="statamic-butik::payment.address_2" }}</div>
+            <input id="address_2" name="address_2" type="text" value="{{ old:address_2 ?? address_2 }}" class="b-border b-border-gray-900 b-px-2 b-py-1 b-rounded b-w-full">
+            {{ if {error:address_2} }}<span class="b-text-red-600 b-text-xs">{{ error:address_2 }}</span>{{ /if }}
         </label>
 
-        <label for="city" class="butik-block butik-my-3">
-            <div class="butik-font-bold butik-text-g butik-text-xs">{{ trans key="statamic-butik::payment.city" }}</div>
-            <input id="city" name="city" type="text" value="{{ old:city ?? city }}" class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
-            {{ if {error:city} }}<span class="butik-text-red-600 butik-text-xs">{{ error:city }}</span>{{ /if }}
+        <label for="city" class="b-block b-my-3">
+            <div class="b-font-bold b-text-g b-text-xs">{{ trans key="statamic-butik::payment.city" }}</div>
+            <input id="city" name="city" type="text" value="{{ old:city ?? city }}" class="b-border b-border-gray-900 b-px-2 b-py-1 b-rounded b-w-full">
+            {{ if {error:city} }}<span class="b-text-red-600 b-text-xs">{{ error:city }}</span>{{ /if }}
         </label>
 
-        <label for="zip" class="butik-block butik-my-3">
-            <div class="butik-font-bold butik-text-g butik-text-xs">{{ trans key="statamic-butik::payment.zip" }}</div>
-            <input id="zip" name="zip" type="text" value="{{ old:zip ?? zip }}" class="butik-border butik-border-gray-900 butik-px-2 butik-py-1 butik-rounded butik-w-full">
-            {{ if {error:zip} }}<span class="butik-text-red-600 butik-text-xs">{{ error:zip }}</span>{{ /if }}
+        <label for="zip" class="b-block b-my-3">
+            <div class="b-font-bold b-text-g b-text-xs">{{ trans key="statamic-butik::payment.zip" }}</div>
+            <input id="zip" name="zip" type="text" value="{{ old:zip ?? zip }}" class="b-border b-border-gray-900 b-px-2 b-py-1 b-rounded b-w-full">
+            {{ if {error:zip} }}<span class="b-text-red-600 b-text-xs">{{ error:zip }}</span>{{ /if }}
         </label>
 
-        <div class="butik-flex butik-justify-end flex">
-            <button type="submit" class="butik-bg-gray-900 butik-block butik-mt-3 butik-px-6 butik-py-2 butik-rounded butik-text-center butik-text-white butik-text-xl hover:butik-bg-gray-800">
+        <div class="b-flex b-justify-end flex">
+            <button type="submit" class="b-bg-gray-900 b-block b-mt-3 b-px-6 b-py-2 b-rounded b-text-center b-text-white b-text-xl hover:b-bg-gray-800">
                 {{ trans key="statamic-butik::payment.to_payment" }}
             </button>
         </div>
     </form>
 
-    <div class="butik-bg-gray-200 butik-rounded butik-hidden butik-items-center butik-w-1/2 md:butik-flex">
+    <div class="b-bg-gray-200 b-rounded b-hidden b-items-center b-w-1/2 md:b-flex">
         <div>
-            <div class="butik-flex butik-justify-center butik-mt-5">
+            <div class="b-flex b-justify-center b-mt-5">
                 {{ images limit="1" }}
-                <img class="butik-w-2/5 butik-rounded" src="/assets/{{ value }}">
+                <img class="b-w-2/5 b-rounded" src="/assets/{{ value }}">
                 {{ /images }}
             </div>
 
-            <section class="butik-px-10">
-                <h3 class="butik-font-bold butik-block butik-mt-5 butik-text-3xl butik-text-center">{{ title }}</h3>
+            <section class="b-px-10">
+                <h3 class="b-font-bold b-block b-mt-5 b-text-3xl b-text-center">{{ title }}</h3>
 
-                <hr class="butik-border-white butik-my-5">
+                <hr class="b-border-white b-my-5">
 
-                <div class="butik-flex butik-my-3 butik-justify-between butik-max-w-sm butik-mx-auto">
+                <div class="b-flex b-my-3 b-justify-between b-max-w-sm b-mx-auto">
                     <span>{{ trans key="statamic-butik::payment.subtotal" }}</span>
                     <span>{{ butik:currency_symbol }} {{ base_price }}</span>
                 </div>
 
-                <div class="butik-flex butik-my-3 butik-justify-between butik-max-w-sm butik-mx-auto">
+                <div class="b-flex b-my-3 b-justify-between b-max-w-sm b-mx-auto">
                     <span>{{ trans key="statamic-butik::payment.shipping" }}</span>
                     <span>{{ butik:currency_symbol }} {{ shipping_amount }}</span>
                 </div>
 
-                <hr class="butik-border-white butik-my-5">
+                <hr class="b-border-white b-my-5">
 
-                <div class="butik-flex butik-mt-3 butik-justify-between butik-max-w-sm butik-mx-auto">
+                <div class="b-flex b-mt-3 b-justify-between b-max-w-sm b-mx-auto">
                     <span>{{ trans key="statamic-butik::payment.total" }}</span>
-                    <span class="butik-font-black">{{ butik:currency_symbol }} {{ total_price }}</span>
+                    <span class="b-font-black">{{ butik:currency_symbol }} {{ total_price }}</span>
                 </div>
-                <div class="butik-max-w-sm butik-mx-auto butik-pb-3 butik-text-gray-500 butik-text-right butik-text-sm">
+                <div class="b-max-w-sm b-mx-auto b-pb-3 b-text-gray-500 b-text-right b-text-sm">
                     Including {{ tax_percentage }}% taxes ({{ tax_amount }} {{ butik:currency_symbol }})
                 </div>
 

@@ -1,27 +1,27 @@
-<div class="butik-block md:butik-flex">
+<div class="b-block md:b-flex">
     {{ images limit="1" }}
-        <img class="butik-w-full md:butik-w-1/2" src="/assets/{{ value }}">
+        <img class="b-w-full md:b-w-1/2" src="/assets/{{ value }}">
     {{ /images }}
 
-    <div class="butik-px-5 butik-w-full">
-        <h1 class="butik-mt-2 butik-text-2xl">{{ title }}</h1>
+    <div class="b-px-5 b-w-full">
+        <h1 class="b-mt-2 b-text-2xl">{{ title }}</h1>
 
-        <div class="butik-text-gray-500 butik-text-sm butik-mt-2">{{ base_price }} {{ butik:currency_symbol }} Base price</div>
-        <div class="butik-text-gray-500 butik-text-sm">{{ shipping_amount }} {{ butik:currency_symbol }} Shipping</div>
-        <div class="butik-text-gray-700 butik-text-3xl butik-mt-2">{{ total_price }} {{ butik:currency_symbol }} Total</div>
+        <div class="b-text-gray-500 b-text-sm b-mt-2">{{ base_price }} {{ butik:currency_symbol }} Base price</div>
+        <div class="b-text-gray-500 b-text-sm">{{ shipping_amount }} {{ butik:currency_symbol }} Shipping</div>
+        <div class="b-text-gray-700 b-text-3xl b-mt-2">{{ total_price }} {{ butik:currency_symbol }} Total</div>
 
-        <a class="butik-bg-gray-900 butik-block butik-mt-5 butik-py-2 butik-rounded butik-text-center butik-text-white butik-text-xl hover:butik-bg-gray-800"
+        <a class="b-bg-gray-900 b-block b-mt-5 b-py-2 b-rounded b-text-center b-text-white b-text-xl hover:b-bg-gray-800"
            href="{{ express_delivery_url }}"
         >
             Express Checkout
         </a>
 
         {{ if description }}
-            <p class="butik-mt-8">{{ description }}</p>
+            <p class="b-mt-8">{{ description }}</p>
         {{ /if }}
 
-        <a class="lg:butik-hidden butik--mb-3 butik-block butik-flex butik-mt-8 butik-text-gray-400 hover:butik-text-gray-500" href="{{ butik:overview }}">
-            <svg class="butik-fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M5.41 11H21a1 1 0 0 1 0 2H5.41l5.3 5.3a1 1 0 0 1-1.42 1.4l-7-7a1 1 0 0 1 0-1.4l7-7a1 1 0 0 1 1.42 1.4L5.4 11z"/></svg>
+        <a class="lg:b-hidden b--mb-3 b-block b-flex b-mt-8 b-text-gray-400 hover:b-text-gray-500" href="{{ butik:overview }}">
+            <svg class="b-fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M5.41 11H21a1 1 0 0 1 0 2H5.41l5.3 5.3a1 1 0 0 1-1.42 1.4l-7-7a1 1 0 0 1 0-1.4l7-7a1 1 0 0 1 1.42 1.4L5.4 11z"/></svg>
             <span>Zurück</span>
         </a>
     </div>

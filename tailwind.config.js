@@ -1,5 +1,5 @@
 module.exports = {
-  prefix: 'butik-',
+  prefix: 'b-',
   theme: {
     extend: {},
   },
