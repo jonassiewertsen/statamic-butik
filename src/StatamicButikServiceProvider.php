@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Gate;
 use Jonassiewertsen\StatamicButik\Http\Middleware\DeletingTransactionData;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Policies\ProductPolicy;
+use Mollie\Laravel\MollieServiceProvider;
 use Statamic\Facades\Nav;
 use Statamic\Facades\Permission;
 use Statamic\Providers\AddonServiceProvider;
@@ -50,7 +51,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
          $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
          $this->registerPolicies();
-         $this->registerPermissions();
+         $this->registerPermissions(); // TODO: Renaming to boot
          $this->registerMiddleware();
          $this->createNavigation();
 
@@ -96,6 +97,8 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         $this->app->singleton('statamic-butik', function () {
             return new StatamicButik;
         });
+
+        $this->app->register(MollieServiceProvider::class);
     }
 
     private function createNavigation(): void {
