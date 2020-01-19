@@ -16,9 +16,9 @@ class Cart {
         // TODO: Calculate amount automatically
     }
 
-    public function getId(): string {
-        return $this->transaction->id;
-    }
+//    public function getId(): string {
+//        return $this->transaction->id;
+//    }
 
     public function customer(Customer $customer): self {
         $this->customer = $customer;
@@ -35,10 +35,10 @@ class Cart {
         return $this;
     }
 
-    public function addProduct(Product $product): self {
-        if ($this->products->count() === 0) {
-            collect($this->products);
-        }
-        $this->products->push($product);
-    }
+//    public function addProduct(Product $product): self {
+//        if ($this->products->count() === 0) {
+//            collect($this->products);
+//        }
+//        $this->products->push($product);
+//    }
 }
