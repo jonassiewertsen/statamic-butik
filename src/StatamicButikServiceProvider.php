@@ -5,7 +5,11 @@ namespace Jonassiewertsen\StatamicButik;
 use Illuminate\Support\Facades\Gate;
 use Jonassiewertsen\StatamicButik\Http\Middleware\DeletingTransactionData;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
+use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Jonassiewertsen\StatamicButik\Policies\ProductPolicy;
+use Jonassiewertsen\StatamicButik\Policies\ShippingPolicy;
+use Jonassiewertsen\StatamicButik\Policies\TaxPolicy;
 use Mollie\Laravel\MollieServiceProvider;
 use Statamic\Facades\Nav;
 use Statamic\Facades\Permission;
@@ -39,7 +43,9 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     ];
 
     protected $policies = [
-        Product::class => ProductPolicy::class,
+        Product::class  => ProductPolicy::class,
+        Shipping::class => ShippingPolicy::class,
+        Tax::class      => TaxPolicy::class,
     ];
 
     public function boot()
