@@ -1,0 +1,33 @@
+<div class="b-bordeer b-border b-border-gray-500 b-px-6 b-py-3 b-mt-8 lg:b-mt-0 b-rounded-md">
+    <h3 class="b-underline">{{ trans key="statamic-butik::payment.ship_to" }}</h3>
+    <div>
+        <span class="b-font-bold">{{ trans key="statamic-butik::payment.name" }}</span>
+        <span>{{ name }}</span>
+    </div>
+    <div class="b-mb-2">
+        <span class="b-font-bold">{{ trans key="statamic-butik::payment.mail" }}</span>
+        <span>{{ mail }}</span>
+    </div>
+
+    <div>
+        <span class="b-font-bold">{{ trans key="statamic-butik::payment.address_1" }}</span>
+        <span>{{ address_1 }}</div>
+    {{if address_2 }}
+    <div>
+        <span class="b-font-bold">{{ trans key="statamic-butik::payment.address_2" }}</span>
+        <span>{{ address_2 }}</span>
+    </div>
+    {{ /if }}
+    <div>
+        <span class="b-font-bold">{{ trans key="statamic-butik::payment.city" }}</span>
+        <span>{{ city }}</span>
+    </div>
+    <div>
+        <span class="b-font-bold">{{ trans key="statamic-butik::payment.zip" }}</span>
+        <span>{{ zip }}</span>
+    </div>
+    <div>
+        <span class="b-font-bold">{{ trans key="statamic-butik::payment.country" }}</span>
+        <span>{{ country }}</span>
+    </div>
+</div>

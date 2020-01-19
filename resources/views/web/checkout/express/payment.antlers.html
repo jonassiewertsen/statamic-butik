@@ -2,53 +2,26 @@
 
 <hr class="b-mb-5 b-mt-8">
 
-<h1 class="b-block b-mb-6 b-text-center b-font-bold b-text-xl">{{ trans key="statamic-butik::payment.express_checkout" }}</h1>
+<h1 class="b-block b-mb-6 b-text-center b-font-bold b-text-xl">
+    {{ trans key="statamic-butik::payment.express_checkout" }}
+</h1>
 
+{{# body #}}
 <div class="b-flex b-flex-col-reverse lg:b-flex-row b-px-5 lg:b-px-0  b-mb-20 b-mt-6">
     <div class="b-w-full lg:b-ml-5 lg:b-px-0 lg:b-w-1/2 xl:b-ml-0">
 
-        <div class="b-bordeer b-border b-border-gray-500 b-px-6 b-py-3 b-mt-8 lg:b-mt-0 b-rounded-md">
-            <h3 class="b-underline">{{ trans key="statamic-butik::payment.ship_to" }}</h3>
-            <div>
-                <span class="b-font-bold">{{ trans key="statamic-butik::payment.name" }}</span>
-                <span>{{ name }}</span>
-            </div>
-            <div class="b-mb-2">
-                <span class="b-font-bold">{{ trans key="statamic-butik::payment.mail" }}</span>
-                <span>{{ mail }}</span>
-            </div>
+        {{# ship to card #}}
+        {{ partial src="statamic-butik::web.checkout.partials.shipToCard" }}
 
-            <div>
-                <span class="b-font-bold">{{ trans key="statamic-butik::payment.address_1" }}</span>
-                <span>{{ address_1 }}</div>
-            {{if address_2 }}
-                <div>
-                    <span class="b-font-bold">{{ trans key="statamic-butik::payment.address_2" }}</span>
-                    <span>{{ address_2 }}</span>
-                </div>
-            {{ /if }}
-            <div>
-                <span class="b-font-bold">{{ trans key="statamic-butik::payment.city" }}</span>
-                <span>{{ city }}</span>
-            </div>
-            <div>
-                <span class="b-font-bold">{{ trans key="statamic-butik::payment.zip" }}</span>
-                <span>{{ zip }}</span>
-            </div>
-            <div>
-                <span class="b-font-bold">{{ trans key="statamic-butik::payment.country" }}</span>
-                <span>{{ country }}</span>
-            </div>
-        </div>
-
+        {{# pay now button #}}
         <button class="b-block b-w-full b-mt-3 b-bg-gray-900 b-mt-6 b-py-2 b-rounded b-text-center b-text-white b-text-xl hover:b-bg-gray-800">
             {{ trans key="statamic-butik::payment.pay_now" }}
         </button>
     </div>
 
-
+    {{# Product card #}}
     <div class="b-bg-gray-200 b-flex b-items-center lg:b-pl-10 b-w-full lg:b-w-1/2">
-        {{ partial src="statamic-butik::web.checkout.partials.productCart" }}
+        {{ partial src="statamic-butik::web.checkout.partials.productCard" }}
     </div>
 </div>
 
