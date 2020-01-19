@@ -130,19 +130,19 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         });
     }
 
-    public function bootPolicies()
+    protected function bootPolicies()
     {
         foreach ($this->policies as $key => $value) {
             Gate::policy($key, $value);
         }
     }
 
-    private function bootMiddleware() {
+    protected function bootMiddleware() {
         $router = $this->app['router'];
         $router->pushMiddlewareToGroup('web', DeletingTransactionData::class);
     }
 
-    private function bootPermissions() {
+    protected function bootPermissions() {
         $this->app->booted(function () {
             Permission::group('butik', 'Statamic Butik', function () {
                 Permission::register('view products', function ($permission) {
