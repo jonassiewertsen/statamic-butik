@@ -50,9 +50,9 @@ class StatamicButikServiceProvider extends AddonServiceProvider
          $this->loadViewsFrom(__DIR__.'/../resources/views', 'statamic-butik');
          $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
-         $this->registerPolicies();
-         $this->registerPermissions(); // TODO: Renaming to boot
-         $this->registerMiddleware();
+         $this->bootPolicies();
+         $this->bootPermissions();
+         $this->bootMiddleware();
          $this->createNavigation();
 
         if ($this->app->runningInConsole()) {
@@ -98,6 +98,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
             return new StatamicButik;
         });
 
+        // Registering the service provider
         $this->app->register(MollieServiceProvider::class);
     }
 
@@ -123,19 +124,19 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         });
     }
 
-    public function registerPolicies()
+    public function bootPolicies()
     {
         foreach ($this->policies as $key => $value) {
             Gate::policy($key, $value);
         }
     }
 
-    private function registerMiddleware() {
+    private function bootMiddleware() {
         $router = $this->app['router'];
         $router->pushMiddlewareToGroup('web', DeletingTransactionData::class);
     }
 
-    private function registerPermissions() {
+    private function bootPermissions() {
         $this->app->booted(function () {
             Permission::group('butik', 'Statamic Butik', function () {
                 Permission::register('view products', function ($permission) {
