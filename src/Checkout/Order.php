@@ -16,6 +16,10 @@ class Order {
         // TODO: Calculate amount automatically
     }
 
+    public function getId() {
+        return $this->transaction->id;
+    }
+
     public function customer(Customer $customer) {
         $this->customer = $customer;
         return $this;
