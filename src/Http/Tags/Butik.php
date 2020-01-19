@@ -10,6 +10,11 @@ class Butik extends StatamicTags
     public function products()
     {
         $products = Product::all();
+
+        if ($products->count() === 0) {
+            return null;
+        }
+
         $products->transform(function($product) {
             return [
                 'title'           => $product->title,

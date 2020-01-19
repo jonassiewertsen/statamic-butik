@@ -23,6 +23,12 @@ class ButikTagTest extends TestCase
     }
 
     /** @test */
+    public function it_will_return_null_if_null_products_have_been_created()
+    {
+        $this->assertNull($this->butik->products());
+    }
+
+    /** @test */
     public function the_products_value_is_returning_the_product_collection()
     {
         $product = create(Product::class)->first();
