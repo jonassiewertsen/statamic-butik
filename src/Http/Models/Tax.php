@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tax extends Model
 {
-    protected $table        = 'taxes';
+    protected $table        = 'butik_taxes';
     public    $incrementing = false;
     protected $primaryKey   = 'slug';
     protected $keyType      = 'string';

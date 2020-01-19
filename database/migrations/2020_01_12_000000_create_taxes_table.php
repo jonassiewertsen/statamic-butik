@@ -8,7 +8,7 @@ class CreateTaxesTable extends Migration
 {
     public function up()
     {
-        Schema::create('taxes', function (Blueprint $table) {
+        Schema::create('butik_taxes', function (Blueprint $table) {
             $table->string('title');
             $table->string('slug')->unique()->primary();
             $table->integer('percentage');
@@ -19,6 +19,6 @@ class CreateTaxesTable extends Migration
 
     public function down()
     {
-        Schema::drop('taxes');
+        Schema::drop('butik_taxes');
     }
 }

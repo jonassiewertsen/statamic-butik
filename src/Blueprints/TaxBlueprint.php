@@ -39,7 +39,7 @@ class TaxBlueprint
                             'field'  => [
                                 'type'     => 'slug',
                                 'display'  => __('statamic-butik::cp.slug'),
-                                'validate' => 'required|unique:taxes,slug,id,'.request()->id,
+                                'validate' => 'required|unique:butik_taxes,slug,id,'.request()->id,
                                 'read_only' => $this->slugReadOnly(),
                             ],
                         ],

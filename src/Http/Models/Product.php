@@ -9,7 +9,7 @@ class Product extends Model
 {
     use ProductUrlTrait;
 
-    protected $table        = 'products';
+    protected $table        = 'butik_products';
     public    $incrementing = false;
     protected $primaryKey   = 'slug';
     protected $keyType      = 'string';

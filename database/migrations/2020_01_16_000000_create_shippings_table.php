@@ -8,7 +8,7 @@ class CreateShippingsTable extends Migration
 {
     public function up()
     {
-        Schema::create('shippings', function (Blueprint $table) {
+        Schema::create('butik_shippings', function (Blueprint $table) {
             $table->string('title');
             $table->string('slug')->unique()->primary();
             $table->integer('price');
@@ -19,6 +19,6 @@ class CreateShippingsTable extends Migration
 
     public function down()
     {
-        Schema::drop('shippings');
+        Schema::drop('butik_shippings');
     }
 }

@@ -28,7 +28,7 @@ class ProductBlueprint
                                 'type'         => 'slug',
                                 'display'      => __('statamic-butik::product.form.slug'),
                                 'instructions' => __('statamic-butik::product.form.slug_description'),
-                                'validate' => 'required|string|unique:products,slug,id,'.request()->id,
+                                'validate' => 'required|string|unique:butik_products,slug,id,'.request()->id,
                                 'read_only' => $this->slugReadOnly(),
                             ],
                         ],

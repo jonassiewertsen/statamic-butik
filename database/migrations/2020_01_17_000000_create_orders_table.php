@@ -8,7 +8,7 @@ class CreateOrdersTable extends Migration
 {
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('butik_orders', function (Blueprint $table) {
             $table->string('id')->unique()->primary();
             $table->json('products');
             $table->integer('total_amount');
@@ -21,6 +21,6 @@ class CreateOrdersTable extends Migration
 
     public function down()
     {
-        Schema::drop('orders');
+        Schema::drop('butik_orders');
     }
 }

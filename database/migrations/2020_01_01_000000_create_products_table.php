@@ -8,7 +8,7 @@ class CreateProductsTable extends Migration
 {
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('butik_products', function (Blueprint $table) {
             $table->string('title');
             $table->string('slug')->unique()->primary();
             $table->integer('base_price');
@@ -24,6 +24,6 @@ class CreateProductsTable extends Migration
 
     public function down()
     {
-        Schema::drop('products');
+        Schema::drop('butik_products');
     }
 }
