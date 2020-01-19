@@ -17,6 +17,7 @@ class SendPurchaseConfirmationToCustomer implements ShouldQueue
         $transaction = $transaction->transaction;
 
         try {
+            // TODO: Seems not to send mails now
             Mail::queue(new OrderConfirmationForCustomer($transaction));
         } catch(\Exception $e) {
             report($e);

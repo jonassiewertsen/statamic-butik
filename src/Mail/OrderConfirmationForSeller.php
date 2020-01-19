@@ -11,32 +11,20 @@ class OrderConfirmationForSeller extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    /**
-     * The order instance.
-     *
-     * @var Order
-     */
-    public $order;
+    public $transaction;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-//    public function __construct(Order $order)
-    public function __construct()
+    public function __construct($transaction)
     {
-//        $this->order = $order;
+        $this->transaction = [
+            'id'         => $transaction->id,
+            'amount'     => $transaction->amount,
+            'currency'   => $transaction->currencyIsoCode,
+            'created_at' => $transaction->createdAt,
+        ];
     }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
     public function build()
     {
-        // TODO: Get a nice view into place !!!
-//        return $this->view('emails.orders.shipped');
+        return $this->view('emails.orders.shipped');
     }
 }
