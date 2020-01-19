@@ -4,7 +4,7 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
-use Jonassiewertsen\StatamicButik\Checkout\Order;
+use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Exceptions\TransactionSessionDataIncomplete;
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
@@ -13,7 +13,7 @@ class ExpressCheckoutController extends WebController
 {
     public function delivery(Product $product) {
 //        dd(collect($product));
-        $order = (new Order())->products(collect($product));
+        $order = (new Cart())->products(collect($product));
 
         // TODO: Get the session back in place
 //        if (session()->has('butik.customer')) {
@@ -30,7 +30,7 @@ class ExpressCheckoutController extends WebController
     public function saveCustomerData(Product $product) {
         $validatedData = request()->validate($this->rules());
 
-        $order = (new Order)
+        $order = (new Cart)
             ->customer((new Customer)->create($validatedData))
             ->products(collect($product));
 
