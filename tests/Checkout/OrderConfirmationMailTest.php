@@ -2,6 +2,7 @@
 
 namespace Tests\Checkout;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
 use Jonassiewertsen\StatamicButik\Mail\OrderConfirmationForCustomer;
@@ -31,6 +32,22 @@ class OrderConfirmationMailTest extends TestCase
         $amount = $this->makePayment();
 
         Mail::assertQueued(OrderConfirmationForCustomer::class);
+    }
+
+    /** @test */
+    public function a_purchase_confirmation_mail_will_contain_transaction_data(){
+        $this->withoutExceptionHandling();
+        Event::fake([CreateOrder::class]);
+        Mail::fake();
+
+        $transaction = $this->makePayment();
+
+        Mail::assertQueued(OrderConfirmationForCustomer::class, function($mail) use ($transaction) {
+            return  $mail->transaction['id']                        === $transaction->id &&
+                    $mail->transaction['amount']                    === $transaction->amount &&
+                    $mail->transaction['currency']                  === $transaction->currencyIsoCode &&
+                    Carbon::parse($mail->transaction['created_at'])  == Carbon::parse($transaction->createdAt->date);
+        });
     }
 
     /** @test */

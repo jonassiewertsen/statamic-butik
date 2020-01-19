@@ -11,7 +11,7 @@
                 Order ID
             </td>
             <td valign="top" width="67%" style="text-align: left;">
-                23484
+                {{ $transaction['id'] }}
             </td>
         </tr>
 
@@ -20,7 +20,7 @@
                 Total Amount
             </td>
             <td valign="top" width="67%" style="text-align: left;">
-                20 €
+                {{ $transaction['amount'] }} {{ $transaction['currency'] }}
             </td>
         </tr>
 
@@ -29,7 +29,7 @@
                 Status
             </td>
             <td valign="top" width="67%" style="text-align: left;">
-                Payed
+                Paid
             </td>
         </tr>
 
@@ -38,7 +38,7 @@
                 Ordered at
             </td>
             <td valign="top" width="67%" style="text-align: left;">
-                20. August 2020
+                {{ $transaction['created_at'] }}
             </td>
         </tr>
 
