@@ -5,7 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Checkout;
 use Illuminate\Support\Collection;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 
-class Order {
+class Cart {
     public ?Customer $customer;
     public ?Collection $products;
     public ?Transaction $transaction;
