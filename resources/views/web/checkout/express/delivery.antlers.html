@@ -1,19 +1,4 @@
-<div class="b-mx-5">
-    <div class="b-flex b-justify-around">
-        <div class="b-text-xs b-flex b-flex-col b-items-center">
-            <div class="b-border-2 b-border-green-500 b-flex b-h-8 b-items-center b-justify-center b-rounded-full b-w-8">1</div>
-            <span class="b-text-green-500 b-mt-1">{{ trans key="statamic-butik::payment.delivery" }}</span>
-        </div>
-        <div class="b-text-xs b-flex b-flex-col b-items-center">
-            <div class="b-border-2 b-border-gray-400 b-flex b-h-8 b-items-center b-justify-center b-rounded-full b-w-8">2</div>
-            <span class="b-text-gray-400 b-mt-1">{{ trans key="statamic-butik::payment.review_payment" }}</span>
-        </div>
-        <div class="b-text-xs b-flex b-flex-col b-items-center">
-            <div class="b-border-2 b-border-gray-400 b-flex b-h-8 b-items-center b-justify-center b-rounded-full b-w-8">3</div>
-            <span class="b-text-gray-500 b-mt-1">{{ trans key="statamic-butik::payment.receipt" }}</span>
-        </div>
-    </div>
-</div>
+{{ partial src="statamic-butik::web.checkout.partials.status" delivery="true" review="false" receipt="false"}}
 
 <hr class="b-mb-5 b-mt-8">
 
