@@ -15,6 +15,7 @@ return [
         'singular' => 'Product',
         'plural'   => 'Products',
     ],
+    'back'        => 'back',
     'description' => 'Amazing products will make your customers happy! You just need to add them here.',
 
     'navigation' => [
