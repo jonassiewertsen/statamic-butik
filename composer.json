@@ -26,7 +26,6 @@
     },
     "require": {
         "php": "^7.2",
-        "braintree/braintree_php": "^4.6",
         "illuminate/support": "^6.0",
         "mollie/laravel-mollie": "^2.8",
         "statamic/cms": "^3.0@beta"
@@ -66,7 +65,7 @@
                 "Jonassiewertsen\\StatamicButik\\StatamicButikServiceProvider"
             ],
             "aliases": {
-             \   "StatamicButik": "Jonassiewertsen\\StatamicButik\\StatamicButikFacade"
+                "StatamicButik": "Jonassiewertsen\\StatamicButik\\StatamicButikFacade"
             }
         }
     }
