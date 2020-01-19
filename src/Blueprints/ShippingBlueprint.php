@@ -39,7 +39,7 @@ class ShippingBlueprint
                             'field'  => [
                                 'type'     => 'slug',
                                 'display'  => __('statamic-butik::cp.slug'),
-                                'validate' => 'required|unique:butik_shipping,slug,id,'.request()->id,
+                                'validate' => 'required|unique:butik_shippings,slug,id,'.request()->id,
                                 'read_only' => $this->slugReadOnly(),
                             ],
                         ],

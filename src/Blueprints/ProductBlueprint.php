@@ -48,7 +48,7 @@ class ProductBlueprint
                                 'display'      => __('statamic-butik::cp.taxes'),
                                 'options'      => $this->fetchTaxOptions(),
                                 'width'         => '25',
-                                'validate'      => 'required|exists:taxes,slug'
+                                'validate'      => 'required|exists:butik_taxes,slug'
                             ],
                         ],
                         [
@@ -58,7 +58,7 @@ class ProductBlueprint
                                 'display'      => __('statamic-butik::cp.shipping'),
                                 'options'      => $this->fetchShippingOptions(),
                                 'width'         => '25',
-                                'validate'      => 'required|exists:shippings,slug'
+                                'validate'      => 'required|exists:butik_shippings,slug'
                             ],
                         ],
                         [
