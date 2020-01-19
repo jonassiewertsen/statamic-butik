@@ -31,7 +31,7 @@ return [
     'total'     => 'Total',
 
     'to_payment' => 'To payment',
-    'pay_now'    => 'Pay now & confirm',
+    'pay_now'    => 'Go to payment',
 
     'your_information' => 'Your Information',
     'delivery_address' => 'Delivery Address',

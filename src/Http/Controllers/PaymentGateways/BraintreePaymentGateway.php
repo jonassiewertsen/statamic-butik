@@ -8,6 +8,8 @@ use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 
 class BraintreePaymentGateway extends WebController implements PaymentGatewayInterface
 {
+    // TODO: Can be deleted ?
+
     protected $braintree;
 
     public function __construct()

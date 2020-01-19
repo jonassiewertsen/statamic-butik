@@ -15,18 +15,25 @@ class PaymentGatewayController extends WebController
 
     public function __construct()
     {
-        $this->gateway = new BraintreePaymentGateway();
+        $this->gateway = new MolliePaymentGateway();
     }
 
     public function processPayment(Request $request)
     {
-        $response = $this->gateway->handle($request);
-        if ($response->success) {
-            $this->saveTransactionInSession($response);
-            event(new PaymentSuccessful($response->transaction));
-        }
+        $payment = Mollie::api()->payments()->create([
+             'amount' => [
+                 'currency' => 'EUR',
+                 'value' => '10.00', // You must send the correct number of decimals, thus we enforce the use of strings
+             ],
+             'description' => 'My first API payment',
+             'webhookUrl' => route('webhooks.mollie'),
+             'redirectUrl' => route('order.success'),
+         ]);
 
-        return response()->json($response);
+        $payment = Mollie::api()->payments()->get($payment->id);
+
+        // redirect customer to Mollie checkout page
+        return redirect($payment->getCheckoutUrl(), 303);
     }
 
     private function saveTransactionInSession($response) {

@@ -1,6 +1,3 @@
-{{# <!-- TODO: Remember to refactor. It looks like ... -->  #}}
-{{# Dont worry. These two sections wont be rendered into HTML.  #}}
-
 <div class="butik-mx-5">
     <div class="butik-flex butik-justify-around">
         <a href="{{ express_delivery_url }}" class="butik-block butik-text-xs butik-flex butik-flex-col butik-items-center">
@@ -59,44 +56,9 @@
             </div>
         </div>
 
-        <div id="dropin-container" class="butik-mt-3" style="min-height: 200px;"></div>
-        <button id="submit-button" class="butik-block butik-w-full butik-mt-3 butik-bg-gray-900 butik-mt-6 butik-py-2 butik-rounded butik-text-center butik-text-white butik-text-xl hover:butik-bg-gray-800">
+        <button class="butik-block butik-w-full butik-mt-3 butik-bg-gray-900 butik-mt-6 butik-py-2 butik-rounded butik-text-center butik-text-white butik-text-xl hover:butik-bg-gray-800">
             {{ trans key="statamic-butik::payment.pay_now" }}
         </button>
-        <script>
-            var button = document.querySelector('#submit-button');
-            // TODO: Prepare PayPal but dont ship it as default
-            braintree.dropin.create({
-                authorization: 'sandbox_8hc4ttnw_8t2hkkd3nn7yqncp',
-                container: '#dropin-container',
-                locale: '{{ site_locale }}',
-                paypal: {
-                    flow: 'vault',
-                },
-                card: {
-                    cardholderName: {
-                        required: true,
-                    }
-                }
-            }, function (createErr, instance) {
-                button.addEventListener('click', function () {
-                    instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
-                        $.get('{{ braintree:route name="payment.process" }}', {payload}, function (response) {
-                            if (response.success) {
-                                // TODO: add redirect dynamically
-                                window.location.href = "/shop/express-checkout/receipt/nort-jaime-2020";
-                            } else {
-                                instance.clearSelectedPaymentMethod();
-
-                                alert('{{ trans key="statamic-butik::payment.process_failed" }}.\n\n' +
-                                    '{{ trans key="statamic-butik::payment.error_message" }}\n ' +
-                                    response.message);
-                            }
-                        }, 'json');
-                    });
-                });
-            });
-        </script>
     </div>
 
 

@@ -18,22 +18,5 @@ Route::prefix(config('statamic-butik.uri.shop'))->name('butik.')->namespace('Htt
 
     Route::get('payment/process', 'PaymentGatewayController@processPayment')->name('payment.process');
 
-    Route::get('mollie', function() {
-        $payment = Mollie::api()->payments()->create([
-             'amount' => [
-                 'currency' => 'EUR',
-                 'value' => '10.00', // You must send the correct number of decimals, thus we enforce the use of strings
-             ],
-             'description' => 'My first API payment',
-             'webhookUrl' => route('webhooks.mollie'),
-             'redirectUrl' => route('order.success'),
-         ]);
-
-        $payment = Mollie::api()->payments()->get($payment->id);
-
-        // redirect customer to Mollie checkout page
-        return redirect($payment->getCheckoutUrl(), 303);
-    });
-
     Route::get('{product}', 'ShopController@show')->name('shop.product');
 });
