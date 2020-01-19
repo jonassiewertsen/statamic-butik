@@ -3,6 +3,8 @@
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 
 use Illuminate\Support\Facades\Session;
+use Jonassiewertsen\StatamicButik\Checkout\Customer;
+use Jonassiewertsen\StatamicButik\Checkout\Order;
 use Jonassiewertsen\StatamicButik\Exceptions\TransactionSessionDataIncomplete;
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
@@ -10,48 +12,49 @@ use Jonassiewertsen\StatamicButik\Http\Models\Product;
 class ExpressCheckoutController extends WebController
 {
     public function delivery(Product $product) {
+//        dd(collect($product));
+        $order = (new Order())->products(collect($product));
 
-        // Adding checkout routes to the product
-        $product = $this->addingProductRoutes($product);
-
-        // In case a customer goes back to edit, we will load his previews information
-        if (session()->has('butik.customer')) {
-            $formData = session('butik.customer');
-            $viewData = array_merge($formData, $product);
-        }
+        // TODO: Get the session back in place
+//        if (session()->has('butik.customer')) {
+//            $formData = session('butik.customer');
+//            $viewData = array_merge($formData, $product);
+//        }
 
        return (new \Statamic\View\View())
            ->layout(config('statamic-butik.frontend.layout.checkout.express.delivery'))
            ->template(config('statamic-butik.frontend.template.checkout.express.delivery'))
-           ->with($viewData ?? $product);
+           ->with($order->products->toArray());
     }
 
     public function saveCustomerData(Product $product) {
         $validatedData = request()->validate($this->rules());
 
-        Session::put('butik.customer', $validatedData);
+        $order = (new Order)
+            ->customer((new Customer)->create($validatedData))
+            ->products(collect($product));
+
+        Session::put('butik.order', $order);
 
         return redirect()->route('butik.checkout.express.payment', $product);
     }
 
-    public function payment(Product $product) {
+    public function payment() {
+        $order = session()->get('butik.order');
+
         if (! $this->customerDataComplete()) {
-            return redirect($product->expressDeliveryUrl);
+            return redirect($order->products->first->expressDeliveryUrl);
         }
 
-        // Adding checkout routes to the product
-        $product = $this->addingProductRoutes($product);
-
-        // In case a customer goes back to edit, we will load his previews information
-        if (session()->has('butik.customer')) {
-            $formData = session('butik.customer');
-            $viewData = array_merge($formData, $product);
-        }
+        $viewData = array_merge(
+            $order->products->toArray(),
+            (array) $order->customer
+        );
 
         return (new \Statamic\View\View())
             ->layout(config('statamic-butik.frontend.layout.checkout.express.payment'))
             ->template(config('statamic-butik.frontend.template.checkout.express.payment'))
-            ->with($viewData ?? $product);
+            ->with($viewData);
     }
 
     public function receipt(Product $product) {
@@ -79,13 +82,13 @@ class ExpressCheckoutController extends WebController
             return false;
         }
 
-        $session = session()->get('butik.customer');
+        $customer = session()->get('butik.customer');
 
         $keys = collect(['name', 'mail', 'country', 'address_1', 'city', 'zip']);
 
         foreach ($keys as $key) {
             // Return false in case one of the keys does not exist inside the session data
-            if (empty($session[$key])) {
+            if (empty($customer->$key)) {
                 return false;
             }
         }

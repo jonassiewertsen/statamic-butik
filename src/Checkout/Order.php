@@ -6,10 +6,10 @@ use Illuminate\Support\Collection;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 
 class Order {
-    public Customer $customer;
-    public Product $products;
-    public Transaction $transaction;
-    public $amount; // TODO: Set type hint
+    public ?Customer $customer;
+    public ?Collection $products;
+    public ?Transaction $transaction;
+    public ?string $amount; // TODO: Set type hint
 
     public function __construct()
     {
@@ -26,12 +26,12 @@ class Order {
     }
 
     public function transaction(Transaction $transaction): self {
-        $this->customer = $transaction;
+        $this->transaction = $transaction;
         return $this;
     }
 
     public function products(Collection $products): self {
-        $this->customer = $products;
+        $this->products = $products;
         return $this;
     }
 
