@@ -35,6 +35,22 @@ class ProductCreateTest extends TestCase
     }
 
     /** @test */
+    public function available_is_required()
+    {
+        $product = raw(Product::class, ['available' => null]);
+        $this->post(route('statamic.cp.butik.products.store'), $product)
+            ->assertSessionHasErrors('available');
+    }
+
+    /** @test */
+    public function available_must_be_a_boolean()
+    {
+        $product = raw(Product::class, ['available' => 'yes']);
+        $this->post(route('statamic.cp.butik.products.store'), $product)
+            ->assertSessionHasErrors('available');
+    }
+
+    /** @test */
     public function title_is_required()
     {
         $product = raw(Product::class, ['title' => null]);

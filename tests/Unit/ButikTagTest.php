@@ -43,6 +43,15 @@ class ButikTagTest extends TestCase
     }
 
     /** @test */
+    public function it_will_only_return_available_products()
+    {
+        create(Product::class, [], 3);
+        create(Product::class, ['available' => false]);
+
+        $this->assertCount(3,  $this->butik->products());
+    }
+
+    /** @test */
     public function it_can_return_the_currency_symbol()
     {
         create(Product::class, [], 10);

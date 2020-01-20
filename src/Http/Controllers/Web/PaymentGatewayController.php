@@ -13,6 +13,8 @@ class PaymentGatewayController extends WebController
 {
     protected $gateway;
 
+    // TODO: Only available products can be bought
+
     public function __construct()
     {
         $this->gateway = new MolliePaymentGateway();

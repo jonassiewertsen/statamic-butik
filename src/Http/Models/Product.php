@@ -14,9 +14,11 @@ class Product extends ButikModel
     protected $keyType      = 'string';
 
     protected $casts = [
-        'description' => 'array',
-        'images'      => 'array',
-        'base_price'  => 'integer',
+        'available'       => 'boolean',
+        'base_price'      => 'integer',
+        'description'     => 'array',
+        'images'          => 'array',
+        'stock_unlimited' => 'boolean',
     ];
 
     protected $appends = [

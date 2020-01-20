@@ -9,7 +9,7 @@ class Butik extends StatamicTags
 {
     public function products()
     {
-        $products = Product::all();
+        $products = Product::whereAvailable(true)->get();
 
         if ($products->count() === 0) {
             return null;

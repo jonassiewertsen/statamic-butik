@@ -10,6 +10,12 @@ use Jonassiewertsen\StatamicButik\Tests\TestCase;
 class ProductTest extends TestCase
 {
     /** @test */
+    public function it_is_available_as_default(){
+        $product = create(Product::class)->first();
+        $this->assertTrue(Product::first()->available);
+    }
+
+    /** @test */
     public function it_has_a_shipping_amount(){
         $product = create(Product::class)->first();
         $this->assertEquals($product->shipping->price, $product->shipping_amount);

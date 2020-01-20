@@ -17,6 +17,10 @@ class ShopController extends WebController
 
     public function show(Product $product)
     {
+        if (! $product->available) {
+            return redirect()->route('butik.shop');
+        }
+
         $product = $this->addingProductRoutes($product);
 
         return (new \Statamic\View\View())

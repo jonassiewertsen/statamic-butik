@@ -25,6 +25,16 @@ class ProductShowTest extends TestCase
     }
 
     /** @test */
+    public function a_product_must_be_available_to_be_shown()
+    {
+        $product = create(Product::class, ['available' => false])->first();
+
+        $this->get(route('butik.shop.product', $product))
+            ->assertRedirect(route('butik.shop'));
+
+    }
+
+    /** @test */
     public function product_information_will_be_shown()
     {
         $this->get(route('butik.shop.product', $this->product))

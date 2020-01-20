@@ -90,6 +90,15 @@ class ProductBlueprint
                 'sidebar' => [
                     'fields' => [
                         [
+                            'handle' => 'available',
+                            'field'  => [
+                                'type'     => 'toggle',
+                                'default'  => true,
+                                'display'  => __('statamic-butik::product.form.available'),
+                                'validate' => 'required|boolean',
+                            ],
+                        ],
+                        [
                             'handle' => 'images',
                             'field'  => [
                                 'type'     => 'assets',
