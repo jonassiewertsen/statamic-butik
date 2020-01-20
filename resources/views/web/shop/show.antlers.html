@@ -11,7 +11,15 @@
     {{ /if }}
 
     <div class="b-px-5 md:b-w-1/2 b-w-full">
-        <h1 class="b-mt-2 b-text-2xl">{{ title }}</h1>
+
+        {{ if stock_unlimited || stock  > 0 }}
+            <h1 class="b-mt-2 b-text-2xl">{{ title }}</h1>
+        {{ else }}
+            <h1 class="b-mt-2 b-text-2xl">
+                <s>{{ title }}</s>
+                <span class="b-text-sm b-ml-2">sold out</span>
+            </h1>
+        {{ /if }}
 
         <div class="b-text-gray-500 b-text-sm b-mt-2">{{ base_price }} {{ butik:currency_symbol }} Base price</div>
         <div class="b-text-gray-500 b-text-sm">{{ shipping_amount }} {{ butik:currency_symbol }} Shipping</div>

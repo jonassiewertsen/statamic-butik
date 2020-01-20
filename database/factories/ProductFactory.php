@@ -7,12 +7,19 @@ use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 
 $factory->define(Product::class, function (Faker $faker) {
     return [
-        'title'          => $faker->name,
-        'slug'           => $faker->unique()->slug,
-        'description'    => $faker->paragraph(3),
-        'base_price'     => $faker->numberBetween(100, 20000),
-        'tax_id'         => create(Tax::class)->first(),
-        'shipping_id'    => create(Shipping::class)->first(),
-        'type'           => $faker->randomElement(['download', 'physical'])
+        'available'       => true,
+        'title'           => $faker->name,
+        'slug'            => $faker->unique()->slug,
+        'description'     => $faker->paragraph(3),
+        'base_price'      => $faker->numberBetween(100, 20000),
+        'tax_id'          => create(Tax::class)->first(),
+        'shipping_id'     => create(Shipping::class)->first(),
+        'stock'           => $faker->numberBetween(2, 100),
+        'stock_unlimited' => false,
+        'type'            => $faker->randomElement(
+            [
+                'download',
+                'physical',
+            ]),
     ];
 });

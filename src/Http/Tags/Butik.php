@@ -26,6 +26,8 @@ class Butik extends StatamicTags
                 'tax_amount'      => $product->tax_amount,
                 'tax_percentage'  => $product->tax_percentage,
                 'show_url'        => $product->showUrl,
+                'stock'           => $product->stock,
+                'stock_unlimited' => $product->stock_unlimited,
             ];
 
         });

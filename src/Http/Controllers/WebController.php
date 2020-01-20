@@ -18,6 +18,8 @@ class WebController extends LaravelController
             'tax_percentage'       => $product->tax_percentage,
             'shipping_amount'      => $product->shipping_amount,
             'show_url'             => $product->showUrl,
+            'stock'                => $product->stock,
+            'stock_unlimited'      => $product->stock_unlimited,
             'express_delivery_url' => $product->expressDeliveryUrl,
             'express_payment_url'  => $product->expressPaymentUr,
         ];
