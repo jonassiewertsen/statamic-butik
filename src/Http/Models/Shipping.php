@@ -19,6 +19,30 @@ class Shipping extends ButikModel
         return 'slug';
     }
 
+    /**
+     * Will return the base price for this item
+     */
+    public function getPriceAttribute($value)
+    {
+        return $this->makeAmountHuman($value);
+    }
+
+    /**
+     * Mutating from a the correct amount into a integer without commas
+     */
+    public function setPriceAttribute($value)
+    {
+        $this->attributes['price'] = $this->makeAmountSaveable($value);
+    }
+
+    /**
+     * Return the price with currency appended
+     */
+    public function getPriceWithCurrencySymbolAttribute($value)
+    {
+        return config('statamic-butik.currency.symbol').' '.$this->price;
+    }
+
     public function products() {
         return $this->hasMany(Product::class, 'shipping_id');
     }

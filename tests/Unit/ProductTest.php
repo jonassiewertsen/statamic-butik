@@ -12,7 +12,7 @@ class ProductTest extends TestCase
     /** @test */
     public function it_has_a_shipping_amount(){
         $product = create(Product::class)->first();
-        $this->assertEquals($product->makeAmountHuman($product->shipping->price), $product->shipping_amount);
+        $this->assertEquals($product->shipping->price, $product->shipping_amount);
     }
 
     /** @test */
@@ -27,7 +27,7 @@ class ProductTest extends TestCase
 
         $divisor            = $product->tax->percentage + 100;
         $base_price         = $product->getOriginal('base_price');
-        $shipping_amount    = $product->shipping->price;
+        $shipping_amount    = $product->shipping->getOriginal('price');
         $total_amount       = $base_price + $shipping_amount;
 
         $totalPriceWithoutTax = $total_amount / $divisor * 100;
@@ -38,7 +38,7 @@ class ProductTest extends TestCase
     /** @test */
     public function it_has_a_total_price(){
         $product = create(Product::class)->first();
-        $amount = $product->getOriginal('base_price') + $product->shipping->price;
+        $amount = $product->getOriginal('base_price') + $product->shipping->getOriginal('price');
 
         $this->assertEquals(
             $product->makeAmountHuman($amount),

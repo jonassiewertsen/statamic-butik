@@ -24,7 +24,7 @@ class ShippingBlueprint
                         [
                             'handle' => 'price',
                             'field'  => [
-                                'type'         => 'integer',
+                                'type'         => 'money',
                                 'display'      => __('statamic-butik::cp.price'),
                                 'width'         => '33',
                                 'validate'      => 'required|integer|min:0',

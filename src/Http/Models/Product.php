@@ -57,7 +57,7 @@ class Product extends ButikModel
      */
     public function getTotalPriceAttribute()
     {
-        $amount = $this->getOriginal('base_price') + $this->shipping->price;
+        $amount = $this->getOriginal('base_price') + $this->shipping->getOriginal('price');
         return $this->makeAmountHuman($amount);
     }
 
@@ -70,11 +70,19 @@ class Product extends ButikModel
     }
 
     /**
+     * Mutating from a the correct amount into a integer without commas
+     */
+    public function setBasePriceAttribute($value)
+    {
+        $this->attributes['base_price'] = $this->makeAmountSaveable($value);
+    }
+
+    /**
      * Will return the shipping price
      */
     public function getShippingAmountAttribute()
     {
-        return $this->makeAmountHuman($this->shipping->price);
+        return $this->shipping->price;
     }
 
     /**
@@ -88,20 +96,12 @@ class Product extends ButikModel
     public function getTaxAmountAttribute() {
         $divisor            = $this->tax->percentage + 100;
         $base_price         = $this->getOriginal('base_price');
-        $shipping_amount    = $this->shipping->price;
+        $shipping_amount    = $this->shipping->getOriginal('price');
         $total_amount       = $base_price + $shipping_amount;
 
         $totalPriceWithoutTax = $total_amount / $divisor * 100;
         $tax = $total_amount - $totalPriceWithoutTax;
         return $this->makeAmountHuman($tax);
-    }
-
-    /**
-     * Mutating from a the correct amount into a integer without commas
-     */
-    public function setBasePriceAttribute($value)
-    {
-        $this->attributes['base_price'] = $this->makeAmountSaveable($value);
     }
 
     /**

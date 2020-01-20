@@ -18,7 +18,7 @@ class ShippingsController extends CpController
         $shippings = Shipping::all()->map(function ($shipping) {
             return [
                 'title'      => $shipping->title,
-                'price'      => $shipping->price,
+                'price'      => $shipping->priceWithCurrencySymbol,
                 'edit_url'   => $shipping->editUrl(),
                 'id'         => $shipping->slug,
                 'deleteable' => auth()->user()->can('delete', Shipping::class),
