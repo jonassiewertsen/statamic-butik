@@ -125,7 +125,6 @@ class StatamicButikServiceProvider extends AddonServiceProvider
             $nav->create('Settings')
                 ->section('Butik')
                 ->icon('settings-slider')
-                ->route('butik.taxes.index')
                 ->children([
                    $nav->item('Taxes')->route('butik.taxes.index')->can('view taxes'),
                    $nav->item('Shippings')->route('butik.shippings.index')->can('view shippings'),
