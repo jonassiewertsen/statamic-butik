@@ -35,7 +35,7 @@ class ProductBlueprint
                         [
                             'handle' => 'base_price',
                             'field'  => [
-                                'type'         => 'integer',
+                                'type'         => 'money',
                                 'display'      => __('statamic-butik::product.form.base_price'),
                                 'width'         => '25',
                                 'validate'      => 'required|min:0',

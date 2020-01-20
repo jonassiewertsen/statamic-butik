@@ -11,4 +11,15 @@ class Money extends \Statamic\Fields\Fieldtype
             'currencySymbol' => config('statamic-butik.currency.symbol', ''),
         ];
     }
+
+    public function process($data)
+    {
+        return $data;
+    }
+
+    public function preProcess($data)
+    {
+        // In case another dec point then '.' has been just, we will reformat
+        return number_format(floatval($data), 2, '.', '');
+    }
 }
