@@ -64,7 +64,7 @@ class ProductTest extends TestCase
     public function the_currency_can_output_the_currency_symbol()
     {
         $product = create(Product::class, ['base_price' => 2 ]);
-        $this->assertEquals('2,00 €', $product->first()->basePriceWithCurrencySymbol);
+        $this->assertEquals('€ 2,00', $product->first()->basePriceWithCurrencySymbol);
     }
 
     /** @test */

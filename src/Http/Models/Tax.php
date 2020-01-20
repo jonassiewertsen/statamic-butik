@@ -2,9 +2,7 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Tax extends Model
+class Tax extends ButikModel
 {
     protected $table        = 'butik_taxes';
     public    $incrementing = false;

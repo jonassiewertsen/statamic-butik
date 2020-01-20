@@ -2,10 +2,9 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Jonassiewertsen\StatamicButik\Http\Traits\ProductUrlTrait;
 
-class Product extends Model
+class Product extends ButikModel
 {
     use ProductUrlTrait;
 
@@ -110,20 +109,7 @@ class Product extends Model
      */
     public function getBasePriceWithCurrencySymbolAttribute($value)
     {
-        return $this->base_price.' '.config('statamic-butik.currency.symbol');
-    }
-
-    public function makeAmountHuman($value)
-    {
-        $value = floatval($value) / 100;
-
-        $delimiter = config('statamic-butik.currency.delimiter');
-        return number_format($value, 2, $delimiter, '');
-    }
-
-    public function makeAmountSaveable($value)
-    {
-        return number_format(floatval($value) * 100, 0, '', '');
+        return config('statamic-butik.currency.symbol').' '.$this->base_price;
     }
 
     /**
