@@ -146,4 +146,18 @@ class ProductTest extends TestCase
 
         $this->assertInstanceOf(Shipping::class, $product->shipping);
     }
+
+    /** @test */
+    public function it_is_sold_out_if_the_stock_is_null(){
+        $product = create(Product::class, ['stock' => 0, 'stock_unlimited' => false])->first();
+
+        $this->assertTrue($product->soldOut);
+    }
+
+    /** @test */
+    public function it_is_not_sold_out_if_the_product_is_unlimited(){
+        $product = create(Product::class, ['stock' => 0, 'stock_unlimited' => true ])->first();
+
+        $this->assertFalse($product->soldOut);
+    }
 }

@@ -115,6 +115,17 @@ class Product extends ButikModel
     }
 
     /**
+     * Return the price with currency appended
+     */
+    public function getSoldOutAttribute()
+    {
+        if ($this->stock_unlimited) {
+            return false;
+        }
+        return $this->stock === 0;
+    }
+
+    /**
      * The route to the base shop
      */
     private function shopRoute() {
