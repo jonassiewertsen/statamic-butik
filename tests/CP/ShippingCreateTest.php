@@ -46,19 +46,11 @@ class ShippingCreateTest extends TestCase
             ->assertSessionHasErrors('price');
     }
 
-    /** @test */
-    public function percentage_must_be_an_integer()
-    {
-        $shipping = raw(Shipping::class, ['price' => 'drei']);
-        $this->post(route('statamic.cp.butik.shippings.store'), $shipping)
-            ->assertSessionHasErrors('price');
-    }
-
-    /** @test */
-    public function percentage_cant_be_less_then_zero()
-    {
-        $shipping = raw(Shipping::class, ['price' => -1 ]);
-        $this->post(route('statamic.cp.butik.shippings.store'), $shipping)
-            ->assertSessionHasErrors('price');
-    }
+//    /** @test */
+//    public function price_must_be_an_integer()
+//    {
+//        $shipping = raw(Shipping::class, ['price' => 'drei']);
+//        $this->post(route('statamic.cp.butik.shippings.store'), $shipping)
+//            ->assertSessionHasErrors('price');
+//    }
 }

@@ -27,7 +27,7 @@ class TaxUpdateTest extends TestCase
         $tax = create(Tax::class)->first();
         $tax->title = 'Updated Name';
         $this->updateTax($tax)->assertSessionHasNoErrors();
-        $this->assertDatabaseHas('taxes', ['title' => 'Updated Name']);
+        $this->assertDatabaseHas('butik_taxes', ['title' => 'Updated Name']);
     }
 
     /** @test */
@@ -36,7 +36,7 @@ class TaxUpdateTest extends TestCase
         $tax = create(Tax::class)->first();
         $tax->percentage = 99;
         $this->updateTax($tax);
-        $this->assertDatabaseHas('taxes', ['percentage' => 99]);
+        $this->assertDatabaseHas('butik_taxes', ['percentage' => 99]);
     }
 
     private function updateTax($tax) {

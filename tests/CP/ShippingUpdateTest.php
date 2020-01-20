@@ -27,7 +27,7 @@ class ShippingUpdateTest extends TestCase
         $shipping = create(Shipping::class)->first();
         $shipping->title = 'Updated Name';
         $this->updateShipping($shipping)->assertSessionHasNoErrors();
-        $this->assertDatabaseHas('shippings', ['title' => 'Updated Name']);
+        $this->assertDatabaseHas('butik_shippings', ['title' => 'Updated Name']);
     }
 
     /** @test */
@@ -36,7 +36,7 @@ class ShippingUpdateTest extends TestCase
         $shipping = create(Shipping::class)->first();
         $shipping->price = 99;
         $this->updateShipping($shipping);
-        $this->assertDatabaseHas('shippings', ['price' => 99]);
+        $this->assertDatabaseHas('butik_shippings', ['price' => $shipping->makeAmountSaveable(99)]);
     }
 
     private function updateShipping($shipping) {

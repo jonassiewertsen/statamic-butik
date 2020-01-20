@@ -29,7 +29,7 @@ class ProductUpdateTest extends TestCase
         $product = create(Product::class)->first();
         $product->title = 'Updated Name';
         $this->updateProduct($product)->assertSessionHasNoErrors();
-        $this->assertDatabaseHas('products', ['title' => 'Updated Name']);
+        $this->assertDatabaseHas('butik_products', ['title' => 'Updated Name']);
     }
 
     /** @test */
@@ -38,7 +38,7 @@ class ProductUpdateTest extends TestCase
         $product = create(Product::class)->first();
         $product->description = 'Updated Description';
         $this->updateProduct($product);
-        $this->assertDatabaseHas('products', ['description' => json_encode('Updated Description')]);
+        $this->assertDatabaseHas('butik_products', ['description' => json_encode('Updated Description')]);
     }
     // TODO: Fix this test
 //    /** @test */
@@ -47,7 +47,7 @@ class ProductUpdateTest extends TestCase
 //        $product = create(Product::class)->first();
 //        $product->images = array('new/image/path.png');
 //        $this->updateProduct($product);
-//        $this->assertDatabaseHas('products', ['images' =>  'new/image/path.png']);
+//        $this->assertDatabaseHas('butik_products', ['images' =>  'new/image/path.png']);
 //    }
 
     /** @test */
@@ -56,7 +56,7 @@ class ProductUpdateTest extends TestCase
         $product = create(Product::class)->first();
         $product->base_price = 4321;
         $this->updateProduct($product);
-        $this->assertDatabaseHas('products', [
+        $this->assertDatabaseHas('butik_products', [
             'base_price' => 432100 // To zeros added because of the mutation
         ]);
     }
@@ -67,7 +67,7 @@ class ProductUpdateTest extends TestCase
         $product = create(Product::class)->first();
         $product->type = 'new_type';
         $this->updateProduct($product);
-        $this->assertDatabaseHas('products', ['type' => 'new_type' ]);
+        $this->assertDatabaseHas('butik_products', ['type' => 'new_type' ]);
     }
 
     private function updateProduct($product) {
