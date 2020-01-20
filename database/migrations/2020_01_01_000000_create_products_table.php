@@ -15,8 +15,8 @@ class CreateProductsTable extends Migration
             $table->json('images')->nullable();
             $table->string('shipping_id');
             $table->string('slug')->unique()->primary();
-//            $table->integer('stock')->default(0);
-//            $table->boolean('stock_unlimited')->default('false');
+            $table->integer('stock')->default(0);
+            $table->boolean('stock_unlimited')->default('false');
             $table->string('tax_id');
             $table->string('title');
             $table->string('type', 20)->default('physical');

@@ -14,6 +14,7 @@ class PaymentGatewayController extends WebController
     protected $gateway;
 
     // TODO: Only available products can be bought
+    // TODO: Only proceed if stock available
 
     public function __construct()
     {

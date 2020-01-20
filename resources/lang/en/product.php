@@ -33,6 +33,8 @@ return [
         'type'             => 'Type',
         'slug'             => 'Slug',
         'slug_description' => 'The slug is the product identifier, needs to be unique and may not include spaces.',
+        'stock'             => 'Stock',
+        'unlimited'        => 'Unlimited products',
     ],
 
 

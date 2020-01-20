@@ -99,6 +99,28 @@ class ProductBlueprint
                             ],
                         ],
                         [
+                            'handle' => 'stock',
+                            'field'  => [
+                                'type'     => 'integer',
+                                'width'    => '50',
+                                'default'  => 0,
+                                'display'  => __('statamic-butik::product.form.stock'),
+                                'validate' => 'required|integer',
+                                'unless'    => [
+                                    'stock_unlimited' => true,
+                                ],
+                            ],
+                        ],
+                        [
+                            'handle' => 'stock_unlimited',
+                            'field'  => [
+                                'type'     => 'toggle',
+                                'width'    => '50',
+                                'display'  => __('statamic-butik::product.form.unlimited'),
+                                'validate' => 'required|boolean',
+                            ],
+                        ],
+                        [
                             'handle' => 'images',
                             'field'  => [
                                 'type'     => 'assets',

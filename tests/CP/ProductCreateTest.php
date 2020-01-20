@@ -153,6 +153,38 @@ class ProductCreateTest extends TestCase
             ->assertSessionHasErrors('base_price');
     }
 
+    /** @test */
+    public function stock_is_required()
+    {
+        $product = raw(Product::class, ['stock' => null]);
+        $this->post(route('statamic.cp.butik.products.store'), $product)
+            ->assertSessionHasErrors('stock');
+    }
+
+    /** @test */
+    public function stock_must_be_an_integer()
+    {
+        $product = raw(Product::class, ['stock' => 'five']);
+        $this->post(route('statamic.cp.butik.products.store'), $product)
+            ->assertSessionHasErrors('stock');
+    }
+
+    /** @test */
+    public function stock_unlimited_is_required()
+    {
+        $product = raw(Product::class, ['stock_unlimited' => null]);
+        $this->post(route('statamic.cp.butik.products.store'), $product)
+            ->assertSessionHasErrors('stock_unlimited');
+    }
+
+    /** @test */
+    public function stock_unlimited_must_be_a_boolean()
+    {
+        $product = raw(Product::class, ['stock_unlimited' => 'yes']);
+        $this->post(route('statamic.cp.butik.products.store'), $product)
+            ->assertSessionHasErrors('stock_unlimited');
+    }
+
 // TODO: Important to test?
 //    /** @test */
 //    public function base_price_cant_be_lower_then_zero()
