@@ -54,6 +54,14 @@ class ProductShowTest extends TestCase
     }
 
     /** @test */
+    public function a_product_out_of_stock_will_hide_the_express_checkout_button()
+    {
+        $product = create(Product::class, ['stock' => 0])->first();
+        $this->get(route('butik.shop.product', $product))
+            ->assertDontSee('Express Checkout');
+    }
+
+    /** @test */
     public function a_product_with_unlimted_stock_wont_be_shown_as_sold_out()
     {
         $product = create(Product::class, ['stock_unlimited' => true, 'stock' => 0])->first();
