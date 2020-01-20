@@ -3,6 +3,8 @@
 namespace Tests\Shop;
 
 use Illuminate\Support\Facades\Session;
+use Jonassiewertsen\StatamicButik\Checkout\Cart;
+use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
@@ -19,7 +21,6 @@ class ExpressCheckoutDeliveryTest extends TestCase
     /** @test */
     public function The_express_delivery_page_does_exist()
     {
-        $this->withoutExceptionHandling();
         $route = route('butik.checkout.express.delivery', $this->product);
 
         $this->assertStatamicLayoutIs('statamic-butik::web.layouts.express-checkout', $route);
@@ -61,180 +62,181 @@ class ExpressCheckoutDeliveryTest extends TestCase
 
     /** @test */
     public function user_data_will_be_saved_inside_the_session() {
-        $this->post(route('butik.checkout.express.delivery', $this->product), $this->createUserData())
-            ->assertSessionHas('butik.customer');
+        $this->withoutExceptionHandling();
+        $this->post(route('butik.checkout.express.delivery', $this->product), (array) $this->createUserData())
+            ->assertSessionHas('butik.cart');
     }
 
     /** @test */
     public function a_country_is_required() {
         $data = $this->createUserData('country', '');
-        $this->post(route('butik.checkout.express.delivery', $this->product), $data)
+        $this->post(route('butik.checkout.express.delivery', $this->product), (array) $data)
             ->assertSessionHasErrors('country');
     }
 
     /** @test */
     public function a_country_cant_be_to_long() {
         $data = $this->createUserData('country', str_repeat('a', 51));
-        $this->post(route('butik.checkout.express.delivery', $this->product), $data)
+        $this->post(route('butik.checkout.express.delivery', $this->product), (array) $data)
             ->assertSessionHasErrors('country');
     }
 
     /** @test */
     public function a_name_is_required() {
         $data = $this->createUserData('name', '');
-        $this->post(route('butik.checkout.express.delivery', $this->product), $data)
+        $this->post(route('butik.checkout.express.delivery', $this->product), (array) $data)
             ->assertSessionHasErrors('name');
     }
 
     /** @test */
     public function a_name_cant_be_to_short() {
         $data = $this->createUserData('name', str_repeat('a', 4));
-        $this->post(route('butik.checkout.express.delivery', $this->product), $data)
+        $this->post(route('butik.checkout.express.delivery', $this->product), (array) $data)
             ->assertSessionHasErrors('name');
     }
 
     /** @test */
     public function a_name_cant_be_to_long() {
         $data = $this->createUserData('name', str_repeat('a', 51));
-        $this->post(route('butik.checkout.express.delivery', $this->product), $data)
+        $this->post(route('butik.checkout.express.delivery', $this->product), (array) $data)
             ->assertSessionHasErrors('name');
     }
 
     /** @test */
     public function a_mail_address_is_required() {
         $data = $this->createUserData('mail', '');
-        $this->post(route('butik.checkout.express.delivery', $this->product), $data)
+        $this->post(route('butik.checkout.express.delivery', $this->product), (array) $data)
             ->assertSessionHasErrors('mail');
     }
 
     /** @test */
     public function a_mail_address_bust_be_a_mail_address() {
         $data = $this->createUserData('mail', 'jonas');
-        $this->post(route('butik.checkout.express.delivery', $this->product), $data)
+        $this->post(route('butik.checkout.express.delivery', $this->product), (array) $data)
             ->assertSessionHasErrors('mail');
     }
 
     /** @test */
     public function address_line_1_is_required() {
         $data = $this->createUserData('address_1', '');
-        $this->post(route('butik.checkout.express.delivery', $this->product), $data)
+        $this->post(route('butik.checkout.express.delivery', $this->product), (array) $data)
             ->assertSessionHasErrors('address_1');
     }
 
     /** @test */
     public function address_line_1_cant_be_to_long() {
         $data = $this->createUserData('address_1', str_repeat('a', 81));
-        $this->post(route('butik.checkout.express.delivery', $this->product), $data)
+        $this->post(route('butik.checkout.express.delivery', $this->product), (array) $data)
             ->assertSessionHasErrors('address_1');
     }
 
     /** @test */
     public function address_line_2_is_optional() {
         $data = $this->createUserData('address_2', '');
-        $this->post(route('butik.checkout.express.delivery', $this->product), $data)
+        $this->post(route('butik.checkout.express.delivery', $this->product), (array) $data)
             ->assertSessionHasNoErrors();
     }
 
     /** @test */
     public function address_line_2_cant_be_to_long() {
         $data = $this->createUserData('address_2', str_repeat('a', 81));
-        $this->post(route('butik.checkout.express.delivery', $this->product), $data)
+        $this->post(route('butik.checkout.express.delivery', $this->product), (array) $data)
             ->assertSessionHasErrors('address_2');
     }
 
     /** @test */
     public function city_is_required() {
         $data = $this->createUserData('city', '');
-        $this->post(route('butik.checkout.express.delivery', $this->product), $data)
+        $this->post(route('butik.checkout.express.delivery', $this->product), (array) $data)
             ->assertSessionHasErrors('city');
     }
 
     /** @test */
     public function city_2_cant_be_to_long() {
         $data = $this->createUserData('city', str_repeat('a', 81));
-        $this->post(route('butik.checkout.express.delivery', $this->product), $data)
+        $this->post(route('butik.checkout.express.delivery', $this->product), (array) $data)
             ->assertSessionHasErrors('city');
     }
 
     /** @test */
     public function state_region_is_optional() {
         $data = $this->createUserData('stage_region', '');
-        $this->post(route('butik.checkout.express.delivery', $this->product), $data)
+        $this->post(route('butik.checkout.express.delivery', $this->product), (array) $data)
             ->assertSessionHasNoErrors();
     }
 
     /** @test */
     public function state_region_cant_be_to_long() {
         $data = $this->createUserData('state_region', str_repeat('a', 81));
-        $this->post(route('butik.checkout.express.delivery', $this->product), $data)
+        $this->post(route('butik.checkout.express.delivery', $this->product), (array) $data)
             ->assertSessionHasErrors('state_region');
     }
 
     /** @test */
     public function zip_is_required() {
         $data = $this->createUserData('zip', '');
-        $this->post(route('butik.checkout.express.delivery', $this->product), $data)
+        $this->post(route('butik.checkout.express.delivery', $this->product), (array) $data)
             ->assertSessionHasErrors('zip');
     }
 
     /** @test */
     public function zip_cant_be_to_long() {
         $data = $this->createUserData('zip', str_repeat('a', 21));
-        $this->post(route('butik.checkout.express.delivery', $this->product), $data)
+        $this->post(route('butik.checkout.express.delivery', $this->product), (array) $data)
             ->assertSessionHasErrors('zip');
     }
 
     /** @test */
     public function phone_is_optional() {
         $data = $this->createUserData('phone', '');
-        $this->post(route('butik.checkout.express.delivery', $this->product), $data)
+        $this->post(route('butik.checkout.express.delivery', $this->product), (array) $data)
             ->assertSessionHasNoErrors();
     }
 
     /** @test */
     public function phone_cant_be_to_long() {
         $data = $this->createUserData('phone', str_repeat('a', 51));
-        $this->post(route('butik.checkout.express.delivery', $this->product), $data)
+        $this->post(route('butik.checkout.express.delivery', $this->product), (array) $data)
             ->assertSessionHasErrors('phone');
     }
 
     /** @test */
     public function after_a_valid_form_the_user_will_be_redirected_to_the_payment_page() {
-        $this->post(route('butik.checkout.express.delivery', $this->product), $this->createUserData())
+        $this->post(route('butik.checkout.express.delivery', $this->product), (array) $this->createUserData())
             ->assertRedirect(route('butik.checkout.express.payment', $this->product));
     }
 
     /** @test */
     public function existing_data_from_the_session_will_be_passed_to_the_delivery_view() {
-        Session::put('butik.customer', $this->createUserData());
+        Session::put('butik.cart', (new Cart)->customer($this->createUserData()));
         $page = $this->get(route('butik.checkout.express.delivery', $this->product))->getOriginalContent()->data();
-        $session = session('butik.customer');
+        $session = session('butik.cart');
 
-        $this->assertEquals($page['name'], $session['name']);
-        $this->assertEquals($page['country'], $session['country']);
-        $this->assertEquals($page['mail'], $session['mail']);
-        $this->assertEquals($page['address_1'], $session['address_1']);
-        $this->assertEquals($page['address_2'], $session['address_2']);
-        $this->assertEquals($page['city'], $session['city']);
-        $this->assertEquals($page['zip'], $session['zip']);
+        $this->assertEquals($page['name'], $session->customer->name);
+        $this->assertEquals($page['country'], $session->customer->country);
+        $this->assertEquals($page['mail'], $session->customer->mail);
+        $this->assertEquals($page['address_1'], $session->customer->address_1);
+        $this->assertEquals($page['address_2'], $session->customer->address_2);
+        $this->assertEquals($page['city'], $session->customer->city);
+        $this->assertEquals($page['zip'], $session->customer->zip);
     }
 
     /** @test */
     public function existing_data_will_be_displayed_in_the_form() {
-        $customer = $this->createUserData();
-        Session::put('butik.customer', $customer);
+        $cart = (new Cart)->customer($this->createUserData());
+        Session::put('butik.cart', $cart);
 
         $this->get(route('butik.checkout.express.delivery', $this->product))
-            ->assertSee($customer['name'])
-            ->assertSee($customer['mail'])
-            ->assertSee($customer['address_1'])
-            ->assertSee($customer['address_2'])
-            ->assertSee($customer['city'])
-            ->assertSee($customer['zip']);
+            ->assertSee($cart->customer->name)
+            ->assertSee($cart->customer->mail)
+            ->assertSee($cart->customer->address_1)
+            ->assertSee($cart->customer->address_2)
+            ->assertSee($cart->customer->city)
+            ->assertSee($cart->customer->zip);
     }
 
     private function createUserData($key = null, $value = null) {
-        $data = [
+        $customer = (new Customer)->create([
             'country' => 'Germany',
             'name' => 'John Doe',
             'mail' => 'johndoe@mail.de',
@@ -244,12 +246,12 @@ class ExpressCheckoutDeliveryTest extends TestCase
             'state_region' => '',
             'zip' => '24579',
             'phone' => '013643-23837'
-        ];
+        ]);
 
         if ($key !== null || $value !== null) {
-            $data[$key] = $value;
+            $customer->$key = $value;
         }
 
-        return $data;
+        return $customer;
     }
 }

@@ -12,29 +12,28 @@ use Jonassiewertsen\StatamicButik\Http\Models\Product;
 class ExpressCheckoutController extends WebController
 {
     public function delivery(Product $product) {
-//        dd(collect($product));
-        $order = (new Cart())->products(collect($product));
 
-        // TODO: Get the session back in place
-//        if (session()->has('butik.customer')) {
-//            $formData = session('butik.customer');
-//            $viewData = array_merge($formData, $product);
-//        }
+        $cart = (new Cart())->products(collect($product));
+
+        if (session()->has('butik.cart')) {
+            $formData = session('butik.cart');
+            $viewData = array_merge((array) $formData->customer, $product->toArray());
+        }
 
        return (new \Statamic\View\View())
            ->layout(config('statamic-butik.frontend.layout.checkout.express.delivery'))
            ->template(config('statamic-butik.frontend.template.checkout.express.delivery'))
-           ->with($order->products->toArray());
+           ->with($viewData ?? $product->toArray());
     }
 
     public function saveCustomerData(Product $product) {
         $validatedData = request()->validate($this->rules());
 
-        $order = (new Cart)
+        $cart = (new Cart)
             ->customer((new Customer)->create($validatedData))
             ->products(collect($product));
 
-        Session::put('butik.order', $order);
+        Session::put('butik.cart', $cart);
 
         return redirect()->route('butik.checkout.express.payment', $product);
     }
