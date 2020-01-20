@@ -226,7 +226,7 @@ module.exports = function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(3);
-module.exports = __webpack_require__(13);
+module.exports = __webpack_require__(16);
 
 
 /***/ }),
@@ -241,14 +241,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_taxes_Listing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_taxes_Listing__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_shippings_Listing__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_shippings_Listing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_shippings_Listing__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_fieldtypes_moneyFieldtype__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_fieldtypes_moneyFieldtype___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_fieldtypes_moneyFieldtype__);
+
+
 
 
 
 
 Statamic.booting(function () {
+    // Listings
     Statamic.$components.register('butik-product-list', __WEBPACK_IMPORTED_MODULE_0__components_products_Listing___default.a);
     Statamic.$components.register('butik-tax-list', __WEBPACK_IMPORTED_MODULE_1__components_taxes_Listing___default.a);
     Statamic.$components.register('butik-shipping-list', __WEBPACK_IMPORTED_MODULE_2__components_shippings_Listing___default.a);
+
+    // Fieldtypes
+    Statamic.$components.register('money-fieldtype', __WEBPACK_IMPORTED_MODULE_3__components_fieldtypes_moneyFieldtype___default.a);
 });
 
 /***/ }),
@@ -905,10 +913,122 @@ if (false) {
 }
 
 /***/ }),
-/* 13 */
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(22)
+/* template */
+var __vue_template__ = __webpack_require__(23)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/fieldtypes/moneyFieldtype.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-cc901e2e", Component.options)
+  } else {
+    hotAPI.reload("data-v-cc901e2e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 22 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mixins: [Fieldtype],
+
+    data: function data() {
+        return {
+            currencySymbol: this.meta.currencySymbol
+        };
+    }
+});
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("text-input", {
+        attrs: {
+          type: "number",
+          prepend: _vm.currencySymbol,
+          min: "0",
+          placeholder: "0.00",
+          value: _vm.value
+        },
+        on: { input: _vm.update }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-cc901e2e", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
