@@ -42,9 +42,10 @@ class ExpressCheckoutController extends WebController
     public function payment() {
         $order = session()->get('butik.order');
 
-        if (! $this->customerDataComplete()) {
-            return redirect($order->products->first->expressDeliveryUrl);
-        }
+        // TODO: Needs to check the object data
+//        if (! $this->customerDataComplete()) {
+//            return redirect($order->products['ExpressDeliveryUrl']);
+//        }
 
         $viewData = array_merge(
             $order->products->toArray(),

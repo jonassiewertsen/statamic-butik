@@ -1,8 +1,15 @@
-<div>
+<div class="b-mx-auto b-my-10">
     <div class="b-flex b-justify-center b-mt-5">
-        {{ images limit="1" }}
-        <img class="b-w-2/5 b-rounded" src="/assets/{{ value }}">
-        {{ /images }}
+        {{# Images #}}
+        {{ if images > 0 }}
+            {{ images limit="1" }}
+                <img class="b-w-full" src="/assets/{{ value }}">
+            {{ /images }}
+        {{ else }}
+            <div class="b-w-full">
+                {{ partial src="statamic-butik::web.shop.partials.placeholder" }}
+            </div>
+        {{ /if }}
     </div>
 
     <section class="b-px-10">

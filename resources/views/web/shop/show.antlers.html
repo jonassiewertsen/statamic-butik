@@ -1,10 +1,16 @@
 <div class="b-block md:b-flex">
     {{# Images #}}
-    {{ images limit="1" }}
-        <img class="b-w-full md:b-w-1/2" src="/assets/{{ value }}">
-    {{ /images }}
+    {{ if images > 0 }}
+        {{ images limit="1" }}
+            <img class="b-w-full md:b-w-1/2" src="/assets/{{ value }}">
+        {{ /images }}
+    {{ else }}
+        <div class="b-w-full md:b-w-1/2">
+            {{ partial src="statamic-butik::web.shop.partials.placeholder" }}
+        </div>
+    {{ /if }}
 
-    <div class="b-px-5 b-w-full">
+    <div class="b-px-5 md:b-w-1/2 b-w-full">
         <h1 class="b-mt-2 b-text-2xl">{{ title }}</h1>
 
         <div class="b-text-gray-500 b-text-sm b-mt-2">{{ base_price }} {{ butik:currency_symbol }} Base price</div>
