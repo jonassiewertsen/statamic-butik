@@ -29,7 +29,6 @@ class Product extends ButikModel
         'editUrl',
         'showUrl',
         'ExpressDeliveryUrl',
-        'ExpressPaymentUrl',
         'ExpressReceiptUrl',
     ];
 

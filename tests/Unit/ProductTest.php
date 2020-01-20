@@ -109,18 +109,6 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function it_has_a_express_checkout_payment_url()
-    {
-        $product = create(Product::class)->first();
-
-        $uri_prefix = config('statamic-butik.uri.prefix');
-        $this->assertEquals(
-            "/shop/express-checkout/payment/{$product->slug}",
-            $product->expressPaymentUrl
-        );
-    }
-
-    /** @test */
     public function it_has_a_express_checkout_receipt_url()
     {
         $product = create(Product::class)->first();
