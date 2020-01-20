@@ -123,10 +123,11 @@ class ProductBlueprint
                         [
                             'handle' => 'images',
                             'field'  => [
-                                'type'     => 'assets',
-                                'display'  => __('statamic-butik::product.form.images'),
-                                'validate' => 'nullable',
-                                'mode'     => 'grid',
+                                'type'      => 'assets',
+                                'display'   => __('statamic-butik::product.form.images'),
+                                'validate'  => 'nullable',
+                                'mode'      => 'grid',
+                                'max_files' => 1,
                             ],
                         ],
                     ],
