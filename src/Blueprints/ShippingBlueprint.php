@@ -27,7 +27,7 @@ class ShippingBlueprint
                                 'type'         => 'money',
                                 'display'      => __('statamic-butik::cp.price'),
                                 'width'         => '33',
-                                'validate'      => 'required|integer|min:0',
+                                'validate'      => 'required|min:0',
                             ],
                         ],
                     ],
