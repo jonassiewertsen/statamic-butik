@@ -44,6 +44,11 @@ class Butik extends StatamicTags
         return config('statamic-butik.currency.symbol');
     }
 
+    public function country()
+    {
+        return config('statamic-butik.country');
+    }
+
     public function overview()
     {
         return config('statamic-butik.uri.shop');

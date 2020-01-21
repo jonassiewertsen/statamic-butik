@@ -23,7 +23,7 @@
 
     <label for="country" class="b-block b-my-3 b-cursor-not-allowed">
         <div class="b-font-bold b-text-g b-text-xs">{{ trans key="statamic-butik::payment.country" }}</div>
-        <input id="country" name="country" type="text" readonly value="Germaninien" class="b-border b-border-gray-900 b-px-2 b-py-1 b-rounded b-w-full">
+        <input id="country" name="country" type="text" readonly value="{{ butik:country }}" class="b-border b-border-gray-900 b-px-2 b-py-1 b-rounded b-w-full">
         {{ if {error:country} }}<span class="b-text-red-600 b-text-xs">{{ error:country }}</span>{{ /if }}
     </label>
 

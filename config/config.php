@@ -4,6 +4,7 @@
  */
 return [
     // TODO: Remember To enable foreign key constraints
+    // TODO: Remember to disable CSRF in middleware
     // https://laravel.com/docs/6.x/database
 
     /**
@@ -20,6 +21,9 @@ return [
 
     'phone' => '+49 1294 238474934',
     'mail' => 'butik@shop.com',
+
+
+
     /**
      * useful links here
      * 'link' => 'name',

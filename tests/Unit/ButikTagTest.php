@@ -74,6 +74,15 @@ class ButikTagTest extends TestCase
     }
 
     /** @test */
+    public function it_can_return_the_country()
+    {
+        $this->assertEquals(
+            $this->butik->country(),
+            config('statamic-butik.country')
+        );
+    }
+
+    /** @test */
     public function it_can_return_the_shop_link_link()
     {
         $this->assertEquals(
