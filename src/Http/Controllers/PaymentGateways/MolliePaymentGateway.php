@@ -4,6 +4,7 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways;
 
 use Illuminate\Http\Request;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
+use Jonassiewertsen\StatamicButik\Events\PaymentOpen;
 use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 use Mollie\Laravel\Facades\Mollie;
@@ -24,7 +25,7 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
              'metadata' => 'Express Checkout: '. $product->title,
              'locale' => $this->getLocale(),
              // TODO: The verify csrf tooken needs to be disabled. Put into Documentation !!!
-             'webhookUrl' => route('butik.payment.webhook.mollie'),
+//             'webhookUrl' => route('butik.payment.webhook.mollie'),
              'redirectUrl' => 'https://statamic.test/shop',
 
              'amount' => [
@@ -36,6 +37,8 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
          ]);
 
         $payment = Mollie::api()->payments()->get($payment->id);
+
+        event(PaymentOpen::class);
 
         // redirect customer to Mollie checkout page
         return redirect($payment->getCheckoutUrl(), 303);
