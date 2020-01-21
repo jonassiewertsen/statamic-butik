@@ -41,6 +41,10 @@ class ExpressCheckoutController extends WebController
 
         // TODO: Check if a cart does exist at all to prevent errors
 
+        if ($cart->products->first()->soldOut || ! $cart->products->first()->available) {
+            return redirect($cart->products->first()->showUrl);
+        }
+
         if (! $this->customerDataComplete()) {
             return redirect($cart->products->first()->ExpressDeliveryUrl);
         }

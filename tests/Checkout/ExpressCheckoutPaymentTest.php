@@ -17,8 +17,8 @@ class ExpressCheckoutPaymentTestTest extends TestCase
         parent::setUp();
 
         $this->cart = (new Cart)
-            ->addProduct((create(Product::class)->first()))
-            ->customer($this->createUserData());
+            ->customer($this->createUserData())
+            ->addProduct((create(Product::class)->first()));
     }
 
     /** @test */
@@ -43,7 +43,23 @@ class ExpressCheckoutPaymentTestTest extends TestCase
             ->assertSee('Zip');
     }
 
-    // TODO: check if product in stock
+    /** @test */
+    public function the_payment_page_will_redirect_if_the_product_is_sold_out() {
+        $this->cart->products->first()->stock = 0;
+        Session::put('butik.cart', $this->cart);
+
+        $this->get(route('butik.checkout.express.payment'))
+            ->assertRedirect($this->cart->products->first()->showUrl);
+    }
+
+    /** @test */
+    public function the_payment_page_will_redirect_if_the_product_is_not_available() {
+        $this->cart->products->first()->available = false;
+        Session::put('butik.cart', $this->cart);
+
+        $this->get(route('butik.checkout.express.payment'))
+            ->assertRedirect($this->cart->products->first()->showUrl);
+    }
 
     /** @test */
     public function the_payment_page_will_redirect_back_without_a_name() {
