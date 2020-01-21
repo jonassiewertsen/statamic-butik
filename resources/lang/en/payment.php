@@ -40,8 +40,8 @@ return [
     'name'      => 'Name',
     'mail'      => 'Mail',
     'country'   => 'Country',
-    'address_1' => 'Address 1',
-    'address_2' => 'Address 2',
+    'address1' => 'Address 1',
+    'address2' => 'Address 2',
     'city'      => 'City',
     'zip'       => 'Zip',
 ];

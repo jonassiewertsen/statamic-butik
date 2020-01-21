@@ -27,16 +27,16 @@
         {{ if {error:country} }}<span class="b-text-red-600 b-text-xs">{{ error:country }}</span>{{ /if }}
     </label>
 
-    <label for="address_1" class="b-block b-my-3">
-        <div class="b-font-bold b-text-g b-text-xs">{{ trans key="statamic-butik::payment.address_1" }}</div>
-        <input id="address_1" name="address_1" type="text" value="{{ old:address_1 ?? address_1 }}" class="b-border b-border-gray-900 b-px-2 b-py-1 b-rounded b-w-full">
-        {{ if {error:address_1} }}<span class="b-text-red-600 b-text-xs">{{ error:address_1 }}</span>{{ /if }}
+    <label for="address1" class="b-block b-my-3">
+        <div class="b-font-bold b-text-g b-text-xs">{{ trans key="statamic-butik::payment.address1" }}</div>
+        <input id="address1" name="address1" type="text" value="{{ old:address1 ?? address1 }}" class="b-border b-border-gray-900 b-px-2 b-py-1 b-rounded b-w-full">
+        {{ if {error:address1} }}<span class="b-text-red-600 b-text-xs">{{ error:address1 }}</span>{{ /if }}
     </label>
 
-    <label for="address_2" class="b-block b-my-3">
-        <div class="b-font-bold b-text-g b-text-xs">{{ trans key="statamic-butik::payment.address_2" }}</div>
-        <input id="address_2" name="address_2" type="text" value="{{ old:address_2 ?? address_2 }}" class="b-border b-border-gray-900 b-px-2 b-py-1 b-rounded b-w-full">
-        {{ if {error:address_2} }}<span class="b-text-red-600 b-text-xs">{{ error:address_2 }}</span>{{ /if }}
+    <label for="address2" class="b-block b-my-3">
+        <div class="b-font-bold b-text-g b-text-xs">{{ trans key="statamic-butik::payment.address2" }}</div>
+        <input id="address2" name="address2" type="text" value="{{ old:address2 ?? address2 }}" class="b-border b-border-gray-900 b-px-2 b-py-1 b-rounded b-w-full">
+        {{ if {error:address2} }}<span class="b-text-red-600 b-text-xs">{{ error:address2 }}</span>{{ /if }}
     </label>
 
     <label for="city" class="b-block b-my-3">

@@ -118,30 +118,30 @@ class ExpressCheckoutDeliveryTest extends TestCase
 
     /** @test */
     public function address_line_1_is_required() {
-        $data = $this->createUserData('address_1', '');
+        $data = $this->createUserData('address1', '');
         $this->post(route('butik.checkout.express.delivery', $this->product), (array) $data)
-            ->assertSessionHasErrors('address_1');
+            ->assertSessionHasErrors('address1');
     }
 
     /** @test */
     public function address_line_1_cant_be_to_long() {
-        $data = $this->createUserData('address_1', str_repeat('a', 81));
+        $data = $this->createUserData('address1', str_repeat('a', 81));
         $this->post(route('butik.checkout.express.delivery', $this->product), (array) $data)
-            ->assertSessionHasErrors('address_1');
+            ->assertSessionHasErrors('address1');
     }
 
     /** @test */
     public function address_line_2_is_optional() {
-        $data = $this->createUserData('address_2', '');
+        $data = $this->createUserData('address2', '');
         $this->post(route('butik.checkout.express.delivery', $this->product), (array) $data)
             ->assertSessionHasNoErrors();
     }
 
     /** @test */
     public function address_line_2_cant_be_to_long() {
-        $data = $this->createUserData('address_2', str_repeat('a', 81));
+        $data = $this->createUserData('address2', str_repeat('a', 81));
         $this->post(route('butik.checkout.express.delivery', $this->product), (array) $data)
-            ->assertSessionHasErrors('address_2');
+            ->assertSessionHasErrors('address2');
     }
 
     /** @test */
@@ -215,8 +215,8 @@ class ExpressCheckoutDeliveryTest extends TestCase
         $this->assertEquals($page['name'], $session->customer->name);
         $this->assertEquals($page['country'], $session->customer->country);
         $this->assertEquals($page['mail'], $session->customer->mail);
-        $this->assertEquals($page['address_1'], $session->customer->address_1);
-        $this->assertEquals($page['address_2'], $session->customer->address_2);
+        $this->assertEquals($page['address1'], $session->customer->address1);
+        $this->assertEquals($page['address2'], $session->customer->address2);
         $this->assertEquals($page['city'], $session->customer->city);
         $this->assertEquals($page['zip'], $session->customer->zip);
     }
@@ -229,8 +229,8 @@ class ExpressCheckoutDeliveryTest extends TestCase
         $this->get(route('butik.checkout.express.delivery', $this->product))
             ->assertSee($cart->customer->name)
             ->assertSee($cart->customer->mail)
-            ->assertSee($cart->customer->address_1)
-            ->assertSee($cart->customer->address_2)
+            ->assertSee($cart->customer->address1)
+            ->assertSee($cart->customer->address2)
             ->assertSee($cart->customer->city)
             ->assertSee($cart->customer->zip);
     }
@@ -240,8 +240,8 @@ class ExpressCheckoutDeliveryTest extends TestCase
             'country' => 'Germany',
             'name' => 'John Doe',
             'mail' => 'johndoe@mail.de',
-            'address_1' => 'Main Street 2',
-            'address_2' => '',
+            'address1' => 'Main Street 2',
+            'address2' => '',
             'city' => 'Flensburg',
             'state_region' => '',
             'zip' => '24579',

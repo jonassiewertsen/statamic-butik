@@ -30,15 +30,17 @@ class Cart {
         return $this;
     }
 
-    public function products(Collection $products): self {
-        $this->products = $products;
+//    public function products(Collection $products): self {
+//        $this->products = $products;
+//        return $this;
+//    }
+
+    public function addProduct(Product $product): self {
+        if (empty($this->products)) {
+            $this->products = collect();
+        }
+        $this->products->push($product);
+
         return $this;
     }
-
-//    public function addProduct(Product $product): self {
-//        if ($this->products->count() === 0) {
-//            collect($this->products);
-//        }
-//        $this->products->push($product);
-//    }
 }

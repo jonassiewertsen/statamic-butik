@@ -26,6 +26,7 @@ return [
     'form' => [
         'form_title'       => 'Add your amazing product',
         'title'            => 'Name',
+        'title'            => 'Name',
         'available'        => 'Available',
         'description'      => 'Description',
         'images'           => 'Images',

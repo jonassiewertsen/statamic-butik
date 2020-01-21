@@ -32,16 +32,6 @@ trait ProductUrlTrait {
     }
 
     /**
-     * A product has a express payment checkout url
-     */
-    public function getExpressPaymentUrlAttribute()
-    {
-        $checkout = config('statamic-butik.uri.checkout.express.payment');
-
-        return "{$this->shopRoute()}/{$checkout}/{$this->slug}";
-    }
-
-    /**
      * A product has a express receipt checkout url
      */
     public function getExpressReceiptUrlAttribute()

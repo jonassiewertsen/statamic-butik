@@ -3,32 +3,30 @@
 namespace Tests\Shop;
 
 use Illuminate\Support\Facades\Session;
+use Jonassiewertsen\StatamicButik\Checkout\Cart;
+use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class ExpressCheckoutPaymentTestTest extends TestCase
 {
-    protected $product;
+    protected $cart;
 
     public function setUp(): void {
         parent::setUp();
 
-        $this->product = create(Product::class)->first();
-    }
-
-    /** @test */
-    public function the_payment_page_will_redirect_back_without_a_name() {
-        Session::put('butik.customer', $this->createUserData('name', ''));
-
-        $this->get($this->product->expressPaymentUrl)
-           ->assertRedirect($this->product->expressDeliveryUrl);
+        $this->cart = (new Cart)
+            ->addProduct((create(Product::class)->first()))
+            ->customer($this->createUserData());
     }
 
     /** @test */
     public function translations_will_be_displayed(){
-        Session::put('butik.customer', $this->createUserData());
+        Session::put('butik.cart', $this->cart->customer($this->createUserData()));
 
-        $this->get(route('butik.checkout.express.payment', $this->product))
+        $this->get(route('butik.checkout.express.payment'))
+            ->assertOk()
             ->assertSee('Delivery')
             ->assertSee('Review & Payment')
             ->assertSee('Receipt')
@@ -36,7 +34,7 @@ class ExpressCheckoutPaymentTestTest extends TestCase
             ->assertSee('Shipping')
             ->assertSee('Total')
             ->assertSee('Ship to')
-            ->assertSee('Pay now & confirm')
+            ->assertSee('Go to payment')
             ->assertSee('Name')
             ->assertSee('Mail')
             ->assertSee('Country')
@@ -45,51 +43,61 @@ class ExpressCheckoutPaymentTestTest extends TestCase
             ->assertSee('Zip');
     }
 
+    // TODO: check if product in stock
+
+    /** @test */
+    public function the_payment_page_will_redirect_back_without_a_name() {
+        Session::put('butik.cart', $this->cart->customer($this->createUserData('name', '')));
+
+        $this->get(route('butik.checkout.express.payment'))
+            ->assertRedirect($this->cart->products->first()->expressDeliveryUrl);
+    }
+
     /** @test */
     public function the_payment_page_will_redirect_back_without_a_mail() {
-        Session::put('butik.customer', $this->createUserData('mail', ''));
+        Session::put('butik.cart', $this->cart->customer($this->createUserData('mail', '')));
 
-        $this->get($this->product->expressPaymentUrl)
-            ->assertRedirect($this->product->expressDeliveryUrl);
+        $this->get(route('butik.checkout.express.payment'))
+            ->assertRedirect($this->cart->products->first()->expressDeliveryUrl);
     }
 
     /** @test */
     public function the_payment_page_will_redirect_back_without_a_country() {
-        Session::put('butik.customer', $this->createUserData('country', ''));
+        Session::put('butik.cart', $this->cart->customer($this->createUserData('country', '')));
 
-        $this->get($this->product->expressPaymentUrl)
-            ->assertRedirect($this->product->expressDeliveryUrl);
+        $this->get(route('butik.checkout.express.payment'))
+            ->assertRedirect($this->cart->products->first()->expressDeliveryUrl);
     }
 
     /** @test */
     public function the_payment_page_will_redirect_back_without_a_address_1() {
-        Session::put('butik.customer', $this->createUserData('address_1', ''));
+        Session::put('butik.cart', $this->cart->customer($this->createUserData('address1', '')));
 
-        $this->get($this->product->expressPaymentUrl)
-            ->assertRedirect($this->product->expressDeliveryUrl);
+        $this->get(route('butik.checkout.express.payment'))
+            ->assertRedirect($this->cart->products->first()->expressDeliveryUrl);
     }
 
     /** @test */
     public function the_payment_page_will_redirect_back_without_a_city() {
-        Session::put('butik.customer', $this->createUserData('city', ''));
+        Session::put('butik.cart', $this->cart->customer($this->createUserData('city', '')));
 
-        $this->get($this->product->expressPaymentUrl)
-            ->assertRedirect($this->product->expressDeliveryUrl);
+        $this->get(route('butik.checkout.express.payment'))
+            ->assertRedirect($this->cart->products->first()->expressDeliveryUrl);
     }
 
     /** @test */
     public function the_payment_page_will_redirect_back_without_a_zip() {
-        Session::put('butik.customer', $this->createUserData('zip', ''));
+        Session::put('butik.cart', $this->cart->customer($this->createUserData('zip', '')));
 
-        $this->get($this->product->expressPaymentUrl)
-            ->assertRedirect($this->product->expressDeliveryUrl);
+        $this->get(route('butik.checkout.express.payment'))
+            ->assertRedirect($this->cart->products->first()->expressDeliveryUrl);
     }
 
     /** @test */
     public function The_express_payment_page_does_exist()
     {
-        Session::put('butik.customer', $this->createUserData());
-        $route = $this->product->expressPaymentUrl;
+        Session::put('butik.cart', $this->cart->customer($this->createUserData()));
+        $route = route('butik.checkout.express.payment');
 
         $this->assertStatamicLayoutIs('statamic-butik::web.layouts.express-checkout', $route);
         $this->assertStatamicTemplateIs('statamic-butik::web.checkout.express.payment', $route);
@@ -97,47 +105,53 @@ class ExpressCheckoutPaymentTestTest extends TestCase
 
     /** @test */
     public function the_product_information_will_be_displayed(){
-        Session::put('butik.customer', $this->createUserData());
+        $this->withoutExceptionHandling();
+//        $product = create(Product::class)->first();
+        Session::put('butik.cart', $this->cart);
+        $product = $this->cart->products->first();
 
-        $this->get($this->product->expressPaymentUrl)
-            ->assertSee($this->product->title)
-            ->assertSee($this->product->base_price)
-            ->assertSee($this->product->total_price)
-            ->assertSee($this->product->taxes_amount)
-            ->assertSee($this->product->taxes_percentage)
-            ->assertSee($this->product->shipping_amount);
+        $this->get(route('butik.checkout.express.payment'))
+            ->assertOk()
+            ->assertSee($product->title)
+            ->assertSee($product->base_price)
+            ->assertSee($product->total_price)
+            ->assertSee($product->taxes_amount)
+            ->assertSee($product->taxes_percentage)
+            ->assertSee($product->shipping_amount);
     }
 
     /** @test */
     public function customer_data_will_be_displayed_inside_the_view() {
-        Session::put('butik.customer',$customer = $this->createUserData());
+        Session::put('butik.cart', $this->cart);
+        $customer = (array) $this->cart->customer;
 
-        $this->get(route('butik.checkout.express.payment', $this->product))
+        $this->get(route('butik.checkout.express.payment', (array) $customer))
             ->assertSee($customer['name'])
             ->assertSee($customer['mail'])
-            ->assertSee($customer['address_1'])
-            ->assertSee($customer['address_2'])
+            ->assertSee($customer['address1'])
+            ->assertSee($customer['address2'])
             ->assertSee($customer['city'])
-            ->assertSee($customer['zip']);
+            ->assertSee($customer['zip'])
+            ->assertSee($customer['country']);
     }
 
     private function createUserData($key = null, $value = null) {
-        $data = [
+        $customer = (new Customer)->create([
             'country' => 'Germany',
             'name' => 'John Doe',
             'mail' => 'johndoe@mail.de',
-            'address_1' => 'Main Street 2',
-            'address_2' => '',
+            'address1' => 'Main Street 2',
+            'address2' => '',
             'city' => 'Flensburg',
             'state_region' => '',
             'zip' => '24579',
             'phone' => '013643-23837'
-        ];
+        ]);
 
         if ($key !== null || $value !== null) {
-            $data[$key] = $value;
+            $customer->$key = $value;
         }
 
-        return $data;
+        return $customer;
     }
 }

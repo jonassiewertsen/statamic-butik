@@ -13,8 +13,6 @@ class ExpressCheckoutController extends WebController
 {
     public function delivery(Product $product) {
 
-        $cart = (new Cart())->products(collect($product));
-
         if (session()->has('butik.cart')) {
             $formData = session('butik.cart');
             $viewData = array_merge((array) $formData->customer, $product->toArray());
@@ -31,7 +29,7 @@ class ExpressCheckoutController extends WebController
 
         $cart = (new Cart)
             ->customer((new Customer)->create($validatedData))
-            ->products(collect($product));
+            ->addProduct($product);
 
         Session::put('butik.cart', $cart);
 
@@ -39,16 +37,17 @@ class ExpressCheckoutController extends WebController
     }
 
     public function payment() {
-        $order = session()->get('butik.order');
+        $cart = session()->get('butik.cart');
 
-        // TODO: Needs to check the object data
-//        if (! $this->customerDataComplete()) {
-//            return redirect($order->products['ExpressDeliveryUrl']);
-//        }
+        // TODO: Check if a cart does exist at all to prevent errors
+
+        if (! $this->customerDataComplete()) {
+            return redirect($cart->products->first()->ExpressDeliveryUrl);
+        }
 
         $viewData = array_merge(
-            $order->products->toArray(),
-            (array) $order->customer
+            $cart->products->first()->toArray(),
+            (array) $cart->customer
         );
 
         return (new \Statamic\View\View())
@@ -78,17 +77,18 @@ class ExpressCheckoutController extends WebController
     }
 
     private function customerDataComplete() {
-        if (! session()->has('butik.customer')) {
+
+        if (! session()->has('butik.cart')) {
             return false;
         }
 
-        $customer = session()->get('butik.customer');
+        $cart = session()->get('butik.cart');
 
-        $keys = collect(['name', 'mail', 'country', 'address_1', 'city', 'zip']);
+        $keys = collect(['name', 'mail', 'country', 'address1', 'city', 'zip']);
 
         foreach ($keys as $key) {
             // Return false in case one of the keys does not exist inside the session data
-            if (empty($customer->$key)) {
+            if (empty($cart->customer->$key)) {
                 return false;
             }
         }
@@ -117,8 +117,8 @@ class ExpressCheckoutController extends WebController
             'country'           => 'required|max:50',
             'name'              => 'required|min:5|max:50',
             'mail'              => 'required|email',
-            'address_1'         => 'required|max:80',
-            'address_2'         => 'nullable|max:80',
+            'address1'         => 'required|max:80',
+            'address2'         => 'nullable|max:80',
             'city'              => 'required|max:80',
             'state_region'      => 'nullable|max:80',
             'zip'               => 'required|max:20',
