@@ -17,13 +17,11 @@ class CartTest extends TestCase
         $this->cart = new Cart();
     }
 
-    // TODO: getId test
-
     /** @test */
     public function a_customer_can_be_added()
     {
-        $this->cart->products(collect());
-        $this->assertInstanceOf('Illuminate\Support\Collection', $this->cart->products);
+        $this->cart->customer(new Customer());
+        $this->assertInstanceOf(Customer::class, $this->cart->customer);
     }
 
     /** @test */
@@ -34,11 +32,11 @@ class CartTest extends TestCase
     }
 
     /** @test */
-    public function products_can_be_added()
+    public function a_product_can_be_added()
     {
-        $products = create(Product::class, [], 3);
+        $product = create(Product::class)->first();
 
-        $this->cart->products($products);
-        $this->assertCount(3, $this->cart->products);
+        $this->cart->addProduct($product);
+        $this->assertCount(1, $this->cart->products);
     }
 }
