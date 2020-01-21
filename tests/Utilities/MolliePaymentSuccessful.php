@@ -16,7 +16,7 @@ use Mollie\Api\Resources\ResourceFactory;
 use Mollie\Api\Types\PaymentStatus;
 use Mollie\Api\Types\SequenceType;
 
-class MollieSuccessfulPayment {
+class MolliePaymentSuccessful {
     public $resource = "payment";
     public $id = "fake_id";
     public $mode;

@@ -46,7 +46,7 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
             return;
         }
 
-        // TODO: Some error handling
+        // TODO: Error handling
         $payment = Mollie::api()->payments()->get($request->id);
 
         if ($payment->isPaid()) {

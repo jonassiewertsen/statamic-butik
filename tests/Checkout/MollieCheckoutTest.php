@@ -5,7 +5,7 @@ namespace Tests\Shop;
 use Illuminate\Support\Facades\Event;
 use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
-use Jonassiewertsen\StatamicButik\Tests\Utilities\MollieSuccessfulPayment;
+use Jonassiewertsen\StatamicButik\Tests\Utilities\MolliePaymentSuccessful;
 use Mollie\Laravel\Facades\Mollie;
 
 class MollieCheckoutTest extends TestCase
@@ -15,24 +15,7 @@ class MollieCheckoutTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-
         Event::fake();
-
-        $this->app['config']->set('statamic-butik.payment.mollie.key', '020f0a4c1d7db142d33e40c04f9a4799');
-
-//        // Setting up a dummy customer
-//        $this->customer = [
-//            'country'      => 'Germany',
-//            'name'         => 'John Doe',
-//            'mail'         => 'johndoe@mail.de',
-//            'address_1'    => 'Main Street 2',
-//            'address_2'    => '',
-//            'city'         => 'Flensburg',
-//            'state_region' => '',
-//            'zip'          => '24579',
-//            'phone'        => '013643-23837',
-//        ];
-//        Session::put('butik.customer', $this->customer);
     }
 
     /** @test */
@@ -40,25 +23,13 @@ class MollieCheckoutTest extends TestCase
     {
         Mollie::shouldReceive('api->payments->get')
                 ->once()
-                ->andReturn(new MollieSuccessfulPayment());
+                ->andReturn(new MolliePaymentSuccessful());
 
         $this->post(route('butik.payment.webhook.mollie'), ['id' => 'some_fake_id']);
         Event::assertDispatched(PaymentSuccessful::class);
     }
 
-//    /** @test */
-//    public function a_successful_payment_will_be_saved_in_the_session()
-//    {
-//        $amount = $this->accepted();
-//        $response = $this->makePayment($amount)->getData();
-//        $session = Session::get('butik.transaction');
-//
-//        $this->assertEquals($session['success'], $response->success);
-//        $this->assertEquals($session['id'], $response->transaction->id);
-//        $this->assertEquals($session['currencyIsoCode'], $response->transaction->currencyIsoCode);
-//        $this->assertEquals($session['amount'], $response->transaction->amount);
-//        $this->assertEquals($session['created_at'], Carbon::parse($response->transaction->createdAt->date));
-//    }
+
 //
 //    /** @test */
 //    public function customer_informations_will_be_transfered_into_the_payment_session(){
