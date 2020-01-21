@@ -6,12 +6,11 @@ use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
-use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class ExpressCheckoutPaymentTestTest extends TestCase
 {
-    protected $cart;
+    protected Cart $cart;
 
     public function setUp(): void {
         parent::setUp();
