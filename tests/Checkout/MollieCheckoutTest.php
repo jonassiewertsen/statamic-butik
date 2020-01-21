@@ -21,6 +21,7 @@ class MollieCheckoutTest extends TestCase
     /** @test */
     public function a_successful_payment_will_fire_the_an_event()
     {
+        $this->withoutExceptionHandling();
         Mollie::shouldReceive('api->payments->get')
                 ->once()
                 ->andReturn(new MolliePaymentSuccessful());
