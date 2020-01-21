@@ -18,7 +18,7 @@ use Jonassiewertsen\StatamicButik\Tests\Utilities\MolliePaymentOpen;
 use Jonassiewertsen\StatamicButik\Tests\Utilities\MolliePaymentSuccessful;
 use Mollie\Laravel\Facades\Mollie;
 
-class CreateOrderTest extends TestCase
+class CreateOpenOrderTest extends TestCase
 {
     protected $cart;
 
