@@ -2,6 +2,7 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Events\PaymentSubmitted;
@@ -54,14 +55,55 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
 
         if ($payment->isPaid()) {
             event(PaymentSuccessful::class);
-
-            $order = Order::whereId($payment->id)->firstOrFail();
-            $order->update(['status' => 'paid']);
+            $this->setOrderStatusToPaid($payment);
         }
+
+        if ($payment->isFailed()) {
+            $this->setOrderStatusToFailed($payment);
+        }
+
+        if ($payment->isExpired()) {
+            $this->setOrderStatusToExpired($payment);
+        }
+
+        if ($payment->isCanceled()) {
+            $this->setOrderStatusToCanceled($payment);
+        }
+
     }
 
     private function convertAmount($amount) {
         return number_format(floatval($amount), 2, '.', '');
+    }
+
+    private function setOrderStatusToPaid($payment): void {
+        $order = Order::whereId($payment->id)->firstOrFail();
+        $order->update([
+           'status' => 'paid',
+           'paid_at' => Carbon::parse($payment->paidAt)
+       ]);
+    }
+
+    private function setOrderStatusToFailed($payment): void {
+        $order = Order::whereId($payment->id)->firstOrFail();
+        $order->update([
+           'status' => 'failed',
+           'failed_at' => Carbon::parse($payment->failedAt)
+       ]);
+    }
+
+    private function setOrderStatusToExpired($payment): void {
+        $order = Order::whereId($payment->id)->firstOrFail();
+        $order->update([
+            'status' => 'expired',
+        ]);
+    }
+
+    private function setOrderStatusToCanceled($payment): void {
+        $order = Order::whereId($payment->id)->firstOrFail();
+        $order->update([
+           'status' => 'canceled',
+       ]);
     }
 
     private function getLocale() {

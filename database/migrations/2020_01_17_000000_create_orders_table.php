@@ -16,6 +16,7 @@ class CreateOrdersTable extends Migration
             $table->json('customer');
             $table->integer('total_amount');
             $table->timestamp('paid_at')->default(null)->nullable();
+            $table->timestamp('failed_at')->default(null)->nullable();
             $table->timestamp('shipped_at')->default(null)->nullable();
 
             $table->timestamps();
