@@ -4,6 +4,7 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways;
 
 use Illuminate\Http\Request;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
+use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 use Mollie\Laravel\Facades\Mollie;
 
@@ -45,10 +46,11 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
             return;
         }
 
+        // TODO: Some error handling
         $payment = Mollie::api()->payments()->get($request->id);
 
         if ($payment->isPaid()) {
-            // TODO: change session status, display receipt
+            event(PaymentSuccessful::class);
         }
     }
 

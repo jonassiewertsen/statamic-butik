@@ -2,11 +2,11 @@
 
 namespace Tests\Shop;
 
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\StatamicButik\Tests\Utilities\MollieSuccessfulPayment;
+use Mollie\Laravel\Facades\Mollie;
 
 class MollieCheckoutTest extends TestCase
 {
@@ -36,19 +36,16 @@ class MollieCheckoutTest extends TestCase
     }
 
     /** @test */
-    public function a_payment_can_be_accepted()
+    public function a_successful_payment_will_fire_the_an_event()
     {
-        $this->makePayment($this->accepted())->assertJsonFragment(['success' => true]);
+        Mollie::shouldReceive('api->payments->get')
+                ->once()
+                ->andReturn(new MollieSuccessfulPayment());
+
+        $this->post(route('butik.payment.webhook.mollie'), ['id' => 'some_fake_id']);
+        Event::assertDispatched(PaymentSuccessful::class);
     }
 
-//    /** @test */
-//    public function a_succesful_will_fire_an_event()
-//    {
-//        $transaction = $this->makePayment($this->accepted());
-//
-//        Event::assertDispatched(PaymentSuccessful::class);
-//    }
-//
 //    /** @test */
 //    public function a_successful_payment_will_be_saved_in_the_session()
 //    {
@@ -98,23 +95,23 @@ class MollieCheckoutTest extends TestCase
 //        return $this->get(route('butik.payment.process', $payload));
 //    }
 
-    private function accepted()
-    {
-        return mt_rand(0.01, 1999.99);
-    }
-
-    private function declined()
-    {
-        return mt_rand(2000.00, 2999.99);
-    }
-
-    private function failed()
-    {
-        return mt_rand(3000.00, 3000.99);
-    }
-
-    private function gateway()
-    {
-        return 5001;
-    }
+//    private function accepted()
+//    {
+//        return mt_rand(0.01, 1999.99);
+//    }
+//
+//    private function declined()
+//    {
+//        return mt_rand(2000.00, 2999.99);
+//    }
+//
+//    private function failed()
+//    {
+//        return mt_rand(3000.00, 3000.99);
+//    }
+//
+//    private function gateway()
+//    {
+//        return 5001;
+//    }
 }
