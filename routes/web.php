@@ -21,5 +21,5 @@ Route::prefix(config('statamic-butik.uri.shop'))->name('butik.')->namespace('Htt
     Route::get('{product}', 'ShopController@show')->name('shop.product');
 });
 
-// Webhook without shop prefix
+// Webhook without butik prefix
 Route::post('payment/webhook/mollie', 'Http\\Controllers\\Web\\PaymentGatewayController@webhook')->name('butik.payment.webhook.mollie');
