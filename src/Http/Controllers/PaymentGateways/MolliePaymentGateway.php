@@ -25,7 +25,7 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
              'metadata' => 'Express Checkout: '. $product->title,
              'locale' => $this->getLocale(),
              // TODO: The verify csrf tooken needs to be disabled. Put into Documentation !!!
-//             'webhookUrl' => route('butik.payment.webhook.mollie'),
+             'webhookUrl' => route('butik.payment.webhook.mollie'),
              'redirectUrl' => 'https://statamic.test/shop',
 
              'amount' => [
