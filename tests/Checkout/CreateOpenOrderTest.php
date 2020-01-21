@@ -120,16 +120,16 @@ class CreateOpenOrderTest extends TestCase
 
     private function createUserData($key = null, $value = null) {
         $customer = (new Customer)->create([
-                                               'country' => 'Germany',
-                                               'name' => 'John Doe',
-                                               'mail' => 'johndoe@mail.de',
-                                               'address1' => 'Main Street 2',
-                                               'address2' => '',
-                                               'city' => 'Flensburg',
-                                               'state_region' => '',
-                                               'zip' => '24579',
-                                               'phone' => '013643-23837'
-                                           ]);
+            'country' => 'Germany',
+            'name' => 'John Doe',
+            'mail' => 'johndoe@mail.de',
+            'address1' => 'Main Street 2',
+            'address2' => '',
+            'city' => 'Flensburg',
+            'state_region' => '',
+            'zip' => '24579',
+            'phone' => '013643-23837'
+       ]);
 
         if ($key !== null || $value !== null) {
             $customer->$key = $value;
