@@ -3,22 +3,33 @@
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways;
 
 use Illuminate\Http\Request;
+use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 use Mollie\Laravel\Facades\Mollie;
 
 class MolliePaymentGateway extends WebController implements PaymentGatewayInterface
 {
-    public function handle() {
+    public function handle(Cart $cart) {
+        $customer = Mollie::api()->customers()->create([
+            'name' => $cart->customer->name,
+            'email' => $cart->customer->mail,
+       ]);
+
+        $product = $cart->products->first();
+
         $payment = Mollie::api()->payments()->create([
+             'description' => $product->title,
+             'customerId' => $customer->id,
+             'metadata' => 'Express Checkout: '. $product->title,
+             'locale' => $this->getLocale(),
+             'webhookUrl' => 'https://26fc002c.ngrok.io/shop/payment/webhook/mollie', // TODO: Change for Production
+             //             'webhookUrl' => route('butik.payment.webhook.mollie'),
+             'redirectUrl' => 'https://statamic.test/shop', // TODO: Add success route
+
              'amount' => [
                  'currency' => 'EUR',
-                 // You must send the correct number of decimals, thus we enforce the use of strings
-                 'value' => '10.00', // TODO: Check if the delimiter can be , or only .
+                 'value' => $this->convertAmount($product->totalPrice), // TODO: Refactor cart to return the total price
              ],
-             'description' => 'My first API payment',
-             'webhookUrl' => 'https://563ef0ff.ngrok.io',
-//             'webhookUrl' => route('butik.payment.webhook.mollie'),
-             'redirectUrl' => 'https://www.google.com', // TODO: Add success route
          ]);
 
         $payment = Mollie::api()->payments()->get($payment->id);
@@ -35,7 +46,70 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
         $payment = Mollie::api()->payments()->get($request->id);
 
         if ($payment->isPaid()) {
-            dd('yeahhh. Payment did work :-)');
+            // TODO: change session status, display receipt
+        }
+    }
+
+    private function convertAmount($amount) {
+        return number_format(floatval($amount), 2, '.', '');
+    }
+
+    private function getLocale() {
+
+        switch (app()->getLocale()) {
+            case 'en':
+                return 'en_US';
+                break;
+            case 'nl':
+                return 'nl_NL';
+                break;
+            case 'fr':
+                return 'fr_FR';
+                break;
+            case 'de':
+                return 'de_DE';
+                break;
+            case 'es':
+                return 'es_ES';
+                break;
+            case 'ca':
+                return 'ca_ES';
+                break;
+            case 'pt':
+                return 'pt_PT';
+                break;
+            case 'it':
+                return 'it_IT';
+                break;
+            case 'bn':
+                return 'nb_NO';
+                break;
+            case 'sv':
+                return 'sv_SE';
+                break;
+            case 'fi':
+                return 'fi_FI';
+                break;
+            case 'da':
+                return 'da_DK';
+                break;
+            case 'is':
+                return 'is_IS';
+                break;
+            case 'hu':
+                return 'hu_HU';
+                break;
+            case 'pl':
+                return 'pl_PL';
+                break;
+            case 'lv':
+                return 'lv_LV';
+                break;
+            case 'lt':
+                return 'lt_LT';
+                break;
+            default:
+                return 'en_US';
         }
     }
 }

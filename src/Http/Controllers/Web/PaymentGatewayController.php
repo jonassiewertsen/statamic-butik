@@ -2,11 +2,9 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
-use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
+use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\MolliePaymentGateway;
 
 class PaymentGatewayController extends WebController
@@ -21,9 +19,10 @@ class PaymentGatewayController extends WebController
         $this->gateway = new MolliePaymentGateway();
     }
 
-    public function processPayment(Request $request)
+    public function processPayment()
     {
-        return $this->gateway->handle();
+        $cart = Session::get('butik.cart'); // TODO: check if exists
+        return $this->gateway->handle($cart);
     }
 
     public function webhook(Request $request): void {

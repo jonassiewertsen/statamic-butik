@@ -2,8 +2,8 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways;
 
-use Illuminate\Http\Request;
+use Jonassiewertsen\StatamicButik\Checkout\Cart;
 
 interface PaymentGatewayInterface {
-    public function handle();
+    public function handle(Cart $cart);
 }

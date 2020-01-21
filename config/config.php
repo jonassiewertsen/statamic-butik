@@ -36,11 +36,8 @@ return [
      * to do so in your .env file.
      */
     'payment'  => [
-        'braintree' => [
-            'env'         => env('BRAINTREE_ENV', 'sandbox'),
-            'merchant_id' => env('BRAINTREE_MERCHANT_ID', null),
-            'public_key'  => env('BRAINTREE_PUBLIC_KEY', null),
-            'private_key' => env('BRAINTREE_PRIVATE_KEY', null),
+        'mollie' => [
+            'key' => env('MOLLIE_KEY', ''),
         ],
     ],
 
