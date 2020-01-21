@@ -39,7 +39,9 @@ class ExpressCheckoutController extends WebController
     public function payment() {
         $cart = session()->get('butik.cart');
 
-        // TODO: Check if a cart does exist at all to prevent errors
+        if ($cart === null || $cart->products === null || $cart->products->count() > 1) {
+            return redirect()->route('butik.shop');
+        }
 
         if ($cart->products->first()->soldOut || ! $cart->products->first()->available) {
             return redirect($cart->products->first()->showUrl);

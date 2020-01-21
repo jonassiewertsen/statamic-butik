@@ -62,6 +62,30 @@ class ExpressCheckoutPaymentTestTest extends TestCase
     }
 
     /** @test */
+    public function the_payment_page_will_redirect_in_case_the_session_does_not_exist() {
+        $this->get(route('butik.checkout.express.payment'))
+            ->assertRedirect(route('butik.shop'));
+    }
+
+    /** @test */
+    public function the_payment_page_will_redirect_if_no_product_is_in_the_cart() {
+        $this->cart->products = null;
+        Session::put('butik.cart', $this->cart);
+
+        $this->get(route('butik.checkout.express.payment'))
+            ->assertRedirect(route('butik.shop'));
+    }
+
+    /** @test */
+    public function the_payment_page_will_redirect_if_more_then_one_product_is_in_the_cart() {
+        $this->cart->products = create(Product::class, [], 2);
+        Session::put('butik.cart', $this->cart);
+
+        $this->get(route('butik.checkout.express.payment'))
+            ->assertRedirect(route('butik.shop'));
+    }
+
+    /** @test */
     public function the_payment_page_will_redirect_back_without_a_name() {
         Session::put('butik.cart', $this->cart->customer($this->createUserData('name', '')));
 
