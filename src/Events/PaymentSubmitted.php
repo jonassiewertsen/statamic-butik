@@ -4,7 +4,7 @@ namespace Jonassiewertsen\StatamicButik\Events;
 
 use Illuminate\Queue\SerializesModels;
 
-class PaymentOpen
+class PaymentSubmitted
 {
     use SerializesModels;
 

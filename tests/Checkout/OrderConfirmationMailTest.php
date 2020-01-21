@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
 use Jonassiewertsen\StatamicButik\Mail\OrderConfirmationForCustomer;
-use Jonassiewertsen\StatamicButik\Listeners\CreateOrder;
+use Jonassiewertsen\StatamicButik\Listeners\CreateOpenOrder;
 use Jonassiewertsen\StatamicButik\Mail\OrderConfirmationForSeller;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
@@ -26,7 +26,7 @@ class OrderConfirmationMailTest extends TestCase
 
     /** @test */
     public function a_purchase_confirmation_mail_will_be_sent_to_the_customer(){
-        Event::fake([CreateOrder::class]);
+        Event::fake([CreateOpenOrder::class]);
         Mail::fake();
 
         $amount = $this->makePayment();
@@ -37,7 +37,7 @@ class OrderConfirmationMailTest extends TestCase
     /** @test */
     public function a_purchase_confirmation_for_the_customer_will_contain_transaction_data(){
         $this->withoutExceptionHandling();
-        Event::fake([CreateOrder::class]);
+        Event::fake([CreateOpenOrder::class]);
         Mail::fake();
 
         $transaction = $this->makePayment();
@@ -52,7 +52,7 @@ class OrderConfirmationMailTest extends TestCase
 
     /** @test */
     public function a_purchase_confirmation_for_the_seller_will_contain_transaction_data(){
-        Event::fake([CreateOrder::class]);
+        Event::fake([CreateOpenOrder::class]);
         Mail::fake();
 
         $transaction = $this->makePayment();
@@ -68,7 +68,7 @@ class OrderConfirmationMailTest extends TestCase
     /** @test */
     public function a_purchase_confirmation_mail_will_be_sent_to_the_seller(){
         $this->withoutExceptionHandling();
-        Event::fake([CreateOrder::class]);
+        Event::fake([CreateOpenOrder::class]);
         Mail::fake();
 
         $amount = $this->makePayment();
