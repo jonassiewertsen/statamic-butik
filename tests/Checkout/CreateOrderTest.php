@@ -3,12 +3,14 @@
 namespace Tests\Checkout;
 
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Mail;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
-use Jonassiewertsen\StatamicButik\Events\PaymentOpen;
+use Jonassiewertsen\StatamicButik\Events\PaymentSubmitted;
 use Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\MolliePaymentGateway;
 use Jonassiewertsen\StatamicButik\Http\Controllers\Web\PaymentGatewayController;
 use Illuminate\Support\Facades\Session;
+use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 use Jonassiewertsen\StatamicButik\Tests\Utilities\MollieCustomer;
@@ -27,32 +29,25 @@ class CreateOrderTest extends TestCase
             ->customer($this->createUserData())
             ->addProduct((create(Product::class)->first()));
 
-        Event::fake();
-//        Mail::fake();
+        Session::put('butik.cart', (new Cart()));
+
+        Mail::fake();
     }
 
     /** @test */
-    public function an_open_order_will_be_created_when_checking_out() {
-        Session::put('butik.cart', (new Cart()));
-
-        $openPayment = new MolliePaymentOpen();
-        Mollie::shouldReceive('api->customers->create')->andReturn(new MollieCustomer());
-        Mollie::shouldReceive('api->payments->create')->andReturn($openPayment);
-        Mollie::shouldReceive('api->payments->get')->with($openPayment->id)->andReturn($openPayment);
-
-        (new MolliePaymentGateway())->handle($this->cart);
-        Event::assertDispatched(PaymentOpen::class);
+    public function the_payment_open_event_will_be_fired_when_checking_out() {
+        Event::fake();
+        $this->checkout();
+        Event::assertDispatched(PaymentSubmitted::class);
     }
 
-//    /** @test */
-//    public function an_open_order_will_be_created(){
-//        Event::fake([CreateOrder::class]);
-//
-//        $this->makePayment();
-//
-//        $this->assertCount(1, Order::all());
-//    }
-//
+    /** @test */
+    public function an_open_order_will_be_created(){
+        $this->checkout();
+
+        $this->assertCount(1, Order::all());
+    }
+
 //    /** @test */
 //    public function a_order_will_have_the_braintree_order_id(){
 //        Event::fake([CreateOrder::class]);
@@ -86,6 +81,15 @@ class CreateOrderTest extends TestCase
 //        $response = $this->get(route('butik.payment.process', $payload));
 //        return $response->getData()->transaction;
 //    }
+
+    private function checkout() {
+        $openPayment = new MolliePaymentOpen();
+        Mollie::shouldReceive('api->customers->create')->andReturn(new MollieCustomer());
+        Mollie::shouldReceive('api->payments->create')->andReturn($openPayment);
+        Mollie::shouldReceive('api->payments->get')->with($openPayment->id)->andReturn($openPayment);
+
+        (new MolliePaymentGateway())->handle($this->cart);
+    }
 
     private function createUserData($key = null, $value = null) {
         $customer = (new Customer)->create([

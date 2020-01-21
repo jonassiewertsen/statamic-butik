@@ -8,16 +8,8 @@ class PaymentSuccessful
 {
     use SerializesModels;
 
-    public $transaction;
-
-    /**
-     * Create a new event instance.
-     *
-     * @param  $transaction
-     * @return void
-     */
-    public function __construct($transaction)
+    public function __construct()
     {
-        $this->transaction = $transaction;
+        dd('here');
     }
 }
