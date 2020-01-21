@@ -174,7 +174,6 @@ abstract class MollieResponse {
         );
     }
 
-
     public function chargebacks()
     {
         if (!isset($this->_links->chargebacks->href)) {
@@ -231,11 +230,11 @@ abstract class MollieResponse {
         }
 
         $body = json_encode([
-                                "description" => $this->description,
-                                "redirectUrl" => $this->redirectUrl,
-                                "webhookUrl" => $this->webhookUrl,
-                                "metadata" => $this->metadata,
-                            ]);
+            "description" => $this->description,
+            "redirectUrl" => $this->redirectUrl,
+            "webhookUrl" => $this->webhookUrl,
+            "metadata" => $this->metadata,
+        ]);
 
         $result = $this->client->performHttpCallToFullUrl(
             MollieApiClient::HTTP_PATCH,
