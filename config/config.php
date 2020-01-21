@@ -45,10 +45,10 @@ return [
      * Define your shops currency
      */
     'currency' => [
-        'name'            => 'Euro',
-        'currencyIsoCode' => 'EUR',
-        'symbol'          => '€',
-        'delimiter'       => ',',
+        'name'      => 'Euro',
+        'isoCode'   => 'EUR', // Make sure to use  ISO_4217 https://en.wikipedia.org/wiki/ISO_4217
+        'symbol'    => '€',
+        'delimiter' => ',',
     ],
 
     /**

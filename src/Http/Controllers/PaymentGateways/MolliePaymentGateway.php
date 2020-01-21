@@ -22,13 +22,15 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
              'customerId' => $customer->id,
              'metadata' => 'Express Checkout: '. $product->title,
              'locale' => $this->getLocale(),
-             'webhookUrl' => 'https://26fc002c.ngrok.io/shop/payment/webhook/mollie', // TODO: Change for Production
-             //             'webhookUrl' => route('butik.payment.webhook.mollie'),
-             'redirectUrl' => 'https://statamic.test/shop', // TODO: Add success route
+             // TODO: The verify csrf tooken needs to be disabled. Put into Documentation !!!
+             'webhookUrl' => route('butik.payment.webhook.mollie'),
+             'redirectUrl' => 'https://statamic.test/shop',
 
              'amount' => [
-                 'currency' => 'EUR',
-                 'value' => $this->convertAmount($product->totalPrice), // TODO: Refactor cart to return the total price
+                 'currency' => config('statamic-butik.currency.isoCode'),
+                 // TODO: Refactor cart to return the total price
+                 'value' => $this->convertAmount($product->totalPrice),
+
              ],
          ]);
 
