@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\PaymentGateways;
+namespace Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways;
 
 use Illuminate\Http\Request;
 use Braintree_Gateway;

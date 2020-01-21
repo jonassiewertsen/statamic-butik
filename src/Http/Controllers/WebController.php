@@ -7,7 +7,7 @@ use Illuminate\Routing\Controller as LaravelController;
 class WebController extends LaravelController
 {
     protected function addingProductRoutes($product): array {
-        // Todo: Maybe this could be refactored into something cleaner?
+        // Todo: This is working, but sucks. Do something about it.
         return [
             'title'                => $product->title,
             'description'          => $product->description,

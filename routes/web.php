@@ -17,6 +17,7 @@ Route::prefix(config('statamic-butik.uri.shop'))->name('butik.')->namespace('Htt
     Route::get(config('statamic-butik.uri.checkout.express.receipt').'/{product}', 'ExpressCheckoutController@receipt')->name('checkout.express.receipt');
 
     Route::get('payment/process', 'PaymentGatewayController@processPayment')->name('payment.process');
+    Route::post('payment/webhook/mollie', 'PaymentGatewayController@webhook')->name('payment.webhook.mollie');
 
     Route::get('{product}', 'ShopController@show')->name('shop.product');
 });

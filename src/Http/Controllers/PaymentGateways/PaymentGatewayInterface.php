@@ -1,9 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\PaymentGateways;
+namespace Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways;
 
 use Illuminate\Http\Request;
 
 interface PaymentGatewayInterface {
-    public function handle(Request $request);
+    public function handle();
 }
