@@ -12,7 +12,7 @@ class MolliePaymentOpen extends MollieResponse {
     public $resource    = "payment";
     public $id          = "fake_id";
     public $mode;
-    public $amount;
+    public $amount      = "20.00";
     public $expiresAt;
     public $failedAt;
     public $settlementAmount;

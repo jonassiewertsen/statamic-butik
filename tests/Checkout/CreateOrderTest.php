@@ -2,19 +2,20 @@
 
 namespace Tests\Checkout;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Events\PaymentSubmitted;
 use Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\MolliePaymentGateway;
-use Jonassiewertsen\StatamicButik\Http\Controllers\Web\PaymentGatewayController;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 use Jonassiewertsen\StatamicButik\Tests\Utilities\MollieCustomer;
 use Jonassiewertsen\StatamicButik\Tests\Utilities\MolliePaymentOpen;
+use Jonassiewertsen\StatamicButik\Tests\Utilities\MolliePaymentSuccessful;
 use Mollie\Laravel\Facades\Mollie;
 
 class CreateOrderTest extends TestCase
@@ -48,39 +49,65 @@ class CreateOrderTest extends TestCase
         $this->assertCount(1, Order::all());
     }
 
-//    /** @test */
-//    public function a_order_will_have_the_braintree_order_id(){
-//        Event::fake([CreateOrder::class]);
-//
-//        $response = $this->makePayment();
-//        $id = now()->format('y') .'_'. $response->id;
-//
-//        $this->assertDatabaseHas('orders', ['id' => $id]);
-//    }
-//
-//    /** @test */
-//    public function a_order_will_contain_the_braintree_amount(){
-//        Event::fake([CreateOrder::class]);
-//        $amount = $this->makePayment()->amount;
-//
-//        $this->assertDatabaseHas('orders', ['total_amount' => $amount]);
-//    }
-//
-//    /** @test */
-//    public function a_order_will_contain_the_braintree_pay_datetime(){
-//        Event::fake([CreateOrder::class]);
-//        $createdAt = $this->makePayment()->createdAt->date;
-//        $createdAt = Carbon::parse($createdAt)->format('Y-m-d H:i:s');
-//
-//        $this->assertDatabaseHas('orders', ['paid_at' => $createdAt]);
-//    }
-//
-//    private function makePayment()
-//    {
-//        $payload = ['payload' => ['nonce' => 'fake-valid-nonce', 'amount' => mt_rand(0.01, 1999.99)]];
-//        $response = $this->get(route('butik.payment.process', $payload));
-//        return $response->getData()->transaction;
-//    }
+    /** @test */
+    public function the_order_id_will_be_identical_with_the_payment_id(){
+        $this->checkout();
+        $payment = new MolliePaymentSuccessful;
+
+        $this->assertDatabaseHas('butik_orders', ['id' => $payment->id]);
+    }
+
+    /** @test */
+    public function the_order_will_have_status_open(){
+        $this->checkout();
+
+        $this->assertDatabaseHas('butik_orders', ['status' => 'open']);
+    }
+
+    /** @test */
+    public function the_order_will_have_an_order_type(){
+        $this->checkout();
+        $payment = new MolliePaymentSuccessful;
+
+        $this->assertDatabaseHas('butik_orders', ['method' => $payment->method ]);
+    }
+
+    /** @test */
+    public function the_order_will_have_an_total_amount(){
+        $this->checkout();
+        $payment = new MolliePaymentSuccessful;
+
+        $this->assertDatabaseHas('butik_orders', ['total_amount' => $payment->amount ]);
+    }
+
+    /** @test */
+    public function the_order_will_have_created_at_date(){
+        $this->checkout();
+        $payment = new MolliePaymentSuccessful;
+
+        $this->assertDatabaseHas('butik_orders', ['created_at' => Carbon::parse($payment->createdAt) ]);
+    }
+
+    /** @test */
+    public function paid_at_will_stay_null_for_the_moment(){
+        $this->checkout();
+
+        $this->assertDatabaseHas('butik_orders', ['paid_at' => null ]);
+    }
+
+    /** @test */
+    public function the_express_checkout_product_will_be_saved_as_json(){
+        $this->checkout();
+
+        $this->assertDatabaseHas('butik_orders', ['products' => json_encode($this->cart->products) ]);
+    }
+
+    /** @test */
+    public function the_express_checkout_customer_will_be_saved_as_json(){
+        $this->checkout();
+
+        $this->assertDatabaseHas('butik_orders', ['customer' => json_encode($this->cart->customer) ]);
+    }
 
     private function checkout() {
         $openPayment = new MolliePaymentOpen();

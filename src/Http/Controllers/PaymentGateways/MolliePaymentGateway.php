@@ -38,7 +38,7 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
 
         $payment = Mollie::api()->payments()->get($payment->id);
 
-        event(PaymentSubmitted::class);
+        event(new PaymentSubmitted($payment, $cart));
 
         // redirect customer to Mollie checkout page
         return redirect($payment->getCheckoutUrl(), 303);

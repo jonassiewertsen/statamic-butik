@@ -2,22 +2,27 @@
 
 namespace Jonassiewertsen\StatamicButik\Events;
 
+use Carbon\Carbon;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
+use Jonassiewertsen\StatamicButik\Checkout\Cart;
+use Jonassiewertsen\StatamicButik\Checkout\Transaction;
+use Mollie\Api\Resources\Payment;
 
 class PaymentSubmitted
 {
     use SerializesModels;
 
-    public $transaction;
+    public Transaction $transaction;
 
-    /**
-     * Create a new event instance.
-     *
-     * @param  $transaction
-     * @return void
-     */
-    public function __construct()
+    public function __construct($payment, Cart $cart)
     {
-        dd('yes');
+        $this->transaction = (new Transaction())
+            ->id($payment->id)
+            ->method($payment->method)
+            ->totalAmount($payment->amount)
+            ->createdAt(Carbon::parse($payment->createdAt))
+            ->products($cart->products)
+            ->customer($cart->customer);
     }
 }

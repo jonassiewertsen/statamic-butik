@@ -11,7 +11,9 @@ class CreateOrdersTable extends Migration
         Schema::create('butik_orders', function (Blueprint $table) {
             $table->string('id')->unique()->primary();
             $table->string('status');
+            $table->string('method');
             $table->json('products');
+            $table->json('customer');
             $table->integer('total_amount');
             $table->timestamp('paid_at')->default(null)->nullable();
             $table->timestamp('shipped_at')->default(null)->nullable();

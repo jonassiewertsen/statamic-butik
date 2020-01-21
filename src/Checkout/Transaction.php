@@ -2,20 +2,21 @@
 
 namespace Jonassiewertsen\StatamicButik\Checkout;
 
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Collection;
 
 class Transaction {
     public string     $id;
     public string     $status;
-    public string     $type;
+    public string     $method;
     public string     $currencyIsoCode;
     public string     $currencySymbol;
     public string     $totalAmount;
     public Collection $products;
     public Customer   $customer;
-    public DateTime   $createdAt;
-    public DateTime   $paidAt;
+    public Carbon     $createdAt;
+    public Carbon     $paidAt;
 
     public function id(string $value): self {
         $this->id = $value;
@@ -27,8 +28,8 @@ class Transaction {
         return $this;
     }
 
-    public function type(string $value): self {
-        $this->type = $value;
+    public function method(string $value): self {
+        $this->method = $value;
         return $this;
     }
 
@@ -57,7 +58,7 @@ class Transaction {
         return $this;
     }
 
-    public function createdAt(DateTime $value): self {
+    public function createdAt(Carbon $value): self {
         $this->createdAt = $value;
         return $this;
     }

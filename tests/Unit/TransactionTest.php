@@ -33,11 +33,11 @@ class TransactionTest extends TestCase
     }
 
     /** @test */
-    public function a_type_can_be_added(){
-        $type = 'paypal';
-        $this->transaction->type($type);
+    public function a_method_can_be_added(){
+        $method = 'paypal';
+        $this->transaction->method($method);
 
-        $this->assertEquals($type, $this->transaction->type);
+        $this->assertEquals($method, $this->transaction->method);
     }
 
     /** @test */
