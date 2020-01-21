@@ -6,10 +6,14 @@ use Jonassiewertsen\StatamicButik\Http\Models\Product;
 
 $factory->define(Order::class, function (Faker $faker) {
     return [
-        'id' => $faker->unique()->uuid,
-        'products'  => json_encode(create(Product::class)),
+        'id'           => $faker->unique()->uuid,
+        'status'       => 'open',
+        'method'       => 'paypal',
+        'products'     => json_encode(create(Product::class)),
+        'customer'     => json_encode(create(Customer::class)->first()),
         'total_amount' => $faker->numberBetween(20, 150),
-        'paid_at' => $faker->dateTimeBetween(now()->subMonth(), now()),
-        'shipped_at' => null,
+        'created_at'   => $faker->dateTimeBetween(now()->subMonth(), now()),
+        'paid_at'      => null,
+        'shipped_at'   => null,
     ];
 });
