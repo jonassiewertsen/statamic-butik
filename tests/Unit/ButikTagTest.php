@@ -55,6 +55,14 @@ class ButikTagTest extends TestCase
     }
 
     /** @test */
+    public function it_can_return_the_payment_process_link(){
+        $this->assertEquals(
+            $this->butik->paymentProcessUrl(),
+            route('butik.payment.process')
+        );
+    }
+
+    /** @test */
     public function it_can_return_the_currency_symbol()
     {
         create(Product::class, [], 10);

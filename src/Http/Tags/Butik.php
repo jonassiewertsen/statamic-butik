@@ -35,6 +35,10 @@ class Butik extends StatamicTags
          return $products;
     }
 
+    public function paymentProcessUrl() {
+        return route('butik.payment.process');
+    }
+
     public function currencySymbol()
     {
         return config('statamic-butik.currency.symbol');

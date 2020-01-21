@@ -14,9 +14,9 @@
         {{ partial src="statamic-butik::web.checkout.partials.shipToCard" }}
 
         {{# pay now button #}}
-        <button class="b-block b-w-full b-mt-3 b-bg-gray-900 b-mt-6 b-py-2 b-rounded b-text-center b-text-white b-text-xl hover:b-bg-gray-800">
+        <a href="{{ butik:paymentProcessUrl }}" class="b-block b-w-full b-mt-3 b-bg-gray-900 b-mt-6 b-py-2 b-rounded b-text-center b-text-white b-text-xl hover:b-bg-gray-800">
             {{ trans key="statamic-butik::payment.pay_now" }}
-        </button>
+        </a>
     </div>
 
     {{# Product card #}}
