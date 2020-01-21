@@ -7,6 +7,7 @@ use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Events\PaymentSubmitted;
 use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
+use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Mollie\Laravel\Facades\Mollie;
 
 class MolliePaymentGateway extends WebController implements PaymentGatewayInterface
@@ -49,11 +50,13 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
             return;
         }
 
-        // TODO: Error handling
         $payment = Mollie::api()->payments()->get($request->id);
 
         if ($payment->isPaid()) {
             event(PaymentSuccessful::class);
+
+            $order = Order::whereId($payment->id)->firstOrFail();
+            $order->update(['status' => 'paid']);
         }
     }
 
