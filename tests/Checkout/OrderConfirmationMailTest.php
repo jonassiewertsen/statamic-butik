@@ -48,28 +48,6 @@ class OrderConfirmationMailTest extends TestCase
         Mail::assertQueued(OrderConfirmation::class);
     }
 
-    /** @test */
-    public function a_order_confirmation_for_the_seller_will_contain_transaction_data(){
-        $payment = new MolliePaymentSuccessful();
-
-        $order = create(Order::class, [
-            'id' => $payment->id,
-            'total_amount' => $payment->amount,
-            'paid_at' => Carbon::parse($payment->paidAt),
-        ])->first();
-
-        $this->mockMollie($payment);
-        $this->post(route('butik.payment.webhook.mollie'), ['id' => $payment->id]);
-
-        Mail::assertQueued(OrderConfirmation::class, function($mail) use ($payment, $order) {
-            return  $mail->transaction->id                          === $order->id &&
-                    $mail->transaction->totalAmount                 === $order->total_amount &&
-                    $mail->transaction->currencySymbol              === config('statamic-butik.currency.symbol') &&
-                    $mail->transaction->paidAt                      ==  $order->paid_at &&
-                    $mail->transaction->products->first()->title    === json_decode($order->products)[0]->title;
-        });
-    }
-
     public function mockMollie($mock)
     {
         Mollie::shouldReceive('api->payments->get')

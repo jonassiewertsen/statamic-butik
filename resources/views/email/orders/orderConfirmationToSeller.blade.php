@@ -5,12 +5,12 @@
 
 @section('content')
 
-    <div style="text-align: center; padding-right: 12px; font-weight: 600;">
+    <div style="text-align: center; padding-right: 12px; padding-top: 20px; font-weight: 600;">
         Prodcuts
     </div>
-    <div class="text" style="padding: 0 3em; text-align: center;">
-        @foreach ($transaction->products as $product)
-            <h2>{{ $product->title }}</h2>
+    <div class="text" style="padding: 0 3em; margin-bottom: 60px; text-align: center;">
+        @foreach ($products as $product)
+            <h2>{{ $product['title'] }}</h2>
         @endforeach
     </div>
 
@@ -20,7 +20,7 @@
                 Order ID
             </td>
             <td valign="top" width="67%" style="text-align: left;">
-                {{ $transaction->id ?? '' }}
+                {{ $id }}
             </td>
         </tr>
 
@@ -29,7 +29,7 @@
                 Total Amount
             </td>
             <td valign="top" width="67%" style="text-align: left;">
-                {{ $transaction->totalAmount ?? '' }} {{ $transaction->currencySymbol ?? '' }}
+                {{ $totalAmount ?? '' }} {{ $currencySymbol ?? '' }}
             </td>
         </tr>
 
@@ -44,12 +44,14 @@
 
         <tr>
             <td valign="top" width="33%" style="text-align: right; padding-right: 12px; font-weight: 600;">
-                Paid at
+                Ordered at
             </td>
             <td valign="top" width="67%" style="text-align: left;">
-                {{ $transaction->paidAt ?? '' }}
+                {{ $paidAt ?? '' }}
             </td>
         </tr>
+
+        <br/>
 
     </table>
 

@@ -13,6 +13,8 @@ class Product extends ButikModel
     protected $primaryKey   = 'slug';
     protected $keyType      = 'string';
 
+    // TODO: Don't sell product if sold out
+
     protected $casts = [
         'available'       => 'boolean',
         'base_price'      => 'integer',
