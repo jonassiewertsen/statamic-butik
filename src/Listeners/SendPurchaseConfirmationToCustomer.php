@@ -14,9 +14,6 @@ class SendPurchaseConfirmationToCustomer implements ShouldQueue
 
     public function handle($event)
     {
-        $order = Order::whereId($event->transaction->id)->firstOrFail();
-        $customer = json_decode($order->customer);
-
         try {
             Mail::queue(new PurchaseConfirmation($event->transaction));
         } catch(\Exception $e) {

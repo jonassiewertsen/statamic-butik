@@ -23,8 +23,6 @@ class PaymentSuccessful
             ->totalAmount($payment->amount)
             ->createdAt(Carbon::parse($payment->createdAt))
             ->paidAt(Carbon::parse($payment->paidAt));
-
-
     }
 
     private function fetchProducts($payment): Collection {
