@@ -10,9 +10,9 @@
                                     <h3 class="heading">Contact Info</h3>
                                     <ul>
                                         <li>
-                                            <div class="text">{{ config('statamic-butik.address1', '') }}</div>
-                                            @if (config('statamic-butik.address2') !== null)
-                                                <div class="text">{{ config('statamic-butik.address2', '') }}</div>
+                                            <div class="text">{{ config('statamic-butik.address_1', '') }}</div>
+                                            @if (config('statamic-butik.address_2') !== null)
+                                                <div class="text">{{ config('statamic-butik.address_2', '') }}</div>
                                             @endif
                                             <div class="text">{{ config('statamic-butik.zip_city', '') }}</div>
                                             <div class="text">{{ config('statamic-butik.country', '') }}</div>
