@@ -17,6 +17,17 @@ class TransactionTest extends TestCase
     }
 
     /** @test */
+    public function the_currency_will_be_set_automatically(){
+        $this->assertEquals(
+            config('statamic-butik.currency.isoCode'),
+            $this->transaction->currencyIsoCode);
+
+        $this->assertEquals(
+            config('statamic-butik.currency.symbol'),
+            $this->transaction->currencySymbol);
+    }
+
+    /** @test */
     public function a_id_can_be_added(){
         $id = 'some-id-234';
         $this->transaction->id($id);

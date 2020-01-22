@@ -18,6 +18,11 @@ class Transaction {
     public Carbon     $createdAt;
     public Carbon     $paidAt;
 
+    public function __construct(){
+        $this->currencyIsoCode  = config('statamic-butik.currency.isoCode', '');
+        $this->currencySymbol   = config('statamic-butik.currency.symbol', '');
+    }
+
     public function id(string $value): self {
         $this->id = $value;
         return $this;
