@@ -5,21 +5,22 @@ namespace Jonassiewertsen\StatamicButik\Listeners;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
-use Jonassiewertsen\StatamicButik\Mail\OrderConfirmationForCustomer;
+use Jonassiewertsen\StatamicButik\Http\Models\Order;
+use Jonassiewertsen\StatamicButik\Mail\Customer\PurchaseConfirmation;
 
 class SendPurchaseConfirmationToCustomer implements ShouldQueue
 {
     use SerializesModels;
 
-    public function handle($transaction)
+    public function handle($event)
     {
-        // Removing the transaction wrapper
-        $transaction = $transaction->transaction;
+        $order = Order::whereId($event->transaction->id)->firstOrFail();
+        $customer = json_decode($order->customer);
 
         try {
-            // TODO: Seems not to send mails now
-            Mail::queue(new OrderConfirmationForCustomer($transaction));
+            Mail::queue(new PurchaseConfirmation($event->transaction));
         } catch(\Exception $e) {
+            // TODO: Better error handling
             report($e);
         }
     }

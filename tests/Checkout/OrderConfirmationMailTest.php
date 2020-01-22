@@ -5,33 +5,37 @@ namespace Tests\Checkout;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
-use Jonassiewertsen\StatamicButik\Mail\OrderConfirmationForCustomer;
+use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Listeners\CreateOpenOrder;
+use Jonassiewertsen\StatamicButik\Mail\Customer\PurchaseConfirmation;
 use Jonassiewertsen\StatamicButik\Mail\OrderConfirmationForSeller;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\StatamicButik\Tests\Utilities\MolliePaymentCanceled;
+use Jonassiewertsen\StatamicButik\Tests\Utilities\MolliePaymentSuccessful;
+use Mollie\Laravel\Facades\Mollie;
 
 class OrderConfirmationMailTest extends TestCase
 {
     public function setUp(): void
     {
         parent::setUp();
-        $configPath = 'statamic-butik.payment.braintree.';
-        $this->app['config']->set($configPath.'env', 'sandbox');
-        $this->app['config']->set($configPath.'merchant_id', '8t2hkkd3nn7yqncp');
-        $this->app['config']->set($configPath.'public_key', 'j3txsgnhkx8q4cdp');
-        $this->app['config']->set($configPath.'private_key', '020f0a4c1d7db142d33e40c04f9a4799');
 
         Mail::fake();
     }
 
     /** @test */
     public function a_purchase_confirmation_mail_will_be_sent_to_the_customer(){
-        Event::fake([CreateOpenOrder::class]);
-        Mail::fake();
+        $this->withoutExceptionHandling();
+        $order = create(Order::class)->first();
 
-        $amount = $this->makePayment();
+        $payment = new MolliePaymentSuccessful();
+        $payment->id = $order->id;
 
-        Mail::assertQueued(OrderConfirmationForCustomer::class);
+        $this->mockMollie($payment);
+
+        $this->post(route('butik.payment.webhook.mollie'), ['id' => $payment->id]);
+
+        Mail::assertQueued(PurchaseConfirmation::class);
     }
 
     /** @test */
@@ -42,7 +46,7 @@ class OrderConfirmationMailTest extends TestCase
 
         $transaction = $this->makePayment();
 
-        Mail::assertQueued(OrderConfirmationForCustomer::class, function($mail) use ($transaction) {
+        Mail::assertQueued(CustomerReceipt::class, function($mail) use ($transaction) {
             return  $mail->transaction['id']                        === $transaction->id &&
                     $mail->transaction['amount']                    === $transaction->amount &&
                     $mail->transaction['currency']                  === $transaction->currencyIsoCode &&
@@ -76,11 +80,9 @@ class OrderConfirmationMailTest extends TestCase
         Mail::assertQueued(OrderConfirmationForSeller::class);
     }
 
-    // TODO: Move up
-    private function makePayment()
+    public function mockMollie($mock)
     {
-        $payload = ['payload' => ['nonce' => 'fake-valid-nonce', 'amount' => mt_rand(0.01, 1999.99)]];
-        $response = $this->get(route('butik.payment.process', $payload));
-        return $response->getData()->transaction;
+        Mollie::shouldReceive('api->payments->get')
+            ->andReturn($mock);
     }
 }

@@ -38,7 +38,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
             \Jonassiewertsen\StatamicButik\Listeners\CreateOpenOrder::class,
         ],
         \Jonassiewertsen\StatamicButik\Events\PaymentSuccessful::class => [
-//            \Jonassiewertsen\StatamicButik\Listeners\SendPurchaseConfirmationToCustomer::class,
+            \Jonassiewertsen\StatamicButik\Listeners\SendPurchaseConfirmationToCustomer::class,
 //            \Jonassiewertsen\StatamicButik\Listeners\SendPurchaseConfirmationToSeller::class,
         ],
     ];
