@@ -57,7 +57,7 @@ class OrderConfirmationMailTest extends TestCase
     }
 
     /** @test */
-    public function a_order_confirmation_mail_will_be_sent_to_the_customer(){
+    public function a_order_confirmation_mail_will_be_sent_to_the_seller() {
         $order = create(Order::class)->first();
 
         $payment = new MolliePaymentSuccessful();
@@ -70,27 +70,27 @@ class OrderConfirmationMailTest extends TestCase
         Mail::assertQueued(OrderConfirmation::class);
     }
 
-//    /** @test */
-//    public function a_purchase_confirmation_for_the_customer_will_contain_transaction_data(){
-//        $payment = new MolliePaymentSuccessful();
-//
-//        $order = create(Order::class, [
-//            'id' => $payment->id,
-//            'total_amount' => $payment->amount,
-//            'paid_at' => Carbon::parse($payment->paidAt),
-//        ])->first();
-//
-//        $this->mockMollie($payment);
-//        $this->post(route('butik.payment.webhook.mollie'), ['id' => $payment->id]);
-//
-//        Mail::assertQueued(PurchaseConfirmation::class, function($mail) use ($payment, $order) {
-//            return  $mail->transaction->id                          === $order->id &&
-//                $mail->transaction->totalAmount                 === $order->total_amount &&
-//                $mail->transaction->currencySymbol              === config('statamic-butik.currency.symbol') &&
-//                $mail->transaction->paidAt                      ==  $order->paid_at &&
-//                $mail->transaction->products->first()->title    === json_decode($order->products)[0]->title;
-//        });
-//    }
+    /** @test */
+    public function a_order_confirmation_for_the_seller_will_contain_transaction_data(){
+        $payment = new MolliePaymentSuccessful();
+
+        $order = create(Order::class, [
+            'id' => $payment->id,
+            'total_amount' => $payment->amount,
+            'paid_at' => Carbon::parse($payment->paidAt),
+        ])->first();
+
+        $this->mockMollie($payment);
+        $this->post(route('butik.payment.webhook.mollie'), ['id' => $payment->id]);
+
+        Mail::assertQueued(OrderConfirmation::class, function($mail) use ($payment, $order) {
+            return  $mail->transaction->id                          === $order->id &&
+                    $mail->transaction->totalAmount                 === $order->total_amount &&
+                    $mail->transaction->currencySymbol              === config('statamic-butik.currency.symbol') &&
+                    $mail->transaction->paidAt                      ==  $order->paid_at &&
+                    $mail->transaction->products->first()->title    === json_decode($order->products)[0]->title;
+        });
+    }
 
     public function mockMollie($mock)
     {
