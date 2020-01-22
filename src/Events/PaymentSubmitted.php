@@ -20,7 +20,7 @@ class PaymentSubmitted
         $this->transaction = (new Transaction())
             ->id($payment->id)
             ->method($payment->method)
-            ->totalAmount($payment->amount)
+            ->totalAmount($payment->amount->value)
             ->createdAt(Carbon::parse($payment->createdAt))
             ->products($cart->products)
             ->customer($cart->customer);

@@ -20,13 +20,13 @@ class PaymentSuccessful
             ->id($payment->id)
             ->method($payment->method)
             ->products($this->fetchProducts($payment))
-            ->totalAmount($payment->amount)
+            ->totalAmount($payment->amount->value)
             ->createdAt(Carbon::parse($payment->createdAt))
             ->paidAt(Carbon::parse($payment->paidAt));
     }
 
     private function fetchProducts($payment): Collection {
         $order = Order::whereId($payment->id)->firstOrFail();
-        return collect(json_decode($order->products));
+        return collect($order->products);
     }
 }

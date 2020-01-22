@@ -10,7 +10,7 @@ class MolliePaymentCanceled extends MollieResponse {
     public $paidAt      = null;
     public $canceledAt  = null;
     public $resource    = "payment";
-    public $id          = "fake_id";
+    public $id          = "tr_fake_id";
     public $mode;
     public $amount      = "20.00";
     public $expiresAt;

@@ -22,6 +22,6 @@ class OrderConfirmation extends Mailable implements ShouldQueue
     public function build()
     {
         // TODO: make customizable
-        return $this->view('statamic-butik::email.orders.customerConfirmation');
+        return $this->view('statamic-butik::email.orders.orderConfirmationToSeller');
     }
 }

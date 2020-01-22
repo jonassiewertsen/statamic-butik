@@ -26,6 +26,7 @@ class MolliePaymentTest extends TestCase
     /** @test */
     public function a_successful_payment_will_fire_the_an_event()
     {
+        create(Order::class, ['id' => 'tr_fake_id']);
         $this->mockMollie(new MolliePaymentSuccessful());
 
         $this->post(route('butik.payment.webhook.mollie'), ['id' => 'tr_fake_id']);
@@ -35,6 +36,7 @@ class MolliePaymentTest extends TestCase
     /** @test */
     public function a_successful_payment_without_payment_id_wont_fire_the_event()
     {
+        create(Order::class, ['id' => 'tr_fake_id']);
         $this->mockMollie(new MolliePaymentSuccessful());
 
         $this->post(route('butik.payment.webhook.mollie'));
