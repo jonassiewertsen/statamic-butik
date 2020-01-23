@@ -2,6 +2,7 @@
 
 namespace Jonassiewertsen\StatamicButik;
 
+use Illuminate\Support\Facades\Gate;
 use Jonassiewertsen\StatamicButik\Http\Middleware\DeletingTransactionData;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
