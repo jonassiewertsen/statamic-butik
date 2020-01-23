@@ -2,15 +2,10 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
 
-use Illuminate\Http\Request;
-use Jonassiewertsen\StatamicButik\Blueprints\ShippingBlueprint;
+use Jonassiewertsen\StatamicButik\Blueprints\ProductBlueprint;
 use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
-use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
-use Scrumpy\HtmlToProseMirror\Test\TestCase;
-use Statamic\Contracts\Auth\User;
 use Statamic\CP\Column;
-use Statamic\Facades\Blueprint;
 
 class OrdersController extends CpController
 {
@@ -44,5 +39,14 @@ class OrdersController extends CpController
                 Column::make('created_at')->label(__('statamic-butik::order.created_at')),
             ],
         ]);
+    }
+
+    public function show(Order $order) {
+        $this->authorize('show', Order::class);
+
+        $customer = json_decode($order->customer);
+        $products = $order->products;
+
+        return view('statamic-butik::cp.orders.show', compact('order', 'customer', 'products'));
     }
 }
