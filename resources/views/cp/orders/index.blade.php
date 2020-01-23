@@ -3,11 +3,11 @@
 
 @section('content')
 
-    @unless($orders->isEmpty())
+    <div class="flex mb-3">
+        <h1 class="flex-1">{{ __('statamic-butik::order.name.plural') }}</h1>
+    </div>
 
-        <div class="flex mb-3">
-            <h1 class="flex-1">{{ __('statamic-butik::order.name.plural') }}</h1>
-        </div>
+    @unless($orders->isEmpty())
 
         <butik-order-list
             :initial-rows="{{ json_encode($orders) }}"
@@ -17,7 +17,9 @@
 
     @else
 
-       No Orders yet
+        <div class="card">
+            No Orders yet
+        </div>
 
     @endunless
 

@@ -5,6 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
+use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 
@@ -88,7 +89,7 @@ class InstallButik extends Command
 
         if ($freeShipping) {
             Shipping::create([
-                'title' => 'Free shipping',
+                'title' => 'Free',
                 'slug' => 'free',
                 'price' => 0,
             ]);

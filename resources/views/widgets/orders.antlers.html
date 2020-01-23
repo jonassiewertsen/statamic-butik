@@ -2,6 +2,9 @@
     <div class="p-3">
         <h1>{{ __('statamic-butik::order.successful') }}</h1>
     </div>
+
+    {{ if (orders | count) > 0  }}
+
     <div class="flex flex-wrap">
         <table class="w-full mb-3 text-center text-grey-80">
             <thead class="border-b">
@@ -28,4 +31,11 @@
             </tbody>
         </table>
     </div>
+
+    {{ else }}
+        <div class="p-3 -mt-5">
+            No Orders yet
+        </div>
+    {{ /if }}
+
 </div>
