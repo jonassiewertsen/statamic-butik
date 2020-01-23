@@ -7,7 +7,13 @@ use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class OrderCreateTest extends TestCase
 {
-    // TODO: Not sure if i want to use this approach for creating orders ...
+    // TODO: Ruhe!
+    /** @test */
+    public function ruhe(){
+        $this->assertTrue(true);
+    }
+
+    // TODO: Not sure if i want to use this approach to create orders ...
 
 //    public function setUp(): void {
 //        parent::setUp();
