@@ -2,7 +2,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/jonassiewertsen/statamic-butik.svg?style=flat-square)](https://packagist.org/packages/jonassiewertsen/statamic-butik)
 
-"Butik" is a Scandinavian term for a small or medium-sized shop. Exactly what this Statamic addon will be crafted for.
+"Butik" is a Scandinavian term for a small or medium-sized shop. Exactly what this Statamic addon has been crafted for.
 
 It is my goal to create a wonderful e-commerce solution, for small to medium-sized online shops.
 
