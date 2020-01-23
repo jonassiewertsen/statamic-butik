@@ -14,5 +14,17 @@ class Order extends ButikModel
         'paid_at'    => 'datetime',
         'shipped_at' => 'datetime',
     ];
+
+    protected $appends = [
+        'showUrl',
+    ];
+
     protected $guarded = [];
+
+    public function getShowUrlAttribute()
+    {
+        $cp_route = config('statamic.cp.route');
+
+        return "/{$cp_route}/butik/orders/{$this->id}";
+    }
 }

@@ -2,29 +2,13 @@
     <data-list :columns="columns" :sort="false" :rows="rows">
         <div class="card p-0" slot-scope="{ filteredRows: rows }">
             <data-list-table :rows="rows">
-                <template slot="cell-title" slot-scope="{ row: collection }">
-                    <a :href="collection.edit_url">{{ collection.title }}</a>
+                <template slot="cell-id" slot-scope="{ row: collection }">
+                    <a :href="collection.show_url">{{ collection.id }}</a>
                 </template>
                 <template slot="actions" slot-scope="{ row: collection, index }">
                     <dropdown-list>
-                        <dropdown-item :text="__('Edit')" :redirect="collection.edit_url" />
-                        <dropdown-item
-                            v-if="collection.deleteable"
-                            :text="__('Delete')"
-                            class="warning"
-                            @click="confirmDeleteRow(collection.slug, index)" />
+                        <dropdown-item :text="__('Show')" :redirect="collection.show_url" />
                     </dropdown-list>
-
-                    <confirmation-modal
-                        v-if="deletingRow !== false"
-                        :title="deletingModalTitle"
-                        :bodyText="__('Are you sure you want to delete this product?')"
-                        :buttonText="__('Delete')"
-                        :danger="true"
-                        @confirm="deleteRow('/cp/butik/products')"
-                        @cancel="cancelDeleteRow"
-                    >
-                    </confirmation-modal>
                 </template>
             </data-list-table>
         </div>

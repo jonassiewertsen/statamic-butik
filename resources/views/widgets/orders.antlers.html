@@ -15,8 +15,10 @@
             </thead>
             <tbody>
                 {{ orders }}
-                    <tr class="{{ switch between="bg-white|bg-grey-20" }}">
-                        <td class="px-3 py-1">{{ id }}</td>
+                    <tr class="{{ switch between='bg-white|bg-grey-20' }}">
+                        <td class="px-3 py-1">
+                            <a href="{{ show_url }}">{{ id }}</a>
+                        </td>
                         <td class="px-3 py-1">{{ customer }}</td>
                         <td class="px-3 py-1">{{ mail}}</td>
                         <td class="px-3 py-1">{{ total_amount }}</td>

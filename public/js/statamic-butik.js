@@ -987,22 +987,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -1043,12 +1027,12 @@ var render = function() {
                 scopedSlots: _vm._u(
                   [
                     {
-                      key: "cell-title",
+                      key: "cell-id",
                       fn: function(ref) {
                         var collection = ref.row
                         return [
-                          _c("a", { attrs: { href: collection.edit_url } }, [
-                            _vm._v(_vm._s(collection.title))
+                          _c("a", { attrs: { href: collection.show_url } }, [
+                            _vm._v(_vm._s(collection.id))
                           ])
                         ]
                       }
@@ -1064,47 +1048,13 @@ var render = function() {
                             [
                               _c("dropdown-item", {
                                 attrs: {
-                                  text: _vm.__("Edit"),
-                                  redirect: collection.edit_url
-                                }
-                              }),
-                              _vm._v(" "),
-                              collection.deleteable
-                                ? _c("dropdown-item", {
-                                    staticClass: "warning",
-                                    attrs: { text: _vm.__("Delete") },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.confirmDeleteRow(
-                                          collection.slug,
-                                          index
-                                        )
-                                      }
-                                    }
-                                  })
-                                : _vm._e()
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _vm.deletingRow !== false
-                            ? _c("confirmation-modal", {
-                                attrs: {
-                                  title: _vm.deletingModalTitle,
-                                  bodyText: _vm.__(
-                                    "Are you sure you want to delete this product?"
-                                  ),
-                                  buttonText: _vm.__("Delete"),
-                                  danger: true
-                                },
-                                on: {
-                                  confirm: function($event) {
-                                    return _vm.deleteRow("/cp/butik/products")
-                                  },
-                                  cancel: _vm.cancelDeleteRow
+                                  text: _vm.__("Show"),
+                                  redirect: collection.show_url
                                 }
                               })
-                            : _vm._e()
+                            ],
+                            1
+                          )
                         ]
                       }
                     }

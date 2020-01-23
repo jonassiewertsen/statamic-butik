@@ -22,6 +22,7 @@ class OrdersController extends CpController
                     'status'       => $order->status,
                     'method'       => $order->method,
                     'total_amount' => $order->total_amount,
+                    'show_url'     => $order->show_url,
                     'created_at'   => $order->created_at->format('d-m-Y H:i'),
                     'deleteable'   => false,
                 ];

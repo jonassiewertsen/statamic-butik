@@ -17,14 +17,7 @@
 
     @else
 
-        @include('statamic::partials.create-first', [
-            'resource' => __('statamic-butik::order.name.singular'),
-            'description' => __('statamic-butik::order.description'),
-            'svg' => 'empty/collection',
-            'route' => cp_route('butik.orders.create'),
-            // TODO: I should set permissions right here
-             'can' => auth()->user()->can('create', 'Statamic\Contracts\Entries\Collection')
-        ])
+       No Orders yet
 
     @endunless
 
