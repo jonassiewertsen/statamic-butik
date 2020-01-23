@@ -7,10 +7,9 @@
 
         <div class="flex mb-3">
             <h1 class="flex-1">{{ __('statamic-butik::shipping.plural') }}</h1>
-                {{-- TODO: add permissions --}}
-{{--            @can('create', 'Statamic\Contracts\Entries\Collection')--}}
+            @can('create', 'Jonassiewertsen\StatamicButik\Http\Models\Product\Shipping')
                 <a href="{{ cp_route('butik.shippings.create') }}" class="btn-primary">{{ __('statamic-butik::shipping.navigation.create') }}</a>
-{{--            @endcan--}}
+            @endcan
         </div>
 
         <butik-shipping-list
@@ -26,8 +25,7 @@
             'description' => __('statamic-butik::shipping.description'),
             'svg' => 'empty/collection',
             'route' => cp_route('butik.shippings.create'),
-            // TODO: I should set permissions right here
-             'can' => auth()->user()->can('create', 'Statamic\Contracts\Entries\Collection')
+             'can' => auth()->user()->can('create', 'Jonassiewertsen\StatamicButik\Http\Models\Product\Shipping')
         ])
 
     @endunless
