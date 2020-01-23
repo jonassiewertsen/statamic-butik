@@ -18,6 +18,10 @@ use Statamic\Tags\Errors;
 
 class StatamicButikServiceProvider extends AddonServiceProvider
 {
+    protected $commands = [
+        \Jonassiewertsen\StatamicButik\Commands\InstallButik::class,
+    ];
+
     protected $routes = [
         'cp' => __DIR__.'/../routes/cp.php',
         'web' => __DIR__.'/../routes/web.php',
