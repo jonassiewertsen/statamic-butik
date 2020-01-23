@@ -144,6 +144,13 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         });
     }
 
+    protected function bootPolicies()
+    {
+        foreach ($this->policies as $key => $value) {
+            Gate::policy($key, $value);
+        }
+    }
+
     protected function bootMiddleware() {
         $router = $this->app['router'];
         $router->pushMiddlewareToGroup('web', DeletingTransactionData::class);
