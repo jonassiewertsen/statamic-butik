@@ -1,5 +1,5 @@
 <template>
-    <data-list :columns="columns" :rows="rows">
+    <data-list :columns="columns" :sort="false" :rows="rows">
         <div class="card p-0" slot-scope="{ filteredRows: rows }">
             <data-list-table :rows="rows">
                 <template slot="cell-title" slot-scope="{ row: collection }">

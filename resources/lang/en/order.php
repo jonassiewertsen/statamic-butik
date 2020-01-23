@@ -30,7 +30,7 @@ return [
     'customer'     => 'Customer',
     'mail'         => 'Mail',
     'method'       => 'Method',
-
+    'created_at'   => 'Order Date',
 
 
 ];

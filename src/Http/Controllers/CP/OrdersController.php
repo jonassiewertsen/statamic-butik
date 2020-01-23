@@ -17,17 +17,20 @@ class OrdersController extends CpController
     public function index() {
         $this->authorize('index', Order::class);
 
-        $orders = Order::select('id', 'status', 'total_amount', 'method', 'customer')->get()->map(function ($order) {
-            return [
-                'id'           => $order->id,
-                'customer'     => json_decode($order->customer)->name,
-                'mail'         => json_decode($order->customer)->mail,
-                'status'       => $order->status,
-                'method'       => $order->method,
-                'total_amount' => $order->total_amount,
-                'deleteable' => false,
-            ];
-        })->values();
+        $orders = Order::select('id', 'status', 'total_amount', 'method', 'customer', 'created_at')
+            ->get()
+            ->map(function ($order) {
+                return [
+                    'id'           => $order->id,
+                    'customer'     => json_decode($order->customer)->name,
+                    'mail'         => json_decode($order->customer)->mail,
+                    'status'       => $order->status,
+                    'method'       => $order->method,
+                    'total_amount' => $order->total_amount,
+                    'created_at'   => $order->created_at->format('d-m-Y H:i'),
+                    'deleteable'   => false,
+                ];
+            })->sortByDesc('created_at')->values();
 
         return view('statamic-butik::cp.orders.index', [
             'orders' => $orders,
@@ -38,6 +41,7 @@ class OrdersController extends CpController
                 Column::make('mail')->label(__('statamic-butik::order.mail')),
                 Column::make('method')->label(__('statamic-butik::order.method')),
                 Column::make('total_amount')->label(__('statamic-butik::order.total_amount')),
+                Column::make('created_at')->label(__('statamic-butik::order.created_at')),
             ],
         ]);
     }

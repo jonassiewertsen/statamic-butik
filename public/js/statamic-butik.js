@@ -1028,7 +1028,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("data-list", {
-    attrs: { columns: _vm.columns, rows: _vm.rows },
+    attrs: { columns: _vm.columns, sort: false, rows: _vm.rows },
     scopedSlots: _vm._u([
       {
         key: "default",
