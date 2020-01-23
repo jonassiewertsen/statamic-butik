@@ -23,9 +23,6 @@ class TestCase extends OrchestraTestCase
         parent::setUp();
 
         $this->withFactories(__DIR__.'/../database/factories');
-
-        // TODO: Can the container part be removed
-//         $this->createContainer();
     }
 
     protected function signInUser($permissions = [])
@@ -112,20 +109,5 @@ class TestCase extends OrchestraTestCase
 
         // Setting the user repository to the default flat file system
         $app['config']->set('statamic.users.repository', 'file');
-    }
-
-    protected function createContainer()
-    {
-        $container = AssetContainer::make('testcontainer')
-            ->title('Test Container')
-            ->disk('local')
-            ->blueprint(Blueprint::makeFromFields([
-                'title' =>  'Assets',
-                'disk' => 'assets',
-            ]))
-            ->allowUploads(true)
-            ->createFolders('test');
-
-        $container->save();
     }
 }
