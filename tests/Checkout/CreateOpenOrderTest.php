@@ -77,7 +77,7 @@ class CreateOpenOrderTest extends TestCase
         $this->checkout();
         $payment = new MolliePaymentSuccessful;
 
-        $this->assertDatabaseHas('butik_orders', ['total_amount' => $payment->amount ]);
+        $this->assertDatabaseHas('butik_orders', ['total_amount' => $payment->amount->value ]);
     }
 
     /** @test */

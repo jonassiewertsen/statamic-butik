@@ -4,7 +4,7 @@ namespace Jonassiewertsen\StatamicButik\Tests\Utilities;
 
 class MolliePaymentSuccessful extends MollieResponse {
     public function __construct(){
-        $this->amount = new Amount();
+        $this->amount = new MollieAmount();
     }
 
     public $description = "Nice product";
@@ -22,8 +22,4 @@ class MolliePaymentSuccessful extends MollieResponse {
     public $settlementAmount;
     public $amountRefunded;
     public $amountRemaining;
-}
-
-class Amount {
-    public string $value = "20.00";
 }

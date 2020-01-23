@@ -2,7 +2,13 @@
 
 namespace Jonassiewertsen\StatamicButik\Tests\Utilities;
 
+
+
 class MolliePaymentOpen extends MollieResponse {
+    public function __construct(){
+        $this->amount = new MollieAmount();
+    }
+
     public $description = "Nice product";
     public $method      = "PayPal";
     public $status      = "open";
