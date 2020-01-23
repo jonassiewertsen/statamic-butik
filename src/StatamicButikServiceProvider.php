@@ -116,6 +116,13 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     private function createNavigation(): void {
         Nav::extend(function ($nav) {
 
+            // Orders
+            $nav->create(__('statamic-butik::menu.cp.orders'))
+                ->section('Butik')
+                ->can(auth()->user()->can('view orders'))
+                ->route('butik.orders.index')
+                ->icon('drawer-file');
+
             // Products
             $nav->create(__('statamic-butik::menu.cp.products'))
                 ->section('Butik')

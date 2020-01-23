@@ -22,7 +22,4 @@ return [
     'taxes'            => 'Taxes',
     'title'            => 'Title',
     'type'             => 'Type',
-
-
-
 ];
