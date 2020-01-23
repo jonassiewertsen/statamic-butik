@@ -21,10 +21,7 @@ class OrderConfirmation extends Mailable implements ShouldQueue
 
     public function build()
     {
-        // TODO: Make more clear what to do with this mails. Ship itens etc ...
-        // TODO: make customizable
-        return $this->to('test@mail.com')
-            ->from('butik@butik.com')
+        return $this->subject(__('statamic-butik::order.new_purchase'))
             ->view('statamic-butik::email.orders.orderConfirmationToSeller')
             ->with([
                'id'             => $this->transaction->id,

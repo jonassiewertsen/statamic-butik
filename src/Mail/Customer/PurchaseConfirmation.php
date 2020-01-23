@@ -21,7 +21,8 @@ class PurchaseConfirmation extends Mailable implements ShouldQueue
 
     public function build()
     {
-        return $this->view('statamic-butik::email.orders.purchaseConfirmationForCustomer')
+        return $this->subject(__('statamic-butik::order.confirmation'))
+            ->view('statamic-butik::email.orders.purchaseConfirmationForCustomer')
             ->with([
                 'id'             => $this->transaction->id,
                 'totalAmount'    => $this->transaction->totalAmount,

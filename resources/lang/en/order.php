@@ -23,6 +23,10 @@ return [
         'create' => 'Show a order',
     ],
 
+    /** email subjects */
+    'confirmation' => 'Order Confirmation',
+    'new_purchase'  => 'A Product has been sold',
+
     'form_title'   => 'Add your amazing product',
     'id'           => 'ID',
     'images'       => 'Images',
