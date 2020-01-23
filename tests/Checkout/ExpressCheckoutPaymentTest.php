@@ -43,14 +43,12 @@ class ExpressCheckoutPaymentTestTest extends TestCase
     }
 
     /** @test */
-    public function the_payment_process_botton_to_go_to_mollies_will_be_shown(){
+    public function the_payment_process_button_to_redirect_to_mollies_will_be_shown(){
         Session::put('butik.cart', $this->cart->customer($this->createUserData()));
 
         $this->get(route('butik.checkout.express.payment'))
             ->assertOk()
             ->assertSee(route('butik.payment.process'));
-
-        // TODO: Get test in place to redirect from Mollie redirect, in case cart does not exist etc ...
     }
 
     /** @test */

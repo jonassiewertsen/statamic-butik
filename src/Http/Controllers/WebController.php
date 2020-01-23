@@ -6,6 +6,26 @@ use Illuminate\Routing\Controller as LaravelController;
 
 class WebController extends LaravelController
 {
+    protected function customerDataComplete() {
+
+        if (! session()->has('butik.cart')) {
+            return false;
+        }
+
+        $cart = session()->get('butik.cart');
+
+        $keys = collect(['name', 'mail', 'country', 'address1', 'city', 'zip']);
+
+        foreach ($keys as $key) {
+            // Return false in case one of the keys does not exist inside the session data
+            if (empty($cart->customer->$key)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     protected function addingProductRoutes($product): array {
         // Todo: This is working, but sucks. Do something about it.
         return [
