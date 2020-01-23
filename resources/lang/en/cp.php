@@ -10,7 +10,7 @@ return [
     | The following language lines are used for any related control panel naming
     |
     */
-
+    // TODO: Clean up the language files
     'base_price'       => 'Base Price',
     'description'      => 'Description',
     'images'           => 'Images',

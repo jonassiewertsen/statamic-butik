@@ -12,7 +12,7 @@ Route::prefix('butik/')->name('butik.')->namespace('Http\\Controllers\\CP\\')->g
     ]);
 
     Route::resource('orders', 'OrdersController')->only([
-       'index', 'store',
+       'index',
     ]);
 
     Route::prefix('/settings')->group(function() {

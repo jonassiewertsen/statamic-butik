@@ -119,7 +119,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
             // Orders
             $nav->create(__('statamic-butik::menu.cp.orders'))
                 ->section('Butik')
-                ->can(auth()->user()->can('view orders'))
+//                ->can(auth()->user()->can('view orders')) // TODO: Add permissions
                 ->route('butik.orders.index')
                 ->icon('drawer-file');
 
@@ -156,6 +156,11 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     protected function bootPermissions() {
         $this->app->booted(function () {
             Permission::group('butik', 'Statamic Butik', function () {
+                Permission::register('view orders', function ($permission) {
+                    $permission->children([
+                        Permission::make('update orders'),
+                    ]);
+                });
                 Permission::register('view products', function ($permission) {
                     $permission->children([
                         Permission::make('edit products')->children([

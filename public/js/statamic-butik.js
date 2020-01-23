@@ -226,7 +226,7 @@ module.exports = function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(3);
-module.exports = __webpack_require__(16);
+module.exports = __webpack_require__(19);
 
 
 /***/ }),
@@ -237,12 +237,15 @@ module.exports = __webpack_require__(16);
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_products_Listing__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_products_Listing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_products_Listing__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_taxes_Listing__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_taxes_Listing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_taxes_Listing__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_shippings_Listing__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_shippings_Listing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_shippings_Listing__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_fieldtypes_moneyFieldtype__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_fieldtypes_moneyFieldtype___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_fieldtypes_moneyFieldtype__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_shippings_Listing__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_shippings_Listing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_shippings_Listing__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_taxes_Listing__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_taxes_Listing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_taxes_Listing__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_orders_Listing__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_orders_Listing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_orders_Listing__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_fieldtypes_moneyFieldtype__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_fieldtypes_moneyFieldtype___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_fieldtypes_moneyFieldtype__);
+
 
 
 
@@ -252,11 +255,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Statamic.booting(function () {
     // Listings
     Statamic.$components.register('butik-product-list', __WEBPACK_IMPORTED_MODULE_0__components_products_Listing___default.a);
-    Statamic.$components.register('butik-tax-list', __WEBPACK_IMPORTED_MODULE_1__components_taxes_Listing___default.a);
-    Statamic.$components.register('butik-shipping-list', __WEBPACK_IMPORTED_MODULE_2__components_shippings_Listing___default.a);
+    Statamic.$components.register('butik-shipping-list', __WEBPACK_IMPORTED_MODULE_1__components_shippings_Listing___default.a);
+    Statamic.$components.register('butik-tax-list', __WEBPACK_IMPORTED_MODULE_2__components_taxes_Listing___default.a);
+    Statamic.$components.register('butik-order-list', __WEBPACK_IMPORTED_MODULE_3__components_orders_Listing___default.a);
 
     // Fieldtypes
-    Statamic.$components.register('money-fieldtype', __WEBPACK_IMPORTED_MODULE_3__components_fieldtypes_moneyFieldtype___default.a);
+    Statamic.$components.register('money-fieldtype', __WEBPACK_IMPORTED_MODULE_4__components_fieldtypes_moneyFieldtype___default.a);
 });
 
 /***/ }),
@@ -500,7 +504,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/js/components/taxes/Listing.vue"
+Component.options.__file = "resources/js/components/shippings/Listing.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -509,9 +513,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-5bb8a8b3", Component.options)
+    hotAPI.createRecord("data-v-169cd9c2", Component.options)
   } else {
-    hotAPI.reload("data-v-5bb8a8b3", Component.options)
+    hotAPI.reload("data-v-169cd9c2", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -652,7 +656,7 @@ var render = function() {
                                 attrs: {
                                   title: _vm.deletingModalTitle,
                                   bodyText: _vm.__(
-                                    "Are you sure you want to delete this tax? You will not be able to delete this shipping if used by any product."
+                                    "Are you sure you want to delete this shipping? You will not be able to delete this shipping if used by any product."
                                   ),
                                   buttonText: _vm.__("Delete"),
                                   danger: true
@@ -660,7 +664,7 @@ var render = function() {
                                 on: {
                                   confirm: function($event) {
                                     return _vm.deleteRow(
-                                      "/cp/butik/settings/taxes"
+                                      "/cp/butik/settings/shippings"
                                     )
                                   },
                                   cancel: _vm.cancelDeleteRow
@@ -689,7 +693,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-5bb8a8b3", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-169cd9c2", module.exports)
   }
 }
 
@@ -719,7 +723,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/js/components/shippings/Listing.vue"
+Component.options.__file = "resources/js/components/taxes/Listing.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -728,9 +732,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-169cd9c2", Component.options)
+    hotAPI.createRecord("data-v-5bb8a8b3", Component.options)
   } else {
-    hotAPI.reload("data-v-169cd9c2", Component.options)
+    hotAPI.reload("data-v-5bb8a8b3", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -871,7 +875,7 @@ var render = function() {
                                 attrs: {
                                   title: _vm.deletingModalTitle,
                                   bodyText: _vm.__(
-                                    "Are you sure you want to delete this shipping? You will not be able to delete this shipping if used by any product."
+                                    "Are you sure you want to delete this tax? You will not be able to delete this shipping if used by any product."
                                   ),
                                   buttonText: _vm.__("Delete"),
                                   danger: true
@@ -879,7 +883,7 @@ var render = function() {
                                 on: {
                                   confirm: function($event) {
                                     return _vm.deleteRow(
-                                      "/cp/butik/settings/shippings"
+                                      "/cp/butik/settings/taxes"
                                     )
                                   },
                                   cancel: _vm.cancelDeleteRow
@@ -908,33 +912,235 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-169cd9c2", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-5bb8a8b3", module.exports)
   }
 }
 
 /***/ }),
-/* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */,
-/* 21 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(22)
+var __vue_script__ = __webpack_require__(14)
 /* template */
-var __vue_template__ = __webpack_require__(23)
+var __vue_template__ = __webpack_require__(15)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/orders/Listing.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1a4cbf45", Component.options)
+  } else {
+    hotAPI.reload("data-v-1a4cbf45", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DeletesListingRow_js__ = __webpack_require__(1);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__DeletesListingRow_js__["a" /* default */]],
+
+    props: ['initial-rows', 'columns'],
+
+    data: function data() {
+        return {
+            rows: this.initialRows
+        };
+    }
+});
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("data-list", {
+    attrs: { columns: _vm.columns, rows: _vm.rows },
+    scopedSlots: _vm._u([
+      {
+        key: "default",
+        fn: function(ref) {
+          var rows = ref.filteredRows
+          return _c(
+            "div",
+            { staticClass: "card p-0" },
+            [
+              _c("data-list-table", {
+                attrs: { rows: rows },
+                scopedSlots: _vm._u(
+                  [
+                    {
+                      key: "cell-title",
+                      fn: function(ref) {
+                        var collection = ref.row
+                        return [
+                          _c("a", { attrs: { href: collection.edit_url } }, [
+                            _vm._v(_vm._s(collection.title))
+                          ])
+                        ]
+                      }
+                    },
+                    {
+                      key: "actions",
+                      fn: function(ref) {
+                        var collection = ref.row
+                        var index = ref.index
+                        return [
+                          _c(
+                            "dropdown-list",
+                            [
+                              _c("dropdown-item", {
+                                attrs: {
+                                  text: _vm.__("Edit"),
+                                  redirect: collection.edit_url
+                                }
+                              }),
+                              _vm._v(" "),
+                              collection.deleteable
+                                ? _c("dropdown-item", {
+                                    staticClass: "warning",
+                                    attrs: { text: _vm.__("Delete") },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.confirmDeleteRow(
+                                          collection.slug,
+                                          index
+                                        )
+                                      }
+                                    }
+                                  })
+                                : _vm._e()
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _vm.deletingRow !== false
+                            ? _c("confirmation-modal", {
+                                attrs: {
+                                  title: _vm.deletingModalTitle,
+                                  bodyText: _vm.__(
+                                    "Are you sure you want to delete this product?"
+                                  ),
+                                  buttonText: _vm.__("Delete"),
+                                  danger: true
+                                },
+                                on: {
+                                  confirm: function($event) {
+                                    return _vm.deleteRow("/cp/butik/products")
+                                  },
+                                  cancel: _vm.cancelDeleteRow
+                                }
+                              })
+                            : _vm._e()
+                        ]
+                      }
+                    }
+                  ],
+                  null,
+                  true
+                )
+              })
+            ],
+            1
+          )
+        }
+      }
+    ])
+  })
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1a4cbf45", module.exports)
+  }
+}
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(17)
+/* template */
+var __vue_template__ = __webpack_require__(18)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -973,7 +1179,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 22 */
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -996,7 +1202,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 23 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -1029,6 +1235,12 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-cc901e2e", module.exports)
   }
 }
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

@@ -14,70 +14,31 @@ use Statamic\Facades\Blueprint;
 
 class OrdersController extends CpController
 {
-//    public function index() {
-//        $shippings = Shipping::all()->filter(function ($collection) {
-//            return true;
-//            // TODO: Add permissions
-//            //return User::current()->can('view', $collection);
-//        })->map(function ($shipping) {
-//            return [
-//                'title'      => $shipping->title,
-//                'price'      => $shipping->price,
-//                'edit_url'   => $shipping->editUrl(),
-//                'id'         => $shipping->slug,
-//
-//                // TODO: Add permissions
-//                // 'deleteable' => User::current()->can('delete', $collection)
-//                'deleteable' => true,
-//            ];
-//        })->values();
-//
-//        return view('statamic-butik::cp.shippings.index', [
-//            'shippings' => $shippings,
-//            'columns' => [
-//                Column::make('title')->label(__('statamic-butik::shipping.singular')),
-//                Column::make('price')->label(__('statamic-butik::cp.price')),
-//            ],
-//        ]);
-//    }
-// TODO: Controller needed?
-//    public function store(Request $request)
-//    {
-//        $validatedData = $request->validate([
-//            'id'           => 'required|unique:orders,id',
-//            'products'     => 'required',
-//            'total_amount' => 'required|integer',
-//            'paid_at'      => 'required|date',
-//            'shipped_at'   => 'nullable|date',
-//        ]);
-//
-//        Order::create($validatedData);
-//    }
+    public function index() {
+        $this->authorize('index', Order::class);
 
-//    public function edit(Shipping $shipping) {
-//        $values = $shipping->toArray();
-//        $blueprint = new ShippingBlueprint();
-//        $fields = $blueprint()->fields()->addValues($values)->preProcess();
-//
-//        return view('statamic-butik::cp.shippings.edit', [
-//            'blueprint' => $blueprint()->toPublishArray(),
-//            'values'    => $fields->values(),
-//            'id'        => $shipping->slug,
-//            'meta'      => $fields->meta(),
-//        ]);
-//    }
-//
-//    public function update(Request $request, Shipping $shipping) {
-//        $blueprint = new ShippingBlueprint();
-//        $fields = $blueprint()->fields()->addValues($request->all());
-//        $fields->validate();
-//        $values = $fields->process()->values();
-//        $shipping->update($values->toArray());
-//    }
-//
-//    public function destroy(Shipping $shipping)
-//    {
-//        // TODO: Add Permissions
-//        $shipping->delete();
-//    }
+        $orders = Order::select('id', 'status', 'total_amount', 'method', 'customer')->get()->map(function ($order) {
+            return [
+                'id'           => $order->id,
+                'customer'     => json_decode($order->customer)->name,
+                'mail'         => json_decode($order->customer)->mail,
+                'status'       => $order->status,
+                'method'       => $order->method,
+                'total_amount' => $order->total_amount,
+                'deleteable' => false,
+            ];
+        })->values();
+
+        return view('statamic-butik::cp.orders.index', [
+            'orders' => $orders,
+            'columns' => [
+                Column::make('id')->label(__('statamic-butik::order.id')),
+                Column::make('status')->label(__('statamic-butik::order.status')),
+                Column::make('customer')->label(__('statamic-butik::order.customer')),
+                Column::make('mail')->label(__('statamic-butik::order.mail')),
+                Column::make('method')->label(__('statamic-butik::order.method')),
+                Column::make('total_amount')->label(__('statamic-butik::order.total_amount')),
+            ],
+        ]);
+    }
 }
