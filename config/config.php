@@ -60,7 +60,7 @@ return [
 
     'widgets' => [
         'orders' => [
-            'limit' => 15,
+            'limit' => 10,
         ]
     ],
 

@@ -15,7 +15,7 @@ class Orders extends Widget {
 
         $orders = Order::select('id', 'status', 'total_amount', 'method', 'customer', 'created_at')
             ->orderByDesc('created_at')
-            ->limit(config('statamic-butik.widgets.orders.limit', '15'))
+            ->limit(config('statamic-butik.widgets.orders.limit', '10'))
             ->get()
             ->map(function ($order) {
                 return [
