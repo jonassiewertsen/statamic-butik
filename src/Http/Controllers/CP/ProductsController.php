@@ -31,11 +31,7 @@ class ProductsController extends CpController
             'columns' => [
                 Column::make('title')->label(__('statamic-butik::product.form.title')),
                 Column::make('base_price')->label(__('statamic-butik::product.form.base_price')),
-                // TODO: Show Image !
-//                Column::make('images')->label(__('statamic-butik::product.form.images')),
                 Column::make('slug')->label(__('statamic-butik::product.form.slug')),
-                // TODO: Parse description into array
-//                Column::make('description')->label(__('statamic-butik::product.form.description')),
             ],
         ]);
     }
@@ -94,7 +90,6 @@ class ProductsController extends CpController
     {
         $this->authorize('delete', Product::class);
 
-        // TODO: Only deletable if ?
         $product->delete();
     }
 }
