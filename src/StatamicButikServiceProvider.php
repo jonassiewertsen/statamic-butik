@@ -69,7 +69,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
          $this->loadViewsFrom(__DIR__.'/../resources/views', 'statamic-butik');
          $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
-         $this->bootPolicies();
+//         $this->bootPolicies();
          $this->bootPermissions();
          $this->bootMiddleware();
          $this->createNavigation();
@@ -149,12 +149,12 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         });
     }
 
-    protected function bootPolicies()
-    {
-        foreach ($this->policies as $key => $value) {
-            Gate::policy($key, $value);
-        }
-    }
+//    protected function bootPolicies()
+//    {
+//        foreach ($this->policies as $key => $value) {
+//            Gate::policy($key, $value);
+//        }
+//    }
 
     protected function bootMiddleware() {
         $router = $this->app['router'];
