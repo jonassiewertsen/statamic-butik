@@ -7,7 +7,6 @@ mix.js('resources/js/app.js', 'public/js/statamic-butik.js')
         tailwindcss('tailwind.config.js')
     ]);
 
-// TODO: Add purge css for production
-// if (mix.inProduction()) {
-//     mix.purgeCss();
-// }
+if (mix.inProduction()) {
+    mix.purgeCss();
+}
