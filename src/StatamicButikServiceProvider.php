@@ -119,7 +119,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
             // Orders
             $nav->create(__('statamic-butik::menu.cp.orders'))
                 ->section('Butik')
-//                ->can(auth()->user()->can('view orders')) // TODO: Add permissions
+                ->can(auth()->user()->can('view orders'))
                 ->route('butik.orders.index')
                 ->icon('drawer-file');
 
