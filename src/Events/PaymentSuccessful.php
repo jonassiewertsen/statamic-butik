@@ -5,6 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Events;
 use Carbon\Carbon;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
+use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Transaction;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 
@@ -16,9 +17,12 @@ class PaymentSuccessful
 
     public function __construct($payment)
     {
+        $customer = (new Customer())->name($payment->customer->name)->mail($payment->customer->email);
+
         $this->transaction = (new Transaction())
             ->id($payment->id)
             ->method($payment->method)
+            ->customer($customer)
             ->products($this->fetchProducts($payment))
             ->totalAmount($payment->amount->value)
             ->createdAt(Carbon::parse($payment->createdAt))

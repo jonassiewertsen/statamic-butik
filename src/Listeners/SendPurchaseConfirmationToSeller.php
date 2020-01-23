@@ -15,7 +15,8 @@ class SendPurchaseConfirmationToSeller implements ShouldQueue
     public function handle($event)
     {
         try {
-            Mail::queue(new OrderConfirmation($event->transaction));
+            Mail::to(config('statamic-butik.mail_confirmations'))
+                ->queue(new OrderConfirmation($event->transaction));
         } catch(\Exception $e) {
             throw new OrderConfirmationToSellerNotSent();
         }

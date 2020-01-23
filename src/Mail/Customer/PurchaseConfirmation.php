@@ -2,7 +2,6 @@
 
 namespace Jonassiewertsen\StatamicButik\Mail\Customer;
 
-use Braintree\Collection;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -22,10 +21,7 @@ class PurchaseConfirmation extends Mailable implements ShouldQueue
 
     public function build()
     {
-        // TODO: test for to and from !
-        return $this->to('test@mail.com')
-            ->from('butik@butik.com')
-            ->view('statamic-butik::email.orders.purchaseConfirmationForCustomer')
+        return $this->view('statamic-butik::email.orders.purchaseConfirmationForCustomer')
             ->with([
                 'id'             => $this->transaction->id,
                 'totalAmount'    => $this->transaction->totalAmount,

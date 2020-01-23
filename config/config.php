@@ -23,6 +23,11 @@ return [
     'mail' => 'butik@shop.com',
 
     /**
+     * Who should receive mails for successful orders?
+     */
+    'mail_confirmations' => 'your_mail@butik.com',
+
+    /**
      * useful links here
      * 'link' => 'name',
      */

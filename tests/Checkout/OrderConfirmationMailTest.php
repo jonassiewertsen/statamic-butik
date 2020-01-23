@@ -35,6 +35,21 @@ class OrderConfirmationMailTest extends TestCase
     }
 
     /** @test */
+    public function a_purchase_confirmation_mail_will_be_addressed_correctly(){
+        $order = create(Order::class)->first();
+
+        $payment = new MolliePaymentSuccessful();
+        $payment->id = $order->id;
+
+        $this->mockMollie($payment);
+        $this->post(route('butik.payment.webhook.mollie'), ['id' => $payment->id]);
+
+        Mail::assertQueued(PurchaseConfirmation::class, function($mail) use ($payment) {
+            return $mail->hasTo($payment->customer->email);
+        });
+    }
+
+    /** @test */
     public function a_order_confirmation_mail_will_be_sent_to_the_seller() {
         $order = create(Order::class)->first();
 
@@ -46,6 +61,21 @@ class OrderConfirmationMailTest extends TestCase
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $payment->id]);
 
         Mail::assertQueued(OrderConfirmation::class);
+    }
+
+    /** @test */
+    public function a_order_confirmation_mail_will_be_addressed_to_the_seller() {
+        $order = create(Order::class)->first();
+
+        $payment = new MolliePaymentSuccessful();
+        $payment->id = $order->id;
+
+        $this->mockMollie($payment);
+        $this->post(route('butik.payment.webhook.mollie'), ['id' => $payment->id]);
+
+        Mail::assertQueued(OrderConfirmation::class, function($mail) {
+            return $mail->hasTo(config('statamic-butik.mail_confirmations'));
+        });
     }
 
     public function mockMollie($mock)
