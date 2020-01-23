@@ -15,6 +15,7 @@ return [
         'singular' => 'Order',
         'plural'   => 'Orders',
     ],
+    'successful' => 'Successful Orders',
     'description' => 'Nothing ordered yet? Don\'t worry, be happy and belive in your customers',
 
     'navigation' => [

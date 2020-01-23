@@ -22,8 +22,6 @@ return [
     'phone' => '+49 1294 238474934',
     'mail' => 'butik@shop.com',
 
-
-
     /**
      * useful links here
      * 'link' => 'name',
@@ -59,6 +57,12 @@ return [
      * Value in Minutes
      */
     'transaction_data_cache' => 2,
+
+    'widgets' => [
+        'orders' => [
+            'limit' => 15,
+        ]
+    ],
 
     /**
      * Define your own custom route name to view the Statamic Butik

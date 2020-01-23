@@ -29,6 +29,10 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         \Jonassiewertsen\StatamicButik\Http\Tags\Error::class,
     ];
 
+    protected $widgets = [
+        \Jonassiewertsen\StatamicButik\Widgets\Orders::class,
+    ];
+
     protected $fieldtypes = [
         \Jonassiewertsen\StatamicButik\Fieldtypes\Money::class,
     ];
