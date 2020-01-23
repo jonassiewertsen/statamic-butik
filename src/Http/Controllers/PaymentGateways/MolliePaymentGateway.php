@@ -4,6 +4,7 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Events\PaymentSubmitted;
 use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
@@ -13,33 +14,40 @@ use Mollie\Laravel\Facades\Mollie;
 
 class MolliePaymentGateway extends WebController implements PaymentGatewayInterface
 {
+    private function paymentInformation($cart, $mollieCustomer){
+        $product = $cart->products->first();
+
+        $payment = [
+            'description' => $product->title,
+            'customerId' => $mollieCustomer->id,
+            'metadata' => 'Express Checkout: '. $product->title,
+            'locale' => $this->getLocale(),
+            'redirectUrl' => 'https://statamic.test/shop',
+            'amount' => [
+                'currency' => config('statamic-butik.currency.isoCode'),
+                'value' => $this->convertAmount($product->totalPrice),
+            ],
+        ];
+
+        // Only adding the webhook when not in local environment
+        if (! App::environment(['local'])) {
+            array_push($payment, [
+                'webhookUrl' => route('butik.payment.webhook.mollie'),
+            ]);
+        }
+
+        return $payment;
+    }
+
     public function handle(Cart $cart) {
-        $customer = Mollie::api()->customers()->create([
+        $mollieCustomer = Mollie::api()->customers()->create([
             'name' => $cart->customer->name,
             'email' => $cart->customer->mail,
        ]);
 
-        $product = $cart->products->first();
-
-        $payment = Mollie::api()->payments()->create([
-             'description' => $product->title,
-             'customerId' => $customer->id,
-             'metadata' => 'Express Checkout: '. $product->title,
-             'locale' => $this->getLocale(),
-             // TODO: The verify csrf tooken needs to be disabled. Put into Documentation !!!
-             'webhookUrl' => route('butik.payment.webhook.mollie'),
-             'redirectUrl' => 'https://statamic.test/shop',
-
-             'amount' => [
-                 'currency' => config('statamic-butik.currency.isoCode'),
-                 // TODO: Refactor cart to return the total price
-                 'value' => $this->convertAmount($product->totalPrice),
-
-             ],
-         ]);
+        $payment = Mollie::api()->payments()->create($this->paymentInformation($cart, $mollieCustomer));
 
         $payment = Mollie::api()->payments()->get($payment->id);
-
         event(new PaymentSubmitted($payment, $cart));
 
         // redirect customer to Mollie checkout page
