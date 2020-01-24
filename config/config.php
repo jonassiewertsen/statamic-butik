@@ -4,8 +4,6 @@
  */
 return [
     // TODO: Remember To enable foreign key constraints
-    // TODO: Remember to disable CSRF in middleware
-    // https://laravel.com/docs/6.x/database
 
     /**
      * Put your shop information here. Those will fx be shown on the
@@ -57,11 +55,6 @@ return [
         'symbol'    => '€',
         'delimiter' => ',',
     ],
-
-    /**
-     * Value in Minutes
-     */
-    'transaction_data_cache' => 2,
 
     'widgets' => [
         'orders' => [

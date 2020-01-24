@@ -69,7 +69,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
          $this->loadViewsFrom(__DIR__.'/../resources/views', 'statamic-butik');
          $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
-//         $this->bootPolicies();
+//         $this->bootPolicies(); // TODO: Remove when working with Statamic beta 12
          $this->bootPermissions();
          $this->bootMiddleware();
          $this->createNavigation();
@@ -149,16 +149,17 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         });
     }
 
-//    protected function bootPolicies()
-//    {
-//        foreach ($this->policies as $key => $value) {
-//            Gate::policy($key, $value);
-//        }
-//    }
+    // TODO: Remove when working with Statamic beta 12
+    //    protected function bootPolicies()
+    //    {
+    //        foreach ($this->policies as $key => $value) {
+    //            Gate::policy($key, $value);
+    //        }
+    //    }
 
     protected function bootMiddleware() {
-        $router = $this->app['router'];
-        $router->pushMiddlewareToGroup('web', DeletingTransactionData::class);
+//        $router = $this->app['router']; // TODO: Remove later when sure that i am not using it.
+//        $router->pushMiddlewareToGroup('web', DeletingTransactionData::class);
     }
 
     protected function bootPermissions() {

@@ -17,7 +17,7 @@ class DeletingTransactionData
      */
     public function handle($request, Closure $next)
     {
-        // TODO: Please enable me again when the time comes.
+        // TODO: Please enable me again when the time comes or remove me completly
 //        if ($this->sessionExists() && $this->sessionExpired()) {
 //            session()->forget('butik.transaction');
 //        }
