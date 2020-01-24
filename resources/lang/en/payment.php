@@ -24,16 +24,17 @@ return [
 
     'successful'    => 'Payment Successful',
     'thank_you'     => 'Thank you for your trust',
-    'mail_sent'     => 'A confirmation mail has been sent to :mail',
+    'mail_sent'     => 'We will send a confirmation mail to :mail after confirming your payment.',
 
     'process_failed'    => 'Sorry! The payment could not be processed. Please try again.',
     'error_message'     => 'Error Message',
-
-    'order_id'  => 'Order ID',
-    'subtotal'  => 'Subtotal',
-    'shipping'  => 'Shipping',
+    'id'       => 'Order ID',
+    'status'   => 'Status',
+    'method'   => 'Method',
+    'subtotal' => 'Subtotal',
+    'shipping' => 'Shipping',
     'ship_to'  => 'Ship to',
-    'total'     => 'Total',
+    'total'    => 'Total',
 
     'to_payment' => 'To payment',
     'pay_now'    => 'Go to payment',

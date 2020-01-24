@@ -26,12 +26,12 @@
             </div>
 
             <div>
-                <span class="b-font-bold">{{ trans key="statamic-butik::payment.address_1" }}</span>
-                <span>{{ address_1 }}</div>
+                <span class="b-font-bold">{{ trans key="statamic-butik::payment.address1" }}</span>
+                <span>{{ address1 }}</div>
             {{if address_2 }}
             <div>
-                <span class="b-font-bold">{{ trans key="statamic-butik::payment.address_2" }}</span>
-                <span>{{ address_2 }}</span>
+                <span class="b-font-bold">{{ trans key="statamic-butik::payment.address2" }}</span>
+                <span>{{ address2 }}</span>
             </div>
             {{ /if }}
             <div>
@@ -51,12 +51,20 @@
         <div class="b-bordeer b-border b-border-gray-500 b-px-6 b-py-3 b-mt-8 b-rounded-md">
             <div>{{ trans key="statamic-butik::payment.mail_sent" mail="{ mail }" }}</div>
             <div class="b-my-2">
-                <span class="b-font-bold">{{ trans key="statamic-butik::payment.order_id" }}</span>
-                <span>1234002</span>
+                <span class="b-font-bold">{{ trans key="statamic-butik::payment.status" }}</span>
+                <span>{{ status }}</span>
+            </div>
+            <div class="b-my-2">
+                <span class="b-font-bold">{{ trans key="statamic-butik::payment.id" }}</span>
+                <span>{{ id }}</span>
+            </div>
+            <div class="b-my-2">
+                <span class="b-font-bold">{{ trans key="statamic-butik::payment.method" }}</span>
+                <span>{{ method }}</span>
             </div>
             <div>
                 <span class="b-font-bold">{{ trans key="statamic-butik::payment.total" }}</span>
-                <span>34238 {{ butik:currency_symbol }}</span>
+                <span>{{ butik:currency_symbol }} {{ total_amount }}</span>
             </div>
             <div class="b-font-bold b-mt-3">
                 {{ trans key="statamic-butik::payment.thank_you" }}
@@ -84,22 +92,8 @@
                 <hr class="b-border-white b-my-5">
 
                 <div class="b-flex b-my-3 b-justify-between b-max-w-sm b-mx-auto">
-                    <span>{{ trans key="statamic-butik::payment.subtotal" }}</span>
-                    <span>{{ butik:currency_symbol }} {{ base_price }}</span>
-                </div>
-
-                <div class="b-flex b-my-3 b-justify-between b-max-w-sm b-mx-auto">
-                    <span>{{ trans key="statamic-butik::payment.shipping" }}</span>
-                    <span>{{ butik:currency_symbol }} 5,00</span>
-                    <!-- Get the shipping amount -->
-                </div>
-
-                <hr class="b-border-white b-my-5">
-
-                <div class="b-flex b-my-3 b-justify-between b-max-w-sm b-mx-auto">
                     <span>{{ trans key="statamic-butik::payment.total" }}</span>
-                    <span class="b-font-black">{{ butik:currency_symbol }} 1402,00</span>
-                    <!-- TODO: Get the correct amount in here -->
+                    <span class="b-font-black">{{ butik:currency_symbol }} {{ total_amount }}</span>
                 </div>
 
             </section>

@@ -3,8 +3,10 @@
 namespace Tests\Shop;
 
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\URL;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Exceptions\TransactionSessionDataIncomplete;
+use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
@@ -44,8 +46,10 @@ class ExpressCheckoutReceiptTest extends TestCase
             ]));
     }
 
+    // TODO: Add a test that the correct redirect url will be past to the mollies redirect
+
     /** @test */
-    public function the_correct_template_and_layout_will_be_loaded_in_case_the_url_is_invalid()
+    public function the_invalid_receipt_layout_will_be_loaded_in_case_the_url_is_not_signed()
     {
         $route = route('butik.payment.receipt', ['id' => 'tr_dasd']);
 
@@ -54,82 +58,55 @@ class ExpressCheckoutReceiptTest extends TestCase
     }
 
     /** @test */
-    public function the_correct_template_and_layout_will_be_loaded_in_case_the_url_is_invalid()
+    public function the_receipt_layout_will_be_loaded_in_case_the_url_is_correclty_signed()
     {
-        $route = route('butik.payment.receipt', ['id' => 'tr_dasd']);
+        $route = URL::temporarySignedRoute('butik.payment.receipt', now()->addMinute(), ['id' => 'tr_dasd']);
 
         $this->assertStatamicLayoutIs('statamic-butik::web.layouts.express-checkout', $route);
-        $this->assertStatamicTemplateIs('statamic-butik::web.checkout.invalidReceipt', $route);
+        $this->assertStatamicTemplateIs('statamic-butik::web.checkout.receipt', $route);
     }
 
-    // TODO: Show Redceipt as an signed url
+    /** @test */
+    public function customer_data_will_be_displayed()
+    {
+        $this->withoutExceptionHandling();
+        $order = create(Order::class)->first();
+        $customer = json_decode($order->customer);
+        $route = URL::temporarySignedRoute('butik.payment.receipt', now()->addMinute(), ['order' => $order->id]);
 
-//    /** @test */
-//    public function it_can_be_visited_with_successful_transaction()
-//    {
-//        $this->get($this->product->expressReceiptUrl)->assertOk();
-//    }
-//
-//    /** @test */
-//    public function redirect_without_a_successful_transaction_in_the_session_()
-//    {
-//        Session::put(
-//            'butik.transaction', collect(
-//            [
-//                'success'         => false,
-//                'id'              => str_random(8),
-//                'type'            => 'sale',
-//                'currencyIsoCode' => 'EUR',
-//                'amount'          => 1233,
-//                'created_at'      => now(),
-//            ]));
-//        $this->get(create(Product::class)->first()->expressReceiptUrl)->assertRedirect();
-//    }
-//
-//    /** @test */
-//    public function redirect_without_a_existing_transaction_in_the_session()
-//    {
-//        Session::forget('butik.transaction');
-//        $this->get(create(Product::class)->first()->expressReceiptUrl)->assertRedirect();
-//    }
-//
-//    /** @test */
-//    public function incomplete_transaction_data_will_throw_an_exception()
-//    {
-//        $this->withoutExceptionHandling();
-//        $this->expectException(TransactionSessionDataIncomplete::class);
-//        Session::put('butik.transaction', [
-//            'success' => true,
-//            'created_at' => now(),
-//        ]);
-//
-//        $this->get($this->product->expressReceiptUrl);
-//    }
-//
-//    /** @test */
-//    public function middleware_will_delete_transaction_data_after_checkout()
-//    {
-//        $this->withoutExceptionHandling();
-//        Session::put('butik.cart', new Cart());
-//
-//        $this->get($this->product->expressReceiptUrl)
-//            ->assertSessionMissing('butik.cart');
-//    }
-//
-//    /** @test */
-//    public function customer_data_will_be_displayed()
-//    {
-//        $this->get(route('butik.checkout.express.receipt', $this->product))->assertSee(
-//                $this->customer['name'])->assertSee($this->customer['mail'])->assertSee(
-//                $this->customer['address_1'])->assertSee($this->customer['address_2'])->assertSee(
-//                $this->customer['city'])->assertSee($this->customer['zip']);
-//    }
-//
-//    /** @test */
-//    public function payment_data_will_be_displayed()
-//    {
-//        $this->get(route('butik.checkout.express.receipt', $this->product))
-//            ->assertSee($this->product->base_price);
-//        // ->assertSee($this->customer['order_id']);
-//    }
+        $this->get($route)->assertOk()
+            ->assertSee($customer->name)
+            ->assertSee($customer->mail)
+            ->assertSee($customer->address1)
+            ->assertSee($customer->zip)
+            ->assertSee($customer->city)
+            ->assertSee($customer->country);
+    }
+
+    /** @test */
+    public function payment_data_will_be_displayed()
+    {
+        $order = create(Order::class)->first();
+        $route = URL::temporarySignedRoute('butik.payment.receipt', now()->addMinute(), ['order' => $order->id]);
+
+        $this->get($route)->assertOk()
+            ->assertSee($order->id)
+            ->assertSee($order->status)
+            ->assertSee($order->method)
+            ->assertSee($order->total_amount);
+    }
+
+    /** @test */
+    public function product_data_will_be_displayed()
+    {
+        $this->withoutExceptionHandling();
+        $order = create(Order::class)->first();
+        $product = $order->products[0];
+
+        $route = URL::temporarySignedRoute('butik.payment.receipt', now()->addMinute(), ['order' => $order->id]);
+
+        $this->get($route)->assertOk()
+            ->assertSee($product['title'])
+            ->assertSee($product['images']);
+    }
 }

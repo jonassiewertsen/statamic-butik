@@ -75,7 +75,7 @@ return [
             ],
         ],
         'payment' => [
-            'receipt'   => 'payment/{id}/receipt',
+            'receipt'   => 'payment/{order}/receipt',
         ]
     ],
     'frontend' => [
@@ -97,8 +97,8 @@ return [
                 'express' => [
                     'delivery' => 'statamic-butik::web.checkout.express.delivery',
                     'payment'  => 'statamic-butik::web.checkout.express.payment',
-                    'receipt'  => 'statamic-butik::web.checkout.express.receipt',
                 ],
+                'receipt'         => 'statamic-butik::web.checkout.receipt',
                 'invalidReceipt'  => 'statamic-butik::web.checkout.invalidReceipt',
             ],
         ],

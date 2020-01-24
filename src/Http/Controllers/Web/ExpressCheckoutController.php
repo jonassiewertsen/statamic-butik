@@ -8,6 +8,7 @@ use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Exceptions\TransactionSessionDataIncomplete;
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
+use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 
 class ExpressCheckoutController extends WebController
@@ -63,30 +64,35 @@ class ExpressCheckoutController extends WebController
             ->with($viewData);
     }
 
-    public function receipt(Request $request, $id) {
-        if (!$request->hasValidSignature()) {
-            return (new \Statamic\View\View())
-                ->layout(config('statamic-butik.frontend.layout.checkout.express.receipt'))
-                ->template(config('statamic-butik.frontend.template.checkout.invalidReceipt'));
-        }
-        dd($id);
-        if (! $this->transactionSuccessful()) {
-            return redirect($product->expressDeliveryUrl);
-        }
+    public function receipt(Request $request, $order) {
+//        if (!$request->hasValidSignature()) {
+//            return (new \Statamic\View\View())
+//                ->layout(config('statamic-butik.frontend.layout.checkout.express.receipt'))
+//                ->template(config('statamic-butik.frontend.template.checkout.invalidReceipt'));
+//        }
 
-        if (! $this->transactionDataComplete()) {
-            throw new TransactionSessionDataIncomplete();
-        }
+        $order = Order::findOrFail($order);
+        $customer = json_decode($order->customer);
+        $product = $order->products[0];
 
-        $session = session()->get('butik.transaction')->toArray();
-        $viewData = array_merge($product->toArray(), $session['customer']);
-
-        // TODO: In theory another product slug could be called. The transaction itself would be correct, but
-        // displaying funny things. We don't want that. It's not urgent, but should be fixed.
         return (new \Statamic\View\View())
             ->layout(config('statamic-butik.frontend.layout.checkout.express.receipt'))
-            ->template(config('statamic-butik.frontend.template.checkout.express.receipt'))
-            ->with($viewData);
+            ->template(config('statamic-butik.frontend.template.checkout.receipt'))
+            ->with([
+               'name'         => $customer->name,
+               'mail'         => $customer->mail,
+               'address1'     => $customer->address1,
+               'address2'     => $customer->address2,
+               'zip'          => $customer->zip,
+               'city'         => $customer->city,
+               'country'      => $customer->country,
+               'id'           => $order->id,
+               'status'       => $order->status,
+               'method'       => $order->method,
+               'total_amount' => $order->total_amount,
+                'title'        => $product['title'],
+                'images'        => $product['images'],
+            ]);
     }
 
     private function transactionSuccessful() {
