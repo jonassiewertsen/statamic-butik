@@ -73,7 +73,7 @@ class ExpressCheckoutController extends WebController
 
         $order = Order::findOrFail($order);
         $customer = json_decode($order->customer);
-        $product = $order->products[0];
+//        $product = $order->products[0];
 
         return (new \Statamic\View\View())
             ->layout(config('statamic-butik.frontend.layout.checkout.express.receipt'))
@@ -90,8 +90,6 @@ class ExpressCheckoutController extends WebController
                'status'       => $order->status,
                'method'       => $order->method,
                'total_amount' => $order->total_amount,
-                'title'        => $product['title'],
-                'images'        => $product['images'],
             ]);
     }
 

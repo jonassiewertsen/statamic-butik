@@ -1,4 +1,3 @@
-<!-- TODO: Refactor -->
 <div class="b-px-24 b-max-w-sm b-mx-auto b-text-green-500">
     <svg class="b-fill-current b-mx-auto" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g id="Page-1" stroke="none" stroke-width="1" fill-rule="evenodd">
@@ -11,7 +10,7 @@
 
 <h1 class="b-block b-my-8 b-text-center b-font-bold b-text-xl">{{ trans key="statamic-butik::payment.successful" }}</h1>
 
-<div class="b-flex b-flex-col-reverse lg:b-flex-row b-px-5 lg:b-px-0  b-mb-20 b-mt-6">
+<div class="b-flex b-flex-col-reverse lg:b-flex-row b-px-5 b-justify-center lg:b-px-0 b-mb-20 b-mt-6">
     <div class="b-w-full lg:b-ml-5 lg:b-px-0 lg:b-w-1/2 xl:b-ml-0">
 
         <div class="b-bordeer b-border b-border-gray-500 b-px-6 b-py-3 b-mt-8 lg:b-mt-0 b-rounded-md">
@@ -77,28 +76,6 @@
 
     </div>
 
-
-    <div class="b-flex b-items-center lg:b-pl-10 b-w-full lg:b-w-1/2">
-        <div class="b-bg-gray-200 b-rounded b-py-6 lg:b-py-12">
-            <div class="b-flex b-justify-center b-mt-5">
-                {{ images limit="1" }}
-                <img class="b-w-2/5 b-rounded" src="/assets/{{ value }}">
-                {{ /images }}
-            </div>
-
-            <section class="b-px-10">
-                <h3 class="b-font-bold b-block b-mt-5 b-text-3xl b-text-center">{{ title }}</h3>
-
-                <hr class="b-border-white b-my-5">
-
-                <div class="b-flex b-my-3 b-justify-between b-max-w-sm b-mx-auto">
-                    <span>{{ trans key="statamic-butik::payment.total" }}</span>
-                    <span class="b-font-black">{{ butik:currency_symbol }} {{ total_amount }}</span>
-                </div>
-
-            </section>
-        </div>
-    </div>
 </div>
 
 

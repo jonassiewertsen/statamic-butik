@@ -95,18 +95,4 @@ class ExpressCheckoutReceiptTest extends TestCase
             ->assertSee($order->method)
             ->assertSee($order->total_amount);
     }
-
-    /** @test */
-    public function product_data_will_be_displayed()
-    {
-        $this->withoutExceptionHandling();
-        $order = create(Order::class)->first();
-        $product = $order->products[0];
-
-        $route = URL::temporarySignedRoute('butik.payment.receipt', now()->addMinute(), ['order' => $order->id]);
-
-        $this->get($route)->assertOk()
-            ->assertSee($product['title'])
-            ->assertSee($product['images']);
-    }
 }
