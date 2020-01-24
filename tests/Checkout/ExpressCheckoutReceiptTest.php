@@ -12,40 +12,6 @@ use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class ExpressCheckoutReceiptTest extends TestCase
 {
-    protected $product;
-    protected $customer;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->product = create(Product::class)->first();
-        // Setting up a dummy customer
-        $this->customer = [
-            'country'      => 'Germany',
-            'name'         => 'John Doe',
-            'mail'         => 'johndoe@mail.de',
-            'address_1'    => 'Main Street 2',
-            'address_2'    => '',
-            'city'         => 'Flensburg',
-            'state_region' => '',
-            'zip'          => '24579',
-            'phone'        => '013643-23837',
-        ];
-        Session::put('butik.customer', $this->customer);
-        // Setting up a dummy transaction
-        Session::put(
-            'butik.cart', collect(
-            [
-                'success'         => true,
-                'id'              => str_random(8),
-                'type'            => 'sale',
-                'currencyIsoCode' => 'EUR',
-                'amount'          => 1233,
-                'created_at'      => now(),
-                'customer'        => $this->customer,
-            ]));
-    }
-
     // TODO: Add a test that the correct redirect url will be past to the mollies redirect
 
     /** @test */
