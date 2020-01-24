@@ -33,9 +33,48 @@ class ExpressCheckoutReceiptTest extends TestCase
     }
 
     /** @test */
+    public function a_paid_payment_will_show_that_it_is_paid()
+    {
+        $order = create(Order::class, ['status' => 'paid'])->first();
+        $route = URL::temporarySignedRoute('butik.payment.receipt', now()->addMinute(), ['order' => $order->id]);
+
+        $this->get($route)->assertOk()
+            ->assertSee('Payment Successful');
+    }
+
+    /** @test */
+    public function a_canceled_payment_will_show_that_it_is_canceled()
+    {
+        $order = create(Order::class, ['status' => 'paid'])->first();
+        $route = URL::temporarySignedRoute('butik.payment.receipt', now()->addMinute(), ['order' => $order->id]);
+
+        $this->get($route)->assertOk()
+            ->assertSee('Payment Successful');
+    }
+
+    /** @test */
+    public function an_open_payment_will_show_that_its_open()
+    {
+        $order = create(Order::class, ['status' => 'open',])->first();
+        $route = URL::temporarySignedRoute('butik.payment.receipt', now()->addMinute(), ['order' => $order->id,]);
+
+        $this->get($route)->assertOk()
+            ->assertSee('Waiting for payment');
+    }
+
+    /** @test */
+    public function a_failed_payment_will_show_that_it_did_fail()
+    {
+        $order = create(Order::class, ['status' => 'failed'])->first();
+        $route = URL::temporarySignedRoute('butik.payment.receipt', now()->addMinute(), ['order' => $order->id]);
+
+        $this->get($route)->assertOk()
+            ->assertSee('Your Payment did fail');
+    }
+
+    /** @test */
     public function customer_data_will_be_displayed()
     {
-        $this->withoutExceptionHandling();
         $order = create(Order::class)->first();
         $customer = json_decode($order->customer);
         $route = URL::temporarySignedRoute('butik.payment.receipt', now()->addMinute(), ['order' => $order->id]);

@@ -22,7 +22,6 @@ return [
 
     'go_back'        => 'Back to our shop',
 
-    'successful'    => 'Payment Successful',
     'thank_you'     => 'Thank you for your trust',
     'mail_sent'     => 'We will send a confirmation mail to :mail after confirming your payment.',
 
@@ -37,6 +36,10 @@ return [
     'total'    => 'Total',
 
     'to_payment' => 'To payment',
+    'successful' => 'Payment Successful',
+    'canceled'   => 'You did cancel your payment. Don\'t hesitate to try again',
+    'waiting'    => 'Waiting for payment',
+    'failed'     => 'Your Payment did fail. please try again',
     'pay_now'    => 'Go to payment',
 
     'your_information' => 'Your Information',
