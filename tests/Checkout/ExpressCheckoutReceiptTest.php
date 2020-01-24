@@ -45,11 +45,21 @@ class ExpressCheckoutReceiptTest extends TestCase
     }
 
     /** @test */
-    public function the_correct_template_and_layout_will_be_loaded()
+    public function the_correct_template_and_layout_will_be_loaded_in_case_the_url_is_invalid()
     {
-        $route = $this->product->expressReceiptUrl;
+        $route = route('butik.payment.receipt', ['id' => 'tr_dasd']);
+
         $this->assertStatamicLayoutIs('statamic-butik::web.layouts.express-checkout', $route);
-        $this->assertStatamicTemplateIs('statamic-butik::web.checkout.express.receipt', $route);
+        $this->assertStatamicTemplateIs('statamic-butik::web.checkout.invalidReceipt', $route);
+    }
+
+    /** @test */
+    public function the_correct_template_and_layout_will_be_loaded_in_case_the_url_is_invalid()
+    {
+        $route = route('butik.payment.receipt', ['id' => 'tr_dasd']);
+
+        $this->assertStatamicLayoutIs('statamic-butik::web.layouts.express-checkout', $route);
+        $this->assertStatamicTemplateIs('statamic-butik::web.checkout.invalidReceipt', $route);
     }
 
     // TODO: Show Redceipt as an signed url
@@ -121,5 +131,5 @@ class ExpressCheckoutReceiptTest extends TestCase
 //        $this->get(route('butik.checkout.express.receipt', $this->product))
 //            ->assertSee($this->product->base_price);
 //        // ->assertSee($this->customer['order_id']);
-    }
+//    }
 }

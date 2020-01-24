@@ -72,9 +72,11 @@ return [
             'express' => [
                 'delivery' => 'express-checkout/delivery',
                 'payment'  => 'express-checkout/payment',
-                'receipt'  => 'express-checkout/receipt',
             ],
         ],
+        'payment' => [
+            'receipt'   => 'payment/{id}/receipt',
+        ]
     ],
     'frontend' => [
         'layout'   => [
@@ -97,6 +99,7 @@ return [
                     'payment'  => 'statamic-butik::web.checkout.express.payment',
                     'receipt'  => 'statamic-butik::web.checkout.express.receipt',
                 ],
+                'invalidReceipt'  => 'statamic-butik::web.checkout.invalidReceipt',
             ],
         ],
     ],

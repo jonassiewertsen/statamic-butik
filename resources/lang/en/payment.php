@@ -15,6 +15,11 @@ return [
     'delivery'       => 'Delivery',
     'review_payment' => 'Review & Payment',
     'receipt'        => 'Receipt',
+
+    'receipt_invalid'=> 'Invalid Receipt',
+    'link_invalid'   => 'This link is not valid anymore.',
+    'why_invalid'    => 'Our receipt links to your payment status will automatically get invalid after 10 minutes.',
+
     'go_back'        => 'Back to our shop',
 
     'successful'    => 'Payment Successful',

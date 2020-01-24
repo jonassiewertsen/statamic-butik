@@ -2,6 +2,7 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
@@ -62,7 +63,13 @@ class ExpressCheckoutController extends WebController
             ->with($viewData);
     }
 
-    public function receipt(Product $product) {
+    public function receipt(Request $request, $id) {
+        if (!$request->hasValidSignature()) {
+            return (new \Statamic\View\View())
+                ->layout(config('statamic-butik.frontend.layout.checkout.express.receipt'))
+                ->template(config('statamic-butik.frontend.template.checkout.invalidReceipt'));
+        }
+        dd($id);
         if (! $this->transactionSuccessful()) {
             return redirect($product->expressDeliveryUrl);
         }
