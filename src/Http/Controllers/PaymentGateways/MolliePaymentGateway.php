@@ -5,6 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\URL;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Events\PaymentSubmitted;
 use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
@@ -32,7 +33,8 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
         // Only adding the webhook when not in local environment
         if (! App::environment(['local'])) {
             array_push($payment, [
-                'webhookUrl' => route('butik.payment.webhook.mollie'),
+                // TODO: Signed url not working yet ...
+//                'webhookUrl' => URL::temporarySignedRoute('butik.payment.receipt', now()->addMinutes(10), ['order' => $order->id]);
             ]);
         }
 
