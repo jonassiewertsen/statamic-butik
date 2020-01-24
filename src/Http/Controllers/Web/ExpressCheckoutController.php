@@ -65,11 +65,11 @@ class ExpressCheckoutController extends WebController
     }
 
     public function receipt(Request $request, $order) {
-//        if (!$request->hasValidSignature()) {
-//            return (new \Statamic\View\View())
-//                ->layout(config('statamic-butik.frontend.layout.checkout.express.receipt'))
-//                ->template(config('statamic-butik.frontend.template.checkout.invalidReceipt'));
-//        }
+        if (!$request->hasValidSignature()) {
+            return (new \Statamic\View\View())
+                ->layout(config('statamic-butik.frontend.layout.checkout.express.receipt'))
+                ->template(config('statamic-butik.frontend.template.checkout.invalidReceipt'));
+        }
 
         $order = Order::findOrFail($order);
         $customer = json_decode($order->customer);
