@@ -26,13 +26,12 @@
     },
     "require": {
         "php": "^7.4",
-        "illuminate/support": "^6.0",
-        "mollie/laravel-mollie": "^2.8",
-        "statamic/cms": "v3.0.0-beta.11"
+        "mollie/laravel-mollie": "^2.8"
     },
     "require-dev": {
         "orchestra/testbench": "^4.0",
-        "phpunit/phpunit": "^8.5"
+        "phpunit/phpunit": "^8.5",
+        "statamic/cms": "3.0.*@beta"
     },
     "autoload": {
         "psr-4": {
@@ -50,7 +49,6 @@
     "scripts": {
         "test": "vendor/bin/phpunit",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
-
     },
     "config": {
         "sort-packages": true
@@ -68,5 +66,7 @@
                 "StatamicButik": "Jonassiewertsen\\StatamicButik\\StatamicButikFacade"
             }
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
