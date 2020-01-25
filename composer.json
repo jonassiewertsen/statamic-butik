@@ -26,12 +26,12 @@
     },
     "require": {
         "php": "^7.4",
+        "statamic/cms": "3.0.*@beta",
         "mollie/laravel-mollie": "^2.8"
     },
     "require-dev": {
         "orchestra/testbench": "^4.0",
-        "phpunit/phpunit": "^8.5",
-        "statamic/cms": "3.0.*@beta"
+        "phpunit/phpunit": "^8.5"
     },
     "autoload": {
         "psr-4": {
