@@ -17,4 +17,18 @@ class OrderTest extends TestCase
             '/'.config('statamic.cp.route')."/butik/orders/{$order->id}"
         );
     }
+
+    /** @test */
+    public function the_currency_will_be_converted_correctly()
+    {
+        $product = create(Order::class, ['total_amount' => 2.13 ]);
+        $this->assertEquals('2,13', $product->first()->total_amount);
+    }
+
+    /** @test */
+    public function the_currency_will_be_saved_without_decimals()
+    {
+        create(Order::class, ['total_amount' => '2.11' ]);
+        $this->assertEquals('211', Order::first()->getOriginal('total_amount'));
+    }
 }

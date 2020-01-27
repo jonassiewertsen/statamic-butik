@@ -27,4 +27,20 @@ class Order extends ButikModel
 
         return "/{$cp_route}/butik/orders/{$this->id}";
     }
+
+    /**
+     * Will return the base price for this item
+     */
+    public function getTotalAmountAttribute($value)
+    {
+        return $this->makeAmountHuman($value);
+    }
+
+    /**
+     * Mutating from a the correct amount into a integer without commas
+     */
+    public function setTotalAmountAttribute($value)
+    {
+        $this->attributes['total_amount'] = $this->makeAmountSaveable($value);
+    }
 }
