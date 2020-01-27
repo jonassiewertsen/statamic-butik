@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="vendor/autoload.php"
+         backupGlobals="false"
+         backupStaticAttributes="false"
+         colors="true"
+         verbose="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false">
+    <testsuites>
+        <testsuite name="Unit">
+            <directory suffix="Test.php">tests/Unit/</directory>
+        </testsuite>
+        <testsuite name="Checkout">
+            <directory suffix="Test.php">tests/Checkout/</directory>
+        </testsuite>
+        <testsuite name="CP">
+            <directory suffix="Test.php">tests/CP/</directory>
+        </testsuite>
+        <testsuite name="Products">
+            <directory suffix="Test.php">tests/Products/</directory>
+        </testsuite>
+        <testsuite name="Shop">
+            <directory suffix="Test.php">tests/Shop/</directory>
+        </testsuite>
+        <testsuite name="Permissions">
+            <directory suffix="Test.php">tests/Permissions/</directory>
+        </testsuite>
+        <testsuite name="Commands">
+            <directory suffix="Test.php">tests/Commands/</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src/</directory>
+        </whitelist>
+    </filter>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="APP_KEY" value="AckfSECXIvnK5r28GVIWUAxmbBSjTsmF"/>
+        <env name="BCRYPT_ROUNDS" value="4"/>
+        <env name="DB_CONNECTION" value="sqlite" />
+        <env name="DB_DATABASE" value=":memory:" />
+        <env name="CACHE_DRIVER" value="array"/>
+        <env name="SESSION_DRIVER" value="array"/>
+        <env name="QUEUE_DRIVER" value="sync"/>
+        <env name="MAIL_DRIVER" value="array"/>
+    </php>
+</phpunit>

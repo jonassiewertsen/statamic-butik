@@ -1,0 +1,41 @@
+<div class="card p-0 content">
+    <div class="p-3">
+        <h1>{{ __('butik::order.successful') }}</h1>
+    </div>
+
+    {{ if (orders | count) > 0  }}
+
+    <div class="flex flex-wrap">
+        <table class="w-full mb-3 text-center text-grey-80">
+            <thead class="border-b">
+                <tr class="font-bold">
+                    <td class="px-3">{{ __('butik::order.id') }}</td>
+                    <td class="px-3">{{ __('butik::order.customer') }}</td>
+                    <td class="px-3">{{ __('butik::order.mail') }}</td>
+                    <td class="px-3">{{ __('butik::order.total_amount') }}</td>
+                    <td class="px-3">{{ __('butik::order.created_at') }}</td>
+                </tr>
+            </thead>
+            <tbody>
+                {{ orders }}
+                    <tr class="{{ switch between='bg-white|bg-grey-20' }}">
+                        <td class="px-3 py-1">
+                            <a href="{{ show_url }}">{{ id }}</a>
+                        </td>
+                        <td class="px-3 py-1">{{ customer }}</td>
+                        <td class="px-3 py-1">{{ mail}}</td>
+                        <td class="px-3 py-1">{{ total_amount }}</td>
+                        <td class="px-3 py-1">{{ created_at }}</td>
+                    </tr>
+                {{ /orders }}
+            </tbody>
+        </table>
+    </div>
+
+    {{ else }}
+        <div class="p-3 -mt-5">
+            No Orders yet
+        </div>
+    {{ /if }}
+
+</div>
