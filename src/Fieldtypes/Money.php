@@ -20,6 +20,8 @@ class Money extends \Statamic\Fields\Fieldtype
     public function preProcess($data)
     {
         // In case another dec point then '.' has been just, we will reformat
+        $data = str_replace(',', '.', $data);
+
         return number_format(floatval($data), 2, '.', '');
     }
 }
