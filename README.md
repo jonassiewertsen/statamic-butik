@@ -7,6 +7,12 @@ The *Statamic Butik*  e-commerce solution will integrate nicely with your person
 
 You can use the light and simple design as shipped or customize it after your needs, to integrate it perfectly into your existing design.
 
+# License 
+
+Before going into productions with *Statamic Butik*, you need to buy a license at the Statamic Marketplace. 
+
+*Statamic Butik* is not free software. 
+
 # Beta
 
 Addons haven't been fully integrated into Statamic v3 at the moment. To try Statamic Butik, you need to force your application to use the beta 11 version of Statamic.
