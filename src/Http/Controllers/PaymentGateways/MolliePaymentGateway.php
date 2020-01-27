@@ -63,6 +63,9 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
     }
 
     private function convertAmount($amount) {
+        // In case the delimiter is a ',' we will swap it to '.'
+        $amount = str_replace(',', '.', $amount);
+
         return number_format(floatval($amount), 2, '.', '');
     }
 
