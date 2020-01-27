@@ -15,17 +15,6 @@ Before going into productions with *Statamic Butik*, you need to buy a license a
 
 # Beta
 
-Addons haven't been fully integrated into Statamic v3 at the moment. To try Statamic Butik, you need to force your application to use the beta 11 version of Statamic.
-You need to change your composer file like following.
-```
-"require": {
-    ...
-    "statamic/cms": "v3.0.0-beta.11"
-}
-```
-
-Now run `composer update`.
-
 "Butik" is an addon for Statamic v3, which is in beta right now. Until Statamic v3 is in beta, you **should be careful to use Butik in production. There can be breaking changes!**
 
 ## Stability
