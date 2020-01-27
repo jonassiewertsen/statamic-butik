@@ -17,7 +17,7 @@
     <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
             <td valign="top" width="33%" style="text-align: right; padding-right: 12px; font-weight: 600;">
-                {{ __('butik::general.id') }} ID
+                {{ __('butik::order.singular') }} ID
             </td>
             <td valign="top" width="67%" style="text-align: left;">
                 {{ $id }}

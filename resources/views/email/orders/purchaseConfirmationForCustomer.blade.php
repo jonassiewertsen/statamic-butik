@@ -6,7 +6,7 @@
 @section('content')
 
     <div style="text-align: center; padding-right: 12px; padding-top: 20px; font-weight: 600;">
-        {{ __('butik.product.plural') }}
+        {{ __('butik::product.plural') }}
     </div>
     <div class="text" style="padding: 0 3em; margin-bottom: 60px; text-align: center;">
         @foreach ($products as $product)
@@ -44,7 +44,7 @@
 
         <tr>
             <td valign="top" width="33%" style="text-align: right; padding-right: 12px; font-weight: 600;">
-                {{ __('butik::prodcut.ordered_at') }}
+                {{ __('butik::product.ordered_at') }}
             </td>
             <td valign="top" width="67%" style="text-align: left;">
                 {{ $paidAt ?? '' }}
