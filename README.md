@@ -102,3 +102,8 @@ All payments will be handled by mollie.com and do offer
 
 Mollies payment gateway does work with webhooks, which does provide security and a safe way to update a payment status. Even if the customer will close his tab right after the payment, he will get notified. 
 Even if your website went down for many hours, all payments would be updated afterwards. 
+
+## Links
+
+- [Github issue tracking](https://github.com/jonassiewertsen/statamic-butik)
+- [Share your ideas & wishes with me](https://feedback.userreport.com/81c07a00-5ad7-4f63-b28d-503c3a76bfdc/)
