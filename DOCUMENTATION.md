@@ -118,3 +118,8 @@ Make a copy of the en folder, rename it into your prefered language and change t
 
 Make sure NOT to delete the `en` directory. It is the fallback language and should not be deleted.
 
+## Version controll your Database?
+
+No Problem with SQLite! 
+
+Go into your `database` directory and delete the .gitignore file in there. That's it. Git will track those changes now. 
