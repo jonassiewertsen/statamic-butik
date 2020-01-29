@@ -80,28 +80,28 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
             // Views
             $this->publishes([
-                __DIR__.'/../resources/views/email' => resource_path('views/vendor/jonassiewertsen/statamic-butik/emails'),
+                __DIR__.'/../resources/views/email' => resource_path('views/vendor/statamic-butik/emails'),
             ], 'views');
             $this->publishes([
-                __DIR__.'/../resources/views/web' => resource_path('views/vendor/jonassiewertsen/statamic-butik/web'),
+                __DIR__.'/../resources/views/web' => resource_path('views/vendor/statamic-butik/web'),
             ], 'views');
             $this->publishes([
-                __DIR__.'/../resources/views/widgets' => resource_path('views/vendor/jonassiewertsen/statamic-butik/widgets'),
+                __DIR__.'/../resources/views/widgets' => resource_path('views/vendor/statamic-butik/widgets'),
             ], 'views');
 
             // Images
             $this->publishes([
-                __DIR__.'/../public/images' => public_path('vendor/jonassiewertsen/statamic-butik/images'),
+                __DIR__.'/../public/images' => public_path('vendor/statamic-butik/images'),
             ], 'images');
 
             // Resources (CSS)
             $this->publishes([
-                __DIR__.'/../public/css' => public_path('vendor/jonassiewertsen/statamic-butik/css/'),
+                __DIR__.'/../public/css' => public_path('vendor/statamic-butik/css/'),
             ], 'resources');
 
             // Lang
             $this->publishes([
-                __DIR__.'/../resources/lang' => resource_path('lang/vendor/jonassiewertsen/statamic-butik'),
+                __DIR__.'/../resources/lang' => resource_path('lang/vendor/statamic-butik'),
             ], 'lang');
         }
     }
