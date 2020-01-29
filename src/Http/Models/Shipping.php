@@ -40,7 +40,7 @@ class Shipping extends ButikModel
      */
     public function getPriceWithCurrencySymbolAttribute($value)
     {
-        return config('butik.currency.symbol').' '.$this->price;
+        return config('butik.currency_symbol').' '.$this->price;
     }
 
     public function products() {

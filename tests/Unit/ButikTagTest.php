@@ -69,7 +69,7 @@ class ButikTagTest extends TestCase
 
         $this->assertEquals(
             $this->butik->currencySymbol(),
-            config('butik.currency.symbol')
+            config('butik.currency_symbol')
         );
     }
 
@@ -87,7 +87,7 @@ class ButikTagTest extends TestCase
     {
         $this->assertEquals(
             $this->butik->overview(),
-            config('butik.uri.shop')
+            config('butik.route_shop-prefix')
         );
     }
 }

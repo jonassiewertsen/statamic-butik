@@ -74,7 +74,7 @@ class OrderConfirmationMailTest extends TestCase
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $payment->id]);
 
         Mail::assertQueued(OrderConfirmation::class, function($mail) {
-            return $mail->hasTo(config('butik.mail_confirmations'));
+            return $mail->hasTo(config('butik.order-confirmations'));
         });
     }
 

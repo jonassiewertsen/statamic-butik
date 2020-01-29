@@ -109,7 +109,7 @@ class Product extends ButikModel
      */
     public function getBasePriceWithCurrencySymbolAttribute($value)
     {
-        return config('butik.currency.symbol').' '.$this->base_price;
+        return config('butik.currency_symbol').' '.$this->base_price;
     }
 
     /**
@@ -127,6 +127,6 @@ class Product extends ButikModel
      * The route to the base shop
      */
     private function shopRoute() {
-        return config('butik.uri.shop');
+        return config('butik.route_shop-prefix');
     }
 }

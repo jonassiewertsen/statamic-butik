@@ -109,7 +109,7 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
             'locale' => $this->getLocale(),
             'redirectUrl' =>  URL::temporarySignedRoute('butik.payment.receipt', now()->addMinutes(5), ['order' => $orderId]),
             'amount' => [
-                'currency' => config('butik.currency.isoCode'),
+                'currency' => config('butik.currency_isoCode'),
                 'value' => $this->convertAmount($product->totalPrice),
             ],
         ];

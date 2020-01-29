@@ -8,7 +8,7 @@ class Money extends \Statamic\Fields\Fieldtype
 
     public function preload() {
         return [
-            'currencySymbol' => config('butik.currency.symbol', ''),
+            'currencySymbol' => config('butik.currency_symbol', ''),
         ];
     }
 

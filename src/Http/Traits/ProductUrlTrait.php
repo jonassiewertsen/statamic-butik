@@ -26,7 +26,7 @@ trait ProductUrlTrait {
      */
     public function getExpressDeliveryUrlAttribute()
     {
-        $checkout = config('butik.uri.checkout.express.delivery');
+        $checkout = config('butik.route_express-checkout-delivery');
 
         return "{$this->shopRoute()}/{$checkout}/{$this->slug}";
     }

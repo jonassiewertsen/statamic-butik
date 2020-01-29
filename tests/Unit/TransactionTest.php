@@ -19,11 +19,11 @@ class TransactionTest extends TestCase
     /** @test */
     public function the_currency_will_be_set_automatically(){
         $this->assertEquals(
-            config('butik.currency.isoCode'),
+            config('butik.currency_isoCode'),
             $this->transaction->currencyIsoCode);
 
         $this->assertEquals(
-            config('butik.currency.symbol'),
+            config('butik.currency_symbol'),
             $this->transaction->currencySymbol);
     }
 

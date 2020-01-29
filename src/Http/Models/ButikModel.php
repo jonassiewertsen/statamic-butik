@@ -10,7 +10,7 @@ abstract class ButikModel extends Model {
     {
         $value = floatval($value) / 100;
 
-        $delimiter = config('butik.currency.delimiter');
+        $delimiter = config('butik.currency_delimiter');
         return number_format($value, 2, $delimiter, '');
     }
 

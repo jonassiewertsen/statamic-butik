@@ -9,8 +9,8 @@ class ShopController extends WebController
 {
     public function index() {
         return (new \Statamic\View\View())
-            ->layout(config('butik.layout.product-overview'))
-            ->template(config('butik.template.product-overview'))
+            ->layout(config('butik.layout_product-overview'))
+            ->template(config('butik.template_product-overview'))
             ->with(['title' => 'Overview']);
     }
 
@@ -23,8 +23,8 @@ class ShopController extends WebController
         $product = $this->addingProductRoutes($product);
 
         return (new \Statamic\View\View())
-            ->layout(config('butik.layout.product-show'))
-            ->template(config('butik.template.product-show'))
+            ->layout(config('butik.layout_product-show'))
+            ->template(config('butik.template_product-show'))
             ->with($product);
     }
 }

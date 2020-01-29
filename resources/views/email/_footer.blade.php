@@ -24,14 +24,14 @@
                             </tr>
                         </table>
                     </td>
-                    @if (count(config('butik.useful_links')) > 0)
+                    @if (count(config('butik.useful-links')) > 0)
                         <td valign="top" width="50%" style="padding-top: 20px;">
                             <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                                 <tr>
                                     <td style="text-align: left; padding-left: 10px;">
                                         <h3 class="heading">Useful Links</h3>
                                         <ul>
-                                            @foreach(config('butik.useful_links') as $link => $name)
+                                            @foreach(config('butik.useful-links') as $link => $name)
                                                 <li><a target="_blank" href="{{ $link }}">{{ $name }}</a></li>
                                             @endforeach
                                         </ul>

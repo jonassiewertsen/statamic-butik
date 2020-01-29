@@ -20,8 +20,8 @@ class ExpressCheckoutController extends WebController
         }
 
         return (new \Statamic\View\View())
-            ->layout(config('butik.layout.express-checkout-delivery'))
-            ->template(config('butik.template.express-checkout-delivery'))
+            ->layout(config('butik.layout_express-checkout-delivery'))
+            ->template(config('butik.template_express-checkout-delivery'))
             ->with($viewData ?? $product->toArray());
     }
 
@@ -48,8 +48,8 @@ class ExpressCheckoutController extends WebController
         );
 
         return (new \Statamic\View\View())
-            ->layout(config('butik.layout.express-checkout-payment'))
-            ->template(config('butik.template.express-checkout-payment'))
+            ->layout(config('butik.layout_express-checkout-payment'))
+            ->template(config('butik.template_express-checkout-payment'))
             ->with($viewData);
     }
 
@@ -71,8 +71,8 @@ class ExpressCheckoutController extends WebController
         }
 
         return (new \Statamic\View\View())
-            ->layout(config('butik.layout.checkout-receipt'))
-            ->template(config('butik.template.checkout-receipt'))
+            ->layout(config('butik.layout_checkout-receipt'))
+            ->template(config('butik.template_checkout-receipt'))
             ->with(
                 [
                     'name'         => $customer->name,
@@ -132,7 +132,7 @@ class ExpressCheckoutController extends WebController
 
     private function showInvalidReceipt() {
         return (new \Statamic\View\View())
-            ->layout(config('butik.layout.checkout-receipt'))
-            ->template(config('butik.template.checkout-receipt-invalid'));
+            ->layout(config('butik.layout_checkout-receipt'))
+            ->template(config('butik.template_checkout-receipt-invalid'));
     }
 }

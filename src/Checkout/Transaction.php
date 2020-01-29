@@ -20,8 +20,8 @@ class Transaction {
     public Carbon     $paidAt;
 
     public function __construct(){
-        $this->currencyIsoCode  = config('butik.currency.isoCode', '');
-        $this->currencySymbol   = config('butik.currency.symbol', '');
+        $this->currencyIsoCode  = config('butik.currency_isoCode', '');
+        $this->currencySymbol   = config('butik.currency_symbol', '');
     }
 
     public function id(string $value): self {

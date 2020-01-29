@@ -89,7 +89,7 @@ class ProductTest extends TestCase
     {
         $product = create(Product::class)->first();
 
-        $uri_prefix = config('butik.uri.prefix');
+        $uri_prefix = config('butik.route_shop-prefix');
         $this->assertEquals(
             "/shop/{$product->slug}",
             $product->showUrl
@@ -101,7 +101,7 @@ class ProductTest extends TestCase
     {
         $product = create(Product::class)->first();
 
-        $uri_prefix = config('butik.uri.prefix');
+        $uri_prefix = config('butik.route_shop-prefix');
         $this->assertEquals(
             "/shop/express-checkout/delivery/{$product->slug}",
             $product->expressDeliveryUrl

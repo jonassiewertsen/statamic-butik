@@ -19,7 +19,7 @@
             </tr>
             <tr>
                 <th class="pl-2 py-1 w-1/4">Total Amount</th>
-                <td>{{ config('butik.currency.symbol', '') }} {{ $order->total_amount }}</td>
+                <td>{{ config('butik.currency_symbol', '') }} {{ $order->total_amount }}</td>
             </tr>
             @if ($order->shipped_at)
                 <tr>

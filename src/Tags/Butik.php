@@ -41,7 +41,7 @@ class Butik extends StatamicTags
 
     public function currencySymbol()
     {
-        return config('butik.currency.symbol');
+        return config('butik.currency_symbol');
     }
 
     public function country()
@@ -51,6 +51,6 @@ class Butik extends StatamicTags
 
     public function overview()
     {
-        return config('butik.uri.shop');
+        return config('butik.route_shop-prefix');
     }
 }
