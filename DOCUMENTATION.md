@@ -39,7 +39,7 @@ Will follow soon
 
 Most of the steps have been taken care of by the installer. Those are the last modifications needed. 
 
-Open the statamic-butik.php config file `config/statamic-butik.php`.
+Open the statamic-butik.php config file `config/butik.php`.
 
 ### Shop Information
 
@@ -74,13 +74,13 @@ Let's say you want to swap the layout for the product overview with your own lay
 
 ```
 // before
-'product-overview'          => 'butik::web.layouts.shop',
+'layout_product-overview' => 'butik::web.layouts.shop',
 
 // after
-'product-overview'          => 'layouts.my-layout',
+'layout_product-overview' => 'layouts.my-layout',
 ```
 
-The `butik::` prefix will ask Statamic, to look into the vendor files. If wanted, you can make some changes to the existing files inside `resources/views/vendor/jonassiewertsen/statamic-butik/`. 
+The `butik::` prefix will ask Statamic, to look into the vendor files. If wanted, you can make some changes to the existing files inside `resources/views/vendor/statamic-butik/`. 
 If you want to use your own files, remove the prefix to start inside the resources/views directory.
 
 ### Templates
@@ -119,7 +119,7 @@ MAIL_PASSWORD=your_password
 
 ## Translation
 
-To add another language open the lang directory `resources/lang/vendor/jonassiewertsen/statamic-butik/`
+To add another language open the lang directory `resources/lang/vendor/statamic-butik/`
 
 Make a copy of the en folder, rename it into your prefered language and change the translations in your newly created folder.
 
