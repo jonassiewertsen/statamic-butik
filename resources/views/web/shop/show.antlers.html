@@ -21,15 +21,15 @@
             </h1>
         {{ /if }}
 
-        <div class="b-text-gray-500 b-text-sm b-mt-2">{{ base_price }} {{ butik:currency_symbol }} {{ trans key="butik::product.base_price }}</div>
-        <div class="b-text-gray-500 b-text-sm">{{ shipping_amount }} {{ butik:currency_symbol }} {{ trans key="butik::product.shipping }}</div>
-        <div class="b-text-gray-700 b-text-3xl b-mt-2">{{ total_price }} {{ butik:currency_symbol }} {{ trans key="butik::product.total }}</div>
+        <div class="b-text-gray-500 b-text-sm b-mt-2">{{ base_price }} {{ butik:currency_symbol }} {{ trans key="butik::product.base_price" }}</div>
+        <div class="b-text-gray-500 b-text-sm">{{ shipping_amount }} {{ butik:currency_symbol }} {{ trans key="butik::general.shipping" }}</div>
+        <div class="b-text-gray-700 b-text-3xl b-mt-2">{{ total_price }} {{ butik:currency_symbol }} {{ trans key="butik::product.total" }}</div>
 
         {{ if stock_unlimited || stock  > 0 }}
             <a class="b-bg-gray-900 b-block b-mt-5 b-py-2 b-rounded b-text-center b-text-white b-text-xl hover:b-bg-gray-800"
                href="{{ express_delivery_url }}"
             >
-                {{ trans key="butik::product.express_checkout }}
+                {{ trans key="butik::payment.express_checkout" }}
             </a>
         {{ /if }}
 
