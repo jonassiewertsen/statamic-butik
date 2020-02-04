@@ -37,7 +37,7 @@
                         :bodyText="__('Are you sure you want to delete this product?')"
                         :buttonText="__('Delete')"
                         :danger="true"
-                        @confirm="deleteRow('/cp/butik/products')"
+                        @confirm="deleteRow('/butik/products')"
                         @cancel="cancelDeleteRow"
                     >
                     </confirmation-modal>

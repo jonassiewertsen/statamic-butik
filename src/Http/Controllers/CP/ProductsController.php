@@ -24,6 +24,7 @@ class ProductsController extends CpController
                 'images'          => $product->images[0] ?? null,
                 'description'     => $product->description,
                 'base_price'      => $product->base_price_with_currency_symbol,
+                'cp_route'        => config('statamic.cp.route', 'cp'),
                 'edit_url'        => $product->editUrl,
                 'deleteable'      => auth()->user()->can('delete', $product),
             ];
