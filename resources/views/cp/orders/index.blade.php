@@ -18,7 +18,7 @@
     @else
 
         <div class="card">
-            {{ __('butik::general.id') }}
+            {{ __('butik::order.description') }}
         </div>
 
     @endunless

@@ -22,7 +22,7 @@ return [
     'method'       => 'Method',
     'created_at'   => 'Order Date',
     'successful'   => 'Successful Orders',
-    'description'  => 'Nothing ordered yet? Don\'t worry, be happy and belive in your customers',
+    'description'  => 'Nothing ordered yet. Don\'t worry, be happy and belive in your customers.',
 
     /** email subjects */
     'confirmation' => 'Order Confirmation',
