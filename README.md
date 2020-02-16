@@ -92,7 +92,7 @@ All payments will be handled by mollie.com and do offer
 * American Express
 * nand many more ...
 
-**No monthly fees to use mollies.com.** You will be charged per transaction.
+**No monthly fees to use mollie.com.** You will be charged per transaction.
 
-Mollies payment gateway does work with webhooks, which does provide security and a safe way to update a payment status. Even if the customer will close his tab right after the payment, he will get notified. 
+Mollie payment gateway does work with webhooks, which does provide security and a safe way to update a payment status. Even if the customer will close his tab right after the payment, he will get notified. 
 Even if your website went down for many hours, all payments would be updated afterwards. 
