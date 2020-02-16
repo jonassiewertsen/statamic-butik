@@ -23,7 +23,7 @@
 
         @include('statamic::partials.create-first', [
             'resource' => __('butik::product.singular'),
-            'description' => __('butik::product.description'),
+            'description' => __('butik::product.create_description'),
             'svg' => 'empty/collection',
             'route' => cp_route('butik.products.create'),
              'can' => auth()->user()->can('create', 'Jonassiewertsen\StatamicButik\Http\Models\Product')
