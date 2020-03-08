@@ -27,4 +27,14 @@ class Tax extends ButikModel
     {
         return cp_route('butik.taxes.edit', $this);
     }
+
+    public function getPercentageAttribute($value)
+    {
+        return $this->makeAmountHuman($value);
+    }
+
+    public function setPercentageAttribute($value)
+    {
+        $this->attributes['percentage'] = $this->makeAmountSaveable($value);
+    }
 }

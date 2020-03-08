@@ -37,6 +37,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
     protected $fieldtypes = [
         \Jonassiewertsen\StatamicButik\Fieldtypes\Money::class,
+        \Jonassiewertsen\StatamicButik\Fieldtypes\Tax::class,
     ];
 
     protected $listen = [

@@ -24,10 +24,10 @@ class TaxBlueprint
                         [
                             'handle' => 'percentage',
                             'field'  => [
-                                'type'         => 'integer',
+                                'type'         => 'tax',
                                 'display'      => __('butik::general.percentage'),
                                 'width'         => '33',
-                                'validate'      => 'required|integer|min:0|max:100',
+                                'validate'      => 'required|min:0|max:100',
                             ],
                         ],
                     ],

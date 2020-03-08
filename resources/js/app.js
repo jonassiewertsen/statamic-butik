@@ -4,6 +4,7 @@ import TaxesListing from './components/taxes/Listing';
 import OrdersListing from './components/orders/Listing';
 
 import MoneyFieldtype from './components/fieldtypes/moneyFieldtype';
+import TaxFieldtype from './components/fieldtypes/taxFieldtype';
 
 Statamic.booting(() => {
     // Listings
@@ -14,4 +15,5 @@ Statamic.booting(() => {
 
     // Fieldtypes
     Statamic.$components.register('money-fieldtype', MoneyFieldtype);
+    Statamic.$components.register('tax-fieldtype', TaxFieldtype);
 });
