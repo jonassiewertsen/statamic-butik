@@ -31,10 +31,9 @@ class Tax extends ButikModel
     public function getPercentageAttribute($value)
     {
         // A Tax value without decimals, will be returned as integer
-        if ($value > 100) {
+        if ($value % 100 === 0) {
             return $value / 100;
         }
-
         return $this->makeAmountHuman($value);
     }
 
