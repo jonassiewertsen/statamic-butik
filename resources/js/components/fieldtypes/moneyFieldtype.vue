@@ -1,6 +1,6 @@
 <template>
     <div>
-        <text-input type="number" :prepend="currencySymbol" min="0" placeholder="0.00" :value="value" @input="update" />
+        <text-input type="number" :prepend="currencySymbol" min="0" step="0.01" placeholder="0.00" :value="value" @input="update" />
     </div>
 </template>
 
