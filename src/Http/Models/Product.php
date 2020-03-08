@@ -94,7 +94,9 @@ class Product extends ButikModel
     }
 
     public function getTaxAmountAttribute() {
-        $divisor            = $this->tax->percentage + 100;
+        $tax = $data = str_replace(',', '.', $this->tax->percentage);
+
+        $divisor            = $tax + 100;
         $base_price         = $this->getOriginal('base_price');
         $shipping_amount    = $this->shipping->getOriginal('price');
         $total_amount       = $base_price + $shipping_amount;
