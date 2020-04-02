@@ -6,7 +6,8 @@
 |--------------------------------------------------------------------------
 */
 
-Route::prefix('butik/')->name('butik.')->namespace('Http\\Controllers\\CP\\')->group(function() {
+// TODO: Choose a better namespace, when addon testing has been streamlined
+Route::prefix('butik/')->name('butik.')->namespace('\\Jonassiewertsen\\StatamicButik\\Http\\Controllers\\CP\\')->group(function() {
 
     Route::resource('products', 'ProductsController')->only([
        'index', 'create', 'store', 'edit',  'update', 'destroy',

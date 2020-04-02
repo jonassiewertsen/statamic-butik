@@ -10,7 +10,7 @@ use Jonassiewertsen\StatamicButik\Policies\ProductPolicy;
 use Jonassiewertsen\StatamicButik\Policies\ShippingPolicy;
 use Jonassiewertsen\StatamicButik\Policies\TaxPolicy;
 use Mollie\Laravel\MollieServiceProvider;
-use Statamic\Facades\Nav;
+use Statamic\Facades\CP\Nav;
 use Statamic\Facades\Permission;
 use Statamic\Providers\AddonServiceProvider;
 use Statamic\Tags\Errors;

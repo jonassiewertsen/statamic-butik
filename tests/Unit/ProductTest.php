@@ -51,7 +51,7 @@ class ProductTest extends TestCase
             $product->total_price
         );
     }
-    
+
     /** @test */
     public function the_currency_will_be_converted_correctly()
     {

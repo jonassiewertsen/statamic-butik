@@ -6,7 +6,8 @@
 |--------------------------------------------------------------------------
 */
 
-Route::prefix(config('butik.route_shop-prefix'))->name('butik.')->namespace('Http\\Controllers\\Web\\')->group(function() {
+// TODO: Choose a better namespace, when addon testing has been streamlined
+Route::prefix(config('butik.route_shop-prefix'))->name('butik.')->namespace('\\Jonassiewertsen\\StatamicButik\\Http\\Controllers\\Web\\')->group(function() {
     Route::get('/', 'ShopController@index')->name('shop');
 
     Route::get(config('butik.route_payment-receipt'), 'ExpressCheckoutController@receipt')->name('payment.receipt');
