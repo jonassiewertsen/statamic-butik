@@ -46,14 +46,6 @@ class TaxCreateTest extends TestCase
     }
 
     /** @test */
-    public function percentage_must_be_an_integer()
-    {
-        $tax = raw(Tax::class, ['percentage' => 'drei']);
-        $this->post(route('statamic.cp.butik.taxes.store'), $tax)
-            ->assertSessionHasErrors('percentage');
-    }
-
-    /** @test */
     public function percentage_cant_be_less_then_zero()
     {
         $tax = raw(Tax::class, ['percentage' => -1 ]);
@@ -65,6 +57,14 @@ class TaxCreateTest extends TestCase
     public function percentage_cant_be_higher_then_100()
     {
         $tax = raw(Tax::class, ['percentage' => 101 ]);
+        $this->post(route('statamic.cp.butik.taxes.store'), $tax)
+            ->assertSessionHasErrors('percentage');
+    }
+
+    /** @test */
+    public function percentage_must_be_an_integer()
+    {
+        $tax = raw(Tax::class, ['percentage' => 'drei']);
         $this->post(route('statamic.cp.butik.taxes.store'), $tax)
             ->assertSessionHasErrors('percentage');
     }
