@@ -4,6 +4,7 @@ namespace Jonassiewertsen\StatamicButik\Tests;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Statamic\Extend\Manifest;
 use Statamic\Facades\AssetContainer;
 use Statamic\Facades\Blueprint;
 use Statamic\Facades\Role;
@@ -86,7 +87,7 @@ class TestCase extends OrchestraTestCase
     {
         parent::getEnvironmentSetUp($app);
 
-        $app->make(\Statamic\Extend\Manifest::class)->manifest = [
+        $app->make(Manifest::class)->manifest = [
             'jonassiewertsen/statamic-butik' => [
                 'id' => 'jonassiewertsen/statamic-butik',
                 'namespace' => 'Jonassiewertsen\\StatamicButik\\',
