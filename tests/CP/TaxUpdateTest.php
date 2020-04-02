@@ -36,7 +36,7 @@ class TaxUpdateTest extends TestCase
         $tax = create(Tax::class)->first();
         $tax->percentage = 99;
         $this->updateTax($tax);
-        $this->assertDatabaseHas('butik_taxes', ['percentage' => 99]);
+        $this->assertEquals(Tax::first()->percentage, 99);
     }
 
     private function updateTax($tax) {
