@@ -20,7 +20,7 @@ return [
     'customer'     => 'Kunde',
     'mail'         => 'Email',
     'method'       => 'Metode',
-    'created_at'   => 'Bestllungsdatum',
+    'created_at'   => 'Bestellungsdatum',
     'successful'   => 'Erfolgreiche Bestellungen',
     'description'  => 'Bisher gibt es keine Bestellungen. Glaube an deine Kunden und gib Ihnen noch etwas Zeit.',
 
