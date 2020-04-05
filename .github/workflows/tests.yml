@@ -40,7 +40,8 @@ jobs:
               run: |
                   composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" ${{ matrix.additional-deps }} --no-interaction --no-update
                   composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
+                  composer validate
+                  composer install --no-interaction
 
-            - name: Execute tests
-              run: vendor/bin/phpunit
-              continue-on-error: ${{ matrix.laravel == '5.8.*' }}
+            - name: Run PHPUnit
+              run: composer test
