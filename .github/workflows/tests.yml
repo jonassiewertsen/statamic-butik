@@ -14,13 +14,13 @@ jobs:
             matrix:
                 php: [7.4]
                 laravel: [6.*]
-                dependency-version: [prefer-stable]
+                dependency-version: prefer-stable
                 os: [ubuntu-latest]
                 include:
                     - laravel: 6.*
                       testbench: 4.*
                     - php: 7.4
-                      dependency-version: prefer-lowest
+                      dependency-version: prefer-stable
                       additional-deps: '"mockery/mockery:1.2.3"'
 
         name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
