@@ -15,8 +15,6 @@ class ExpressCheckoutReceiptTest extends TestCase
     {
         $route = route('butik.payment.receipt', ['order' => 'wrong_order_id']);
 
-        dd($route);
-
         $this->assertStatamicLayoutIs('butik::web.layouts.express-checkout', $route);
         $this->assertStatamicTemplateIs('butik::web.checkout.invalidReceipt', $route);
     }
