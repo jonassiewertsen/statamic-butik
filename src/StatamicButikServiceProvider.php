@@ -13,7 +13,6 @@ use Mollie\Laravel\MollieServiceProvider;
 use Statamic\Facades\CP\Nav;
 use Statamic\Facades\Permission;
 use Statamic\Providers\AddonServiceProvider;
-use Statamic\Tags\Errors;
 
 class StatamicButikServiceProvider extends AddonServiceProvider
 {
