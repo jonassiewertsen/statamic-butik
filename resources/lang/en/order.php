@@ -3,8 +3,9 @@
 return [
 
     /** General */
-    'singular' => 'Order',
-    'plural'   => 'Orders',
+    'singular'      => 'Order',
+    'plural'        => 'Orders',
+    'order_id'      => 'Order ID',
 
     /** Control Panel */
     'index'        => 'Orders overview',
