@@ -94,9 +94,12 @@ class StatamicButikServiceProvider extends AddonServiceProvider
                 __DIR__.'/../public/images' => public_path('vendor/butik/images'),
             ], 'images');
 
-            // Resources (CSS)
+            // Resources
             $this->publishes([
                 __DIR__.'/../public/css' => public_path('vendor/butik/css'),
+            ], 'resources');
+            $this->publishes([
+                __DIR__.'/../public/js' => public_path('vendor/butik/js'),
             ], 'resources');
 
             // Lang
