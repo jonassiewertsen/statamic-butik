@@ -16,6 +16,25 @@ class Cart {
         // TODO: Move calculation from Product model to Cart object.
     }
 
+    public function add(Product $product): self {
+        // TODO: Add a new product if not exisiting.
+        // If existing, increase the amount of the product
+        if (empty($this->products)) {
+            $this->products = collect();
+        }
+        $this->products->push($product);
+
+        return $this;
+    }
+
+    public function remove(Product $product): self {
+        // TODO: Remove a single product from the shopping cart
+    }
+
+    public function clear(): void {
+        // TODO: Clear the complete shopping cart
+    }
+
     public function customer(Customer $customer): self {
         $this->customer = $customer;
         return $this;
@@ -26,12 +45,5 @@ class Cart {
         return $this;
     }
 
-    public function add(Product $product): self {
-        if (empty($this->products)) {
-            $this->products = collect();
-        }
-        $this->products->push($product);
 
-        return $this;
-    }
 }
