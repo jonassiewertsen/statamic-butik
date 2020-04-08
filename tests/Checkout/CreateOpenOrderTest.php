@@ -111,7 +111,7 @@ class CreateOpenOrderTest extends TestCase
         $this->assertDatabaseHas('butik_orders', ['customer' => json_encode($this->cart->customer) ]);
     }
 
-    private function checkout() {K
+    private function checkout() {
         $openPayment = new MolliePaymentOpen();
         Mollie::shouldReceive('api->customers->create')->andReturn(new MollieCustomer());
         Mollie::shouldReceive('api->payments->create')->andReturn($openPayment);
