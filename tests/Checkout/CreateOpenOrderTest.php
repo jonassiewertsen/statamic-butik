@@ -28,7 +28,7 @@ class CreateOpenOrderTest extends TestCase
 
         $this->cart = (new Cart)
             ->customer($this->createUserData())
-            ->addProduct((create(Product::class)->first()));
+            ->add((create(Product::class)->first()));
 
         Session::put('butik.cart', (new Cart()));
 
@@ -111,7 +111,7 @@ class CreateOpenOrderTest extends TestCase
         $this->assertDatabaseHas('butik_orders', ['customer' => json_encode($this->cart->customer) ]);
     }
 
-    private function checkout() {
+    private function checkout() {K
         $openPayment = new MolliePaymentOpen();
         Mollie::shouldReceive('api->customers->create')->andReturn(new MollieCustomer());
         Mollie::shouldReceive('api->payments->create')->andReturn($openPayment);

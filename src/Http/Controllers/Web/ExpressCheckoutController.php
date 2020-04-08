@@ -31,7 +31,7 @@ class ExpressCheckoutController extends WebController
 
         $cart = (new Cart)
             ->customer((new Customer)->create($validatedData))
-            ->addProduct($product);
+            ->add($product);
 
         Session::put('butik.cart', $cart);
 

@@ -36,7 +36,7 @@ class CartTest extends TestCase
     {
         $product = create(Product::class)->first();
 
-        $this->cart->addProduct($product);
+        $this->cart->add($product);
         $this->assertCount(1, $this->cart->products);
     }
 }

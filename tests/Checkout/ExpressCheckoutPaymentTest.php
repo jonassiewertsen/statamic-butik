@@ -17,7 +17,7 @@ class ExpressCheckoutPaymentTestTest extends TestCase
 
         $this->cart = (new Cart)
             ->customer($this->createUserData())
-            ->addProduct((create(Product::class)->first()));
+            ->add((create(Product::class)->first()));
     }
 
     /** @test */

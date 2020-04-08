@@ -26,7 +26,7 @@ class Cart {
         return $this;
     }
 
-    public function addProduct(Product $product): self {
+    public function add(Product $product): self {
         if (empty($this->products)) {
             $this->products = collect();
         }
