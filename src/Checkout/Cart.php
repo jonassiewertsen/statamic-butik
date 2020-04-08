@@ -16,10 +16,6 @@ class Cart {
         // TODO: Move calculation from Product model to Cart object.
     }
 
-//    public function getId(): string {
-//        return $this->transaction->id;
-//    }
-
     public function customer(Customer $customer): self {
         $this->customer = $customer;
         return $this;
@@ -29,11 +25,6 @@ class Cart {
         $this->transaction = $transaction;
         return $this;
     }
-
-//    public function products(Collection $products): self {
-//        $this->products = $products;
-//        return $this;
-//    }
 
     public function addProduct(Product $product): self {
         if (empty($this->products)) {
