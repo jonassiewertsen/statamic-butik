@@ -7,7 +7,7 @@ use Jonassiewertsen\StatamicButik\Http\Models\Product;
 
 class Cart {
     public ?Customer $customer;
-    public ?Collection $products;
+    public ?Collection $items;
     public ?Transaction $transaction;
     public ?string $amount; // TODO: To string or not to string?
 
@@ -19,10 +19,11 @@ class Cart {
     public function add(Product $product): self {
         // TODO: Add a new product if not exisiting.
         // If existing, increase the amount of the product
-        if (empty($this->products)) {
-            $this->products = collect();
+        if (empty($this->items)) {
+            $this->items = collect();
         }
-        $this->products->push($product);
+
+        $this->items->push(new Item($product));
 
         return $this;
     }

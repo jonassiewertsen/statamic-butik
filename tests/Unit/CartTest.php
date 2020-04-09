@@ -11,10 +11,12 @@ use Jonassiewertsen\StatamicButik\Tests\TestCase;
 class CartTest extends TestCase
 {
     protected Cart $cart;
+    protected Product $product;
 
     public function setUp(): void {
         parent::setUp();
         $this->cart = new Cart();
+        $this->product = create(Product::class)->first();
     }
 
     /** @test */
@@ -34,9 +36,15 @@ class CartTest extends TestCase
     /** @test */
     public function a_product_can_be_added()
     {
-        $product = create(Product::class)->first();
-
-        $this->cart->add($product);
-        $this->assertCount(1, $this->cart->products);
+        $this->cart->add($this->product);
+        $this->assertCount(1, $this->cart->items);
     }
+
+    /** @test */
+    public function a_new_cart_item_has_the_quanitity_of_one()
+    {
+        $this->cart->add($this->product);
+        $this->assertEquals(1, $this->cart->items->first()->quanitity);
+    }
+
 }
