@@ -26,15 +26,13 @@ class Item
     /**
      * The quanitity of this item in the shopping cart
      */
-    public Int $quanitity;
+    public Int $quantity;
 
     public function __construct(Product $product)
     {
-//        $this->id             = $product->slug;
-//        $this->name         = $product->name;
+        $this->id           = $product->slug;
+        $this->name         = $product->title;
         $this->product      = $product;
-        $this->quanitity    = 1;
-
-
+        $this->quantity     = 1;
     }
 }
