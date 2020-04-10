@@ -35,4 +35,18 @@ class Item
         $this->product      = $product;
         $this->quantity     = 1;
     }
+
+    public function increase()
+    {
+        $this->quantity++;
+    }
+
+    public function decrease()
+    {
+        if ($this->quantity === 1) {
+            return;
+        }
+
+        $this->quantity--;
+    }
 }

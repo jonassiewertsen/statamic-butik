@@ -47,4 +47,33 @@ class ItemTest extends TestCase
 
         $this->assertEquals($item->quantity, 1);
     }
+
+    /** @test */
+    public function an_item_can_be_increased()
+    {
+        $item = new Item($this->product);
+        $item->increase();
+
+        $this->assertEquals($item->quantity, 2);
+    }
+
+    /** @test */
+    public function an_item_can_be_decreased()
+    {
+        $item = new Item($this->product);
+        $item->quantity = 2;
+
+        $item->decrease();
+
+        $this->assertEquals($item->quantity, 1);
+    }
+
+    /** @test */
+    public function an_item_quantity_cant_be_lover_then_one()
+    {
+        $item = new Item($this->product);
+        $item->decrease();
+
+        $this->assertEquals($item->quantity, 1);
+    }
 }

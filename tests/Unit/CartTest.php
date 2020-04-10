@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Transaction;
@@ -44,7 +45,40 @@ class CartTest extends TestCase
     public function a_new_cart_item_has_the_quanitity_of_one()
     {
         $this->cart->add($this->product);
-        $this->assertEquals(1, $this->cart->items->first()->quanitity);
+        $this->assertEquals(1, $this->cart->items->first()->quantity);
     }
 
+    /** @test */
+    public function an_new_item_will_be_added_to_the_session()
+    {
+        $this->cart->add($this->product);
+
+        $fromSession = Session::get('butik.cart');
+
+        $this->assertEquals(
+            $fromSession->items->first(),
+            $this->cart->items->first()
+        );
+    }
+
+    /** @test */
+    public function the_quanitity_will_be_increase_if_the_product_already_has_been_added()
+    {
+        $this->cart->add($this->product);
+        $this->assertEquals(1, $this->cart->items->first()->quantity);
+
+        $this->cart->add($this->product);
+        $this->assertEquals(2, $this->cart->items->first()->quantity);
+    }
+
+    /** @test */
+    public function an_item_can_be_removed()
+    {
+        $this->cart->add($this->product);
+
+        $fromSession = Session::get('butik.cart');
+
+        $this->cart->remove($this->product);
+        $this->assertFalse($fromSession->items->contains('id', $this->product->slug));
+    }
 }
