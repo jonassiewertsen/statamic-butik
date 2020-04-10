@@ -34,7 +34,7 @@ class CartTest extends TestCase
     }
 
     /** @test */
-    public function a_product_can_be_added()
+    public function a_product_will_be_addes_as_item()
     {
         $this->cart->add($this->product);
         $this->assertCount(1, $this->cart->items);
