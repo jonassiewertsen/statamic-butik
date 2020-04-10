@@ -43,7 +43,7 @@ class ExpressCheckoutController extends WebController
         $cart = session()->get('butik.cart');
 
         $viewData = array_merge(
-            $cart->products->first()->toArray(),
+            $cart->items->first()->product->toArray(),
             (array) $cart->customer
         );
 

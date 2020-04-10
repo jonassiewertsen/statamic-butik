@@ -15,15 +15,15 @@ class ValidateCheckoutCart
         $cart = session()->get('butik.cart');
 
         if (! $this->customerDataComplete($cart)) {
-            return redirect($cart->products->first()->ExpressDeliveryUrl);
+            return redirect($cart->items->first()->product->ExpressDeliveryUrl);
         }
 
-        if ($cart === null || $cart->products === null || $cart->products->count() > 1) {
+        if ($cart === null || $cart->items === null || $cart->items->count() > 1) {
             return redirect()->route('butik.shop');
         }
 
-        if ($cart->products->first()->soldOut || !$cart->products->first()->available) {
-            return redirect($cart->products->first()->showUrl);
+        if ($cart->items->first()->product->soldOut || !$cart->items->first()->product->available) {
+            return redirect($cart->items->first()->product->showUrl);
         }
 
         return $next($request);

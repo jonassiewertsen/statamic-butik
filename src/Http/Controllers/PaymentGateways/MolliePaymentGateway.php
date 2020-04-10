@@ -99,18 +99,19 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
        ]);
     }
 
-    private function paymentInformation($cart, $mollieCustomer, $orderId){
-        $product = $cart->products->first();
+    private function paymentInformation($cart, $mollieCustomer, $orderId)
+    {
+        $item = $cart->items->first();
 
         $payment = [
-            'description' => $product->title,
+            'description' => $item->name,
             'customerId' => $mollieCustomer->id,
-            'metadata' => 'Express Checkout: '. $product->title,
+            'metadata' => 'Express Checkout: '. $item->name,
             'locale' => $this->getLocale(),
             'redirectUrl' =>  URL::temporarySignedRoute('butik.payment.receipt', now()->addMinutes(5), ['order' => $orderId]),
             'amount' => [
                 'currency' => config('butik.currency_isoCode'),
-                'value' => $this->convertAmount($product->totalPrice),
+                'value' => $this->convertAmount(200), // TODO: Add dynamic price
             ],
         ];
 

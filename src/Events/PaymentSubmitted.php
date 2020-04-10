@@ -4,10 +4,8 @@ namespace Jonassiewertsen\StatamicButik\Events;
 
 use Carbon\Carbon;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Collection;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Checkout\Transaction;
-use Mollie\Api\Resources\Payment;
 
 class PaymentSubmitted
 {
@@ -23,7 +21,7 @@ class PaymentSubmitted
             ->method($payment->method ?? '') // TODO: Only a problem with multiple payment options
             ->totalAmount($payment->amount->value)
             ->createdAt(Carbon::parse($payment->createdAt))
-            ->products($cart->products)
+            ->products($cart->items)
             ->customer($cart->customer);
     }
 }
