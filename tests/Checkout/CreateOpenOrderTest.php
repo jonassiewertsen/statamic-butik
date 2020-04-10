@@ -30,7 +30,7 @@ class CreateOpenOrderTest extends TestCase
             ->customer($this->createUserData())
             ->add((create(Product::class)->first()));
 
-        Session::put('butik.cart', (new Cart()));
+        Session::put('butik.cart', (new Cart())); // TODO: Save the items for the single checkout in another session part
 
         Mail::fake();
     }
