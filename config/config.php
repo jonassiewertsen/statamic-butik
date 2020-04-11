@@ -63,6 +63,7 @@ return [
      * on the front-end.
      */
     'route_shop-prefix'               => '/shop',
+    'route_cart'                      => '/cart',
     'route_express-checkout-delivery' => 'express-checkout/delivery', // yourshop.com/shop/express-checkout/delivery
     'route_express-checkout-payment'  => 'express-checkout/payment', // yourshop.com/shop/express-checkout/payment
     'route_payment-receipt'           => 'payment/{order}/receipt', // yourshop.com/shop/payment/xxxxxxxxx/receipt
@@ -73,6 +74,7 @@ return [
      * Define your own layouts for the frontend if you want. You can as well edit the
      * given layouts to fit your needs.
      */
+    'layout_cart'                      => 'butik::web.layouts.shop',
     'layout_product-overview'          => 'butik::web.layouts.shop',
     'layout_product-show'              => 'butik::web.layouts.shop',
     'layout_express-checkout-delivery' => 'butik::web.layouts.express-checkout',
@@ -85,6 +87,7 @@ return [
      * Define your own templates for the frontend if you want. You can as well edit the
      * given layouts to fit your needs.
      */
+    'template_cart-overview'             => 'butik::web.cart.index',
     'template_product-overview'          => 'butik::web.shop.overview',
     'template_product-show'              => 'butik::web.shop.show',
     'template_express-checkout-delivery' => 'butik::web.checkout.express.delivery',
