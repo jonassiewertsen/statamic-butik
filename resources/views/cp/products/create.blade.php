@@ -1,5 +1,7 @@
 @extends('statamic::layout')
+
 @section('title', __('butik::product.create'))
+@section('wrapper_class', 'max-w-3xl')
 
 @section('content')
     <publish-form
