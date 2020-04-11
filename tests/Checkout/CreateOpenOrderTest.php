@@ -121,7 +121,7 @@ class CreateOpenOrderTest extends TestCase
     }
 
     private function createUserData($key = null, $value = null) {
-        $customer = (new Customer)->create([
+        $customer = (new Customer([
             'country' => 'Germany',
             'name' => 'John Doe',
             'mail' => 'johndoe@mail.de',
@@ -131,7 +131,7 @@ class CreateOpenOrderTest extends TestCase
             'state_region' => '',
             'zip' => '24579',
             'phone' => '013643-23837'
-       ]);
+       ]));
 
         if ($key !== null || $value !== null) {
             $customer->$key = $value;

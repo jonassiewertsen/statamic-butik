@@ -13,11 +13,10 @@ class Customer {
     public ?string $phone;
     public ?string $country;
 
-    public function create(array $data): self {
+    public function __construct(array $data = []) {
         foreach ($data as $key => $attribute) {
             $this->$key = $attribute;
         }
-        return $this;
     }
 
     public function name($value): self {

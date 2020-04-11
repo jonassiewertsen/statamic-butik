@@ -186,8 +186,8 @@ class ExpressCheckoutPaymentTestTest extends TestCase
             ->assertSee($customer['country']);
     }
 
-    private function createUserData($key = null, $value = null) {
-        $customer = (new Customer)->create([
+    private function createUserData($key = null, $value = null): Customer {
+        $customer = (new Customer([
             'country' => 'Germany',
             'name' => 'John Doe',
             'mail' => 'johndoe@mail.de',
@@ -197,7 +197,7 @@ class ExpressCheckoutPaymentTestTest extends TestCase
             'state_region' => '',
             'zip' => '24579',
             'phone' => '013643-23837'
-        ]);
+        ]));
 
         if ($key !== null || $value !== null) {
             $customer->$key = $value;

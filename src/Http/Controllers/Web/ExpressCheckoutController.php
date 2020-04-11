@@ -27,18 +27,16 @@ class ExpressCheckoutController extends WebController
 
     public function saveCustomerData(Product $product)
     {
-        $validatedData = request()->validate($this->rules());
+        $customer = request()->validate($this->rules());
 
-        $cart = (new Cart)
-            ->customer((new Customer)->create($validatedData))
-            ->add($product);
+        $cart = (new Cart)->customer((new Customer($customer)));
 
         Session::put('butik.cart', $cart);
 
         return redirect()->route('butik.checkout.express.payment', $product);
     }
 
-    public function payment()
+    public function payment() // TODO: Pass the product through the url. Not saved in the session anymore
     {
         $cart = session()->get('butik.cart');
 
