@@ -2,7 +2,7 @@
 
 namespace Jonassiewertsen\StatamicButik;
 
-use Jonassiewertsen\StatamicButik\Http\Middleware\ValidateCheckoutCart;
+use Jonassiewertsen\StatamicButik\Http\Middleware\ValidateExpressCheckoutRoute;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
@@ -156,7 +156,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
     protected function bootMiddleware() {
         $router = $this->app['router'];
-        $router->pushMiddlewareToGroup('validateCheckoutCart', ValidateCheckoutCart::class);
+        $router->pushMiddlewareToGroup('validateExpressCheckoutRoute', ValidateExpressCheckoutRoute::class);
     }
 
     protected function bootPermissions() {

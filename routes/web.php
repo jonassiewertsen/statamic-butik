@@ -14,8 +14,8 @@ Route::prefix(config('butik.route_shop-prefix'))->name('butik.')->namespace('\\J
 
     Route::get(config('butik.route_express-checkout-delivery').'/{product}', 'ExpressCheckoutController@delivery')->name('checkout.express.delivery');
     Route::post(config('butik.route_express-checkout-delivery').'/{product}', 'ExpressCheckoutController@saveCustomerData')->name('checkout.express.delivery');
-    Route::get(config('butik.route_express-checkout-payment'), 'ExpressCheckoutController@payment')->name('checkout.express.payment')->middleware('validateCheckoutCart');
-    Route::get('payment/process', 'PaymentGatewayController@processPayment')->name('payment.process')->middleware('validateCheckoutCart');
+    Route::get(config('butik.route_express-checkout-payment').'/{product}', 'ExpressCheckoutController@payment')->name('checkout.express.payment')->middleware('validateExpressCheckoutRoute');
+    Route::get('payment/process', 'PaymentGatewayController@processPayment')->name('payment.process')->middleware('validateExpressCheckoutRoute');
 
     Route::get('{product}', 'ShopController@show')->name('shop.product');
 });

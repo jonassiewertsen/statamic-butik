@@ -122,7 +122,7 @@ class Product extends ButikModel
         if ($this->stock_unlimited) {
             return false;
         }
-        return $this->stock === 0;
+        return $this->stock == 0;
     }
 
     /**

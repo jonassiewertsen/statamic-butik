@@ -3,11 +3,22 @@
 namespace Jonassiewertsen\StatamicButik\Http\Middleware;
 
 use Closure;
+use Jonassiewertsen\StatamicButik\Http\Models\Product;
 
-class ValidateCheckoutCart
+class ValidateExpressCheckoutRoute
 {
     public function handle($request, Closure $next)
     {
+        if (! $productSlug = $request->segment(4)) {
+            return redirect()->route('butik.shop');
+        }
+
+        $product = Product::findOrFail($productSlug);
+
+        if ($product->soldOut || ! $product->available) {
+            return redirect($product->showUrl);
+        }
+
         if (! session()->has('butik.cart') ) {
             return redirect()->route('butik.shop');
         }
@@ -15,21 +26,13 @@ class ValidateCheckoutCart
         $cart = session()->get('butik.cart');
 
         if (! $this->customerDataComplete($cart)) {
-            return redirect($cart->items->first()->product->ExpressDeliveryUrl);
-        }
-
-        if ($cart === null || $cart->items === null || $cart->items->count() > 1) {
-            return redirect()->route('butik.shop');
-        }
-
-        if ($cart->items->first()->product->soldOut || !$cart->items->first()->product->available) {
-            return redirect($cart->items->first()->product->showUrl);
+            return redirect($product->ExpressDeliveryUrl);
         }
 
         return $next($request);
     }
 
-    protected function customerDataComplete($cart): bool {
+    private function customerDataComplete($cart): bool {
         $keys = collect(['name', 'mail', 'country', 'address1', 'city', 'zip']);
 
         foreach ($keys as $key) {

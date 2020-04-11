@@ -36,12 +36,12 @@ class ExpressCheckoutController extends WebController
         return redirect()->route('butik.checkout.express.payment', $product);
     }
 
-    public function payment() // TODO: Pass the product through the url. Not saved in the session anymore
+    public function payment(Product $product)
     {
         $cart = session()->get('butik.cart');
 
         $viewData = array_merge(
-            $cart->items->first()->product->toArray(),
+            $product->toArray(),
             (array) $cart->customer
         );
 
