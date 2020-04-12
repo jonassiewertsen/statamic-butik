@@ -10,26 +10,26 @@ class Cart {
     public ?Customer    $customer;
     public ?Collection  $items;
     public ?Transaction $transaction;
-    public ?string      $amount; // TODO: To string or not to string?
 
-    public function __construct()
+    public function get(): self
     {
-        if ($this->cartEmpty()) {
-            $this->items = collect();
+        $this->items = collect();
+
+        if (Session::has('butik.cart')) {
+            $items = Session::get('butik.cart');
+
+            foreach($items as $item) {
+                $this->items->push((array) $item);
+            }
         }
+
+        return $this;
     }
 
     public function add(Product $product): self {
+        $this->items->push(new Item($product));
 
-
-        if ($this->contains($product))
-        {
-            $this->items->firstWhere('id', $product->slug)->increase();
-        } else {
-            $this->items->push(new Item($product));
-        }
-
-        Session::put('butik.cart', $this);
+        Session::put('butik.cart', $this->items);
 
         return $this;
     }
@@ -52,22 +52,22 @@ class Cart {
         return $this;
     }
 
-    /**
-     * Is the shopping cart empty?
-     */
-    private function cartEmpty(): bool
-    {
-        return empty($this->items);
-    }
+//    Todo: May it be removed?
+//    /**
+//     * Is the shopping cart empty?
+//     */
+//    private function cartEmpty(): bool
+//    {
+//        return empty($this->items);
+//    }
 
-    /**
-     * @param Product $product
-     * @return bool
-     */
-    private function contains(Product $product): bool
-    {
-        return $this->items->contains('id', $product->slug);
-    }
-
-
+//    TODO: May it be removed?
+//    /**
+//     * @param Product $product
+//     * @return bool
+//     */
+//    private function contains(Product $product): bool
+//    {
+//        return $this->items->contains('id', $product->slug);
+//    }
 }

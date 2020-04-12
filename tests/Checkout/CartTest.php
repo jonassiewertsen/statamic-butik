@@ -4,6 +4,7 @@ namespace Tests\Checkout;
 
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
+use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
@@ -39,13 +40,27 @@ class CartTest extends TestCase
     }
 
     /** @test */
-    public function a_cart_item_will_be_added_to_the_session() {
-        $this->post(route('butik.cart.add', $this->product));
+    public function items_from_the_session_will_be_added_to_the_cart() {
+        $items = collect();
+        $items->push(new Item(
+            create(Product::class)->first()
+        ));
 
-        $cart = Session::get('butik.cart');
+        Session::put('butik.cart', $items);
+        $cart = (new Cart)->get();
+
+        $this->assertEquals($items->first()->name, $cart->items->first()['name']);
+    }
+
+    /** @test */
+    public function a_cart_item_will_be_added_to_the_session() {
+        $this->assertFalse(Session::has('butik.cart'));
+
+        $this->post(route('butik.cart.add', $this->product));
+        $items = Session::get('butik.cart');
 
         $this->assertEquals(
-            $cart->items->first()->name,
+            $items->first()->name,
             $this->product->title
         );
     }
