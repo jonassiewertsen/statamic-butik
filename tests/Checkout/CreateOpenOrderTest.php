@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
+use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Events\PaymentSubmitted;
 use Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\MolliePaymentGateway;
 use Illuminate\Support\Facades\Session;
@@ -20,17 +21,18 @@ use Mollie\Laravel\Facades\Mollie;
 
 class CreateOpenOrderTest extends TestCase
 {
-    protected $cart;
+    protected $customer;
+    protected $items;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->cart = (new Cart)
-            ->customer($this->createUserData())
-            ->add((create(Product::class)->first()));
+        $this->customer = (new Customer($this->createUserData()));
+        $this->items = collect();
+        $this->items->push(new Item(factory(Product::class)->create()));
 
-        Session::put('butik.cart', (new Cart())); // TODO: Save the items for the single checkout in another session part
+        Session::put('butik.customer', $this->customer);
 
         Mail::fake();
     }
@@ -101,14 +103,14 @@ class CreateOpenOrderTest extends TestCase
     public function the_express_checkout_product_will_be_saved_as_json(){
         $this->checkout();
 
-        $this->assertDatabaseHas('butik_orders', ['products' => json_encode($this->cart->items) ]);
+        $this->assertDatabaseHas('butik_orders', ['products' => json_encode($this->items) ]);
     }
 
     /** @test */
     public function the_express_checkout_customer_will_be_saved_as_json(){
         $this->checkout();
 
-        $this->assertDatabaseHas('butik_orders', ['customer' => json_encode($this->cart->customer) ]);
+        $this->assertDatabaseHas('butik_orders', ['customer' => json_encode($this->customer) ]);
     }
 
     private function checkout() {
@@ -117,11 +119,11 @@ class CreateOpenOrderTest extends TestCase
         Mollie::shouldReceive('api->payments->create')->andReturn($openPayment);
         Mollie::shouldReceive('api->payments->get')->with($openPayment->id)->andReturn($openPayment);
 
-        (new MolliePaymentGateway())->handle($this->cart);
+        (new MolliePaymentGateway())->handle($this->customer, $this->items);
     }
 
     private function createUserData($key = null, $value = null) {
-        $customer = (new Customer([
+        $customer = [
             'country' => 'Germany',
             'name' => 'John Doe',
             'mail' => 'johndoe@mail.de',
@@ -131,7 +133,7 @@ class CreateOpenOrderTest extends TestCase
             'state_region' => '',
             'zip' => '24579',
             'phone' => '013643-23837'
-       ]));
+       ];
 
         if ($key !== null || $value !== null) {
             $customer->$key = $value;

@@ -4,9 +4,10 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
-use Jonassiewertsen\StatamicButik\Checkout\Cart;
+use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Events\PaymentSubmitted;
 use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
@@ -18,20 +19,20 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
 {
     use MollyLocale;
 
-    public function handle(Cart $cart) {
+    public function handle(Customer $customer, Collection $items) {
         $mollieCustomer = Mollie::api()->customers()->create([
-            'name' => $cart->customer->name,
-            'email' => $cart->customer->mail,
+            'name' => $customer->name,
+            'email' => $customer->mail,
        ]);
 
         $orderId = str_random(20);
 
         $payment = Mollie::api()
             ->payments()
-            ->create($this->paymentInformation($cart, $mollieCustomer, $orderId));
+            ->create($this->paymentInformation($items, $mollieCustomer, $orderId));
 
         $payment = Mollie::api()->payments()->get($payment->id);
-        event(new PaymentSubmitted($payment, $cart, $orderId));
+        event(new PaymentSubmitted($payment, $customer, $items, $orderId));
 
         // redirect customer to Mollie checkout page
         return redirect($payment->getCheckoutUrl(), 303);
@@ -99,9 +100,9 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
        ]);
     }
 
-    private function paymentInformation($cart, $mollieCustomer, $orderId)
+    private function paymentInformation($items, $mollieCustomer, $orderId)
     {
-        $item = $cart->items->first();
+        $item = $items->first(); // TODO: Refactor !!! it's items now
 
         $payment = [
             'description' => $item->name,
