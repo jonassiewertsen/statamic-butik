@@ -18,7 +18,7 @@ class Shop extends Component
 
     public function render()
     {
-        return view('butik::livewire.shop', [
+        return view('butik::web.livewire.shop', [
             'products' => Product::where('title', 'like', '%' . $this->search . '%')->get()
         ]);
     }
