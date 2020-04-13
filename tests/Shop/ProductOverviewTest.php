@@ -18,6 +18,7 @@ class ProductOverviewTest extends TestCase
             ->assertViewIs(config('butik.template_product-index'));
     }
 
+    // TODO: Get tests up and running with Livewire
     /** @test */
     public function all_product_information_will_be_shown()
     {
