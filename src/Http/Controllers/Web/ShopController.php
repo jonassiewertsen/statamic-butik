@@ -7,13 +7,9 @@ use Jonassiewertsen\StatamicButik\Http\Models\Product;
 
 class ShopController extends WebController
 {
-    public function index() {
-//        return (new \Statamic\View\View())
-//            ->layout(config('butik.layout_product-overview'))
-//            ->template(config('butik.template_product-overview'))
-//            ->with(['title' => 'Overview']);
-
-        return view('butik::web.shop.index');
+    public function index()
+    {
+        return view(config('butik.template_product-index'));
     }
 
     public function show(Product $product)

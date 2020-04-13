@@ -10,9 +10,8 @@
 Route::prefix(config('butik.route_shop-prefix'))->name('butik.')->middleware('web')->namespace('\\Jonassiewertsen\\StatamicButik\\Http\\Controllers\\Web\\')->group(function() {
     Route::get('/', 'ShopController@index')->name('shop');
 
-    Route::get('/', 'ShopController@index')->name('shop');
-    Route::get(config('butik.route_cart'), 'CartController@index')->name('cart');
-    Route::post(config('butik.route_cart') . '/add/{product}', 'CartController@add')->name('cart.add');
+//    Route::get(config('butik.route_cart'), 'CartController@index')->name('cart');
+//    Route::post(config('butik.route_cart') . '/add/{product}', 'CartController@add')->name('cart.add');
 
     Route::get(config('butik.route_payment-receipt'), 'ExpressCheckoutController@receipt')->name('payment.receipt');
 

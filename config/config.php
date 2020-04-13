@@ -87,9 +87,9 @@ return [
      * Define your own templates for the frontend if you want. You can as well edit the
      * given layouts to fit your needs.
      */
-    'template_cart-overview'             => 'butik::web.cart.index',
-    'template_product-overview'          => 'butik::web.shop.overview',
+    'template_product-index'             => 'butik::web.shop.index',
     'template_product-show'              => 'butik::web.shop.show',
+    'template_cart-index'                => 'butik::web.cart.index',
     'template_express-checkout-delivery' => 'butik::web.checkout.express.delivery',
     'template_express-checkout-payment'  => 'butik::web.checkout.express.payment',
     'template_checkout-receipt'          => 'butik::web.checkout.receipt',

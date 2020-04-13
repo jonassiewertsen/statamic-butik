@@ -44,6 +44,7 @@ class TestCase extends OrchestraTestCase
         return $user;
     }
 
+    // TODO: May be removed?
     protected function assertStatamicTemplateIs($template, $route) {
         return $this->assertEquals(
             $this->get($route)->getOriginalContent()->template(),
@@ -51,6 +52,7 @@ class TestCase extends OrchestraTestCase
         );
     }
 
+    // TODO: May be removed?
     protected function assertStatamicLayoutIs($layout, $route) {
         return $this->assertEquals(
             $this->get($route)->getOriginalContent()->layout(),
@@ -68,6 +70,7 @@ class TestCase extends OrchestraTestCase
         return [
             \Statamic\Providers\StatamicServiceProvider::class,
             \Jonassiewertsen\StatamicButik\StatamicButikServiceProvider::class,
+            \Livewire\LivewireServiceProvider::class,
         ];
     }
 
