@@ -14,9 +14,9 @@ class ExpressCheckoutController extends WebController
 {
     public function delivery(Product $product)
     {
-        if (session()->has('butik.cart')) {
-            $formData = session('butik.cart');
-            $viewData = array_merge((array) $formData->customer, $product->toArray());
+        if (session()->has('butik.customer')) {
+            $customer = session('butik.customer');
+            $viewData = array_merge((array) $customer, $product->toArray());
         }
 
         return (new \Statamic\View\View())
@@ -29,20 +29,20 @@ class ExpressCheckoutController extends WebController
     {
         $customer = request()->validate($this->rules());
 
-        $cart = (new Cart)->customer((new Customer($customer)));
+        $customer = new Customer($customer);
 
-        Session::put('butik.cart', $cart);
+        Session::put('butik.customer', $customer);
 
         return redirect()->route('butik.checkout.express.payment', $product);
     }
 
     public function payment(Product $product)
     {
-        $cart = session()->get('butik.cart');
+        $customer = session()->get('butik.customer');
 
         $viewData = array_merge(
             $product->toArray(),
-            (array) $cart->customer
+            (array) $customer
         );
 
         return (new \Statamic\View\View())
@@ -65,7 +65,7 @@ class ExpressCheckoutController extends WebController
         $customer = json_decode($order->customer);
 
         if ($order->status === 'paid') {
-            Session::forget('butik.cart');
+            Session::forget('butik.customer');
         }
 
         return (new \Statamic\View\View())

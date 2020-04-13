@@ -63,7 +63,7 @@ class ExpressCheckoutDeliveryTest extends TestCase
     /** @test */
     public function user_data_will_be_saved_inside_the_session() {
         $this->post(route('butik.checkout.express.delivery', $this->product), (array) $this->createUserData())
-            ->assertSessionHas('butik.cart');
+            ->assertSessionHas('butik.customer');
     }
 
     /** @test */
@@ -207,35 +207,35 @@ class ExpressCheckoutDeliveryTest extends TestCase
 
     /** @test */
     public function existing_data_from_the_session_will_be_passed_to_the_delivery_view() {
-        Session::put('butik.cart', (new Cart)->customer($this->createUserData()));
+        Session::put('butik.customer', new Customer($this->createUserData()));
         $page = $this->get(route('butik.checkout.express.delivery', $this->product))->getOriginalContent()->data();
-        $session = session('butik.cart');
+        $customer = session('butik.customer');
 
-        $this->assertEquals($page['name'], $session->customer->name);
-        $this->assertEquals($page['country'], $session->customer->country);
-        $this->assertEquals($page['mail'], $session->customer->mail);
-        $this->assertEquals($page['address1'], $session->customer->address1);
-        $this->assertEquals($page['address2'], $session->customer->address2);
-        $this->assertEquals($page['city'], $session->customer->city);
-        $this->assertEquals($page['zip'], $session->customer->zip);
+        $this->assertEquals($page['name'], $customer->name);
+        $this->assertEquals($page['country'], $customer->country);
+        $this->assertEquals($page['mail'], $customer->mail);
+        $this->assertEquals($page['address1'], $customer->address1);
+        $this->assertEquals($page['address2'], $customer->address2);
+        $this->assertEquals($page['city'], $customer->city);
+        $this->assertEquals($page['zip'], $customer->zip);
     }
 
     /** @test */
     public function existing_data_will_be_displayed_in_the_form() {
-        $cart = (new Cart)->customer($this->createUserData());
-        Session::put('butik.cart', $cart);
+        $customer = new Customer($this->createUserData());
+        Session::put('butik.customer', $customer);
 
         $this->get(route('butik.checkout.express.delivery', $this->product))
-            ->assertSee($cart->customer->name)
-            ->assertSee($cart->customer->mail)
-            ->assertSee($cart->customer->address1)
-            ->assertSee($cart->customer->address2)
-            ->assertSee($cart->customer->city)
-            ->assertSee($cart->customer->zip);
+            ->assertSee($customer->name)
+            ->assertSee($customer->mail)
+            ->assertSee($customer->address1)
+            ->assertSee($customer->address2)
+            ->assertSee($customer->city)
+            ->assertSee($customer->zip);
     }
 
     private function createUserData($key = null, $value = null) {
-        $customer = new Customer([
+        $customer = [
             'country' => 'Germany',
             'name' => 'John Doe',
             'mail' => 'johndoe@mail.de',
@@ -245,10 +245,10 @@ class ExpressCheckoutDeliveryTest extends TestCase
             'state_region' => '',
             'zip' => '24579',
             'phone' => '013643-23837'
-        ]);
+        ];
 
         if ($key !== null || $value !== null) {
-            $customer->$key = $value;
+            $customer[$key] = $value;
         }
 
         return $customer;
