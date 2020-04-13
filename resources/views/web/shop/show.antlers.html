@@ -31,10 +31,6 @@
             >
                 {{ trans key="butik::payment.express_checkout" }}
             </a>
-            <form action="{{ route:butik.cart.add product="{ slug }" }}" method="post" class="b-mr-1 b-mt-4 b-text-right">
-                {{ csrf_field }}
-                <button type="submit" class="b-text-xl b-underline b-text-gray-700 hover:b-no-underline">{{ trans key="butik::cart.add" }}</button>
-            </form>
         {{ /if }}
 
         {{ if description }}
