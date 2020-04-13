@@ -4,7 +4,7 @@ namespace Tests\Shop;
 
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
-use Jonassiewertsen\StatamicButik\Checkout\Cart;
+use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
@@ -116,24 +116,24 @@ class ExpressCheckoutReceiptTest extends TestCase
     /** @test */
     public function the_session_will_be_deleted_after_visiting_the_receipt_page()
     {
-        Session::put('butik.cart', new Cart());
+        Session::put('butik.customer', new Customer);
         $order = create(Order::class, ['status' => 'paid'])->first();
 
-        $this->assertTrue(Session::has('butik.cart'));
+        $this->assertTrue(Session::has('butik.customer'));
 
         $route = URL::temporarySignedRoute('butik.payment.receipt', now()->addMinute(), ['order' => $order->id]);
-        $this->get($route)->assertSessionMissing('butik.cart');
+        $this->get($route)->assertSessionMissing('butik.customer');
     }
 
     /** @test */
     public function the_session_wont_be_deleted_in_case_the_payment_is_open()
     {
-        Session::put('butik.cart', new Cart());
+        Session::put('butik.customer', new Customer);
         $order = create(Order::class, ['status' => 'open'])->first();
 
-        $this->assertTrue(Session::has('butik.cart'));
+        $this->assertTrue(Session::has('butik.customer'));
 
         $route = URL::temporarySignedRoute('butik.payment.receipt', now()->addMinute(), ['order' => $order->id]);
-        $this->get($route)->assertSessionHas('butik.cart');
+        $this->get($route)->assertSessionHas('butik.customer');
     }
 }
