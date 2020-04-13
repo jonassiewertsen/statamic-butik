@@ -3,6 +3,7 @@
 namespace Jonassiewertsen\StatamicButik\Http\Middleware;
 
 use Closure;
+use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 
 class ValidateExpressCheckoutRoute
@@ -19,25 +20,25 @@ class ValidateExpressCheckoutRoute
             return redirect($product->showUrl);
         }
 
-        if (! session()->has('butik.cart') ) {
+        if (! session()->has('butik.customer') ) {
             return redirect()->route('butik.shop');
         }
 
-        $cart = session()->get('butik.cart');
+        $customer = session()->get('butik.customer');
 
-        if (! $this->customerDataComplete($cart)) {
+        if (! $this->customerDataComplete($customer)) {
             return redirect($product->ExpressDeliveryUrl);
         }
 
         return $next($request);
     }
 
-    private function customerDataComplete($cart): bool {
+    private function customerDataComplete(Customer $customer): bool {
         $keys = collect(['name', 'mail', 'country', 'address1', 'city', 'zip']);
 
         foreach ($keys as $key) {
             // Return false in case one of the keys does not exist inside the session data
-            if (empty($cart->customer->$key)) {
+            if (empty($customer->$key)) {
                 return false;
             }
         }

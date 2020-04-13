@@ -3,29 +3,26 @@
 namespace Tests\Shop;
 
 use Illuminate\Support\Facades\Session;
-use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class ExpressCheckoutPaymentTestTest extends TestCase
 {
-    protected Cart      $cart;
+    protected Customer  $customer;
     protected Product   $product;
 
     public function setUp(): void {
         parent::setUp();
 
-        $this->cart     = (new Cart)->customer($this->createUserData());
+        $this->customer = new Customer($this->createUserData());
         $this->product  = create(Product::class)->first();
     }
 
     /** @test */
     public function translations_will_be_displayed()
     {
-        $this->withoutExceptionhandling();
-
-        Session::put('butik.cart', $this->cart->customer($this->createUserData()));
+        Session::put('butik.customer', $this->customer);
 
         $this->get(route('butik.checkout.express.payment', $this->product))
             ->assertOk()
@@ -47,7 +44,7 @@ class ExpressCheckoutPaymentTestTest extends TestCase
 
     /** @test */
     public function the_payment_process_button_to_redirect_to_mollies_will_be_shown(){
-        Session::put('butik.cart', $this->cart->customer($this->createUserData()));
+        Session::put('butik.customer', $this->customer);
 
         $this->get(route('butik.checkout.express.payment', $this->product))
             ->assertOk()
@@ -56,10 +53,9 @@ class ExpressCheckoutPaymentTestTest extends TestCase
 
     /** @test */
     public function the_payment_page_will_redirect_if_the_product_is_sold_out() {
-        $this->withoutExceptionHandling();
         $this->product->update(['stock' => 0]);
 
-        Session::put('butik.cart', $this->cart);
+        Session::put('butik.customer', $this->customer);
 
         $this->get(route('butik.checkout.express.payment', $this->product))
             ->assertRedirect($this->product->showUrl);
@@ -68,7 +64,7 @@ class ExpressCheckoutPaymentTestTest extends TestCase
     /** @test */
     public function the_payment_page_will_redirect_if_the_product_is_not_available() {
         $this->product->update(['available' => false]);
-        Session::put('butik.cart', $this->cart);
+        Session::put('butik.customer', $this->customer);
 
         $this->get(route('butik.checkout.express.payment', $this->product))
             ->assertRedirect($this->product->showUrl);
@@ -85,7 +81,7 @@ class ExpressCheckoutPaymentTestTest extends TestCase
     /** @test */
     public function the_payment_page_will_redirect_back_without_a_name() {
         $this->withoutExceptionHandling();
-        Session::put('butik.cart', $this->cart->customer($this->createUserData('name', '')));
+        Session::put('butik.customer', new Customer($this->createUserData('name', '')));
 
         $this->get(route('butik.checkout.express.payment', $this->product))
             ->assertRedirect($this->product->expressDeliveryUrl);
@@ -93,7 +89,7 @@ class ExpressCheckoutPaymentTestTest extends TestCase
 
     /** @test */
     public function the_payment_page_will_redirect_back_without_a_mail() {
-        Session::put('butik.cart', $this->cart->customer($this->createUserData('mail', '')));
+        Session::put('butik.customer', new Customer($this->createUserData('mail', '')));
 
         $this->get(route('butik.checkout.express.payment', $this->product))
             ->assertRedirect($this->product->expressDeliveryUrl);
@@ -101,7 +97,7 @@ class ExpressCheckoutPaymentTestTest extends TestCase
 
     /** @test */
     public function the_payment_page_will_redirect_back_without_a_country() {
-        Session::put('butik.cart', $this->cart->customer($this->createUserData('country', '')));
+        Session::put('butik.customer', new Customer($this->createUserData('country', '')));
 
         $this->get(route('butik.checkout.express.payment', $this->product))
             ->assertRedirect($this->product->expressDeliveryUrl);
@@ -109,7 +105,7 @@ class ExpressCheckoutPaymentTestTest extends TestCase
 
     /** @test */
     public function the_payment_page_will_redirect_back_without_a_address_1() {
-        Session::put('butik.cart', $this->cart->customer($this->createUserData('address1', '')));
+        Session::put('butik.customer', new Customer($this->createUserData('address1', '')));
 
         $this->get(route('butik.checkout.express.payment', $this->product))
             ->assertRedirect($this->product->expressDeliveryUrl);
@@ -117,7 +113,7 @@ class ExpressCheckoutPaymentTestTest extends TestCase
 
     /** @test */
     public function the_payment_page_will_redirect_back_without_a_city() {
-        Session::put('butik.cart', $this->cart->customer($this->createUserData('city', '')));
+        Session::put('butik.customer', new Customer($this->createUserData('city', '')));
 
         $this->get(route('butik.checkout.express.payment', $this->product))
             ->assertRedirect($this->product->expressDeliveryUrl);
@@ -125,7 +121,7 @@ class ExpressCheckoutPaymentTestTest extends TestCase
 
     /** @test */
     public function the_payment_page_will_redirect_back_without_a_zip() {
-        Session::put('butik.cart', $this->cart->customer($this->createUserData('zip', '')));
+        Session::put('butik.customer', new Customer($this->createUserData('zip', '')));
 
         $this->get(route('butik.checkout.express.payment', $this->product))
             ->assertRedirect($this->product->expressDeliveryUrl);
@@ -134,7 +130,7 @@ class ExpressCheckoutPaymentTestTest extends TestCase
     /** @test */
     public function The_express_payment_page_does_exist()
     {
-        Session::put('butik.cart', $this->cart->customer($this->createUserData()));
+        Session::put('butik.customer', $this->customer);
         $route = route('butik.checkout.express.payment', $this->product);
 
         $this->assertStatamicLayoutIs('butik::web.layouts.express-checkout', $route);
@@ -143,7 +139,7 @@ class ExpressCheckoutPaymentTestTest extends TestCase
 
     /** @test */
     public function the_product_information_will_be_displayed(){
-        Session::put('butik.cart', $this->cart);
+        Session::put('butik.customer', $this->customer);
 
         $this->get(route('butik.checkout.express.payment', $this->product))
             ->assertOk()
@@ -157,8 +153,8 @@ class ExpressCheckoutPaymentTestTest extends TestCase
 
     /** @test */
     public function customer_data_will_be_displayed_inside_the_view() {
-        Session::put('butik.cart', $this->cart);
-        $customer = (array) $this->cart->customer;
+        Session::put('butik.customer', $this->customer);
+        $customer = (array) $this->customer;
 
         $this->get(route('butik.checkout.express.payment', $this->product))
             ->assertSee($customer['name'])
@@ -170,8 +166,8 @@ class ExpressCheckoutPaymentTestTest extends TestCase
             ->assertSee($customer['country']);
     }
 
-    private function createUserData($key = null, $value = null): Customer {
-        $customer = (new Customer([
+    private function createUserData($key = null, $value = null): array {
+        $customer = [
             'country' => 'Germany',
             'name' => 'John Doe',
             'mail' => 'johndoe@mail.de',
@@ -181,10 +177,10 @@ class ExpressCheckoutPaymentTestTest extends TestCase
             'state_region' => '',
             'zip' => '24579',
             'phone' => '013643-23837'
-        ]));
+        ];
 
         if ($key !== null || $value !== null) {
-            $customer->$key = $value;
+            $customer[$key] = $value;
         }
 
         return $customer;
