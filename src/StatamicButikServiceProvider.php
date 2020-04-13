@@ -9,6 +9,7 @@ use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Jonassiewertsen\StatamicButik\Policies\ProductPolicy;
 use Jonassiewertsen\StatamicButik\Policies\ShippingPolicy;
 use Jonassiewertsen\StatamicButik\Policies\TaxPolicy;
+use Livewire\Livewire;
 use Mollie\Laravel\MollieServiceProvider;
 use Statamic\Facades\CP\Nav;
 use Statamic\Facades\Permission;
@@ -63,6 +64,8 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     public function boot()
     {
          parent::boot();
+
+         Livewire::component('butik::shop', \Jonassiewertsen\StatamicButik\Http\Livewire\Shop::class);
 
          $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'butik');
          $this->loadViewsFrom(__DIR__.'/../resources/views', 'butik');

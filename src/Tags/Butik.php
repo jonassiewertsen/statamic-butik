@@ -15,6 +15,7 @@ class Butik extends StatamicTags
             return null;
         }
 
+        // TODO: Can be removed?
         $products->transform(function($product) {
             return [
                 'title'           => $product->title,

@@ -1,12 +1,13 @@
 <!doctype html>
-<html lang="{{ site_short_locale }}">
+<html lang=""><!-- TODO: lang missing -->
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>{{ title }} | {{ site_name }}</title>
+        <title>TITLE</title><!-- Title missing -->
 
         <link rel="stylesheet" href="/vendor/butik/css/statamic-butik.css">
+        @livewireStyles
     </head>
 
     <body>
@@ -26,7 +27,7 @@
 
             <main class="b-w-full">
 
-                {{ template_content }}
+                @yield('content')
 
             </main>
         </div>
@@ -42,5 +43,7 @@
                 <a class="b-mx-6 b-mb-2" href="#">AGB</a>
             </div>
         </footer>
+
+        @livewireScripts
     </body>
 </html>
