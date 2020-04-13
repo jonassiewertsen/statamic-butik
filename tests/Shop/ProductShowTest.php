@@ -33,7 +33,7 @@ class ProductShowTest extends TestCase
             ->assertSee($this->product->base_price)
             ->assertSee($this->product->total_price)
             ->assertSee($this->product->shippin_amount)
-            ->assertSee(__('butik::cart.add'))
+//            ->assertSee(__('butik::cart.add'))
             ->assertDontSee('sold out');
     }
 
