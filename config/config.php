@@ -93,5 +93,5 @@ return [
     'template_express-checkout-delivery' => 'butik::web.checkout.express.delivery',
     'template_express-checkout-payment'  => 'butik::web.checkout.express.payment',
     'template_checkout-receipt'          => 'butik::web.checkout.receipt',
-    'template_checkout-receipt-invalid'  => 'butik::web.checkout.invalidReceipt',
+    'template_checkout-receipt-invalid'  => 'butik::web.checkout.invalid-receipt',
 ];

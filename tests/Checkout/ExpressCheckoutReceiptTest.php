@@ -40,8 +40,9 @@ class ExpressCheckoutReceiptTest extends TestCase
         $order = create(Order::class)->first();
         $route = URL::temporarySignedRoute('butik.payment.receipt', now()->addMinute(), ['order' => $order->id]);
 
-        $this->assertStatamicLayoutIs('butik::web.layouts.express-checkout', $route);
-        $this->assertStatamicTemplateIs('butik::web.checkout.receipt', $route);
+        $this->get($route)
+            ->assertOk()
+            ->assertViewIs('butik::web.checkout.receipt');
     }
 
     /** @test */

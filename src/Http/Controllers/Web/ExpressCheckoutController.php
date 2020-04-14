@@ -54,23 +54,7 @@ class ExpressCheckoutController extends WebController
             Session::forget('butik.customer');
         }
 
-        return (new \Statamic\View\View())
-            ->layout(config('butik.layout_checkout-receipt'))
-            ->template(config('butik.template_checkout-receipt'))
-            ->with(
-                [
-                    'name'         => $customer->name,
-                    'mail'         => $customer->mail,
-                    'address1'     => $customer->address1,
-                    'address2'     => $customer->address2,
-                    'zip'          => $customer->zip,
-                    'city'         => $customer->city,
-                    'country'      => $customer->country,
-                    'id'           => $order->id,
-                    'status'       => $order->status,
-                    'method'       => $order->method,
-                    'total_amount' => $order->total_amount,
-                ]);
+        return view(config('butik.template_checkout-receipt'), compact('customer', 'order'));
     }
 
     private function transactionSuccessful()
@@ -115,8 +99,6 @@ class ExpressCheckoutController extends WebController
     }
 
     private function showInvalidReceipt() {
-        return (new \Statamic\View\View())
-            ->layout(config('butik.layout_checkout-receipt'))
-            ->template(config('butik.template_checkout-receipt-invalid'));
+        return view(config('butik.template_checkout-receipt-invalid'));
     }
 }
