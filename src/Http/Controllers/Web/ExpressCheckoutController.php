@@ -14,15 +14,9 @@ class ExpressCheckoutController extends WebController
 {
     public function delivery(Product $product)
     {
-        if (session()->has('butik.customer')) {
-            $customer = session('butik.customer');
-            $viewData = array_merge((array) $customer, $product->toArray());
-        }
+        $customer = session('butik.customer');
 
-        return (new \Statamic\View\View())
-            ->layout(config('butik.layout_express-checkout-delivery'))
-            ->template(config('butik.template_express-checkout-delivery'))
-            ->with($viewData ?? $product->toArray());
+        return view(config('butik.template_express-checkout-delivery'), compact('customer', 'product'));
     }
 
     public function saveCustomerData(Product $product)
@@ -38,17 +32,9 @@ class ExpressCheckoutController extends WebController
 
     public function payment(Product $product)
     {
-        $customer = session()->get('butik.customer');
+        $customer = session('butik.customer');
 
-        $viewData = array_merge(
-            $product->toArray(),
-            (array) $customer
-        );
-
-        return (new \Statamic\View\View())
-            ->layout(config('butik.layout_express-checkout-payment'))
-            ->template(config('butik.template_express-checkout-payment'))
-            ->with($viewData);
+        return view(config('butik.template_express-checkout-payment'), compact('customer', 'product'));
     }
 
     public function receipt(Request $request, $order)
