@@ -22,7 +22,7 @@
                     @else
                         <div class="b-mt-2">
                             <s>{{ $product->title }}</s>
-                            <span class="b-text-sm b-ml-2">sold out</span>
+                            <span class="b-text-sm b-ml-2">{{ __('butik::product.sold_out') }}</span>
                         </div>
                     @endif
 
