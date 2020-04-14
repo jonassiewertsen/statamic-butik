@@ -26,11 +26,6 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         'web' => __DIR__.'/../routes/web.php',
     ];
 
-    protected $tags = [
-        \Jonassiewertsen\StatamicButik\Tags\Butik::class,
-        \Jonassiewertsen\StatamicButik\Tags\Error::class,
-    ];
-
     protected $widgets = [
         \Jonassiewertsen\StatamicButik\Widgets\Orders::class,
     ];
