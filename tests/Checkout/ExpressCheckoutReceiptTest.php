@@ -13,6 +13,7 @@ class ExpressCheckoutReceiptTest extends TestCase
     /** @test */
     public function the_invalid_receipt_layout_will_be_loaded_in_case_the_url_is_not_signed()
     {
+        $this->withoutExceptionhandling();
         $route = route('butik.payment.receipt', ['order' => 'wrong_order_id']);
 
         $this->get($route)
@@ -23,6 +24,7 @@ class ExpressCheckoutReceiptTest extends TestCase
     /** @test */
     public function the_invalid_receipt_layout_will_be_loaded_in_case_the_order_does_not_exist()
     {
+        $this->withoutExceptionhandling();
         $route = URL::temporarySignedRoute('butik.payment.receipt', now()->addMinute(), ['order' => 'not_existing_id']);
 
          $this->get($route)

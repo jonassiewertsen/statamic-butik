@@ -18,17 +18,17 @@ class ProductOverviewTest extends TestCase
             ->assertViewIs(config('butik.template_product-index'));
     }
 
-    // TODO: Get tests up and running with Livewire
-    /** @test */
-    public function all_product_information_will_be_shown()
-    {
+//      TODO: Get tests up and running with Livewire
+//    /** @test */
+//    public function all_product_information_will_be_shown()
+//    {
 //        $product = create(Product::class, [], 10)->first();
-
+//
 //        Livewire::test(Shop::class)
 //            ->assertSee($product->total_price)
 //            ->assertSee($product->show_url)
 //            ->assertDontSee('sold out');
-    }
+//    }
 
 //    /** @test */
 //    public function a_product_out_of_stock_will_be_shown_as_sold_out()
