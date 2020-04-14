@@ -26,8 +26,7 @@
                         </div>
                     @endif
 
-                    <div class="b-text-gray-500 b-text-sm">{{ $product->base_price }}</div>
-                    <!-- TODO: Get the price symbol and total price back -->
+                    <div class="b-text-gray-500 b-text-sm">{{ $product->currency }} {{ $product->base_price }}</div>
 
                 </a>
             </div>
