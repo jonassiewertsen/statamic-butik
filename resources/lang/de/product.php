@@ -21,6 +21,7 @@ return [
    'slug'               => 'Slug',
    'status'             => 'Status',
    'stock'              => 'Auf Lager',
+   'sold_out'           => 'Ausverkauft',
    'stock_unlimited'    => 'Unendlich verfügbar',
    'slug_description'   => 'Der Slug dient zur Identifizierung des Produktes, darf nicht doppelt vergeben werden und keine Leerzeichen enthalten.',
    'total'              => 'Gesamt',
