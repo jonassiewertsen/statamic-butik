@@ -27,7 +27,7 @@ class ExpressCheckoutPaymentTestTest extends TestCase
         $this->get(route('butik.checkout.express.payment', $this->product))
             ->assertOk()
             ->assertSee('Delivery')
-            ->assertSee('Review & Payment')
+            ->assertSee('Review &amp; Payment')
             ->assertSee('Receipt')
             ->assertSee('Subtotal')
             ->assertSee('Shipping')
@@ -48,7 +48,7 @@ class ExpressCheckoutPaymentTestTest extends TestCase
 
         $this->get(route('butik.checkout.express.payment', $this->product))
             ->assertOk()
-            ->assertSee(route('butik.payment.process'));
+            ->assertSee(route('butik.payment.process', $this->product));
     }
 
     /** @test */
@@ -133,8 +133,7 @@ class ExpressCheckoutPaymentTestTest extends TestCase
         Session::put('butik.customer', $this->customer);
         $route = route('butik.checkout.express.payment', $this->product);
 
-        $this->assertStatamicLayoutIs('butik::web.layouts.express-checkout', $route);
-        $this->assertStatamicTemplateIs('butik::web.checkout.express.payment', $route);
+        $this->get($route)->assertOk();
     }
 
     /** @test */
