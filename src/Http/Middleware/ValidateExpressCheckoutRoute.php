@@ -11,26 +11,22 @@ class ValidateExpressCheckoutRoute
     public function handle($request, Closure $next)
     {
         if (! $productSlug = $request->segment(4)) {
-            dd('1');
             return redirect()->route('butik.shop');
         }
 
         $product = Product::findOrFail($productSlug);
 
         if ($product->soldOut || ! $product->available) {
-            dd('2');
             return redirect($product->showUrl);
         }
 
         if (! session()->has('butik.customer') ) {
-            dd('3');
             return redirect()->route('butik.shop');
         }
 
         $customer = session()->get('butik.customer');
 
         if (! $this->customerDataComplete($customer)) {
-            dd('4');
             return redirect($product->ExpressDeliveryUrl);
         }
 
