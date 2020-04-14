@@ -21,14 +21,21 @@ class ExpressCheckoutDeliveryTest extends TestCase
     /** @test */
     public function The_express_delivery_page_does_exist()
     {
+        $customer = new Customer($this->createUserData());
+        Session::put('butik.customer', $customer);
+
         $route = route('butik.checkout.express.delivery', $this->product);
 
-        $this->assertStatamicLayoutIs('butik::web.layouts.express-checkout', $route);
-        $this->assertStatamicTemplateIs('butik::web.checkout.express.delivery', $route);
+        $this->get($route)
+            ->assertOk()
+            ->assertViewIs('butik::web.checkout.express.delivery');
     }
 
     /** @test */
     public function the_product_information_will_be_displayed(){
+        $customer = new Customer($this->createUserData());
+        Session::put('butik.customer', $customer);
+
         $this->get(route('butik.checkout.express.delivery', $this->product))
             ->assertSee($this->product->title)
             ->assertSee($this->product->base_price)
@@ -39,9 +46,12 @@ class ExpressCheckoutDeliveryTest extends TestCase
 
     /** @test */
     public function translations_will_be_displayed(){
+        $customer = new Customer($this->createUserData());
+        Session::put('butik.customer', $customer);
+
         $this->get(route('butik.checkout.express.delivery', $this->product))
             ->assertSee('Delivery')
-            ->assertSee('Review & Payment')
+            ->assertSee('Review &amp; Payment')
             ->assertSee('Receipt')
             ->assertSee('Express Checkout')
             ->assertSee('Subtotal')
@@ -208,16 +218,16 @@ class ExpressCheckoutDeliveryTest extends TestCase
     /** @test */
     public function existing_data_from_the_session_will_be_passed_to_the_delivery_view() {
         Session::put('butik.customer', new Customer($this->createUserData()));
-        $page = $this->get(route('butik.checkout.express.delivery', $this->product))->getOriginalContent()->data();
+        $page = $this->get(route('butik.checkout.express.delivery', $this->product))->content();
         $customer = session('butik.customer');
 
-        $this->assertEquals($page['name'], $customer->name);
-        $this->assertEquals($page['country'], $customer->country);
-        $this->assertEquals($page['mail'], $customer->mail);
-        $this->assertEquals($page['address1'], $customer->address1);
-        $this->assertEquals($page['address2'], $customer->address2);
-        $this->assertEquals($page['city'], $customer->city);
-        $this->assertEquals($page['zip'], $customer->zip);
+        $this->assertStringContainsString($customer->name, $page);
+        $this->assertStringContainsString($customer->country, $page);
+        $this->assertStringContainsString($customer->mail, $page);
+        $this->assertStringContainsString($customer->address1, $page);
+        $this->assertStringContainsString($customer->address2, $page);
+        $this->assertStringContainsString($customer->city, $page);
+        $this->assertStringContainsString($customer->zip, $page);
     }
 
     /** @test */

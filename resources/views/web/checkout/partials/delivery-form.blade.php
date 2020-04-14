@@ -20,7 +20,7 @@
     </label>
 
     <div class="b-mb-6 b-text-gray-600 b-text-xs">
-        {{ __('butik::payment.account_creation') }}
+        {!! __('butik::payment.account_creation') !!}
     </div>
 
     <h2 class="b-text-md b-uppercase">{{ __('butik::payment.delivery_address') }}</h2>
