@@ -19,7 +19,7 @@ return [
    'base_price'         => 'Base Price',
    'images'             => 'Images',
    'slug'               => 'Slug',
-   'sold_out'           => 'Sold Out',
+   'sold_out'           => 'Sold out',
    'status'             => 'Status',
    'stock'              => 'Stock',
    'stock_unlimited'    => 'Unlimited',

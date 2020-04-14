@@ -80,7 +80,7 @@ class Product extends ButikModel
     /**
      * Will return the shipping price
      */
-    public function getShippingAmountAttribute()
+    public function getShippingAmountAttribute($value)
     {
         return $this->shipping->price;
     }
@@ -109,20 +109,20 @@ class Product extends ButikModel
     /**
      * Return the price with currency appended
      */
-    public function getBasePriceWithCurrencySymbolAttribute($value)
-    {
-        return config('butik.currency_symbol').' '.$this->base_price;
-    }
-
-    /**
-     * Return the price with currency appended
-     */
     public function getSoldOutAttribute()
     {
         if ($this->stock_unlimited) {
             return false;
         }
         return $this->stock == 0;
+    }
+
+    /**
+     * Return the price with currency appended
+     */
+    public function getCurrencyAttribute()
+    {
+        return config('butik.currency_symbol');
     }
 
     /**

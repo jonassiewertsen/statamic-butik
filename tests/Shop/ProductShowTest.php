@@ -18,10 +18,9 @@ class ProductShowTest extends TestCase
     /** @test */
     public function the_view_of_a_single_product_does_exist()
     {
-        $route = route('butik.shop.product', $this->product);
-
-        $this->assertStatamicLayoutIs('butik::web.layouts.shop', $route);
-        $this->assertStatamicTemplateIs('butik::web.shop.show', $route);
+        $this->get(route('butik.shop.product', $this->product))
+            ->assertOk()
+            ->assertViewIs(config('butik.template_product-show'));
     }
 
     /** @test */
@@ -51,7 +50,7 @@ class ProductShowTest extends TestCase
     {
         $product = create(Product::class, ['stock' => 0])->first();
         $this->get(route('butik.shop.product', $product))
-            ->assertSee('sold out');
+            ->assertSee(__('butik::product.sold_out'));
     }
 
     /** @test */
