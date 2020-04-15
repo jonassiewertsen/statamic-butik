@@ -6,7 +6,7 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title>Shop | {{ config('app.name') }}</title>
 
-        {{-- Feel free to remove this Butik css completely to create your own look. --}}
+        {{-- Feel free to reduce this Butik css completely to create your own look. --}}
         <link rel="stylesheet" href="/vendor/butik/css/statamic-butik.css">
 
         @livewireStyles

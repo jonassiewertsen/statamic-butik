@@ -29,11 +29,14 @@
             <div class="b-text-gray-700 b-text-3xl b-mt-2">{{ $product->total_price }} {{ $product->currency }} {{ __('butik::product.total') }}</div>
 
             @if ($product->stock_unlimited || $product->stock  > 0)
-                <a class="b-bg-gray-900 b-block b-mt-5 b-py-2 b-rounded b-text-center b-text-white b-text-xl hover:b-bg-gray-800"
-                   href="{{ $product->express_delivery_url }}"
-                >
-                    {{ __('butik::payment.express_checkout') }}
-                </a>
+                <div class="b-flex b-mt-5">
+                    <a class="b-bg-gray-900 b-flex-grow b-block b-py-2 b-rounded b-text-center b-text-white b-text-xl hover:b-bg-gray-800"
+                       href="{{ $product->express_delivery_url }}"
+                    >
+                        {{ __('butik::payment.express_checkout') }}
+                    </a>
+                    @livewire('butik::add-to-cart', ['product' => $product])
+                </div>
             @endif
 
             @if ($product->description )

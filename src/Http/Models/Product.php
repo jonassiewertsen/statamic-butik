@@ -21,6 +21,7 @@ class Product extends ButikModel
         'stock_unlimited' => 'boolean',
     ];
 
+    // TODO: still neded?
     protected $appends = [
         'editUrl',
         'showUrl',

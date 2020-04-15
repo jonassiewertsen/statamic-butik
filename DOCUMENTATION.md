@@ -70,7 +70,7 @@ Let's say you want to swap the layout for the product overview with your own lay
 ```
 
 The `butik::` prefix will ask Statamic, to look into the vendor files. If wanted, you can make some changes to the existing files inside `resources/views/vendor/statamic-butik/`. 
-If you want to use your own files, remove the prefix to start inside the resources/views directory.
+If you want to use your own files, reduce the prefix to start inside the resources/views directory.
 
 ### Templates
 

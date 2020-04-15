@@ -61,6 +61,8 @@ class StatamicButikServiceProvider extends AddonServiceProvider
          parent::boot();
 
          Livewire::component('butik::shop', \Jonassiewertsen\StatamicButik\Http\Livewire\Shop::class);
+         Livewire::component('butik::cart', \Jonassiewertsen\StatamicButik\Http\Livewire\Cart::class);
+         Livewire::component('butik::add-to-cart', \Jonassiewertsen\StatamicButik\Http\Livewire\AddToCart::class);
 
          $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'butik');
          $this->loadViewsFrom(__DIR__.'/../resources/views', 'butik');
