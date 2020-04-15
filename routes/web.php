@@ -10,7 +10,7 @@
 Route::prefix(config('butik.route_shop-prefix'))->name('butik.')->middleware('web')->namespace('\\Jonassiewertsen\\StatamicButik\\Http\\Controllers\\Web\\')->group(function() {
     Route::get('/', 'ShopController@index')->name('shop');
 
-//    Route::get(config('butik.route_cart'), 'CartController@index')->name('cart');
+    Route::get(config('butik.route_cart'), 'CartController@index')->name('cart');
 
     Route::get(config('butik.route_payment-receipt'), 'ExpressCheckoutController@receipt')->name('payment.receipt');
 

@@ -10,22 +10,22 @@ use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class CartTest extends TestCase
 {
-//    protected Cart      $cart;
-//    protected Product   $product;
-//
-//    public function setUp(): void
-//    {
-//        parent::setUp();
-//
-//        $this->product = create(Product::class)->first();
-//    }
-//
-//    /** @test */
-//    public function the_cart_route_does_exist() {
-//        $this->get(route('butik.cart'))
-//            ->assertOk()
-//            ->assertSee('Shopping cart');
-//    }
+    protected Product   $product;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->product = create(Product::class)->first();
+    }
+
+    /** @test */
+    public function the_cart_route_does_exist() {
+        $this->withoutExceptionhandling();
+
+        $this->get(route('butik.cart'))
+            ->assertOk();
+    }
 //
 //    /** @test */
 //    public function the_cart_can_be_empty() {

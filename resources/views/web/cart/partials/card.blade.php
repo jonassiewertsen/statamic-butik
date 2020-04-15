@@ -1,9 +1,9 @@
 <div class="b-bg-gray-100 b-flex b-w-full b-rounded b-px-8 b-py-5 b-mb-6">
     <header class="b-w-40 b-w-1/5">
-        {{ partial src="butik::web.shop.partials.placeholder" }}
+        @include('butik::web.shop.partials.placeholder')
     </header>
     <section class="b-w-4/5 b-ml-12">
-        <h3 class="b-font-bold b-block b-mt-5 b-text-2xl">{{ name }}</h3>
+        <h3 class="b-font-bold b-block b-mt-5 b-text-2xl">{{ $item->name }}</h3>
 
         <hr class="b-border-white b-my-3">
 
@@ -13,7 +13,11 @@
 
         <footer class="b-flex b-justify-end b-items-center">
             <span class="">$ 236</span>
-            <input class="b-ml-10 b-border b-rounded b-border-gray-900 b-px-2 b-py-1 b-w-12 b-bg-gray-100" type="number" value="1">
+            <figure class="b-ml-10">
+                <button wire:click="reduce('{{ $item->id }}')" class="b-bg-gray-400 b-px-4 b-py-1 b-rounded-full">-</button>
+                <span class="b-bg-gray-400 b-px-4 b-py-1 b-rounded-full">{{ $item->quantity }}</span>
+                <button wire:click="add('{{ $item->id }}')" class="b-bg-gray-400 b-px-4 b-py-1 b-rounded-full">+</button>
+            </figure>
             <strong class="b-ml-10">$ 236</strong>
         </footer>
     </section>
