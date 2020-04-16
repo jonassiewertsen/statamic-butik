@@ -5,9 +5,15 @@ namespace Tests\Unit;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Money\Currencies\ISOCurrencies;
+use Money\Currency;
+use Money\Formatter\DecimalMoneyFormatter;
+use Money\Money;
 
 class ItemTest extends TestCase
 {
+    use \Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
+
     protected Product $product;
 
     public function setUp(): void {
@@ -89,8 +95,11 @@ class ItemTest extends TestCase
     public function multiple_prices_will_be_added_up_by_the_given_quantity()
     {
         $item = new Item($this->product);
-        $item->quantity = 3;
+        $item->quantity(3);
 
-        $this->assertEquals($this->product->totalPrice * 3, $item->total);
+        $productPrice = $this->makeAmountSaveable($this->product->totalPrice);
+        $total = $this->makeAmountHuman($productPrice * 3);
+
+        $this->assertEquals($total, $item->totalPrice());
     }
 }
