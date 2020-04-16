@@ -76,4 +76,21 @@ class ItemTest extends TestCase
 
         $this->assertEquals($item->quantity, 1);
     }
+
+    /** @test */
+    public function an_item_has_a_total_price()
+    {
+        $item = new Item($this->product);
+
+        $this->assertEquals($this->product->totalPrice, $item->total);
+    }
+
+    /** @test */
+    public function multiple_prices_will_be_added_up_by_the_given_quantity()
+    {
+        $item = new Item($this->product);
+        $item->quantity = 3;
+
+        $this->assertEquals($this->product->totalPrice * 3, $item->total);
+    }
 }

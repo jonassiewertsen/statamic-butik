@@ -28,11 +28,17 @@ class Item
      */
     public Int $quantity;
 
+    /**
+     * Will return the total price of the item
+     */
+    public string $total;
+
     public function __construct(Product $product)
     {
         $this->id           = $product->slug;
         $this->name         = $product->title;
         $this->product      = $product;
+        $this->total        = $product->totalPrice;
         $this->quantity     = 1;
     }
 
