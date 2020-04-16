@@ -5,7 +5,6 @@
     <section class="b-flex b-flex-col b-justify-between b-ml-12 b-w-4/5">
         <div>
             <h3 class="b-font-bold b-block b-mt-5 b-text-2xl">{{ $item->name }}</h3>
-
             @if ($item->product->description)
                 <hr class="b-border-white b-my-3">
                 <p>{{ $item->product->description }}</p>
@@ -15,13 +14,13 @@
         </div>
 
         <footer class="b-flex b-justify-end b-items-center">
-            <span class="">$ 236</span>
+            <span class="">$ {{ $item->singlePrice() }}</span>
             <figure class="b-flex b-items-center b-ml-10">
                 <button wire:click="reduce('{{ $item->id }}')" class="b-bg-gray-300 b-flex b-font-bold b-h-8 b-justify-center b-py-1 b-rounded-full b-text-gray-600 b-w-8 hover:b-bg-gray-400">-</button>
-                <span class="b-px-3">{{ $item->quantity }}</span>
+                <span class="b-px-3">{{ $item->getQuantity() }}</span>
                 <button wire:click="add('{{ $item->id }}')" class="b-bg-gray-300 b-flex b-font-bold b-h-8 b-justify-center b-py-1 b-rounded-full b-text-gray-600 b-w-8 hover:b-bg-gray-400">+</button>
             </figure>
-            <strong class="b-ml-10">$ 236</strong>
+            <strong class="b-ml-10">$ {{ $item->totalPrice() }}</strong>
         </footer>
     </section>
 </div>

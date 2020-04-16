@@ -31,17 +31,17 @@ class CartTest extends TestCase
     {
         Cart::add($this->product);
 
-        $this->assertEquals(1, Cart::get()->first()->quantity);
+        $this->assertEquals(1, Cart::get()->first()->getQuantity());
     }
 
     /** @test */
     public function the_quanitity_will_be_increase_if_the_product_already_has_been_added()
     {
         Cart::add($this->product);
-        $this->assertEquals(1, Cart::get()->first()->quantity);
+        $this->assertEquals(1, Cart::get()->first()->getQuantity());
 
         Cart::add($this->product);
-        $this->assertEquals(2, Cart::get()->first()->quantity);
+        $this->assertEquals(2, Cart::get()->first()->getQuantity());
     }
 
     /** @test */
@@ -59,10 +59,10 @@ class CartTest extends TestCase
     {
         Cart::add($this->product);
         Cart::add($this->product);
-        $this->assertEquals(2, Cart::get()->first()->quantity);
+        $this->assertEquals(2, Cart::get()->first()->getQuantity());
 
         Cart::reduce($this->product);
-        $this->assertEquals(1, Cart::get()->first()->quantity);
+        $this->assertEquals(1, Cart::get()->first()->getQuantity());
     }
 
     /** @test */
@@ -70,7 +70,7 @@ class CartTest extends TestCase
     {
         Cart::add($this->product);
         Cart::add($this->product);
-        $this->assertEquals(2, Cart::get()->first()->quantity);
+        $this->assertEquals(2, Cart::get()->first()->getQuantity());
 
         Cart::remove($this->product);
         $this->assertFalse(Cart::get()->contains('id', $this->product->slug));
@@ -81,7 +81,7 @@ class CartTest extends TestCase
     {
         Cart::add($this->product);
         Cart::add($this->product);
-        $this->assertEquals(2, Cart::get()->first()->quantity);
+        $this->assertEquals(2, Cart::get()->first()->getQuantity());
 
         Cart::clear();
         $this->assertTrue((Cart::get() == collect()));

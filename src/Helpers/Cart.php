@@ -37,7 +37,7 @@ class Cart {
 
         static::$cart = static::$cart->filter(function($item) use ($product) {
             // If the quanitity is higher then one, it will only decrease
-            if ($item->id === $product->slug && $item->quantity > 1) {
+            if ($item->id === $product->slug && $item->getQuantity() > 1) {
                $item->decrease();
                return true;
             }

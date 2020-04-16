@@ -4,15 +4,12 @@ namespace Tests\Unit;
 
 use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
-use Money\Currencies\ISOCurrencies;
-use Money\Currency;
-use Money\Formatter\DecimalMoneyFormatter;
-use Money\Money;
 
 class ItemTest extends TestCase
 {
-    use \Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
+    use MoneyTrait;
 
     protected Product $product;
 
@@ -51,7 +48,7 @@ class ItemTest extends TestCase
     {
         $item = new Item($this->product);
 
-        $this->assertEquals($item->quantity, 1);
+        $this->assertEquals($item->getQuantity(), 1);
     }
 
     /** @test */
@@ -60,18 +57,18 @@ class ItemTest extends TestCase
         $item = new Item($this->product);
         $item->increase();
 
-        $this->assertEquals($item->quantity, 2);
+        $this->assertEquals($item->getQuantity(), 2);
     }
 
     /** @test */
     public function an_item_can_be_decreased()
     {
         $item = new Item($this->product);
-        $item->quantity = 2;
+        $item->setQuantity(2);
 
         $item->decrease();
 
-        $this->assertEquals($item->quantity, 1);
+        $this->assertEquals($item->getQuantity(), 1);
     }
 
     /** @test */
@@ -80,7 +77,7 @@ class ItemTest extends TestCase
         $item = new Item($this->product);
         $item->decrease();
 
-        $this->assertEquals($item->quantity, 1);
+        $this->assertEquals($item->getQuantity(), 1);
     }
 
     /** @test */
@@ -88,14 +85,14 @@ class ItemTest extends TestCase
     {
         $item = new Item($this->product);
 
-        $this->assertEquals($this->product->totalPrice, $item->total);
+        $this->assertEquals($this->product->totalPrice, $item->totalPrice());
     }
 
     /** @test */
     public function multiple_prices_will_be_added_up_by_the_given_quantity()
     {
         $item = new Item($this->product);
-        $item->quantity(3);
+        $item->setQuantity(3);
 
         $productPrice = $this->makeAmountSaveable($this->product->totalPrice);
         $total = $this->makeAmountHuman($productPrice * 3);

@@ -28,12 +28,12 @@ class Item
     /**
      * The quanitity of this item in the shopping cart
      */
-    public Int $quantity;
+    private Int $quantity;
 
     /**
      * Will return the total price of the item
      */
-    private string $total;
+    private $total;
 
     public function __construct(Product $product)
     {
@@ -48,21 +48,28 @@ class Item
     public function increase()
     {
         $this->quantity++;
+        $this->updatePrice();
     }
 
     public function decrease()
     {
-        if ($this->quantity === 1) {
+        if ($this->getQuantity() === 1) {
             return;
         }
 
         $this->quantity--;
+        $this->updatePrice();
     }
 
-    public function quantity($quanitity): void
+    public function setQuantity(int $quanitity): void
     {
         $this->quantity = $quanitity;
-        $this->calculateTotalPrice();
+        $this->updatePrice();
+    }
+
+    public function getQuantity(): int
+    {
+        return $this->quantity;
     }
 
     public function totalPrice(): string
@@ -76,8 +83,13 @@ class Item
     }
 
     private function calculateTotalPrice() {
-        $price       = $this->makeAmountSaveable($this->product->totalPrice);
-        $this->total = $this->makeAmountHuman($price * $this->quantity);
-        return $this->total;
+        $price = $this->makeAmountSaveable($this->product->totalPrice);
+        return $this->makeAmountHuman($price * $this->quantity);
+
+    }
+
+    private function updatePrice(): void
+    {
+        $this->total = $this->calculateTotalPrice();
     }
 }
