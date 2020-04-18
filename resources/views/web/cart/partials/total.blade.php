@@ -4,13 +4,9 @@
     <hr class="b-border-gray-200 b-my-5">
 
     <div class="b-flex b-my-3 b-justify-between b-max-w-sm b-mx-auto">
-        <span>{{ __('butik::payment.subtotal') }}</span>
-        <span>CURRENCY 2345</span>
-    </div>
-
-    <div class="b-flex b-my-3 b-justify-between b-max-w-sm b-mx-auto">
-        <span>{{ __('butik::payment.shipping') }}</span>
-        <span>$$$$ {{ $total['shipping'] }}</span>
+{{--        <span>{{ __('butik::payment.shipping') }}</span>--}}
+        <span>Shipping</span>
+        <span>$ {{ $total['shipping'] }}</span>
     </div>
 
     <hr class="b-border-gray-200 b-my-5">
@@ -20,7 +16,7 @@
         <span class="b-font-black">$ {{ $total['price'] }}</span>
     </div>
     <div class="b-max-w-sm b-mx-auto b-pb-3 b-text-gray-500 b-text-right b-text-sm">
-        Including XXX % taxes (233 CURRENCY )
+        Including taxes
     </div>
 
 

@@ -13,7 +13,7 @@
     <body>
         <div class="b-max-w-6xl b-mx-auto">
             <header class="b-flex b-px-5 b-py-8 md:b-py-10">
-                <a class="b-w-full" href="/">
+                <a class="b-w-full" href="{{ route('butik.shop') }}">
                     <img class="b-w-3/5" style="max-width: 200px;" src="/vendor/butik/images/logo.svg">
                 </a>
                 <div class="b-w-2/5 b-flex b-justify-end">
