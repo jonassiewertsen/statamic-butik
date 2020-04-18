@@ -99,4 +99,16 @@ class ItemTest extends TestCase
 
         $this->assertEquals($total, $item->totalPrice());
     }
+
+    /** @test */
+    public function multiple_shipping_costs_will_be_added_up_by_the_given_quantity()
+    {
+        $item = new Item($this->product);
+        $item->setQuantity(3);
+
+        $productShipping = $this->makeAmountSaveable($this->product->shipping_amount);
+        $totalShipping = $this->makeAmountHuman($productShipping * 3);
+
+        $this->assertEquals($totalShipping, $item->totalShipping());
+    }
 }

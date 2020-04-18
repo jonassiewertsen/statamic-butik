@@ -10,7 +10,7 @@
 
     <div class="b-flex b-my-3 b-justify-between b-max-w-sm b-mx-auto">
         <span>{{ __('butik::payment.shipping') }}</span>
-        <span>CURRENCY 5</span>
+        <span>$$$$ {{ $total['shipping'] }}</span>
     </div>
 
     <hr class="b-border-gray-200 b-my-5">

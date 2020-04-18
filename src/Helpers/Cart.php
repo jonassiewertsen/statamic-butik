@@ -13,6 +13,7 @@ class Cart {
 
     public static $cart;
     private static $totalPrice;
+    private static $totalShipping;
     private static $totalItems;
 
     /**
@@ -93,6 +94,17 @@ class Cart {
         });
 
         return static::makeAmountHumanStatic(static::$totalPrice);
+    }
+
+    public static function totalShipping()
+    {
+        static::$cart = static::get();
+
+        static::$cart->each(function($item) {
+            static::$totalShipping += static::makeAmountSaveableStatic($item->totalShipping());
+        });
+
+        return static::makeAmountHumanStatic(static::$totalShipping);
     }
 
     public static function totalItems()
