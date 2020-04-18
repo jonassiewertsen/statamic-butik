@@ -27,7 +27,7 @@ class ExpressCheckoutDeliveryTest extends TestCase
 
         $this->get($route)
             ->assertOk()
-            ->assertViewIs('butik::web.checkout.express.delivery');
+            ->assertViewIs('butik::web.checkout.express-delivery');
     }
 
     /** @test */
