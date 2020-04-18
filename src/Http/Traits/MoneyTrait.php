@@ -16,4 +16,17 @@ trait MoneyTrait
     {
         return number_format(floatval($value) * 100, 0, '', '');
     }
+
+    public static function makeAmountHumanStatic($value) // TODO: Is there a better way?
+    {
+        $value = floatval($value) / 100;
+
+        $delimiter = config('butik.currency_delimiter');
+        return number_format($value, 2, $delimiter, '');
+    }
+
+    public static function makeAmountSaveableStatic($value) // TODO: Is there a better way?
+    {
+        return number_format(floatval($value) * 100, 0, '', '');
+    }
 }

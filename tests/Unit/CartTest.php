@@ -5,10 +5,13 @@ namespace Tests\Unit;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Helpers\Cart;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class CartTest extends TestCase
 {
+    use MoneyTrait;
+
     protected Product $product;
 
     public function setUp(): void {
@@ -85,5 +88,36 @@ class CartTest extends TestCase
 
         Cart::clear();
         $this->assertTrue((Cart::get() == collect()));
+    }
+
+    /** @test */
+    public function the_cart_has_a_total_price()
+    {
+     $product1 = factory(Product::class)->create();
+     $product2 = factory(Product::class)->create();
+
+        Cart::add($product1);
+        Cart::add($product2);
+
+        $item1 = Cart::get()->first();
+        $item2 = Cart::get()->last();
+
+        $calculatedPrice = $this->makeAmountSaveable($item1->totalPrice()) + $this->makeAmountSaveable($item2->totalPrice());
+        $calculatedPrice = $this->makeAmountHuman($calculatedPrice);
+
+        $this->assertEquals($calculatedPrice, Cart::totalPrice());
+    }
+
+    /** @test */
+    public function the_cart_has_total_items()
+    {
+        $product1 = factory(Product::class)->create();
+        $product2 = factory(Product::class)->create();
+
+        Cart::add($product1); // 1
+        Cart::add($product1); // +1
+        Cart::add($product2); // 2 + 1
+
+        $this->assertEquals(3, Cart::totalItems());
     }
 }

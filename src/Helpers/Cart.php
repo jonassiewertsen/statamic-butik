@@ -6,9 +6,14 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 
 class Cart {
+    use MoneyTrait;
+
     public static $cart;
+    private static $totalPrice;
+    private static $totalItems;
 
     /**
      * A product can be added to the cart
@@ -77,6 +82,28 @@ class Cart {
         return Session::get('butik.cart') !== null ?
             Session::get('butik.cart') :
             static::empty();
+    }
+
+    public static function totalPrice()
+    {
+        static::$cart = static::get();
+
+        static::$cart->each(function($item) {
+             static::$totalPrice += static::makeAmountSaveableStatic($item->totalPrice());
+        });
+
+        return static::makeAmountHumanStatic(static::$totalPrice);
+    }
+
+    public static function totalItems()
+    {
+        static::$cart = static::get();
+
+        static::$cart->each(function($item) {
+            static::$totalItems += $item->getQuantity();
+        });
+
+        return static::$totalItems;
     }
 
     /**
