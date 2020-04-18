@@ -17,7 +17,7 @@ class CartTest extends TestCase
     }
 
     /** @test */
-    public function a_product_can_be_addes_as_item()
+    public function a_product_can_be_added_as_item()
     {
         $this->assertNull(Session::get('butik.cart'));
 
