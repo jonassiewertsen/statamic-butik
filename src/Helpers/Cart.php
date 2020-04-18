@@ -42,13 +42,20 @@ class Cart {
         static::$cart = static::get();
 
         static::$cart = static::$cart->filter(function($item) use ($product) {
-            // If the quanitity is higher then one, it will only decrease
+            // If the quantity is <= 1 the item will be deleted from the cart
+            if ($item->id === $product->slug && $item->getQuantity() <= 1) {
+                return false;
+            }
+
+            // If the quantity is bigger than one, it will only decrease
             if ($item->id === $product->slug && $item->getQuantity() > 1) {
                $item->decrease();
                return true;
             }
 
-            return false;
+            // If the slug is not matching, we should not care and just
+            // keep the item in our cart
+            return true;
         });
 
         static::set(static::$cart);
