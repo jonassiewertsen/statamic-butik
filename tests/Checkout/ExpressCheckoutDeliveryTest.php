@@ -19,8 +19,7 @@ class ExpressCheckoutDeliveryTest extends TestCase
     }
 
     /** @test */
-    public function The_express_delivery_page_does_exist()
-    {
+    public function The_express_delivery_page_does_exist() {
         $customer = new Customer($this->createUserData());
         Session::put('butik.customer', $customer);
 
@@ -32,7 +31,17 @@ class ExpressCheckoutDeliveryTest extends TestCase
     }
 
     /** @test */
-    public function the_product_information_will_be_displayed(){
+    public function the_product_information_will_be_displayed_without_saved_customer_data() {
+        $this->get(route('butik.checkout.express.delivery', $this->product))
+            ->assertSee($this->product->title)
+            ->assertSee($this->product->base_price)
+            ->assertSee($this->product->total_price)
+            ->assertSee($this->product->tax_amount)
+            ->assertSee($this->product->tax_percentage);
+    }
+
+    /** @test */
+    public function the_product_information_will_be_displayed() {
         $customer = new Customer($this->createUserData());
         Session::put('butik.customer', $customer);
 
@@ -45,7 +54,7 @@ class ExpressCheckoutDeliveryTest extends TestCase
     }
 
     /** @test */
-    public function translations_will_be_displayed(){
+    public function translations_will_be_displayed() {
         $customer = new Customer($this->createUserData());
         Session::put('butik.customer', $customer);
 

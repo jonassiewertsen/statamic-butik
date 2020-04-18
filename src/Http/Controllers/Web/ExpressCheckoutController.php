@@ -5,7 +5,6 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
-use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
@@ -14,7 +13,9 @@ class ExpressCheckoutController extends WebController
 {
     public function delivery(Product $product)
     {
-        $customer = session('butik.customer');
+        $customer = session()->has('butik.customer') ?
+                    Session::get('butik.customer') :
+                    (new Customer())->empty();
 
         return view(config('butik.template_express-checkout-delivery'), compact('customer', 'product'));
     }
