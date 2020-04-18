@@ -64,9 +64,10 @@ return [
      */
     'route_shop-prefix'               => '/shop',
     'route_cart'                      => '/cart',
-    'route_express-checkout-delivery' => 'express-checkout/delivery', // yourshop.com/shop/express-checkout/delivery
-    'route_express-checkout-payment'  => 'express-checkout/payment', // yourshop.com/shop/express-checkout/payment
-    'route_payment-receipt'           => 'payment/{order}/receipt', // yourshop.com/shop/payment/xxxxxxxxx/receipt
+    'route_checkout-delivery'         => 'checkout/delivery',           // yourshop.com/shop/checkout/delivery
+    'route_express-checkout-delivery' => 'express-checkout/delivery',   // yourshop.com/shop/express-checkout/delivery
+    'route_express-checkout-payment'  => 'express-checkout/payment',    // yourshop.com/shop/express-checkout/payment
+    'route_payment-receipt'           => 'payment/{order}/receipt',     // yourshop.com/shop/payment/xxxxxxxxx/receipt
 
     /**
      * LAYOUTS
@@ -90,6 +91,7 @@ return [
     'template_product-index'             => 'butik::web.shop.index',
     'template_product-show'              => 'butik::web.shop.show',
     'template_cart-index'                => 'butik::web.cart.index',
+    'template_checkout-delivery'         => 'butik::web.checkout.delivery',
     'template_express-checkout-delivery' => 'butik::web.checkout.express-delivery',
     'template_express-checkout-payment'  => 'butik::web.checkout.express-payment',
     'template_checkout-receipt'          => 'butik::web.checkout.receipt',
