@@ -20,15 +20,15 @@ class CheckoutController extends WebController
         return view(config('butik.template_checkout-delivery'), compact('customer'));
     }
 
-    public function saveCustomerData(Product $product)
+    public function saveCustomerData()
     {
-//        $customer = request()->validate($this->rules());
-//
-//        $customer = new Customer($customer);
-//
-//        Session::put('butik.customer', $customer);
-//
-//        return redirect()->route('butik.checkout.express.payment', $product);
+        $validatedData = request()->validate($this->rules());
+
+        $customer = new Customer($validatedData);
+
+        Session::put('butik.customer', $customer);
+
+//        return redirect()->route('butik.checkout.payment');
     }
 
     public function payment(Product $product)
@@ -84,7 +84,7 @@ class CheckoutController extends WebController
 //        return true;
     }
 
-    private function rules()
+    private function rules() // TODO: Create into abstract checkout class
     {
         return [
             'country'      => 'required|max:50',
