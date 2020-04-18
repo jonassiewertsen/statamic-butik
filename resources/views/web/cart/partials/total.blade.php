@@ -16,11 +16,11 @@
         <span class="b-font-black">$ {{ $total['price'] }}</span>
     </div>
     <div class="b-max-w-sm b-mx-auto b-pb-3 b-text-gray-500 b-text-right b-text-sm">
-        Including taxes
+        {{ __('butik::checkout.including_taxes') }}
     </div>
 
 
-    <a href="#" class="b-bg-gray-900 b-block b-mt-5 b-py-2 b-rounded b-text-center b-text-white b-text-xl hover:b-bg-gray-800">
-        Buy this stuff
+    <a href="{{ route('butik.checkout.delivery') }}" class="b-bg-gray-900 b-block b-mt-5 b-py-2 b-rounded b-text-center b-text-white b-text-xl hover:b-bg-gray-800">
+        {{ __('butik::checkout.buy_now') }}
     </a>
 </section>
