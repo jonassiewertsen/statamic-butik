@@ -8,15 +8,17 @@ use Livewire\Component;
 
 class Cart extends Component
 {
-    public function mount(): void
+    public function getTotalProperty()
     {
-        //
+        $total['price'] = ShoppingCart::totalPrice();
+        return $total;
     }
 
     public function render()
     {
         return view('butik::web.livewire.cart', [
             'items' => ShoppingCart::get(),
+            'total' => $this->total,
         ]);
     }
 

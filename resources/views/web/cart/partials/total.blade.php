@@ -17,7 +17,7 @@
 
     <div class="b-flex b-mt-3 b-justify-between b-max-w-sm b-mx-auto">
         <span>{{ __('butik::cart.total') }}</span>
-        <span class="b-font-black">CURRENCY 243455</span>
+        <span class="b-font-black">$ {{ $total['price'] }}</span>
     </div>
     <div class="b-max-w-sm b-mx-auto b-pb-3 b-text-gray-500 b-text-right b-text-sm">
         Including XXX % taxes (233 CURRENCY )

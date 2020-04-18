@@ -11,5 +11,5 @@
 
     </main>
 
-{{--    @include('butik::web.cart.partials.total')--}}
+    @include('butik::web.cart.partials.total')
 </div>
