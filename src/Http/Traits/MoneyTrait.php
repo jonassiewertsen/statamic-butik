@@ -2,6 +2,9 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Traits;
 
+/**
+ * TODO: Should be refactored into it's own class
+ */
 trait MoneyTrait
 {
     public function makeAmountHuman($value)
@@ -17,7 +20,7 @@ trait MoneyTrait
         return number_format(floatval($value) * 100, 0, '', '');
     }
 
-    public static function makeAmountHumanStatic($value) // TODO: Is there a better way?
+    public static function makeAmountHumanStatic($value)
     {
         $value = floatval($value) / 100;
 
@@ -25,7 +28,7 @@ trait MoneyTrait
         return number_format($value, 2, $delimiter, '');
     }
 
-    public static function makeAmountSaveableStatic($value) // TODO: Is there a better way?
+    public static function makeAmountSaveableStatic($value)
     {
         return number_format(floatval($value) * 100, 0, '', '');
     }
