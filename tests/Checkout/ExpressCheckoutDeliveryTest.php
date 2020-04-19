@@ -219,12 +219,6 @@ class ExpressCheckoutDeliveryTest extends TestCase
     }
 
     /** @test */
-    public function after_a_valid_form_the_user_will_be_redirected_to_the_payment_page() {
-        $this->post(route('butik.checkout.express.delivery', $this->product), (array) $this->createUserData())
-            ->assertRedirect(route('butik.checkout.express.payment', $this->product));
-    }
-
-    /** @test */
     public function existing_data_from_the_session_will_be_passed_to_the_delivery_view() {
         Session::put('butik.customer', new Customer($this->createUserData()));
         $page = $this->get(route('butik.checkout.express.delivery', $this->product))->content();
@@ -237,6 +231,12 @@ class ExpressCheckoutDeliveryTest extends TestCase
         $this->assertStringContainsString($customer->address2, $page);
         $this->assertStringContainsString($customer->city, $page);
         $this->assertStringContainsString($customer->zip, $page);
+    }
+
+    /** @test */
+    public function after_a_valid_form_the_user_will_be_redirected_to_the_payment_page() {
+        $this->post(route('butik.checkout.express.delivery', $this->product), (array) $this->createUserData())
+            ->assertRedirect(route('butik.checkout.express.payment', $this->product));
     }
 
     /** @test */
