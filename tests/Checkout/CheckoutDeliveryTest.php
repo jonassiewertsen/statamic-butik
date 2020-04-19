@@ -190,40 +190,40 @@ class CheckoutDeliveryTest extends TestCase
             ->assertSessionHasErrors('phone');
     }
 
-//    /** @test */
-//    public function after_a_valid_form_the_user_will_be_redirected_to_the_payment_page() {
-//        $this->post(route('butik.checkout.delivery'), (array) $this->createUserData())
-//            ->assertRedirect(route('butik.checkout.express.payment', $this->product));
-//    }
+    /** @test */
+    public function existing_data_from_the_session_will_be_passed_to_the_delivery_view() {
+        Session::put('butik.customer', new Customer($this->createUserData()));
+        $page = $this->get(route('butik.checkout.delivery', $this->product))->content();
+        $customer = session('butik.customer');
 
-//    /** @test */
-//    public function existing_data_from_the_session_will_be_passed_to_the_delivery_view() {
-//        Session::put('butik.customer', new Customer($this->createUserData()));
-//        $page = $this->get(route('butik.checkout.express.delivery', $this->product))->content();
-//        $customer = session('butik.customer');
-//
-//        $this->assertStringContainsString($customer->name, $page);
-//        $this->assertStringContainsString($customer->country, $page);
-//        $this->assertStringContainsString($customer->mail, $page);
-//        $this->assertStringContainsString($customer->address1, $page);
-//        $this->assertStringContainsString($customer->address2, $page);
-//        $this->assertStringContainsString($customer->city, $page);
-//        $this->assertStringContainsString($customer->zip, $page);
-//    }
-//
-//    /** @test */
-//    public function existing_data_will_be_displayed_in_the_form() {
-//        $customer = new Customer($this->createUserData());
-//        Session::put('butik.customer', $customer);
-//
-//        $this->get(route('butik.checkout.express.delivery', $this->product))
-//            ->assertSee($customer->name)
-//            ->assertSee($customer->mail)
-//            ->assertSee($customer->address1)
-//            ->assertSee($customer->address2)
-//            ->assertSee($customer->city)
-//            ->assertSee($customer->zip);
-//    }
+        $this->assertStringContainsString($customer->name, $page);
+        $this->assertStringContainsString($customer->country, $page);
+        $this->assertStringContainsString($customer->mail, $page);
+        $this->assertStringContainsString($customer->address1, $page);
+        $this->assertStringContainsString($customer->address2, $page);
+        $this->assertStringContainsString($customer->city, $page);
+        $this->assertStringContainsString($customer->zip, $page);
+    }
+
+    /** @test */
+    public function after_a_valid_form_the_user_will_be_redirected_to_the_payment_page() {
+        $this->post(route('butik.checkout.delivery'), (array) $this->createUserData())
+            ->assertRedirect(route('butik.checkout.payment'));
+    }
+
+    /** @test */
+    public function existing_data_will_be_displayed_in_the_form() {
+        $customer = new Customer($this->createUserData());
+        Session::put('butik.customer', $customer);
+
+        $this->get(route('butik.checkout.express.delivery', $this->product))
+            ->assertSee($customer->name)
+            ->assertSee($customer->mail)
+            ->assertSee($customer->address1)
+            ->assertSee($customer->address2)
+            ->assertSee($customer->city)
+            ->assertSee($customer->zip);
+    }
 
     private function createUserData($key = null, $value = null) {
         $customer = [

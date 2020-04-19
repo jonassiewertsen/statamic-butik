@@ -19,6 +19,8 @@ Route::prefix(config('butik.route_shop-prefix'))->name('butik.')->middleware('we
     // Checkout routes
     Route::get(config('butik.route_checkout-delivery'), 'CheckoutController@delivery')->name('checkout.delivery');
     Route::post(config('butik.route_checkout-delivery'), 'CheckoutController@saveCustomerData')->name('checkout.delivery');
+    Route::get(config('butik.route_checkout-payment'), 'CheckoutController@payment')->name('checkout.payment');
+
 
     // Express Checkout routes
     Route::get(config('butik.route_express-checkout-delivery').'/{product}', 'ExpressCheckoutController@delivery')->name('checkout.express.delivery');

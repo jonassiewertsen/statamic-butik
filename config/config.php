@@ -65,6 +65,7 @@ return [
     'route_shop-prefix'               => '/shop',
     'route_cart'                      => '/cart',
     'route_checkout-delivery'         => 'checkout/delivery',           // yourshop.com/shop/checkout/delivery
+    'route_checkout-payment'          => 'checkout/payment',            // yourshop.com/shop/checkout/payment
     'route_express-checkout-delivery' => 'express-checkout/delivery',   // yourshop.com/shop/express-checkout/delivery
     'route_express-checkout-payment'  => 'express-checkout/payment',    // yourshop.com/shop/express-checkout/payment
     'route_payment-receipt'           => 'payment/{order}/receipt',     // yourshop.com/shop/payment/xxxxxxxxx/receipt

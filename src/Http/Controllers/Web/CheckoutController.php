@@ -28,7 +28,7 @@ class CheckoutController extends Checkout
 
         Session::put('butik.customer', $customer);
 
-//        return redirect()->route('butik.checkout.payment');
+        return redirect()->route('butik.checkout.payment');
     }
 
     public function payment(Product $product)
