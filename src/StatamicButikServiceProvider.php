@@ -2,7 +2,6 @@
 
 namespace Jonassiewertsen\StatamicButik;
 
-use Jonassiewertsen\StatamicButik\Http\Middleware\ValidateExpressCheckoutRoute;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
@@ -44,6 +43,11 @@ class StatamicButikServiceProvider extends AddonServiceProvider
             \Jonassiewertsen\StatamicButik\Listeners\SendPurchaseConfirmationToSeller::class,
             \Jonassiewertsen\StatamicButik\Listeners\ReduceProductStock::class,
         ],
+    ];
+
+    protected $middleware = [
+        'validateExpressCheckoutRoute'  => 'Jonassiewertsen\StatamicButik\Http\Middleware\ValidateExpressCheckoutRoute',
+        'validateCheckoutRoute'         => 'Jonassiewertsen\StatamicButik\Http\Middleware\ValidateCheckoutRoute',
     ];
 
     protected $scripts = [
@@ -156,7 +160,11 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
     protected function bootMiddleware() {
         $router = $this->app['router'];
-        $router->pushMiddlewareToGroup('validateExpressCheckoutRoute', ValidateExpressCheckoutRoute::class);
+
+        foreach ($this->middleware as $name =>$path)
+        {
+            $router->pushMiddlewareToGroup($name, $path);
+        }
     }
 
     protected function bootPermissions() {
