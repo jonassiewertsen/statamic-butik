@@ -19,6 +19,16 @@ class ExpressCheckoutPaymentTestTest extends TestCase
         $this->product  = create(Product::class)->first();
     }
 
+
+    /** @test */
+    public function The_express_payment_page_does_exist()
+    {
+        Session::put('butik.customer', $this->customer);
+        $route = route('butik.checkout.express.payment', $this->product);
+
+        $this->get($route)->assertOk();
+    }
+
     /** @test */
     public function translations_will_be_displayed()
     {
@@ -43,7 +53,7 @@ class ExpressCheckoutPaymentTestTest extends TestCase
     }
 
     /** @test */
-    public function the_payment_process_button_to_redirect_to_mollies_will_be_shown(){
+    public function the_payment_process_button_to_redirect_to_mollies_will_be_shown() {
         Session::put('butik.customer', $this->customer);
 
         $this->get(route('butik.checkout.express.payment', $this->product))
@@ -128,16 +138,7 @@ class ExpressCheckoutPaymentTestTest extends TestCase
     }
 
     /** @test */
-    public function The_express_payment_page_does_exist()
-    {
-        Session::put('butik.customer', $this->customer);
-        $route = route('butik.checkout.express.payment', $this->product);
-
-        $this->get($route)->assertOk();
-    }
-
-    /** @test */
-    public function the_product_information_will_be_displayed(){
+    public function the_product_information_will_be_displayed() {
         Session::put('butik.customer', $this->customer);
 
         $this->get(route('butik.checkout.express.payment', $this->product))
