@@ -5,11 +5,10 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
-use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 
-class ExpressCheckoutController extends WebController
+class ExpressCheckoutController extends Checkout
 {
     public function delivery(Product $product)
     {
@@ -82,21 +81,6 @@ class ExpressCheckoutController extends WebController
         }
 
         return true;
-    }
-
-    private function rules()
-    {
-        return [
-            'country'      => 'required|max:50',
-            'name'         => 'required|min:5|max:50',
-            'mail'         => 'required|email',
-            'address1'     => 'required|max:80',
-            'address2'     => 'nullable|max:80',
-            'city'         => 'required|max:80',
-            'state_region' => 'nullable|max:80',
-            'zip'          => 'required|max:20',
-            'phone'        => 'nullable|max:50',
-        ];
     }
 
     private function showInvalidReceipt() {
