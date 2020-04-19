@@ -20,4 +20,35 @@ abstract class Checkout extends WebController
             'phone'        => 'nullable|max:50',
         ];
     }
+
+    protected function transactionDataComplete()
+    {
+        $keys = [
+            'success',
+            'id',
+            'type',
+            'currencyIsoCode',
+            'amount',
+            'created_at',
+            'customer',
+        ];
+        foreach ($keys as $key) {
+            if (!session()->has("butik.transaction.{$key}")) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    protected function transactionSuccessful()
+    {
+        return session()->has('butik.transaction.success')
+            && session()->get('butik.transaction.success') === true;
+    }
+
+    protected function showInvalidReceipt()
+    {
+        return view(config('butik.template_checkout-receipt-invalid'));
+    }
 }
