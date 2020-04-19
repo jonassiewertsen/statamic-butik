@@ -93,6 +93,7 @@ return [
     'template_product-show'              => 'butik::web.shop.show',
     'template_cart-index'                => 'butik::web.cart.index',
     'template_checkout-delivery'         => 'butik::web.checkout.delivery',
+    'template_checkout-payment'          => 'butik::web.checkout.payment',
     'template_express-checkout-delivery' => 'butik::web.checkout.express-delivery',
     'template_express-checkout-payment'  => 'butik::web.checkout.express-payment',
     'template_checkout-receipt'          => 'butik::web.checkout.receipt',

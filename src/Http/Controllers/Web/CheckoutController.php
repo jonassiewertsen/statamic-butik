@@ -31,11 +31,11 @@ class CheckoutController extends Checkout
         return redirect()->route('butik.checkout.payment');
     }
 
-    public function payment(Product $product)
+    public function payment()
     {
-//        $customer = session('butik.customer');
-//
-//        return view(config('butik.template_express-checkout-payment'), compact('customer', 'product'));
+        $customer = session('butik.customer');
+
+        return view(config('butik.template_checkout-payment'), compact('customer'));
     }
 
     public function receipt(Request $request, $order)
