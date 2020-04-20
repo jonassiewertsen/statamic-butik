@@ -3,6 +3,7 @@
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\PaymentGatewayInterface;
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
@@ -18,12 +19,13 @@ class PaymentGatewayController extends WebController
         $this->gateway = new MolliePaymentGateway();
     }
 
-//    public function processPayment(Product $product)
-//    {
-//        $customer = session()->get('butik.customer');
-//
-//        return $this->gateway->handle($cart);
-//    }
+    public function processPayment()
+    {
+        $customer   = Session::get('butik.customer');
+        $items      = Session::get('butik.cart');
+
+        return $this->gateway->handle($customer, $items);
+    }
 
     public function processExpressPayment(Product $product)
     {

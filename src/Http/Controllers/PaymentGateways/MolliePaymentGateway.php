@@ -7,17 +7,29 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Events\PaymentSubmitted;
 use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Traits\MollyLocale;
+use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Mollie\Laravel\Facades\Mollie;
 
 class MolliePaymentGateway extends WebController implements PaymentGatewayInterface
 {
-    use MollyLocale;
+    use MollyLocale, MoneyTrait;
+
+    /**
+     * The total amount we will charge the customer with
+     */
+    protected $totalPrice;
+
+    /**
+     * The metainformation we will save in mollie.
+     */
+    protected string $metaInformation;
 
     public function handle(Customer $customer, Collection $items) {
         $mollieCustomer = Mollie::api()->customers()->create([
@@ -63,13 +75,6 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
         }
     }
 
-    private function convertAmount($amount) {
-        // In case the delimiter is a ',' we will swap it to '.'
-        $amount = str_replace(',', '.', $amount);
-
-        return number_format(floatval($amount), 2, '.', '');
-    }
-
     private function setOrderStatusToPaid($payment): void {
         $order = Order::whereTransactionId($payment->id)->firstOrFail();
         $order->update([
@@ -102,17 +107,15 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
 
     private function paymentInformation($items, $mollieCustomer, $orderId)
     {
-        $item = $items->first(); // TODO: Refactor !!! it's items now
-
         $payment = [
-            'description' => $item->name,
-            'customerId' => $mollieCustomer->id,
-            'metadata' => 'Express Checkout: '. $item->name,
-            'locale' => $this->getLocale(),
-            'redirectUrl' =>  URL::temporarySignedRoute('butik.payment.receipt', now()->addMinutes(5), ['order' => $orderId]),
-            'amount' => [
-                'currency' => config('butik.currency_isoCode'),
-                'value' => $this->convertAmount(200), // TODO: Add dynamic price
+            'description'   => 'ORDER ' . $orderId,
+            'customerId'    => $mollieCustomer->id,
+            'metadata'      => $this->generateMetaData($items, $orderId),
+            'locale'        => $this->getLocale(),
+            'redirectUrl'   =>  URL::temporarySignedRoute('butik.payment.receipt', now()->addMinutes(5), ['order' => $orderId]),
+            'amount'        => [
+                'currency'  => config('butik.currency_isoCode'),
+                'value'     => $this->calculateTotalPrice($items),
             ],
         ];
 
@@ -124,5 +127,34 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
         }
 
         return $payment;
+    }
+
+    private function calculateTotalPrice($items) {
+        $this->totalPrice = 0;
+
+        $items->each(function($item)
+        {
+            $this->totalPrice += $this->makeAmountSaveable($item->totalPrice());
+        });
+
+        return $this->formatPrice($this->totalPrice);
+    }
+
+    private function generateMetaData($items, $orderId) {
+        $meta = 'ORDER ' . $orderId . ': ';
+
+        foreach ($items as $item) {
+            $meta = $meta . $item->getQuantity() . ' x ' . $item->name . '; ';
+        }
+
+        return $meta;
+    }
+
+    private function formatPrice($amount)
+    {
+        $amount = $this->makeAmountHuman($amount);
+
+        // Swap the decimal from . to , so Mollie stays happy
+        return number_format(floatval($amount), 2, '.', '');
     }
 }
