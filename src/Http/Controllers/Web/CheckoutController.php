@@ -31,10 +31,12 @@ class CheckoutController extends Checkout
 
     public function payment()
     {
-        $customer   = session('butik.customer');
-        $items      = Cart::get();
+        $customer       = session('butik.customer');
+        $items          = Cart::get();
+        $totalShipping  = Cart::totalShipping();
+        $totalPrice     = Cart::totalPrice();
 
-        return view(config('butik.template_checkout-payment'), compact('customer', 'items'));
+        return view(config('butik.template_checkout-payment'), compact('customer', 'items', 'totalShipping', 'totalPrice'));
     }
 
     public function receipt(Request $request, $order)

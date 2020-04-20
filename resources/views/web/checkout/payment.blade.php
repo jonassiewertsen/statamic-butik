@@ -59,14 +59,14 @@
 
                 <div class="b-flex b-my-3 b-justify-between b-max-w-sm b-mx-auto">
                     <span>{{ __('butik::payment.shipping') }}</span>
-                    <span>5555555</span>
+                    <span>{{ $totalShipping }} $$$$$</span>
                 </div>
 
                 <hr class="b-border-white b-my-5">
 
                 <div class="b-flex b-mt-3 b-justify-between b-max-w-sm b-mx-auto">
                     <span>{{ __('butik::payment.total') }}</span>
-                    <span class="b-font-black">4344553</span>
+                    <span class="b-font-black">{{ $totalPrice }} $$$$</span>
                 </div>
                 <div class="b-max-w-sm b-mx-auto b-pb-3 b-text-gray-500 b-text-right b-text-sm">
                     Including taxes

@@ -149,6 +149,16 @@ class CheckoutPaymentTest extends TestCase
     }
 
     /** @test */
+    public function the_total_information_will_be_displayed() {
+        Session::put('butik.customer', $this->customer);
+
+        $this->get(route('butik.checkout.payment'))
+            ->assertOk()
+            ->assertSee(Cart::totalShipping())
+            ->assertSee(Cart::totalPrice());
+    }
+
+    /** @test */
     public function customer_data_will_be_displayed_inside_the_view() {
         Session::put('butik.customer', $this->customer);
         $customer = (array) $this->customer;
