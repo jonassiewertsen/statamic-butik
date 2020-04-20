@@ -3,6 +3,7 @@
 
 namespace Jonassiewertsen\StatamicButik\Checkout;
 
+use Illuminate\Support\Str;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 
@@ -19,6 +20,11 @@ class Item
      * The item name
      */
     public String $name;
+
+    /**
+     * The description, shortened to 100 characters
+     */
+    public String $description;
 
     /**
      * The product the item does base on
@@ -44,6 +50,7 @@ class Item
     {
         $this->id               = $product->slug;
         $this->name             = $product->title;
+        $this->description      = Str::limit($product->description, 100);
         $this->product          = $product;
         $this->quantity         = 1;
         $this->totalPrice       = $this->calculateTotalPrice();

@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use Illuminate\Support\Str;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
@@ -41,6 +42,14 @@ class ItemTest extends TestCase
         $item = new Item($this->product);
 
         $this->assertEquals($item->name, $this->product->title);
+    }
+
+    /** @test */
+    public function it_has_a_description()
+    {
+        $item = new Item($this->product);
+
+        $this->assertEquals($item->description, Str::limit($this->product->description, 100));
     }
 
     /** @test */
