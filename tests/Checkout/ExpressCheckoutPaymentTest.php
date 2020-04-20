@@ -58,7 +58,7 @@ class ExpressCheckoutPaymentTestTest extends TestCase
 
         $this->get(route('butik.checkout.express.payment', $this->product))
             ->assertOk()
-            ->assertSee(route('butik.payment.process', $this->product));
+            ->assertSee(route('butik.payment.express.process', $this->product));
     }
 
     /** @test */

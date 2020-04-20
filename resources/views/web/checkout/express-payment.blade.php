@@ -18,7 +18,7 @@
             @include('butik::web.checkout.partials.ship-to-card')
 
             {{-- pay now button --}}
-            <a href="{{ route('butik.payment.process', $product) }}"
+            <a href="{{ route('butik.payment.express.process', $product) }}"
                rel="nofollow"
                class="b-block b-w-full b-mt-3 b-bg-gray-900 b-mt-6 b-py-2 b-rounded b-text-center b-text-white b-text-xl hover:b-bg-gray-800">
                 {{ __('butik::payment.pay_now') }}

@@ -66,7 +66,7 @@ class CheckoutPaymentTest extends TestCase
 
         $this->get(route('butik.checkout.express.payment', $this->product))
             ->assertOk()
-            ->assertSee(route('butik.payment.process', $this->product));
+            ->assertSee(route('butik.payment.express.process', $this->product));
     }
 
     // TODO: Tests to remove products from the cart, which are sold out.
