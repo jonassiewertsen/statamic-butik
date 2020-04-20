@@ -3,7 +3,9 @@
 namespace Tests\Shop;
 
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
+use Jonassiewertsen\StatamicButik\Helpers\Cart;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
@@ -129,20 +131,22 @@ class CheckoutPaymentTest extends TestCase
             ->assertRedirect(route('butik.checkout.delivery'));
     }
 
-// TODO: The products need to be displayed
-//    /** @test */
-//    public function the_product_information_will_be_displayed(){
-//        Session::put('butik.customer', $this->customer);
-//
-//        $this->get(route('butik.checkout.express.payment', $this->product))
-//            ->assertOk()
-//            ->assertSee($this->product->title)
-//            ->assertSee($this->product->base_price)
-//            ->assertSee($this->product->total_price)
-//            ->assertSee($this->product->taxes_amount)
-//            ->assertSee($this->product->taxes_percentage)
-//            ->assertSee($this->product->shipping_amount);
-//    }
+    /** @test */
+    public function the_product_information_will_be_displayed() {
+        Session::put('butik.customer', $this->customer);
+        Cart::add($this->product);
+        Cart::add($this->product);
+
+        $item = Cart::get()->first();
+
+        $this->get(route('butik.checkout.payment'))
+            ->assertOk()
+            ->assertSee($item->name)
+            ->assertSee($item->description)
+            ->assertSee($item->singlePrice())
+            ->assertSee($item->totalPrice())
+            ->assertSee($item->getQuantity());
+    }
 
     /** @test */
     public function customer_data_will_be_displayed_inside_the_view() {

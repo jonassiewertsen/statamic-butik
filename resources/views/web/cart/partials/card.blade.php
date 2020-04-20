@@ -5,9 +5,9 @@
     <section class="b-flex b-flex-col b-justify-between b-ml-12 b-w-4/5">
         <div>
             <h3 class="b-font-bold b-block b-mt-5 b-text-2xl">{{ $item->name }}</h3>
-            @if ($item->product->description)
+            @if ($item->description)
                 <hr class="b-border-white b-my-3">
-                <p>{{ $item->product->description }}</p>
+                <p>{{ $item->description }}</p>
                 <hr class="b-border-white b-my-3">
             @endif
 

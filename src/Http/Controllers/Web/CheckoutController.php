@@ -5,9 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
-use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
-use Jonassiewertsen\StatamicButik\Http\Models\Order;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Helpers\Cart;
 
 class CheckoutController extends Checkout
 {
@@ -33,9 +31,10 @@ class CheckoutController extends Checkout
 
     public function payment()
     {
-        $customer = session('butik.customer');
+        $customer   = session('butik.customer');
+        $items      = Cart::get();
 
-        return view(config('butik.template_checkout-payment'), compact('customer'));
+        return view(config('butik.template_checkout-payment'), compact('customer', 'items'));
     }
 
     public function receipt(Request $request, $order)

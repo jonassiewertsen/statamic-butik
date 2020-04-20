@@ -28,69 +28,28 @@
         {{-- Product listing --}}
         <div class="b-bg-gray-200 b-px-10 b-py-8 b-w-full lg:b-w-1/2">
 
-            <section class="b-flex b-mt-3f">
-                <figure class="b-w-1/5 b-mr-5">
-                    @if (! empty($product->images))
-                        <img class="b-w-1/2" src="/assets/{{ $product->images->first() }}">
-                    @else
-                        <div class="b-w-full">
-                            @include('butik::web.shop.partials.placeholder')
+            @foreach ($items as $item)
+                <section class="b-flex b-mt-3f">
+                    <figure class="b-w-1/5 b-mr-5">
+                        @if (! empty($product->images))
+                            <img class="b-w-1/2" src="/assets/{{ $product->images->first() }}">
+                        @else
+                            <div class="b-w-full">
+                                @include('butik::web.shop.partials.placeholder')
+                            </div>
+                        @endif
+                    </figure>
+
+                    <div class="b-w-full">
+                        <h3 class="b-font-bold">{{ $item->name }}</h3>
+                        <p>{{ $item->description }}</p>
+                        <div class="b-flex b-justify-end b-items-baseline">
+                            <span class="b-mr-5 b-text-sm b-italic">{{ $item->singlePrice() }} €€€€€€ x {{ $item->getQuantity() }}</span>
+                            <span class="b-font-bold">{{ $item->totalPrice() }} €€€€</span>
                         </div>
-                    @endif
-                </figure>
-
-                <div class="b-w-full">
-                    <h3 class="b-font-bold">Product title</h3>
-                    <p>Eine kurze Beschreibung um ...</p>
-                    <div class="b-flex b-justify-end b-items-baseline">
-                        <span class="b-mr-5 b-text-sm b-italic">25,5 € x 2</span>
-                        <span class="b-font-bold">56 €</span>
                     </div>
-                </div>
-            </section>
-
-            <section class="b-flex b-mt-3f">
-                <figure class="b-w-1/5 b-mr-5">
-                    @if (! empty($product->images))
-                        <img class="b-w-1/2" src="/assets/{{ $product->images->first() }}">
-                    @else
-                        <div class="b-w-full">
-                            @include('butik::web.shop.partials.placeholder')
-                        </div>
-                    @endif
-                </figure>
-
-                <div class="b-w-full">
-                    <h3 class="b-font-bold">Product title</h3>
-                    <p>Eine kurze Beschreibung um ...</p>
-                    <div class="b-flex b-justify-end b-items-baseline">
-                        <span class="b-mr-5 b-text-sm b-italic">25,5 € x 2</span>
-                        <span class="b-font-bold">56 €</span>
-                    </div>
-                </div>
-            </section>
-
-            <section class="b-flex b-mt-3f">
-                <figure class="b-w-1/5 b-mr-5">
-                    @if (! empty($product->images))
-                        <img class="b-w-1/2" src="/assets/{{ $product->images->first() }}">
-                    @else
-                        <div class="b-w-full">
-                            @include('butik::web.shop.partials.placeholder')
-                        </div>
-                    @endif
-                </figure>
-
-                <div class="b-w-full">
-                    <h3 class="b-font-bold">Product title</h3>
-                    <p>Eine kurze Beschreibung um ...</p>
-                    <div class="b-flex b-justify-end b-items-baseline">
-                        <span class="b-mr-5 b-text-sm b-italic">25,5 € x 2</span>
-                        <span class="b-font-bold">56 €</span>
-                    </div>
-                </div>
-            </section>
-
+                </section>
+            @endforeach
 
             <section class="b-w-full b-mt-4">
 
