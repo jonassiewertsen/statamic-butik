@@ -96,6 +96,8 @@ class Cart {
     {
         static::$cart = static::get();
 
+        static::$totalPrice = 0; // Reset total Price
+
         static::$cart->each(function($item) {
              static::$totalPrice += static::makeAmountSaveableStatic($item->totalPrice());
         });
@@ -106,6 +108,8 @@ class Cart {
     public static function totalShipping()
     {
         static::$cart = static::get();
+
+        static::$totalShipping = 0; // Reset total Shipping
 
         static::$cart->each(function($item) {
             static::$totalShipping += static::makeAmountSaveableStatic($item->totalShipping());
