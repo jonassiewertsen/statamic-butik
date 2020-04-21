@@ -44,22 +44,6 @@ class TestCase extends OrchestraTestCase
         return $user;
     }
 
-    // TODO: May be removed?
-    protected function assertStatamicTemplateIs($template, $route) {
-        return $this->assertEquals(
-            $this->get($route)->getOriginalContent()->template(),
-            $template
-        );
-    }
-
-    // TODO: May be removed?
-    protected function assertStatamicLayoutIs($layout, $route) {
-        return $this->assertEquals(
-            $this->get($route)->getOriginalContent()->layout(),
-            $layout
-        );
-    }
-
     /**
      * Load package service provider
      * @param  \Illuminate\Foundation\Application $app
