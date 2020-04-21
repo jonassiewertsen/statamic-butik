@@ -21,17 +21,6 @@ class Product extends ButikModel
         'stock_unlimited' => 'boolean',
     ];
 
-    // TODO: still neded?
-    protected $appends = [
-        'editUrl',
-        'showUrl',
-        'total_price',
-        'tax_amount',
-        'tax_percentage',
-        'shipping_amount',
-        'ExpressDeliveryUrl',
-    ];
-
     protected $guarded = [];
 
     public function getRouteKeyName()
