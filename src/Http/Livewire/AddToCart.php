@@ -24,5 +24,6 @@ class AddToCart extends Component
     {
         $product = Product::find($productSlug);
         Cart::add($product);
+        $this->emit('cartUpdated');
     }
 }
