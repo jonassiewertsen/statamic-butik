@@ -34,4 +34,4 @@ Route::prefix(config('butik.route_shop-prefix'))->name('butik.')->middleware('we
 });
 
 // Webhook without butik prefix
-Route::post('payment/webhook/mollie', 'Http\\Controllers\\Web\\PaymentGatewayController@webhook')->name('butik.payment.webhook.mollie');
+Route::post('payment/webhook/mollie', '\\Jonassiewertsen\\StatamicButik\\Http\\Controllers\\Web\\PaymentGatewayController@webhook')->name('butik.payment.webhook.mollie');
