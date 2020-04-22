@@ -20,10 +20,10 @@ class PaymentSubmitted
         $this->transaction = (new Transaction())
             ->id($orderId)
             ->transactionId($payment->id)
-            ->method($payment->method ?? '') // TODO: Only a problem with multiple payment options
+            ->method($payment->method ?? '')
             ->totalAmount($payment->amount->value)
             ->createdAt(Carbon::parse($payment->createdAt))
-            ->products($items)
+            ->items($items)
             ->customer($customer);
     }
 }
