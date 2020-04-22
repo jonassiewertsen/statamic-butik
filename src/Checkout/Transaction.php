@@ -60,7 +60,18 @@ class Transaction {
     }
 
     public function items(Collection $value): self {
-        $this->items = $value;
+        $this->items = $value->map(function($item) {
+            return [
+                'id'            => $item->id,
+                'name'          => $item->name,
+                'description'   => $item->description,
+                'quantity'      => $item->getQuantity(),
+                'singlePrice'   => $item->singlePrice(),
+                'totalPrice'    => $item->totalPrice(),
+                'totalShipping' => $item->totalShipping(),
+            ];
+        });
+
         return $this;
     }
 

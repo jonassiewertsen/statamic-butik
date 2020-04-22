@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
+use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Checkout\Transaction;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
@@ -84,11 +85,27 @@ class TransactionTest extends TestCase
     }
 
     /** @test */
-    public function products_can_be_added(){
-        $products = create(Product::class, [], 3);
-        $this->transaction->items($products);
+    public function items_will_be_added_and_mapped_correctly()
+    {
+        $product = create(Product::class, [])->first();
+        $items = collect()->push(new Item($product));
 
-        $this->assertEquals($products, $this->transaction->items);
+        $mappedItems = $items->map(function($item) {
+            return [
+                'id'            => $item->id,
+                'name'          => $item->name,
+                'description'   => $item->description,
+                'quantity'      => $item->getQuantity(),
+                'singlePrice'   => $item->singlePrice(),
+                'totalPrice'    => $item->totalPrice(),
+                'totalShipping' => $item->totalShipping(),
+            ];
+        });
+
+        // Push into transaction object
+        $this->transaction->items($items);
+
+        $this->assertEquals($mappedItems, $this->transaction->items);
     }
 
     /** @test */
