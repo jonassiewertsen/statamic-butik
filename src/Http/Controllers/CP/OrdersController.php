@@ -45,7 +45,7 @@ class OrdersController extends CpController
         $this->authorize('show', Order::class);
 
         $customer = json_decode($order->customer);
-        $items = $order->products;
+        $items = json_decode($order->items);
 
         return view('butik::cp.orders.show', compact('order', 'customer', 'items'));
     }
