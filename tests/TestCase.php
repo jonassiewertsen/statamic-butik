@@ -3,16 +3,15 @@
 namespace Jonassiewertsen\StatamicButik\Tests;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\WithFaker;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Statamic\Extend\Manifest;
-use Statamic\Facades\AssetContainer;
-use Statamic\Facades\Blueprint;
 use Statamic\Facades\Role;
 use Statamic\Statamic;
 
 class TestCase extends OrchestraTestCase
 {
-    use DatabaseMigrations;
+    use DatabaseMigrations, WithFaker;
 
     /**
      * Setup the test environment.
@@ -26,6 +25,20 @@ class TestCase extends OrchestraTestCase
         $this->withFactories(__DIR__.'/../database/factories');
     }
 
+    /**
+     * Setup up the Faker instance.
+     * @return void
+     */
+    protected function setUpFaker()
+    {
+        $this->faker = $this->makeFaker('de_DE');
+    }
+
+    /**
+     * Sign in a Statamic user
+     * @param array $permissions
+     * @return mixed
+     */
     protected function signInUser($permissions = [])
     {
         $role = Role::make()->handle('test')->title('Test')->addPermission($permissions)->save();
@@ -36,6 +49,10 @@ class TestCase extends OrchestraTestCase
         return $user;
     }
 
+    /**
+     * Sign in a Statamic user as admin
+     * @return mixed
+     */
     protected function signInAdmin()
     {
         $user = \Statamic\Facades\User::make();
@@ -70,6 +87,10 @@ class TestCase extends OrchestraTestCase
         ];
     }
 
+    /**
+     * Load Environment
+     * @param \Illuminate\Foundation\Application $app
+     */
     protected function getEnvironmentSetUp($app)
     {
         parent::getEnvironmentSetUp($app);
@@ -82,6 +103,10 @@ class TestCase extends OrchestraTestCase
         ];
     }
 
+    /**
+     * Resolve the Application Configuration and set the Statamic configuration
+     * @param \Illuminate\Foundation\Application $app
+     */
     protected function resolveApplicationConfiguration($app)
     {
         parent::resolveApplicationConfiguration($app);
