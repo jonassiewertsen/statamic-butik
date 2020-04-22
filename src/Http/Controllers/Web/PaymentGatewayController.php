@@ -29,7 +29,7 @@ class PaymentGatewayController extends WebController
 
     public function processExpressPayment(Product $product)
     {
-        $customer = session()->get('butik.customer');
+        $customer = Session::get('butik.customer');
 
         $items = collect();
         $items->push(new Item($product));
