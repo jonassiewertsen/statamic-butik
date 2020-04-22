@@ -9,7 +9,7 @@ class RenameProductsColumnToItems extends Migration
     public function up()
     {
         Schema::table('butik_orders', function (Blueprint $table) {
-            $table->renameColumn('products', 'itmes');
+            $table->renameColumn('products', 'items');
         });
     }
 

@@ -1,6 +1,7 @@
 <?php
 
 use Faker\Generator as Faker;
+use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 
@@ -10,7 +11,7 @@ $factory->define(Order::class, function (Faker $faker) {
         'transaction_id' => 'tr_'. str_random(8),
         'status'       => 'open',
         'method'       => 'paypal',
-        'products'     => create(Product::class)->toArray(),
+        'items'        => json_encode(new Item(create(Product::class)->first())),
         'customer'     => json_encode([
             'name'     => 'John Doe',
             'mail'     => 'doe@john.com',

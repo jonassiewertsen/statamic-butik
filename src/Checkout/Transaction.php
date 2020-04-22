@@ -14,7 +14,7 @@ class Transaction {
     public string     $currencyIsoCode;
     public string     $currencySymbol;
     public string     $totalAmount;
-    public Collection $products;
+    public Collection $items;
     public Customer   $customer;
     public Carbon     $createdAt;
     public Carbon     $paidAt;
@@ -59,8 +59,8 @@ class Transaction {
         return $this;
     }
 
-    public function products(Collection $value): self {
-        $this->products = $value;
+    public function items(Collection $value): self {
+        $this->items = $value;
         return $this;
     }
 

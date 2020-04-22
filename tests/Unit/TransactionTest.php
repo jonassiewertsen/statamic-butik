@@ -86,9 +86,9 @@ class TransactionTest extends TestCase
     /** @test */
     public function products_can_be_added(){
         $products = create(Product::class, [], 3);
-        $this->transaction->products($products);
+        $this->transaction->items($products);
 
-        $this->assertEquals($products, $this->transaction->products);
+        $this->assertEquals($products, $this->transaction->items);
     }
 
     /** @test */

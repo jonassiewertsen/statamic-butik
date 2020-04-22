@@ -43,7 +43,7 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
             ->create($this->paymentInformation($items, $mollieCustomer, $orderId));
 
         $payment = Mollie::api()->payments()->get($payment->id);
-        event(new PaymentSubmitted($payment, $customer, $items, $orderId));
+        event(new PaymentSubmitted($payment, $customer, $items, $orderId)); // TODO: Don't pass the items, pass the SavableCart class
 
         // redirect customer to Mollie checkout page
         return redirect($payment->getCheckoutUrl(), 303);
@@ -113,7 +113,7 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
             'locale'        => $this->getLocale(),
             'redirectUrl'   =>  URL::temporarySignedRoute('butik.payment.receipt', now()->addMinutes(5), ['order' => $orderId]),
             'amount'        => [
-                'currency'  => config('butik.currency_isoCode'),
+                'currency'  => config('butik.currency_isoCode'), // TODO: Use Butik Facade. Needs to be created.
                 'value'     => $this->calculateTotalPrice($items),
             ],
         ];

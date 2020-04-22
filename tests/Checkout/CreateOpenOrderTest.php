@@ -103,7 +103,7 @@ class CreateOpenOrderTest extends TestCase
     public function the_express_checkout_product_will_be_saved_as_json(){
         $this->checkout();
 
-        $this->assertDatabaseHas('butik_orders', ['products' => json_encode($this->items) ]);
+        $this->assertDatabaseHas('butik_orders', ['items' => json_encode($this->items) ]);
     }
 
     /** @test */
