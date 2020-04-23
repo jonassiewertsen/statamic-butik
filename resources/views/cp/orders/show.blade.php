@@ -92,6 +92,10 @@
                     <th class="pl-2 py-1 w-1/4">Summed price</th>
                     <td>{{ $item->totalPrice }}</td>
                 </tr>
+                <tr>
+                    <th class="pl-2 py-1 w-1/4">Tax Rate</th>
+                    <td>{{ $item->taxRate }}</td>
+                </tr>
             </table>
         </div>
     @endforeach
