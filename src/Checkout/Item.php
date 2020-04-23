@@ -32,6 +32,11 @@ class Item
     public Product $product;
 
     /**
+     * The taxrate of the product
+     */
+    public int $taxRate;
+
+    /**
      * The quanitity of this item in the shopping cart
      */
     private Int $quantity;
@@ -52,6 +57,7 @@ class Item
         $this->name             = $product->title;
         $this->description      = Str::limit($product->description, 100, '...');
         $this->product          = $product;
+        $this->taxRate          = $product->tax->percentage;
         $this->quantity         = 1;
         $this->totalPrice       = $this->calculateTotalPrice();
         $this->totalShipping    = $this->calculateTotalShipping();
@@ -87,6 +93,11 @@ class Item
     public function totalPrice(): string
     {
         return $this->totalPrice;
+    }
+
+    public function singleShipping(): string
+    {
+        return $this->product->shipping->price;
     }
 
     public function totalShipping(): string

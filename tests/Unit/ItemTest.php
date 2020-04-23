@@ -37,6 +37,14 @@ class ItemTest extends TestCase
     }
 
     /** @test */
+    public function it_has_a_taxRate()
+    {
+        $item = new Item($this->product);
+
+        $this->assertEquals($item->taxRate, $this->product->tax->percentage);
+    }
+
+    /** @test */
     public function it_has_a_name()
     {
         $item = new Item($this->product);
@@ -107,6 +115,14 @@ class ItemTest extends TestCase
         $total = $this->makeAmountHuman($productPrice * 3);
 
         $this->assertEquals($total, $item->totalPrice());
+    }
+
+    /** @test */
+    public function single_shipping_costs_will_be_returned_correclty()
+    {
+        $item = new Item($this->product);
+
+        $this->assertEquals($this->product->shipping->price, $item->singleShipping());
     }
 
     /** @test */
