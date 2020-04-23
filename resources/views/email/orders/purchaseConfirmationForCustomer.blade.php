@@ -9,8 +9,8 @@
         {{ __('butik::product.plural') }}
     </div>
     <div class="text" style="padding: 0 3em; margin-bottom: 60px; text-align: center;">
-        @foreach ($products as $product)
-            <h2>{{ $product['title'] }}</h2>
+        @foreach ($items as $item)
+            <h2>{{ $item->name }}</h2>
         @endforeach
     </div>
 

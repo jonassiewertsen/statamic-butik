@@ -12,15 +12,17 @@ class ReduceProductStock implements ShouldQueue
 
     public function handle($event)
     {
-        $item = $event->transaction->items[0]; // TODO: Refactor for multiple items
-        $item = json_decode($item);
-        $product = Product::findOrFail($item->id);
+        $items = $event->transaction->items;
 
-        if ($product->stock_unlimited) {
-            return;
+        foreach ($items as $item) {
+            $product = Product::findOrFail($item->id);
+
+            if ($product->stock_unlimited) {
+                return;
+            }
+
+            $product->stock--;
+            $product->save();
         }
-
-        $product->stock--;
-        $product->save();
     }
 }

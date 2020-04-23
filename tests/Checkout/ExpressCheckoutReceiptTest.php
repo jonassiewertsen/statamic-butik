@@ -33,6 +33,7 @@ class ExpressCheckoutReceiptTest extends TestCase
     /** @test */
     public function the_receipt_layout_will_be_loaded_in_case_the_url_is_correclty_signed()
     {
+        $this->withoutExceptionHandling();
         $order = create(Order::class)->first();
         $route = URL::temporarySignedRoute('butik.payment.receipt', now()->addMinute(), ['order' => $order->id]);
 

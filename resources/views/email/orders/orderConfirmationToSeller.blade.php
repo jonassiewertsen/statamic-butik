@@ -9,8 +9,8 @@
         {{ __('butik::product.plural') }}
     </div>
     <div class="text" style="padding: 0 3em; margin-bottom: 60px; text-align: center;">
-        @foreach ($products as $product)
-            <h2>{{ $product['title'] }}</h2>
+        @foreach ($items as $item)
+            <h2>{{ $item->name }}</h2>
         @endforeach
     </div>
 
@@ -27,7 +27,7 @@
         <tr>
             <td valign="top" width="33%" style="text-align: right; padding-right: 12px; font-weight: 600;">
                 {{ __('butik::product.total_amount') }}
-            </td>
+            </td>w
             <td valign="top" width="67%" style="text-align: left;">
                 {{ $totalAmount ?? '' }} {{ $currencySymbol ?? '' }}
             </td>

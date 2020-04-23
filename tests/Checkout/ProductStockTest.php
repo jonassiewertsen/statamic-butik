@@ -2,6 +2,7 @@
 
 namespace Tests\Checkout;
 
+use Illuminate\Support\Facades\Mail;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
@@ -15,6 +16,8 @@ class ProductStockTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
+        Mail::fake();
     }
 
     /** @test */
@@ -26,7 +29,7 @@ class ProductStockTest extends TestCase
 
         $this->mockMollie(new MolliePaymentSuccessful());
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $order->id]);
-
+//
         $this->assertEquals($stock - 1, Product::first()->stock);
     }
 

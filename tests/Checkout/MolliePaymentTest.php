@@ -26,6 +26,7 @@ class MolliePaymentTest extends TestCase
     /** @test */
     public function a_successful_payment_will_fire_the_an_event()
     {
+        $this->withoutExceptionHandling();
         $order = create(Order::class, ['transaction_id' => 'tr_fake_id'])->first();
         $this->mockMollie(new MolliePaymentSuccessful());
 

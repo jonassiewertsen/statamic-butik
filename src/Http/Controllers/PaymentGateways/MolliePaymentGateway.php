@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
+use Jonassiewertsen\StatamicButik\Checkout\Transaction;
 use Jonassiewertsen\StatamicButik\Events\PaymentSubmitted;
 use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
@@ -26,9 +27,9 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
     protected $totalPrice;
 
     /**
-     * The metainformation we will save in mollie.
+     * All data from this transaction
      */
-    protected string $metaInformation;
+    protected Transaction $transaction;
 
     public function handle(Customer $customer, Collection $items) {
         $mollieCustomer = Mollie::api()->customers()->create([
@@ -43,7 +44,17 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
             ->create($this->paymentInformation($items, $mollieCustomer, $orderId));
 
         $payment = Mollie::api()->payments()->get($payment->id);
-        event(new PaymentSubmitted($payment, $customer, $items, $orderId)); // TODO: Don't pass the items, pass the SavableCart class
+
+        $this->transaction = (new Transaction())
+            ->id($orderId)
+            ->transactionId($payment->id)
+            ->method($payment->method ?? '')
+            ->totalAmount($payment->amount->value)
+            ->createdAt(Carbon::parse($payment->createdAt))
+            ->items($items)
+            ->customer($customer);
+
+        event(new PaymentSubmitted($this->transaction));
 
         // redirect customer to Mollie checkout page
         return redirect($payment->getCheckoutUrl(), 303);
@@ -53,7 +64,6 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
         if (! $request->has('id')) {
             return;
         }
-
         $payment = Mollie::api()->payments()->get($request->id);
 
         if ($payment->isPaid()) {
@@ -112,6 +122,7 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
             'metadata'      => $this->generateMetaData($items, $orderId),
             'locale'        => $this->getLocale(),
             'redirectUrl'   =>  URL::temporarySignedRoute('butik.payment.receipt', now()->addMinutes(5), ['order' => $orderId]),
+            'webhookUrl'    => 'https://dd02b4d2.ngrok.io/payment/webhook/mollie',
             'amount'        => [
                 'currency'  => config('butik.currency_isoCode'), // TODO: Use Butik Facade. Needs to be created.
                 'value'     => $this->calculateTotalPrice($items),

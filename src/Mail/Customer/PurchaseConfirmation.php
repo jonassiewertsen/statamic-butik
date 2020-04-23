@@ -28,7 +28,7 @@ class PurchaseConfirmation extends Mailable implements ShouldQueue
                 'totalAmount'    => $this->transaction->totalAmount,
                 'currencySymbol' => $this->transaction->currencySymbol,
                 'paidAt'         => $this->transaction->paidAt,
-                'products'       => $this->transaction->products,
+                'items'          => $this->transaction->items,
             ]);
 
     }

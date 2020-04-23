@@ -59,7 +59,13 @@ class Transaction {
         return $this;
     }
 
-    public function items(Collection $value): self {
+    public function items(Collection $value, $fromDatabase = false): self
+    {
+        if ($fromDatabase) {
+            $this->items = $value;
+            return $this;
+        }
+
         $this->items = $value->map(function($item) {
             return [
                 'id'            => $item->id,

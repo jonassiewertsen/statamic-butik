@@ -29,7 +29,6 @@ class OrderConfirmationMailTest extends TestCase
         $payment->id = $order->transaction_id;
 
         $this->mockMollie($payment);
-
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $payment->id]);
 
         Mail::assertQueued(PurchaseConfirmation::class);
