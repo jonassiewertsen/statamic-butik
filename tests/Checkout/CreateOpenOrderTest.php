@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
+use Jonassiewertsen\StatamicButik\Checkout\Transaction;
 use Jonassiewertsen\StatamicButik\Events\PaymentSubmitted;
 use Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\MolliePaymentGateway;
 use Illuminate\Support\Facades\Session;
@@ -103,7 +104,9 @@ class CreateOpenOrderTest extends TestCase
     public function the_express_checkout_product_will_be_saved_as_json(){
         $this->checkout();
 
-        $this->assertDatabaseHas('butik_orders', ['items' => json_encode($this->items) ]);
+        $transaction = (new Transaction())->items($this->items);
+
+        $this->assertDatabaseHas('butik_orders', ['items' => json_encode($transaction->items) ]);
     }
 
     /** @test */
