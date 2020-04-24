@@ -5,7 +5,7 @@ namespace Tests\Shop;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
-use Jonassiewertsen\StatamicButik\Helpers\Cart;
+use Jonassiewertsen\StatamicButik\Helper\Cart;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 

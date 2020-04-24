@@ -3,7 +3,7 @@
 namespace Jonassiewertsen\StatamicButik\Http\Livewire;
 
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
-use Jonassiewertsen\StatamicButik\Helpers\Cart;
+use Jonassiewertsen\StatamicButik\Helper\Cart;
 use Livewire\Component;
 
 class AddToCart extends Component

@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Helpers;
+namespace Jonassiewertsen\StatamicButik\Helper;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
