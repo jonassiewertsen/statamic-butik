@@ -45,9 +45,13 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         ],
     ];
 
-    protected $middleware = [
-        'validateExpressCheckoutRoute'  => 'Jonassiewertsen\StatamicButik\Http\Middleware\ValidateExpressCheckoutRoute',
-        'validateCheckoutRoute'         => 'Jonassiewertsen\StatamicButik\Http\Middleware\ValidateCheckoutRoute',
+    protected $middlewareGroups = [
+        'validateExpressCheckoutRoute' => [
+            \Jonassiewertsen\StatamicButik\Http\Middleware\ValidateExpressCheckoutRoute::class,
+        ],
+        'validateCheckoutRoute' => [
+            \Jonassiewertsen\StatamicButik\Http\Middleware\ValidateCheckoutRoute::class,
+        ],
     ];
 
     protected $scripts = [
@@ -157,15 +161,6 @@ class StatamicButikServiceProvider extends AddonServiceProvider
                    $nav->item(__('butik::shipping.plural'))->route('butik.shippings.index')->can('view shippings'),
                ]);
         });
-    }
-
-    protected function bootMiddleware() {
-        $router = $this->app['router'];
-
-        foreach ($this->middleware as $name =>$path)
-        {
-            $router->pushMiddlewareToGroup($name, $path);
-        }
     }
 
     protected function bootPermissions() {
