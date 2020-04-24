@@ -41,7 +41,7 @@
     },
     "autoload": {
         "files": [
-            "Helper/GlobalHelper.php"
+            "src/Helper/GlobalHelper.php"
         ],
         "psr-4": {
             "Jonassiewertsen\\StatamicButik\\": "src"
