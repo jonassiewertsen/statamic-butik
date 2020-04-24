@@ -98,7 +98,7 @@ class TransactionTest extends TestCase
                 'quantity'      => $item->getQuantity(),
                 'singlePrice'   => $item->singlePrice(),
                 'totalPrice'    => $item->totalPrice(),
-                'singeShipping' => $item->singleShipping(),
+                'singleShipping' => $item->singleShipping(),
                 'totalShipping' => $item->totalShipping(),
                 'taxRate'       => $item->taxRate,
             ];

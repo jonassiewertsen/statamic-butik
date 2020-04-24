@@ -68,15 +68,15 @@ class Transaction {
 
         $this->items = $value->map(function($item) {
             return [
-                'id'            => $item->id,
-                'name'          => $item->name,
-                'description'   => $item->description,
-                'quantity'      => $item->getQuantity(),
-                'singlePrice'   => $item->singlePrice(),
-                'totalPrice'    => $item->totalPrice(),
-                'singeShipping' => $item->singleShipping(),
-                'totalShipping' => $item->totalShipping(),
-                'taxRate'       => $item->taxRate,
+                'id'             => $item->id,
+                'name'           => $item->name,
+                'description'    => $item->description,
+                'quantity'       => $item->getQuantity(),
+                'singlePrice'    => $item->singlePrice(),
+                'totalPrice'     => $item->totalPrice(),
+                'singleShipping' => $item->singleShipping(),
+                'totalShipping'  => $item->totalShipping(),
+                'taxRate'        => $item->taxRate,
             ];
         });
 
