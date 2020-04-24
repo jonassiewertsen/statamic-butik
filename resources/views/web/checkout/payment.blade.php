@@ -44,8 +44,8 @@
                         <h3 class="b-font-bold">{{ $item->name }}</h3>
                         <p>{{ $item->description }}</p>
                         <div class="b-flex b-justify-end b-items-baseline">
-                            <span class="b-mr-5 b-text-sm b-italic">{{ $item->singlePrice() }} €€€€€€ x {{ $item->getQuantity() }}</span>
-                            <span class="b-font-bold">{{ $item->totalPrice() }} €€€€</span>
+                            <span class="b-mr-5 b-text-sm b-italic">{{ currency() }} {{ $item->singlePrice() }} x {{ $item->getQuantity() }}</span>
+                            <span class="b-font-bold">{{ currency() }} {{ $item->totalPrice() }}</span>
                         </div>
                     </div>
                 </section>
@@ -59,14 +59,14 @@
 
                 <div class="b-flex b-my-3 b-justify-between b-max-w-sm b-mx-auto">
                     <span>{{ __('butik::payment.shipping') }}</span>
-                    <span>{{ $totalShipping }} $$$$$</span>
+                    <span>{{ currency() }} {{ $totalShipping }}</span>
                 </div>
 
                 <hr class="b-border-white b-my-5">
 
                 <div class="b-flex b-mt-3 b-justify-between b-max-w-sm b-mx-auto">
                     <span>{{ __('butik::payment.total') }}</span>
-                    <span class="b-font-black">{{ $totalPrice }} $$$$</span>
+                    <span class="b-font-black">{{ currency() }} {{ $totalPrice }}</span>
                 </div>
                 <div class="b-max-w-sm b-mx-auto b-pb-3 b-text-gray-500 b-text-right b-text-sm">
                     Including taxes

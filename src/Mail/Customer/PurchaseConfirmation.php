@@ -26,7 +26,6 @@ class PurchaseConfirmation extends Mailable implements ShouldQueue
             ->with([
                 'id'             => $this->transaction->id,
                 'totalAmount'    => $this->transaction->totalAmount,
-                'currencySymbol' => $this->transaction->currencySymbol,
                 'paidAt'         => $this->transaction->paidAt,
                 'items'          => $this->transaction->items,
             ]);

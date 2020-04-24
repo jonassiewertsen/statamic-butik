@@ -29,7 +29,7 @@
                {{ __('butik::product.total_amount') }}
             </td>
             <td valign="top" width="67%" style="text-align: left;">
-                {{ $totalAmount ?? '' }} {{ $currencySymbol ?? '' }}
+                {{ currency() ?? '' }} {{ $totalAmount ?? '' }}
             </td>
         </tr>
 
