@@ -20,19 +20,6 @@
                 </td>
             </tr><!-- end tr -->
             <tr>
-                <td valign="middle" class="hero hero-2 bg_white" style="padding: 4em 0;">
-                    <table>
-                        <tr>
-                            <td>
-                                <div class="text" style="padding: 0 3em; text-align: center;">
-                                    <h2>{{ config('butik.thank_you', '') }}</h2>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr><!-- end tr -->
-            <tr>
                 <td class="bg_white">
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                         <tr>
