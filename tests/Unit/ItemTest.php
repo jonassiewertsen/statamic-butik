@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use Illuminate\Support\Str;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
@@ -135,5 +136,15 @@ class ItemTest extends TestCase
         $totalShipping = $this->makeAmountHuman($productShipping * 3);
 
         $this->assertEquals($totalShipping, $item->totalShipping());
+    }
+
+    /** @test */
+    public function multiple_odd_shipping_costs_will_be_added_up_by_the_given_quantity()
+    {
+        $shipping = factory(Shipping::class)->create(['price' => '2.5']);
+        $item = new Item(factory(Product::class)->create(['shipping_id' => $shipping->slug]));
+        $item->setQuantity(2);
+
+        $this->assertEquals('5,00', $item->totalShipping());
     }
 }
