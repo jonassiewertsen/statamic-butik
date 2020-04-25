@@ -15,7 +15,11 @@ class CheckoutController extends Checkout
                     Session::get('butik.customer') :
                     (new Customer())->empty();
 
-        return view(config('butik.template_checkout-delivery'), compact('customer'));
+        $items          = Cart::get();
+        $totalShipping  = Cart::totalShipping();
+        $totalPrice     = Cart::totalPrice();
+
+        return view(config('butik.template_checkout-delivery'), compact('customer', 'items', 'totalShipping', 'totalPrice'));
     }
 
     public function saveCustomerData()
