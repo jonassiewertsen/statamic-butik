@@ -19,6 +19,17 @@ class CheckoutPaymentTest extends TestCase
 
         $this->customer = new Customer($this->createUserData());
         $this->product  = create(Product::class)->first();
+
+        Cart::add($this->product);
+    }
+
+    /** @test */
+    public function the_user_will_be_redirected_without_any_products()
+    {
+        Cart::clear();
+
+        $this->get(route('butik.checkout.payment', $this->product))
+            ->assertRedirect(route('butik.cart'));
     }
 
     /** @test */
@@ -72,15 +83,6 @@ class CheckoutPaymentTest extends TestCase
     // TODO: Tests to remove products from the cart, which are sold out.
 
     // TODO: Tests to remove products from the cart, which are not available.
-
-    /** @test */
-    public function the_payment_page_will_redirect_if_the_cart_is_empty() {
-        $this->withoutExceptionHandling();
-        Session::put('butik.cart', null);
-
-        $this->get(route('butik.checkout.payment'))
-            ->assertRedirect(route('butik.checkout.delivery'));
-    }
 
     /** @test */
     public function the_payment_page_will_redirect_back_without_a_name() {

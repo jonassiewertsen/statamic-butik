@@ -52,6 +52,9 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         'validateCheckoutRoute' => [
             \Jonassiewertsen\StatamicButik\Http\Middleware\ValidateCheckoutRoute::class,
         ],
+        'cartNotEmpty' => [
+            \Jonassiewertsen\StatamicButik\Http\Middleware\CartNotEmpty::class,
+        ]
     ];
 
     protected $scripts = [
