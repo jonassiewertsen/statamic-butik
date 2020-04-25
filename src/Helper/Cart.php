@@ -11,7 +11,7 @@ use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 class Cart {
     use MoneyTrait;
 
-    public static $cart;
+    public static  $cart;
     private static $totalPrice;
     private static $totalShipping;
     private static $totalItems;
