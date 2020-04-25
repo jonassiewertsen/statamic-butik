@@ -122,7 +122,9 @@ class CreateOpenOrderTest extends TestCase
         Mollie::shouldReceive('api->payments->create')->andReturn($openPayment);
         Mollie::shouldReceive('api->payments->get')->with($openPayment->id)->andReturn($openPayment);
 
-        (new MolliePaymentGateway())->handle($this->customer, $this->items);
+        $totalPrice = $this->items->first()->totalPrice();
+
+        (new MolliePaymentGateway())->handle($this->customer, $this->items, $totalPrice);
     }
 
     private function createUserData($key = null, $value = null) {
