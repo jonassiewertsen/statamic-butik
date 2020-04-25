@@ -81,7 +81,6 @@ class StatamicButikServiceProvider extends AddonServiceProvider
          $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
          $this->bootPermissions();
-         $this->bootMiddleware();
          $this->createNavigation();
 
         if ($this->app->runningInConsole()) {
