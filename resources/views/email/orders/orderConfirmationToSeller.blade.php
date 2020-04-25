@@ -32,7 +32,7 @@
                         {{ __('butik::general.shipping') }} {{ $item->singleShipping ?? '' }} / {{ $item->totalShipping ?? '' }}
                     </td>
                     <td valign="top" width="33%" style="text-align: right; font-weight: 600;">
-                        {{ currency() ?? '' }} {{ $totalAmount ?? '' }}
+                        {{ currency() ?? '' }} {{ $item->totalPrice ?? '' }}
                     </td>
                 </tr>
             </table>

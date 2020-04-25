@@ -22,22 +22,24 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
     use MollyLocale, MoneyTrait;
 
     /**
-     * The total amount we will charge the customer with
+     * The total amount we will charge the customer with. The price
+     * needs to be written with dot notation to make Mollie happy.
      */
-    protected $totalPrice;
+    protected string $totalPrice;
 
     /**
      * All data from this transaction
      */
     protected Transaction $transaction;
 
-    public function handle(Customer $customer, Collection $items) {
+    public function handle(Customer $customer, Collection $items, string $totalPrice) {
         $mollieCustomer = Mollie::api()->customers()->create([
             'name' => $customer->name,
             'email' => $customer->mail,
        ]);
 
         $orderId = str_random(20);
+        $this->totalPrice = $totalPrice;
 
         $payment = Mollie::api()
             ->payments()
@@ -122,10 +124,10 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
             'metadata'      => $this->generateMetaData($items, $orderId),
             'locale'        => $this->getLocale(),
             'redirectUrl'   =>  URL::temporarySignedRoute('butik.payment.receipt', now()->addMinutes(5), ['order' => $orderId]),
-            'webhookUrl'    => 'https://dd02b4d2.ngrok.io/payment/webhook/mollie',
+            'webhookUrl'    => 'https://b2402e3c.ngrok.io/payment/webhook/mollie', // TODO: REMEBER TO REMOVE NGROOK URL
             'amount'        => [
-                'currency'  => config('butik.currency_isoCode'), // TODO: Use Butik Facade. Needs to be created.
-                'value'     => $this->calculateTotalPrice($items),
+                'currency'  => config('butik.currency_isoCode'),
+                'value'     => $this->totalPrice,
             ],
         ];
 
@@ -139,17 +141,6 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
         return $payment;
     }
 
-    private function calculateTotalPrice($items) {
-        $this->totalPrice = 0;
-
-        $items->each(function($item)
-        {
-            $this->totalPrice += $this->makeAmountSaveable($item->totalPrice());
-        });
-
-        return $this->formatPrice($this->totalPrice);
-    }
-
     private function generateMetaData($items, $orderId) {
         $meta = 'ORDER ' . $orderId . ': ';
 
@@ -158,13 +149,5 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
         }
 
         return $meta;
-    }
-
-    private function formatPrice($amount)
-    {
-        $amount = $this->makeAmountHuman($amount);
-
-        // Swap the decimal from . to , so Mollie stays happy
-        return number_format(floatval($amount), 2, '.', '');
     }
 }
