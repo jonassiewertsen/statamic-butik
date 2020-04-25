@@ -122,7 +122,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     public function register(): void
     {
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'butik');
+        $this->mergeConfigFrom(__DIR__.'/../config/statamic/config.php', 'butik');
 
         // Register the main class to use with the facade
         $this->app->singleton('statamic-butik', function () {
