@@ -120,6 +120,8 @@ class Cart {
 
     public static function totalItems()
     {
+        static::$totalItems = 0; // Reset total items to zero
+
         static::$cart = static::get();
 
         static::$cart->each(function($item) {

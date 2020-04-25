@@ -122,6 +122,14 @@ class CartTest extends TestCase
     }
 
     /** @test */
+    public function the_cart_returns_zero_without_any_items()
+    {
+        Cart::clear();
+
+        $this->assertNotNull(Cart::totalItems());
+    }
+
+    /** @test */
     public function the_cart_calculates_total_shipping_expenses()
     {
         $product1 = factory(Product::class)->create();
