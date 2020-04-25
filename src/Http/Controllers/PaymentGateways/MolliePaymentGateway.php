@@ -124,17 +124,24 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
             'metadata'      => $this->generateMetaData($items, $orderId),
             'locale'        => $this->getLocale(),
             'redirectUrl'   =>  URL::temporarySignedRoute('butik.payment.receipt', now()->addMinutes(5), ['order' => $orderId]),
-            'webhookUrl'    => 'https://b2402e3c.ngrok.io/payment/webhook/mollie', // TODO: REMEBER TO REMOVE NGROOK URL
             'amount'        => [
                 'currency'  => config('butik.currency_isoCode'),
                 'value'     => $this->totalPrice,
             ],
         ];
 
-        // Only adding the webhook when not in local environment
+
         if (! App::environment(['local'])) {
+            // Only adding the mollie webhook, when not in local environment
             $payment = array_merge($payment, [
                 'webhookUrl' => route('butik.payment.webhook.mollie'),
+            ]);
+        } elseif (App::environment(['local']) && $this->ngrokSet()) {
+            // When local env and the the NGROK has been set, it will add the ngrok url
+            $route = env('MOLLIE_NGROK_REDIRECT') . route('butik.payment.webhook.mollie', [], false);
+
+            $payment = array_merge($payment, [
+                'webhookUrl' => $route,
             ]);
         }
 
@@ -149,5 +156,10 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
         }
 
         return $meta;
+    }
+
+    private function ngrokSet(): bool
+    {
+        return env('MOLLIE_NGROK_REDIRECT', false) == true;
     }
 }
