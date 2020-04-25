@@ -11,6 +11,7 @@ jobs:
         runs-on: ${{ matrix.os }}
 
         strategy:
+            fail-fast: false
             matrix:
                 php: [7.4]
                 laravel: [7.*, 6.*]
