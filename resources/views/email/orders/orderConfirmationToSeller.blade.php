@@ -11,7 +11,7 @@
     </div>
     <div class="text" style="padding: 0 3em; margin: 40px 0; text-align: center;">
         @foreach ($items as $item)
-            <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin: 25px 0;">
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin: 25px 0 !important;">
                 <tr>
                     <td colspan="3" valign="top" width="100%" style="text-align: left; font-weight: 600; line-height: 1;">
                         {{ $item->name ?? '' }}
@@ -25,11 +25,11 @@
                 </tr>
                 @endif
                 <tr style="font-style: italic;">
-                    <td valign="top" width="33%" style="text-align: left;">
-                        {{ $item->quantity ?? '' }}x {{ $item->singlePrice ?? '' }}
+                    <td valign="top" width="33%" style="text-align: left; font-size: 14px;">
+                        <b>{{ $item->quantity ?? '' }}x</b> {{ $item->singlePrice ?? '' }}
                     </td>
-                    <td valign="top" width="34%" style="text-align: left;">
-                        {{ __('butik::general.shipping') }} {{ $item->singleShipping ?? '' }} / {{ $item->totalShipping ?? '' }}
+                    <td valign="top" width="34%" style="text-align: left; font-size: 14px;">
+                        Shipping included
                     </td>
                     <td valign="top" width="33%" style="text-align: right; font-weight: 600;">
                         {{ currency() ?? '' }} {{ $item->totalPrice ?? '' }}

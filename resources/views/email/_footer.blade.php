@@ -9,7 +9,7 @@
                                 <td style="text-align: left; padding-left: 5px; padding-right: 5px;">
                                     <h3 class="heading">Contact Info</h3>
                                     <ul>
-                                        <li>
+                                        <li style="color: white;">
                                             <div class="text">{{ config('butik.address1', '') }}</div>
                                             @if (config('butik.address2') !== null)
                                                 <div class="text">{{ config('butik.address2', '') }}</div>
@@ -51,7 +51,7 @@
                     <td valign="top" width="100%">
                         <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                             <tr>
-                                <td style="text-align: left; padding-right: 10px;">
+                                <td style="text-align: left; padding-right: 10px; color: white;">
                                     <p>&copy; {{ now()->format('Y') }} {{ config('butik.name') }}. All Rights Reserved</p>
                                 </td>
                             </tr>
