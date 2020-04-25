@@ -88,36 +88,36 @@ class StatamicButikServiceProvider extends AddonServiceProvider
             // Config
             $this->publishes([
                 __DIR__.'/../config/config.php' => config_path('statamic/butik.php'),
-            ], 'config');
+            ], 'butik-config');
 
             // Views
             $this->publishes([
                 __DIR__.'/../resources/views/email' => resource_path('views/vendor/butik/emails'),
-            ], 'views');
+            ], 'butik-views');
             $this->publishes([
                 __DIR__.'/../resources/views/web' => resource_path('views/vendor/butik/web'),
-            ], 'views');
+            ], 'statamic-butik-views');
             $this->publishes([
                 __DIR__.'/../resources/views/widgets' => resource_path('views/vendor/butik/widgets'),
-            ], 'views');
+            ], 'butik-views');
 
             // Images
             $this->publishes([
                 __DIR__.'/../public/images' => public_path('vendor/butik/images'),
-            ], 'images');
+            ], 'butik-images');
 
             // Resources
             $this->publishes([
                 __DIR__.'/../public/css' => public_path('vendor/butik/css'),
-            ], 'resources');
+            ], 'butik-resources');
             $this->publishes([
                 __DIR__.'/../public/js' => public_path('vendor/butik/js'),
-            ], 'resources');
+            ], 'butik-resources');
 
             // Lang
             $this->publishes([
                 __DIR__.'/../resources/lang' => resource_path('lang/vendor/butik'),
-            ], 'lang');
+            ], 'butik-lang');
         }
     }
 
