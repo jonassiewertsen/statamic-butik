@@ -21,8 +21,8 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     ];
 
     protected $routes = [
-        'cp' => __DIR__.'/../routes/cp.php',
-        'web' => __DIR__.'/../routes/web.php',
+        'cp'    => __DIR__.'/../routes/cp.php',
+        'web'   => __DIR__.'/../routes/web.php',
     ];
 
     protected $widgets = [
@@ -67,14 +67,9 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         Tax::class      => TaxPolicy::class,
     ];
 
-    public function boot()
+    public function boot(): void
     {
          parent::boot();
-
-         Livewire::component('butik::shop', \Jonassiewertsen\StatamicButik\Http\Livewire\Shop::class);
-         Livewire::component('butik::cart', \Jonassiewertsen\StatamicButik\Http\Livewire\Cart::class);
-         Livewire::component('butik::cart-icon', \Jonassiewertsen\StatamicButik\Http\Livewire\CartIcon::class);
-         Livewire::component('butik::add-to-cart', \Jonassiewertsen\StatamicButik\Http\Livewire\AddToCart::class);
 
          $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'butik');
          $this->loadViewsFrom(__DIR__.'/../resources/views', 'butik');
@@ -82,6 +77,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
          $this->bootPermissions();
          $this->createNavigation();
+         $this->bootLivewireComponents();
 
         if ($this->app->runningInConsole()) {
             // Config
@@ -123,7 +119,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     /**
      * Register the application services.
      */
-    public function register()
+    public function register(): void
     {
         // Automatically apply the package configuration
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'butik');
@@ -165,7 +161,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         });
     }
 
-    protected function bootPermissions() {
+    protected function bootPermissions(): void {
         $this->app->booted(function () {
             Permission::group('butik', 'Statamic Butik', function () {
                 Permission::register('view orders', function ($permission) {
@@ -199,5 +195,12 @@ class StatamicButikServiceProvider extends AddonServiceProvider
                 });
             });
         });
+    }
+
+    protected function bootLivewireComponents(): void {
+        Livewire::component('butik::shop', \Jonassiewertsen\StatamicButik\Http\Livewire\Shop::class);
+        Livewire::component('butik::cart', \Jonassiewertsen\StatamicButik\Http\Livewire\Cart::class);
+        Livewire::component('butik::cart-icon', \Jonassiewertsen\StatamicButik\Http\Livewire\CartIcon::class);
+        Livewire::component('butik::add-to-cart', \Jonassiewertsen\StatamicButik\Http\Livewire\AddToCart::class);
     }
 }
