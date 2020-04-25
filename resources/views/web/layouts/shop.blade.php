@@ -1,32 +1,27 @@
 <!doctype html>
-<html lang="{{ site_short_locale }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>{{ title }} | {{ site_name }}</title>
+        <title>Shop | {{ config('app.name') }}</title>
 
         <link rel="stylesheet" href="/vendor/butik/css/statamic-butik.css">
+        @livewireStyles
     </head>
 
     <body>
         <div class="b-max-w-6xl b-mx-auto">
             <header class="b-flex b-px-5 b-py-8 md:b-py-10">
-                <a class="b-w-full" href="/">
+                <a class="b-w-full" href="{{ route('butik.shop') }}">
                     <img class="b-w-3/5" style="max-width: 200px;" src="/vendor/butik/images/logo.svg">
                 </a>
-                <div class="b-w-2/5 b-flex b-justify-end">
-                    <button>
-                        <svg class="b-w-8 b-h-8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000">
-                            <g><path d="M990,210.3c0,38.7-31.3,70-70,70H80c-38.7,0-70-31.3-70-70l0,0c0-38.7,31.3-70,70-70H920C958.5,140.2,990,171.6,990,210.3L990,210.3L990,210.3z"/><path d="M713.4,500c0,38.7-31.3,70-70,70H80c-38.7,0-70-31.3-70-70l0,0c0-38.7,31.3-70,70-70l563.3,0C682,430,713.4,461.3,713.4,500L713.4,500L713.4,500z"/><path d="M503.4,789.7c0,38.7-31.3,70-70,70H80c-38.7,0-70-31.3-70-70l0,0c0-38.7,31.3-70,70-70h353.4C472.1,719.7,503.4,751.2,503.4,789.7L503.4,789.7L503.4,789.7z"/></g>
-                        </svg>
-                    </button>
-                </div>
+                @livewire('butik::cart-icon')
             </header>
 
             <main class="b-w-full">
 
-                {{ template_content }}
+                @yield('content')
 
             </main>
         </div>
@@ -42,5 +37,7 @@
                 <a class="b-mx-6 b-mb-2" href="#">AGB</a>
             </div>
         </footer>
+
+        @livewireScripts
     </body>
 </html>

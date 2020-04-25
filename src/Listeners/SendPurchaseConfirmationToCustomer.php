@@ -19,7 +19,9 @@ class SendPurchaseConfirmationToCustomer implements ShouldQueue
             Mail::to($event->transaction->customer->mail)
                 ->queue(new PurchaseConfirmation($event->transaction));
         } catch(\Exception $e) {
-            throw new PurchaseConfirmationToCustomerNotSent();
+            report($e);
+
+            return false;
         }
     }
 }

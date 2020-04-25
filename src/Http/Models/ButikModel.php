@@ -3,19 +3,8 @@
 namespace Jonassiewertsen\StatamicButik\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 
 abstract class ButikModel extends Model {
-
-    public function makeAmountHuman($value)
-    {
-        $value = floatval($value) / 100;
-
-        $delimiter = config('butik.currency_delimiter');
-        return number_format($value, 2, $delimiter, '');
-    }
-
-    public function makeAmountSaveable($value)
-    {
-        return number_format(floatval($value) * 100, 0, '', '');
-    }
+    use MoneyTrait;
 }

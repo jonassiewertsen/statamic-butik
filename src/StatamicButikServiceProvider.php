@@ -2,13 +2,13 @@
 
 namespace Jonassiewertsen\StatamicButik;
 
-use Jonassiewertsen\StatamicButik\Http\Middleware\ValidateCheckoutCart;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Jonassiewertsen\StatamicButik\Policies\ProductPolicy;
 use Jonassiewertsen\StatamicButik\Policies\ShippingPolicy;
 use Jonassiewertsen\StatamicButik\Policies\TaxPolicy;
+use Livewire\Livewire;
 use Mollie\Laravel\MollieServiceProvider;
 use Statamic\Facades\CP\Nav;
 use Statamic\Facades\Permission;
@@ -21,13 +21,8 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     ];
 
     protected $routes = [
-        'cp' => __DIR__.'/../routes/cp.php',
-        'web' => __DIR__.'/../routes/web.php',
-    ];
-
-    protected $tags = [
-        \Jonassiewertsen\StatamicButik\Tags\Butik::class,
-        \Jonassiewertsen\StatamicButik\Tags\Error::class,
+        'cp'    => __DIR__.'/../routes/cp.php',
+        'web'   => __DIR__.'/../routes/web.php',
     ];
 
     protected $widgets = [
@@ -50,6 +45,18 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         ],
     ];
 
+    protected $middlewareGroups = [
+        'validateExpressCheckoutRoute' => [
+            \Jonassiewertsen\StatamicButik\Http\Middleware\ValidateExpressCheckoutRoute::class,
+        ],
+        'validateCheckoutRoute' => [
+            \Jonassiewertsen\StatamicButik\Http\Middleware\ValidateCheckoutRoute::class,
+        ],
+        'cartNotEmpty' => [
+            \Jonassiewertsen\StatamicButik\Http\Middleware\CartNotEmpty::class,
+        ]
+    ];
+
     protected $scripts = [
         __DIR__ . '/../public/js/statamic-butik.js',
     ];
@@ -60,7 +67,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         Tax::class      => TaxPolicy::class,
     ];
 
-    public function boot()
+    public function boot(): void
     {
          parent::boot();
 
@@ -69,50 +76,50 @@ class StatamicButikServiceProvider extends AddonServiceProvider
          $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
          $this->bootPermissions();
-         $this->bootMiddleware();
          $this->createNavigation();
+         $this->bootLivewireComponents();
 
         if ($this->app->runningInConsole()) {
             // Config
             $this->publishes([
-                __DIR__.'/../config/config.php' => config_path('butik.php'),
-            ], 'config');
+                __DIR__.'/../config/config.php' => config_path('statamic/butik.php'),
+            ], 'butik-config');
 
             // Views
             $this->publishes([
                 __DIR__.'/../resources/views/email' => resource_path('views/vendor/butik/emails'),
-            ], 'views');
+            ], 'butik-views');
             $this->publishes([
                 __DIR__.'/../resources/views/web' => resource_path('views/vendor/butik/web'),
-            ], 'views');
+            ], 'statamic-butik-views');
             $this->publishes([
                 __DIR__.'/../resources/views/widgets' => resource_path('views/vendor/butik/widgets'),
-            ], 'views');
+            ], 'butik-views');
 
             // Images
             $this->publishes([
                 __DIR__.'/../public/images' => public_path('vendor/butik/images'),
-            ], 'images');
+            ], 'butik-images');
 
             // Resources
             $this->publishes([
                 __DIR__.'/../public/css' => public_path('vendor/butik/css'),
-            ], 'resources');
+            ], 'butik-resources');
             $this->publishes([
                 __DIR__.'/../public/js' => public_path('vendor/butik/js'),
-            ], 'resources');
+            ], 'butik-resources');
 
             // Lang
             $this->publishes([
                 __DIR__.'/../resources/lang' => resource_path('lang/vendor/butik'),
-            ], 'lang');
+            ], 'butik-lang');
         }
     }
 
     /**
      * Register the application services.
      */
-    public function register()
+    public function register(): void
     {
         // Automatically apply the package configuration
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'butik');
@@ -154,12 +161,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         });
     }
 
-    protected function bootMiddleware() {
-        $router = $this->app['router'];
-        $router->pushMiddlewareToGroup('validateCheckoutCart', ValidateCheckoutCart::class);
-    }
-
-    protected function bootPermissions() {
+    protected function bootPermissions(): void {
         $this->app->booted(function () {
             Permission::group('butik', 'Statamic Butik', function () {
                 Permission::register('view orders', function ($permission) {
@@ -193,5 +195,12 @@ class StatamicButikServiceProvider extends AddonServiceProvider
                 });
             });
         });
+    }
+
+    protected function bootLivewireComponents(): void {
+        Livewire::component('butik::shop', \Jonassiewertsen\StatamicButik\Http\Livewire\Shop::class);
+        Livewire::component('butik::cart', \Jonassiewertsen\StatamicButik\Http\Livewire\Cart::class);
+        Livewire::component('butik::cart-icon', \Jonassiewertsen\StatamicButik\Http\Livewire\CartIcon::class);
+        Livewire::component('butik::add-to-cart', \Jonassiewertsen\StatamicButik\Http\Livewire\AddToCart::class);
     }
 }

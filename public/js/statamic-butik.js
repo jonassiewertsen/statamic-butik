@@ -1,1 +1,1366 @@
-!function(t){var e={};function n(r){if(e[r])return e[r].exports;var o=e[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}n.m=t,n.c=e,n.d=function(t,e,r){n.o(t,e)||Object.defineProperty(t,e,{configurable:!1,enumerable:!0,get:r})},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="/",n(n.s=2)}([function(t,e){t.exports=function(t,e,n,r,o,i){var s,l=t=t||{},a=typeof t.default;"object"!==a&&"function"!==a||(s=t,l=t.default);var u,c="function"==typeof l?l.options:l;if(e&&(c.render=e.render,c.staticRenderFns=e.staticRenderFns,c._compiled=!0),n&&(c.functional=!0),o&&(c._scopeId=o),i?(u=function(t){(t=t||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext)||"undefined"==typeof __VUE_SSR_CONTEXT__||(t=__VUE_SSR_CONTEXT__),r&&r.call(this,t),t&&t._registeredComponents&&t._registeredComponents.add(i)},c._ssrRegister=u):r&&(u=r),u){var d=c.functional,f=d?c.render:c.beforeCreate;d?(c._injectStyles=u,c.render=function(t,e){return u.call(e),f(t,e)}):c.beforeCreate=f?[].concat(f,u):[u]}return{esModule:s,exports:l,options:c}}},function(t,e,n){"use strict";e.a={data:function(){return{deletingRow:!1}},computed:{deletingModalTitle:function(){return this.deletingModalTitleFromRowKey("title")}},methods:{confirmDeleteRow:function(t,e){this.deletingRow={id:t,index:e}},deletingModalTitleFromRowKey:function(t){return __("Delete")+" "+this.rows[this.deletingRow.index][t]},deleteRow:function(t,e){var n=this,r=this.deletingRow.id;e=e||__("Deleted"),this.$axios.delete(cp_url(t+"/"+r)).then(function(){var t=_.indexOf(n.rows,_.findWhere(n.rows,{id:r}));n.rows.splice(t,1),n.deletingRow=!1,n.$toast.success(e),0===n.rows.length&&location.reload()}).catch(function(t){n.$toast.error(t.response?t.response.data.message:__("Something went wrong"))})},cancelDeleteRow:function(){this.deletingRow=!1}}}},function(t,e,n){n(3),t.exports=n(22)},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=n(4),o=n.n(r),i=n(7),s=n.n(i),l=n(10),a=n.n(l),u=n(13),c=n.n(u),d=n(16),f=n.n(d),p=n(19),_=n.n(p);Statamic.booting(function(){Statamic.$components.register("butik-product-list",o.a),Statamic.$components.register("butik-shipping-list",s.a),Statamic.$components.register("butik-tax-list",a.a),Statamic.$components.register("butik-order-list",c.a),Statamic.$components.register("money-fieldtype",f.a),Statamic.$components.register("tax-fieldtype",_.a)})},function(t,e,n){var r=n(0)(n(5),n(6),!1,null,null,null);t.exports=r.exports},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=n(1);e.default={mixins:[r.a],props:["initial-rows","columns"],data:function(){return{rows:this.initialRows}}}},function(t,e){t.exports={render:function(){var t=this,e=t.$createElement,n=t._self._c||e;return n("data-list",{attrs:{columns:t.columns,rows:t.rows},scopedSlots:t._u([{key:"default",fn:function(e){var r=e.filteredRows;return n("div",{staticClass:"card p-0"},[n("data-list-table",{attrs:{rows:r},scopedSlots:t._u([{key:"cell-available",fn:function(t){return[t.row.available?n("div",{staticClass:"bg-green block h-3 w-2 mx-auto rounded-full"}):n("div",{staticClass:"bg-red block h-3 w-2 mx-auto rounded-full"})]}},{key:"cell-title",fn:function(e){var r=e.row;return[n("a",{attrs:{href:r.edit_url}},[t._v(t._s(r.title))])]}},{key:"cell-stock_unlimited",fn:function(t){var e=t.row;return[n("div",{staticClass:"ml-4"},[e.stock_unlimited?n("div",{staticClass:"bg-green block h-3 w-2 rounded-full"}):n("div",{staticClass:"bg-grey-50 block h-3 w-2 rounded-full"})])]}},{key:"cell-stock",fn:function(e){var r=e.row;return[n("div",{staticClass:"mr-2"},[r.stock_unlimited?n("div",[t._v(". . .")]):n("div",[t._v(t._s(r.stock))])])]}},{key:"actions",fn:function(e){var r=e.row,o=e.index;return[n("dropdown-list",[n("dropdown-item",{attrs:{text:t.__("Edit"),redirect:r.edit_url}}),t._v(" "),r.deleteable?n("dropdown-item",{staticClass:"warning",attrs:{text:t.__("Delete")},on:{click:function(e){return t.confirmDeleteRow(r.slug,o)}}}):t._e()],1),t._v(" "),!1!==t.deletingRow?n("confirmation-modal",{attrs:{title:t.deletingModalTitle,bodyText:t.__("Are you sure you want to delete this product?"),buttonText:t.__("Delete"),danger:!0},on:{confirm:function(e){return t.deleteRow("/butik/products")},cancel:t.cancelDeleteRow}}):t._e()]}}],null,!0)})],1)}}])})},staticRenderFns:[]}},function(t,e,n){var r=n(0)(n(8),n(9),!1,null,null,null);t.exports=r.exports},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=n(1);e.default={mixins:[r.a],props:["initial-rows","columns"],data:function(){return{rows:this.initialRows}}}},function(t,e){t.exports={render:function(){var t=this,e=t.$createElement,n=t._self._c||e;return n("data-list",{attrs:{columns:t.columns,rows:t.rows},scopedSlots:t._u([{key:"default",fn:function(e){var r=e.filteredRows;return n("div",{staticClass:"card p-0"},[n("data-list-table",{attrs:{rows:r},scopedSlots:t._u([{key:"cell-title",fn:function(e){var r=e.row;return[n("a",{attrs:{href:r.edit_url}},[t._v(t._s(r.title))])]}},{key:"actions",fn:function(e){var r=e.row,o=e.index;return[n("dropdown-list",[n("dropdown-item",{attrs:{text:t.__("Edit"),redirect:r.edit_url}}),t._v(" "),r.deleteable?n("dropdown-item",{staticClass:"warning",attrs:{text:t.__("Delete")},on:{click:function(e){return t.confirmDeleteRow(r.slug,o)}}}):t._e()],1),t._v(" "),!1!==t.deletingRow?n("confirmation-modal",{attrs:{title:t.deletingModalTitle,bodyText:t.__("Are you sure you want to delete this shipping? You will not be able to delete this shipping if used by any product."),buttonText:t.__("Delete"),danger:!0},on:{confirm:function(e){return t.deleteRow("/butik/settings/shippings")},cancel:t.cancelDeleteRow}}):t._e()]}}],null,!0)})],1)}}])})},staticRenderFns:[]}},function(t,e,n){var r=n(0)(n(11),n(12),!1,null,null,null);t.exports=r.exports},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=n(1);e.default={mixins:[r.a],props:["initial-rows","columns"],data:function(){return{rows:this.initialRows}}}},function(t,e){t.exports={render:function(){var t=this,e=t.$createElement,n=t._self._c||e;return n("data-list",{attrs:{columns:t.columns,rows:t.rows},scopedSlots:t._u([{key:"default",fn:function(e){var r=e.filteredRows;return n("div",{staticClass:"card p-0"},[n("data-list-table",{attrs:{rows:r},scopedSlots:t._u([{key:"cell-title",fn:function(e){var r=e.row;return[n("a",{attrs:{href:r.edit_url}},[t._v(t._s(r.title))])]}},{key:"actions",fn:function(e){var r=e.row,o=e.index;return[n("dropdown-list",[n("dropdown-item",{attrs:{text:t.__("Edit"),redirect:r.edit_url}}),t._v(" "),r.deleteable?n("dropdown-item",{staticClass:"warning",attrs:{text:t.__("Delete")},on:{click:function(e){return t.confirmDeleteRow(r.slug,o)}}}):t._e()],1),t._v(" "),!1!==t.deletingRow?n("confirmation-modal",{attrs:{title:t.deletingModalTitle,bodyText:t.__("Are you sure you want to delete this tax? You will not be able to delete this shipping if used by any product."),buttonText:t.__("Delete"),danger:!0},on:{confirm:function(e){return t.deleteRow("/butik/settings/taxes")},cancel:t.cancelDeleteRow}}):t._e()]}}],null,!0)})],1)}}])})},staticRenderFns:[]}},function(t,e,n){var r=n(0)(n(14),n(15),!1,null,null,null);t.exports=r.exports},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=n(1);e.default={mixins:[r.a],props:["initial-rows","columns"],data:function(){return{rows:this.initialRows}}}},function(t,e){t.exports={render:function(){var t=this,e=t.$createElement,n=t._self._c||e;return n("data-list",{attrs:{columns:t.columns,sort:!1,rows:t.rows},scopedSlots:t._u([{key:"default",fn:function(e){var r=e.filteredRows;return n("div",{staticClass:"card p-0"},[n("data-list-table",{attrs:{rows:r},scopedSlots:t._u([{key:"cell-id",fn:function(e){var r=e.row;return[n("a",{attrs:{href:r.show_url}},[t._v(t._s(r.id))])]}},{key:"actions",fn:function(e){var r=e.row;return e.index,[n("dropdown-list",[n("dropdown-item",{attrs:{text:t.__("Show"),redirect:r.show_url}})],1)]}}],null,!0)})],1)}}])})},staticRenderFns:[]}},function(t,e,n){var r=n(0)(n(17),n(18),!1,null,null,null);t.exports=r.exports},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.default={mixins:[Fieldtype],data:function(){return{currencySymbol:this.meta.currencySymbol}}}},function(t,e){t.exports={render:function(){var t=this.$createElement,e=this._self._c||t;return e("div",[e("text-input",{attrs:{type:"number",prepend:this.currencySymbol,min:"0",step:"0.01",placeholder:"0.00",value:this.value},on:{input:this.update}})],1)},staticRenderFns:[]}},function(t,e,n){var r=n(0)(n(20),n(21),!1,null,null,null);t.exports=r.exports},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.default={mixins:[Fieldtype],data:function(){}}},function(t,e){t.exports={render:function(){var t=this.$createElement,e=this._self._c||t;return e("div",[e("text-input",{attrs:{type:"number",min:"0",placeholder:"0.00",value:this.value},on:{input:this.update}})],1)},staticRenderFns:[]}},function(t,e){}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports) {
+
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file.
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier /* server only */
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = injectStyles
+  }
+
+  if (hook) {
+    var functional = options.functional
+    var existing = functional
+      ? options.render
+      : options.beforeCreate
+
+    if (!functional) {
+      // inject component registration as beforeCreate hook
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    } else {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return existing(h, context)
+      }
+    }
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+    data: function data() {
+        return {
+            deletingRow: false
+        };
+    },
+
+
+    computed: {
+        deletingModalTitle: function deletingModalTitle() {
+            return this.deletingModalTitleFromRowKey('title');
+        }
+    },
+
+    methods: {
+        confirmDeleteRow: function confirmDeleteRow(id, index) {
+            this.deletingRow = { id: id, index: index };
+        },
+        deletingModalTitleFromRowKey: function deletingModalTitleFromRowKey(key) {
+            return __('Delete') + ' ' + this.rows[this.deletingRow.index][key];
+        },
+        deleteRow: function deleteRow(resourceRoute, message) {
+            var _this = this;
+
+            var id = this.deletingRow.id;
+            message = message || __('Deleted');
+
+            this.$axios.delete(cp_url(resourceRoute + '/' + id)).then(function () {
+                var i = _.indexOf(_this.rows, _.findWhere(_this.rows, { id: id }));
+                _this.rows.splice(i, 1);
+                _this.deletingRow = false;
+                _this.$toast.success(message);
+
+                if (_this.rows.length === 0) location.reload();
+            }).catch(function (e) {
+                _this.$toast.error(e.response ? e.response.data.message : __('Something went wrong'));
+            });
+        },
+        cancelDeleteRow: function cancelDeleteRow() {
+            this.deletingRow = false;
+        }
+    }
+});
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(3);
+module.exports = __webpack_require__(22);
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_products_Listing__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_products_Listing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_products_Listing__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_shippings_Listing__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_shippings_Listing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_shippings_Listing__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_taxes_Listing__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_taxes_Listing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_taxes_Listing__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_orders_Listing__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_orders_Listing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_orders_Listing__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_fieldtypes_moneyFieldtype__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_fieldtypes_moneyFieldtype___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_fieldtypes_moneyFieldtype__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_fieldtypes_taxFieldtype__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_fieldtypes_taxFieldtype___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_fieldtypes_taxFieldtype__);
+
+
+
+
+
+
+
+
+Statamic.booting(function () {
+    // Listings
+    Statamic.$components.register('butik-product-list', __WEBPACK_IMPORTED_MODULE_0__components_products_Listing___default.a);
+    Statamic.$components.register('butik-shipping-list', __WEBPACK_IMPORTED_MODULE_1__components_shippings_Listing___default.a);
+    Statamic.$components.register('butik-tax-list', __WEBPACK_IMPORTED_MODULE_2__components_taxes_Listing___default.a);
+    Statamic.$components.register('butik-order-list', __WEBPACK_IMPORTED_MODULE_3__components_orders_Listing___default.a);
+
+    // Fieldtypes
+    Statamic.$components.register('money-fieldtype', __WEBPACK_IMPORTED_MODULE_4__components_fieldtypes_moneyFieldtype___default.a);
+    Statamic.$components.register('tax-fieldtype', __WEBPACK_IMPORTED_MODULE_5__components_fieldtypes_taxFieldtype___default.a);
+});
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(5)
+/* template */
+var __vue_template__ = __webpack_require__(6)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/products/Listing.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-24d71684", Component.options)
+  } else {
+    hotAPI.reload("data-v-24d71684", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DeletesListingRow_js__ = __webpack_require__(1);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__DeletesListingRow_js__["a" /* default */]],
+
+    props: ['initial-rows', 'columns'],
+
+    data: function data() {
+        return {
+            rows: this.initialRows
+        };
+    }
+});
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("data-list", {
+    attrs: { columns: _vm.columns, rows: _vm.rows },
+    scopedSlots: _vm._u([
+      {
+        key: "default",
+        fn: function(ref) {
+          var rows = ref.filteredRows
+          return _c(
+            "div",
+            { staticClass: "card p-0" },
+            [
+              _c("data-list-table", {
+                attrs: { rows: rows },
+                scopedSlots: _vm._u(
+                  [
+                    {
+                      key: "cell-available",
+                      fn: function(ref) {
+                        var collection = ref.row
+                        return [
+                          collection.available
+                            ? _c("div", {
+                                staticClass:
+                                  "bg-green block h-3 w-2 mx-auto rounded-full"
+                              })
+                            : _c("div", {
+                                staticClass:
+                                  "bg-red block h-3 w-2 mx-auto rounded-full"
+                              })
+                        ]
+                      }
+                    },
+                    {
+                      key: "cell-title",
+                      fn: function(ref) {
+                        var collection = ref.row
+                        return [
+                          _c("a", { attrs: { href: collection.edit_url } }, [
+                            _vm._v(_vm._s(collection.title))
+                          ])
+                        ]
+                      }
+                    },
+                    {
+                      key: "cell-stock_unlimited",
+                      fn: function(ref) {
+                        var collection = ref.row
+                        return [
+                          _c("div", { staticClass: "ml-4" }, [
+                            collection.stock_unlimited
+                              ? _c("div", {
+                                  staticClass:
+                                    "bg-green block h-3 w-2 rounded-full"
+                                })
+                              : _c("div", {
+                                  staticClass:
+                                    "bg-grey-50 block h-3 w-2 rounded-full"
+                                })
+                          ])
+                        ]
+                      }
+                    },
+                    {
+                      key: "cell-stock",
+                      fn: function(ref) {
+                        var collection = ref.row
+                        return [
+                          _c("div", { staticClass: "mr-2" }, [
+                            collection.stock_unlimited
+                              ? _c("div", [_vm._v(". . .")])
+                              : _c("div", [_vm._v(_vm._s(collection.stock))])
+                          ])
+                        ]
+                      }
+                    },
+                    {
+                      key: "actions",
+                      fn: function(ref) {
+                        var collection = ref.row
+                        var index = ref.index
+                        return [
+                          _c(
+                            "dropdown-list",
+                            [
+                              _c("dropdown-item", {
+                                attrs: {
+                                  text: _vm.__("Edit"),
+                                  redirect: collection.edit_url
+                                }
+                              }),
+                              _vm._v(" "),
+                              collection.deleteable
+                                ? _c("dropdown-item", {
+                                    staticClass: "warning",
+                                    attrs: { text: _vm.__("Delete") },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.confirmDeleteRow(
+                                          collection.slug,
+                                          index
+                                        )
+                                      }
+                                    }
+                                  })
+                                : _vm._e()
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _vm.deletingRow !== false
+                            ? _c("confirmation-modal", {
+                                attrs: {
+                                  title: _vm.deletingModalTitle,
+                                  bodyText: _vm.__(
+                                    "Are you sure you want to delete this product?"
+                                  ),
+                                  buttonText: _vm.__("Delete"),
+                                  danger: true
+                                },
+                                on: {
+                                  confirm: function($event) {
+                                    return _vm.deleteRow("/butik/products")
+                                  },
+                                  cancel: _vm.cancelDeleteRow
+                                }
+                              })
+                            : _vm._e()
+                        ]
+                      }
+                    }
+                  ],
+                  null,
+                  true
+                )
+              })
+            ],
+            1
+          )
+        }
+      }
+    ])
+  })
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-24d71684", module.exports)
+  }
+}
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(8)
+/* template */
+var __vue_template__ = __webpack_require__(9)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/shippings/Listing.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-169cd9c2", Component.options)
+  } else {
+    hotAPI.reload("data-v-169cd9c2", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DeletesListingRow_js__ = __webpack_require__(1);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__DeletesListingRow_js__["a" /* default */]],
+
+    props: ['initial-rows', 'columns'],
+
+    data: function data() {
+        return {
+            rows: this.initialRows
+        };
+    }
+});
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("data-list", {
+    attrs: { columns: _vm.columns, rows: _vm.rows },
+    scopedSlots: _vm._u([
+      {
+        key: "default",
+        fn: function(ref) {
+          var rows = ref.filteredRows
+          return _c(
+            "div",
+            { staticClass: "card p-0" },
+            [
+              _c("data-list-table", {
+                attrs: { rows: rows },
+                scopedSlots: _vm._u(
+                  [
+                    {
+                      key: "cell-title",
+                      fn: function(ref) {
+                        var collection = ref.row
+                        return [
+                          _c("a", { attrs: { href: collection.edit_url } }, [
+                            _vm._v(_vm._s(collection.title))
+                          ])
+                        ]
+                      }
+                    },
+                    {
+                      key: "actions",
+                      fn: function(ref) {
+                        var collection = ref.row
+                        var index = ref.index
+                        return [
+                          _c(
+                            "dropdown-list",
+                            [
+                              _c("dropdown-item", {
+                                attrs: {
+                                  text: _vm.__("Edit"),
+                                  redirect: collection.edit_url
+                                }
+                              }),
+                              _vm._v(" "),
+                              collection.deleteable
+                                ? _c("dropdown-item", {
+                                    staticClass: "warning",
+                                    attrs: { text: _vm.__("Delete") },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.confirmDeleteRow(
+                                          collection.slug,
+                                          index
+                                        )
+                                      }
+                                    }
+                                  })
+                                : _vm._e()
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _vm.deletingRow !== false
+                            ? _c("confirmation-modal", {
+                                attrs: {
+                                  title: _vm.deletingModalTitle,
+                                  bodyText: _vm.__(
+                                    "Are you sure you want to delete this shipping? You will not be able to delete this shipping if used by any product."
+                                  ),
+                                  buttonText: _vm.__("Delete"),
+                                  danger: true
+                                },
+                                on: {
+                                  confirm: function($event) {
+                                    return _vm.deleteRow(
+                                      "/butik/settings/shippings"
+                                    )
+                                  },
+                                  cancel: _vm.cancelDeleteRow
+                                }
+                              })
+                            : _vm._e()
+                        ]
+                      }
+                    }
+                  ],
+                  null,
+                  true
+                )
+              })
+            ],
+            1
+          )
+        }
+      }
+    ])
+  })
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-169cd9c2", module.exports)
+  }
+}
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(11)
+/* template */
+var __vue_template__ = __webpack_require__(12)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/taxes/Listing.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5bb8a8b3", Component.options)
+  } else {
+    hotAPI.reload("data-v-5bb8a8b3", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DeletesListingRow_js__ = __webpack_require__(1);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__DeletesListingRow_js__["a" /* default */]],
+
+    props: ['initial-rows', 'columns'],
+
+    data: function data() {
+        return {
+            rows: this.initialRows
+        };
+    }
+});
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("data-list", {
+    attrs: { columns: _vm.columns, rows: _vm.rows },
+    scopedSlots: _vm._u([
+      {
+        key: "default",
+        fn: function(ref) {
+          var rows = ref.filteredRows
+          return _c(
+            "div",
+            { staticClass: "card p-0" },
+            [
+              _c("data-list-table", {
+                attrs: { rows: rows },
+                scopedSlots: _vm._u(
+                  [
+                    {
+                      key: "cell-title",
+                      fn: function(ref) {
+                        var collection = ref.row
+                        return [
+                          _c("a", { attrs: { href: collection.edit_url } }, [
+                            _vm._v(_vm._s(collection.title))
+                          ])
+                        ]
+                      }
+                    },
+                    {
+                      key: "actions",
+                      fn: function(ref) {
+                        var collection = ref.row
+                        var index = ref.index
+                        return [
+                          _c(
+                            "dropdown-list",
+                            [
+                              _c("dropdown-item", {
+                                attrs: {
+                                  text: _vm.__("Edit"),
+                                  redirect: collection.edit_url
+                                }
+                              }),
+                              _vm._v(" "),
+                              collection.deleteable
+                                ? _c("dropdown-item", {
+                                    staticClass: "warning",
+                                    attrs: { text: _vm.__("Delete") },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.confirmDeleteRow(
+                                          collection.slug,
+                                          index
+                                        )
+                                      }
+                                    }
+                                  })
+                                : _vm._e()
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _vm.deletingRow !== false
+                            ? _c("confirmation-modal", {
+                                attrs: {
+                                  title: _vm.deletingModalTitle,
+                                  bodyText: _vm.__(
+                                    "Are you sure you want to delete this tax? You will not be able to delete this shipping if used by any product."
+                                  ),
+                                  buttonText: _vm.__("Delete"),
+                                  danger: true
+                                },
+                                on: {
+                                  confirm: function($event) {
+                                    return _vm.deleteRow(
+                                      "/butik/settings/taxes"
+                                    )
+                                  },
+                                  cancel: _vm.cancelDeleteRow
+                                }
+                              })
+                            : _vm._e()
+                        ]
+                      }
+                    }
+                  ],
+                  null,
+                  true
+                )
+              })
+            ],
+            1
+          )
+        }
+      }
+    ])
+  })
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5bb8a8b3", module.exports)
+  }
+}
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(14)
+/* template */
+var __vue_template__ = __webpack_require__(15)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/orders/Listing.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1a4cbf45", Component.options)
+  } else {
+    hotAPI.reload("data-v-1a4cbf45", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DeletesListingRow_js__ = __webpack_require__(1);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__DeletesListingRow_js__["a" /* default */]],
+
+    props: ['initial-rows', 'columns'],
+
+    data: function data() {
+        return {
+            rows: this.initialRows
+        };
+    }
+});
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("data-list", {
+    attrs: { columns: _vm.columns, sort: false, rows: _vm.rows },
+    scopedSlots: _vm._u([
+      {
+        key: "default",
+        fn: function(ref) {
+          var rows = ref.filteredRows
+          return _c(
+            "div",
+            { staticClass: "card p-0" },
+            [
+              _c("data-list-table", {
+                attrs: { rows: rows },
+                scopedSlots: _vm._u(
+                  [
+                    {
+                      key: "cell-id",
+                      fn: function(ref) {
+                        var collection = ref.row
+                        return [
+                          _c("a", { attrs: { href: collection.show_url } }, [
+                            _vm._v(_vm._s(collection.id))
+                          ])
+                        ]
+                      }
+                    },
+                    {
+                      key: "actions",
+                      fn: function(ref) {
+                        var collection = ref.row
+                        var index = ref.index
+                        return [
+                          _c(
+                            "dropdown-list",
+                            [
+                              _c("dropdown-item", {
+                                attrs: {
+                                  text: _vm.__("Show"),
+                                  redirect: collection.show_url
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ]
+                      }
+                    }
+                  ],
+                  null,
+                  true
+                )
+              })
+            ],
+            1
+          )
+        }
+      }
+    ])
+  })
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1a4cbf45", module.exports)
+  }
+}
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(17)
+/* template */
+var __vue_template__ = __webpack_require__(18)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/fieldtypes/moneyFieldtype.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-cc901e2e", Component.options)
+  } else {
+    hotAPI.reload("data-v-cc901e2e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mixins: [Fieldtype],
+
+    data: function data() {
+        return {
+            currencySymbol: this.meta.currencySymbol
+        };
+    }
+});
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("text-input", {
+        attrs: {
+          type: "number",
+          prepend: _vm.currencySymbol,
+          min: "0",
+          step: "0.01",
+          placeholder: "0.00",
+          value: _vm.value
+        },
+        on: { input: _vm.update }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-cc901e2e", module.exports)
+  }
+}
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(20)
+/* template */
+var __vue_template__ = __webpack_require__(21)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/fieldtypes/taxFieldtype.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-b0aef9c4", Component.options)
+  } else {
+    hotAPI.reload("data-v-b0aef9c4", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 20 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mixins: [Fieldtype],
+
+    data: function data() {}
+});
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("text-input", {
+        attrs: {
+          type: "number",
+          min: "0",
+          placeholder: "0.00",
+          value: _vm.value
+        },
+        on: { input: _vm.update }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-b0aef9c4", module.exports)
+  }
+}
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ })
+/******/ ]);

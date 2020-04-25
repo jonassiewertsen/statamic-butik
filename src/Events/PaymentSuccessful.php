@@ -19,20 +19,20 @@ class PaymentSuccessful
     {
         $order      = $this->fetchOrder($payment);
         $customer   = $this->createCustomer($order);
-        $products   = $this->fetchProducts($order);
+        $items      = $this->fetchItems($order);
 
         $this->transaction = (new Transaction())
             ->id($payment->id)
             ->method($payment->method)
             ->customer($customer)
-            ->products($products)
+            ->items($items, true)
             ->totalAmount($payment->amount->value)
             ->createdAt(Carbon::parse($payment->createdAt))
             ->paidAt(Carbon::parse($payment->paidAt));
     }
 
-    private function fetchProducts($order): Collection {
-        return collect($order->products);
+    private function fetchItems($order): Collection {
+        return collect(json_decode($order->items));
     }
 
     private function fetchOrder($payment): Order {

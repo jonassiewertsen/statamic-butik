@@ -14,7 +14,7 @@ class Transaction {
     public string     $currencyIsoCode;
     public string     $currencySymbol;
     public string     $totalAmount;
-    public Collection $products;
+    public Collection $items;
     public Customer   $customer;
     public Carbon     $createdAt;
     public Carbon     $paidAt;
@@ -59,8 +59,27 @@ class Transaction {
         return $this;
     }
 
-    public function products(Collection $value): self {
-        $this->products = $value;
+    public function items(Collection $value, $fromDatabase = false): self
+    {
+        if ($fromDatabase) {
+            $this->items = $value;
+            return $this;
+        }
+
+        $this->items = $value->map(function($item) {
+            return [
+                'id'             => $item->id,
+                'name'           => $item->name,
+                'description'    => $item->description,
+                'quantity'       => $item->getQuantity(),
+                'singlePrice'    => $item->singlePrice(),
+                'totalPrice'     => $item->totalPrice(),
+                'singleShipping' => $item->singleShipping(),
+                'totalShipping'  => $item->totalShipping(),
+                'taxRate'        => $item->taxRate,
+            ];
+        });
+
         return $this;
     }
 

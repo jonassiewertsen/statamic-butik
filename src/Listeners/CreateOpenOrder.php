@@ -19,7 +19,7 @@ class CreateOpenOrder implements ShouldQueue
             'transaction_id' => $event->transaction->transactionId,
             'status'         => 'open',
             'method'         => $event->transaction->method,
-            'products'       => $event->transaction->products,
+            'items'          => $event->transaction->items,
             'customer'       => json_encode($event->transaction->customer),
             'total_amount'   => $event->transaction->totalAmount,
             'paid_at'        => null,

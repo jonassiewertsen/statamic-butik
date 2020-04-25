@@ -15,10 +15,6 @@ class Order extends ButikModel
         'shipped_at' => 'datetime',
     ];
 
-    protected $appends = [
-        'showUrl',
-    ];
-
     protected $guarded = [];
 
     public function getShowUrlAttribute()

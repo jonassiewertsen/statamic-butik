@@ -5,52 +5,36 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
-use Jonassiewertsen\StatamicButik\Checkout\Cart;
-use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 
-class ExpressCheckoutController extends WebController
+class ExpressCheckoutController extends Checkout
 {
     public function delivery(Product $product)
     {
-        if (session()->has('butik.cart')) {
-            $formData = session('butik.cart');
-            $viewData = array_merge((array) $formData->customer, $product->toArray());
-        }
+        $customer = session()->has('butik.customer') ?
+                    Session::get('butik.customer') :
+                    (new Customer())->empty();
 
-        return (new \Statamic\View\View())
-            ->layout(config('butik.layout_express-checkout-delivery'))
-            ->template(config('butik.template_express-checkout-delivery'))
-            ->with($viewData ?? $product->toArray());
+        return view(config('butik.template_express-checkout-delivery'), compact('customer', 'product'));
     }
 
     public function saveCustomerData(Product $product)
     {
-        $validatedData = request()->validate($this->rules());
+        $customer = request()->validate($this->rules());
 
-        $cart = (new Cart)
-            ->customer((new Customer)->create($validatedData))
-            ->addProduct($product);
+        $customer = new Customer($customer);
 
-        Session::put('butik.cart', $cart);
+        Session::put('butik.customer', $customer);
 
         return redirect()->route('butik.checkout.express.payment', $product);
     }
 
-    public function payment()
+    public function payment(Product $product)
     {
-        $cart = session()->get('butik.cart');
+        $customer = session('butik.customer');
 
-        $viewData = array_merge(
-            $cart->products->first()->toArray(),
-            (array) $cart->customer
-        );
-
-        return (new \Statamic\View\View())
-            ->layout(config('butik.layout_express-checkout-payment'))
-            ->template(config('butik.template_express-checkout-payment'))
-            ->with($viewData);
+        return view(config('butik.template_express-checkout-payment'), compact('customer', 'product'));
     }
 
     public function receipt(Request $request, $order)
@@ -67,72 +51,9 @@ class ExpressCheckoutController extends WebController
         $customer = json_decode($order->customer);
 
         if ($order->status === 'paid') {
-            Session::forget('butik.cart');
+            Session::forget('butik.customer');
         }
 
-        return (new \Statamic\View\View())
-            ->layout(config('butik.layout_checkout-receipt'))
-            ->template(config('butik.template_checkout-receipt'))
-            ->with(
-                [
-                    'name'         => $customer->name,
-                    'mail'         => $customer->mail,
-                    'address1'     => $customer->address1,
-                    'address2'     => $customer->address2,
-                    'zip'          => $customer->zip,
-                    'city'         => $customer->city,
-                    'country'      => $customer->country,
-                    'id'           => $order->id,
-                    'status'       => $order->status,
-                    'method'       => $order->method,
-                    'total_amount' => $order->total_amount,
-                ]);
-    }
-
-    private function transactionSuccessful()
-    {
-        return session()->has('butik.transaction.success')
-            && session()->get('butik.transaction.success') === true;
-    }
-
-    private function transactionDataComplete()
-    {
-        $keys = [
-            'success',
-            'id',
-            'type',
-            'currencyIsoCode',
-            'amount',
-            'created_at',
-            'customer',
-        ];
-        foreach ($keys as $key) {
-            if (!session()->has("butik.transaction.{$key}")) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private function rules()
-    {
-        return [
-            'country'      => 'required|max:50',
-            'name'         => 'required|min:5|max:50',
-            'mail'         => 'required|email',
-            'address1'     => 'required|max:80',
-            'address2'     => 'nullable|max:80',
-            'city'         => 'required|max:80',
-            'state_region' => 'nullable|max:80',
-            'zip'          => 'required|max:20',
-            'phone'        => 'nullable|max:50',
-        ];
-    }
-
-    private function showInvalidReceipt() {
-        return (new \Statamic\View\View())
-            ->layout(config('butik.layout_checkout-receipt'))
-            ->template(config('butik.template_checkout-receipt-invalid'));
+        return view(config('butik.template_checkout-receipt'), compact('customer', 'order'));
     }
 }

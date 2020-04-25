@@ -63,9 +63,12 @@ return [
      * on the front-end.
      */
     'route_shop-prefix'               => '/shop',
-    'route_express-checkout-delivery' => 'express-checkout/delivery', // yourshop.com/shop/express-checkout/delivery
-    'route_express-checkout-payment'  => 'express-checkout/payment', // yourshop.com/shop/express-checkout/payment
-    'route_payment-receipt'           => 'payment/{order}/receipt', // yourshop.com/shop/payment/xxxxxxxxx/receipt
+    'route_cart'                      => '/cart',
+    'route_checkout-delivery'         => 'checkout/delivery',           // yourshop.com/shop/checkout/delivery
+    'route_checkout-payment'          => 'checkout/payment',            // yourshop.com/shop/checkout/payment
+    'route_express-checkout-delivery' => 'express-checkout/delivery',   // yourshop.com/shop/express-checkout/delivery
+    'route_express-checkout-payment'  => 'express-checkout/payment',    // yourshop.com/shop/express-checkout/payment
+    'route_payment-receipt'           => 'payment/{order}/receipt',     // yourshop.com/shop/payment/xxxxxxxxx/receipt
 
     /**
      * LAYOUTS
@@ -73,6 +76,7 @@ return [
      * Define your own layouts for the frontend if you want. You can as well edit the
      * given layouts to fit your needs.
      */
+    'layout_cart'                      => 'butik::web.layouts.shop',
     'layout_product-overview'          => 'butik::web.layouts.shop',
     'layout_product-show'              => 'butik::web.layouts.shop',
     'layout_express-checkout-delivery' => 'butik::web.layouts.express-checkout',
@@ -85,10 +89,13 @@ return [
      * Define your own templates for the frontend if you want. You can as well edit the
      * given layouts to fit your needs.
      */
-    'template_product-overview'          => 'butik::web.shop.overview',
+    'template_product-index'             => 'butik::web.shop.index',
     'template_product-show'              => 'butik::web.shop.show',
-    'template_express-checkout-delivery' => 'butik::web.checkout.express.delivery',
-    'template_express-checkout-payment'  => 'butik::web.checkout.express.payment',
+    'template_cart-index'                => 'butik::web.cart.index',
+    'template_checkout-delivery'         => 'butik::web.checkout.delivery',
+    'template_checkout-payment'          => 'butik::web.checkout.payment',
+    'template_express-checkout-delivery' => 'butik::web.checkout.express-delivery',
+    'template_express-checkout-payment'  => 'butik::web.checkout.express-payment',
     'template_checkout-receipt'          => 'butik::web.checkout.receipt',
-    'template_checkout-receipt-invalid'  => 'butik::web.checkout.invalidReceipt',
+    'template_checkout-receipt-invalid'  => 'butik::web.checkout.invalid-receipt',
 ];

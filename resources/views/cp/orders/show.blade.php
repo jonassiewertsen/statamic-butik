@@ -76,16 +76,29 @@
 
     <h1 class="mt-3">Products</h1>
 
-    @foreach ($products as $product)
-        <h2 class="mt-4 font-bold text-xl">{{ $product['title'] }}</h2>
-        <span class="block text-2xs mb-2">All Informations saved from buying date</span>
+    @foreach ($items as $item)
+        <h2 class="mt-4 font-bold text-xl">{{ $item->name }}</h2>
         <div class="card p-0">
             <table class="data-table">
                 <tr>
-                    <th class="pl-2 py-1 w-1/4">Base price</th>
-                    <td>{{ $product['base_price'] }}</td>
+                    <th class="pl-2 py-1 w-1/4">Single price</th>
+                    <td>{{ $item->singlePrice }}</td>
+                </tr>
+                <tr>
+                    <th class="pl-2 py-1 w-1/4">Quantity</th>
+                    <td>{{ $item->quantity }}</td>
+                </tr>
+                <tr>
+                    <th class="pl-2 py-1 w-1/4">Summed price</th>
+                    <td>{{ $item->totalPrice }}</td>
+                </tr>
+                <tr>
+                    <th class="pl-2 py-1 w-1/4">Tax Rate</th>
+                    <td>{{ $item->taxRate }}</td>
                 </tr>
             </table>
         </div>
     @endforeach
+
+    <span class="block text-2xs mt-4 mb-2">All Informations saved from buying date</span>
 @endsection

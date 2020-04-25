@@ -13,10 +13,20 @@ class Customer {
     public ?string $phone;
     public ?string $country;
 
-    public function create(array $data): self {
+    public function __construct(array $data = []) {
         foreach ($data as $key => $attribute) {
             $this->$key = $attribute;
         }
+    }
+
+    public function empty(): self {
+
+        $fields = ['name', 'mail', 'address1', 'address2', 'city', 'stateRegion', 'zip', 'phone', 'country'];
+
+        foreach ($fields as $field) {
+            $this->$field = '';
+        }
+
         return $this;
     }
 

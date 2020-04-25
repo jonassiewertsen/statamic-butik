@@ -18,7 +18,9 @@ class SendPurchaseConfirmationToSeller implements ShouldQueue
             Mail::to(config('butik.order-confirmations'))
                 ->queue(new OrderConfirmation($event->transaction));
         } catch(\Exception $e) {
-            throw new OrderConfirmationToSellerNotSent();
+            report($e);
+
+            return false;
         }
     }
 }

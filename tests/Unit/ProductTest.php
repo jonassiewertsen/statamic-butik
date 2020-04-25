@@ -67,13 +67,6 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function the_currency_can_output_the_currency_symbol()
-    {
-        $product = create(Product::class, ['base_price' => 2 ]);
-        $this->assertEquals('€ 2,00', $product->first()->basePriceWithCurrencySymbol);
-    }
-
-    /** @test */
     public function it_has_a_edit_url()
     {
         $product = create(Product::class)->first();
@@ -134,5 +127,12 @@ class ProductTest extends TestCase
         $product = create(Product::class, ['stock' => 0, 'stock_unlimited' => true ])->first();
 
         $this->assertFalse($product->soldOut);
+    }
+
+    /** @test */
+    public function it_has_a_currency(){
+        $product = create(Product::class)->first();
+
+        $this->assertEquals($product->currency, '€');
     }
 }
