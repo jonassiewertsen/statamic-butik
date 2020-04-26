@@ -89,7 +89,8 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
     private function setOrderStatusToPaid($payment): void {
         $order = Order::whereTransactionId($payment->id)->firstOrFail();
         $order->update([
-           'status' => 'paid',
+           'status'  => 'paid',
+           'method'  => $payment->method,
            'paid_at' => Carbon::parse($payment->paidAt)
        ]);
     }
@@ -97,14 +98,16 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
     private function setOrderStatusToFailed($payment): void {
         $order = Order::whereTransactionId($payment->id)->firstOrFail();
         $order->update([
-           'status' => 'failed',
-           'failed_at' => Carbon::parse($payment->failedAt)
+            'status'    => 'failed',
+            'method'    => $payment->method,
+            'failed_at' => Carbon::parse($payment->failedAt)
        ]);
     }
 
     private function setOrderStatusToExpired($payment): void {
         $order = Order::whereTransactionId($payment->id)->firstOrFail();
         $order->update([
+            'method' => $payment->method,
             'status' => 'expired',
         ]);
     }
@@ -112,7 +115,8 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
     private function setOrderStatusToCanceled($payment): void {
         $order = Order::whereTransactionId($payment->id)->firstOrFail();
         $order->update([
-           'status' => 'canceled',
+            'method'    => $payment->method,
+            'status'    => 'canceled',
        ]);
     }
 
