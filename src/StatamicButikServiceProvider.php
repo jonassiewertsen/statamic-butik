@@ -82,7 +82,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         if ($this->app->runningInConsole()) {
             // Config
             $this->publishes([
-                __DIR__.'/../config/config.php' => config_path('statamic/butik.php'),
+                __DIR__.'/../config/config.php' => config_path('butik.php'),
             ], 'butik-config');
 
             // Views
