@@ -10,7 +10,7 @@
                 <a href="{{ $product->show_url }}" class="b-block b-text-xl b-trans b-w-full hover:b-opacity-75">
 
                     @if (! empty($product->images))
-                        <img class="b-w-full" src="/assets/{{ $product->images->first() }}">
+                        <img class="b-w-full" src="/assets/{{ $product->images[0] }}">
                     @else
                         <div class="b-w-full">
                             @include('butik::web.shop.partials.placeholder')

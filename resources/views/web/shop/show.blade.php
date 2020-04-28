@@ -5,7 +5,7 @@
     <div class="b-block md:b-flex">
         {{-- Images --}}
         @if (! empty($product->images))
-            <img class="b-w-full md:b-w-1/2" src="/assets/{{ $product->images->first() }}">
+            <img class="b-w-full md:b-w-1/2" src="/assets/{{ $product->images[0] }}">
         @else
             <div class="b-w-full md:b-w-1/2">
                 @include('butik::web.shop.partials.placeholder')
