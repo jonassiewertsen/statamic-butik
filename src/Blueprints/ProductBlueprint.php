@@ -2,6 +2,7 @@
 
 namespace Jonassiewertsen\StatamicButik\Blueprints;
 
+use Illuminate\Validation\Rule;
 use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Statamic\Facades\Blueprint;
@@ -25,18 +26,18 @@ class ProductBlueprint
                         [
                             'handle' => 'slug',
                             'field'  => [
-                                'type'         => 'slug',
-                                'display'      => __('butik::product.slug'),
-                                'instructions' => __('butik::product.slug_description'),
-                                'validate' => 'required|string|unique:butik_products,slug,id,'.request()->id,
-                                'read_only' => $this->slugReadOnly(),
+                                'type'          => 'slug',
+                                'display'       => __('butik::product.slug'),
+                                'instructions'  => __('butik::product.slug_description'),
+                                'validate'      => ['required', 'string', $this->slugExcept() ],
+                                'read_only'     => $this->slugReadOnly(),
                             ],
                         ],
                         [
                             'handle' => 'base_price',
                             'field'  => [
-                                'type'         => 'money',
-                                'display'      => __('butik::product.base_price'),
+                                'type'          => 'money',
+                                'display'       => __('butik::product.base_price'),
                                 'width'         => '25',
                                 'validate'      => 'required|min:0',
                             ],
@@ -151,5 +152,15 @@ class ProductBlueprint
 
     private function fetchShippingOptions() {
         return Shipping::pluck('title', 'slug')->toArray();
+    }
+
+    /**
+     * Will ignore the slug if updating an existing product
+     */
+    private function slugExcept() {
+        if (request()->route()->action['as'] === 'statamic.cp.butik.products.update') {
+            return Rule::unique('butik_products', 'slug')->ignore(request()->slug, 'slug');
+        }
+        return Rule::unique('butik_products', 'slug');
     }
 }

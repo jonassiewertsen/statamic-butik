@@ -90,10 +90,10 @@ class ProductCreateTest extends TestCase
         $this->post(route('statamic.cp.butik.products.store'), $product)
             ->assertSessionHasNoErrors();
 
-        // Another product with the same slug
-//        $product = raw(Product::class, ['slug' => $slug ]);
-//        $this->post(route('statamic.cp.butik.products.store'), $product)
-//            ->assertSessionHasErrors('slug');
+        // Another Product with the same slug
+        $product = raw(Product::class, ['slug' => $slug ]);
+        $this->post(route('statamic.cp.butik.products.store'), $product)
+            ->assertSessionHasErrors('slug');
     }
 
     /** @test */
