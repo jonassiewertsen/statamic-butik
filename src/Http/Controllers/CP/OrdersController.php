@@ -42,7 +42,7 @@ class OrdersController extends CpController
     }
 
     public function show(Order $order) {
-        $this->authorize('show', Order::class);
+        $this->authorize('show', $order);
 
         $customer = json_decode($order->customer);
         $items = json_decode($order->items);

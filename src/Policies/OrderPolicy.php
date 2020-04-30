@@ -10,17 +10,17 @@ class OrderPolicy
 {
     use HandlesAuthorization;
 
-    public function index(User $user, $ability)
+    public function index(User $user)
     {
         return $user->hasPermission('view orders');
     }
 
-    public function show(User $user, $ability)
+    public function show(User $user, $order)
     {
         return $user->hasPermission('show orders');
     }
 
-    public function update(User $user, Order $product)
+    public function update(User $user, $order)
     {
         return $user->hasPermission('update products');
     }

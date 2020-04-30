@@ -7,7 +7,7 @@
 
         <div class="flex mb-3">
             <h1 class="flex-1">{{ __('butik::shipping.plural') }}</h1>
-            @can('create', 'Jonassiewertsen\StatamicButik\Http\Models\Product\Shipping')
+            @can('create', 'Jonassiewertsen\StatamicButik\Http\Models\Shipping')
                 <a href="{{ cp_route('butik.shippings.create') }}" class="btn-primary">{{ __('butik::shipping.create') }}</a>
             @endcan
         </div>
@@ -25,7 +25,7 @@
             'description' => __('butik::shipping.description'),
             'svg' => 'empty/collection',
             'route' => cp_route('butik.shippings.create'),
-             'can' => auth()->user()->can('create', 'Jonassiewertsen\StatamicButik\Http\Models\Product\Shipping')
+             'can' => auth()->user()->can('create', 'Jonassiewertsen\StatamicButik\Http\Models\Shipping')
         ])
 
     @endunless

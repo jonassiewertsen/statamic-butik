@@ -20,7 +20,7 @@ class ShippingsController extends CpController
                 'price'      => $shipping->priceWithCurrencySymbol,
                 'edit_url'   => $shipping->editUrl(),
                 'slug'       => $shipping->slug,
-                'deleteable' => auth()->user()->can('delete', Shipping::class),
+                'deleteable' => auth()->user()->can('delete', $shipping),
             ];
         })->values();
 

@@ -7,7 +7,7 @@
 
         <div class="flex mb-3">
             <h1 class="flex-1">{{ __('butik::tax.plural') }}</h1>
-            @can('create', 'Jonassiewertsen\StatamicButik\Http\Models\Product\Tax')
+            @can('create', 'Jonassiewertsen\StatamicButik\Http\Models\Tax')
                 <a href="{{ cp_route('butik.taxes.create') }}" class="btn-primary">{{ __('butik::tax.create') }}</a>
             @endcan
         </div>
@@ -25,7 +25,7 @@
             'description' => __('butik::tax.description'),
             'svg' => 'empty/collection',
             'route' => cp_route('butik.taxes.create'),
-             'can' => auth()->user()->can('create', 'Jonassiewertsen\StatamicButik\Http\Models\Product\Tax')
+            'can' => auth()->user()->can('create', 'Jonassiewertsen\StatamicButik\Http\Models\Tax')
         ])
 
     @endunless

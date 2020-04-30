@@ -2,9 +2,11 @@
 
 namespace Jonassiewertsen\StatamicButik;
 
+use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
+use Jonassiewertsen\StatamicButik\Policies\OrderPolicy;
 use Jonassiewertsen\StatamicButik\Policies\ProductPolicy;
 use Jonassiewertsen\StatamicButik\Policies\ShippingPolicy;
 use Jonassiewertsen\StatamicButik\Policies\TaxPolicy;
@@ -65,6 +67,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         Product::class  => ProductPolicy::class,
         Shipping::class => ShippingPolicy::class,
         Tax::class      => TaxPolicy::class,
+        Order::class    => OrderPolicy::class,
     ];
 
     public function boot(): void
@@ -91,7 +94,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
             ], 'butik-views');
             $this->publishes([
                 __DIR__.'/../resources/views/web' => resource_path('views/vendor/butik/web'),
-            ], 'statamic-butik-views');
+            ], 'butik-views');
             $this->publishes([
                 __DIR__.'/../resources/views/widgets' => resource_path('views/vendor/butik/widgets'),
             ], 'butik-views');
@@ -166,6 +169,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
             Permission::group('butik', 'Statamic Butik', function () {
                 Permission::register('view orders', function ($permission) {
                     $permission->children([
+                        Permission::make('show orders'),
                         Permission::make('update orders'),
                     ]);
                 });

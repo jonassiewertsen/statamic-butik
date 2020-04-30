@@ -10,17 +10,17 @@ class TaxPolicy
 {
     use HandlesAuthorization;
 
-    public function index(User $user, $ability)
+    public function index(User $user)
     {
         return $user->hasPermission('view taxes');
     }
 
-    public function create(User $user, $ability)
+    public function create(User $user)
     {
         return $user->hasPermission('create taxes');
     }
 
-    public function store($user, $ability)
+    public function store($user)
     {
         return $user->hasPermission('create taxes');
     }
@@ -32,7 +32,7 @@ class TaxPolicy
 
     public function update(User $user, Tax $tax)
     {
-        return $user->hasPermission('update taxes');
+        return $user->hasPermission('edit taxes');
     }
 
     public function delete(User $user, Tax $tax)

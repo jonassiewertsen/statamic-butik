@@ -10,17 +10,17 @@ class ProductPolicy
 {
     use HandlesAuthorization;
 
-    public function index(User $user, $ability)
+    public function index(User $user)
     {
         return $user->hasPermission('view products');
     }
 
-    public function create(User $user, $ability)
+    public function create(User $user)
     {
         return $user->hasPermission('create products');
     }
 
-    public function store($user, $ability)
+    public function store(User $user)
     {
         return $user->hasPermission('create products');
     }
@@ -30,9 +30,9 @@ class ProductPolicy
         return $user->hasPermission('edit products');
     }
 
-    public function update(User $user, Product $product)
+    public function update(User $user, $product)
     {
-        return $user->hasPermission('update products');
+        return $user->hasPermission('edit products');
     }
 
     public function delete(User $user, Product $product)
