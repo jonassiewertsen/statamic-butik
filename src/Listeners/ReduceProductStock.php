@@ -15,13 +15,14 @@ class ReduceProductStock implements ShouldQueue
         $items = $event->transaction->items;
 
         foreach ($items as $item) {
+
             $product = Product::findOrFail($item->id);
 
             if ($product->stock_unlimited) {
                 return;
             }
 
-            $product->stock--;
+            $product->stock -= $item->quantity;
             $product->save();
         }
     }
