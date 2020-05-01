@@ -38,6 +38,30 @@ class ShippingCreateTest extends TestCase
     }
 
     /** @test */
+    public function slug_is_required()
+    {
+        $shipping = raw(Shipping::class, ['slug' => null]);
+        $this->post(route('statamic.cp.butik.shippings.store'), $shipping)
+            ->assertSessionHasErrors('slug');
+    }
+
+    /** @test */
+    public function slug_must_be_unique()
+    {
+        $slug = 'not-unique';
+
+        // First shipping
+        $product = raw(Shipping::class, ['slug' => $slug ]);
+        $this->post(route('statamic.cp.butik.shippings.store'), $product)
+            ->assertSessionHasNoErrors();
+
+        // Another shipping with the same slug
+        $product = raw(Shipping::class, ['slug' => $slug ]);
+        $this->post(route('statamic.cp.butik.shippings.store'), $product)
+            ->assertSessionHasErrors('slug');
+    }
+
+    /** @test */
     public function price_is_required()
     {
         $shipping = raw(Shipping::class, ['price' => null]);

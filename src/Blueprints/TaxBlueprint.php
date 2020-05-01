@@ -2,13 +2,13 @@
 
 namespace Jonassiewertsen\StatamicButik\Blueprints;
 
-use Statamic\Facades\Blueprint;
+use Statamic\Facades\Blueprint as StatamicBlueprint;
 
-class TaxBlueprint
+class TaxBlueprint extends Blueprint
 {
     public function __invoke()
     {
-        return Blueprint::make()->setContents([
+        return StatamicBlueprint::make()->setContents([
             'sections' => [
                 'main'    => [
                     'fields' => [
@@ -39,7 +39,7 @@ class TaxBlueprint
                             'field'  => [
                                 'type'     => 'slug',
                                 'display'  => __('butik::general.slug'),
-                                'validate' => 'required|unique:butik_taxes,slug,id,'.request()->id,
+                                'validate' => ['required', $this->taxesUniqueRule()],
                                 'read_only' => $this->slugReadOnly(),
                             ],
                         ],
@@ -53,9 +53,15 @@ class TaxBlueprint
      * In case the Product will be edited, the slug will be read only
      */
     private function slugReadOnly() {
-        if (request()->route()->action['as'] === 'statamic.cp.butik.taxes.edit') {
-            return true;
-        }
-        return false;
+        return $this->isRoute('statamic.cp.butik.taxes.edit');
+    }
+
+    private function taxesUniqueRule()
+    {
+        return $this->ignoreUnqiueOn(
+            'butik_taxes',
+            'slug',
+            'statamic.cp.butik.taxes.update'
+        );
     }
 }

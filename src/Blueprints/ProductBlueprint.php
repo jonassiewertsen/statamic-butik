@@ -2,16 +2,15 @@
 
 namespace Jonassiewertsen\StatamicButik\Blueprints;
 
-use Illuminate\Validation\Rule;
 use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
-use Statamic\Facades\Blueprint;
+use Statamic\Facades\Blueprint as StatamicBlueprint;
 
-class ProductBlueprint
+class ProductBlueprint extends Blueprint
 {
     public function __invoke()
     {
-        return Blueprint::make()->setContents([
+        return StatamicBlueprint::make()->setContents([
             'sections' => [
                 'main'    => [
                     'fields' => [
@@ -29,7 +28,7 @@ class ProductBlueprint
                                 'type'          => 'slug',
                                 'display'       => __('butik::product.slug'),
                                 'instructions'  => __('butik::product.slug_description'),
-                                'validate'      => ['required', 'string', $this->slugExcept() ],
+                                'validate'      => ['required', 'string', $this->productUniqueRule() ],
                                 'read_only'     => $this->slugReadOnly(),
                             ],
                         ],
@@ -139,28 +138,23 @@ class ProductBlueprint
     /**
      * In case the Product will be edited, the slug will be read only
      */
-    private function slugReadOnly() {
-        if (request()->route()->action['as'] === 'statamic.cp.butik.products.edit') {
-            return true;
-        }
-        return false;
+    private function slugReadOnly(): bool {
+        return $this->isRoute('statamic.cp.butik.products.edit');
     }
 
-    private function fetchTaxOptions() {
+    private function fetchTaxOptions(): array {
         return Tax::pluck('title', 'slug')->toArray();
     }
 
-    private function fetchShippingOptions() {
+    private function fetchShippingOptions(): array {
         return Shipping::pluck('title', 'slug')->toArray();
     }
 
-    /**
-     * Will ignore the slug if updating an existing product
-     */
-    private function slugExcept() {
-        if (request()->route()->action['as'] === 'statamic.cp.butik.products.update') {
-            return Rule::unique('butik_products', 'slug')->ignore(request()->slug, 'slug');
-        }
-        return Rule::unique('butik_products', 'slug');
+    private function productUniqueRule() {
+        return $this->ignoreUnqiueOn(
+            'butik_products',
+            'slug',
+            'statamic.cp.butik.products.update'
+        );
     }
 }

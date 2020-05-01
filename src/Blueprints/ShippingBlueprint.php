@@ -2,13 +2,13 @@
 
 namespace Jonassiewertsen\StatamicButik\Blueprints;
 
-use Statamic\Facades\Blueprint;
+use Statamic\Facades\Blueprint as StatamicBlueprint;
 
-class ShippingBlueprint
+class ShippingBlueprint extends Blueprint
 {
     public function __invoke()
     {
-        return Blueprint::make()->setContents([
+        return StatamicBlueprint::make()->setContents([
             'sections' => [
                 'main'    => [
                     'fields' => [
@@ -39,7 +39,7 @@ class ShippingBlueprint
                             'field'  => [
                                 'type'     => 'slug',
                                 'display'  => __('butik::general.slug'),
-                                'validate' => 'required|unique:butik_shippings,slug,id,'.request()->id,
+                                'validate' => ['required', $this->shippingUniqueRule()],
                                 'read_only' => $this->slugReadOnly(),
                             ],
                         ],
@@ -52,10 +52,17 @@ class ShippingBlueprint
     /**
      * In case the Product will be edited, the slug will be read only
      */
-    private function slugReadOnly() {
-        if (request()->route()->action['as'] === 'statamic.cp.butik.products.edit') {
-            return true;
-        }
-        return false;
+    private function slugReadOnly(): bool
+    {
+        return $this->isRoute('statamic.cp.butik.shippings.edit');
+    }
+
+    private function shippingUniqueRule()
+    {
+        return $this->ignoreUnqiueOn(
+            'butik_shippings',
+            'slug',
+            'statamic.cp.butik.shippings.update'
+        );
     }
 }

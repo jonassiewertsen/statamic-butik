@@ -80,17 +80,18 @@ class ProductCreateTest extends TestCase
         $this->post(route('statamic.cp.butik.products.store'), $product)
             ->assertSessionHasErrors('slug');
     }
+
     /** @test */
     public function slug_must_be_unique()
     {
         $slug = 'not-unique';
 
-        // First Product
+        // First product
         $product = raw(Product::class, ['slug' => $slug ]);
         $this->post(route('statamic.cp.butik.products.store'), $product)
             ->assertSessionHasNoErrors();
 
-        // Another Product with the same slug
+        // Another product with the same slug
         $product = raw(Product::class, ['slug' => $slug ]);
         $this->post(route('statamic.cp.butik.products.store'), $product)
             ->assertSessionHasErrors('slug');

@@ -38,6 +38,30 @@ class TaxCreateTest extends TestCase
     }
 
     /** @test */
+    public function slug_is_required()
+    {
+        $tax = raw(Tax::class, ['slug' => null]);
+        $this->post(route('statamic.cp.butik.taxes.store'), $tax)
+            ->assertSessionHasErrors('slug');
+    }
+
+    /** @test */
+    public function slug_must_be_unique()
+    {
+        $slug = 'not-unique';
+
+        // First tax
+        $product = raw(Tax::class, ['slug' => $slug ]);
+        $this->post(route('statamic.cp.butik.taxes.store'), $product)
+            ->assertSessionHasNoErrors();
+
+        // Another tax with the same slug
+        $product = raw(Tax::class, ['slug' => $slug ]);
+        $this->post(route('statamic.cp.butik.taxes.store'), $product)
+            ->assertSessionHasErrors('slug');
+    }
+
+    /** @test */
     public function percentage_is_required()
     {
         $tax = raw(Tax::class, ['percentage' => null]);
