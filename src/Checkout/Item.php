@@ -14,17 +14,17 @@ class Item
     /**
      * The id of the item, which does contain the product slug
      */
-    public String $id;
+    public string $id;
 
     /**
      * The item name
      */
-    public String $name;
+    public string $name;
 
     /**
      * The description, shortened to 100 characters
      */
-    public ?String $description;
+    public ?string $description;
 
     /**
      * The product the item does base on
@@ -39,7 +39,7 @@ class Item
     /**
      * The quanitity of this item in the shopping cart
      */
-    private Int $quantity;
+    private int $quantity;
 
     /**
      * Will return the total price of the item
@@ -53,14 +53,14 @@ class Item
 
     public function __construct(Product $product)
     {
-        $this->id               = $product->slug;
-        $this->name             = $product->title;
-        $this->description      = Str::limit($product->description, 100, '...');
-        $this->product          = $product;
-        $this->taxRate          = $product->tax->percentage;
-        $this->quantity         = 1;
-        $this->totalPrice       = $this->calculateTotalPrice();
-        $this->totalShipping    = $this->calculateTotalShipping();
+        $this->id            = $product->slug;
+        $this->name          = $product->title;
+        $this->description   = Str::limit($product->description, 100, '...');
+        $this->product       = $product;
+        $this->taxRate       = $product->tax->percentage;
+        $this->quantity      = 1;
+        $this->totalPrice    = $this->calculateTotalPrice();
+        $this->totalShipping = $this->calculateTotalShipping();
     }
 
     public function increase()
@@ -110,19 +110,21 @@ class Item
         return $this->product->totalPrice;
     }
 
-    private function calculateTotalPrice() {
+    private function calculateTotalPrice()
+    {
         $price = $this->makeAmountSaveable($this->product->totalPrice);
         return $this->makeAmountHuman($price * $this->quantity);
     }
 
-    private function calculateTotalShipping() {
+    private function calculateTotalShipping()
+    {
         $shipping = $this->makeAmountSaveable($this->product->shipping_amount);
         return $this->makeAmountHuman($shipping * $this->quantity);
     }
 
     private function update(): void
     {
-        $this->totalPrice       = $this->calculateTotalPrice();
-        $this->totalShipping    = $this->calculateTotalShipping();
+        $this->totalPrice    = $this->calculateTotalPrice();
+        $this->totalShipping = $this->calculateTotalShipping();
     }
 }
