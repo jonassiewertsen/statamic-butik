@@ -97,7 +97,6 @@ class ItemTest extends TestCase
     {
         $item = new Item($this->product);
         $item->setQuantity(10);
-        $item->decrease();
 
         $this->assertEquals($item->getQuantity(), 5);
     }
