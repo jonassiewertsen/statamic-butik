@@ -8,10 +8,11 @@ use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 
-class Cart {
+class Cart
+{
     use MoneyTrait;
 
-    public static  $cart;
+    public static $cart;
     private static $totalPrice;
     private static $totalShipping;
     private static $totalItems;
@@ -35,13 +36,53 @@ class Cart {
     }
 
     /**
+     * Fetch the cart from the session
+     */
+    public static function get(): Collection
+    {
+        return Session::get('butik.cart') !== null ?
+            Session::get('butik.cart') :
+            static::empty();
+    }
+
+    /**
+     * An empty cart
+     *
+     * @return Collection
+     */
+
+    private static function empty(): Collection
+    {
+        return collect();
+    }
+
+    /**
+     * Is this product already saved in the cart?
+     *
+     * @param Product $product
+     * @return bool
+     */
+    private static function contains(Product $product): bool
+    {
+        return static::$cart->contains('id', $product->slug);
+    }
+
+    /**
+     * Set the cart to the session
+     */
+    private static function set(Collection $cart): void
+    {
+        Session::put('butik.cart', $cart);
+    }
+
+    /**
      * An item can be reduced or removed from the cart
      */
     public static function reduce(Product $product): void
     {
         static::$cart = static::get();
 
-        static::$cart = static::$cart->filter(function($item) use ($product) {
+        static::$cart = static::$cart->filter(function ($item) use ($product) {
             // If the quantity is <= 1 the item will be deleted from the cart
             if ($item->id === $product->slug && $item->getQuantity() <= 1) {
                 return false;
@@ -49,8 +90,8 @@ class Cart {
 
             // If the quantity is bigger than one, it will only decrease
             if ($item->id === $product->slug && $item->getQuantity() > 1) {
-               $item->decrease();
-               return true;
+                $item->decrease();
+                return true;
             }
 
             // If the slug is not matching, we should not care and just
@@ -68,7 +109,7 @@ class Cart {
     {
         static::$cart = static::get();
 
-        static::$cart = static::$cart->filter(function($item) use ($product) {
+        static::$cart = static::$cart->filter(function ($item) use ($product) {
             return $item->id !== $product->slug;
         });
 
@@ -78,18 +119,9 @@ class Cart {
     /**
      * Clear the complete cart
      */
-    public static function clear(): void {
-        static::set(static::empty());
-    }
-
-    /**
-     * Fetch the cart from the session
-     */
-    public static function get(): Collection
+    public static function clear(): void
     {
-        return Session::get('butik.cart') !== null ?
-            Session::get('butik.cart') :
-            static::empty();
+        static::set(static::empty());
     }
 
     public static function totalPrice()
@@ -98,8 +130,8 @@ class Cart {
 
         static::$totalPrice = 0; // Reset total Price
 
-        static::$cart->each(function($item) {
-             static::$totalPrice += static::makeAmountSaveableStatic($item->totalPrice());
+        static::$cart->each(function ($item) {
+            static::$totalPrice += static::makeAmountSaveableStatic($item->totalPrice());
         });
 
         return static::makeAmountHumanStatic(static::$totalPrice);
@@ -111,7 +143,7 @@ class Cart {
 
         static::$totalShipping = 0; // Reset total Shipping
 
-        static::$cart->each(function($item) {
+        static::$cart->each(function ($item) {
             static::$totalShipping += static::makeAmountSaveableStatic($item->totalShipping());
         });
 
@@ -124,38 +156,10 @@ class Cart {
 
         static::$cart = static::get();
 
-        static::$cart->each(function($item) {
+        static::$cart->each(function ($item) {
             static::$totalItems += $item->getQuantity();
         });
 
         return static::$totalItems;
-    }
-
-    /**
-     * Set the cart to the session
-     */
-    private static function set(Collection $cart): void
-    {
-        Session::put('butik.cart', $cart);
-    }
-
-    /**
-     * Is this product already saved in the cart?
-     *
-     * @param Product $product
-     * @return bool
-     */
-    private static function contains(Product $product): bool
-    {
-        return static::$cart->contains('id', $product->slug);
-    }
-
-    /**
-     * An empty cart
-     *
-     * @return Collection
-     */
-    private static function empty() {
-        return collect();
     }
 }
