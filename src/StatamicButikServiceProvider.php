@@ -56,6 +56,9 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         ],
         'cartNotEmpty' => [
             \Jonassiewertsen\StatamicButik\Http\Middleware\CartNotEmpty::class,
+        ],
+        'butikRoutes' => [
+            \Jonassiewertsen\StatamicButik\Http\Middleware\UpdateCart::class,
         ]
     ];
 

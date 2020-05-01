@@ -130,6 +130,17 @@ class Cart
         return static::makeAmountHumanStatic(static::$totalShipping);
     }
 
+    public static function update()
+    {
+        static::$cart = static::get();
+
+        $items = static::$cart->each(function ($item) {
+            $item->update();
+        });
+
+        static::set($items);
+    }
+
     /**
      * An empty cart
      *

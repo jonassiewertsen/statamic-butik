@@ -3,6 +3,7 @@
 
 namespace Jonassiewertsen\StatamicButik\Checkout;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
@@ -55,10 +56,10 @@ class Item
     {
         $this->id            = $product->slug;
         $this->name          = $product->title;
-        $this->description   = Str::limit($product->description, 100, '...');
-        $this->product       = $product;
+        $this->description   = $this->limitDescription($product->description);
         $this->taxRate       = $product->tax->percentage;
         $this->quantity      = 1;
+        $this->base_price    = $product->base_price;
         $this->totalPrice    = $this->calculateTotalPrice();
         $this->totalShipping = $this->calculateTotalShipping();
     }
@@ -97,7 +98,7 @@ class Item
 
     public function singleShipping(): string
     {
-        return $this->product->shipping->price;
+        return $this->product()->shipping->price;
     }
 
     public function totalShipping(): string
@@ -107,24 +108,40 @@ class Item
 
     public function singlePrice(): string
     {
-        return $this->product->totalPrice;
+        return $this->product()->totalPrice;
     }
 
     private function calculateTotalPrice()
     {
-        $price = $this->makeAmountSaveable($this->product->totalPrice);
+        $price = $this->makeAmountSaveable($this->product()->totalPrice);
         return $this->makeAmountHuman($price * $this->quantity);
     }
 
     private function calculateTotalShipping()
     {
-        $shipping = $this->makeAmountSaveable($this->product->shipping_amount);
+        $shipping = $this->makeAmountSaveable($this->product()->shipping_amount);
         return $this->makeAmountHuman($shipping * $this->quantity);
     }
 
-    private function update(): void
+    public function update(): void
     {
+        $this->base_price    = $this->product()->base_price;
+        $this->description   = $this->limitDescription($this->product()->description);
         $this->totalPrice    = $this->calculateTotalPrice();
         $this->totalShipping = $this->calculateTotalShipping();
+    }
+
+    private function limitDescription($text)
+    {
+        return Str::limit($text, 100, '...');
+    }
+
+    private function product(): Product
+    {
+        $cacheName = "product:{$this->id}";
+
+        return Cache::remember($cacheName, 300, function () {
+           return  Product::find($this->id);
+        });
     }
 }

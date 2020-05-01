@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
@@ -27,14 +28,6 @@ class ItemTest extends TestCase
         $item = new Item($this->product);
 
         $this->assertEquals($item->id, $this->product->slug);
-    }
-
-    /** @test */
-    public function it_has_a_product()
-    {
-        $item = new Item($this->product);
-
-        $this->assertEquals($item->product, $this->product);
     }
 
     /** @test */
@@ -146,5 +139,57 @@ class ItemTest extends TestCase
         $item->setQuantity(2);
 
         $this->assertEquals('5,00', $item->totalShipping());
+    }
+
+    /** @test */
+    public function A_new_name_will_be_reflected_on_the_item_update()
+    {
+        $item = new Item($this->product);
+
+        $newDescription = 'new Description';
+        $this->product->update(['description' => $newDescription]);
+        Cache::flush();
+        $item->update();
+
+        $this->assertEquals($item->description, $newDescription);
+    }
+
+    /** @test */
+    public function A_new_base_price_will_be_reflected_on_the_item_update()
+    {
+        $item = new Item($this->product);
+
+        $newPrice = 9999;
+        $this->product->update(['base_price' => $newPrice]);
+        Cache::flush();
+        $item->update();
+
+        $this->assertEquals($item->base_price, $this->product->base_price);
+    }
+
+    /** @test */
+    public function A_new_total_base_price_will_be_reflected_on_the_item_update()
+    {
+        $item = new Item($this->product);
+
+        $oldPrice = $item->totalPrice();
+        $this->product->update(['base_price' => 999]);
+        Cache::flush();
+        $item->update();
+
+        $this->assertNotEquals($item->totalPrice(), $oldPrice);
+    }
+
+    /** @test */
+    public function A_new_shipping_price_will_be_reflected_on_the_item_update()
+    {
+        $item = new Item($this->product);
+
+        $oldShipping = $item->totalShipping();
+        $this->product->shipping->update(['price' => 999]);
+        Cache::flush();
+        $item->update();
+
+        $this->assertNotEquals($item->totalShipping(), $oldShipping);
     }
 }
