@@ -4,6 +4,7 @@ namespace Jonassiewertsen\StatamicButik\Listeners;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Cache;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 
 class ReduceProductStock implements ShouldQueue
@@ -24,6 +25,8 @@ class ReduceProductStock implements ShouldQueue
 
             $product->stock -= $item->quantity;
             $product->save();
+
+            Cache::forget("product:{$product->slug}");
         }
     }
 }
