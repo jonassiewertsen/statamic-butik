@@ -12,7 +12,7 @@ class Cart
 {
     use MoneyTrait;
 
-    public static $cart;
+    public static  $cart;
     private static $totalPrice;
     private static $totalShipping;
     private static $totalItems;
@@ -46,33 +46,11 @@ class Cart
     }
 
     /**
-     * An empty cart
-     *
-     * @return Collection
+     * Clear the complete cart
      */
-
-    private static function empty(): Collection
+    public static function clear(): void
     {
-        return collect();
-    }
-
-    /**
-     * Is this product already saved in the cart?
-     *
-     * @param Product $product
-     * @return bool
-     */
-    private static function contains(Product $product): bool
-    {
-        return static::$cart->contains('id', $product->slug);
-    }
-
-    /**
-     * Set the cart to the session
-     */
-    private static function set(Collection $cart): void
-    {
-        Session::put('butik.cart', $cart);
+        static::set(static::empty());
     }
 
     /**
@@ -116,19 +94,22 @@ class Cart
         static::set(static::$cart);
     }
 
-    /**
-     * Clear the complete cart
-     */
-    public static function clear(): void
+    public static function totalItems()
     {
-        static::set(static::empty());
+        static::$cart = static::get();
+        static::resetTotalItems();
+
+        static::$cart->each(function ($item) {
+            static::$totalItems += $item->getQuantity();
+        });
+
+        return static::$totalItems;
     }
 
     public static function totalPrice()
     {
         static::$cart = static::get();
-
-        static::$totalPrice = 0; // Reset total Price
+        static::resetTotalPrice();
 
         static::$cart->each(function ($item) {
             static::$totalPrice += static::makeAmountSaveableStatic($item->totalPrice());
@@ -140,8 +121,7 @@ class Cart
     public static function totalShipping()
     {
         static::$cart = static::get();
-
-        static::$totalShipping = 0; // Reset total Shipping
+        static::resetTotalShipping();
 
         static::$cart->each(function ($item) {
             static::$totalShipping += static::makeAmountSaveableStatic($item->totalShipping());
@@ -150,16 +130,47 @@ class Cart
         return static::makeAmountHumanStatic(static::$totalShipping);
     }
 
-    public static function totalItems()
+    /**
+     * An empty cart
+     *
+     * @return Collection
+     */
+    private static function empty(): Collection
     {
-        static::$totalItems = 0; // Reset total items to zero
+        return collect();
+    }
 
-        static::$cart = static::get();
+    /**
+     * Is this product already saved in the cart?
+     *
+     * @param Product $product
+     * @return bool
+     */
+    private static function contains(Product $product): bool
+    {
+        return static::$cart->contains('id', $product->slug);
+    }
 
-        static::$cart->each(function ($item) {
-            static::$totalItems += $item->getQuantity();
-        });
+    /**
+     * Set the cart to the session
+     */
+    private static function set(Collection $cart): void
+    {
+        Session::put('butik.cart', $cart);
+    }
 
-        return static::$totalItems;
+    private static function resetTotalItems(): void
+    {
+        static::$totalItems = 0;
+    }
+
+    private static function resetTotalPrice(): void
+    {
+        static::$totalPrice = 0;
+    }
+
+    private static function resetTotalShipping(): void
+    {
+        static::$totalShipping = 0;
     }
 }
