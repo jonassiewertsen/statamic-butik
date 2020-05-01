@@ -36,24 +36,4 @@ class ExpressCheckoutController extends Checkout
 
         return view(config('butik.template_express-checkout-payment'), compact('customer', 'product'));
     }
-
-    public function receipt(Request $request, $order)
-    {
-        if (!$request->hasValidSignature()) {
-           return $this->showInvalidReceipt();
-        }
-
-        if (! $order = Order::find($order))
-        {
-            return $this->showInvalidReceipt();
-        }
-
-        $customer = json_decode($order->customer);
-
-        if ($order->status === 'paid') {
-            Session::forget('butik.customer');
-        }
-
-        return view(config('butik.template_checkout-receipt'), compact('customer', 'order'));
-    }
 }

@@ -16,7 +16,7 @@ Route::prefix(config('butik.route_shop-prefix'))->name('butik.')->middleware(['w
      *   Payment receipt page
      * #################################################################################################################
      */
-    Route::get(config('butik.route_payment-receipt'), 'ExpressCheckoutController@receipt')
+    Route::get(config('butik.route_payment-receipt'), 'CheckoutController@receipt')
 
         ->name('payment.receipt');
 
