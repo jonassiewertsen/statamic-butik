@@ -27,7 +27,7 @@ class TaxBlueprint extends Blueprint
                                 'type'         => 'tax',
                                 'display'      => __('butik::general.percentage'),
                                 'width'         => '33',
-                                'validate'      => 'required|integer|min:0|max:100',
+                                'validate'      => 'required|numeric|min:0|max:100',
                             ],
                         ],
                     ],

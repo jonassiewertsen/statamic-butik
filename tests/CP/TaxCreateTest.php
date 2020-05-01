@@ -86,7 +86,7 @@ class TaxCreateTest extends TestCase
     }
 
     /** @test */
-    public function percentage_must_be_an_integer()
+    public function percentage_must_be_numeric()
     {
         $tax = raw(Tax::class, ['percentage' => 'drei']);
         $this->post(route('statamic.cp.butik.taxes.store'), $tax)
