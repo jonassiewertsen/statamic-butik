@@ -1,7 +1,7 @@
 <?php
 
 // TODO: Choose a better namespace, when addon testing has been streamlined
-Route::prefix(config('butik.route_shop-prefix'))->name('butik.')->middleware('web')->namespace('\\Jonassiewertsen\\StatamicButik\\Http\\Controllers\\Web\\')->group(function() {
+Route::prefix(config('butik.route_shop-prefix'))->name('butik.')->middleware(['web', 'butikRoutes'])->namespace('\\Jonassiewertsen\\StatamicButik\\Http\\Controllers\\Web\\')->group(function() {
 
     /**
      * #################################################################################################################

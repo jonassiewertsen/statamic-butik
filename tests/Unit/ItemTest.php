@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
@@ -18,7 +19,7 @@ class ItemTest extends TestCase
     public function setUp(): void {
         parent::setUp();
 
-        $this->product = create(Product::class)->first();
+        $this->product = create(Product::class, ['stock' => 5])->first();
     }
 
     /** @test */
@@ -27,14 +28,6 @@ class ItemTest extends TestCase
         $item = new Item($this->product);
 
         $this->assertEquals($item->id, $this->product->slug);
-    }
-
-    /** @test */
-    public function it_has_a_product()
-    {
-        $item = new Item($this->product);
-
-        $this->assertEquals($item->product, $this->product);
     }
 
     /** @test */
@@ -79,6 +72,16 @@ class ItemTest extends TestCase
     }
 
     /** @test */
+    public function an_item_can_max_increases_to_the_avialable_stock()
+    {
+        $this->product->update(['stock' => 1]);
+        $item = new Item($this->product);
+        $item->increase();
+
+        $this->assertEquals(1, $item->getQuantity());
+    }
+
+    /** @test */
     public function an_item_can_be_decreased()
     {
         $item = new Item($this->product);
@@ -87,6 +90,16 @@ class ItemTest extends TestCase
         $item->decrease();
 
         $this->assertEquals($item->getQuantity(), 1);
+    }
+
+    /** @test */
+    public function an_item_will_check_the_stock_when_increasing()
+    {
+        $item = new Item($this->product);
+        $item->setQuantity(10);
+        $item->decrease();
+
+        $this->assertEquals($item->getQuantity(), 5);
     }
 
     /** @test */
@@ -146,5 +159,70 @@ class ItemTest extends TestCase
         $item->setQuantity(2);
 
         $this->assertEquals('5,00', $item->totalShipping());
+    }
+
+    /** @test */
+    public function A_new_name_will_be_reflected_on_the_item_update()
+    {
+        $item = new Item($this->product);
+
+        $newDescription = 'new Description';
+        $this->product->update(['description' => $newDescription]);
+        Cache::flush();
+        $item->update();
+
+        $this->assertEquals($item->description, $newDescription);
+    }
+
+    /** @test */
+    public function A_new_base_price_will_be_reflected_on_the_item_update()
+    {
+        $item = new Item($this->product);
+
+        $newPrice = 9999;
+        $this->product->update(['base_price' => $newPrice]);
+        Cache::flush();
+        $item->update();
+
+        $this->assertEquals($item->base_price, $this->product->base_price);
+    }
+
+    /** @test */
+    public function A_new_total_base_price_will_be_reflected_on_the_item_update()
+    {
+        $item = new Item($this->product);
+
+        $oldPrice = $item->totalPrice();
+        $this->product->update(['base_price' => 999]);
+        Cache::flush();
+        $item->update();
+
+        $this->assertNotEquals($item->totalPrice(), $oldPrice);
+    }
+
+    /** @test */
+    public function A_new_shipping_price_will_be_reflected_on_the_item_update()
+    {
+        $item = new Item($this->product);
+
+        $oldShipping = $item->totalShipping();
+        $this->product->shipping->update(['price' => 999]);
+        Cache::flush();
+        $item->update();
+
+        $this->assertNotEquals($item->totalShipping(), $oldShipping);
+    }
+
+    /** @test */
+    public function A_non_available_item_will_be_set_to_null()
+    {
+        $item = new Item($this->product);
+
+        $this->product->update(['available' => false]);
+
+        Cache::flush();
+        $item->update();
+
+        $this->assertEquals(0, $item->getQuantity());
     }
 }

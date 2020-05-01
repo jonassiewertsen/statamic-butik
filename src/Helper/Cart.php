@@ -8,7 +8,8 @@ use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 
-class Cart {
+class Cart
+{
     use MoneyTrait;
 
     public static  $cart;
@@ -35,13 +36,31 @@ class Cart {
     }
 
     /**
+     * Fetch the cart from the session
+     */
+    public static function get(): Collection
+    {
+        return Session::get('butik.cart') !== null ?
+            Session::get('butik.cart') :
+            static::empty();
+    }
+
+    /**
+     * Clear the complete cart
+     */
+    public static function clear(): void
+    {
+        static::set(static::empty());
+    }
+
+    /**
      * An item can be reduced or removed from the cart
      */
     public static function reduce(Product $product): void
     {
         static::$cart = static::get();
 
-        static::$cart = static::$cart->filter(function($item) use ($product) {
+        static::$cart = static::$cart->filter(function ($item) use ($product) {
             // If the quantity is <= 1 the item will be deleted from the cart
             if ($item->id === $product->slug && $item->getQuantity() <= 1) {
                 return false;
@@ -49,8 +68,8 @@ class Cart {
 
             // If the quantity is bigger than one, it will only decrease
             if ($item->id === $product->slug && $item->getQuantity() > 1) {
-               $item->decrease();
-               return true;
+                $item->decrease();
+                return true;
             }
 
             // If the slug is not matching, we should not care and just
@@ -68,38 +87,32 @@ class Cart {
     {
         static::$cart = static::get();
 
-        static::$cart = static::$cart->filter(function($item) use ($product) {
+        static::$cart = static::$cart->filter(function ($item) use ($product) {
             return $item->id !== $product->slug;
         });
 
         static::set(static::$cart);
     }
 
-    /**
-     * Clear the complete cart
-     */
-    public static function clear(): void {
-        static::set(static::empty());
-    }
-
-    /**
-     * Fetch the cart from the session
-     */
-    public static function get(): Collection
+    public static function totalItems()
     {
-        return Session::get('butik.cart') !== null ?
-            Session::get('butik.cart') :
-            static::empty();
+        static::$cart = static::get();
+        static::resetTotalItems();
+
+        static::$cart->each(function ($item) {
+            static::$totalItems += $item->getQuantity();
+        });
+
+        return static::$totalItems;
     }
 
     public static function totalPrice()
     {
         static::$cart = static::get();
+        static::resetTotalPrice();
 
-        static::$totalPrice = 0; // Reset total Price
-
-        static::$cart->each(function($item) {
-             static::$totalPrice += static::makeAmountSaveableStatic($item->totalPrice());
+        static::$cart->each(function ($item) {
+            static::$totalPrice += static::makeAmountSaveableStatic($item->totalPrice());
         });
 
         return static::makeAmountHumanStatic(static::$totalPrice);
@@ -108,35 +121,34 @@ class Cart {
     public static function totalShipping()
     {
         static::$cart = static::get();
+        static::resetTotalShipping();
 
-        static::$totalShipping = 0; // Reset total Shipping
-
-        static::$cart->each(function($item) {
+        static::$cart->each(function ($item) {
             static::$totalShipping += static::makeAmountSaveableStatic($item->totalShipping());
         });
 
         return static::makeAmountHumanStatic(static::$totalShipping);
     }
 
-    public static function totalItems()
+    public static function update()
     {
-        static::$totalItems = 0; // Reset total items to zero
-
         static::$cart = static::get();
 
-        static::$cart->each(function($item) {
-            static::$totalItems += $item->getQuantity();
+        $items = static::$cart->each(function ($item) {
+            $item->update();
         });
 
-        return static::$totalItems;
+        static::set($items);
     }
 
     /**
-     * Set the cart to the session
+     * An empty cart
+     *
+     * @return Collection
      */
-    private static function set(Collection $cart): void
+    private static function empty(): Collection
     {
-        Session::put('butik.cart', $cart);
+        return collect();
     }
 
     /**
@@ -151,11 +163,25 @@ class Cart {
     }
 
     /**
-     * An empty cart
-     *
-     * @return Collection
+     * Set the cart to the session
      */
-    private static function empty() {
-        return collect();
+    private static function set(Collection $cart): void
+    {
+        Session::put('butik.cart', $cart);
+    }
+
+    private static function resetTotalItems(): void
+    {
+        static::$totalItems = 0;
+    }
+
+    private static function resetTotalPrice(): void
+    {
+        static::$totalPrice = 0;
+    }
+
+    private static function resetTotalShipping(): void
+    {
+        static::$totalShipping = 0;
     }
 }

@@ -3,6 +3,7 @@
 
 namespace Jonassiewertsen\StatamicButik\Checkout;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
@@ -12,19 +13,29 @@ class Item
     use MoneyTrait;
 
     /**
+     * Is this item available
+     */
+    public bool $available;
+
+    /**
+     * How many times can the product be sold.
+     */
+    public int $availableStock;
+
+    /**
      * The id of the item, which does contain the product slug
      */
-    public String $id;
+    public string $id;
 
     /**
      * The item name
      */
-    public String $name;
+    public string $name;
 
     /**
      * The description, shortened to 100 characters
      */
-    public ?String $description;
+    public ?string $description;
 
     /**
      * The product the item does base on
@@ -39,7 +50,7 @@ class Item
     /**
      * The quanitity of this item in the shopping cart
      */
-    private Int $quantity;
+    private int $quantity;
 
     /**
      * Will return the total price of the item
@@ -53,18 +64,25 @@ class Item
 
     public function __construct(Product $product)
     {
-        $this->id               = $product->slug;
-        $this->name             = $product->title;
-        $this->description      = Str::limit($product->description, 100, '...');
-        $this->product          = $product;
-        $this->taxRate          = $product->tax->percentage;
-        $this->quantity         = 1;
-        $this->totalPrice       = $this->calculateTotalPrice();
-        $this->totalShipping    = $this->calculateTotalShipping();
+        $this->available      = $product->available;
+        $this->id             = $product->slug;
+        $this->name           = $product->title;
+        $this->description    = $this->limitDescription($product->description);
+        $this->taxRate        = $product->tax->percentage;
+        $this->quantity       = 1;
+        $this->availableStock = $product->stock;
+        $this->base_price     = $product->base_price;
+        $this->totalPrice     = $this->calculateTotalPrice();
+        $this->totalShipping  = $this->calculateTotalShipping();
     }
 
     public function increase()
     {
+        if ($this->getQuantity() >= $this->product()->stock) {
+            $this->setQuantityToStock();
+            return;
+        }
+
         $this->quantity++;
         $this->update();
     }
@@ -72,6 +90,11 @@ class Item
     public function decrease()
     {
         if ($this->getQuantity() === 1) {
+            return;
+        }
+
+        if ($this->getQuantity() > $this->product()->stock) {
+            $this->setQuantityToStock();
             return;
         }
 
@@ -97,7 +120,7 @@ class Item
 
     public function singleShipping(): string
     {
-        return $this->product->shipping->price;
+        return $this->product()->shipping->price;
     }
 
     public function totalShipping(): string
@@ -107,22 +130,59 @@ class Item
 
     public function singlePrice(): string
     {
-        return $this->product->totalPrice;
+        return $this->product()->totalPrice;
     }
 
-    private function calculateTotalPrice() {
-        $price = $this->makeAmountSaveable($this->product->totalPrice);
+    private function calculateTotalPrice()
+    {
+        $price = $this->makeAmountSaveable($this->product()->totalPrice);
         return $this->makeAmountHuman($price * $this->quantity);
     }
 
-    private function calculateTotalShipping() {
-        $shipping = $this->makeAmountSaveable($this->product->shipping_amount);
+    private function calculateTotalShipping()
+    {
+        $shipping = $this->makeAmountSaveable($this->product()->shipping_amount);
         return $this->makeAmountHuman($shipping * $this->quantity);
     }
 
-    private function update(): void
+    public function update(): void
     {
-        $this->totalPrice       = $this->calculateTotalPrice();
-        $this->totalShipping    = $this->calculateTotalShipping();
+        if (! $this->StockAvailable()) {
+            $this->setQuantityToStock();
+        }
+
+        if (! $this->product()->available) {
+            $this->quantity = 0;
+        }
+
+        $this->available      = $this->product()->available;
+        $this->availableStock = $this->product()->stock;
+        $this->base_price     = $this->product()->base_price;
+        $this->description    = $this->limitDescription($this->product()->description);
+        $this->totalPrice     = $this->calculateTotalPrice();
+        $this->totalShipping  = $this->calculateTotalShipping();
+    }
+
+    private function limitDescription($text)
+    {
+        return Str::limit($text, 100, '...');
+    }
+
+    private function product(): Product
+    {
+        $cacheName = "product:{$this->id}";
+
+        return Cache::remember($cacheName, 300, function () {
+           return  Product::find($this->id);
+        });
+    }
+
+    private function setQuantityToStock(): void
+    {
+        $this->setQuantity($this->product()->stock);
+    }
+
+    private function stockAvailable() {
+        return $this->getQuantity() <= $this->product()->stock;
     }
 }

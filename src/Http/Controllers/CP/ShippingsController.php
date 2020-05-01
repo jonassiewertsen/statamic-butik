@@ -3,6 +3,7 @@
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Jonassiewertsen\StatamicButik\Blueprints\ShippingBlueprint;
 use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
 use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
@@ -83,6 +84,9 @@ class ShippingsController extends CpController
         $fields->validate();
         $values = $fields->process()->values();
         $shipping->update($values->toArray());
+
+        // Flush the cache, to automatically update anyones shopping cart
+        Cache::flush();
     }
 
     public function destroy(Shipping $shipping)

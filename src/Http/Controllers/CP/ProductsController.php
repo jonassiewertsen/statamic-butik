@@ -3,6 +3,7 @@
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Jonassiewertsen\StatamicButik\Blueprints\ProductBlueprint;
 use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
@@ -92,6 +93,9 @@ class ProductsController extends CpController
         $fields->validate();
         $values = $fields->process()->values();
         $product->update($values->toArray());
+
+        // Clear the product cache, to automatically update anyones shopping cart
+        Cache::forget("product:{$product->slug}");
     }
 
     public function destroy(Product $product)
