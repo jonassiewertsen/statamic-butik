@@ -19,7 +19,7 @@ class ItemTest extends TestCase
     public function setUp(): void {
         parent::setUp();
 
-        $this->product = create(Product::class)->first();
+        $this->product = create(Product::class, ['stock' => 5])->first();
     }
 
     /** @test */
@@ -72,6 +72,16 @@ class ItemTest extends TestCase
     }
 
     /** @test */
+    public function an_item_can_max_increases_to_the_avialable_stock()
+    {
+        $this->product->update(['stock' => 1]);
+        $item = new Item($this->product);
+        $item->increase();
+
+        $this->assertEquals(1, $item->getQuantity());
+    }
+
+    /** @test */
     public function an_item_can_be_decreased()
     {
         $item = new Item($this->product);
@@ -80,6 +90,16 @@ class ItemTest extends TestCase
         $item->decrease();
 
         $this->assertEquals($item->getQuantity(), 1);
+    }
+
+    /** @test */
+    public function an_item_will_check_the_stock_when_increasing()
+    {
+        $item = new Item($this->product);
+        $item->setQuantity(10);
+        $item->decrease();
+
+        $this->assertEquals($item->getQuantity(), 5);
     }
 
     /** @test */
@@ -191,5 +211,18 @@ class ItemTest extends TestCase
         $item->update();
 
         $this->assertNotEquals($item->totalShipping(), $oldShipping);
+    }
+
+    /** @test */
+    public function A_non_available_item_will_be_set_to_null()
+    {
+        $item = new Item($this->product);
+
+        $this->product->update(['available' => false]);
+
+        Cache::flush();
+        $item->update();
+
+        $this->assertEquals(0, $item->getQuantity());
     }
 }

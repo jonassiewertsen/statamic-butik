@@ -13,6 +13,16 @@ class Item
     use MoneyTrait;
 
     /**
+     * Is this item available
+     */
+    public bool $available;
+
+    /**
+     * How many times can the product be sold.
+     */
+    public int $availableStock;
+
+    /**
      * The id of the item, which does contain the product slug
      */
     public string $id;
@@ -54,18 +64,25 @@ class Item
 
     public function __construct(Product $product)
     {
-        $this->id            = $product->slug;
-        $this->name          = $product->title;
-        $this->description   = $this->limitDescription($product->description);
-        $this->taxRate       = $product->tax->percentage;
-        $this->quantity      = 1;
-        $this->base_price    = $product->base_price;
-        $this->totalPrice    = $this->calculateTotalPrice();
-        $this->totalShipping = $this->calculateTotalShipping();
+        $this->available      = $product->available;
+        $this->id             = $product->slug;
+        $this->name           = $product->title;
+        $this->description    = $this->limitDescription($product->description);
+        $this->taxRate        = $product->tax->percentage;
+        $this->quantity       = 1;
+        $this->availableStock = $product->stock;
+        $this->base_price     = $product->base_price;
+        $this->totalPrice     = $this->calculateTotalPrice();
+        $this->totalShipping  = $this->calculateTotalShipping();
     }
 
     public function increase()
     {
+        if ($this->getQuantity() >= $this->product()->stock) {
+            $this->setQuantityToStock();
+            return;
+        }
+
         $this->quantity++;
         $this->update();
     }
@@ -73,6 +90,11 @@ class Item
     public function decrease()
     {
         if ($this->getQuantity() === 1) {
+            return;
+        }
+
+        if ($this->getQuantity() > $this->product()->stock) {
+            $this->setQuantityToStock();
             return;
         }
 
@@ -125,10 +147,20 @@ class Item
 
     public function update(): void
     {
-        $this->base_price    = $this->product()->base_price;
-        $this->description   = $this->limitDescription($this->product()->description);
-        $this->totalPrice    = $this->calculateTotalPrice();
-        $this->totalShipping = $this->calculateTotalShipping();
+        if (! $this->StockAvailable()) {
+            $this->setQuantityToStock();
+        }
+
+        if (! $this->product()->available) {
+            $this->quantity = 0;
+        }
+
+        $this->available      = $this->product()->available;
+        $this->availableStock = $this->product()->stock;
+        $this->base_price     = $this->product()->base_price;
+        $this->description    = $this->limitDescription($this->product()->description);
+        $this->totalPrice     = $this->calculateTotalPrice();
+        $this->totalShipping  = $this->calculateTotalShipping();
     }
 
     private function limitDescription($text)
@@ -143,5 +175,14 @@ class Item
         return Cache::remember($cacheName, 300, function () {
            return  Product::find($this->id);
         });
+    }
+
+    private function setQuantityToStock(): void
+    {
+        $this->setQuantity($this->product()->stock);
+    }
+
+    private function stockAvailable() {
+        return $this->getQuantity() <= $this->product()->stock;
     }
 }

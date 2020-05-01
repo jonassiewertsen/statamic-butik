@@ -16,6 +16,7 @@ class Product extends ButikModel
     protected $casts = [
         'available'       => 'boolean',
         'base_price'      => 'integer',
+        'stock'           => 'integer',
         'description'     => 'array',
         'images'          => 'array',
         'stock_unlimited' => 'boolean',
