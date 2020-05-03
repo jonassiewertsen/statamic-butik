@@ -44,6 +44,13 @@ class Product extends ButikModel
     }
 
     /**
+     * A Product has categories
+     */
+    public function categories() {
+        return $this->belongsToMany(Category::class, 'butik_category_product');
+    }
+
+    /**
      * Will return the shipping price for this item
      */
     public function getTotalPriceAttribute()
