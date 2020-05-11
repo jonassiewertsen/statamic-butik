@@ -13,13 +13,12 @@ class ShippingCreateTest extends TestCase
         $this->signInAdmin();
     }
 
-//    TODO: Add test back in again, if composer test has been resolve
-//    /** @test */
-//    public function the_publish_form_will_be_displayed()
-//    {
-//        $this->get(route('statamic.cp.butik.shippings.create'))
-//            ->assertOK();
-//    }
+    /** @test */
+    public function the_publish_form_will_be_displayed()
+    {
+        $this->get(route('statamic.cp.butik.shippings.create'))
+            ->assertOK();
+    }
 
     /** @test */
     public function shippings_can_be_created()
