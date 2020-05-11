@@ -13,6 +13,8 @@ class TestCase extends OrchestraTestCase
 {
     use DatabaseMigrations, WithFaker;
 
+    protected $shouldFakeVersion = true;
+
     /**
      * Setup the test environment.
      */
@@ -21,6 +23,11 @@ class TestCase extends OrchestraTestCase
         require_once(__DIR__.'/ExceptionHandler.php');
 
         parent::setUp();
+
+        if ($this->shouldFakeVersion) {
+            \Facades\Statamic\Version::shouldReceive('get')->andReturn('3.0.0-testing');
+            $this->addToAssertionCount(-1); // Dont want to assert this
+        }
 
         $this->withFactories(__DIR__.'/../database/factories');
     }
