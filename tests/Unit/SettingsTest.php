@@ -28,4 +28,10 @@ class SettingsTest extends TestCase
     {
         $this->assertEquals(null, butik('not existing key'));
     }
+
+    /** @test */
+    public function a_default_value_can_be_defined()
+    {
+        $this->assertEquals('default', butik('not existing key', 'default'));
+    }
 }

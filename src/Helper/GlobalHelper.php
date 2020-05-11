@@ -20,10 +20,10 @@ if (!function_exists('currency')) {
  * Will return butik settings
  */
 if (!function_exists('butik')) {
-    function butik($key)
+    function butik($key, $default = null)
     {
         if (!Settings::where('key', $key)->exists()) {
-            return null;
+            return $default;
         }
 
         return Settings::firstWhere('key', $key)->value;
