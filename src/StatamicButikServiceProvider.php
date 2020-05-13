@@ -161,8 +161,9 @@ class StatamicButikServiceProvider extends AddonServiceProvider
                 ->section('Butik')
                 ->icon('settings-slider')
                 ->children([
-                   $nav->item(__('butik::tax.plural'))->route('butik.taxes.index')->can('view taxes'),
+                   $nav->item(__('butik::country.plural'))->route('butik.countries.index')->can('view countries'),
                    $nav->item(__('butik::shipping.plural'))->route('butik.shippings.index')->can('view shippings'),
+                   $nav->item(__('butik::tax.plural'))->route('butik.taxes.index')->can('view taxes'),
                ]);
         });
     }
@@ -198,6 +199,14 @@ class StatamicButikServiceProvider extends AddonServiceProvider
                             Permission::make('create shippings'),
                             Permission::make('delete shippings'),
                          ]),
+                    ]);
+                });
+                Permission::register('view countries', function ($permission) {
+                    $permission->children([
+                        Permission::make('edit countries')->children([
+                            Permission::make('create countries'),
+                            Permission::make('delete countries'),
+                        ]),
                     ]);
                 });
             });

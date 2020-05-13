@@ -27,6 +27,9 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\CP')
         Route::resource('shippings', 'ShippingsController')->only([
             'index', 'create', 'store', 'edit', 'update', 'destroy',
         ]);
-    });
 
+        Route::resource('countries', 'CountriesController')->only([
+           'index', 'create', 'store', 'edit', 'update', 'destroy'
+        ]);
+    });
 });

@@ -84,6 +84,7 @@ class ProductsController extends CpController
             'meta'      => $fields->meta(),
         ]);
     }
+
     public function update(Request $request, Product $product)
     {
         $this->authorize('update', $product);
