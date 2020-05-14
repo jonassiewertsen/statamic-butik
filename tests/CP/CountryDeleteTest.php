@@ -5,7 +5,7 @@ namespace Tests\CP;
 use Jonassiewertsen\StatamicButik\Http\Models\Country;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
-class CountryDeleteTestDeleteTest extends TestCase
+class CountryDeleteTest extends TestCase
 {
     /** @test */
     public function A_product_can_be_deleted()
