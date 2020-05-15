@@ -10,7 +10,7 @@ class CreateShippingZonesTable extends Migration
     {
         Schema::create('butik_shipping_zones', function (Blueprint $table) {
             $table->string('slug')->unique()->primary();
-            $table->string('name');
+            $table->string('title');
             $table->string('shipping_profile_slug')->nullable()->index();
 
             $table->timestamps();
