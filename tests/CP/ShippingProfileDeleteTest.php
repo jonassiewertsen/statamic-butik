@@ -12,10 +12,10 @@ class ShippingProfileDeleteTest extends TestCase
     {
         $this->signInAdmin();
 
-        $shippingType = create(ShippingProfile::class);
-        $this->assertEquals(1, $shippingType->count());
+        $shippingProfile = create(ShippingProfile::class);
+        $this->assertEquals(1, $shippingProfile->count());
 
-        $this->delete(route('statamic.cp.butik.shipping-profiles.destroy', $shippingType->first()))
+        $this->delete(route('statamic.cp.butik.shipping-profiles.destroy', $shippingProfile->first()))
             ->assertOk();
 
         $this->assertEquals(0, ShippingProfile::count());

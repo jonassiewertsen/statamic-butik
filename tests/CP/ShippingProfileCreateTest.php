@@ -24,16 +24,16 @@ class ShippingProfileCreateTestCreateTest extends TestCase
     /** @test */
     public function title_is_required()
     {
-        $shippingType = raw(ShippingProfile::class, ['title' => null]);
-        $this->post(route('statamic.cp.butik.shipping-profiles.store'), $shippingType)
+        $shippingProfile = raw(ShippingProfile::class, ['title' => null]);
+        $this->post(route('statamic.cp.butik.shipping-profiles.store'), $shippingProfile)
             ->assertSessionHasErrors('title');
     }
 
     /** @test */
     public function slug_is_required()
     {
-        $shippingType = raw(ShippingProfile::class, ['slug' => null]);
-        $this->post(route('statamic.cp.butik.shipping-profiles.store'), $shippingType)
+        $shippingProfile = raw(ShippingProfile::class, ['slug' => null]);
+        $this->post(route('statamic.cp.butik.shipping-profiles.store'), $shippingProfile)
             ->assertSessionHasErrors('slug');
     }
 
