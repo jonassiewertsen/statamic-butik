@@ -4,7 +4,7 @@ namespace Jonassiewertsen\StatamicButik\Blueprints;
 
 use Statamic\Facades\Blueprint as StatamicBlueprint;
 
-class ShippingTypeBlueprint extends Blueprint
+class ShippingProfileBlueprint extends Blueprint
 {
     public function __invoke()
     {
@@ -30,7 +30,7 @@ class ShippingTypeBlueprint extends Blueprint
                             'field'  => [
                                 'type'     => 'slug',
                                 'display'  => __('butik::general.slug'),
-                                'validate' => ['required', $this->shippingtypeUniqueRule()],
+                                'validate' => ['required', $this->shippingprofileUniqueRule()],
                                 'read_only' => $this->slugReadOnly(),
                             ],
                         ],
@@ -48,12 +48,12 @@ class ShippingTypeBlueprint extends Blueprint
         return $this->isRoute('statamic.cp.butik.shipping-types.edit');
     }
 
-    private function shippingtypeUniqueRule()
+    private function shippingprofileUniqueRule()
     {
         return $this->ignoreUnqiueOn(
-            'butik_shipping_types',
+            'butik_shipping_profiles',
             'slug',
-            'statamic.cp.butik.shipping-types.update'
+            'statamic.cp.butik.shipping-profiles.update'
         );
     }
 }

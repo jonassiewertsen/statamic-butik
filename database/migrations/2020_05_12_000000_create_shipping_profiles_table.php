@@ -4,11 +4,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateShippingTypesTable extends Migration
+class CreateShippingProfilesTable extends Migration
 {
     public function up()
     {
-        Schema::create('butik_shipping_types', function (Blueprint $table) {
+        Schema::create('butik_shipping_profiles', function (Blueprint $table) {
             $table->string('slug')->unique()->primary();
             $table->string('title');
 
@@ -18,6 +18,6 @@ class CreateShippingTypesTable extends Migration
 
     public function down()
     {
-        Schema::drop('butik_shipping_types');
+        Schema::drop('butik_shipping_profiles');
     }
 }

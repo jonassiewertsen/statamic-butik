@@ -1,10 +1,10 @@
 <?php
 
 use Faker\Generator as Faker;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingType;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Statamic\Support\Str;
 
-$factory->define(ShippingType::class, function (Faker $faker) {
+$factory->define(ShippingProfile::class, function (Faker $faker) {
     $title = $faker->word;
 
     return [

@@ -4,18 +4,18 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Jonassiewertsen\StatamicButik\Blueprints\ShippingTypeBlueprint;
+use Jonassiewertsen\StatamicButik\Blueprints\ShippingProfileBlueprint;
 use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingType;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Statamic\CP\Column;
 
-class ShippingTypesController extends CpController
+class ShippingProfilesController extends CpController
 {
 //    public function index()
 //    {
-//        $this->authorize('index', ShippingType::class);
+//        $this->authorize('index', ShippingProfile::class);
 //
-//        $shippings = ShippingType::all()->map(function ($shipping) {
+//        $shippings = ShippingProfile::all()->map(function ($shipping) {
 //            return [
 //                'title'      => $shipping->title,
 //                'price'      => $shipping->priceWithCurrencySymbol,
@@ -36,7 +36,7 @@ class ShippingTypesController extends CpController
 //
 //    public function create()
 //    {
-//        $this->authorize('create', ShippingType::class);
+//        $this->authorize('create', ShippingProfile::class);
 //
 //        $blueprint = new ShippingBlueprint();
 //        $fields = $blueprint()->fields()->preProcess();
@@ -50,13 +50,13 @@ class ShippingTypesController extends CpController
 
     public function store(Request $request)
     {
-        $this->authorize('store', ShippingType::class);
+        $this->authorize('store', ShippingProfile::class);
 
-        $blueprint = new ShippingTypeBlueprint();
+        $blueprint = new ShippingProfileBlueprint();
         $fields = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
         $values = $fields->process()->values();
-        ShippingType::create($values->toArray());
+        ShippingProfile::create($values->toArray());
     }
 
 //    public function edit(Shipping $shipping)
@@ -75,21 +75,21 @@ class ShippingTypesController extends CpController
 //        ]);
 //    }
 
-    public function update(Request $request, ShippingType $shippingType)
+    public function update(Request $request, ShippingProfile $shippingProfile)
     {
-        $this->authorize('update', $shippingType);
+//        $this->authorize('update', $shippingProfile);
 
-        $blueprint = new ShippingTypeBlueprint();
+        $blueprint = new ShippingProfileBlueprint();
         $fields = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
         $values = $fields->process()->values();
-        $shippingType->update($values->toArray());
+        $shippingProfile->update($values->toArray());
     }
 
-    public function destroy(ShippingType $shippingType)
+    public function destroy(ShippingProfile $shippingProfile)
     {
-        $this->authorize('delete', $shippingType);
+//        $this->authorize('delete', $shippingProfile);
 
-        $shippingType->delete();
+        $shippingProfile->delete();
     }
 }

@@ -11,11 +11,11 @@ class CreateShippingZonesTable extends Migration
         Schema::create('butik_shipping_zones', function (Blueprint $table) {
             $table->string('slug')->unique()->primary();
             $table->string('name');
-            $table->string('shipping_type_slug')->nullable()->index();
+            $table->string('shipping_profile_slug')->nullable()->index();
 
             $table->timestamps();
 
-            $table->foreign('shipping_type_slug')->references('slug')->on('butik_shipping_types');
+            $table->foreign('shipping_profile_slug')->references('slug')->on('butik_shipping_profiles');
         });
     }
 

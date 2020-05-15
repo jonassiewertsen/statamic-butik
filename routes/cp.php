@@ -32,7 +32,7 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\CP')
            'index', 'create', 'store', 'edit', 'update', 'destroy'
         ]);
 
-        Route::resource('shipping-types', 'ShippingTypesController')->only([
+        Route::resource('shipping-profiles', 'ShippingProfilesController')->only([
             'store', 'update', 'destroy',
         ]);
     });

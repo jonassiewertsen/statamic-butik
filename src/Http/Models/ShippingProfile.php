@@ -2,9 +2,9 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Models;
 
-class ShippingType extends ButikModel
+class ShippingProfile extends ButikModel
 {
-    protected $table        = 'butik_shipping_types';
+    protected $table        = 'butik_shipping_profiles';
     public    $incrementing = false;
     protected $primaryKey   = 'slug';
     protected $keyType      = 'string';
