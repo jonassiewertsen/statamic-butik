@@ -11,7 +11,8 @@ use Statamic\Statamic;
 
 class TestCase extends OrchestraTestCase
 {
-    use DatabaseMigrations, WithFaker;
+    use DatabaseMigrations;
+    use WithFaker;
 
     protected $shouldFakeVersion = true;
 
