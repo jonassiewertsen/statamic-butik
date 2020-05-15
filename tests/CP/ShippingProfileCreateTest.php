@@ -16,8 +16,8 @@ class ShippingProfileCreateTestCreateTest extends TestCase
     /** @test */
     public function profiles_can_be_created()
     {
-        $country = raw(ShippingProfile::class);
-        $this->post(route('statamic.cp.butik.shipping-profiles.store'), $country)->assertSessionHasNoErrors();
+        $shippingProfile = raw(ShippingProfile::class);
+        $this->post(route('statamic.cp.butik.shipping-profiles.store'), $shippingProfile)->assertSessionHasNoErrors();
         $this->assertEquals(1, ShippingProfile::count());
     }
 
@@ -42,14 +42,14 @@ class ShippingProfileCreateTestCreateTest extends TestCase
     {
         $slug = 'not-unique';
 
-        // First country
-        $country = raw(ShippingProfile::class, ['slug' => $slug ]);
-        $this->post(route('statamic.cp.butik.shipping-profiles.store'), $country)
+        // First shipping profile
+        $shippingProfile = raw(ShippingProfile::class, ['slug' => $slug ]);
+        $this->post(route('statamic.cp.butik.shipping-profiles.store'), $shippingProfile)
             ->assertSessionHasNoErrors();
 
-        // Another country with the same slug
-        $country = raw(ShippingProfile::class, ['slug' => $slug ]);
-        $this->post(route('statamic.cp.butik.shipping-profiles.store'), $country)
+        // Another shipping profile with the same slug
+        $shippingProfile = raw(ShippingProfile::class, ['slug' => $slug ]);
+        $this->post(route('statamic.cp.butik.shipping-profiles.store'), $shippingProfile)
             ->assertSessionHasErrors('slug');
     }
 }
