@@ -10,13 +10,16 @@ class CreateShippingRatesTable extends Migration
     {
         Schema::create('butik_shipping_rates', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('shipping_zone_slug')->index();
+            $table->string('title');
             $table->integer('price');
             $table->integer('minimum');
             $table->integer('maximum');
-            $table->string('type')->nullable();
+            $table->string('type')->default('price');
 
             $table->timestamps();
+
+            $table->foreign('shipping_zone_slug')->references('slug')->on('butik_shipping_zones');
         });
     }
 

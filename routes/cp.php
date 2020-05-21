@@ -39,5 +39,10 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\CP')
         Route::resource('shipping-zones', 'ShippingZonesController')->only([
             'store', 'update', 'destroy',
         ]);
+
+
+        Route::resource('shipping-rates', 'ShippingRatesController')->only([
+            'store', 'update', 'destroy'
+        ]);
     });
 });
