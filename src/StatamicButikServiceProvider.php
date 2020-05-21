@@ -162,7 +162,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
                 ->icon('settings-slider')
                 ->children([
                    $nav->item(__('butik::country.plural'))->route('butik.countries.index')->can('view countries'),
-                   $nav->item(__('butik::shipping.plural'))->route('butik.shippings.index')->can('view shippings'),
+                   $nav->item(__('butik::shipping.singular'))->route('butik.shipping.index')->can('view shippings'),
                    $nav->item(__('butik::tax.plural'))->route('butik.taxes.index')->can('view taxes'),
                ]);
         });

@@ -24,12 +24,12 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\CP')
             'index', 'create', 'store', 'edit', 'update', 'destroy',
         ]);
 
-        Route::resource('shippings', 'ShippingsController')->only([
-            'index', 'create', 'store', 'edit', 'update', 'destroy',
-        ]);
-
         Route::resource('countries', 'CountriesController')->only([
            'index', 'create', 'store', 'edit', 'update', 'destroy'
+        ]);
+
+        Route::resource('shipping', 'ShippingController')->only([
+            'index',
         ]);
 
         Route::resource('shipping-profiles', 'ShippingProfilesController')->only([
@@ -39,7 +39,6 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\CP')
         Route::resource('shipping-zones', 'ShippingZonesController')->only([
             'store', 'update', 'destroy',
         ]);
-
 
         Route::resource('shipping-rates', 'ShippingRatesController')->only([
             'store', 'update', 'destroy'
