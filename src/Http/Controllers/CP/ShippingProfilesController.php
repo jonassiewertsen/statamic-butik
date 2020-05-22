@@ -17,9 +17,9 @@ class ShippingProfilesController extends CpController
 
         return ShippingProfile::all()->map(function ($shipping) {
             return [
-                'title'     => $shipping->title,
-                'slug'      => $shipping->slug,
-                'countries' => $shipping->countries,
+                'title' => $shipping->title,
+                'slug'  => $shipping->slug,
+                'zones' => $shipping->zones,
             ];
         })->toArray();
     }

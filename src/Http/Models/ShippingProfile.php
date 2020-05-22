@@ -17,13 +17,7 @@ class ShippingProfile extends ButikModel
         return $this->hasMany(Country::class, 'slug');
     }
 
-//    /**
-//     * A country has a edit url
-//     */
-//    public function getEditUrlAttribute()
-//    {
-//        $cp_route = config('statamic.cp.route');
-//
-//        return "/{$cp_route}/butik/settings/countries/{$this->slug}/edit";
-//    }
+    public function zones() {
+        return $this->hasMany(ShippingZone::class, 'shipping_profile_slug');
+    }
 }

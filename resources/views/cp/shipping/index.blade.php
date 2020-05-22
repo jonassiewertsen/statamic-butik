@@ -10,9 +10,9 @@
     </div>
 
     <butik-shipping-profile
+        :index-shipping-profile-route="'{{ cp_route('butik.shipping-profiles.index') }}'"
         :create-shipping-profile-title="'{{ __('butik::shipping.create_profile') }}'"
         :create-shipping-profile-route="'{{ cp_route('butik.shipping-profiles.store') }}'"
-        :index-shipping-profile-route="'{{ cp_route('butik.shipping-profiles.index') }}'"
         :shipping-profile-blueprint='@json($shippingBlueprint)'
         :shipping-profile-values='@json($shippingValues)'
         :shipping-profile-meta='@json($shippingMeta)'
