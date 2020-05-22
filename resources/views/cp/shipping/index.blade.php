@@ -4,7 +4,6 @@
 
 @section('content')
 
-
     <div class="flex mb-3">
         <h1 class="flex-1">{{ __('butik::shipping.singular') }}</h1>
     </div>

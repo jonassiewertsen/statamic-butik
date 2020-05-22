@@ -8,6 +8,8 @@ import ShippingOverview from "./components/shipping/Overview";
 import MoneyFieldtype from './components/fieldtypes/moneyFieldtype';
 import TaxFieldtype from './components/fieldtypes/taxFieldtype';
 
+import CreateButton from './partials/CreateButton';
+
 Statamic.booting(() => {
     // Listings
     Statamic.$components.register('butik-product-list', ProductListing);
@@ -20,4 +22,7 @@ Statamic.booting(() => {
     // Fieldtypes
     Statamic.$components.register('money-fieldtype', MoneyFieldtype);
     Statamic.$components.register('tax-fieldtype', TaxFieldtype);
+
+    // Partials
+    Statamic.$components.register('create-button', CreateButton);
 });

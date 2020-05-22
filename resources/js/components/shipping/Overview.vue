@@ -1,20 +1,19 @@
 <template>
     <div>
-        <profile-card v-for="profile in shippingProfiles"
+        <profile-card v-for="profile in shippingProfiles" key="profile.slug"
             :title="profile.title"
             :slug="profile.slug"
             :zones="profile.zones"
+            @manage="openManageStack"
         ></profile-card>
 
-        <div class="flex justify-center pt-1">
-            <button @click="showCreateStack = true" class="bg-white flex inline-flex items-center px-3 py-1 rounded-full shadow-sm text-grey-70 text-sm hover:text-blue">
-                <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                Create a new shipping profile
-            </button>
-        </div>
+        <create-button
+            :label="'Create a new shipping profile'"
+            @clicked="showCreateStack = true"
+        ></create-button>
 
         <create-stack
-            v-if="this.showCreateStack"
+            v-if="showCreateStack"
             :action="createShippingProfileRoute"
             :title="createShippingProfileTitle"
             :blueprint="shippingProfileBlueprint"
@@ -23,6 +22,12 @@
             @closed="showCreateStack = false"
             @saved="shippingProfileSaved"
         ></create-stack>
+
+        <manage-stack
+            v-if="true"
+            :slug="showManageStack"
+            @closed="showManageStack = null"
+        ></manage-stack>
     </div>
 </template>
 
@@ -30,6 +35,8 @@
     import axios from 'axios'
     import CreateStack from "./../stacks/CreateStack"
     import ProfileCard from "./ProfileCard"
+    import ManageStack from "./ManageStack";
+    import CreateButton from "../../partials/CreateButton";
 
     export default {
         props: {
@@ -42,13 +49,16 @@
         },
 
         components: {
+            CreateButton,
             CreateStack,
+            ManageStack,
             ProfileCard,
         },
 
         data() {
             return {
                 showCreateStack: false,
+                showManageStack: null,
                 shippingProfiles: [],
             }
         },
@@ -70,6 +80,10 @@
             shippingProfileSaved() {
                 this.showCreateStack = false
                 this.fetchShippingProfiles()
+            },
+
+            openManageStack(slug) {
+                this.showManageStack = slug
             }
         }
     }
