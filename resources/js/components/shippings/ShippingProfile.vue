@@ -19,16 +19,11 @@
                     {{ zone.title }}
                 </li>
             </ul>
-            <div v-if="profile.zones.length === 0">
-                <span class="flex items-center text-xs text-grey-70">
-                    No Shipping Zones created.
-                    <a class="ml-sm text-blue hover:underline" href="#">Create</a>
-                </span>
-            </div>
-
-
+            <span v-if="profile.zones.length === 0" class="flex items-center text-xs text-grey-70">
+                No Shipping Zones created.
+                <a class="ml-sm text-blue hover:underline" href="#">Create</a>
+            </span>
         </div>
-
 
         <div class="flex justify-center pt-1">
             <button @click="showCreateStack = true" class="bg-white flex inline-flex items-center px-3 py-1 rounded-full shadow-sm text-grey-70 text-sm hover:text-blue">
