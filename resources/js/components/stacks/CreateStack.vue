@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" @click="close">×</button>
             </header>
 
-            <div class="">
+            <div>
                 <publish-form
                     :title="title"
                     :action="action"
