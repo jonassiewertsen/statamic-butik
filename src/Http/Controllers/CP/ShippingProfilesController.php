@@ -11,29 +11,19 @@ use Statamic\CP\Column;
 
 class ShippingProfilesController extends CpController
 {
-//    public function index()
-//    {
-//        $this->authorize('index', ShippingProfile::class);
-//
-//        $shippings = ShippingProfile::all()->map(function ($shipping) {
-//            return [
-//                'title'      => $shipping->title,
-//                'price'      => $shipping->priceWithCurrencySymbol,
-//                'edit_url'   => $shipping->editUrl(),
-//                'slug'       => $shipping->slug,
-//                'deleteable' => auth()->user()->can('delete', $shipping),
-//            ];
-//        })->values();
-//
-//        return view('butik::cp.shippings.index', [
-//            'shippings' => $shippings,
-//            'columns' => [
-//                Column::make('title')->label(__('butik::shipping.singular')),
-//                Column::make('price')->label(__('butik::shipping.price')),
-//            ],
-//        ]);
-//    }
-//
+    public function index()
+    {
+//        $this->authorize('index', ShippingProfile::class); // TODO: Add authorization
+
+        return ShippingProfile::all()->map(function ($shipping) {
+            return [
+                'title'     => $shipping->title,
+                'slug'      => $shipping->slug,
+                'countries' => $shipping->countries,
+            ];
+        })->toArray();
+    }
+
 //    public function create()
 //    {
 //        $this->authorize('create', ShippingProfile::class);
@@ -53,7 +43,7 @@ class ShippingProfilesController extends CpController
         $this->authorize('store', ShippingProfile::class);
 
         $blueprint = new ShippingProfileBlueprint();
-        $fields = $blueprint()->fields()->addValues($request->all());
+        $fields    = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
         $values = $fields->process()->values();
         ShippingProfile::create($values->toArray());
@@ -80,7 +70,7 @@ class ShippingProfilesController extends CpController
 //        $this->authorize('update', $shippingProfile);
 
         $blueprint = new ShippingProfileBlueprint();
-        $fields = $blueprint()->fields()->addValues($request->all());
+        $fields    = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
         $values = $fields->process()->values();
         $shippingProfile->update($values->toArray());

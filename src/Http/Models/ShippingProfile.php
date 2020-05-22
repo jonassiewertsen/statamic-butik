@@ -11,6 +11,12 @@ class ShippingProfile extends ButikModel
 
     protected $guarded = [];
 
+//    protected $with = [''];
+
+    public function countries() {
+        return $this->hasMany(Country::class, 'slug');
+    }
+
 //    /**
 //     * A country has a edit url
 //     */

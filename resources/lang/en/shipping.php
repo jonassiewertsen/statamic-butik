@@ -9,6 +9,7 @@ return [
     /** Control Panel */
     'index'  => 'Shippings overview',
     'create' => 'Create a new shipping',
+    'create_profile' => 'Create a new shipping profile',
 
     'price' => 'Price',
 

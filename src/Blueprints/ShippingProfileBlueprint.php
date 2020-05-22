@@ -10,32 +10,29 @@ class ShippingProfileBlueprint extends Blueprint
     {
         return StatamicBlueprint::make()->setContents([
             'sections' => [
-                'main'    => [
+                'main' => [
                     'fields' => [
                         [
                             'handle' => 'title',
                             'field'  => [
                                 'type'     => 'text',
-                                'width'    => '66',
+                                'width'    => '50',
                                 'display'  => __('butik::general.title'),
                                 'validate' => 'required',
                             ],
                         ],
-                    ],
-                ],
-                'sidebar' => [
-                    'fields' => [
                         [
                             'handle' => 'slug',
                             'field'  => [
-                                'type'     => 'slug',
-                                'display'  => __('butik::general.slug'),
-                                'validate' => ['required', $this->shippingprofileUniqueRule()],
+                                'type'      => 'slug',
+                                'width'     => '50',
+                                'display'   => __('butik::general.slug'),
+                                'validate'  => ['required', $this->shippingprofileUniqueRule()],
                                 'read_only' => $this->slugReadOnly(),
                             ],
                         ],
-                    ]
-                ]
+                    ],
+                ],
             ],
         ]);
     }

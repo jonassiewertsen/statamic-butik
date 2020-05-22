@@ -5,7 +5,7 @@ use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Statamic\Support\Str;
 
 $factory->define(ShippingProfile::class, function (Faker $faker) {
-    $title = $faker->word;
+    $title = $faker->unique()->word;
 
     return [
         'title' => $title,
