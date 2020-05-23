@@ -34,19 +34,6 @@ class ShippingZoneBlueprint extends Blueprint
                         ],
                     ],
                 ],
-                'sidebar' => [
-                    'fields' => [
-                        [
-                            'handle' => 'slug',
-                            'field'  => [
-                                'type'     => 'slug',
-                                'display'  => __('butik::general.slug'),
-                                'validate' => ['required', $this->shippingzonesUniqueRule()],
-                                'read_only' => $this->slugReadOnly(),
-                            ],
-                        ],
-                    ]
-                ]
             ],
         ]);
     }

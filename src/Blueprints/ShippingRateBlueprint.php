@@ -47,12 +47,12 @@ class ShippingRateBlueprint extends Blueprint
                             ],
                         ],
                         [
-                            'handle' => 'shipping_zone_slug',
+                            'handle' => 'shipping_zone_id',
                             'field'  => [
                                 'type'         => 'select',
                                 'display'      => __('butik::shipping.singular'),
                                 'options'      => $this->fetchShippingZones(),
-                                'validate'      => 'required|exists:butik_shipping_zones,slug',
+                                'validate'      => 'required|exists:butik_shipping_zones,id',
                             ],
                         ],
                     ],
@@ -73,7 +73,7 @@ class ShippingRateBlueprint extends Blueprint
     {
         return $this->ignoreUnqiueOn(
             'butik_shipping_zones',
-            'slug',
+            'id',
             'statamic.cp.butik.shipping-zones.update'
         );
     }

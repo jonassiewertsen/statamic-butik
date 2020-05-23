@@ -7,9 +7,6 @@ use PHPUnit\Framework\Constraint\Count;
 class ShippingZone extends ButikModel
 {
     protected $table        = 'butik_shipping_zones';
-    public    $incrementing = false;
-    protected $primaryKey   = 'slug';
-    protected $keyType      = 'string';
 
     protected $guarded = [];
 
@@ -29,7 +26,7 @@ class ShippingZone extends ButikModel
         return $this->belongsToMany(
             Country::class,
             'butik_country_shipping_zone',
-            'shipping_zone_slug',
+            'shipping_zone_id',
             'country_slug',
         );
     }

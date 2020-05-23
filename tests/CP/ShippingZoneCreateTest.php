@@ -34,30 +34,6 @@ class ShippingZoneCreateTestCreateTest extends TestCase
     }
 
     /** @test */
-    public function slug_is_required()
-    {
-        $ShippingZone = raw(ShippingZone::class, ['slug' => null]);
-        $this->post(route('statamic.cp.butik.shipping-zones.store'), $ShippingZone)
-            ->assertSessionHasErrors('slug');
-    }
-
-    /** @test */
-    public function slug_must_be_unique()
-    {
-        $slug = 'not-unique';
-
-        // First shipping zone
-        $shippingZone = raw(ShippingZone::class, ['slug' => $slug ]);
-        $this->post(route('statamic.cp.butik.shipping-zones.store'), $shippingZone)
-            ->assertSessionHasNoErrors();
-
-        // Another shipping zone with the same slug
-        $shippingZone = raw(ShippingZone::class, ['slug' => $slug ]);
-        $this->post(route('statamic.cp.butik.shipping-zones.store'), $shippingZone)
-            ->assertSessionHasErrors('slug');
-    }
-
-    /** @test */
     public function shipping_is_required()
     {
         $shippingZone = raw(ShippingZone::class, ['shipping_profile_slug' => '']);
@@ -83,7 +59,7 @@ class ShippingZoneCreateTestCreateTest extends TestCase
 
         $this->assertDatabaseHas('butik_country_shipping_zone', [
            'country_slug'       => $country->slug,
-           'shipping_zone_slug' => $shippingZone->slug,
+           'shipping_zone_id' => $shippingZone->id,
         ]);
 
         $this->assertCount(1, $shippingZone->fresh()->countries);
@@ -104,17 +80,17 @@ class ShippingZoneCreateTestCreateTest extends TestCase
 
         $this->assertDatabaseHas('butik_country_shipping_zone', [
                 'country_slug'       => $country1->slug,
-                'shipping_zone_slug' => $shippingZone->slug,
+                'shipping_zone_id' => $shippingZone->id,
         ]);
 
         $this->assertDatabaseMissing('butik_country_shipping_zone', [
             'country_slug'       => $country2->slug,
-            'shipping_zone_slug' => $shippingZone->slug,
+            'shipping_zone_id' => $shippingZone->id,
         ]);
 
         $this->assertDatabaseHas('butik_country_shipping_zone', [
                 'country_slug'       => $country3->slug,
-                'shipping_zone_slug' => $shippingZone->slug,
+                'shipping_zone_id' => $shippingZone->id,
         ]);
 
         $this->assertCount(2, $shippingZone->fresh()->countries);

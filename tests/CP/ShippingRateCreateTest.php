@@ -16,6 +16,7 @@ class ShippingRateCreateTestCreateTest extends TestCase
     /** @test */
     public function a_rate_can_be_created()
     {
+        $this->withoutExceptionHandling();
         $shippingRate = raw(ShippingRate::class);
         $this->post(route('statamic.cp.butik.shipping-rates.store'), $shippingRate)->assertSessionHasNoErrors();
         $this->assertEquals(1, ShippingRate::count());
@@ -128,19 +129,11 @@ class ShippingRateCreateTestCreateTest extends TestCase
     // TODO: Add ShippingRate type. At this moment we do only support rates with a price type
 
     /** @test */
-    public function shipping_zone_slug_is_required()
+    public function shipping_zone_id_is_required()
     {
-        $shippingRate = raw(ShippingRate::class, ['shipping_zone_slug' => null]);
+        $shippingRate = raw(ShippingRate::class, ['shipping_zone_id' => null]);
         $this->post(route('statamic.cp.butik.shipping-rates.store'), $shippingRate)
-            ->assertSessionHasErrors('shipping_zone_slug');
-    }
-
-    /** @test */
-    public function shipping_zone_slug_must_exist()
-    {
-        $shippingRate = raw(ShippingRate::class, ['shipping_zone_slug' => 'not_existing']);
-        $this->post(route('statamic.cp.butik.shipping-rates.store'), $shippingRate)
-            ->assertSessionHasErrors('shipping_zone_slug');
+            ->assertSessionHasErrors('shipping_zone_id');
     }
 }
 
