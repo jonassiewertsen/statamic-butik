@@ -12,7 +12,7 @@
             @clicked="showCreateStack = true"
         ></create-button>
 
-        <create-stack
+        <create-stack narrow
             v-if="showCreateStack"
             :action="createShippingProfileRoute"
             :title="createShippingProfileTitle"
@@ -24,7 +24,7 @@
         ></create-stack>
 
         <manage-stack
-            v-if="true"
+            v-if="showManageStack"
             :slug="showManageStack"
             @closed="showManageStack = null"
         ></manage-stack>

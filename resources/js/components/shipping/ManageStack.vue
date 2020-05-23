@@ -2,11 +2,18 @@
     <stack>
         <div class="h-full bg-white p-4 overflow-auto">
             <header class="pb-5 py-2 border-grey-30 text-lg font-medium flex items-center justify-between">
-                Manage Shipping Zones
+                <div class="flex items-center">
+                    <h2>Manage Shipping Zones</h2>
+                    <create-button
+                        :label="'Create shipping zone'"
+                        :classes="'bg-grey-20 ml-4'"
+                    ></create-button>
+                </div>
+
                 <button type="button" class="btn-close" @click="close">×</button>
             </header>
 
-            <div>
+            <section>
                 <header class="mb-1 flex items-start leading-none">
                     <svg class="mr-2 text-grey-70" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
                     <section>
@@ -58,13 +65,13 @@
 
                     <create-button
                         :label="'Add rate'"
-                        :classes="'bg-grey-30 mt-2 mr-auto'"
+                        :classes="'bg-grey-20 mt-2 mr-auto'"
                         @clicked=""
                     ></create-button>
 
                 </div>
+            </section>
 
-            </div>
         </div>
     </stack>
 </template>

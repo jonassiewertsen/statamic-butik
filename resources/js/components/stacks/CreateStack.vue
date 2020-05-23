@@ -1,5 +1,5 @@
 <template>
-    <stack>
+    <stack :narrow="narrow">
         <div class="h-full bg-grey-30 p-4 overflow-auto">
             <header class="pb-3 py-1 border-b border-grey-30 text-lg font-medium flex items-center justify-between">
                 Shipping
@@ -22,7 +22,14 @@
 
 <script>
     export default {
-        props: ['blueprint', 'meta', 'values', 'title', 'action'],
+        props: {
+            blueprint: Array,
+            meta: Array,
+            values: Array,
+            title: String,
+            action: String,
+            narrow: Boolean,
+        },
 
         methods: {
             close() {

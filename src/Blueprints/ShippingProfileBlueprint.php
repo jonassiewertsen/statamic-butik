@@ -16,7 +16,6 @@ class ShippingProfileBlueprint extends Blueprint
                             'handle' => 'title',
                             'field'  => [
                                 'type'     => 'text',
-                                'width'    => '50',
                                 'display'  => __('butik::general.title'),
                                 'validate' => 'required',
                             ],
@@ -25,7 +24,6 @@ class ShippingProfileBlueprint extends Blueprint
                             'handle' => 'slug',
                             'field'  => [
                                 'type'      => 'slug',
-                                'width'     => '50',
                                 'display'   => __('butik::general.slug'),
                                 'validate'  => ['required', $this->shippingprofileUniqueRule()],
                                 'read_only' => $this->slugReadOnly(),
