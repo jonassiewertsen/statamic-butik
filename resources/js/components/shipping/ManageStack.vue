@@ -5,6 +5,7 @@
                 <div class="flex items-center">
                     <h2>Manage Shipping Zones</h2>
                     <create-button
+                        @clicked="openShippingZone"
                         :label="'Create shipping zone'"
                         :classes="'bg-grey-20 ml-4'"
                     ></create-button>
@@ -89,7 +90,11 @@
 
             saved() {
                 this.$emit('saved', true)
-            }
+            },
+
+            openShippingZone() {
+                this.$emit('openShippingZone', true)
+            },
         }
     }
 </script>

@@ -9,23 +9,35 @@
 
         <create-button
             :label="'Create a new shipping profile'"
-            @clicked="showCreateStack = true"
+            @clicked="createShippingProfileOpen = true"
         ></create-button>
 
         <create-stack narrow
-            v-if="showCreateStack"
+            v-if="createShippingProfileOpen"
             :action="createShippingProfileRoute"
             :title="createShippingProfileTitle"
             :blueprint="shippingProfileBlueprint"
             :meta="shippingProfileMeta"
             :values="shippingProfileValues"
-            @closed="showCreateStack = false"
+            @closed="createShippingProfileOpen = false"
             @saved="shippingProfileSaved"
+        ></create-stack>
+
+        <create-stack
+          v-if="createShippingZoneOpen"
+          :action="createShippingZoneRoute"
+          :title="createShippingZoneTitle"
+          :blueprint="shippingZoneBlueprint"
+          :meta="shippingZoneMeta"
+          :values="shippingZoneValues"
+          @closed="createShippingZoneOpen = false"
+          @saved="shippingZoneSaved"
         ></create-stack>
 
         <manage-stack
             v-if="showManageStack"
             :slug="showManageStack"
+            @openShippingZone="createShippingZoneOpen = true"
             @closed="showManageStack = null"
         ></manage-stack>
     </div>
@@ -46,6 +58,11 @@
             shippingProfileBlueprint: Array,
             shippingProfileValues: Array,
             shippingProfileMeta: Array,
+            createShippingZoneTitle: String,
+            createShippingZoneRoute: String,
+            shippingZoneBlueprint: Array,
+            shippingZoneValues: Array,
+            shippingZoneMeta: Array,
         },
 
         components: {
@@ -57,7 +74,8 @@
 
         data() {
             return {
-                showCreateStack: false,
+                createShippingProfileOpen: false,
+                createShippingZoneOpen: false,
                 showManageStack: null,
                 shippingProfiles: [],
             }
@@ -78,7 +96,12 @@
             },
 
             shippingProfileSaved() {
-                this.showCreateStack = false
+                this.createShippingProfileOpen = false
+                this.fetchShippingProfiles()
+            },
+
+            shippingZoneSaved() {
+                this.createShippingZoneOpen = false
                 this.fetchShippingProfiles()
             },
 

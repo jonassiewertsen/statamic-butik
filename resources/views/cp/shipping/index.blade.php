@@ -12,9 +12,14 @@
         :index-shipping-profile-route="'{{ cp_route('butik.shipping-profiles.index') }}'"
         :create-shipping-profile-title="'{{ __('butik::shipping.create_profile') }}'"
         :create-shipping-profile-route="'{{ cp_route('butik.shipping-profiles.store') }}'"
-        :shipping-profile-blueprint='@json($shippingBlueprint)'
-        :shipping-profile-values='@json($shippingValues)'
-        :shipping-profile-meta='@json($shippingMeta)'
+        :shipping-profile-blueprint='@json($shippingProfileBlueprint)'
+        :shipping-profile-values='@json($shippingProfileValues)'
+        :shipping-profile-meta='@json($shippingProfileMeta)'
+        :create-shipping-zone-title="'{{ __('butik::shipping.create_zone') }}'"
+        :create-shipping-zone-route="'{{ cp_route('butik.shipping-zones.store') }}'"
+        :shipping-zone-blueprint='@json($shippingZoneBlueprint)'
+        :shipping-zone-values='@json($shippingZoneValues)'
+        :shipping-zone-meta='@json($shippingZoneMeta)'
     ></butik-shipping-overview>
 
 @endsection

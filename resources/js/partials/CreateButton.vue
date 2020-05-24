@@ -17,7 +17,7 @@
             classes: {
                 type: String,
                 default: 'bg-white',
-            }
+            },
         },
 
         methods: {

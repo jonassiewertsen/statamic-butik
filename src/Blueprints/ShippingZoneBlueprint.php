@@ -17,7 +17,6 @@ class ShippingZoneBlueprint extends Blueprint
                             'handle' => 'title',
                             'field'  => [
                                 'type'     => 'text',
-                                'width'    => '66',
                                 'display'  => __('butik::general.title'),
                                 'validate' => 'required',
                             ],
@@ -26,9 +25,8 @@ class ShippingZoneBlueprint extends Blueprint
                             'handle' => 'shipping_profile_slug',
                             'field'  => [
                                 'type'     => 'select',
-                                'display'  => __('butik::shipping.singular'),
+                                'display'  => __('butik::shipping.zone'),
                                 'options'  => $this->fetchShippingProfiles(),
-                                'width'    => '25',
                                 'validate' => 'required|exists:butik_shipping_profiles,slug',
                             ],
                         ],
@@ -57,7 +55,6 @@ class ShippingZoneBlueprint extends Blueprint
 
     private function fetchShippingProfiles(): array
     {
-        return [];
-//        return ShippingProfile::pluck('title', 'slug')->toArray();
+        return ShippingProfile::pluck('title', 'slug')->toArray();
     }
 }
