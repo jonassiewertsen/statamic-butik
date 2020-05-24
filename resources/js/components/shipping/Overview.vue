@@ -24,21 +24,21 @@
         ></create-stack>
 
         <create-stack
-          v-if="createShippingZoneOpen"
-          :action="createShippingZoneRoute"
-          :title="createShippingZoneTitle"
-          :blueprint="shippingZoneBlueprint"
-          :meta="shippingZoneMeta"
-          :values="shippingZoneValues"
-          @closed="createShippingZoneOpen = false"
-          @saved="shippingZoneSaved"
+            v-if="createShippingZoneOpen"
+            :action="createShippingZoneRoute"
+            :title="createShippingZoneTitle"
+            :blueprint="shippingZoneBlueprint"
+            :meta="shippingZoneMeta"
+            :values="shippingZoneUpdatedValues"
+            @closed="createShippingZoneOpen = false"
+            @saved="shippingZoneSaved"
         ></create-stack>
 
         <manage-stack
             v-if="showManageStack"
             :slug="showManageStack"
-            @openShippingZone="createShippingZoneOpen = true"
             @closed="showManageStack = null"
+            @openShippingZone="createShippingZoneOpen = true"
         ></manage-stack>
     </div>
 </template>
@@ -76,6 +76,7 @@
             return {
                 createShippingProfileOpen: false,
                 createShippingZoneOpen: false,
+                shippingZoneUpdatedValues: [],
                 showManageStack: null,
                 shippingProfiles: [],
             }
@@ -83,6 +84,7 @@
 
         mounted() {
             this.fetchShippingProfiles()
+            this.shippingZoneUpdatedValues = this.shippingZoneValues
         },
 
         methods: {
@@ -106,7 +108,12 @@
             },
 
             openManageStack(slug) {
+                this.updateShippingZoneSlug(slug)
                 this.showManageStack = slug
+            },
+
+            updateShippingZoneSlug(slug) {
+                this.shippingZoneUpdatedValues.shipping_profile_slug = slug
             }
         }
     }

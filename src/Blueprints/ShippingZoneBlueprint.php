@@ -24,9 +24,8 @@ class ShippingZoneBlueprint extends Blueprint
                         [
                             'handle' => 'shipping_profile_slug',
                             'field'  => [
-                                'type'     => 'select',
+                                'type'     => 'hidden',
                                 'display'  => __('butik::shipping.zone'),
-                                'options'  => $this->fetchShippingProfiles(),
                                 'validate' => 'required|exists:butik_shipping_profiles,slug',
                             ],
                         ],

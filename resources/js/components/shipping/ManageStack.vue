@@ -81,7 +81,10 @@
     import CreateButton from "../../partials/CreateButton";
     export default {
         components: {CreateButton},
-        props: ['slug'],
+        props: {
+            slug: String,
+            default: null,
+        },
 
         methods: {
             close() {

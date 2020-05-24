@@ -31,6 +31,10 @@
             narrow: Boolean,
         },
 
+        mounted() {
+          console.log(this.values)
+        },
+
         methods: {
             close() {
                 this.$emit('closed', true)
