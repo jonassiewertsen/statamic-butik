@@ -9,37 +9,37 @@
 
         <create-button
             :label="'Create a new shipping profile'"
-            @clicked="createShippingProfileOpen = true"
+            @clicked="showCreateShippingProfileStack = true"
         ></create-button>
 
         <create-stack narrow
-            v-if="createShippingProfileOpen"
-            :action="createShippingProfileRoute"
-            :title="createShippingProfileTitle"
+            v-if="showCreateShippingProfileStack"
+            :action="shippingProfileRoute"
+            :title="shippingProfileCreateTitle"
             :blueprint="shippingProfileBlueprint"
             :meta="shippingProfileMeta"
             :values="shippingProfileValues"
-            @closed="createShippingProfileOpen = false"
+            @closed="showCreateShippingProfileStack = false"
             @saved="shippingProfileSaved"
         ></create-stack>
 
         <create-stack
-            v-if="createShippingZoneOpen"
-            :action="createShippingZoneRoute"
-            :title="createShippingZoneTitle"
+            v-if="showCreateShippingZoneStack"
+            :action="shippingZoneRoute"
+            :title="shippingZoneCreateTitle"
             :blueprint="shippingZoneBlueprint"
             :meta="shippingZoneMeta"
             :values="shippingZoneUpdatedValues"
-            @closed="createShippingZoneOpen = false"
+            @closed="showCreateShippingZoneStack = false"
             @saved="shippingZoneSaved"
         ></create-stack>
 
         <manage-stack
-            v-if="showManageStack"
-            :slug="showManageStack"
-            @closed="showManageStack = null"
+            v-if="showShippingProfileManageStack"
+            :slug="showShippingProfileManageStack"
+            @closed="showShippingProfileManageStack = null"
             @deleteShippingProfile="deleteShippingProfile"
-            @openShippingZone="createShippingZoneOpen = true"
+            @openShippingZone="showCreateShippingZoneStack = true"
         ></manage-stack>
     </div>
 </template>
@@ -53,15 +53,13 @@
 
     export default {
         props: {
-            createShippingProfileTitle: String,
-            createShippingProfileRoute: String,
-            deleteShippingProfileRoute: String,
-            indexShippingProfileRoute: String,
+            shippingProfileCreateTitle: String,
+            shippingProfileRoute: String,
             shippingProfileBlueprint: Array,
             shippingProfileValues: Array,
             shippingProfileMeta: Array,
-            createShippingZoneTitle: String,
-            createShippingZoneRoute: String,
+            shippingZoneCreateTitle: String,
+            shippingZoneRoute: String,
             shippingZoneBlueprint: Array,
             shippingZoneValues: Array,
             shippingZoneMeta: Array,
@@ -76,10 +74,10 @@
 
         data() {
             return {
-                createShippingProfileOpen: false,
-                createShippingZoneOpen: false,
+                showCreateShippingProfileStack: false,
+                showCreateShippingZoneStack: false,
+                showShippingProfileManageStack: null,
                 shippingZoneUpdatedValues: [],
-                showManageStack: null,
                 shippingProfiles: [],
             }
         },
@@ -91,7 +89,7 @@
 
         methods: {
             fetchShippingProfiles() {
-                axios.get(this.indexShippingProfileRoute)
+                axios.get(this.shippingProfileRoute)
                     .then(response => {
                         this.shippingProfiles = response.data
                     }).catch(error => {
@@ -100,18 +98,18 @@
             },
 
             shippingProfileSaved() {
-                this.createShippingProfileOpen = false
+                this.showCreateShippingProfileStack = false
                 this.fetchShippingProfiles()
             },
 
             shippingZoneSaved() {
-                this.createShippingZoneOpen = false
+                this.showCreateShippingZoneStack = false
                 this.fetchShippingProfiles()
             },
 
             openManageStack(slug) {
                 this.updateShippingZoneSlug(slug)
-                this.showManageStack = slug
+                this.showShippingProfileManageStack = slug
             },
 
             updateShippingZoneSlug(slug) {
@@ -119,9 +117,9 @@
             },
 
             deleteShippingProfile(slug) {
-                axios.delete(`${this.indexShippingProfileRoute}/${slug}`)
+                axios.delete(`${this.shippingProfileRoute}/${slug}`)
                     .then(() => {
-                        this.showManageStack = null
+                        this.showShippingProfileManageStack = null
                         this.fetchShippingProfiles()
                     })
                     .catch(error => {

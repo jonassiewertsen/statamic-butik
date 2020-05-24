@@ -75,7 +75,7 @@
 
             <hr class="mt-6 mb-3">
 
-            <button @click="confirmDeletion = true" class="btn-danger">Delete </button>
+            <button @click="confirmDeletion = true" class="btn-danger">Delete shipping profile</button>
 
             <confirmation-modal
                 danger
