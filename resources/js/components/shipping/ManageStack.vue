@@ -3,7 +3,7 @@
         <div class="h-full bg-white p-4 overflow-auto">
             <header class="pb-5 py-2 border-grey-30 text-lg font-medium flex items-center justify-between">
                 <div class="flex items-center">
-                    <h2>Manage Shipping Zones</h2>
+                    <h2>Manage Shipping Profile</h2>
                     <create-button
                         @clicked="openShippingZone"
                         :label="'Create shipping zone'"
@@ -73,6 +73,20 @@
                 </div>
             </section>
 
+            <hr class="mt-6 mb-3">
+
+            <button @click="confirmDeletion = true" class="btn-danger">Delete </button>
+
+            <confirmation-modal
+                danger
+                v-if="confirmDeletion"
+                title="Delete"
+                buttonText="Delete shipping profile"
+                bodyText="Are you sure you want delete this shipping profile?"
+                @confirm="deleteShippingProfile"
+                @cancel="confirmDeletion = false"
+            ></confirmation-modal>
+
         </div>
     </stack>
 </template>
@@ -80,10 +94,17 @@
 <script>
     import CreateButton from "../../partials/CreateButton";
     export default {
-        components: {CreateButton},
+        components: { CreateButton },
+
         props: {
             slug: String,
             default: null,
+        },
+
+        data() {
+            return {
+                confirmDeletion: false,
+            }
         },
 
         methods: {
@@ -98,6 +119,11 @@
             openShippingZone() {
                 this.$emit('openShippingZone', true)
             },
+
+            deleteShippingProfile() {
+                this.$emit('deleteShippingProfile', this.slug)
+                this.confirmDeletion = false
+            }
         }
     }
 </script>

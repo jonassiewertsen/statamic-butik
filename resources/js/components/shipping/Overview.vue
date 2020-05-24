@@ -38,6 +38,7 @@
             v-if="showManageStack"
             :slug="showManageStack"
             @closed="showManageStack = null"
+            @deleteShippingProfile="deleteShippingProfile"
             @openShippingZone="createShippingZoneOpen = true"
         ></manage-stack>
     </div>
@@ -54,6 +55,7 @@
         props: {
             createShippingProfileTitle: String,
             createShippingProfileRoute: String,
+            deleteShippingProfileRoute: String,
             indexShippingProfileRoute: String,
             shippingProfileBlueprint: Array,
             shippingProfileValues: Array,
@@ -94,7 +96,7 @@
                         this.shippingProfiles = response.data
                     }).catch(error => {
                         this.$toast.error(error)
-                })
+                    })
             },
 
             shippingProfileSaved() {
@@ -114,6 +116,17 @@
 
             updateShippingZoneSlug(slug) {
                 this.shippingZoneUpdatedValues.shipping_profile_slug = slug
+            },
+
+            deleteShippingProfile(slug) {
+                axios.delete(`${this.indexShippingProfileRoute}/${slug}`)
+                    .then(() => {
+                        this.showManageStack = null
+                        this.fetchShippingProfiles()
+                    })
+                    .catch(error => {
+                        this.$toast.error(error)
+                    })
             }
         }
     }
