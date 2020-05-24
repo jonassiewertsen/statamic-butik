@@ -23,24 +23,17 @@
             @saved="shippingProfileSaved"
         ></create-stack>
 
-        <create-stack
-            v-if="showCreateShippingZoneStack"
-            :action="shippingZoneRoute"
-            :title="shippingZoneCreateTitle"
-            :blueprint="shippingZoneBlueprint"
-            :meta="shippingZoneMeta"
-            :values="shippingZoneUpdatedValues"
-            @closed="showCreateShippingZoneStack = false"
-            @saved="shippingZoneSaved"
-        ></create-stack>
-
         <manage-stack
             v-if="showShippingProfileManageStack"
             :slug="showShippingProfileManageStack"
             :shippingProfileRoute="shippingProfileRoute"
-            @closed="showShippingProfileManageStack = null"
+            :shippingZoneRoute="shippingZoneRoute"
+            :shippingZoneCreateTitle="shippingZoneCreateTitle"
+            :shippingZoneBlueprint="shippingZoneBlueprint"
+            :shippingZoneMeta="shippingZoneMeta"
+            :shippingZoneValues="shippingZoneValues"
+            @closed="closeShippingProfileManageStack"
             @deleteShippingProfile="deleteShippingProfile"
-            @openShippingZone="showCreateShippingZoneStack = true"
         ></manage-stack>
     </div>
 </template>
@@ -76,19 +69,20 @@
         data() {
             return {
                 showCreateShippingProfileStack: false,
-                showCreateShippingZoneStack: false,
                 showShippingProfileManageStack: null,
-                shippingZoneUpdatedValues: [],
                 shippingProfiles: [],
             }
         },
 
         mounted() {
             this.fetchShippingProfiles()
-            this.shippingZoneUpdatedValues = this.shippingZoneValues
         },
 
         methods: {
+            refresh() {
+                this.fetchShippingProfiles()
+            },
+
             fetchShippingProfiles() {
                 axios.get(this.shippingProfileRoute)
                     .then(response => {
@@ -100,21 +94,16 @@
 
             shippingProfileSaved() {
                 this.showCreateShippingProfileStack = false
-                this.fetchShippingProfiles()
-            },
-
-            shippingZoneSaved() {
-                this.showCreateShippingZoneStack = false
-                this.fetchShippingProfiles()
+                this.refresh()
             },
 
             openManageStack(slug) {
-                this.updateShippingZoneSlug(slug)
                 this.showShippingProfileManageStack = slug
             },
 
-            updateShippingZoneSlug(slug) {
-                this.shippingZoneUpdatedValues.shipping_profile_slug = slug
+            closeShippingProfileManageStack() {
+                this.showShippingProfileManageStack = null
+                this.refresh()
             },
 
             deleteShippingProfile(slug) {

@@ -5,7 +5,7 @@
                 <div class="flex items-center">
                     <h2>Manage {{ profile.title }} Shipping</h2>
                     <create-button
-                        @clicked="openShippingZone"
+                        @clicked="showCreateShippingZoneStack = true"
                         :label="'Create shipping zone'"
                         :classes="'bg-grey-20 ml-4'"
                     ></create-button>
@@ -71,15 +71,26 @@
                 @cancel="confirmDeletion = false"
             ></confirmation-modal>
 
+            <create-stack
+                    v-if="showCreateShippingZoneStack"
+                    :action="shippingZoneRoute"
+                    :title="shippingZoneCreateTitle"
+                    :blueprint="shippingZoneBlueprint"
+                    :meta="shippingZoneMeta"
+                    :values="shippingZoneUpdatedValues"
+                    @closed="showCreateShippingZoneStack = false"
+                    @saved="shippingZoneSaved"
+            ></create-stack>
         </div>
     </stack>
 </template>
 
 <script>
     import CreateButton from "../../partials/CreateButton";
+    import CreateStack from "./../stacks/CreateStack"
     import axios from "axios";
     export default {
-        components: { CreateButton },
+        components: { CreateButton, CreateStack },
 
         props: {
             slug: {
@@ -89,18 +100,42 @@
             shippingProfileRoute: {
                 type: String,
                 default: null,
+            },
+            shippingZoneRoute: {
+                type: String,
+                default: null,
+            },
+            shippingZoneCreateTitle: {
+                type: String,
+                default: null,
+            },
+            shippingZoneBlueprint: {
+                type: Array,
+                default: [],
+            },
+            shippingZoneMeta: {
+                type: Array,
+                default: [],
+            },
+            shippingZoneValues: {
+                type: Array,
+                default: [],
             }
         },
 
         data() {
             return {
+                showCreateShippingZoneStack: false,
+                shippingZoneUpdatedValues: [],
                 confirmDeletion: false,
                 profile: [],
             }
         },
 
         mounted() {
-            this.fetchShippingProfile(this.slug)
+            this.refresh()
+            this.shippingZoneUpdatedValues = this.shippingZoneValues
+            this.updateShippingZoneSlug()
         },
 
         methods: {
@@ -113,6 +148,10 @@
                 })
             },
 
+            refresh() {
+                this.fetchShippingProfile(this.slug)
+            },
+
             close() {
                 this.$emit('closed', true)
             },
@@ -121,8 +160,13 @@
                 this.$emit('saved', true)
             },
 
-            openShippingZone() {
-                this.$emit('openShippingZone', true)
+            updateShippingZoneSlug() {
+                this.shippingZoneUpdatedValues.shipping_profile_slug = this.slug
+            },
+
+            shippingZoneSaved() {
+                this.showCreateShippingZoneStack = false
+                this.refresh()
             },
 
             deleteShippingProfile() {
