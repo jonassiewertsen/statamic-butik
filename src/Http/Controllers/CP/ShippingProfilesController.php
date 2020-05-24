@@ -24,19 +24,22 @@ class ShippingProfilesController extends CpController
         })->toArray();
     }
 
-//    public function create()
-//    {
-//        $this->authorize('create', ShippingProfile::class);
-//
-//        $blueprint = new ShippingBlueprint();
-//        $fields = $blueprint()->fields()->preProcess();
-//
-//        return view('butik::cp.shippings.create', [
-//            'blueprint' => $blueprint()->toPublishArray(),
-//            'values'    => $fields->values(),
-//            'meta'      => $fields->meta(),
-//        ]);
-//    }
+    public function show(ShippingProfile $shippingProfile)
+    {
+        $zones = $shippingProfile->zones->map(function($zone) {
+            return [
+                'title' => $zone->title,
+                'countries' => $zone->countries,
+                'rates' => $zone->rates,
+            ];
+        });
+
+        return [
+            'title'     => $shippingProfile->title,
+            'slug'      => $shippingProfile->slug,
+            'zones'     => $zones,
+        ];
+    }
 
     public function store(Request $request)
     {
@@ -48,22 +51,6 @@ class ShippingProfilesController extends CpController
         $values = $fields->process()->values();
         ShippingProfile::create($values->toArray());
     }
-
-//    public function edit(Shipping $shipping)
-//    {
-//        $this->authorize('edit', $shipping);
-//
-//        $values = $shipping->toArray();
-//        $blueprint = new ShippingBlueprint();
-//        $fields = $blueprint()->fields()->addValues($values)->preProcess();
-//
-//        return view('butik::cp.shippings.edit', [
-//            'blueprint' => $blueprint()->toPublishArray(),
-//            'values'    => $fields->values(),
-//            'id'        => $shipping->slug,
-//            'meta'      => $fields->meta(),
-//        ]);
-//    }
 
     public function update(Request $request, ShippingProfile $shippingProfile)
     {

@@ -22,4 +22,11 @@ class ShippingZoneTest extends TestCase
         $shippingZone = create(ShippingZone::class)->first();
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $shippingZone->countries);
     }
+
+    /** @test */
+    public function it_has_many_rates()
+    {
+        $shippingZone = create(ShippingZone::class)->first();
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $shippingZone->rates);
+    }
 }

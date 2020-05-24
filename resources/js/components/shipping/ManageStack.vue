@@ -3,7 +3,7 @@
         <div class="h-full bg-white p-4 overflow-auto">
             <header class="pb-5 py-2 border-grey-30 text-lg font-medium flex items-center justify-between">
                 <div class="flex items-center">
-                    <h2>Manage Shipping Profile</h2>
+                    <h2>Manage {{ profile.title }} Shipping</h2>
                     <create-button
                         @clicked="openShippingZone"
                         :label="'Create shipping zone'"
@@ -14,48 +14,29 @@
                 <button type="button" class="btn-close" @click="close">×</button>
             </header>
 
-            <section>
+            <section v-for="zone in profile.zones" class="mb-6">
                 <header class="mb-1 flex items-start leading-none">
                     <svg class="mr-2 text-grey-70" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
                     <section>
-                        <h3 class="block text-2xl">Zonen Name</h3>
-                        <ul class="leading-loose text-grey-70">
-                            <li>Deutschland</li>
+                        <h3 class="block text-2xl">{{ zone.title }}</h3>
+                        <ul class="flex leading-loose text-grey-70">
+                            <li v-for="country in zone.countries">{{ country.name }}/</li>
                         </ul>
                     </section>
                 </header>
 
                 <div class="max-w-md mt-4 ml-5 -pl-1">
-                    <table class="w-full leading-loose text-grey-70">
+                    <table v-if="zone.rates.length > 0" class="w-full leading-loose text-grey-70">
                         <tr class="text-left border-b-2 text-grey-80">
                             <th class="w-5/12 font-medium py-2 pl-1">Rate name</th>
                             <th class="w-4/12 font-medium py-2">Conditions</th>
                             <th class="w-2/12 font-medium py-2">Price</th>
                             <th class="w-1/12 font-medium py-2"></th>
                         </tr>
-                        <tr class="border-b hover:bg-grey-10">
-                            <td class="py-2 pl-1">Standard</td>
-                            <td class="py-2">€ 0,00 - € 50,00</td>
-                            <td class="py-2">€ 4,99</td>
-                            <td class="text-right hover:text-grey-80 pr-1">
-                                <button>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="border-b hover:bg-grey-10">
-                            <td class="py-2 pl-1">Standard</td>
-                            <td class="py-2">€ 0,00 - € 50,00</td>
-                            <td class="py-2">€ 4,99</td>
-                            <td class="text-right hover:text-grey-80 pr-1">
-                                <button>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-                                </button>
-                            </td>                        </tr>
-                        <tr class="border-b hover:bg-grey-10">
-                            <td class="py-2 pl-1">Standard</td>
-                            <td class="py-2">€ 0,00 - € 50,00</td>
-                            <td class="py-2">€ 4,99</td>
+                        <tr v-for="rate in zone.rates" class="border-b hover:bg-grey-10">
+                            <td class="py-2 pl-1">{{ rate.title }}</td>
+                            <td class="py-2">{{ (rate.minimum / 100).toFixed(2)  }} - {{ (rate.maximum / 100).toFixed(2) }}</td>
+                            <td class="py-2">{{ (rate.price / 100).toFixed(2) }}</td>
                             <td class="text-right hover:text-grey-80 pr-1">
                                 <button>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
@@ -63,6 +44,9 @@
                             </td>
                         </tr>
                     </table>
+                    <div v-else class="bg-orange border-l-8 mb-1 px-4 py-2 text-grey-80">
+                        No rates have been created yet.
+                    </div>
 
                     <create-button
                         :label="'Add rate'"
@@ -93,21 +77,42 @@
 
 <script>
     import CreateButton from "../../partials/CreateButton";
+    import axios from "axios";
     export default {
         components: { CreateButton },
 
         props: {
-            slug: String,
-            default: null,
+            slug: {
+                type: String,
+                default: null,
+            },
+            shippingProfileRoute: {
+                type: String,
+                default: null,
+            }
         },
 
         data() {
             return {
                 confirmDeletion: false,
+                profile: [],
             }
         },
 
+        mounted() {
+            this.fetchShippingProfile(this.slug)
+        },
+
         methods: {
+            fetchShippingProfile(slug) {
+                axios.get(`${this.shippingProfileRoute}/${slug}`)
+                    .then(response => {
+                        this.profile = response.data
+                    }).catch(error => {
+                    this.$toast.error(error)
+                })
+            },
+
             close() {
                 this.$emit('closed', true)
             },

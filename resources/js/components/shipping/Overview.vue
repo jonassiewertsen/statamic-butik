@@ -37,6 +37,7 @@
         <manage-stack
             v-if="showShippingProfileManageStack"
             :slug="showShippingProfileManageStack"
+            :shippingProfileRoute="shippingProfileRoute"
             @closed="showShippingProfileManageStack = null"
             @deleteShippingProfile="deleteShippingProfile"
             @openShippingZone="showCreateShippingZoneStack = true"

@@ -54,4 +54,12 @@ class ShippingZone extends ButikModel
     {
         $this->countries()->detach($country);
     }
+
+    /**
+     * A shipping zone belongs to many rates
+     */
+    public function rates()
+    {
+        return $this->hasMany(ShippingRate::class);
+    }
 }
