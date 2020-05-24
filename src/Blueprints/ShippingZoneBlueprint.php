@@ -11,7 +11,7 @@ class ShippingZoneBlueprint extends Blueprint
     {
         return StatamicBlueprint::make()->setContents([
             'sections' => [
-                'main'    => [
+                'main' => [
                     'fields' => [
                         [
                             'handle' => 'title',
@@ -25,11 +25,11 @@ class ShippingZoneBlueprint extends Blueprint
                         [
                             'handle' => 'shipping_profile_slug',
                             'field'  => [
-                                'type'         => 'select',
-                                'display'      => __('butik::shipping.singular'),
-                                'options'      => $this->fetchShippingProfiles(),
-                                'width'         => '25',
-                                'validate'      => 'required|exists:butik_shipping_profiles,slug',
+                                'type'     => 'select',
+                                'display'  => __('butik::shipping.singular'),
+                                'options'  => $this->fetchShippingProfiles(),
+                                'width'    => '25',
+                                'validate' => 'required|exists:butik_shipping_profiles,slug',
                             ],
                         ],
                     ],
@@ -55,7 +55,8 @@ class ShippingZoneBlueprint extends Blueprint
         );
     }
 
-    private function fetchShippingProfiles(): array {
+    private function fetchShippingProfiles(): array
+    {
         return [];
 //        return ShippingProfile::pluck('title', 'slug')->toArray();
     }
