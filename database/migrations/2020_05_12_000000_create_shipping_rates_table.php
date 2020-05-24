@@ -19,7 +19,10 @@ class CreateShippingRatesTable extends Migration
 
             $table->timestamps();
 
-            $table->foreign('shipping_zone_id')->references('id')->on('butik_shipping_zones');
+            $table->foreign('shipping_zone_id')
+                ->references('id')
+                ->on('butik_shipping_zones')
+                ->onDelete('cascade');
         });
     }
 

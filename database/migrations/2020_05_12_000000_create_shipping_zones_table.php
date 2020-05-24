@@ -15,7 +15,10 @@ class CreateShippingZonesTable extends Migration
 
             $table->timestamps();
 
-            $table->foreign('shipping_profile_slug')->references('slug')->on('butik_shipping_profiles');
+            $table->foreign('shipping_profile_slug')
+                ->references('slug')
+                ->on('butik_shipping_profiles')
+                ->onDelete('cascade');
         });
     }
 
