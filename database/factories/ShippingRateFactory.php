@@ -10,6 +10,5 @@ $factory->define(ShippingRate::class, function (Faker $faker) {
         'title'            => $faker->word,
         'price'            => $faker->numberBetween(100, 1000),
         'minimum'          => $faker->numberBetween(0, 500),
-        'type'             => 'price',
     ];
 });
