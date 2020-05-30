@@ -18,7 +18,12 @@
                 <header class="mb-1 flex items-start leading-none">
                     <svg class="mr-2 text-grey-70" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
                     <section>
-                        <h3 class="block text-2xl">{{ zone.title }}</h3>
+                        <h3 class="block text-2xl">
+                            {{ zone.title }}
+                            <button class="align-bottom hover:text-blue inline-flex ml-1 text-grey-40">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path></svg>
+                            </button>
+                        </h3>
                         <ul class="flex leading-loose text-grey-70">
                             <li v-for="country in zone.countries">{{ country.name }}/</li>
                         </ul>
@@ -74,7 +79,7 @@
                 @cancel="confirmDeletion = false"
             ></confirmation-modal>
 
-            <create-stack
+            <form-stack
                 v-if="showCreateShippingZoneStack"
                 :action="shippingZoneRoute"
                 :title="shippingZoneCreateTitle"
@@ -83,9 +88,9 @@
                 :values="shippingZoneUpdatedValues"
                 @closed="showCreateShippingZoneStack = false"
                 @saved="shippingZoneSaved"
-            ></create-stack>
+            ></form-stack>
 
-            <create-stack
+            <form-stack
                 v-if="showCreateShippingRateStack"
                 :action="shippingRateRoute"
                 :title="shippingRateCreateTitle"
@@ -94,17 +99,17 @@
                 :values="shippingRateUpdatedValues"
                 @closed="showCreateShippingRateStack = false"
                 @saved="shippingRateSaved"
-            ></create-stack>
+            ></form-stack>
         </div>
     </stack>
 </template>
 
 <script>
     import CreateButton from "../../partials/CreateButton";
-    import CreateStack from "./../stacks/CreateStack"
+    import FormStack from "../stacks/Form"
     import axios from "axios";
     export default {
-        components: { CreateButton, CreateStack },
+        components: { CreateButton, FormStack },
 
         props: {
             slug: {

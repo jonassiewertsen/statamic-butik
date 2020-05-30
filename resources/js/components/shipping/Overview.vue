@@ -12,7 +12,7 @@
             @clicked="showCreateShippingProfileStack = true"
         ></create-button>
 
-        <create-stack narrow
+        <form-stack narrow
             v-if="showCreateShippingProfileStack"
             :action="shippingProfileRoute"
             :title="shippingProfileCreateTitle"
@@ -21,7 +21,7 @@
             :values="shippingProfileValues"
             @closed="showCreateShippingProfileStack = false"
             @saved="shippingProfileSaved"
-        ></create-stack>
+        ></form-stack>
 
         <manage-stack
             v-if="showShippingProfileManageStack"
@@ -48,7 +48,7 @@
 
 <script>
     import axios from 'axios'
-    import CreateStack from "./../stacks/CreateStack"
+    import FormStack from "../stacks/Form"
     import ProfileCard from "./ProfileCard"
     import ManageStack from "./ManageStack";
     import CreateButton from "../../partials/CreateButton";
@@ -76,7 +76,7 @@
 
         components: {
             CreateButton,
-            CreateStack,
+            FormStack,
             ManageStack,
             ProfileCard,
         },
