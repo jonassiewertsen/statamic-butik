@@ -20,7 +20,7 @@
                     <section>
                         <h3 class="block text-2xl">
                             {{ zone.title }}
-                            <button class="align-bottom hover:text-blue inline-flex ml-1 text-grey-40">
+                            <button @click="showShippingZoneManageStack = zone" class="align-bottom hover:text-blue inline-flex ml-1 text-grey-40">
                                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path></svg>
                             </button>
                         </h3>
@@ -108,16 +108,25 @@
                 @closed="showCreateShippingRateStack = false"
                 @saved="shippingRateSaved"
             ></form-stack>
+
+            <manage-zone-stack
+                v-if="showShippingZoneManageStack !== false"
+                :zone="showShippingZoneManageStack"
+                :route="shippingZoneRoute"
+                @closed="closeShippingZoneManageStack()"
+            ></manage-zone-stack>
         </div>
     </stack>
 </template>
 
 <script>
+    import ManageZoneStack from "./ManageZoneStack";
     import CreateButton from "../../partials/CreateButton";
     import FormStack from "../stacks/Form"
     import axios from "axios";
+
     export default {
-        components: { CreateButton, FormStack },
+        components: { ManageZoneStack, CreateButton, FormStack },
 
         props: {
             slug: {
@@ -174,6 +183,7 @@
             return {
                 showCreateShippingZoneStack: false,
                 showCreateShippingRateStack: null,
+                showShippingZoneManageStack: false,
                 shippingZoneUpdatedValues: [],
                 shippingRateUpdatedValues: [],
                 confirmProfileDeletion: false,
@@ -245,6 +255,11 @@
             openCreateShippingRateStack(id) {
                 this.shippingRateUpdatedValues.shipping_zone_id = id
                 this.showCreateShippingRateStack = id;
+            },
+
+            closeShippingZoneManageStack() {
+                this.refresh()
+                this.showShippingZoneManageStack = false
             }
         }
     }

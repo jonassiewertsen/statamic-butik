@@ -24,7 +24,7 @@
         ></form-stack>
 
         <manage-profile-stack
-            v-if="showShippingProfileManageStack"
+            v-if="showShippingProfileManageStack !== false"
             :slug="showShippingProfileManageStack"
             @closed="closeShippingProfileManageStack"
 
@@ -84,7 +84,7 @@
         data() {
             return {
                 showCreateShippingProfileStack: false,
-                showShippingProfileManageStack: null,
+                showShippingProfileManageStack: false,
                 shippingProfiles: [],
             }
         },
@@ -117,7 +117,7 @@
             },
 
             closeShippingProfileManageStack() {
-                this.showShippingProfileManageStack = null
+                this.showShippingProfileManageStack = false
                 this.refresh()
             },
 
