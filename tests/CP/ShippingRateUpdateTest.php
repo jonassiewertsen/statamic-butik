@@ -13,13 +13,6 @@ class ShippingRateUpdateTest extends TestCase
         $this->signInAdmin();
     }
 
-//    /** @test */
-//    public function the_update_form_will_be_displayed()
-//    {
-//        $this->get(route('statamic.cp.butik.shippings.create'))
-//            ->assertOK();
-//    }
-
     /** @test */
     public function the_title_can_be_updated()
     {
@@ -45,15 +38,6 @@ class ShippingRateUpdateTest extends TestCase
         $shippingRate->minimum = 99999;
         $this->updateShippingRate($shippingRate)->assertSessionHasNoErrors();
         $this->assertDatabaseHas('butik_shipping_rates', ['minimum' => '99999']);
-    }
-
-    /** @test */
-    public function the_maximum_can_be_updated()
-    {
-        $shippingRate = create(ShippingRate::class)->first();
-        $shippingRate->maximum = 99999;
-        $this->updateShippingRate($shippingRate)->assertSessionHasNoErrors();
-        $this->assertDatabaseHas('butik_shipping_rates', ['maximum' => '99999']);
     }
 
     private function updateShippingRate($shippingRate) {

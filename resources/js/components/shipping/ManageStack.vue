@@ -28,15 +28,15 @@
                 <div class="max-w-md mt-4 ml-5 -pl-1">
                     <table v-if="zone.rates.length > 0" class="w-full leading-loose text-grey-70">
                         <tr class="text-left border-b-2 text-grey-80">
-                            <th class="w-5/12 font-medium py-2 pl-1">Rate name</th>
-                            <th class="w-4/12 font-medium py-2">Conditions</th>
-                            <th class="w-2/12 font-medium py-2">Price</th>
-                            <th class="w-1/12 font-medium py-2"></th>
+                            <th class="font-medium py-2 pl-1">Rate name</th>
+                            <th class="font-medium py-2">Minimum amount</th>
+                            <th class="font-medium py-2">Price</th>
+                            <th class="font-medium py-2"></th>
                         </tr>
                         <tr v-for="rate in zone.rates" class="border-b hover:bg-grey-10">
                             <td class="py-2 pl-1">{{ rate.title }}</td>
-                            <td class="py-2">{{ (rate.minimum / 100).toFixed(2)  }} - {{ (rate.maximum / 100).toFixed(2) }}</td>
-                            <td class="py-2">{{ (rate.price / 100).toFixed(2) }}</td>
+                            <td class="py-2">{{ rate.minimum }}</td>
+                            <td class="py-2">{{ rate.price }}</td>
                             <td class="text-right hover:text-grey-80 pr-1">
                                 <dropdown-list class="flex justify-end">
                                     <dropdown-item

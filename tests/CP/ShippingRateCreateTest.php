@@ -94,38 +94,6 @@ class ShippingRateCreateTestCreateTest extends TestCase
             ->assertSessionHasErrors('minimum');
     }
 
-    /** @test */
-    public function maximum_is_required()
-    {
-        $shippingRate = raw(ShippingRate::class, ['maximum' => null]);
-        $this->post(route('statamic.cp.butik.shipping-rates.store'), $shippingRate)
-            ->assertSessionHasErrors('maximum');
-    }
-
-    /** @test */
-    public function maximum_must_be_numeric()
-    {
-        $shippingRate = raw(ShippingRate::class, ['maximum' => 'three']);
-        $this->post(route('statamic.cp.butik.shipping-rates.store'), $shippingRate)
-            ->assertSessionHasErrors('maximum');
-    }
-
-    /** @test */
-    public function maximum_can_be_zero()
-    {
-        $shippingRate = raw(ShippingRate::class, ['maximum' => 0]);
-        $this->post(route('statamic.cp.butik.shipping-rates.store'), $shippingRate)
-            ->assertSessionHasNoErrors();
-    }
-
-    /** @test */
-    public function maximum_cant_be_negative()
-    {
-        $shippingRate = raw(ShippingRate::class, ['maximum' => -1]);
-        $this->post(route('statamic.cp.butik.shipping-rates.store'), $shippingRate)
-            ->assertSessionHasErrors('maximum');
-    }
-
     // TODO: Add ShippingRate type. At this moment we do only support rates with a price type
 
     /** @test */

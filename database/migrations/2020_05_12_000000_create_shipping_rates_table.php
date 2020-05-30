@@ -14,7 +14,6 @@ class CreateShippingRatesTable extends Migration
             $table->string('title');
             $table->integer('price');
             $table->integer('minimum');
-            $table->integer('maximum');
             $table->string('type')->default('price');
 
             $table->timestamps();
