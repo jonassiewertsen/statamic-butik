@@ -8,7 +8,9 @@
             </button>
         </header>
 
-        <p v-if="slug === 'general'" class="text-grey-70 mb-2">Your starting point for shipping rates.</p>
+        <p v-if="isDefault(slug)" class="text-grey-70 mb-2">
+            Your starting point for shipping rates.
+        </p>
 
         <h3 class="mb-1 font-bold">Rates for</h3>
 
@@ -45,6 +47,10 @@
         methods: {
             manage(slug) {
                 this.$emit('manage', slug)
+            },
+
+            isDefault(slug) {
+                return slug === 'default'
             }
         }
     }
