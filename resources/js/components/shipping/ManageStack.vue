@@ -38,9 +38,12 @@
                             <td class="py-2">{{ (rate.minimum / 100).toFixed(2)  }} - {{ (rate.maximum / 100).toFixed(2) }}</td>
                             <td class="py-2">{{ (rate.price / 100).toFixed(2) }}</td>
                             <td class="text-right hover:text-grey-80 pr-1">
-                                <button>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-                                </button>
+                                <dropdown-list class="flex justify-end">
+                                    <dropdown-item
+                                        :text="__('Delete')"
+                                        class="warning"
+                                        @click="deleteShippingRate(rate.id)" />
+                                </dropdown-list>
                             </td>
                         </tr>
                     </table>
@@ -51,7 +54,7 @@
                     <create-button
                         :label="'Add rate'"
                         :classes="'bg-grey-20 mt-2 mr-auto'"
-                        @clicked=""
+                        @clicked="openCreateShippingRateStack(zone.id)"
                     ></create-button>
 
                 </div>
@@ -72,14 +75,25 @@
             ></confirmation-modal>
 
             <create-stack
-                    v-if="showCreateShippingZoneStack"
-                    :action="shippingZoneRoute"
-                    :title="shippingZoneCreateTitle"
-                    :blueprint="shippingZoneBlueprint"
-                    :meta="shippingZoneMeta"
-                    :values="shippingZoneUpdatedValues"
-                    @closed="showCreateShippingZoneStack = false"
-                    @saved="shippingZoneSaved"
+                v-if="showCreateShippingZoneStack"
+                :action="shippingZoneRoute"
+                :title="shippingZoneCreateTitle"
+                :blueprint="shippingZoneBlueprint"
+                :meta="shippingZoneMeta"
+                :values="shippingZoneUpdatedValues"
+                @closed="showCreateShippingZoneStack = false"
+                @saved="shippingZoneSaved"
+            ></create-stack>
+
+            <create-stack
+                v-if="showCreateShippingRateStack"
+                :action="shippingRateRoute"
+                :title="shippingRateCreateTitle"
+                :blueprint="shippingRateBlueprint"
+                :meta="shippingRateMeta"
+                :values="shippingRateUpdatedValues"
+                @closed="showCreateShippingRateStack = false"
+                @saved="shippingRateSaved"
             ></create-stack>
         </div>
     </stack>
@@ -120,13 +134,35 @@
             shippingZoneValues: {
                 type: Array,
                 default: [],
-            }
+            },
+            shippingRateCreateTitle: {
+                type: String,
+                default: '',
+            },
+            shippingRateRoute: {
+                type: String,
+                default: ''
+            },
+            shippingRateBlueprint: {
+                type: Array,
+                default: [],
+            },
+            shippingRateValues: {
+                type: Array,
+                default: [],
+            },
+            shippingRateMeta: {
+                type: Array,
+                default: [],
+            },
         },
 
         data() {
             return {
                 showCreateShippingZoneStack: false,
+                showCreateShippingRateStack: null,
                 shippingZoneUpdatedValues: [],
+                shippingRateUpdatedValues: [],
                 confirmDeletion: false,
                 profile: [],
             }
@@ -135,6 +171,7 @@
         mounted() {
             this.refresh()
             this.shippingZoneUpdatedValues = this.shippingZoneValues
+            this.shippingRateUpdatedValues = this.shippingRateValues
             this.updateShippingZoneSlug()
         },
 
@@ -169,9 +206,30 @@
                 this.refresh()
             },
 
+            shippingRateSaved() {
+                this.showCreateShippingRateStack = false
+                this.refresh()
+            },
+
             deleteShippingProfile() {
                 this.$emit('deleteShippingProfile', this.slug)
                 this.confirmDeletion = false
+            },
+
+            deleteShippingRate(id) {
+                console.log(`${this.shippingRateRoute}/${id}`)
+                axios.delete(`${this.shippingRateRoute}/${id}`)
+                    .then(() => {
+                        this.refresh()
+                    })
+                    .catch(error => {
+                        this.$toast.error(error)
+                    })
+            },
+
+            openCreateShippingRateStack(id) {
+                this.shippingRateUpdatedValues.shipping_zone_id = id
+                this.showCreateShippingRateStack = id;
             }
         }
     }

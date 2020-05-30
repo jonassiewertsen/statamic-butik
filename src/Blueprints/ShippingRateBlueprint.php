@@ -34,7 +34,9 @@ class ShippingRateBlueprint extends Blueprint
                             'handle' => 'minimum',
                             'field'  => [
                                 'type'          => 'integer',
-                                'display'       => __('butik::product.base_price'),
+                                'width'         => '50',
+                                'steps'         => '0.1',
+                                'display'       => __('butik::shipping.minimum'),
                                 'validate'      => 'required|numeric|min:0',
                             ],
                         ],
@@ -42,16 +44,15 @@ class ShippingRateBlueprint extends Blueprint
                             'handle' => 'maximum',
                             'field'  => [
                                 'type'          => 'integer',
-                                'display'       => __('butik::product.base_price'),
+                                'width'         => '50',
+                                'display'       => __('butik::shipping.minimum'),
                                 'validate'      => 'required|numeric|min:0',
                             ],
                         ],
                         [
                             'handle' => 'shipping_zone_id',
                             'field'  => [
-                                'type'         => 'select',
-                                'display'      => __('butik::shipping.singular'),
-                                'options'      => $this->fetchShippingZones(),
+                                'type'         => 'hidden',
                                 'validate'      => 'required|exists:butik_shipping_zones,id',
                             ],
                         ],

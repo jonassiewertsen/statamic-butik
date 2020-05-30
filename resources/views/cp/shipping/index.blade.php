@@ -14,11 +14,18 @@
         :shipping-profile-blueprint='@json($shippingProfileBlueprint)'
         :shipping-profile-values='@json($shippingProfileValues)'
         :shipping-profile-meta='@json($shippingProfileMeta)'
+
         :shipping-zone-route="'{{ cp_route('butik.shipping-zones.store') }}'"
         :shipping-zone-create-title="'{{ __('butik::shipping.create_zone') }}'"
         :shipping-zone-blueprint='@json($shippingZoneBlueprint)'
         :shipping-zone-values='@json($shippingZoneValues)'
         :shipping-zone-meta='@json($shippingZoneMeta)'
+
+        :shipping-rate-route="'{{ cp_route('butik.shipping-rates.store') }}'"
+        :shipping-rate-create-title="'{{ __('butik::shipping.create_rate') }}'"
+        :shipping-rate-blueprint='@json($shippingRateBlueprint)'
+        :shipping-rate-values='@json($shippingRateValues)'
+        :shipping-rate-meta='@json($shippingRateMeta)'
     ></butik-shipping-overview>
 
 @endsection

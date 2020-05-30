@@ -26,18 +26,19 @@ class ShippingProfilesController extends CpController
 
     public function show(ShippingProfile $shippingProfile)
     {
-        $zones = $shippingProfile->zones->map(function($zone) {
+        $zones = $shippingProfile->zones->map(function ($zone) {
             return [
-                'title' => $zone->title,
+                'id'        => $zone->id,
+                'title'     => $zone->title,
                 'countries' => $zone->countries,
-                'rates' => $zone->rates,
+                'rates'     => $zone->rates,
             ];
         });
 
         return [
-            'title'     => $shippingProfile->title,
-            'slug'      => $shippingProfile->slug,
-            'zones'     => $zones,
+            'title' => $shippingProfile->title,
+            'slug'  => $shippingProfile->slug,
+            'zones' => $zones,
         ];
     }
 

@@ -26,14 +26,22 @@
         <manage-stack
             v-if="showShippingProfileManageStack"
             :slug="showShippingProfileManageStack"
+            @closed="closeShippingProfileManageStack"
+
             :shippingProfileRoute="shippingProfileRoute"
+            @deleteShippingProfile="deleteShippingProfile"
+
             :shippingZoneRoute="shippingZoneRoute"
             :shippingZoneCreateTitle="shippingZoneCreateTitle"
             :shippingZoneBlueprint="shippingZoneBlueprint"
             :shippingZoneMeta="shippingZoneMeta"
             :shippingZoneValues="shippingZoneValues"
-            @closed="closeShippingProfileManageStack"
-            @deleteShippingProfile="deleteShippingProfile"
+
+            :shippingRateRoute="shippingRateRoute"
+            :shippingRateCreateTitle="shippingRateCreateTitle"
+            :shippingRateBlueprint="shippingRateBlueprint"
+            :shippingRateMeta="shippingRateMeta"
+            :shippingRateValues="shippingRateValues"
         ></manage-stack>
     </div>
 </template>
@@ -52,11 +60,18 @@
             shippingProfileBlueprint: Array,
             shippingProfileValues: Array,
             shippingProfileMeta: Array,
+
             shippingZoneCreateTitle: String,
             shippingZoneRoute: String,
             shippingZoneBlueprint: Array,
             shippingZoneValues: Array,
             shippingZoneMeta: Array,
+
+            shippingRateCreateTitle: String,
+            shippingRateRoute: String,
+            shippingRateBlueprint: Array,
+            shippingRateValues: Array,
+            shippingRateMeta: Array,
         },
 
         components: {

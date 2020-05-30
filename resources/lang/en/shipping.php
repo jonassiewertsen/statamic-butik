@@ -15,5 +15,8 @@ return [
     'price' => 'Price',
     'zone' => 'Shipping Zone',
 
+    'minimum' => 'Minimum',
+    'maximum' => 'Maximum',
+
     'description' => 'Let your customers know, how it will cost them to ship your items home.',
 ];

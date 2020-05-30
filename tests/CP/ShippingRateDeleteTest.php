@@ -13,7 +13,7 @@ class ShippingRateDeleteTest extends TestCase
         $this->signInAdmin();
 
         $shippingRate = create(ShippingRate::class);
-        $this->assertEquals(1, $shippingRate->count());
+        $this->assertEquals(1, ShippingRate::count());
 
         $this->delete(route('statamic.cp.butik.shipping-rates.destroy', $shippingRate->first()))
             ->assertOk();
