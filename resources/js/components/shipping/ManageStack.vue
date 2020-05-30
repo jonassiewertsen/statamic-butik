@@ -47,7 +47,7 @@
                                     <dropdown-item
                                         :text="__('Delete')"
                                         class="warning"
-                                        @click="deleteShippingRate(rate.id)" />
+                                        @click="confirmRateDeletion = rate.id" />
                                 </dropdown-list>
                             </td>
                         </tr>
@@ -67,16 +67,24 @@
 
             <hr class="mt-6 mb-3">
 
-            <button @click="confirmDeletion = true" class="btn-danger">Delete shipping profile</button>
+            <button @click="confirmProfileDeletion = true" class="btn-danger">Delete shipping profile</button>
 
-            <confirmation-modal
-                danger
-                v-if="confirmDeletion"
-                title="Delete"
+            <confirmation-modal danger
+                v-if="confirmProfileDeletion"
                 buttonText="Delete shipping profile"
+                title="Delete"
                 bodyText="Are you sure you want delete this shipping profile?"
                 @confirm="deleteShippingProfile"
-                @cancel="confirmDeletion = false"
+                @cancel="confirmProfileDeletion = false"
+            ></confirmation-modal>
+
+            <confirmation-modal danger
+                v-if="confirmRateDeletion !== false"
+                buttonText="Delete shipping rate"
+                title="Delete"
+                bodyText="Are you sure you want delete this shipping rate?"
+                @confirm="deleteShippingRate(confirmRateDeletion)"
+                @cancel="confirmRateDeletion = false"
             ></confirmation-modal>
 
             <form-stack
@@ -168,7 +176,8 @@
                 showCreateShippingRateStack: null,
                 shippingZoneUpdatedValues: [],
                 shippingRateUpdatedValues: [],
-                confirmDeletion: false,
+                confirmProfileDeletion: false,
+                confirmRateDeletion: false,
                 profile: [],
             }
         },
@@ -181,6 +190,15 @@
         },
 
         methods: {
+
+            close() {
+                this.$emit('closed', true)
+            },
+
+            saved() {
+                this.$emit('saved', true)
+            },
+
             fetchShippingProfile(slug) {
                 axios.get(`${this.shippingProfileRoute}/${slug}`)
                     .then(response => {
@@ -192,14 +210,6 @@
 
             refresh() {
                 this.fetchShippingProfile(this.slug)
-            },
-
-            close() {
-                this.$emit('closed', true)
-            },
-
-            saved() {
-                this.$emit('saved', true)
             },
 
             updateShippingZoneSlug() {
@@ -218,14 +228,14 @@
 
             deleteShippingProfile() {
                 this.$emit('deleteShippingProfile', this.slug)
-                this.confirmDeletion = false
+                this.confirmProfileDeletion = false
             },
 
             deleteShippingRate(id) {
-                console.log(`${this.shippingRateRoute}/${id}`)
                 axios.delete(`${this.shippingRateRoute}/${id}`)
                     .then(() => {
                         this.refresh()
+                        this.confirmRateDeletion = false
                     })
                     .catch(error => {
                         this.$toast.error(error)
