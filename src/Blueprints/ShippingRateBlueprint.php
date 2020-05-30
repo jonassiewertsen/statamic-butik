@@ -23,20 +23,20 @@ class ShippingRateBlueprint extends Blueprint
                             ],
                         ],
                         [
-                            'handle' => 'price',
-                            'field'  => [
-                                'type'          => 'money',
-                                'display'       => __('butik::product.base_price'),
-                                'validate'      => 'required|numeric|min:0',
-                            ],
-                        ],
-                        [
                             'handle' => 'minimum',
                             'field'  => [
                                 'type'          => 'integer',
                                 'default'       => 0,
-                                'display'       => __('butik::shipping.from'),
-                                'instructions'  => __('butik::shipping.from_instructions'),
+                                'display'       => __('butik::shipping.minimum'),
+                                'instructions'  => __('butik::shipping.minimum_instructions'),
+                                'validate'      => 'required|numeric|min:0',
+                            ],
+                        ],
+                        [
+                            'handle' => 'price',
+                            'field'  => [
+                                'type'          => 'money',
+                                'display'       => __('butik::product.base_price'),
                                 'validate'      => 'required|numeric|min:0',
                             ],
                         ],

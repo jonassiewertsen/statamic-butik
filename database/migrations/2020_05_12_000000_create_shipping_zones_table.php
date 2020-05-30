@@ -11,6 +11,7 @@ class CreateShippingZonesTable extends Migration
         Schema::create('butik_shipping_zones', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
+            $table->string('type')->default('price');
             $table->string('shipping_profile_slug')->nullable()->index();
 
             $table->timestamps();
