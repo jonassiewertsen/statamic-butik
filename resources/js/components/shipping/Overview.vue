@@ -23,7 +23,7 @@
             @saved="shippingProfileSaved"
         ></form-stack>
 
-        <manage-stack
+        <manage-profile-stack
             v-if="showShippingProfileManageStack"
             :slug="showShippingProfileManageStack"
             @closed="closeShippingProfileManageStack"
@@ -42,7 +42,7 @@
             :shippingRateBlueprint="shippingRateBlueprint"
             :shippingRateMeta="shippingRateMeta"
             :shippingRateValues="shippingRateValues"
-        ></manage-stack>
+        ></manage-profile-stack>
     </div>
 </template>
 
@@ -50,8 +50,8 @@
     import axios from 'axios'
     import FormStack from "../stacks/Form"
     import ProfileCard from "./ProfileCard"
-    import ManageStack from "./ManageStack";
     import CreateButton from "../../partials/CreateButton";
+    import ManageProfileStack from "./ManageProfileStack";
 
     export default {
         props: {
@@ -77,7 +77,7 @@
         components: {
             CreateButton,
             FormStack,
-            ManageStack,
+            ManageProfileStack,
             ProfileCard,
         },
 
