@@ -113,6 +113,9 @@
                 v-if="showShippingZoneManageStack !== false"
                 :zone="showShippingZoneManageStack"
                 :route="shippingZoneRoute"
+                :blueprint="shippingZoneBlueprint"
+                :meta="shippingZoneMeta"
+                :values="shippingZoneUpdatedValues"
                 @closed="closeShippingZoneManageStack()"
             ></manage-zone-stack>
         </div>
