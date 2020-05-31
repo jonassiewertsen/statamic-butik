@@ -19,7 +19,6 @@
                 @saved="close"
             ></publish-form>
 
-
             <hr class="mt-6 mb-3">
 
             <button @click="confirmZoneDeletion = true" class="btn-danger">Delete shipping zone</button>
