@@ -45,9 +45,12 @@
                             <td class="text-right hover:text-grey-80 pr-1">
                                 <dropdown-list class="flex justify-end">
                                     <dropdown-item
-                                        :text="__('Delete')"
-                                        class="warning"
-                                        @click="confirmRateDeletion = rate.id" />
+                                        :text="__('Edit')"
+                                        @click="editShippingRate(rate)" />
+                                    <dropdown-item
+                                            :text="__('Delete')"
+                                            class="warning"
+                                            @click="confirmRateDeletion = rate.id" />
                                 </dropdown-list>
                             </td>
                         </tr>
@@ -118,18 +121,31 @@
                 :values="shippingZoneUpdatedValues"
                 @closed="closeShippingZoneManageStack()"
             ></manage-zone-stack>
+
+            <form-stack
+                v-if="showUpdateShippingRateStack !== false"
+                :action="shippingRateUpdateRoute"
+                :method="'patch'"
+                :title="'Update shipping rate'"
+                :blueprint="shippingRateBlueprint"
+                :meta="shippingRateMeta"
+                :values="showUpdateShippingRateStack"
+                @closed="showUpdateShippingRateStack = false"
+                @saved="closeShippingRateUpdateStack()"
+            ></form-stack>
         </div>
     </stack>
 </template>
 
 <script>
     import ManageZoneStack from "./ManageZoneStack";
+    import UpdateRateStack from "./UpdateRate";
     import CreateButton from "../../partials/CreateButton";
     import FormStack from "../stacks/Form"
     import axios from "axios";
 
     export default {
-        components: { ManageZoneStack, CreateButton, FormStack },
+        components: { ManageZoneStack, UpdateRateStack, CreateButton, FormStack },
 
         props: {
             slug: {
@@ -186,9 +202,11 @@
             return {
                 showCreateShippingZoneStack: false,
                 showCreateShippingRateStack: null,
+                showUpdateShippingRateStack: false,
                 showShippingZoneManageStack: false,
                 shippingZoneUpdatedValues: [],
                 shippingRateUpdatedValues: [],
+                shippingRateUpdateRoute: '',
                 confirmProfileDeletion: false,
                 confirmRateDeletion: false,
                 profile: [],
@@ -244,6 +262,11 @@
                 this.confirmProfileDeletion = false
             },
 
+            editShippingRate(rate) {
+                this.shippingRateUpdateRoute = `${this.shippingRateRoute}/${rate.id}`
+                this.showUpdateShippingRateStack = rate
+            },
+
             deleteShippingRate(id) {
                 axios.delete(`${this.shippingRateRoute}/${id}`)
                     .then(() => {
@@ -263,6 +286,11 @@
             closeShippingZoneManageStack() {
                 this.refresh()
                 this.showShippingZoneManageStack = false
+            },
+
+            closeShippingRateUpdateStack() {
+                this.refresh()
+                this.showUpdateShippingRateStack = false
             }
         }
     }

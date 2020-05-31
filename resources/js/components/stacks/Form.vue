@@ -10,6 +10,7 @@
                 <publish-form
                     :title="title"
                     :action="action"
+                    :method="method"
                     :blueprint="blueprint"
                     :meta="meta"
                     :values="values"
@@ -26,6 +27,7 @@
             blueprint: Array,
             meta: Array,
             values: Array,
+            method: { default: 'post' },
             title: String,
             action: String,
             narrow: Boolean,
