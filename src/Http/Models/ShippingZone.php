@@ -60,6 +60,7 @@ class ShippingZone extends ButikModel
      */
     public function rates()
     {
-        return $this->hasMany(ShippingRate::class);
+        return $this->hasMany(ShippingRate::class)
+                    ->orderBy('minimum');
     }
 }
