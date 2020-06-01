@@ -139,13 +139,12 @@
 
 <script>
     import ManageZoneStack from "./ManageZoneStack";
-    import UpdateRateStack from "./UpdateRate";
     import CreateButton from "../../partials/CreateButton";
     import FormStack from "../stacks/Form"
     import axios from "axios";
 
     export default {
-        components: { ManageZoneStack, UpdateRateStack, CreateButton, FormStack },
+        components: { ManageZoneStack, CreateButton, FormStack },
 
         props: {
             slug: {
