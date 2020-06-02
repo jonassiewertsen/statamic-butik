@@ -38,6 +38,7 @@ class CountryBlueprint extends Blueprint
                             'handle' => 'slug',
                             'field'  => [
                                 'type'      => 'slug',
+                                'from'      => 'name',
                                 'display'   => __('butik::general.slug'),
                                 'validate'  => ['required', $this->countryUniqueRule()],
                                 'read_only' => $this->slugReadOnly(),
