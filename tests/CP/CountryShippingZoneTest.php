@@ -3,8 +3,6 @@
 namespace Tests\CP;
 
 use Jonassiewertsen\StatamicButik\Http\Models\Country;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 

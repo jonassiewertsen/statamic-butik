@@ -38,9 +38,9 @@ class Country extends ButikModel
     public function attachableTo(ShippingProfile $shippingProfile): bool {
         foreach ($shippingProfile->zones as $zone) {
             if ($zone->countries->contains('slug', $this->slug)) {
-                return false; // Ups. This country already attached to this shipping profile
+                return false; // Ups. This country is already attached to this shipping profile
             }
         }
-        return true; // Not attached to this shipping profile, so it could be.
+        return true; // Not attached to this shipping profile, so you can attach it if you want.
     }
 }
