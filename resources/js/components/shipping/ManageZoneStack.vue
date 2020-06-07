@@ -19,6 +19,21 @@
                 @saved="close"
             ></publish-form>
 
+            <h1 class="mb-3 mt-4">Countries</h1>
+
+            <section class="card">
+                <table class="data-table">
+                    <tbody>
+                        <tr v-for="country in countries">
+                            <th class="pl-2 py-1 w-1/4">{{ country.name }}</th>
+                            <td>
+                                <toggle-input @input="update(country)" v-model="country.current_zone" :read-only="! country.can_be_attached && ! country.current_zone"></toggle-input>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
             <hr class="mt-6 mb-3">
 
             <button @click="confirmZoneDeletion = true" class="btn-danger">Delete shipping zone</button>
@@ -63,17 +78,24 @@
             values: {
                 type: Array,
                 default: [],
+            },
+            countryShippingZoneRoute: {
+                type: String,
+                default: null,
             }
         },
 
         data() {
             return {
                 confirmZoneDeletion: false,
+                countries: [],
+                test: true,
             }
         },
 
         mounted() {
             this.values.title = this.zone.title
+            this.fetchCountries()
         },
 
         methods: {
@@ -86,10 +108,12 @@
                 this.$emit('saved', true)
             },
 
-            updateShippingZone() {
-                axios.delete(`${this.route}/${this.zone.id}`)
-                    .then(() => {
-                        this.close()
+            fetchCountries() {
+                let route = this.countryShippingZoneRoute.replace('xxx', this.zone.id)
+
+                axios.get(route)
+                    .then((response) => {
+                        this.countries = response.data
                     })
                     .catch(error => {
                         this.$toast.error(error)
@@ -105,6 +129,30 @@
                         this.$toast.error(error)
                     })
             },
+
+            update(country) {
+                if (country.current_zone) {
+                    let route = this.countryShippingZoneRoute.replace('xxx', `${this.zone.id}/add/${country.slug}`)
+
+                    axios.post(route)
+                        .then(() => {
+                            this.$toast.success(__('Saved'))
+                        })
+                        .catch(error => {
+                            this.$toast.error(error)
+                        })
+                } else {
+                    let route = this.countryShippingZoneRoute.replace('xxx', `${this.zone.id}/remove/${country.slug}`)
+
+                    axios.delete(route)
+                        .then(() => {
+                            this.$toast.success(__('Removed'))
+                        })
+                        .catch(error => {
+                            this.$toast.error(error)
+                        })
+                }
+            }
         }
     }
 </script>

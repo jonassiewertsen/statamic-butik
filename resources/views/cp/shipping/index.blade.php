@@ -26,6 +26,8 @@
         :shipping-rate-blueprint='@json($shippingRateBlueprint)'
         :shipping-rate-values='@json($shippingRateValues)'
         :shipping-rate-meta='@json($shippingRateMeta)'
+
+        :country-shipping-zone-route="'{{ cp_route('butik.country-shipping-zone.index', 'xxx') }}'"
     ></butik-shipping-overview>
 
 @endsection

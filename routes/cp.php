@@ -46,5 +46,11 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\CP')
 
         Route::get('country-shipping-zone/{shippingZone}', 'CountryShippingZoneController@index')
             ->name('country-shipping-zone.index');
+
+        Route::post('country-shipping-zone/{shippingZone}/add/{country}', 'CountryShippingZoneController@store')
+            ->name('country-shipping-zone.store');
+
+        Route::delete('country-shipping-zone/{shippingZone}/remove/{country}', 'CountryShippingZoneController@destroy')
+            ->name('country-shipping-zone.destroy');
     });
 });

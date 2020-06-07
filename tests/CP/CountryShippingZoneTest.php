@@ -61,4 +61,29 @@ class CountryShippingZoneTest extends TestCase
                 'can_be_attached' => true,
             ]);
     }
+
+    /** @test */
+    public function a_country_can_be_added_to_a_shipping_zone()
+    {
+        $country = Country::first();
+        $this->shippingZone->removeCountry($country);
+
+        $this->assertCount(0, $this->shippingZone->fresh()->countries);
+
+        $this->post(cp_route('butik.country-shipping-zone.store', [$this->shippingZone, $country]))->assertOk();
+
+        $this->assertCount(1, $this->shippingZone->fresh()->countries);
+    }
+
+    /** @test */
+    public function a_country_can_be_removed_from_a_shipping_zone()
+    {
+        $country = Country::first();
+
+        $this->assertCount(1, $this->shippingZone->fresh()->countries);
+
+        $this->delete(cp_route('butik.country-shipping-zone.destroy', [$this->shippingZone, $country]))->assertOk();
+
+        $this->assertCount(0, $this->shippingZone->fresh()->countries);
+    }
 }

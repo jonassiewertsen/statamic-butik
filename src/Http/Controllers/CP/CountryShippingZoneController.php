@@ -22,4 +22,14 @@ class CountryShippingZoneController extends CpController
             ];
         });
     }
+
+    public function store(ShippingZone $shippingZone, Country $country)
+    {
+        $shippingZone->addCountry($country);
+    }
+
+    public function destroy(ShippingZone $shippingZone, Country $country)
+    {
+        $shippingZone->removeCountry($country);
+    }
 }

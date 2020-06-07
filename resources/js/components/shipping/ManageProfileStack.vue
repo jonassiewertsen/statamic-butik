@@ -119,6 +119,7 @@
                 :blueprint="shippingZoneBlueprint"
                 :meta="shippingZoneMeta"
                 :values="shippingZoneUpdatedValues"
+                :countryShippingZoneRoute="countryShippingZoneRoute"
                 @closed="closeShippingZoneManageStack()"
             ></manage-zone-stack>
 
@@ -148,6 +149,10 @@
 
         props: {
             slug: {
+                type: String,
+                default: null,
+            },
+            countryShippingZoneRoute: {
                 type: String,
                 default: null,
             },
