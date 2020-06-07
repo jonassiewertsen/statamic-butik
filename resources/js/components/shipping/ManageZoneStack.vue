@@ -108,10 +108,12 @@
                 this.$emit('saved', true)
             },
 
-            fetchCountries() {
-                let route = this.countryShippingZoneRoute.replace('xxx', this.zone.id)
+            createRoute(appendix) {
+                return this.countryShippingZoneRoute.replace('xxx', appendix)
+            },
 
-                axios.get(route)
+            fetchCountries() {
+                axios.get(this.createRoute(this.zone.id))
                     .then((response) => {
                         this.countries = response.data
                     })
@@ -132,26 +134,35 @@
 
             update(country) {
                 if (country.current_zone) {
-                    let route = this.countryShippingZoneRoute.replace('xxx', `${this.zone.id}/add/${country.slug}`)
-
-                    axios.post(route)
-                        .then(() => {
-                            this.$toast.success(__('Saved'))
-                        })
-                        .catch(error => {
-                            this.$toast.error(error)
-                        })
+                    this.addCountry(country)
                 } else {
-                    let route = this.countryShippingZoneRoute.replace('xxx', `${this.zone.id}/remove/${country.slug}`)
-
-                    axios.delete(route)
-                        .then(() => {
-                            this.$toast.success(__('Removed'))
-                        })
-                        .catch(error => {
-                            this.$toast.error(error)
-                        })
+                    this.removeCountry(country)
                 }
+            },
+
+            addCountry(country) {
+                let route = this.createRoute(`${this.zone.id}/add/${country.slug}`)
+
+                axios.post(route)
+                    .then(() => {
+                        this.$toast.success(__('Saved'))
+                    })
+                    .catch(error => {
+                        this.$toast.error(error)
+                    })
+            },
+
+            removeCountry(country) {
+                let route = this.createRoute(`${this.zone.id}/remove/${country.slug}`)
+
+                axios.delete(route)
+                    .then(() => {
+                        this.$toast.success(__('Removed'))
+                    })
+                    .catch(error => {
+                        this.$toast.error(error)
+                    })
+            }
             }
         }
     }
