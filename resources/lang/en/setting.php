@@ -5,5 +5,5 @@ return [
     /** General */
     'singular' => 'Setting',
     'plural'   => 'Settings',
-    'butik'   => 'Butik Settings',
+    'butik'    => 'Butik Settings',
 ];
