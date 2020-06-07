@@ -163,7 +163,6 @@
                         this.$toast.error(error)
                     })
             }
-            }
         }
     }
 </script>
