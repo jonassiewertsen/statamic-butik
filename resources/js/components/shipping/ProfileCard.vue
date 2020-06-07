@@ -22,7 +22,7 @@
         </ul>
         <span v-if="zones.length === 0" class="flex items-center text-xs text-grey-70">
                 No Shipping Zones created.
-                <a class="ml-sm text-blue hover:underline" href="#">Create</a>
+                <button class="ml-sm text-blue hover:underline" @click="manage(slug)">Create</button>
             </span>
     </div>
 </template>

@@ -25,7 +25,7 @@
                             </button>
                         </h3>
                         <ul class="flex leading-loose text-grey-70">
-                            <li v-for="country in zone.countries">{{ country.name }}/</li>
+                            <li class="mr-1" v-for="country in zone.countries">{{ country.name }}</li>
                         </ul>
                     </section>
                 </header>
@@ -48,9 +48,9 @@
                                         :text="__('Edit')"
                                         @click="editShippingRate(rate)" />
                                     <dropdown-item
-                                            :text="__('Delete')"
-                                            class="warning"
-                                            @click="confirmRateDeletion = rate.id" />
+                                        :text="__('Delete')"
+                                        class="warning"
+                                        @click="confirmRateDeletion = rate.id" />
                                 </dropdown-list>
                             </td>
                         </tr>
