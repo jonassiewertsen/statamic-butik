@@ -40,13 +40,12 @@ class ShippingProfileApiTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $profile = ShippingProfile::first();
-        $zone    = create(ShippingZone::class, ['shipping_profile_slug' => $profile->slug])->first();
-        $rate    = create(ShippingRate::class, ['shipping_zone_id' => 1])->first();
+        create(ShippingZone::class, ['shipping_profile_slug' => $profile->slug])->first();
+        create(ShippingRate::class, ['shipping_zone_id' => 1])->first();
 
         $shippingProfile = [
             'title'     => $profile->title,
             'slug'      => $profile->slug,
-            'countries' => $profile->countries,
         ];
 
         $this->get(route('statamic.cp.butik.shipping-profiles.show', [
