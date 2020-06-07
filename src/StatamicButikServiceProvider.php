@@ -217,6 +217,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
             // Settings
             $nav->create(__('butik::setting.plural'))
                 ->section('Butik')
+                ->route('butik.settings.index')
                 ->icon('settings-slider')
                 ->children([
                     $nav->item(__('butik::country.plural'))->route('butik.countries.index')->can('view countries'),
