@@ -11,7 +11,7 @@ $factory->define(Product::class, function (Faker $faker) {
         'title'                 => $faker->name,
         'slug'                  => $faker->unique()->slug,
         'description'           => $faker->paragraph(3),
-        'base_price'            => $faker->numberBetween(100, 20000),
+        'price'                 => $faker->numberBetween(100, 20000),
         'tax_id'                => create(Tax::class)->first(),
         'shipping_profile_slug' => create(ShippingProfile::class)->first(),
         'stock'                 => $faker->numberBetween(2, 100),

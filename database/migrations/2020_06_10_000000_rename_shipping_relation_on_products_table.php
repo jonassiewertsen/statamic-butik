@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RenameShippingRelationOnProductTable extends Migration
+class RenameShippingRelationOnProductsTable extends Migration
 {
     public function up()
     {

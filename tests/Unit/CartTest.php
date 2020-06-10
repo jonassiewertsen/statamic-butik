@@ -141,6 +141,8 @@ class CartTest extends TestCase
         $item1 = Cart::get()->first();
         $item2 = Cart::get()->last();
 
+        dd($item1->totalShipping());
+
         $caluclatedShipping = $this->makeAmountSaveable($item1->totalShipping()) + $this->makeAmountSaveable($item2->totalShipping());
         $caluclatedShipping = $this->makeAmountHuman($caluclatedShipping);
 
