@@ -11,6 +11,8 @@ class Settings extends ButikModel
 
     protected $guarded = [];
 
+    // TODO: Remove the settings table
+
     public function getRouteKeyName()
     {
         return 'key';
