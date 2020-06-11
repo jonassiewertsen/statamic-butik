@@ -1,10 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Helper;
+namespace Jonassiewertsen\StatamicButik\Checkout;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
-use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 
@@ -16,6 +15,8 @@ class Cart
     private static $totalPrice;
     private static $totalShipping;
     private static $totalItems;
+
+    // TODO: Move this class into the checkout folder
 
     /**
      * A product can be added to the cart

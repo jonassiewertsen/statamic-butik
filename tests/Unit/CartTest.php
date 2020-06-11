@@ -3,7 +3,7 @@
 namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
 use Illuminate\Support\Facades\Session;
-use Jonassiewertsen\StatamicButik\Helper\Cart;
+use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;

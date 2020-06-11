@@ -5,7 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
-use Jonassiewertsen\StatamicButik\Helper\Cart;
+use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 
 class CheckoutController extends Checkout
