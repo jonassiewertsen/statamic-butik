@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\CP;
+namespace Jonassiewertsen\StatamicButik\Tests\CP;
 
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;

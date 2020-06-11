@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\CP;
+namespace Jonassiewertsen\StatamicButik\Tests\CP;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;

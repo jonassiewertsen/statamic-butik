@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;

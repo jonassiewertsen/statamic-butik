@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Shop;
+namespace Jonassiewertsen\StatamicButik\Tests\Shop;
 
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;

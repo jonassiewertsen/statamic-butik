@@ -1,9 +1,8 @@
 <?php
 
-namespace Tests\Checkout;
+namespace Jonassiewertsen\StatamicButik\Tests\Checkout;
 
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Str;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Helper\Cart;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;

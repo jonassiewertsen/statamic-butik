@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Helper\Cart;

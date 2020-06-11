@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Checkout;
+namespace Jonassiewertsen\StatamicButik\Tests\Checkout;
 
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
 use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;

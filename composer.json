@@ -49,7 +49,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests"
+            "Jonassiewertsen\\StatamicButik\\Tests\\": "tests"
         },
         "files": [
             "tests/Utilities/functions.php"
