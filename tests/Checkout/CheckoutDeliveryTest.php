@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Shop;
+namespace Tests\Checkout;
 
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
@@ -31,6 +31,8 @@ class CheckoutDeliveryTest extends TestCase
 
     /** @test */
     public function the_product_information_will_be_displayed_without_saved_customer_data() {
+        $this->withoutExceptionHandling();
+
         $this->get(route('butik.checkout.delivery', $this->product))
             ->assertSee('Checkout');
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Shop;
+namespace Tests\Checkout;
 
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
