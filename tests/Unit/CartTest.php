@@ -128,24 +128,4 @@ class CartTest extends TestCase
 
         $this->assertNotNull(Cart::totalItems());
     }
-
-    /** @test */
-    public function the_cart_calculates_total_shipping_expenses()
-    {
-        $product1 = factory(Product::class)->create();
-        $product2 = factory(Product::class)->create();
-
-        Cart::add($product1);
-        Cart::add($product2);
-
-        $item1 = Cart::get()->first();
-        $item2 = Cart::get()->last();
-
-        dd($item1->totalShipping());
-
-        $caluclatedShipping = $this->makeAmountSaveable($item1->totalShipping()) + $this->makeAmountSaveable($item2->totalShipping());
-        $caluclatedShipping = $this->makeAmountHuman($caluclatedShipping);
-
-        $this->assertEquals($caluclatedShipping, Cart::totalShipping());
-    }
 }
