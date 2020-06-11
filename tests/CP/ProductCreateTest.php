@@ -149,9 +149,9 @@ class ProductCreateTest extends TestCase
     /** @test */
     public function base_price_is_required()
     {
-        $product = raw(Product::class, ['base_price' => null]);
+        $product = raw(Product::class, ['price' => null]);
         $this->post(route('statamic.cp.butik.products.store'), $product)
-            ->assertSessionHasErrors('base_price');
+            ->assertSessionHasErrors('price');
     }
 
     /** @test */
