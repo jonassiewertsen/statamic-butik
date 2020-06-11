@@ -6,7 +6,7 @@
     <div class="b-flex b-my-3 b-justify-between b-max-w-sm b-mx-auto">
 {{--        <span>{{ __('butik::payment.shipping') }}</span>--}}
         <span>Shipping</span>
-        <span>{{ currency() }} {{ $total['shipping'] }}</span>
+        <span>{{ currency() }} TOTAL SHIPPING STUFF</span>
     </div>
 
     <hr class="b-border-gray-200 b-my-5">
