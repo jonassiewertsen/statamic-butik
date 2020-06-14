@@ -3,7 +3,7 @@
 namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
-use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
@@ -115,5 +115,13 @@ class ProductTest extends TestCase
         $product = create(Product::class)->first();
 
         $this->assertEquals($product->currency, '€');
+    }
+
+    /** @test */
+    public function it_belongs_to_a_shipping_profile()
+    {
+        $product = create(Product::class)->first();
+
+        $this->assertInstanceOf(ShippingProfile::class, $product->shippingProfile);
     }
 }

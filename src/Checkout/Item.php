@@ -64,15 +64,16 @@ class Item
 
     public function __construct(Product $product)
     {
-        $this->available      = $product->available;
-        $this->id             = $product->slug;
-        $this->name           = $product->title;
-        $this->description    = $this->limitDescription($product->description);
-        $this->taxRate        = $product->tax->percentage;
-        $this->quantity       = 1;
-        $this->availableStock = $product->stock;
-        $this->singlePrice    = $product->price;
-        $this->totalPrice     = $this->totalPrice();
+        $this->available       = $product->available;
+        $this->id              = $product->slug;
+        $this->name            = $product->title;
+        $this->description     = $this->limitDescription($product->description);
+        $this->taxRate         = $product->tax->percentage;
+        $this->quantity        = 1;
+        $this->availableStock  = $product->stock;
+        $this->singlePrice     = $product->price;
+        $this->totalPrice      = $this->totalPrice();
+        $this->shippingProfile = $product->shippingProfile;
     }
 
     public function increase()

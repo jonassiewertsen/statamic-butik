@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
@@ -179,5 +180,18 @@ class ItemTest extends TestCase
         $item->update();
 
         $this->assertEquals(0, $item->getQuantity());
+    }
+
+    /** @test */
+    public function it_has_a_shipping_profile()
+    {
+        $item = new Item($this->product);
+
+        $this->product->update(['available' => false]);
+
+        Cache::flush();
+        $item->update();
+
+        $this->assertEquals(ShippingProfile::first(), $item->shippingProfile);
     }
 }

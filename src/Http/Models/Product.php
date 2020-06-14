@@ -37,13 +37,12 @@ class Product extends ButikModel
         return $this->belongsTo(Tax::class, 'tax_id', 'slug');
     }
 
-    // TODO: Redefine the shipping relation
-    //    /**
-    //     * A Product has a shipping relation
-    //     */
-    //    public function shipping() {
-    //        return $this->belongsTo(Shipping::class, 'shipping_id', 'slug');
-    //    }
+        /**
+         * A Product has a shipping relation
+         */
+        public function shippingProfile() {
+            return $this->belongsTo(ShippingProfile::class, 'shipping_profile_slug', 'slug');
+        }
 
     /**
      * Will return the base price for this item
