@@ -10,11 +10,9 @@ class ShippingByPrice extends ShippingType
 {
     use MoneyTrait;
 
-    public int $totalItemValue;
-
     public ShippingZone $zone;
-
     public ShippingRate $rate;
+    public int $totalItemValue;
 
     public function __construct($profile, $items, $country)
     {
