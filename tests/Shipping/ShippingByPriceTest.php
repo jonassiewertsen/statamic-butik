@@ -2,6 +2,7 @@
 
 namespace Jonassiewertsen\StatamicButik\Tests\Shipping;
 
+use Illuminate\Support\Facades\Config;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Http\Models\Country;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
@@ -12,7 +13,7 @@ use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Shipping\ShippingByPrice;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
-class ShippingByTypeTest extends TestCase
+class ShippingByPriceTest extends TestCase
 {
     use MoneyTrait;
 
@@ -30,6 +31,7 @@ class ShippingByTypeTest extends TestCase
         $this->product3 = create(Product::class)->first();
 
         $this->country = create(Country::class)->first();
+        Config::set('butik.country', Country::first()->name);
 
         create(ShippingZone::class, [
             'shipping_profile_slug' => ShippingProfile::first()->slug,
@@ -40,85 +42,67 @@ class ShippingByTypeTest extends TestCase
         create(ShippingRate::class, [
             'shipping_zone_id' => ShippingZone::first()->id,
             'title'            => 'Standard',
-            'price'            => 600,
             'minimum'          => 0,
+            'price'            => 600,
         ]);
 
         create(ShippingRate::class, [
             'shipping_zone_id' => ShippingZone::first()->id,
             'title'            => 'Free',
-            'price'            => 0,
             'minimum'          => 5000,
+            'price'            => 0,
         ]);
     }
 
     /** @test */
-    public function the_total_item_value_will_only_include_items_from_the_passed_shipping_profile()
+    public function the_correct_total_item_value_will_be_calculated()
     {
         Cart::add($this->product1);
         Cart::add($this->product2);
-        Cart::add($this->product3);
 
-        $shipping = new ShippingByPrice(
-            ShippingProfile::first(),
-            Cart::get(),
-            $this->country
-        );
+        $shipping = new ShippingByPrice(Cart::get(), ShippingZone::first());
         $shipping->calculate();
 
         $total = $this->makeAmountSaveable($this->product1->price) + $this->makeAmountSaveable($this->product2->price);
 
-        $this->assertCount(2, $shipping->items);
         $this->assertEquals($total, $shipping->totalItemValue);
     }
 
-    /** @test */
-    public function the_correct_zone_will_be_detected()
-    {
-        Cart::add($this->product1);
-        Cart::add($this->product2);
-        Cart::add($this->product3);
 
-        $shipping = new ShippingByPrice(
-            ShippingProfile::first(),
-            Cart::get(),
-            $this->country
-        );
-        $shipping->calculate();
-
-        $this->assertEquals(ShippingZone::first()->id, $shipping->zone->id);
-    }
 
     /** @test */
     public function the_standard_shipping_rate_will_be_selected()
     {
-        Cart::add($this->product1);
-        Cart::add($this->product2);
-        Cart::add($this->product3);
+        Cart::add(create(Product::class,
+            ['price' => 49.99]
+        )->first());
 
-        $shipping = new ShippingByPrice(
-            ShippingProfile::first(),
-            Cart::get(),
-            $this->country
-        );
-        $shipping->calculate();
+        $shipping = new ShippingByPrice(Cart::get(), ShippingZone::first());
 
-        $this->assertEquals(ShippingRate::firstWhere('title', 'Standard')->id, $shipping->rate->id);
+        $this->assertEquals(600, $shipping->calculate()->total);
     }
 
     /** @test */
-    public function the_correct_shipping_amount_will_be_calculated()
+    public function the_standard_shipping_rate_wont_be_used_if_the_amount_does_match()
+    {
+        Cart::add(create(Product::class,
+            ['price' => 50]
+        )->first());
+
+        $shipping = new ShippingByPrice(Cart::get(), ShippingZone::first());
+
+        $this->assertEquals(0, $shipping->calculate()->total);
+    }
+
+    /** @test */
+    public function the_free_shipping_amount_will_be_calculated()
     {
         Cart::add($this->product1);
         Cart::add($this->product2);
         Cart::add($this->product3);
 
-        $shipping = new ShippingByPrice(
-            ShippingProfile::first(),
-            Cart::get(),
-            $this->country
-        );
+        $shipping = new ShippingByPrice(Cart::get(), ShippingZone::first());
 
-        $this->assertEquals(600, $shipping->calculate());
+        $this->assertEquals(0, $shipping->calculate()->total);
     }
 }

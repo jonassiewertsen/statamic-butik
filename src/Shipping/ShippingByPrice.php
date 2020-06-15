@@ -14,31 +14,21 @@ class ShippingByPrice extends ShippingType
     public ShippingRate $rate;
     public int $totalItemValue;
 
-    public function __construct($profile, $items, $country)
+    public function __construct($items, $zone)
     {
-        parent::__construct($profile, $items, $country);
+        parent::__construct($items, $zone);
         $this->totalItemValue = 0;
     }
 
-    public function calculate()
+    public function calculate(): ShippingAmount
     {
-        $this->filterItems();
         $this->calculateSummedItemValue();
-        $this->detectShippingZone();
-        $this->detectShippingRate();
+        $this->detectShippingRate($this->zone);
 
-        return $this->shippingCosts();
-    }
-
-    /**
-     * Filter items, so that only items belonging to the selected shipping
-     * profile will be used to calculate the shipping costs.
-     */
-    private function filterItems(): void
-    {
-        $this->items = $this->items->filter(function ($item) {
-            return $item->shippingProfile->slug === $this->profile->slug;
-        });
+        return new ShippingAmount(
+            $this->zone->profile,
+            $this->shippingCosts(),
+        );
     }
 
     /**
@@ -54,29 +44,21 @@ class ShippingByPrice extends ShippingType
     }
 
     /**
-     * The detected shipping zone, belonging to our selected country.
-     */
-    private function detectShippingZone(): void
-    {
-        $this->zone = $this->profile->whereZoneFrom($this->country);
-    }
-
-    /**
      * Which shipping rate is the correct one for our
      * summed total values of all items?
      */
-    private function detectShippingRate(): void
+    protected function detectShippingRate($zone): void
     {
         // As the first step, we will on keep the rates where,
         // where the total item value is bigger or equal
         // as the minimum value of the shipping rate.
-        $rates = $this->zone->rates->filter(function ($zone) {
+        $rates = $zone->rates->filter(function ($zone) {
             return $this->totalItemValue >= $zone->minimum;
         });
 
         // Making sure to select the correct rate, we
         // will sort them and select the first one.
-        $this->rate = $rates->sortBy('minimum')->first();
+        $this->rate = $rates->sortByDesc('minimum')->first();
     }
 
     /**

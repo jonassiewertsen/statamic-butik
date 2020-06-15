@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tests\Unit;
+namespace Jonassiewertsen\StatamicButik\Tests\Shipping;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
@@ -23,9 +23,11 @@ class ShippingTest extends TestCase
         parent::setUp();
 
         $this->product = create(Product::class)->first();
-        $country = create(Country::class);
+        $country = create(Country::class)->first();
         $zone = create(ShippingZone::class)->first();
         $zone->addCountry($country);
+
+        Config::set('butik.country', $country->name);
 
         Cart::add($this->product);
     }
@@ -33,13 +35,10 @@ class ShippingTest extends TestCase
     /** @test */
     public function the_default_country_is_defined_in_the_config_file()
     {
-        $country = Country::first();
-        Config::set('butik.country', $country->name);
-
         $shipping = new Shipping(Cart::get());
-        $shipping->calculate();
+        $shipping->handle();
 
-        $this->assertEquals($shipping->country->name,  $country->name);
+        $this->assertEquals($shipping->country->name, Country::first()->name);
     }
 
     /** @test */
@@ -49,7 +48,7 @@ class ShippingTest extends TestCase
         Config::set('butik.country', Str::lower($country->name));
 
         $shipping = new Shipping(Cart::get());
-        $shipping->calculate();
+        $shipping->handle();
 
         $this->assertEquals($shipping->country->name,  $country->name);
     }
@@ -61,17 +60,14 @@ class ShippingTest extends TestCase
         Config::set('butik.country', 'not existing');
 
         $shipping = new Shipping(Cart::get());
-        $shipping->calculate();
+        $shipping->handle();
     }
 
     /** @test */
     public function a_profile_from_the_item_will_be_collected_inside_the_profile_bag()
     {
-
-        Config::set('butik.country', Country::first()->name);
-
         $shipping = new Shipping(Cart::get());
-        $shipping->calculate();
+        $shipping->handle();
 
         $this->assertCount(1, $shipping->profiles);
         $this->assertEquals(ShippingProfile::first(), $shipping->profiles->first());
@@ -80,13 +76,10 @@ class ShippingTest extends TestCase
     /** @test */
     public function multiple_profiles_will_be_deteced()
     {
-
-        Config::set('butik.country', Country::first()->name);
-
         Cart::add(create(Product::class)->first());
 
         $shipping = new Shipping(Cart::get());
-        $shipping->calculate();
+        $shipping->handle();
 
         $this->assertCount(2, $shipping->profiles);
     }
@@ -94,9 +87,6 @@ class ShippingTest extends TestCase
     /** @test */
     public function the_same_shipping_profile_will_only_be_detected_once()
     {
-
-        Config::set('butik.country', Country::first()->name);
-
         $profile = Cart::get()->first()->shippingProfile;
 
         Cart::add(create(Product::class, [
@@ -104,7 +94,7 @@ class ShippingTest extends TestCase
         ])->first());
 
         $shipping = new Shipping(Cart::get());
-        $shipping->calculate();
+        $shipping->handle();
 
         $this->assertCount(1, $shipping->profiles);
     }

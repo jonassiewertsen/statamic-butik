@@ -15,7 +15,7 @@ class Product extends ButikModel
 
     protected $casts = [
         'available'       => 'boolean',
-        'base_price'      => 'integer',
+        'price'           => 'integer',
         'stock'           => 'integer',
         'description'     => 'array',
         'images'          => 'array',
@@ -37,12 +37,13 @@ class Product extends ButikModel
         return $this->belongsTo(Tax::class, 'tax_id', 'slug');
     }
 
-        /**
-         * A Product has a shipping relation
-         */
-        public function shippingProfile() {
-            return $this->belongsTo(ShippingProfile::class, 'shipping_profile_slug', 'slug');
-        }
+    /**
+     * A Product has a shipping relation
+     */
+    public function shippingProfile()
+    {
+        return $this->belongsTo(ShippingProfile::class, 'shipping_profile_slug', 'slug');
+    }
 
     /**
      * Will return the base price for this item

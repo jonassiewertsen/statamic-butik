@@ -2,7 +2,9 @@
 
 namespace Jonassiewertsen\StatamicButik\Shipping;
 
+
+
 interface ShippingTypeInterface
 {
-    public function calculate();
+    public function calculate(): ShippingAmount;
 }

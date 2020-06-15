@@ -20,7 +20,7 @@ class ShippingProfile extends ButikModel
         return $this->hasMany(ShippingZone::class, 'shipping_profile_slug');
     }
 
-    public function whereZoneFrom(Country $country): ShippingZone
+    public function whereZoneFrom(Country $country): ?ShippingZone
     {
         return $this->zones()
                     ->leftJoin('butik_country_shipping_zone', 'butik_shipping_zones.id', '=', 'butik_country_shipping_zone.shipping_zone_id')
