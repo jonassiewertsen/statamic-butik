@@ -24,7 +24,7 @@ class ShippingProfile extends ButikModel
     {
         return $this->zones()
                     ->leftJoin('butik_country_shipping_zone', 'butik_shipping_zones.id', '=', 'butik_country_shipping_zone.shipping_zone_id')
-                    ->select('id', 'title', 'slug', 'type', 'shipping_zone_id', 'country_slug')
+                    ->select('id', 'title', 'slug', 'type', 'shipping_profile_slug', 'shipping_zone_id', 'country_slug')
                     ->where('country_slug', $country->slug)
                     ->first();
     }

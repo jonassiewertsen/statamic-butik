@@ -27,7 +27,7 @@ class ShippingByPriceTest extends TestCase
         parent::setUp();
 
         $this->product1 = create(Product::class)->first();
-        $this->product2 = create(Product::class, ['shipping_profile_slug' => ShippingProfile::first()->slug,])->first();
+        $this->product2 = create(Product::class, ['shipping_profile_slug' => ShippingProfile::first()->slug])->first();
         $this->product3 = create(Product::class)->first();
 
         $this->country = create(Country::class)->first();
@@ -69,7 +69,6 @@ class ShippingByPriceTest extends TestCase
     }
 
 
-
     /** @test */
     public function the_standard_shipping_rate_will_be_selected()
     {
@@ -104,5 +103,18 @@ class ShippingByPriceTest extends TestCase
         $shipping = new ShippingByPrice(Cart::get(), ShippingZone::first());
 
         $this->assertEquals(0, $shipping->calculate()->total);
+    }
+
+    /** @test */
+    public function the_cart_will_output_the_correct_amount()
+    {
+        Cart::add(create(Product::class, [
+            'shipping_profile_slug' => ShippingProfile::first()->slug,
+            'price'                 => 4,
+        ])->first());
+
+        $shipping = Cart::shipping();
+
+        $this->assertEquals('6,00', $shipping->first()->totalHuman);
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
+use Jonassiewertsen\StatamicButik\Shipping\Shipping;
 
 class Cart
 {
@@ -121,6 +122,13 @@ class Cart
 
     // public static function totalShipping() {}
     // TODO: Start refactoring the shipping calculation here!
+
+    public static function shipping(): Collection {
+        $shipping = new Shipping(Cart::get());
+        $shipping->handle();
+
+        return $shipping->amounts;
+    }
 
     public static function update()
     {

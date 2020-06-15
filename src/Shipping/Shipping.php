@@ -59,8 +59,10 @@ class Shipping
 
             $items = $this->filterItems($profile);
 
+            $shippingType = new ShippingByPrice($items, $zone);
+
             $this->amounts->push(
-                new ShippingByPrice($items, $zone),
+                $shippingType->calculate(),
             );
         }
     }
