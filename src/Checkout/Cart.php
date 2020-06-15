@@ -96,6 +96,9 @@ class Cart
         static::set(static::$cart);
     }
 
+    /**
+     * The total count of items
+     */
     public static function totalItems()
     {
         static::$cart = static::get();
@@ -120,6 +123,10 @@ class Cart
         return static::makeAmountHumanStatic(static::$totalPrice);
     }
 
+    /**
+     * All shipping costs, from all shipping profiles, summed
+     * up to determine the total shipping costs.
+     */
     public static function totalShipping(): string
     {
         static::resetTotalShipping();
@@ -131,6 +138,10 @@ class Cart
         return static::makeAmountHumanStatic(static::$totalShipping);
     }
 
+    /**
+     * All shipping costs are seperated into the original
+     * shipping profiles, where they came from.
+     */
     public static function shipping(): Collection
     {
         $shipping = new Shipping(Cart::get());
@@ -139,6 +150,9 @@ class Cart
         return $shipping->amounts;
     }
 
+    /**
+     * Update the shopping cart
+     */
     public static function update()
     {
         static::$cart = static::get();
