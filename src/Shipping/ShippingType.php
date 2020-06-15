@@ -17,7 +17,7 @@ abstract class ShippingType implements ShippingTypeInterface
 
     public function __construct(Collection $items, ShippingZone $zone)
     {
-        $this->zone = $zone;
+        $this->zone  = $zone;
         $this->items = $items;
     }
 }

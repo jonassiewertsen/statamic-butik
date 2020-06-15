@@ -12,7 +12,7 @@ class ShippingByPrice extends ShippingType
 
     public ShippingZone $zone;
     public ShippingRate $rate;
-    public int $totalItemValue;
+    public int          $totalItemValue;
 
     public function __construct($items, $zone)
     {
@@ -32,18 +32,6 @@ class ShippingByPrice extends ShippingType
     }
 
     /**
-     * We need to calculate the item values, so we can detect the correct
-     * Shipping Rates later. This step is dedicated to the shipping
-     * type calculated via the bag price.
-     */
-    private function calculateSummedItemValue(): void
-    {
-        $this->items->each(function ($item) {
-            $this->totalItemValue += $this->makeAmountSaveable($item->totalPrice());
-        });
-    }
-
-    /**
      * Which shipping rate is the correct one for our
      * summed total values of all items?
      */
@@ -59,6 +47,18 @@ class ShippingByPrice extends ShippingType
         // Making sure to select the correct rate, we
         // will sort them and select the first one.
         $this->rate = $rates->sortByDesc('minimum')->first();
+    }
+
+    /**
+     * We need to calculate the item values, so we can detect the correct
+     * Shipping Rates later. This step is dedicated to the shipping
+     * type calculated via the bag price.
+     */
+    private function calculateSummedItemValue(): void
+    {
+        $this->items->each(function ($item) {
+            $this->totalItemValue += $this->makeAmountSaveable($item->totalPrice());
+        });
     }
 
     /**

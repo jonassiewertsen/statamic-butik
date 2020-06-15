@@ -46,15 +46,7 @@ class Shipping
         $this->detectCountry();
         $this->detectUsedShippingProfiles();
 
-        // does a shipping zone exist for the selected country ?
-
-        /**
-         * calculate prices per profile
-         **/
-
-        $shippingTypes = [
-          'price' => ShippingByPrice::class,
-        ];
+        // TODO: Does a shipping zone exist for the selected country ?
 
         foreach ($this->profiles as $profile) {
             // detect zone
@@ -74,6 +66,9 @@ class Shipping
     }
 
     /**
+     * Which country is selected. It will choose the given country
+     * default to the country defined in the config file.
+     *
      * @throws ButikConfigException
      */
     protected function detectCountry()
@@ -89,6 +84,9 @@ class Shipping
         $this->country = $country;
     }
 
+    /**
+     * Detect and collect profiles, used by the items in the shopping bag.
+     */
     protected function detectUsedShippingProfiles(): void
     {
         $this->items->each(function ($item) {
