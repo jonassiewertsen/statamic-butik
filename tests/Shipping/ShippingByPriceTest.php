@@ -78,7 +78,7 @@ class ShippingByPriceTest extends TestCase
 
         $shipping = new ShippingByPrice(Cart::get(), ShippingZone::first());
 
-        $this->assertEquals(600, $shipping->calculate()->total);
+        $this->assertEquals('6,00', $shipping->calculate()->total);
     }
 
     /** @test */
@@ -90,7 +90,7 @@ class ShippingByPriceTest extends TestCase
 
         $shipping = new ShippingByPrice(Cart::get(), ShippingZone::first());
 
-        $this->assertEquals(0, $shipping->calculate()->total);
+        $this->assertEquals('0,00', $shipping->calculate()->total);
     }
 
     /** @test */
@@ -102,7 +102,7 @@ class ShippingByPriceTest extends TestCase
 
         $shipping = new ShippingByPrice(Cart::get(), ShippingZone::first());
 
-        $this->assertEquals(0, $shipping->calculate()->total);
+        $this->assertEquals('0,00', $shipping->calculate()->total);
     }
 
     /** @test */
@@ -115,11 +115,11 @@ class ShippingByPriceTest extends TestCase
 
         $shipping = Cart::shipping();
 
-        $this->assertEquals('6,00', $shipping->first()->totalHuman);
+        $this->assertEquals('6,00', $shipping->first()->total);
     }
 
     /** @test */
-    public function the_cart_does_have_a_total_shipping_amount()
+    public function the_cart_does_return_the_total_shipping_amount()
     {
         Cart::add(create(Product::class, [
             'shipping_profile_slug' => ShippingProfile::first()->slug,
