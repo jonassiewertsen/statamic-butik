@@ -117,4 +117,17 @@ class ShippingByPriceTest extends TestCase
 
         $this->assertEquals('6,00', $shipping->first()->totalHuman);
     }
+
+    /** @test */
+    public function the_cart_does_have_a_total_shipping_amount()
+    {
+        Cart::add(create(Product::class, [
+            'shipping_profile_slug' => ShippingProfile::first()->slug,
+            'price'                 => 4,
+        ])->first());
+
+        $total = Cart::totalShipping();
+
+        $this->assertEquals('6,00', $total);
+    }
 }

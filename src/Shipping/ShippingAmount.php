@@ -22,13 +22,12 @@ class ShippingAmount
     /**
      * The total amount for all items belonging to the named shipping profile
      */
-    public int    $total;
+    public string    $total;
 
     public function __construct(ShippingProfile $profile, int $total)
     {
         $this->profileTitle = $profile->title;
         $this->profileSlug  = $profile->slug;
-        $this->total        = $total;
-        $this->totalHuman   = $this->makeAmountHuman($total);
+        $this->total        = $this->makeAmountHuman($total);
     }
 }

@@ -120,10 +120,19 @@ class Cart
         return static::makeAmountHumanStatic(static::$totalPrice);
     }
 
-    // public static function totalShipping() {}
-    // TODO: Start refactoring the shipping calculation here!
+    public static function totalShipping(): string
+    {
+        static::resetTotalShipping();
 
-    public static function shipping(): Collection {
+        static::shipping()->each(function ($shipping) {
+            static::$totalShipping += static::makeAmountSaveableStatic($shipping->total);
+        });
+
+        return static::makeAmountHumanStatic(static::$totalShipping);
+    }
+
+    public static function shipping(): Collection
+    {
         $shipping = new Shipping(Cart::get());
         $shipping->handle();
 
