@@ -122,6 +122,18 @@ class Cart
     }
 
     /**
+     * All shipping costs are seperated into the original
+     * shipping profiles, where they came from.
+     */
+    public static function shipping(): Collection
+    {
+        $shipping = new Shipping(Cart::get());
+        $shipping->handle();
+
+        return $shipping->amounts;
+    }
+
+    /**
      * All shipping costs, from all shipping profiles, summed
      * up to determine the total shipping costs.
      */
@@ -134,18 +146,6 @@ class Cart
         });
 
         return static::makeAmountHumanStatic(static::$totalShipping);
-    }
-
-    /**
-     * All shipping costs are seperated into the original
-     * shipping profiles, where they came from.
-     */
-    public static function shipping(): Collection
-    {
-        $shipping = new Shipping(Cart::get());
-        $shipping->handle();
-
-        return $shipping->amounts;
     }
 
     /**
