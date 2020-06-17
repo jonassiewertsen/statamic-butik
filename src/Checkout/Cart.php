@@ -17,8 +17,6 @@ class Cart
     private static $totalShipping;
     private static $totalItems;
 
-    // TODO: Move this class into the checkout folder
-
     /**
      * A product can be added to the cart
      */
