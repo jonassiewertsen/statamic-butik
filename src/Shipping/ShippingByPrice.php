@@ -26,8 +26,9 @@ class ShippingByPrice extends ShippingType
         $this->detectShippingRate($this->zone);
 
         return new ShippingAmount(
-            $this->zone->profile,
             $this->shippingCosts(),
+            $this->zone->profile,
+            $this->rate,
         );
     }
 
