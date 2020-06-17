@@ -24,7 +24,7 @@
                 </h1>
             @endif
 
-            <div class="b-text-gray-500 b-text-sm b-mt-2">{{ $product->base_price }} {{ currency() }} {{ __('butik::product.base_price') }}</div>
+            <div class="b-text-gray-500 b-text-sm b-mt-2">{{ $product->price }} {{ currency() }} {{ __('butik::product.price') }}</div>
             <div class="b-text-gray-500 b-text-sm">{{ $product->shipping_amount }} {{ currency() }} {{ __('butik::general.shipping') }}</div>
             <div class="b-text-gray-700 b-text-3xl b-mt-2">{{ $product->total_price }} {{ currency() }} {{ __('butik::product.total') }}</div>
 

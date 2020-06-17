@@ -16,7 +16,7 @@
 
         <div class="b-flex b-my-3 b-justify-between b-max-w-sm b-mx-auto">
             <span>{{ __('butik::payment.subtotal') }}</span>
-            <span>{{ currency() }} {{ $product->base_price }}</span>
+            <span>{{ currency() }} {{ $product->price }}</span>
         </div>
 
         <div class="b-flex b-my-3 b-justify-between b-max-w-sm b-mx-auto">
