@@ -12,7 +12,7 @@ class ShippingRateBlueprint extends Blueprint
     {
         return StatamicBlueprint::make()->setContents([
             'sections' => [
-                'main'    => [
+                'main' => [
                     'fields' => [
                         [
                             'handle' => 'title',
@@ -25,53 +25,31 @@ class ShippingRateBlueprint extends Blueprint
                         [
                             'handle' => 'minimum',
                             'field'  => [
-                                'type'          => 'integer',
-                                'default'       => 0,
-                                'display'       => __('butik::shipping.minimum'),
-                                'instructions'  => __('butik::shipping.minimum_instructions'),
-                                'validate'      => 'required|numeric|min:0',
+                                'type'         => 'integer',
+                                'default'      => 0,
+                                'display'      => __('butik::shipping.minimum'),
+                                'instructions' => __('butik::shipping.minimum_instructions'),
+                                'validate'     => 'required|numeric|min:0',
                             ],
                         ],
                         [
                             'handle' => 'price',
                             'field'  => [
-                                'type'          => 'money',
-                                'display'       => __('butik::product.base_price'),
-                                'validate'      => 'required|numeric|min:0',
+                                'type'     => 'money',
+                                'display'  => __('butik::product.base_price'),
+                                'validate' => 'required|string|min:0',
                             ],
                         ],
                         [
                             'handle' => 'shipping_zone_id',
                             'field'  => [
-                                'type'         => 'hidden',
-                                'validate'      => 'required|exists:butik_shipping_zones,id',
+                                'type'     => 'hidden',
+                                'validate' => 'required|exists:butik_shipping_zones,id',
                             ],
                         ],
                     ],
                 ],
             ],
         ]);
-    }
-
-    /**
-     * In case the Product will be edited, the slug will be read only
-     */
-    private function slugReadOnly(): bool
-    {
-        return $this->isRoute('statamic.cp.butik.shipping-zones.edit');
-    }
-
-    private function shippingzonesUniqueRule()
-    {
-        return $this->ignoreUnqiueOn(
-            'butik_shipping_zones',
-            'id',
-            'statamic.cp.butik.shipping-zones.update'
-        );
-    }
-
-    private function fetchShippingZones(): array {
-        return [];
-//        return ShippingZone::pluck('title', 'slug')->toArray();
     }
 }
