@@ -42,7 +42,7 @@ class ShippingByPrice extends ShippingType
         // where the total item value is bigger or equal
         // as the minimum value of the shipping rate.
         $rates = $zone->rates->filter(function ($zone) {
-            return $this->totalItemValue >= $zone->minimum;
+            return $this->totalItemValue >= $this->convertIntoCents($zone->minimum);
         });
 
         // Making sure to select the correct rate, we
@@ -66,8 +66,16 @@ class ShippingByPrice extends ShippingType
      * The shipping costs are equal to the shipping price
      * of the selected shipping rate.
      */
-    private function shippingCosts(): int
+    private function shippingCosts(): string
     {
         return $this->rate->price;
+    }
+
+    /**
+     * Converts a value into cents
+     */
+    private function convertIntoCents($value): int
+    {
+        return $value * 100;
     }
 }

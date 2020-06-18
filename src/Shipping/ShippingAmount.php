@@ -8,8 +8,6 @@ use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 
 class ShippingAmount
 {
-    use MoneyTrait;
-
     /**
      * The Shipping profile title of this shipping amount
      */
@@ -25,11 +23,11 @@ class ShippingAmount
      */
     public string    $total;
 
-    public function __construct(int $total, ShippingProfile $profile, ShippingRate $rate)
+    public function __construct(string $total, ShippingProfile $profile, ShippingRate $rate)
     {
         $this->profileTitle = $profile->title;
         $this->profileSlug  = $profile->slug;
         $this->rateTitle    = $rate->title;
-        $this->total        = $this->makeAmountHuman($total);
+        $this->total        = $total;
     }
 }

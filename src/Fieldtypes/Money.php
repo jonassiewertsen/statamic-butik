@@ -19,7 +19,8 @@ class Money extends \Statamic\Fields\Fieldtype
 
     public function preProcess($data)
     {
-        // In case another dec point then '.' has been just, we will reformat
+        // In case we will use another number seperator then '.', like in europe,
+        // we will make sure replace to avoid problems calculating with it.
         $data = str_replace(',', '.', $data);
 
         return number_format(floatval($data), 2, '.', '');

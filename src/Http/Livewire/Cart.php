@@ -10,7 +10,8 @@ class Cart extends Component
 {
     public function getTotalProperty()
     {
-        $total['price']     = ShoppingCart::totalPrice();
+        $total['price']    = ShoppingCart::totalPrice();
+        $total['shipping'] = ShoppingCart::totalShipping();
         return $total;
     }
 

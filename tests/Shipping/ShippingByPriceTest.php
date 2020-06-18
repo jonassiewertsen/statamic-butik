@@ -43,13 +43,13 @@ class ShippingByPriceTest extends TestCase
             'shipping_zone_id' => ShippingZone::first()->id,
             'title'            => 'Standard',
             'minimum'          => 0,
-            'price'            => 600,
+            'price'            => '6,00',
         ]);
 
         create(ShippingRate::class, [
             'shipping_zone_id' => ShippingZone::first()->id,
             'title'            => 'Free',
-            'minimum'          => 5000,
+            'minimum'          => 50,
             'price'            => 0,
         ]);
     }
@@ -85,7 +85,7 @@ class ShippingByPriceTest extends TestCase
     public function the_standard_shipping_rate_wont_be_used_if_the_amount_does_match()
     {
         Cart::add(create(Product::class,
-            ['price' => 50]
+            ['price' => '50,00']
         )->first());
 
         $shipping = new ShippingByPrice(Cart::get(), ShippingZone::first());

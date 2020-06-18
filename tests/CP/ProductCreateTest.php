@@ -147,7 +147,7 @@ class ProductCreateTest extends TestCase
     }
 
     /** @test */
-    public function base_price_is_required()
+    public function price_is_required()
     {
         $product = raw(Product::class, ['price' => null]);
         $this->post(route('statamic.cp.butik.products.store'), $product)
@@ -185,15 +185,6 @@ class ProductCreateTest extends TestCase
         $this->post(route('statamic.cp.butik.products.store'), $product)
             ->assertSessionHasErrors('stock_unlimited');
     }
-
-// TODO: Important to test?
-//    /** @test */
-//    public function base_price_cant_be_lower_then_zero()
-//    {
-//        $product = raw(Product::class, ['base_price' => -3 ]);
-//        $this->post(route('statamic.cp.butik.products.store'), $product)
-//            ->assertSessionHasErrors('base_price');
-//    }
 
     /** @test */
     public function product_type_is_required()

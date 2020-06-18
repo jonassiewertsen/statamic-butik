@@ -16,6 +16,7 @@ class ShippingRateUpdateTest extends TestCase
     /** @test */
     public function the_title_can_be_updated()
     {
+        $this->withoutExceptionHandling();
         $shippingRate = create(ShippingRate::class)->first();
         $shippingRate->title = 'Updated Name';
         $this->updateShippingRate($shippingRate)->assertSessionHasNoErrors();
@@ -28,7 +29,7 @@ class ShippingRateUpdateTest extends TestCase
         $shippingRate = create(ShippingRate::class)->first();
         $shippingRate->price = 99999;
         $this->updateShippingRate($shippingRate)->assertSessionHasNoErrors();
-        $this->assertDatabaseHas('butik_shipping_rates', ['price' => '99999']);
+        $this->assertDatabaseHas('butik_shipping_rates', ['price' => '9999900']);
     }
 
     /** @test */

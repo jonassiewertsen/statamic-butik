@@ -4,6 +4,8 @@ namespace Jonassiewertsen\StatamicButik\Tests;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Config;
+use Jonassiewertsen\StatamicButik\Http\Models\Country;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Statamic\Extend\Manifest;
 use Statamic\Facades\Role;
@@ -28,7 +30,7 @@ class TestCase extends OrchestraTestCase
             $this->addToAssertionCount(-1); // Dont want to assert this
         }
 
-        $this->withFactories(__DIR__.'/../database/factories');
+        $this->withFactories(__DIR__ . '/../database/factories');
     }
 
     /**
@@ -68,8 +70,17 @@ class TestCase extends OrchestraTestCase
     }
 
     /**
+     * This will set the country and write it to our config file
+     */
+    protected function setCountry(): void
+    {
+        $country = create(Country::class)->first();
+        Config::set('butik.country', $country->name);
+    }
+
+    /**
      * Load package service provider
-     * @param  \Illuminate\Foundation\Application $app
+     * @param \Illuminate\Foundation\Application $app
      * @return array
      */
     protected function getPackageProviders($app)
@@ -83,7 +94,7 @@ class TestCase extends OrchestraTestCase
 
     /**
      * Load package alias
-     * @param  \Illuminate\Foundation\Application $app
+     * @param \Illuminate\Foundation\Application $app
      * @return array
      */
     protected function getPackageAliases($app)
@@ -103,7 +114,7 @@ class TestCase extends OrchestraTestCase
 
         $app->make(Manifest::class)->manifest = [
             'jonassiewertsen/statamic-butik' => [
-                'id' => 'jonassiewertsen/statamic-butik',
+                'id'        => 'jonassiewertsen/statamic-butik',
                 'namespace' => 'Jonassiewertsen\\StatamicButik\\',
             ],
         ];
@@ -119,22 +130,22 @@ class TestCase extends OrchestraTestCase
 
         $configs = [
             'assets', 'cp', 'forms', 'routes', 'static_caching',
-            'sites', 'stache', 'system', 'users'
+            'sites', 'stache', 'system', 'users',
         ];
 
         foreach ($configs as $config) {
-            $app['config']->set("statamic.$config", require(__DIR__."/../vendor/statamic/cms/config/{$config}.php"));
+            $app['config']->set("statamic.$config", require(__DIR__ . "/../vendor/statamic/cms/config/{$config}.php"));
         }
 
         // Setting the user repository to the default flat file system
         $app['config']->set('statamic.users.repository', 'file');
 
-        Statamic::pushCpRoutes(function() {
-            return require_once realpath(__DIR__.'/../routes/cp.php');
+        Statamic::pushCpRoutes(function () {
+            return require_once realpath(__DIR__ . '/../routes/cp.php');
         });
 
-        Statamic::pushWebRoutes(function() {
-            return require_once realpath(__DIR__.'/../routes/web.php');
+        Statamic::pushWebRoutes(function () {
+            return require_once realpath(__DIR__ . '/../routes/web.php');
         });
     }
 }

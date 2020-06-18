@@ -7,7 +7,8 @@ use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class ShippingRateCreateTestCreateTest extends TestCase
 {
-    public function setUp(): void {
+    public function setUp(): void
+    {
         parent::setUp();
 
         $this->signInAdmin();
@@ -16,7 +17,6 @@ class ShippingRateCreateTestCreateTest extends TestCase
     /** @test */
     public function a_rate_can_be_created()
     {
-        $this->withoutExceptionHandling();
         $shippingRate = raw(ShippingRate::class);
         $this->post(route('statamic.cp.butik.shipping-rates.store'), $shippingRate)->assertSessionHasNoErrors();
         $this->assertEquals(1, ShippingRate::count());
@@ -39,27 +39,11 @@ class ShippingRateCreateTestCreateTest extends TestCase
     }
 
     /** @test */
-    public function price_must_be_numeric()
-    {
-        $shippingRate = raw(ShippingRate::class, ['price' => 'three']);
-        $this->post(route('statamic.cp.butik.shipping-rates.store'), $shippingRate)
-            ->assertSessionHasErrors('price');
-    }
-
-    /** @test */
     public function price_can_be_zero()
     {
         $shippingRate = raw(ShippingRate::class, ['price' => 0]);
         $this->post(route('statamic.cp.butik.shipping-rates.store'), $shippingRate)
             ->assertSessionHasNoErrors();
-    }
-
-    /** @test */
-    public function price_cant_be_negative()
-    {
-        $shippingRate = raw(ShippingRate::class, ['price' => -1]);
-        $this->post(route('statamic.cp.butik.shipping-rates.store'), $shippingRate)
-            ->assertSessionHasErrors('price');
     }
 
     /** @test */
