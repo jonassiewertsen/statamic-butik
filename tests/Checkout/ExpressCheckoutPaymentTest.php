@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Shop;
+namespace Jonassiewertsen\StatamicButik\Tests\Checkout;
 
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
@@ -144,7 +144,7 @@ class ExpressCheckoutPaymentTestTest extends TestCase
         $this->get(route('butik.checkout.express.payment', $this->product))
             ->assertOk()
             ->assertSee($this->product->title)
-            ->assertSee($this->product->base_price)
+            ->assertSee($this->product->price)
             ->assertSee($this->product->total_price)
             ->assertSee($this->product->taxes_amount)
             ->assertSee($this->product->taxes_percentage)

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\CP;
+namespace Jonassiewertsen\StatamicButik\Tests\CP;
 
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
@@ -21,13 +21,14 @@ class ProductCreateTest extends TestCase
 //    {
 //        $this->withoutExceptionHandling();
 //
-//        $this->get(route('statamic.cp.butik.product.create'))
+//        $this->get(cp_route('butik.products.create'))
 //            ->assertOK();
 //    }
 
     /** @test */
     public function A_product_can_be_created()
     {
+        $this->withoutExceptionHandling();
         $product = raw(Product::class);
         $this->post(route('statamic.cp.butik.products.store'), $product)->assertSessionHasNoErrors();
         $this->assertEquals(1, Product::count());
@@ -132,25 +133,25 @@ class ProductCreateTest extends TestCase
     /** @test */
     public function shipping_is_required()
     {
-        $product = raw(Product::class, ['shipping_id' => '']);
+        $product = raw(Product::class, ['shipping_profile_slug' => '']);
         $this->post(route('statamic.cp.butik.products.store'), $product)
-            ->assertSessionHasErrors('shipping_id');
+            ->assertSessionHasErrors('shipping_profile_slug');
     }
 
     /** @test */
     public function shipping_relation_must_exist_required()
     {
-        $product = raw(Product::class, ['shipping_id' => 44]);
+        $product = raw(Product::class, ['shipping_profile_slug' => 44]);
         $this->post(route('statamic.cp.butik.products.store'), $product)
-            ->assertSessionHasErrors('shipping_id');
+            ->assertSessionHasErrors('shipping_profile_slug');
     }
 
     /** @test */
-    public function base_price_is_required()
+    public function price_is_required()
     {
-        $product = raw(Product::class, ['base_price' => null]);
+        $product = raw(Product::class, ['price' => null]);
         $this->post(route('statamic.cp.butik.products.store'), $product)
-            ->assertSessionHasErrors('base_price');
+            ->assertSessionHasErrors('price');
     }
 
     /** @test */
@@ -184,15 +185,6 @@ class ProductCreateTest extends TestCase
         $this->post(route('statamic.cp.butik.products.store'), $product)
             ->assertSessionHasErrors('stock_unlimited');
     }
-
-// TODO: Important to test?
-//    /** @test */
-//    public function base_price_cant_be_lower_then_zero()
-//    {
-//        $product = raw(Product::class, ['base_price' => -3 ]);
-//        $this->post(route('statamic.cp.butik.products.store'), $product)
-//            ->assertSessionHasErrors('base_price');
-//    }
 
     /** @test */
     public function product_type_is_required()

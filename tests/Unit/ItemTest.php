@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Unit;
+namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
-use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
@@ -115,7 +115,7 @@ class ItemTest extends TestCase
     {
         $item = new Item($this->product);
 
-        $this->assertEquals($this->product->totalPrice, $item->totalPrice());
+        $this->assertEquals($this->product->price, $item->totalPrice());
     }
 
     /** @test */
@@ -124,40 +124,10 @@ class ItemTest extends TestCase
         $item = new Item($this->product);
         $item->setQuantity(3);
 
-        $productPrice = $this->makeAmountSaveable($this->product->totalPrice);
+        $productPrice = $this->makeAmountSaveable($this->product->price);
         $total = $this->makeAmountHuman($productPrice * 3);
 
         $this->assertEquals($total, $item->totalPrice());
-    }
-
-    /** @test */
-    public function single_shipping_costs_will_be_returned_correclty()
-    {
-        $item = new Item($this->product);
-
-        $this->assertEquals($this->product->shipping->price, $item->singleShipping());
-    }
-
-    /** @test */
-    public function multiple_shipping_costs_will_be_added_up_by_the_given_quantity()
-    {
-        $item = new Item($this->product);
-        $item->setQuantity(3);
-
-        $productShipping = $this->makeAmountSaveable($this->product->shipping_amount);
-        $totalShipping = $this->makeAmountHuman($productShipping * 3);
-
-        $this->assertEquals($totalShipping, $item->totalShipping());
-    }
-
-    /** @test */
-    public function multiple_odd_shipping_costs_will_be_added_up_by_the_given_quantity()
-    {
-        $shipping = factory(Shipping::class)->create(['price' => '2.5']);
-        $item = new Item(factory(Product::class)->create(['shipping_id' => $shipping->slug]));
-        $item->setQuantity(2);
-
-        $this->assertEquals('5,00', $item->totalShipping());
     }
 
     /** @test */
@@ -179,11 +149,11 @@ class ItemTest extends TestCase
         $item = new Item($this->product);
 
         $newPrice = 9999;
-        $this->product->update(['base_price' => $newPrice]);
+        $this->product->update(['price' => $newPrice]);
         Cache::flush();
         $item->update();
 
-        $this->assertEquals($item->base_price, $this->product->base_price);
+        $this->assertEquals($item->singlePrice(), $this->product->price);
     }
 
     /** @test */
@@ -192,24 +162,11 @@ class ItemTest extends TestCase
         $item = new Item($this->product);
 
         $oldPrice = $item->totalPrice();
-        $this->product->update(['base_price' => 999]);
+        $this->product->update(['price' => 999]);
         Cache::flush();
         $item->update();
 
         $this->assertNotEquals($item->totalPrice(), $oldPrice);
-    }
-
-    /** @test */
-    public function A_new_shipping_price_will_be_reflected_on_the_item_update()
-    {
-        $item = new Item($this->product);
-
-        $oldShipping = $item->totalShipping();
-        $this->product->shipping->update(['price' => 999]);
-        Cache::flush();
-        $item->update();
-
-        $this->assertNotEquals($item->totalShipping(), $oldShipping);
     }
 
     /** @test */
@@ -223,5 +180,18 @@ class ItemTest extends TestCase
         $item->update();
 
         $this->assertEquals(0, $item->getQuantity());
+    }
+
+    /** @test */
+    public function it_has_a_shipping_profile()
+    {
+        $item = new Item($this->product);
+
+        $this->product->update(['available' => false]);
+
+        Cache::flush();
+        $item->update();
+
+        $this->assertEquals(ShippingProfile::first(), $item->shippingProfile);
     }
 }

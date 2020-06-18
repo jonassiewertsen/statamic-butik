@@ -2,7 +2,7 @@
 
 namespace Jonassiewertsen\StatamicButik\Blueprints;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Statamic\Facades\Blueprint as StatamicBlueprint;
 
@@ -33,7 +33,7 @@ class ProductBlueprint extends Blueprint
                             ],
                         ],
                         [
-                            'handle' => 'base_price',
+                            'handle' => 'price',
                             'field'  => [
                                 'type'          => 'money',
                                 'display'       => __('butik::product.base_price'),
@@ -52,13 +52,13 @@ class ProductBlueprint extends Blueprint
                             ],
                         ],
                         [
-                            'handle' => 'shipping_id',
+                            'handle' => 'shipping_profile_slug',
                             'field'  => [
                                 'type'         => 'select',
                                 'display'      => __('butik::shipping.singular'),
                                 'options'      => $this->fetchShippingOptions(),
                                 'width'         => '25',
-                                'validate'      => 'required|exists:butik_shippings,slug'
+                                'validate'      => 'required|exists:butik_shipping_profiles,slug'
                             ],
                         ],
                         [
@@ -147,7 +147,7 @@ class ProductBlueprint extends Blueprint
     }
 
     private function fetchShippingOptions(): array {
-        return Shipping::pluck('title', 'slug')->toArray();
+        return ShippingProfile::pluck('title', 'slug')->toArray();
     }
 
     private function productUniqueRule() {

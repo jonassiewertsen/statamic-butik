@@ -26,7 +26,7 @@
                         </div>
                     @endif
 
-                    <div class="b-text-gray-500 b-text-sm">{{ currency() }} {{ $product->base_price }}</div>
+                    <div class="b-text-gray-500 b-text-sm">{{ currency() }} {{ $product->price }}</div>
 
                 </a>
             </div>

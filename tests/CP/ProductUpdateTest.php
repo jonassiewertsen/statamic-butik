@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\CP;
+namespace Jonassiewertsen\StatamicButik\Tests\CP;
 
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
@@ -54,10 +54,10 @@ class ProductUpdateTest extends TestCase
     public function the_base_price_can_be_updated()
     {
         $product = create(Product::class)->first();
-        $product->base_price = 4321;
+        $product->price = 4321;
         $this->updateProduct($product);
         $this->assertDatabaseHas('butik_products', [
-            'base_price' => 432100 // To zeros added because of the mutation
+            'price' => 432100 // To zeros added because of the mutation
         ]);
     }
 

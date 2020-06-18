@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
@@ -98,8 +98,6 @@ class TransactionTest extends TestCase
                 'quantity'      => $item->getQuantity(),
                 'singlePrice'   => $item->singlePrice(),
                 'totalPrice'    => $item->totalPrice(),
-                'singleShipping' => $item->singleShipping(),
-                'totalShipping' => $item->totalShipping(),
                 'taxRate'       => $item->taxRate,
             ];
         });

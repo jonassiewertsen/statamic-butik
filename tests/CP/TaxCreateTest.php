@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\CP;
+namespace Jonassiewertsen\StatamicButik\Tests\CP;
 
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
@@ -13,13 +13,13 @@ class TaxCreateTest extends TestCase
         $this->signInAdmin();
     }
 
-//    TODO: Add test back in again, if composer test has been resolve
-//    /** @test */
-//    public function the_publish_form_will_be_displayed()
-//    {
-//        $this->get(route('statamic.cp.butik.taxes.create'))
-//            ->assertOK();
-//    }
+    /** @test */
+    public function the_publish_form_will_be_displayed()
+    {
+        $this->withoutExceptionHandling();
+        $this->get(route('statamic.cp.butik.taxes.create'))
+            ->assertOK();
+    }
 
     /** @test */
     public function Taxes_can_be_created()

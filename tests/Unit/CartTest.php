@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Unit;
+namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
 use Illuminate\Support\Facades\Session;
-use Jonassiewertsen\StatamicButik\Helper\Cart;
+use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
@@ -127,23 +127,5 @@ class CartTest extends TestCase
         Cart::clear();
 
         $this->assertNotNull(Cart::totalItems());
-    }
-
-    /** @test */
-    public function the_cart_calculates_total_shipping_expenses()
-    {
-        $product1 = factory(Product::class)->create();
-        $product2 = factory(Product::class)->create();
-
-        Cart::add($product1);
-        Cart::add($product2);
-
-        $item1 = Cart::get()->first();
-        $item2 = Cart::get()->last();
-
-        $caluclatedShipping = $this->makeAmountSaveable($item1->totalShipping()) + $this->makeAmountSaveable($item2->totalShipping());
-        $caluclatedShipping = $this->makeAmountHuman($caluclatedShipping);
-
-        $this->assertEquals($caluclatedShipping, Cart::totalShipping());
     }
 }

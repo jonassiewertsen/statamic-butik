@@ -3,7 +3,7 @@
 namespace Jonassiewertsen\StatamicButik\Http\Middleware;
 
 use Closure;
-use Jonassiewertsen\StatamicButik\Helper\Cart;
+use Jonassiewertsen\StatamicButik\Checkout\Cart;
 
 class CartNotEmpty
 {
