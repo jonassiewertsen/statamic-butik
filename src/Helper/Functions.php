@@ -15,17 +15,3 @@ if (!function_exists('currency')) {
         return config('butik.currency_symbol');
     }
 }
-
-/**
- * Will return butik settings
- */
-if (!function_exists('butik')) {
-    function butik($key, $default = null)
-    {
-        if (!Settings::where('key', $key)->exists()) {
-            return $default;
-        }
-
-        return Settings::firstWhere('key', $key)->value;
-    }
-}
