@@ -16,6 +16,6 @@
     },
     "dependencies": {
         "axios": "^0.19.2",
-        "tailwindcss": "^1.2.0-canary.5"
+        "tailwindcss": "^1.4.6"
     }
 }
