@@ -268,6 +268,7 @@
 
             editShippingRate(rate) {
                 this.shippingRateUpdateRoute = `${this.shippingRateRoute}/${rate.id}`
+                rate.price = rate.price.replace(',', '.') // make sure to never pass values like 3,02
                 this.showUpdateShippingRateStack = rate
             },
 
