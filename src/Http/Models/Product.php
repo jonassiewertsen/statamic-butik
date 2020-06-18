@@ -82,7 +82,7 @@ class Product extends ButikModel
     }
 
     /**
-     * Return the price with currency appended
+     * Is the product still in stock?
      */
     public function getSoldOutAttribute()
     {
