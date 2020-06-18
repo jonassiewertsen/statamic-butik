@@ -74,7 +74,7 @@ class Product extends ButikModel
         $tax = $data = str_replace(',', '.', $this->tax->percentage);
 
         $divisor = $tax + 100;
-        $price   = $this->getOriginal('price');
+        $price   = $this->getRawOriginal('price');
 
         $totalPriceWithoutTax = $price / $divisor * 100;
         $tax                  = $price - $totalPriceWithoutTax;

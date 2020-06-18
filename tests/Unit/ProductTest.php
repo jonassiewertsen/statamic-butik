@@ -29,7 +29,7 @@ class ProductTest extends TestCase
         $product = create(Product::class)->first();
 
         $divisor = $product->tax->percentage + 100;
-        $price   = $product->getOriginal('price');
+        $price   = $product->getRawOriginal('price');
 
         $totalPriceWithoutTax = $price / $divisor * 100;
         $tax                  = $product->makeAmountHuman($price - $totalPriceWithoutTax);
@@ -47,7 +47,7 @@ class ProductTest extends TestCase
     public function the_currency_will_be_saved_without_decimals()
     {
         create(Product::class, ['price' => '2,00']);
-        $this->assertEquals('200', Product::first()->getOriginal('price'));
+        $this->assertEquals('200', Product::first()->getRawOriginal('price'));
     }
 
     /** @test */

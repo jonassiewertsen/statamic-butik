@@ -66,7 +66,7 @@ class CheckoutPaymentTest extends TestCase
 
         $this->get(route('butik.checkout.payment'))
             ->assertSee('Delivery')
-            ->assertSee('Review &amp; Payment')
+            ->assertSee('Review & Payment')
             ->assertSee('Receipt')
 //            ->assertSee('Shipping') TODO: Add shipping back in again
             ->assertSee('Total');
