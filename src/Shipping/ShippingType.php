@@ -30,11 +30,15 @@ abstract class ShippingType implements ShippingTypeInterface
      */
     public int $total;
 
-    public function __construct(Collection $items, ShippingZone $zone)
+    public function __construct()
     {
-        $this->zone  = $zone;
+        $this->name = $this->name();
+    }
+
+    public function set(Collection $items, ShippingZone $zone): void
+    {
         $this->items = $items;
-        $this->name  = $this->name();
+        $this->zone  = $zone;
     }
 
     /**
@@ -45,7 +49,7 @@ abstract class ShippingType implements ShippingTypeInterface
     protected function name(): string
     {
         $className = Str::snake(class_basename($this));
-        $key = 'butik::shipping.' . $className;
+        $key       = 'butik::shipping.' . $className;
         return __($key);
     }
 }

@@ -7,7 +7,7 @@ use Jonassiewertsen\StatamicButik\Http\Models\Country;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
-class ShippingZoneCreateTestCreateTest extends TestCase
+class ShippingZoneCreateTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -39,6 +39,14 @@ class ShippingZoneCreateTestCreateTest extends TestCase
         $shippingZone = raw(ShippingZone::class, ['shipping_profile_slug' => '']);
         $this->post(route('statamic.cp.butik.shipping-zones.store'), $shippingZone)
             ->assertSessionHasErrors('shipping_profile_slug');
+    }
+
+    /** @test */
+    public function type_is_required()
+    {
+        $shippingZone = raw(ShippingZone::class, ['type' => '']);
+        $this->post(route('statamic.cp.butik.shipping-zones.store'), $shippingZone)
+            ->assertSessionHasErrors('type');
     }
 
     /** @test */

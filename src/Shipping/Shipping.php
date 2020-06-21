@@ -62,7 +62,9 @@ class Shipping
             $items = $this->filterItems($profile);
 
             $shippingStrategy = $this->getShippingStrategy($zone);
-            $shippingType     = new $shippingStrategy($items, $zone);
+
+            $shippingType = new $shippingStrategy($items, $zone);
+            $shippingType->set($items, $zone);
 
             $this->amounts->push(
                 $shippingType->calculate(),

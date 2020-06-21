@@ -19,5 +19,6 @@ return [
     'minimum_instructions' => 'What\'s the minimum shopping bag amount for this rate to be available?',
     'description'          => 'Let your customers know, how it will cost them to ship your items home.',
 
-    'shipping_by_price'        => 'Shipping by price',
+    'type'              => 'Shipping type',
+    'shipping_by_price' => 'Shipping by price',
 ];

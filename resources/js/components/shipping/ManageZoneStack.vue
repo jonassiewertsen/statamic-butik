@@ -10,13 +10,13 @@
             </header>
 
             <publish-form
-                :action="`${this.route}/${this.zone.id}`"
-                :title="'Update title'"
-                :blueprint="blueprint"
-                :meta="meta"
-                :method="'patch'"
-                :values="values"
-                @saved="close"
+                    :action="`${this.route}/${this.zone.id}`"
+                    :title="'Update general information'"
+                    :blueprint="blueprint"
+                    :meta="meta"
+                    :method="'patch'"
+                    :values="values"
+                    @saved="close"
             ></publish-form>
 
             <h1 class="mb-3 mt-4">Countries</h1>
@@ -24,12 +24,13 @@
             <section class="card">
                 <table class="data-table">
                     <tbody>
-                        <tr v-for="country in countries">
-                            <th class="pl-2 py-1 w-1/4">{{ country.name }}</th>
-                            <td>
-                                <toggle-input @input="update(country)" v-model="country.current_zone" :read-only="! country.can_be_attached && ! country.current_zone"></toggle-input>
-                            </td>
-                        </tr>
+                    <tr v-for="country in countries">
+                        <th class="pl-2 py-1 w-1/4">{{ country.name }}</th>
+                        <td>
+                            <toggle-input @input="update(country)" v-model="country.current_zone"
+                                          :read-only="! country.can_be_attached && ! country.current_zone"></toggle-input>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </section>
@@ -39,12 +40,12 @@
             <button @click="confirmZoneDeletion = true" class="btn-danger">Delete shipping zone</button>
 
             <confirmation-modal danger
-                v-if="confirmZoneDeletion"
-                buttonText="Delete shipping zone"
-                title="Delete"
-                bodyText="Are you sure you want delete this shipping zone? All connected rates will be deleted as well. "
-                @confirm="deleteShippingZone"
-                @cancel="confirmZoneDeletion = false"
+                                v-if="confirmZoneDeletion"
+                                buttonText="Delete shipping zone"
+                                title="Delete"
+                                bodyText="Are you sure you want delete this shipping zone? All connected rates will be deleted as well. "
+                                @confirm="deleteShippingZone"
+                                @cancel="confirmZoneDeletion = false"
             ></confirmation-modal>
         </div>
     </stack>
@@ -56,7 +57,7 @@
     import axios from "axios";
 
     export default {
-        components: { CreateButton, FormStack },
+        components: {CreateButton, FormStack},
 
         props: {
             zone: {
@@ -89,12 +90,12 @@
             return {
                 confirmZoneDeletion: false,
                 countries: [],
-                test: true,
             }
         },
 
         mounted() {
             this.values.title = this.zone.title
+            this.values.type = this.zone.type
             this.fetchCountries()
         },
 

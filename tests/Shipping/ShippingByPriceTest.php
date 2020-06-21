@@ -60,7 +60,8 @@ class ShippingByPriceTest extends TestCase
         Cart::add($this->product1);
         Cart::add($this->product2);
 
-        $shipping = new ShippingByPrice(Cart::get(), ShippingZone::first());
+        $shipping = new ShippingByPrice();
+        $shipping->set(Cart::get(), ShippingZone::first());
         $shipping->calculate();
 
         $total = $this->makeAmountSaveable($this->product1->price) + $this->makeAmountSaveable($this->product2->price);
@@ -76,7 +77,8 @@ class ShippingByPriceTest extends TestCase
             ['price' => 49.99]
         )->first());
 
-        $shipping = new ShippingByPrice(Cart::get(), ShippingZone::first());
+        $shipping = new ShippingByPrice();
+        $shipping->set(Cart::get(), ShippingZone::first());
 
         $this->assertEquals('6,00', $shipping->calculate()->total);
     }
@@ -88,7 +90,8 @@ class ShippingByPriceTest extends TestCase
             ['price' => '50,00']
         )->first());
 
-        $shipping = new ShippingByPrice(Cart::get(), ShippingZone::first());
+        $shipping = new ShippingByPrice();
+        $shipping->set(Cart::get(), ShippingZone::first());
 
         $this->assertEquals('0,00', $shipping->calculate()->total);
     }
@@ -100,7 +103,8 @@ class ShippingByPriceTest extends TestCase
         Cart::add($this->product2);
         Cart::add($this->product3);
 
-        $shipping = new ShippingByPrice(Cart::get(), ShippingZone::first());
+        $shipping = new ShippingByPrice();
+        $shipping->set(Cart::get(), ShippingZone::first());
 
         $this->assertEquals('0,00', $shipping->calculate()->total);
     }

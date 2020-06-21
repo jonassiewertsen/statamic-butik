@@ -30,6 +30,7 @@ class ShippingProfilesController extends CpController
             return [
                 'id'        => $zone->id,
                 'title'     => $zone->title,
+                'type'      => $zone->type,
                 'countries' => $zone->countries,
                 'rates'     => $zone->rates,
             ];

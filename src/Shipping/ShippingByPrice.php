@@ -14,9 +14,10 @@ class ShippingByPrice extends ShippingType
     public ShippingRate $rate;
     public int          $totalItemValue;
 
-    public function __construct($items, $zone)
+    public function __construct()
     {
-        parent::__construct($items, $zone);
+        parent::__construct();
+
         $this->totalItemValue = 0;
     }
 

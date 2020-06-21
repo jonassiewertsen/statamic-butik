@@ -102,7 +102,7 @@ return [
     /**
      * SHIPPING
      *
-     * If you want, you can implement your own shipping methods
+     * If you want, you can implement your own shipping methods.
      */
     'shipping' => [
         'price' => \Jonassiewertsen\StatamicButik\Shipping\ShippingByPrice::class,
