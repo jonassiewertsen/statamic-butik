@@ -5,10 +5,12 @@ namespace Jonassiewertsen\StatamicButik\Shipping;
 
 use Illuminate\Support\Collection;
 use Jonassiewertsen\StatamicButik\Exceptions\ButikConfigException;
+use Jonassiewertsen\StatamicButik\Exceptions\ButikShippingException;
 use Jonassiewertsen\StatamicButik\Http\Models\Country;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
+use phpDocumentor\Reflection\Types\Mixed_;
 
 class Shipping
 {
@@ -59,7 +61,8 @@ class Shipping
 
             $items = $this->filterItems($profile);
 
-            $shippingType = new ShippingByPrice($items, $zone);
+            $shippingStrategy = $this->getShippingStrategy($zone);
+            $shippingType     = new $shippingStrategy($items, $zone);
 
             $this->amounts->push(
                 $shippingType->calculate(),
@@ -115,5 +118,21 @@ class Shipping
         return $this->items->filter(function ($item) use ($profile) {
             return $item->shippingProfile->slug === $profile->slug;
         });
+    }
+
+    /**
+     * We will get the shipiping strategy as defined in the butik config file.
+     *
+     * @throws ButikShippingException
+     */
+    private function getShippingStrategy($zone): string
+    {
+        $shippingStrategies = config('butik.shipping');
+
+        if (!key_exists($zone->type, $shippingStrategies)) {
+            throw new ButikShippingException('We could not find the "' . $zone->type . '" shipping class as defined in your butik config file.');
+        }
+
+        return $shippingStrategies[$zone->type];
     }
 }

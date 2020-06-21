@@ -13,4 +13,6 @@ return [
     'price' => 'Preis',
 
     'description' => 'Lass deine Kunden wissen was es kosten wird, das Produkt zu ihnen zu schicken.',
+
+    'shipping_by_price'        => 'Versand nach Preis',
 ];

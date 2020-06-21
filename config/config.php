@@ -98,4 +98,13 @@ return [
     'template_express-checkout-payment'  => 'butik::web.checkout.express-payment',
     'template_checkout-receipt'          => 'butik::web.checkout.receipt',
     'template_checkout-receipt-invalid'  => 'butik::web.checkout.invalid-receipt',
+
+    /**
+     * SHIPPING
+     *
+     * If you want, you can implement your own shipping methods
+     */
+    'shipping' => [
+        'price' => \Jonassiewertsen\StatamicButik\Shipping\ShippingByPrice::class,
+    ]
 ];
