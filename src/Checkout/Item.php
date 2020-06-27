@@ -18,6 +18,11 @@ class Item
     public bool $available;
 
     /**
+     * Is the item buyable in the selected country?
+     */
+    public bool $buyable;
+
+    /**
      * How many times can the product be sold.
      */
     public int $availableStock;
@@ -65,6 +70,7 @@ class Item
     public function __construct(Product $product)
     {
         $this->available       = $product->available;
+        $this->buyable         = true;
         $this->id              = $product->slug;
         $this->name            = $product->title;
         $this->description     = $this->limitDescription($product->description);
@@ -122,6 +128,16 @@ class Item
     {
         $price = $this->makeAmountSaveable($this->product()->price);
         return $this->makeAmountHuman($price * $this->quantity);
+    }
+
+    public function buyable(): void
+    {
+        $this->buyable = true;
+    }
+
+    public function notBuyable(): void
+    {
+        $this->buyable = false;
     }
 
     public function update(): void

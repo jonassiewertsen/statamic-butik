@@ -10,7 +10,6 @@ use Jonassiewertsen\StatamicButik\Http\Models\Country;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
-use phpDocumentor\Reflection\Types\Mixed_;
 
 class Shipping
 {
@@ -48,27 +47,22 @@ class Shipping
         $this->detectCountry();
         $this->detectUsedShippingProfiles();
 
-        // TODO: Does a shipping zone exist for the selected country ?
-
         foreach ($this->profiles as $profile) {
-            // detect zone
-            $zone = $this->detectShippingZone($profile);
+            $zone  = $this->detectShippingZone($profile);
+            $items = $this->filterItems($profile);
 
             if ($zone === null) {
-                // TODO: Add message to item if not buyable because of the shipping
+                // TODO: Declare non buyable items as not buyable
+                // TODO: Does a shipping zone exist for the selected country ?
                 break;
             }
-
-            $items = $this->filterItems($profile);
 
             $shippingStrategy = $this->getShippingStrategy($zone);
 
             $shippingType = new $shippingStrategy($items, $zone);
             $shippingType->set($items, $zone);
 
-            $this->amounts->push(
-                $shippingType->calculate(),
-            );
+            $this->addShippingAmount($shippingType);
         }
     }
 
@@ -136,5 +130,15 @@ class Shipping
         }
 
         return $shippingStrategies[$zone->type];
+    }
+
+    /**
+     * Adds the shipping amount to the class.
+     */
+    private function addShippingAmount($shippingType): void
+    {
+        $this->amounts->push(
+            $shippingType->calculate(),
+        );
     }
 }
