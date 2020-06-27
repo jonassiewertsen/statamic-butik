@@ -116,6 +116,11 @@ class Cart
         static::resetTotalPrice();
 
         static::$cart->each(function ($item) {
+            if (! $item->buyable) {
+                // We won't charge for non buyable items
+                return;
+            }
+
             static::$totalPrice += static::makeAmountSaveableStatic($item->totalPrice());
         });
 

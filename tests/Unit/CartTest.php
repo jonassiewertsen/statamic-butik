@@ -111,6 +111,22 @@ class CartTest extends TestCase
     }
 
     /** @test */
+    public function not_buyable_items_will_not_be_counted()
+    {
+        $product1 = factory(Product::class)->create();
+        $product2 = factory(Product::class)->create();
+
+        Cart::add($product1);
+        Cart::add($product2);
+
+        $item1 = Cart::get()->first();
+        $item1->notBuyable();
+        $item2 = Cart::get()->last();
+
+        $this->assertEquals($item2->totalPrice(), Cart::totalPrice());
+    }
+
+    /** @test */
     public function the_cart_calculates_total_items()
     {
         $product1 = factory(Product::class)->create();
