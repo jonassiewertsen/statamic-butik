@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
+use Jonassiewertsen\StatamicButik\Shipping\Country;
 use Jonassiewertsen\StatamicButik\Shipping\Shipping;
 
 class Cart
@@ -160,6 +161,16 @@ class Cart
         });
 
         static::set($items);
+    }
+
+    public static function country(): array
+    {
+        return Country::get();
+    }
+
+    public static function setCountry(string $name): void
+    {
+        Country::set($name);
     }
 
     /**

@@ -2,10 +2,13 @@
 
 namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
+use Jonassiewertsen\StatamicButik\Http\Models\Country as CountryModel;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
+use Jonassiewertsen\StatamicButik\Shipping\Country;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class CartTest extends TestCase
@@ -127,5 +130,23 @@ class CartTest extends TestCase
         Cart::clear();
 
         $this->assertNotNull(Cart::totalItems());
+    }
+
+    /** @test */
+    public function the_default_country_will_automatically_be_set()
+    {
+        $country = create(CountryModel::class)->first();
+        Config::set('butik.country', $country->name);
+
+        $this->assertEquals(Cart::country()['name'], $country->name);
+    }
+
+    /** @test */
+    public function we_can_set_any_country_we_want()
+    {
+        $country = create(CountryModel::class)->first();
+        Cart::setCountry($country->name);
+
+        $this->assertEquals(Cart::country()['name'], $country->name);
     }
 }
