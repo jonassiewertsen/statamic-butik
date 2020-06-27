@@ -16,15 +16,16 @@ class Country
      * We will get the country. In case no country has been defined, we will
      * fetch the default country from our config file.
      */
-    public static function get(): array
+    public static function get($returnArray = true)
     {
         if (Session::exists(self::SESSION)) {
-            return Session::get(self::SESSION);
+            $country = Session::get(self::SESSION);
+            return $returnArray ? $country->toArray() : $country;
         }
 
         $country =  self::getDefaultCountryFromConfig();
 
-        return $country->toArray();
+        return $returnArray ? $country->toArray() : $country;
     }
 
     /**
@@ -33,7 +34,7 @@ class Country
     public static function set(string $name): void
     {
         $country = static::fetchCountryModel($name);
-        Session::put(self::SESSION, $country->toArray());
+        Session::put(self::SESSION, $country);
     }
 
     /**

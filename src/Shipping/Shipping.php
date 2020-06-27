@@ -10,6 +10,7 @@ use Jonassiewertsen\StatamicButik\Http\Models\Country;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
+use Jonassiewertsen\StatamicButik\Shipping\Country as CountryHelper;
 
 class Shipping
 {
@@ -51,9 +52,10 @@ class Shipping
             $zone  = $this->detectShippingZone($profile);
             $items = $this->filterItems($profile);
 
+            // In case no zone could be detected, we will set the items to not buyable.
+            // This happens, if the items are not available in the choosen country.
             if ($zone === null) {
-                // TODO: Declare non buyable items as not buyable
-                // TODO: Does a shipping zone exist for the selected country ?
+                $items->each->notBuyable();
                 break;
             }
 
@@ -74,15 +76,7 @@ class Shipping
      */
     protected function detectCountry()
     {
-        $countryFromConfig = config('butik.country');
-
-        $country = Country::where('name', 'LIKE', '%' . $countryFromConfig . '%')->first();
-
-        if ($country === null) {
-            throw new ButikConfigException('Your defined Country inside your config file does not exist.');
-        }
-
-        $this->country = $country;
+        $this->country = CountryHelper::get(false);
     }
 
     /**
