@@ -116,7 +116,7 @@ class Cart
         static::resetTotalPrice();
 
         static::$cart->each(function ($item) {
-            if (! $item->buyable) {
+            if (!$item->buyable) {
                 // We won't charge for non buyable items
                 return;
             }
@@ -168,14 +168,31 @@ class Cart
         static::set($items);
     }
 
+    /**
+     * Getting the actual choosen country
+     */
     public static function country(): array
     {
         return Country::get();
     }
 
+    /**
+     * Set a different country to checkout to.
+     */
     public static function setCountry(string $name): void
     {
         Country::set($name);
+    }
+
+    public static function removeNonSellableItems(): void
+    {
+        static::$cart = static::get();
+
+        static::$cart = static::$cart->filter(function ($item) {
+            return $item->buyable;
+        });
+
+        static::set(static::$cart);
     }
 
     /**

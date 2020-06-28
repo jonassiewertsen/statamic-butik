@@ -127,6 +127,24 @@ class CartTest extends TestCase
     }
 
     /** @test */
+    public function we_can_remove_all_non_sellable_items()
+    {
+        $product1 = factory(Product::class)->create();
+        $product2 = factory(Product::class)->create();
+
+        Cart::add($product1);
+        Cart::add($product2);
+
+        $item1 = Cart::get()->first();
+        $item1->notBuyable();
+        $item2 = Cart::get()->last();
+
+        Cart::removeNonSellableItems();
+
+        $this->assertEquals(1, Cart::totalItems());
+    }
+
+    /** @test */
     public function the_cart_calculates_total_items()
     {
         $product1 = factory(Product::class)->create();

@@ -35,6 +35,8 @@ class CheckoutController extends Checkout
 
     public function payment()
     {
+        Cart::removeNonSellableItems();
+
         $customer      = session('butik.customer');
         $items         = Cart::get();
         $totalPrice    = Cart::totalPrice();
