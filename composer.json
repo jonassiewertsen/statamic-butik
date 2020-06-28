@@ -30,18 +30,18 @@
     "require": {
         "php": "^7.4",
         "doctrine/dbal": "^2.10",
-        "illuminate/support": "^6.0",
+        "illuminate/support": "^7.0",
         "livewire/livewire": "^1.0",
-        "mollie/laravel-mollie": "^2.8",
+        "mollie/laravel-mollie": "^2.0",
         "statamic/cms": "^3.0@beta"
     },
     "require-dev": {
-        "orchestra/testbench": "^4.0",
+        "orchestra/testbench": "^5.0",
         "phpunit/phpunit": "^8.5"
     },
     "autoload": {
         "files": [
-            "src/Helper/GlobalHelper.php"
+            "src/Helper/Functions.php"
         ],
         "psr-4": {
             "Jonassiewertsen\\StatamicButik\\": "src"

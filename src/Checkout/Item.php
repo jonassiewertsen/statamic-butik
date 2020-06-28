@@ -18,6 +18,11 @@ class Item
     public bool $available;
 
     /**
+     * Is the item sellable in the selected country?
+     */
+    public bool $sellable;
+
+    /**
      * How many times can the product be sold.
      */
     public int $availableStock;
@@ -53,27 +58,28 @@ class Item
     private int $quantity;
 
     /**
-     * Will return the total price of the item
+     * Will return the price of the item
      */
-    private $totalPrice;
+    private string $singlePrice;
 
     /**
-     * Will return the total price of the item
+     * Will return the cumulated price. The itemquantity multiplied with the single Price
      */
-    private $totalShipping;
+    private string $totalPrice;
 
     public function __construct(Product $product)
     {
-        $this->available      = $product->available;
-        $this->id             = $product->slug;
-        $this->name           = $product->title;
-        $this->description    = $this->limitDescription($product->description);
-        $this->taxRate        = $product->tax->percentage;
-        $this->quantity       = 1;
-        $this->availableStock = $product->stock;
-        $this->base_price     = $product->base_price;
-        $this->totalPrice     = $this->calculateTotalPrice();
-        $this->totalShipping  = $this->calculateTotalShipping();
+        $this->available       = $product->available;
+        $this->sellable        = true;
+        $this->id              = $product->slug;
+        $this->name            = $product->title;
+        $this->description     = $this->limitDescription($product->description);
+        $this->taxRate         = $product->tax->percentage;
+        $this->quantity        = 1;
+        $this->availableStock  = $product->stock;
+        $this->singlePrice     = $product->price;
+        $this->totalPrice      = $this->totalPrice();
+        $this->shippingProfile = $product->shippingProfile;
     }
 
     public function increase()
@@ -102,65 +108,53 @@ class Item
         $this->update();
     }
 
+    public function getQuantity(): int
+    {
+        return $this->quantity;
+    }
+
     public function setQuantity(int $quanitity): void
     {
         $this->quantity = $quanitity;
         $this->update();
     }
 
-    public function getQuantity(): int
-    {
-        return $this->quantity;
-    }
-
-    public function totalPrice(): string
-    {
-        return $this->totalPrice;
-    }
-
-    public function singleShipping(): string
-    {
-        return $this->product()->shipping->price;
-    }
-
-    public function totalShipping(): string
-    {
-        return $this->totalShipping;
-    }
-
     public function singlePrice(): string
     {
-        return $this->product()->totalPrice;
+        return $this->product()->price;
     }
 
-    private function calculateTotalPrice()
+    public function totalPrice()
     {
-        $price = $this->makeAmountSaveable($this->product()->totalPrice);
+        $price = $this->makeAmountSaveable($this->product()->price);
         return $this->makeAmountHuman($price * $this->quantity);
     }
 
-    private function calculateTotalShipping()
+    public function sellable(): void
     {
-        $shipping = $this->makeAmountSaveable($this->product()->shipping_amount);
-        return $this->makeAmountHuman($shipping * $this->quantity);
+        $this->sellable = true;
+    }
+
+    public function nonSellable(): void
+    {
+        $this->sellable = false;
     }
 
     public function update(): void
     {
-        if (! $this->StockAvailable()) {
+        if (!$this->StockAvailable()) {
             $this->setQuantityToStock();
         }
 
-        if (! $this->product()->available) {
+        if (!$this->product()->available) {
             $this->quantity = 0;
         }
 
         $this->available      = $this->product()->available;
         $this->availableStock = $this->product()->stock;
-        $this->base_price     = $this->product()->base_price;
+        $this->singlePrice    = $this->product()->price;
         $this->description    = $this->limitDescription($this->product()->description);
-        $this->totalPrice     = $this->calculateTotalPrice();
-        $this->totalShipping  = $this->calculateTotalShipping();
+        $this->totalPrice     = $this->totalPrice();
     }
 
     private function limitDescription($text)
@@ -173,7 +167,7 @@ class Item
         $cacheName = "product:{$this->id}";
 
         return Cache::remember($cacheName, 300, function () {
-           return  Product::find($this->id);
+            return Product::find($this->id);
         });
     }
 
@@ -182,7 +176,8 @@ class Item
         $this->setQuantity($this->product()->stock);
     }
 
-    private function stockAvailable() {
+    private function stockAvailable()
+    {
         return $this->getQuantity() <= $this->product()->stock;
     }
 }

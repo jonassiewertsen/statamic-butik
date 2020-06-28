@@ -8,14 +8,14 @@ class Product extends ButikModel
 {
     use ProductUrlTrait;
 
-    protected $table        = 'butik_products';
     public    $incrementing = false;
+    protected $table        = 'butik_products';
     protected $primaryKey   = 'slug';
     protected $keyType      = 'string';
 
     protected $casts = [
         'available'       => 'boolean',
-        'base_price'      => 'integer',
+        'price'           => 'integer',
         'stock'           => 'integer',
         'description'     => 'array',
         'images'          => 'array',
@@ -32,15 +32,9 @@ class Product extends ButikModel
     /**
      * A Product has taxes
      */
-    public function tax() {
+    public function tax()
+    {
         return $this->belongsTo(Tax::class, 'tax_id', 'slug');
-    }
-
-    /**
-     * A Product has a shipping relation
-     */
-    public function shipping() {
-        return $this->belongsTo(Shipping::class, 'shipping_id', 'slug');
     }
 
     /**
@@ -51,18 +45,17 @@ class Product extends ButikModel
     }
 
     /**
-     * Will return the shipping price for this item
+     * A Product has a shipping relation
      */
-    public function getTotalPriceAttribute()
+    public function shippingProfile()
     {
-        $amount = $this->getOriginal('base_price') + $this->shipping->getOriginal('price');
-        return $this->makeAmountHuman($amount);
+        return $this->belongsTo(ShippingProfile::class, 'shipping_profile_slug', 'slug');
     }
 
     /**
      * Will return the base price for this item
      */
-    public function getBasePriceAttribute($value)
+    public function getPriceAttribute($value)
     {
         return $this->makeAmountHuman($value);
     }
@@ -70,17 +63,9 @@ class Product extends ButikModel
     /**
      * Mutating from a the correct amount into a integer without commas
      */
-    public function setBasePriceAttribute($value)
+    public function setPriceAttribute($value)
     {
-        $this->attributes['base_price'] = $this->makeAmountSaveable($value);
-    }
-
-    /**
-     * Will return the shipping price
-     */
-    public function getShippingAmountAttribute($value)
-    {
-        return $this->shipping->price;
+        $this->attributes['price'] = $this->makeAmountSaveable($value);
     }
 
     /**
@@ -91,21 +76,20 @@ class Product extends ButikModel
         return $this->tax->percentage;
     }
 
-    public function getTaxAmountAttribute() {
+    public function getTaxAmountAttribute()
+    {
         $tax = $data = str_replace(',', '.', $this->tax->percentage);
 
-        $divisor            = $tax + 100;
-        $base_price         = $this->getOriginal('base_price');
-        $shipping_amount    = $this->shipping->getOriginal('price');
-        $total_amount       = $base_price + $shipping_amount;
+        $divisor = $tax + 100;
+        $price   = $this->getRawOriginal('price');
 
-        $totalPriceWithoutTax = $total_amount / $divisor * 100;
-        $tax = $total_amount - $totalPriceWithoutTax;
+        $totalPriceWithoutTax = $price / $divisor * 100;
+        $tax                  = $price - $totalPriceWithoutTax;
         return $this->makeAmountHuman($tax);
     }
 
     /**
-     * Return the price with currency appended
+     * Is the product still in stock?
      */
     public function getSoldOutAttribute()
     {
@@ -126,7 +110,8 @@ class Product extends ButikModel
     /**
      * The route to the base shop
      */
-    private function shopRoute() {
+    private function shopRoute()
+    {
         return config('butik.route_shop-prefix');
     }
 }

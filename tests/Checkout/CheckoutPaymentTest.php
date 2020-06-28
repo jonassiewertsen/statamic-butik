@@ -1,11 +1,10 @@
 <?php
 
-namespace Tests\Shop;
+namespace Jonassiewertsen\StatamicButik\Tests\Checkout;
 
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Str;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
-use Jonassiewertsen\StatamicButik\Helper\Cart;
+use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
@@ -62,13 +61,14 @@ class CheckoutPaymentTest extends TestCase
     /** @test */
     public function translations_will_be_displayed_on_product_cards()
     {
+        $this->withoutExceptionHandling();
         Session::put('butik.customer', $this->customer);
 
         $this->get(route('butik.checkout.payment'))
             ->assertSee('Delivery')
-            ->assertSee('Review &amp; Payment')
+            ->assertSee('Review & Payment')
             ->assertSee('Receipt')
-            ->assertSee('Shipping')
+//            ->assertSee('Shipping') TODO: Add shipping back in again
             ->assertSee('Total');
     }
 
@@ -157,7 +157,7 @@ class CheckoutPaymentTest extends TestCase
 
         $this->get(route('butik.checkout.payment'))
             ->assertOk()
-            ->assertSee(Cart::totalShipping())
+//            ->assertSee(Cart::totalShipping()) TODO: Add shipping back in again
             ->assertSee(Cart::totalPrice());
     }
 

@@ -5,7 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
-use Jonassiewertsen\StatamicButik\Helper\Cart;
+use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 
 class CheckoutController extends Checkout
@@ -17,10 +17,9 @@ class CheckoutController extends Checkout
             (new Customer())->empty();
 
         $items         = Cart::get();
-        $totalShipping = Cart::totalShipping();
         $totalPrice    = Cart::totalPrice();
 
-        return view(config('butik.template_checkout-delivery'), compact('customer', 'items', 'totalShipping', 'totalPrice'));
+        return view(config('butik.template_checkout-delivery'), compact('customer', 'items', 'totalPrice'));
     }
 
     public function saveCustomerData()
@@ -36,12 +35,13 @@ class CheckoutController extends Checkout
 
     public function payment()
     {
+        Cart::removeNonSellableItems();
+
         $customer      = session('butik.customer');
         $items         = Cart::get();
-        $totalShipping = Cart::totalShipping();
         $totalPrice    = Cart::totalPrice();
 
-        return view(config('butik.template_checkout-payment'), compact('customer', 'items', 'totalShipping', 'totalPrice'));
+        return view(config('butik.template_checkout-payment'), compact('customer', 'items', 'totalPrice'));
     }
 
     public function receipt(Request $request, $order)

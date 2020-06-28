@@ -72,6 +72,11 @@ What Butik can do:
 - [x] Swap layouts
 - [x] swap templates
 
+### Requirements 
+- Statamic V3
+- PHP >= 7.4
+- Laravel 7.*
+
 ## Limitations 
 
 If you need some functions, which Statamic Butik does not provide at the moment, get in contact.  The functionality will be extended a lot over the next months. 

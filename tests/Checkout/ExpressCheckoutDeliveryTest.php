@@ -1,9 +1,8 @@
 <?php
 
-namespace Tests\Shop;
+namespace Jonassiewertsen\StatamicButik\Tests\Checkout;
 
 use Illuminate\Support\Facades\Session;
-use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
@@ -60,7 +59,7 @@ class ExpressCheckoutDeliveryTest extends TestCase
 
         $this->get(route('butik.checkout.express.delivery', $this->product))
             ->assertSee('Delivery')
-            ->assertSee('Review &amp; Payment')
+            ->assertSee('Review & Payment')
             ->assertSee('Receipt')
             ->assertSee('Express Checkout')
             ->assertSee('Subtotal')
@@ -69,7 +68,6 @@ class ExpressCheckoutDeliveryTest extends TestCase
             ->assertSee('To payment')
             ->assertSee('Your Information')
             ->assertSee('Delivery Address')
-            ->assertSee('We will <span class="butik-underline">not</span> ask you to create an account. Nobody likes doing that ...')
             ->assertSee('Name')
             ->assertSee('Mail')
             ->assertSee('Country')

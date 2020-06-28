@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use \Jonassiewertsen\StatamicButik\Http\Models\Tax;
@@ -20,7 +20,7 @@ class TaxTest extends TestCase
     public function the_tax_will_be_saved_without_decimals()
     {
         $this->tax->update(['percentage' => '7.7' ]);
-        $this->assertEquals('770', Tax::first()->getOriginal('percentage'));
+        $this->assertEquals('770', Tax::first()->getRawOriginal('percentage'));
     }
 
     /** @test */
