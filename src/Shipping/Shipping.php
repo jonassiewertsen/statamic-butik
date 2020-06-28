@@ -52,10 +52,10 @@ class Shipping
             $zone  = $this->detectShippingZone($profile);
             $items = $this->filterItems($profile);
 
-            // In case no zone could be detected, we will set the items to not buyable.
+            // In case no zone could be detected, we will set the items to non sellable.
             // This happens, if the items are not available in the choosen country.
             if ($zone === null) {
-                $items->each->notBuyable();
+                $items->each->nonSellable();
                 break;
             }
 

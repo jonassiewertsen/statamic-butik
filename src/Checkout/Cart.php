@@ -116,8 +116,8 @@ class Cart
         static::resetTotalPrice();
 
         static::$cart->each(function ($item) {
-            if (!$item->buyable) {
-                // We won't charge for non buyable items
+            if (!$item->sellable) {
+                // We won't charge for non sellable items
                 return;
             }
 
@@ -189,7 +189,7 @@ class Cart
         static::$cart = static::get();
 
         static::$cart = static::$cart->filter(function ($item) {
-            return $item->buyable;
+            return $item->sellable;
         });
 
         static::set(static::$cart);

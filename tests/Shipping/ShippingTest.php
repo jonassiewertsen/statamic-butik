@@ -100,7 +100,7 @@ class ShippingTest extends TestCase
     }
 
     /** @test */
-    public function if_a_profile_cant_detect_a_belonging_shipping_zone_the_items_will_be_declared_as_not_buyable()
+    public function if_a_profile_cant_detect_a_belonging_shipping_zone_the_items_will_be_declared_as_non_sellable()
     {
         Cart::setCountry(create(Country::class)->first()->name);
 
@@ -108,7 +108,7 @@ class ShippingTest extends TestCase
         $shipping->handle();
 
         foreach ($shipping->items as $item) {
-            $this->assertFalse($item->buyable);
+            $this->assertFalse($item->sellable);
         }
     }
 }

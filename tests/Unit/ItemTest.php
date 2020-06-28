@@ -47,29 +47,29 @@ class ItemTest extends TestCase
     }
 
     /** @test */
-    public function it_can_be_buyable()
+    public function it_can_be_sellable()
     {
         $item = new Item($this->product);
 
-        $this->assertTrue($item->buyable);
+        $this->assertTrue($item->sellable);
     }
 
     /** @test */
-    public function it_can_be_declared_as_buyable()
+    public function it_can_be_declared_as_sellable()
     {
         $item = new Item($this->product);
-        $item->buyable();
+        $item->sellable();
 
-        $this->assertTrue($item->buyable);
+        $this->assertTrue($item->sellable);
     }
 
     /** @test */
-    public function it_can_be_declared_as_notbuyable()
+    public function it_can_be_declared_as_non_sellable()
     {
         $item = new Item($this->product);
-        $item->notBuyable();
+        $item->nonSellable();
 
-        $this->assertFalse($item->buyable);
+        $this->assertFalse($item->sellable);
     }
 
     /** @test */

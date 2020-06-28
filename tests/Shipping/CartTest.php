@@ -111,7 +111,7 @@ class CartTest extends TestCase
     }
 
     /** @test */
-    public function not_buyable_items_will_not_be_counted()
+    public function non_sellable_items_will_not_be_counted()
     {
         $product1 = factory(Product::class)->create();
         $product2 = factory(Product::class)->create();
@@ -120,7 +120,7 @@ class CartTest extends TestCase
         Cart::add($product2);
 
         $item1 = Cart::get()->first();
-        $item1->notBuyable();
+        $item1->nonSellable();
         $item2 = Cart::get()->last();
 
         $this->assertEquals($item2->totalPrice(), Cart::totalPrice());
@@ -136,7 +136,7 @@ class CartTest extends TestCase
         Cart::add($product2);
 
         $item1 = Cart::get()->first();
-        $item1->notBuyable();
+        $item1->nonSellable();
         $item2 = Cart::get()->last();
 
         Cart::removeNonSellableItems();
