@@ -7,7 +7,8 @@ use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class CountryCreateTest extends TestCase
 {
-    public function setUp(): void {
+    public function setUp(): void
+    {
         parent::setUp();
 
         $this->signInAdmin();
@@ -43,12 +44,12 @@ class CountryCreateTest extends TestCase
         $slug = 'not-unique';
 
         // First country
-        $country = raw(Country::class, ['slug' => $slug ]);
+        $country = raw(Country::class, ['slug' => $slug]);
         $this->post(route('statamic.cp.butik.countries.store'), $country)
             ->assertSessionHasNoErrors();
 
         // Another country with the same slug
-        $country = raw(Country::class, ['slug' => $slug ]);
+        $country = raw(Country::class, ['slug' => $slug]);
         $this->post(route('statamic.cp.butik.countries.store'), $country)
             ->assertSessionHasErrors('slug');
     }
