@@ -37,17 +37,6 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function it_has_a_total_price(){
-        $product = create(Product::class)->first();
-        $amount = $product->getOriginal('base_price') + $product->shipping->getOriginal('price');
-
-        $this->assertEquals(
-            $product->makeAmountHuman($amount),
-            $product->total_price
-        );
-    }
-
-    /** @test */
     public function the_currency_will_be_converted_correctly()
     {
         $product = create(Product::class, ['price' => 2]);
