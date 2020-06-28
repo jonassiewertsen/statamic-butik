@@ -11,6 +11,7 @@ class CreateCategoriesTable extends Migration
         Schema::create('butik_categories', function (Blueprint $table) {
             $table->string('slug')->unique()->primary();
             $table->string('name', 50);
+            $table->boolean('is_visible')->default(true);
             $table->timestamps();
         });
     }
