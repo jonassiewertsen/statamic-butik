@@ -10,13 +10,13 @@
             </header>
 
             <publish-form
-                    :action="`${this.route}/${this.zone.id}`"
-                    :title="'Update general information'"
-                    :blueprint="blueprint"
-                    :meta="meta"
-                    :method="'patch'"
-                    :values="values"
-                    @saved="close"
+                :action="`${this.route}/${this.zone.id}`"
+                :title="'Update general information'"
+                :blueprint="blueprint"
+                :meta="meta"
+                :method="'patch'"
+                :values="values"
+                @saved="close"
             ></publish-form>
 
             <h1 class="mb-3 mt-4">Countries</h1>
@@ -40,12 +40,12 @@
             <button @click="confirmZoneDeletion = true" class="btn-danger">Delete shipping zone</button>
 
             <confirmation-modal danger
-                                v-if="confirmZoneDeletion"
-                                buttonText="Delete shipping zone"
-                                title="Delete"
-                                bodyText="Are you sure you want delete this shipping zone? All connected rates will be deleted as well. "
-                                @confirm="deleteShippingZone"
-                                @cancel="confirmZoneDeletion = false"
+                v-if="confirmZoneDeletion"
+                buttonText="Delete shipping zone"
+                title="Delete"
+                bodyText="Are you sure you want delete this shipping zone? All connected rates will be deleted as well. "
+                @confirm="deleteShippingZone"
+                @cancel="confirmZoneDeletion = false"
             ></confirmation-modal>
         </div>
     </stack>
