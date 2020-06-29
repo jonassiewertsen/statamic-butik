@@ -28,6 +28,10 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\CP')
             'index', 'create', 'store', 'edit', 'update', 'destroy',
         ]);
 
+        Route::resource('categories', 'CategoriesController')->only([
+           'store', 'update', 'destroy',
+        ]);
+
         Route::resource('countries', 'CountriesController')->only([
            'index', 'create', 'store', 'edit', 'update', 'destroy'
         ]);

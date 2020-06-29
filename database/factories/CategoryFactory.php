@@ -5,7 +5,7 @@ use Jonassiewertsen\StatamicButik\Http\Models\Category;
 use Statamic\Support\Str;
 
 $factory->define(Category::class, function (Faker $faker) {
-    $name = $faker->unique()->colorName;
+    $name = $faker->unique()->name;
 
     return [
         'name' => $name,

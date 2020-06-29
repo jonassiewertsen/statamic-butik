@@ -10,6 +10,10 @@ class Category extends ButikModel
 
     protected $guarded = [];
 
+    protected $casts = [
+        'is_visible' => 'boolean',
+    ];
+
     public function getRouteKeyName()
     {
         return 'slug';
