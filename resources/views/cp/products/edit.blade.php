@@ -12,4 +12,9 @@
         :meta='@json($meta)'
         :values='@json($values)'
     ></publish-form>
+
+    <butik-manage-product-categories
+        :categories='@json($categories)'
+        :product-slug="'{{ $values['slug'] }}'"
+    ></butik-manage-product-categories>
 @stop
