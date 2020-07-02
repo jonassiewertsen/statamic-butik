@@ -50,15 +50,7 @@ class Category extends ButikModel
     /**
      * Is a specific product attached to this category?
      */
-    public function isAttachedTo(Product $product): bool
-    {
-        return $this->isTheProductAttachedToThisCagegory($product);
-    }
-
-    /**
-     * Is exactly one entry saved in the butik_category_product table?
-     */
-    private function isTheProductAttachedToThisCagegory(Product $product): bool
+    public function isProductAttached(Product $product): bool
     {
         return DB::table('butik_category_product')
                 ->where('product_slug', $product->slug)

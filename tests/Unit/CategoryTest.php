@@ -31,10 +31,10 @@ class CategoryTest extends TestCase
         create(Category::class);
         $category = Category::first();
 
-        $this->assertFalse($category->isAttachedTo($this->product));
+        $this->assertFalse($category->isProductAttached($this->product));
 
         $category->addProduct($this->product);
-        $this->assertTrue($category->isAttachedTo($this->product));
+        $this->assertTrue($category->isProductAttached($this->product));
     }
 
     /** @test */
@@ -44,9 +44,9 @@ class CategoryTest extends TestCase
         $category = Category::first();
         $category->addProduct($this->product);
 
-        $this->assertTrue($category->isAttachedTo($this->product));
+        $this->assertTrue($category->isProductAttached($this->product));
 
         $category->removeProduct($this->product);
-        $this->assertFalse($category->isAttachedTo($this->product));
+        $this->assertFalse($category->isProductAttached($this->product));
     }
 }
