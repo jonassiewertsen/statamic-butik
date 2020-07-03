@@ -17,7 +17,7 @@ class CategoryCreateTest extends TestCase
     public function categories_can_be_created()
     {
         $category = raw(Category::class);
-        $this->post(route('statamic.cp.butik.categories.store'), $category)->assertSessionHasNoErrors();
+        $this->post(cp_route('butik.categories.store'), $category)->assertSessionHasNoErrors();
         $this->assertEquals(1, Category::count());
     }
 
@@ -25,7 +25,7 @@ class CategoryCreateTest extends TestCase
     public function name_is_required()
     {
         $category = raw(Category::class, ['name' => null]);
-        $this->post(route('statamic.cp.butik.categories.store'), $category)
+        $this->post(cp_route('butik.categories.store'), $category)
             ->assertSessionHasErrors('name');
     }
 
@@ -33,7 +33,7 @@ class CategoryCreateTest extends TestCase
     public function slug_is_required()
     {
         $category = raw(Category::class, ['slug' => null]);
-        $this->post(route('statamic.cp.butik.categories.store'), $category)
+        $this->post(cp_route('butik.categories.store'), $category)
             ->assertSessionHasErrors('slug');
     }
 
@@ -44,12 +44,12 @@ class CategoryCreateTest extends TestCase
 
         // First category
         $category = raw(Category::class, ['slug' => $slug ]);
-        $this->post(route('statamic.cp.butik.categories.store'), $category)
+        $this->post(cp_route('butik.categories.store'), $category)
             ->assertSessionHasNoErrors();
 
         // Another category with the same slug
         $category = raw(Category::class, ['slug' => $slug ]);
-        $this->post(route('statamic.cp.butik.categories.store'), $category)
+        $this->post(cp_route('butik.categories.store'), $category)
             ->assertSessionHasErrors('slug');
     }
 }
