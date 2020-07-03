@@ -15,7 +15,8 @@
 
     <butik-manage-product-categories
         :categories='@json($categories)'
-        route="{{ cp_route('butik.category.attach-product', ['category' => 'x-category', 'product' => 'x-product']) }}"
+        category-attach-route="{{ cp_route('butik.category.attach-product', ['category' => 'x-category', 'product' => 'x-product']) }}"
+        category-manage-route="{{ cp_route('butik.categories.store') }}"
         :product-slug="'{{ $values['slug'] }}'"
     ></butik-manage-product-categories>
 @stop
