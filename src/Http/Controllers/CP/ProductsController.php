@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Jonassiewertsen\StatamicButik\Blueprints\ProductBlueprint;
 use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
+use Jonassiewertsen\StatamicButik\Http\Models\Category;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Statamic\CP\Column;
 
@@ -78,10 +79,19 @@ class ProductsController extends CpController
         $blueprint = new ProductBlueprint();
         $fields    = $blueprint()->fields()->addValues($values)->preProcess();
 
+        $categories = Category::orderBy('name', 'desc')->get()->map(function ($category) use ($product) {
+            return [
+                'name'        => $category->name,
+                'slug'        => $category->slug,
+                'is_attached' => $category->isProductAttached($product),
+            ];
+        });
+
         return view('butik::cp.products.edit', [
-            'blueprint' => $blueprint()->toPublishArray(),
-            'values'    => $fields->values(),
-            'meta'      => $fields->meta(),
+            'blueprint'  => $blueprint()->toPublishArray(),
+            'values'     => $fields->values(),
+            'meta'       => $fields->meta(),
+            'categories' => $categories,
         ]);
     }
 

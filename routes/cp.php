@@ -23,10 +23,20 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\CP')
         'index',
     ]);
 
-    Route::prefix('/settings')->group(function() {
+    Route::prefix('settings')->group(function() {
         Route::resource('taxes', 'TaxesController')->only([
             'index', 'create', 'store', 'edit', 'update', 'destroy',
         ]);
+
+        Route::resource('categories', 'CategoriesController')->only([
+           'store', 'update', 'destroy',
+        ]);
+
+        Route::post('category/{category}/attach/{product}', 'CategoriesController@attachProduct')
+            ->name('category.attach-product');
+
+        Route::delete('category/{category}/attach/{product}', 'CategoriesController@detachProduct')
+            ->name('category.attach-product');
 
         Route::resource('countries', 'CountriesController')->only([
            'index', 'create', 'store', 'edit', 'update', 'destroy'

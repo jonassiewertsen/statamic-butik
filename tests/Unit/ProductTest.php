@@ -124,4 +124,12 @@ class ProductTest extends TestCase
 
         $this->assertInstanceOf(ShippingProfile::class, $product->shippingProfile);
     }
+
+    /** @test */
+    public function it_has_many_categories()
+    {
+        $product = create(Product::class)->first();
+
+        $this->assertInstanceOf('Illuminate\Support\Collection', $product->categories);
+    }
 }

@@ -10,8 +10,6 @@ class CountryDeleteTest extends TestCase
     /** @test */
     public function A_product_can_be_deleted()
     {
-        $this->withoutExceptionHandling();
-
         $this->signInAdmin();
 
         $country = create(Country::class);
