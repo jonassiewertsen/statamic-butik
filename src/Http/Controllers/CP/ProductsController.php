@@ -79,7 +79,7 @@ class ProductsController extends CpController
         $blueprint = new ProductBlueprint();
         $fields    = $blueprint()->fields()->addValues($values)->preProcess();
 
-        $categories = Category::orderBy('name', 'desc')->get()->map(function ($category) use ($product) {
+        $categories = Category::orderBy('name')->get()->map(function ($category) use ($product) {
             return [
                 'name'        => $category->name,
                 'slug'        => $category->slug,
