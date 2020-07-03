@@ -15,10 +15,10 @@ class Product extends ButikModel
 
     protected $casts = [
         'available'       => 'boolean',
-        'price'           => 'integer',
-        'stock'           => 'integer',
         'description'     => 'array',
         'images'          => 'array',
+        'price'           => 'integer',
+        'stock'           => 'integer',
         'stock_unlimited' => 'boolean',
     ];
 
@@ -40,7 +40,8 @@ class Product extends ButikModel
     /**
      * A Product has categories
      */
-    public function categories() {
+    public function categories()
+    {
         return $this->belongsToMany(Category::class, 'butik_category_product');
     }
 
