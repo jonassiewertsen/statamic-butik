@@ -79,7 +79,13 @@ class ProductsController extends CpController
         $blueprint = new ProductBlueprint();
         $fields    = $blueprint()->fields()->addValues($values)->preProcess();
 
-        $categories = Category::select('name', 'slug', 'is_visible')->get()->toArray();
+        $categories = Category::all()->map(function ($category) use ($product) {
+            return [
+                'name'        => $category->name,
+                'slug'        => $category->slug,
+                'is_attached' => $category->isProductAttached($product),
+            ];
+        });
 
         return view('butik::cp.products.edit', [
             'blueprint'  => $blueprint()->toPublishArray(),

@@ -54,6 +54,7 @@ class Category extends ButikModel
     {
         return DB::table('butik_category_product')
                 ->where('product_slug', $product->slug)
+                ->where('category_slug', $this->slug)
                 ->count() === 1;
     }
 }

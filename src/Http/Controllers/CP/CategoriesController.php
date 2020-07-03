@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Jonassiewertsen\StatamicButik\Blueprints\CategoryBlueprint;
 use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
 use Jonassiewertsen\StatamicButik\Http\Models\Category;
+use Jonassiewertsen\StatamicButik\Http\Models\Product;
 
 class CategoriesController extends CpController
 {
@@ -36,5 +37,15 @@ class CategoriesController extends CpController
 //        $this->authorize('delete', $category);
 
         $category->delete();
+    }
+
+    public function attachProduct(Category $category, Product $product)
+    {
+        $category->addProduct($product);
+    }
+
+    public function detachProduct(Category $category, Product $product)
+    {
+        $category->removeProduct($product);
     }
 }
