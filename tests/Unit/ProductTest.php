@@ -132,4 +132,12 @@ class ProductTest extends TestCase
 
         $this->assertInstanceOf('Illuminate\Support\Collection', $product->categories);
     }
+
+    /** @test */
+    public function it_has_many_variants()
+    {
+        $product = create(Product::class)->first();
+
+        $this->assertInstanceOf('Illuminate\Support\Collection', $product->variants);
+    }
 }

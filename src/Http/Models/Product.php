@@ -54,6 +54,14 @@ class Product extends ButikModel
     }
 
     /**
+     * A Product has categories
+     */
+    public function variants()
+    {
+        return $this->hasMany(Variant::class);
+    }
+
+    /**
      * Will return the base price for this item
      */
     public function getPriceAttribute($value)

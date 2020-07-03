@@ -15,6 +15,10 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\CP')
        'index', 'create', 'store', 'edit',  'update', 'destroy',
     ]);
 
+    Route::resource('variants', 'VariantsController')->only([
+       'store',
+    ]);
+
     Route::resource('orders', 'OrdersController')->only([
        'index', 'show',
     ]);
