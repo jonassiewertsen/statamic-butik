@@ -48,7 +48,7 @@ class VariantUpdateTest extends TestCase
     /** @test */
     public function the_price_can_be_updated()
     {
-        $this->variant->price = 3333;
+        $this->variant->price = '33,33';
         $this->updateVariant();
 
         $this->assertDatabaseHas('butik_variants', ['price' => 3333]);

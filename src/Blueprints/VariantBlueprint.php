@@ -51,7 +51,7 @@ class VariantBlueprint extends Blueprint
                         [
                             'handle' => 'price',
                             'field'  => [
-                                'type'    => 'integer',
+                                'type'    => 'money',
                                 'width'   => 75,
                                 'display' => __('butik::product.price'),
                                 'validate' => 'nullable',
