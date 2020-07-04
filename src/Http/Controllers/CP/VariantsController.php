@@ -13,6 +13,15 @@ class VariantsController extends CpController
     {
 //        $this->authorize('store', Variant::class);
 
+        /**
+         * TODO: Remove this ugly fix as soon as custom rules can be used in blueprints.
+         *
+         * https://github.com/statamic/cms/issues/2028
+         */
+        if ($request['price'] === null || $request['price'] === '') {
+            $request['price'] = 0;
+        }
+
         $blueprint = new VariantBlueprint();
         $fields    = $blueprint()->fields()->addValues($request->all());
         $fields->validate();

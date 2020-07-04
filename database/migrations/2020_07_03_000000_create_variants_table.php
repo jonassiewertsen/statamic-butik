@@ -14,17 +14,18 @@ class CreateVariantsTable extends Migration
             $table->string('title', 50);
             $table->boolean('available')->default(true);
             $table->boolean('inherit_price')->default(true);
-            $table->integer('price')->nullable();
+            $table->integer('price')->unsigned()->nullable();
             $table->boolean('inherit_stock')->default(false);
             $table->integer('stock')->nullable();
             $table->boolean('stock_unlimited')->default(false);
+            $table->timestamps();
 
             $table->foreign('product_slug')
                 ->references('slug')
                 ->on('butik_products')
                 ->onDelete('cascade');
 
-            $table->timestamps();
+            $table->unique(['product_slug', 'title']);
         });
     }
 
