@@ -79,6 +79,4 @@ class VariantCreateTest extends TestCase
         $variant = raw(Variant::class, $data);
         return $this->post(cp_route('butik.variants.store'), $variant);
     }
-
-    // TODO: test that variants will be deleted in case the product gets deleted
 }

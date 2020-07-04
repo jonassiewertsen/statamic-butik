@@ -39,4 +39,11 @@ class VariantsController extends CpController
             'stock_unlimited' => $variant['stock_unlimited'],
         ]);
     }
+
+    public function destroy(Variant $variant)
+    {
+//        $this->authorize('delete', $variant);
+
+        $variant->delete();
+    }
 }
