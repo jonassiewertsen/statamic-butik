@@ -40,6 +40,26 @@ class VariantsController extends CpController
         ]);
     }
 
+    public function update(Request $request, Variant $variant)
+    {
+//        $this->authorize('update', $variant); // TODO: Add authorization
+
+        $blueprint = new VariantBlueprint();
+        $fields    = $blueprint()->fields()->addValues($request->all());
+        $fields->validate();
+        $values = $fields->process()->values()->toArray();
+
+        $variant->update([
+            'available'       => $values['available'],
+            'title'           => $values['title'],
+            'inherit_price'   => $values['inherit_price'],
+            'price'           => $values['price'],
+            'inherit_stock'   => $values['inherit_stock'],
+            'stock'           => $values['stock'],
+            'stock_unlimited' => $values['stock_unlimited'],
+        ]);
+    }
+
     public function destroy(Variant $variant)
     {
 //        $this->authorize('delete', $variant);
