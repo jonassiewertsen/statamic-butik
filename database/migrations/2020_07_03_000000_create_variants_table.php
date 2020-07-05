@@ -10,8 +10,8 @@ class CreateVariantsTable extends Migration
     {
         Schema::create('butik_variants', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->boolean('default')->default(false);
             $table->string('product_slug');
+            $table->boolean('preselected')->default(false);
             $table->string('title', 50);
             $table->boolean('available')->default(true);
             $table->boolean('inherit_price')->default(true);
