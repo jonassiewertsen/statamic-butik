@@ -5,6 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Jonassiewertsen\StatamicButik\Blueprints\ProductBlueprint;
+use Jonassiewertsen\StatamicButik\Blueprints\VariantBlueprint;
 use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
 use Jonassiewertsen\StatamicButik\Http\Models\Category;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
@@ -75,9 +76,12 @@ class ProductsController extends CpController
     {
         $this->authorize('edit', $product);
 
-        $values    = $product->toArray();
-        $blueprint = new ProductBlueprint();
-        $fields    = $blueprint()->fields()->addValues($values)->preProcess();
+        $prodcutValues    = $product->toArray();
+        $productBlueprint = new ProductBlueprint();
+        $productFields    = $productBlueprint()->fields()->addValues($prodcutValues)->preProcess();
+
+        $variantBlueprint = new VariantBlueprint();
+        $variantFields    = $variantBlueprint()->fields()->addValues([])->preProcess();
 
         $categories = Category::orderBy('name', 'desc')->get()->map(function ($category) use ($product) {
             return [
@@ -88,10 +92,16 @@ class ProductsController extends CpController
         });
 
         return view('butik::cp.products.edit', [
-            'blueprint'  => $blueprint()->toPublishArray(),
-            'values'     => $fields->values(),
-            'meta'       => $fields->meta(),
-            'categories' => $categories,
+            'productBlueprint' => $productBlueprint()->toPublishArray(),
+            'productValues'    => $productFields->values(),
+            'productMeta'      => $productFields->meta(),
+
+            'variantBlueprint' => $variantBlueprint()->toPublishArray(),
+            'variantValues'    => $variantFields->values(),
+            'variantMeta'      => $variantFields->meta(),
+
+            'categories'       => $categories,
+            'variants'         => $product->variants,
         ]);
     }
 

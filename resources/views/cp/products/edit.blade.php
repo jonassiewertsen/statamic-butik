@@ -6,17 +6,24 @@
 @section('content')
     <publish-form
         title="{{ __('butik::product.form_title') }}"
-        action="{{ cp_route('butik.products.update', ['product' => $values['slug']]) }}"
+        action="{{ cp_route('butik.products.update', ['product' => $productValues['slug']]) }}"
         method="patch"
-        :blueprint='@json($blueprint)'
-        :meta='@json($meta)'
-        :values='@json($values)'
+        :blueprint='@json($productBlueprint)'
+        :meta='@json($productMeta)'
+        :values='@json($productValues)'
     ></publish-form>
+
+    <butik-manage-product-variants
+        :blueprint='@json($variantBlueprint)'
+        :meta='@json($variantMeta)'
+        :values='@json($variantValues)'
+        :variants='@json($variants)'
+    ></butik-manage-product-variants>
 
     <butik-manage-product-categories
         :categories='@json($categories)'
         category-attach-route="{{ cp_route('butik.category.attach-product', ['category' => 'x-category', 'product' => 'x-product']) }}"
         category-manage-route="{{ cp_route('butik.categories.store') }}"
-        :product-slug="'{{ $values['slug'] }}'"
+        :product-slug="'{{ $productValues['slug'] }}'"
     ></butik-manage-product-categories>
 @stop

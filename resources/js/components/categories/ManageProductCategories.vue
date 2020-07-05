@@ -1,11 +1,11 @@
 <template>
-    <div class="flex">
+    <div class="flex mt-6 mb-6">
         <section class="flex-grow">
-            <header class="flex mb-3">
+            <header class="flex justify-between mb-3">
                 <h1>Categories</h1>
                 <create-button
                     :label="'New category'"
-                    :classes="'bg-white ml-3'"
+                    :classes="'bg-white'"
                     @clicked="showNewCategory = ! showNewCategory"
                 ></create-button>
             </header>
