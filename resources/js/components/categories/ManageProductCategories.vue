@@ -18,7 +18,7 @@
             <div class="publish-section">
                 <table class="data-table">
                     <tbody>
-                    <tr v-for="category in updatedCategories">
+                    <tr v-for="category in updatedCategories" :class="{ 'bg-grey-30 opacity-75': ! category.is_attached }">
                         <td class="pl-2 py-1 text-base">{{ category.name }}</td>
                         <td>
                             <toggle-input v-model="category.is_attached" @input="update(category)"></toggle-input>

@@ -13,7 +13,7 @@
             <div class="publish-section">
                 <table class="data-table">
                     <tbody>
-                    <tr v-for="variant in variants">
+                    <tr v-for="variant in variants" :class="{ 'bg-grey-30 opacity-75': ! variant.available }">
                         <td class="text-base">
                             {{ variant.title }}
                         </td>
