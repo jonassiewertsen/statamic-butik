@@ -57,7 +57,7 @@
     import axios from "axios";
 
     export default {
-        components: {CreateButton, FormStack},
+        components: { CreateButton, FormStack },
 
         props: {
             zone: {

@@ -19,12 +19,17 @@
                 <table class="data-table">
                     <tbody>
                     <tr v-for="category in updatedCategories">
-                        <th class="pl-2 py-1 w-1/4 text-base">{{ category.name }}</th>
+                        <td class="pl-2 py-1 text-base">{{ category.name }}</td>
                         <td>
                             <toggle-input v-model="category.is_attached" @input="update(category)"></toggle-input>
                         </td>
                         <td>
-                            <button class="text-red hover:text-red-light" @click="deleteCategory(category)">{{ __('Delete') }}</button>
+                            <dropdown-list class="flex justify-end">
+                                <dropdown-item
+                                        :text="__('Delete')"
+                                        class="warning"
+                                        @click="deleteCategory(category)"/>
+                            </dropdown-list>
                         </td>
                     </tr>
                     <tr v-if="updatedCategories.length === 0">

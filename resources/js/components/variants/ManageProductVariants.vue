@@ -6,7 +6,7 @@
                 <create-button
                     :label="'New variant'"
                     :classes="'bg-white'"
-                    @clicked="showNewVariant = ! showNewVariant"
+                    @clicked="openCreateVariantStack"
                 ></create-button>
             </header>
 
@@ -14,31 +14,36 @@
                 <table class="data-table">
                     <tbody>
                     <tr v-for="variant in variants">
-                        <td>
-                            <toggle-input v-model="variant.available"></toggle-input>
-                        </td>
                         <td class="text-base">
                             {{ variant.title }}
                         </td>
                         <td>
-                            <span class="flex items-center" v-if="variant.inherit_price">
-                                Price <svg class="h-6 ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.082 9.5A4.47 4.47 0 0 0 6.75 8h-1.5a4.5 4.5 0 0 0 0 9h1.5a4.474 4.474 0 0 0 3.332-1.5M13.918 9.5A4.469 4.469 0 0 1 17.25 8h1.5a4.5 4.5 0 1 1 0 9h-1.5a4.472 4.472 0 0 1-3.332-1.5M6.75 12.499h10.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg>
-                            </span>
-                            <span class="flex items-center" v-else>
-                                Price: <span class="text-base ml-1">{{ variant.price }}</span>
-                            </span>
-                        </td>
-                        <td>
-                            <span class="flex items-center" v-if="variant.inherit_stock">
-                                Stock <svg class="h-6 ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.082 9.5A4.47 4.47 0 0 0 6.75 8h-1.5a4.5 4.5 0 0 0 0 9h1.5a4.474 4.474 0 0 0 3.332-1.5M13.918 9.5A4.469 4.469 0 0 1 17.25 8h1.5a4.5 4.5 0 1 1 0 9h-1.5a4.472 4.472 0 0 1-3.332-1.5M6.75 12.499h10.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg>
-                            </span>
-                            <span class="flex items-center" v-else>
-                                Stock: <span class="text-base ml-1">{{ variant.stock }}</span>
+                            <span class="flex items-center text-xs">
+                                Price:
+                                <svg v-if="variant.inherit_price" class="h-6 ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.082 9.5A4.47 4.47 0 0 0 6.75 8h-1.5a4.5 4.5 0 0 0 0 9h1.5a4.474 4.474 0 0 0 3.332-1.5M13.918 9.5A4.469 4.469 0 0 1 17.25 8h1.5a4.5 4.5 0 1 1 0 9h-1.5a4.472 4.472 0 0 1-3.332-1.5M6.75 12.499h10.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg>
+                                <span v-else class="text-base ml-1">{{ variant.price }}</span>
                             </span>
                         </td>
                         <td>
-                            <button class="text-grey-70 hover:text-grey-80" @click="">{{ __('Edit') }}</button>
-                            <button class="text-red hover:text-red-light ml-2" @click="">{{ __('Delete') }}</button>
+                            <span class="flex items-center text-xs">
+                                Stock:
+                                <svg v-if="variant.inherit_stock" class="h-6 ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.082 9.5A4.47 4.47 0 0 0 6.75 8h-1.5a4.5 4.5 0 0 0 0 9h1.5a4.474 4.474 0 0 0 3.332-1.5M13.918 9.5A4.469 4.469 0 0 1 17.25 8h1.5a4.5 4.5 0 1 1 0 9h-1.5a4.472 4.472 0 0 1-3.332-1.5M6.75 12.499h10.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg>
+                                <span v-else class="text-base ml-1">{{ variant.stock }}</span>
+                            </span>
+                        </td>
+                        <td>
+                            <toggle-input v-model="variant.available"></toggle-input>
+                        </td>
+                        <td>
+                            <dropdown-list class="flex justify-end">
+                                <dropdown-item
+                                        :text="__('Edit')"
+                                        @click="deleteCategory(category)"/>
+                                <dropdown-item
+                                        :text="__('Delete')"
+                                        class="warning"
+                                        @click="deleteCategory(category)"/>
+                            </dropdown-list>
                         </td>
                     </tr>
                     <tr v-if="updatedVariants.length === 0">
@@ -56,9 +61,11 @@
 </template>
 
 <script>
-    import axios from "axios";
+    import FormStack from "../stacks/Form"
 
     export default {
+        components: { FormStack },
+
         props: {
             variants: {
                 type: Array,
@@ -71,16 +78,22 @@
         },
 
         mounted() {
-          this.updatedVariants = this.variants
+            this.updatedVariants = this.variants
         },
 
         data() {
             return {
+                showVariantStack: false,
                 updatedVariants: [],
-                showNewVariant: false,
+                stackValues: [],
+                formMethod: 'post',
             }
         },
 
-        methods: {}
+        methods: {
+            openCreateVariantStack() {
+                this.showVariantStack = true
+            }
+        }
     }
 </script>
