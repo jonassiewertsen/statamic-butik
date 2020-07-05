@@ -10,6 +10,7 @@ class CreateVariantsTable extends Migration
     {
         Schema::create('butik_variants', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->boolean('default')->default(false);
             $table->string('product_slug');
             $table->string('title', 50);
             $table->boolean('available')->default(true);
