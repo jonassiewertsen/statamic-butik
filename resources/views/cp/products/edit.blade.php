@@ -19,7 +19,8 @@
         :variant-blueprint='@json($variantBlueprint)'
         :variant-meta='@json($variantMeta)'
         :variant-values='@json($variantValues)'
-        :variants='@json($variants)'
+        :variant-index-route='@json($variantIndexRoute)'
+        :variant-manage-route='@json($variantManageRoute)'
         :product-slug="'{{ $productValues['slug'] }}'"
     ></butik-manage-product-variants>
 

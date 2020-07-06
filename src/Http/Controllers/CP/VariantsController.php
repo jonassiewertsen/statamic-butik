@@ -5,6 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
 use Illuminate\Http\Request;
 use Jonassiewertsen\StatamicButik\Blueprints\VariantBlueprint;
 use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
+use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 
 class VariantsController extends CpController
@@ -65,5 +66,9 @@ class VariantsController extends CpController
 //        $this->authorize('delete', $variant);
 
         $variant->delete();
+    }
+
+    public function from(Product $product) {
+        return Variant::where('product_slug', $product->slug)->get();
     }
 }

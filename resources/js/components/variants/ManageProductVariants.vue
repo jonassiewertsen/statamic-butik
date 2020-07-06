@@ -6,7 +6,7 @@
                 <create-button
                     :label="'New variant'"
                     :classes="'bg-white'"
-                    @clicked="openCreateVariantStack()"
+                    @clicked="openCreateVariantStack"
                 ></create-button>
             </header>
 
@@ -38,15 +38,15 @@
                             <dropdown-list class="flex justify-end">
                                 <dropdown-item
                                     :text="__('Edit')"
-                                    @click="deleteCategory(category)"/>
+                                    @click="editVariant(variant)"/>
                                 <dropdown-item
                                     :text="__('Delete')"
                                     class="warning"
-                                    @click="deleteCategory(category)"/>
+                                    @click="deleteVariant(variant)"/>
                             </dropdown-list>
                         </td>
                     </tr>
-                    <tr v-if="updatedVariants.length === 0">
+                    <tr v-if="! variants || variants.length === 0">
                         <td colspan="3">No variants have been created yet.</td>
                     </tr>
                     </tbody>
@@ -75,6 +75,7 @@
 
 <script>
     import FormStack from "../stacks/Form"
+    import axios from "axios";
 
     export default {
         components: { FormStack },
@@ -84,11 +85,15 @@
                 type: String,
                 default: '',
             },
-            variants: {
-                type: Array,
-                default: [],
-            },
             productSlug: {
+                type: String,
+                default: '',
+            },
+            variantIndexRoute: {
+                type: String,
+                default: '',
+            },
+            variantManageRoute: {
                 type: String,
                 default: '',
             },
@@ -106,25 +111,57 @@
             }
         },
 
-        mounted() {
-            this.updatedVariants = this.variants
-            this.stackValues = this.variantValues
-        },
-
         data() {
             return {
-                showVariantStack: false,
-                updatedVariants: [],
-                stackValues: [],
+                variants: {
+                    type: Array,
+                    default: [],
+                },
+                stackValues: {
+                    type: Array,
+                    default: [],
+                },
                 formMethod: 'post',
+                showVariantStack: false,
             }
+        },
+
+        mounted() {
+            this.stackValues = this.variantValues
+            this.variants = this.fetchVariants()
         },
 
         methods: {
             openCreateVariantStack() {
                 this.stackValues.product_slug = this.productSlug
                 this.showVariantStack = true
-            }
+            },
+
+            closeVariantStack() {
+                this.fetchVariants()
+                this.showVariantStack = false
+            },
+
+            fetchVariants() {
+                axios.get(this.variantIndexRoute)
+                    .then(response => {
+                        this.variants = response.data
+                    }).catch(error => {
+                        this.$toast.error(error)
+                })
+            },
+
+            deleteVariant(variant) {
+                console.log(variant)
+                axios.delete(`${this.variantManageRoute}/${variant.id}`)
+                    .then(response => {
+                        this.$toast.success(__('Removed'))
+                        this.fetchVariants()
+                    }).catch(error => {
+                        this.$toast.error(error)
+                    })
+            },
         }
     }
 </script>
+

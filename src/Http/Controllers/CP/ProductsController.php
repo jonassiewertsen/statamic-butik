@@ -96,12 +96,13 @@ class ProductsController extends CpController
             'productValues'    => $productFields->values(),
             'productMeta'      => $productFields->meta(),
 
-            'variantBlueprint' => $variantBlueprint()->toPublishArray(),
-            'variantValues'    => $variantFields->values(),
-            'variantMeta'      => $variantFields->meta(),
+            'variantBlueprint'   => $variantBlueprint()->toPublishArray(),
+            'variantValues'      => $variantFields->values(),
+            'variantMeta'        => $variantFields->meta(),
+            'variantIndexRoute'  => cp_route('butik.variants.index', $product),
+            'variantManageRoute' => cp_route('butik.variants.store'),
 
-            'categories'       => $categories,
-            'variants'         => $product->variants,
+            'categories' => $categories,
         ]);
     }
 
