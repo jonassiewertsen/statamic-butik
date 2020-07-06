@@ -144,6 +144,8 @@
 
             openEditVariantStack(variant) {
                 this.stackValues = variant
+                // We need to transform a , into a dot, to preprocess the values correct
+                this.stackValues.price = variant.price.replace(',', '.')
                 this.stackAction = `${this.action}/${variant.id}`
                 this.stackMethod = 'patch'
                 this.showVariantStack = true

@@ -24,8 +24,6 @@ class Product extends ButikModel
 
     protected $guarded = [];
 
-    public $with = ['variants'];
-
     public function getRouteKeyName()
     {
         return 'slug';

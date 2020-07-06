@@ -25,12 +25,14 @@ class VariantIndexTest extends TestCase
 
         $this->get(cp_route('butik.variants.from-product', $product))
             ->assertJsonFragment([
+                'id'              => $variant->id,
                 'available'       => $variant->available,
-                'title'           => $variant->title,
+                'title'           => $variant->original_title,
                 'inherit_price'   => $variant->inherit_price,
-                'price'           => $variant->price,
+                'price'           => $variant->original_price,
+                'product_slug'    => $variant->product_slug,
                 'inherit_stock'   => $variant->inherit_stock,
-                'stock'           => $variant->stock,
+                'stock'           => $variant->original_stock,
                 'stock_unlimited' => $variant->stock_unlimited,
             ]);
 

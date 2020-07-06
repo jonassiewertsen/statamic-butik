@@ -20,7 +20,10 @@ class Variant extends ButikModel
     ];
 
     protected $appends = [
-      //
+      'original_title',
+      'original_price',
+      'original_stock',
+      'original_stock_unlimited',
     ];
 
     protected $guarded = [];
@@ -68,7 +71,7 @@ class Variant extends ButikModel
             return $this->product->price;
         }
 
-        return $this->makeAmountHuman($value);
+        return $this->makeAmountHuman($this->getRawOriginal('price'));
     }
 
     /**

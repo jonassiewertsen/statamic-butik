@@ -68,7 +68,22 @@ class VariantsController extends CpController
         $variant->delete();
     }
 
-    public function from(Product $product) {
-        return Variant::where('product_slug', $product->slug)->get();
+    public function from(Product $product)
+    {
+        return Variant::where('product_slug', $product->slug)
+            ->get()
+            ->map(function ($variant) {
+                return [
+                    'id'              => $variant->id,
+                    'available'       => $variant->available,
+                    'title'           => $variant->original_title,
+                    'inherit_price'   => $variant->inherit_price,
+                    'price'           => $variant->original_price,
+                    'product_slug'    => $variant->product_slug,
+                    'inherit_stock'   => $variant->inherit_stock,
+                    'stock'           => $variant->original_stock,
+                    'stock_unlimited' => $variant->original_stock_unlimited,
+                ];
+            });
     }
 }
