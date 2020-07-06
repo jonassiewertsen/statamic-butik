@@ -56,11 +56,20 @@ class Product extends ButikModel
     }
 
     /**
-     * A Product has categories
+     * A Product has variants
      */
     public function variants()
     {
         return $this->hasMany(Variant::class);
+    }
+
+    /**
+     * The product will return the belonging variant. Null will be returned,
+     * in case a variant can't be connected to the given slug
+     */
+    public function getVariant(String $variantTitle)
+    {
+        return $this->variants()->where('title', $variantTitle)->first();
     }
 
     /**
