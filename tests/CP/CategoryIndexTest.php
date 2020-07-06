@@ -21,7 +21,7 @@ class CategoryIndexTest extends TestCase
     /** @test */
     public function to_a_product_belonging_categories_can_be_fetched()
     {
-        $product = Product::first();
+        $product  = Product::first();
         $category = Category::first();
         $category->addProduct($product);
 
