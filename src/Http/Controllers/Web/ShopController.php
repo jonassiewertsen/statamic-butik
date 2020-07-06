@@ -4,7 +4,6 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
-use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
 
 class ShopController extends WebController
 {
