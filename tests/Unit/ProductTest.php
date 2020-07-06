@@ -13,7 +13,7 @@ class ProductTest extends TestCase
     /** @test */
     public function it_is_available_as_default()
     {
-        $product = create(Product::class)->first();
+        create(Product::class)->first();
         $this->assertTrue(Product::first()->available);
     }
 
@@ -161,5 +161,16 @@ class ProductTest extends TestCase
         $product = $variant->product;
 
         $this->assertEquals(null, $product->getVariant('not existing'));
+    }
+
+    /** @test */
+    public function a_product_can_check_if_variants_do_exist()
+    {
+        $product = create(Product::class)->first();
+        $this->assertFalse(Product::first()->hasVariants());
+
+        create(Variant::class, ['product_slug' => $product->slug])->first();
+
+        $this->assertTrue(Product::first()->hasVariants());
     }
 }

@@ -73,6 +73,14 @@ class Product extends ButikModel
     }
 
     /**
+     * Do variants exsist?
+     */
+    public function hasVariants()
+    {
+        return $this->variants->count() !== 0;
+    }
+
+    /**
      * Will return the base price for this item
      */
     public function getPriceAttribute($value)
