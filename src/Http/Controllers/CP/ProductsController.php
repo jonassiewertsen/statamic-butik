@@ -91,7 +91,7 @@ class ProductsController extends CpController
             'variantBlueprint'   => $variantBlueprint()->toPublishArray(),
             'variantValues'      => $variantFields->values(),
             'variantMeta'        => $variantFields->meta(),
-            'variantIndexRoute'  => cp_route('butik.variants.fromProduct', $product),
+            'variantIndexRoute'  => cp_route('butik.variants.from-product', $product),
             'variantManageRoute' => cp_route('butik.variants.store'),
         ]);
     }

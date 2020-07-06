@@ -25,7 +25,7 @@ class CategoryIndexTest extends TestCase
         $category = Category::first();
         $category->addProduct($product);
 
-        $this->get(cp_route('butik.categories.fromProduct', $product))
+        $this->get(cp_route('butik.categories.from-product', $product))
             ->assertJsonFragment([
                 'name'        => $category->name,
                 'slug'        => $category->slug,

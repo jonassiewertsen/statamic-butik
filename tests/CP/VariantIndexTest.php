@@ -23,7 +23,7 @@ class VariantIndexTest extends TestCase
         $variant = Variant::first();
         $product = Product::first();
 
-        $this->get(cp_route('butik.variants.fromProduct', $product))
+        $this->get(cp_route('butik.variants.from-product', $product))
             ->assertJsonFragment([
                 'available'       => $variant->available,
                 'title'           => $variant->title,

@@ -25,7 +25,7 @@
     ></butik-manage-product-variants>
 
     <butik-manage-product-categories
-        category-index-route="{{ cp_route('butik.categories.fromProduct', ['product' => $productValues['slug']]) }}"
+        category-index-route="{{ cp_route('butik.categories.from-product', ['product' => $productValues['slug']]) }}"
         category-attach-route="{{ cp_route('butik.category.attach-product', ['category' => 'x-category', 'product' => 'x-product']) }}"
         category-manage-route="{{ cp_route('butik.categories.store') }}"
         :product-slug="'{{ $productValues['slug'] }}'"
