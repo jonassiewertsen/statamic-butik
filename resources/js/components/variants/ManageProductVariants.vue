@@ -38,11 +38,13 @@
                             <dropdown-list class="flex justify-end">
                                 <dropdown-item
                                     :text="__('Edit')"
-                                    @click="editVariant(variant)"/>
+                                    @click="openEditVariantStack(variant)"
+                                ></dropdown-item>
                                 <dropdown-item
                                     :text="__('Delete')"
                                     class="warning"
-                                    @click="deleteVariant(variant)"/>
+                                    @click="deleteVariant(variant)"
+                                ></dropdown-item>
                             </dropdown-list>
                         </td>
                     </tr>
@@ -61,11 +63,11 @@
         <form-stack
             name="variant stack"
             v-if="showVariantStack"
-            :action="action"
+            :action="stackAction"
             title="Variants"
-            method="post"
             :blueprint="variantBlueprint"
             :meta="variantMeta"
+            :method="stackMethod"
             :values="stackValues"
             @closed="showVariantStack = false"
             @saved="closeVariantStack"
@@ -121,19 +123,29 @@
                     type: Array,
                     default: [],
                 },
-                formMethod: 'post',
+                stackMethod: 'post',
+                stackAction: '',
                 showVariantStack: false,
             }
         },
 
         mounted() {
-            this.stackValues = this.variantValues
             this.variants = this.fetchVariants()
         },
 
         methods: {
             openCreateVariantStack() {
+                this.stackValues = this.variantValues
                 this.stackValues.product_slug = this.productSlug
+                this.stackMethod = 'post'
+                this.stackAction = this.action
+                this.showVariantStack = true
+            },
+
+            openEditVariantStack(variant) {
+                this.stackValues = variant
+                this.stackAction = `${this.action}/${variant.id}`
+                this.stackMethod = 'patch'
                 this.showVariantStack = true
             },
 
@@ -152,7 +164,6 @@
             },
 
             deleteVariant(variant) {
-                console.log(variant)
                 axios.delete(`${this.variantManageRoute}/${variant.id}`)
                     .then(response => {
                         this.$toast.success(__('Removed'))

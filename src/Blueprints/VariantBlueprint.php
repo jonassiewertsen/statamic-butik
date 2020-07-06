@@ -27,8 +27,7 @@ class VariantBlueprint extends Blueprint
                             'field'  => [
                                 'type'       => 'text',
                                 'width'      => 75,
-//                                'display'    => __('butik::variant.title'),
-                                'display'    => 'title',
+                                'display'    => __('butik::variant.title'),
                                 'validate'   => 'required',
                             ],
                         ],
@@ -113,27 +112,4 @@ class VariantBlueprint extends Blueprint
             ],
         ]);
     }
-
-//    /**
-//     * In case the Product will be edited, the slug will be read only
-//     */
-//    private function slugReadOnly(): bool {
-//        return $this->isRoute('statamic.cp.butik.products.edit');
-//    }
-//
-//    private function fetchTaxOptions(): array {
-//        return Tax::pluck('title', 'slug')->toArray();
-//    }
-//
-//    private function fetchShippingOptions(): array {
-//        return ShippingProfile::pluck('title', 'slug')->toArray();
-//    }
-//
-//    private function productUniqueRule() {
-//        return $this->ignoreUnqiueOn(
-//            'butik_products',
-//            'slug',
-//            'statamic.cp.butik.products.update'
-//        );
-//    }
 }
