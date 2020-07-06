@@ -26,9 +26,9 @@
                         <td>
                             <dropdown-list class="flex justify-end">
                                 <dropdown-item
-                                        :text="__('Delete')"
-                                        class="warning"
-                                        @click="deleteCategory(category)"/>
+                                    :text="__('Delete')"
+                                    class="warning"
+                                    @click="deleteCategory(category)"/>
                             </dropdown-list>
                         </td>
                     </tr>

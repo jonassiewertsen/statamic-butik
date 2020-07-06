@@ -5,6 +5,7 @@
 
 @section('content')
     <publish-form
+        name="product edit stack"
         title="{{ __('butik::product.form_title') }}"
         action="{{ cp_route('butik.products.update', ['product' => $productValues['slug']]) }}"
         method="patch"
@@ -14,10 +15,12 @@
     ></publish-form>
 
     <butik-manage-product-variants
-        :blueprint='@json($variantBlueprint)'
-        :meta='@json($variantMeta)'
-        :values='@json($variantValues)'
+        action="{{ cp_route('butik.variants.store') }}"
+        :variant-blueprint='@json($variantBlueprint)'
+        :variant-meta='@json($variantMeta)'
+        :variant-values='@json($variantValues)'
         :variants='@json($variants)'
+        :product-slug="'{{ $productValues['slug'] }}'"
     ></butik-manage-product-variants>
 
     <butik-manage-product-categories

@@ -6,7 +6,7 @@
                 <create-button
                     :label="'New variant'"
                     :classes="'bg-white'"
-                    @clicked="openCreateVariantStack"
+                    @clicked="openCreateVariantStack()"
                 ></create-button>
             </header>
 
@@ -37,12 +37,12 @@
                         <td>
                             <dropdown-list class="flex justify-end">
                                 <dropdown-item
-                                        :text="__('Edit')"
-                                        @click="deleteCategory(category)"/>
+                                    :text="__('Edit')"
+                                    @click="deleteCategory(category)"/>
                                 <dropdown-item
-                                        :text="__('Delete')"
-                                        class="warning"
-                                        @click="deleteCategory(category)"/>
+                                    :text="__('Delete')"
+                                    class="warning"
+                                    @click="deleteCategory(category)"/>
                             </dropdown-list>
                         </td>
                     </tr>
@@ -57,6 +57,19 @@
         <div class="hidden xl:block ml-2" style="width: 300px;">
             <!-- a little nasty something, so our container wont't fill up all the space -->
         </div>
+
+        <form-stack
+            name="variant stack"
+            v-if="showVariantStack"
+            :action="action"
+            title="Variants"
+            method="post"
+            :blueprint="variantBlueprint"
+            :meta="variantMeta"
+            :values="stackValues"
+            @closed="showVariantStack = false"
+            @saved="closeVariantStack"
+        ></form-stack>
     </div>
 </template>
 
@@ -67,6 +80,10 @@
         components: { FormStack },
 
         props: {
+            action: {
+                type: String,
+                default: '',
+            },
             variants: {
                 type: Array,
                 default: [],
@@ -75,10 +92,23 @@
                 type: String,
                 default: '',
             },
+            variantBlueprint: {
+                type: Array,
+                default: [],
+            },
+            variantMeta: {
+                type: Array,
+                default: [],
+            },
+            variantValues: {
+                type: Array,
+                default: [],
+            }
         },
 
         mounted() {
             this.updatedVariants = this.variants
+            this.stackValues = this.variantValues
         },
 
         data() {
@@ -92,6 +122,7 @@
 
         methods: {
             openCreateVariantStack() {
+                this.stackValues.product_slug = this.productSlug
                 this.showVariantStack = true
             }
         }
