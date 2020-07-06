@@ -56,7 +56,7 @@ class Variant extends ButikModel
      */
     public function getOriginalPriceAttribute($value)
     {
-        return $this->makeAmountHuman($value);
+        return $this->makeAmountHuman($this->getRawOriginal('price'));
     }
 
     /**

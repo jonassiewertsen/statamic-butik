@@ -4,10 +4,13 @@ namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
+use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class VariantTest extends TestCase
 {
+    use MoneyTrait;
+
     public Variant $variant;
     public Product $product;
 
@@ -44,20 +47,14 @@ class VariantTest extends TestCase
     }
 
     /** @test */
-    public function the_price_can_be_inherited_from_the_parent()
-    {
-        $this->assertEquals(
-            $this->variant->price,
-            $this->product->title . ' - ' . $this->variant->getRawOriginal('title')
-        );
-    }
-
-    /** @test */
     public function a_variant_has_a_original_price()
     {
+        $this->variant->price = '22,00';
+        $this->variant->update();
+
         $this->assertEquals(
             $this->variant->original_price,
-            $this->variant->getOriginal('price')
+            '22,00'
         );
     }
 
@@ -88,15 +85,15 @@ class VariantTest extends TestCase
        /** @test */
     public function the_price_will_be_converted_correctly()
     {
-        $product = create(Variant::class, ['price' => 2]);
+        $product = create(Variant::class, ['price' => 2, 'inherit_price' => false]);
         $this->assertEquals('2,00', $product->first()->price);
     }
 
     /** @test */
     public function the_price_will_be_saved_without_decimals()
     {
-        create(Variant::class, ['price' => '2,00']);
-        $this->assertEquals('200', Variant::first()->getRawOriginal('price'));
+        $variant = create(Variant::class, ['price' => '2,00', 'inherit_price' => false])->first();
+        $this->assertEquals('200', $variant->getRawOriginal('price'));
     }
 
     /** @test */
@@ -163,6 +160,4 @@ class VariantTest extends TestCase
 
         $this->assertTrue($this->variant->stock_unlimited);
     }
-
-
 }
