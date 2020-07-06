@@ -83,14 +83,6 @@ class ProductsController extends CpController
         $variantBlueprint = new VariantBlueprint();
         $variantFields    = $variantBlueprint()->fields()->addValues([])->preProcess();
 
-        $categories = Category::orderBy('name', 'desc')->get()->map(function ($category) use ($product) {
-            return [
-                'name'        => $category->name,
-                'slug'        => $category->slug,
-                'is_attached' => $category->isProductAttached($product),
-            ];
-        });
-
         return view('butik::cp.products.edit', [
             'productBlueprint' => $productBlueprint()->toPublishArray(),
             'productValues'    => $productFields->values(),
@@ -99,10 +91,8 @@ class ProductsController extends CpController
             'variantBlueprint'   => $variantBlueprint()->toPublishArray(),
             'variantValues'      => $variantFields->values(),
             'variantMeta'        => $variantFields->meta(),
-            'variantIndexRoute'  => cp_route('butik.variants.index', $product),
+            'variantIndexRoute'  => cp_route('butik.variants.fromProduct', $product),
             'variantManageRoute' => cp_route('butik.variants.store'),
-
-            'categories' => $categories,
         ]);
     }
 

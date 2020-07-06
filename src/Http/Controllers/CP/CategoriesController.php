@@ -48,4 +48,15 @@ class CategoriesController extends CpController
     {
         $category->removeProduct($product);
     }
+
+    public function from(Product $product)
+    {
+        return Category::orderBy('name', 'desc')->get()->map(function ($category) use ($product) {
+            return [
+                'name'        => $category->name,
+                'slug'        => $category->slug,
+                'is_attached' => $category->isProductAttached($product),
+            ];
+        });
+    }
 }

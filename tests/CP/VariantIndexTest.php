@@ -18,12 +18,12 @@ class VariantIndexTest extends TestCase
     }
 
     /** @test */
-    public function a_variant_can_be_created()
+    public function to_a_product_belonging_variants_can_be_fetched()
     {
         $variant = Variant::first();
         $product = Product::first();
 
-        $this->get(cp_route('butik.variants.index', $product))
+        $this->get(cp_route('butik.variants.fromProduct', $product))
             ->assertJsonFragment([
                 'available'       => $variant->available,
                 'title'           => $variant->title,

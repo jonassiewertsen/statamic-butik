@@ -18,7 +18,7 @@
             <div class="publish-section">
                 <table class="data-table">
                     <tbody>
-                    <tr v-for="category in updatedCategories" :class="{ 'bg-grey-30 opacity-75': ! category.is_attached }">
+                    <tr v-for="category in categories" :class="{ 'bg-grey-30 opacity-75': ! category.is_attached }">
                         <td class="pl-2 py-1 text-base">{{ category.name }}</td>
                         <td>
                             <toggle-input v-model="category.is_attached" @input="update(category)"></toggle-input>
@@ -32,7 +32,7 @@
                             </dropdown-list>
                         </td>
                     </tr>
-                    <tr v-if="updatedCategories.length === 0">
+                    <tr v-if="! categories || categories.length === 0">
                         <td>No Categories have been created yet.</td>
                     </tr>
                     </tbody>
@@ -51,13 +51,13 @@
 
     export default {
         props: {
-            categories: {
-                type: Array,
-                default: [],
-            },
             productSlug: {
                 type: String,
                 default: '',
+            },
+            categoryIndexRoute: {
+                type: String,
+                default: ''
             },
             categoryAttachRoute: {
                 type: String,
@@ -74,12 +74,12 @@
         },
 
         mounted() {
-          this.updatedCategories = this.categories
+          this.categories = this.fetchCategories()
         },
 
         data() {
             return {
-                updatedCategories: [],
+                categories: [],
                 showNewCategory: false,
             }
         },
@@ -91,6 +91,16 @@
                 } else {
                     this.detachCategory(category)
                 }
+            },
+
+            fetchCategories() {
+                axios.get(this.categoryIndexRoute)
+                    .then((response) => {
+                        this.categories = response.data
+                    })
+                    .catch(error => {
+                        this.$toast.error(error)
+                    })
             },
 
             attachCategory(category) {
@@ -116,6 +126,7 @@
             deleteCategory(category) {
                 axios.delete(this.categoryDeleteRoute(category))
                     .then(() => {
+                        this.fetchCategories()
                         this.$toast.success(__('Deleted'))
                     })
                     .catch(error => {
@@ -131,6 +142,7 @@
                         slug: this.categoryName.toLowerCase(),
                     })
                     .then(() => {
+                        this.fetchCategories()
                         this.$toast.success(__('Saved'))
                     })
                     .catch(error => {
