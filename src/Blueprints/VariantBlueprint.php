@@ -27,7 +27,7 @@ class VariantBlueprint extends Blueprint
                             'field'  => [
                                 'type'       => 'text',
                                 'width'      => 75,
-                                'display'    => __('butik::variant.title'),
+                                'display'    => __('butik::product.title'),
                                 'validate'   => 'required',
                             ],
                         ],
@@ -35,7 +35,7 @@ class VariantBlueprint extends Blueprint
                             'handle' => 'price_section',
                             'field'  => [
                                 'type'    => 'section',
-                                'display' => __('butik::price_section'),
+                                'display' => __('butik::product.price_section'),
                             ],
                         ],
                         [
@@ -44,7 +44,7 @@ class VariantBlueprint extends Blueprint
                                 'type'    => 'toggle',
                                 'default' => true,
                                 'width'   => 25,
-                                'display' => __('butik::link_price'),
+                                'display' => __('butik::product.price_linked'),
                             ],
                         ],
                         [
@@ -63,7 +63,7 @@ class VariantBlueprint extends Blueprint
                             'handle' => 'stock_section',
                             'field'  => [
                                 'type'    => 'section',
-                                'display' => __('butik::stock_section'),
+                                'display' => __('butik::product.stock_section'),
                             ],
                         ],
                         [
@@ -72,7 +72,7 @@ class VariantBlueprint extends Blueprint
                                 'type'    => 'toggle',
                                 'default' => false,
                                 'width'   => 25,
-                                'display' => __('butik::link_stock'),
+                                'display' => __('butik::product.stock_linked'),
                             ],
                         ],
                         [
@@ -94,7 +94,7 @@ class VariantBlueprint extends Blueprint
                             'field'  => [
                                 'type'    => 'toggle',
                                 'width'   => 25,
-                                'display' => __('butik::stock_unlimited'),
+                                'display' => __('butik::product.stock_unlimited'),
                                 'unless'  => [
                                     'inherit_stock' => 'equals true',
                                 ],
