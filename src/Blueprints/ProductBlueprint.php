@@ -36,7 +36,7 @@ class ProductBlueprint extends Blueprint
                             'handle' => 'price',
                             'field'  => [
                                 'type'          => 'money',
-                                'display'       => __('butik::product.base_price'),
+                                'display'       => __('butik::product.price'),
                                 'width'         => '25',
                                 'validate'      => 'required|min:0',
                             ],
