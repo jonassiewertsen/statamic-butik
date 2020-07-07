@@ -48,10 +48,10 @@ class VariantUpdateTest extends TestCase
     /** @test */
     public function the_price_can_be_updated()
     {
-        $this->variant->price = '33,33';
+        $this->variant->price = '33';
         $this->updateVariant();
 
-        $this->assertDatabaseHas('butik_variants', ['price' => 3333]);
+        $this->assertDatabaseHas('butik_variants', ['price' => 330000]);
     }
 
     /** @test */
@@ -83,6 +83,6 @@ class VariantUpdateTest extends TestCase
 
     private function updateVariant()
     {
-        return $this->patch(cp_route('butik.variants.update', $this->variant), $this->variant->toArray());
+        return $this->patch(cp_route('butik.variants.update', $this->variant), $this->variant->getAttributes());
     }
 }
