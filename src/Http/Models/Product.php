@@ -132,12 +132,4 @@ class Product extends ButikModel
     {
         return config('butik.currency_symbol');
     }
-
-    /**
-     * The route to the base shop
-     */
-    private function shopRoute()
-    {
-        return config('butik.route_shop-prefix');
-    }
 }

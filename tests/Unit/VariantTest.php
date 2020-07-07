@@ -29,6 +29,15 @@ class VariantTest extends TestCase
     }
 
     /** @test */
+    public function it_has_a_show_url()
+    {
+        $this->assertEquals(
+            "/shop/{$this->product->slug}/{$this->variant->original_title}",
+            $this->variant->show_url
+        );
+    }
+
+    /** @test */
     public function a_variant_has_title()
     {
         $this->assertEquals(

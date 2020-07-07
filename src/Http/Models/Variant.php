@@ -121,4 +121,12 @@ class Variant extends ButikModel
 
         return $this->getRawOriginal('stock_unlimited');
     }
+
+    /**
+     * A variant has a show url
+     */
+    public function getShowUrlAttribute()
+    {
+        return "{$this->shopRoute()}/{$this->product_slug}/{$this->original_title}";
+    }
 }
