@@ -1,9 +1,9 @@
 <div>
     @if ($stock_unlimited || $stock  > 0)
-        <h1 class="b-mt-2 b-text-2xl">{{ $title }}</h1>
+        <h1 class="b-mt-2 b-text-2xl">{{ $variant_title }}</h1>
     @else
         <h1 class="b-mt-2 b-text-2xl">
-            <s>{{ $title }}</s>
+            <s>{{ $variant_title }}</s>
             <span class="b-text-sm b-ml-2">{{ __('butik::product.sold_out') }}</span>
         </h1>
     @endif
@@ -29,3 +29,11 @@
         </div>
     @endif
 </div>
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        window.livewire.on('urlChange', (url) => {
+            history.pushState(null, null, url);
+        });
+    });
+</script>
