@@ -20,6 +20,7 @@ class Variant extends ButikModel
     ];
 
     protected $appends = [
+      'slug',
       'original_title',
       'original_price',
       'original_stock',
@@ -128,5 +129,13 @@ class Variant extends ButikModel
     public function getShowUrlAttribute()
     {
         return "{$this->shopRoute()}/{$this->product_slug}/{$this->original_title}";
+    }
+
+    /**
+     * A variant has a slug
+     */
+    public function getSlugAttribute()
+    {
+        return "{$this->product_slug}::{$this->id}";
     }
 }

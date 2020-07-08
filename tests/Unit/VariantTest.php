@@ -29,6 +29,15 @@ class VariantTest extends TestCase
     }
 
     /** @test */
+    public function it_has_a_slug()
+    {
+        $this->assertEquals(
+            $this->variant->slug,
+            $this->product->slug . '::' . $this->variant->id
+        );
+    }
+
+    /** @test */
     public function it_has_a_show_url()
     {
         $this->assertEquals(
