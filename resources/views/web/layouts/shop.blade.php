@@ -12,9 +12,16 @@
 
     <body>
         <div class="b-max-w-6xl b-mx-auto">
-            <header class="b-flex b-px-5 b-py-8 md:b-py-10">
-                <a class="b-w-full" href="{{ route('butik.shop') }}">
-                    <img class="b-w-3/5" style="max-width: 200px;" src="/vendor/butik/images/logo.svg">
+            <header class="b-flex b-justify-between b-w-full b-py-8 b-px-5 md:b-py-10">
+                <button class="b-px-2">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 12H21" stroke="#2D3748" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M3 6H21" stroke="#2D3748" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M3 18H21" stroke="#2D3748" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <a href="{{ route('butik.shop') }}">
+                    <img alt="Butik - a loveable ecommerece solution for Statamic V3" src="/vendor/butik/images/logo.svg">
                 </a>
                 @livewire('butik::cart-icon')
             </header>
