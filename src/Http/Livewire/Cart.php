@@ -25,15 +25,13 @@ class Cart extends Component
 
     public function add($slug)
     {
-        $product = Product::find($slug);
-        ShoppingCart::add($product);
+        ShoppingCart::add($slug);
         $this->emit('cartUpdated');
     }
 
     public function reduce($slug)
     {
-        $product = Product::find($slug);
-        ShoppingCart::reduce($product);
+        ShoppingCart::reduce($slug);
         $this->emit('cartUpdated');
     }
 }
