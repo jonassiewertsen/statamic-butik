@@ -27,7 +27,7 @@ class ItemTest extends TestCase
     {
         $item = new Item($this->product);
 
-        $this->assertEquals($item->id, $this->product->slug);
+        $this->assertEquals($item->slug, $this->product->slug);
     }
 
     /** @test */

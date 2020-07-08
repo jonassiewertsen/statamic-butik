@@ -26,7 +26,7 @@ class CartTest extends TestCase
     {
         $this->assertNull(Session::get('butik.cart'));
 
-        Cart::add($this->product);
+        Cart::add($this->product->slug);
 
         $this->assertCount(1, Cart::get());
     }
@@ -34,7 +34,7 @@ class CartTest extends TestCase
     /** @test */
     public function a_new_cart_item_has_the_quanitity_of_one()
     {
-        Cart::add($this->product);
+        Cart::add($this->product->slug);
 
         $this->assertEquals(1, Cart::get()->first()->getQuantity());
     }
@@ -42,50 +42,50 @@ class CartTest extends TestCase
     /** @test */
     public function the_quanitity_will_be_increase_if_the_product_already_has_been_added()
     {
-        Cart::add($this->product);
+        Cart::add($this->product->slug);
         $this->assertEquals(1, Cart::get()->first()->getQuantity());
 
-        Cart::add($this->product);
+        Cart::add($this->product->slug);
         $this->assertEquals(2, Cart::get()->first()->getQuantity());
     }
 
     /** @test */
     public function an_item_can_be_removed()
     {
-        Cart::add($this->product);
-        $this->assertTrue(Cart::get()->contains('id', $this->product->slug));
+        Cart::add($this->product->slug);
+        $this->assertTrue(Cart::get()->contains('slug', $this->product->slug));
 
-        Cart::reduce($this->product);
-        $this->assertFalse(Cart::get()->contains('id', $this->product->slug));
+        Cart::reduce($this->product->slug);
+        $this->assertFalse(Cart::get()->contains('slug', $this->product->slug));
     }
 
     /** @test */
     public function an_item_with_more_then_one_item_will_only_be_decreased()
     {
-        Cart::add($this->product);
-        Cart::add($this->product);
+        Cart::add($this->product->slug);
+        Cart::add($this->product->slug);
         $this->assertEquals(2, Cart::get()->first()->getQuantity());
 
-        Cart::reduce($this->product);
+        Cart::reduce($this->product->slug);
         $this->assertEquals(1, Cart::get()->first()->getQuantity());
     }
 
     /** @test */
     public function an_item_can_be_completly_removed()
     {
-        Cart::add($this->product);
-        Cart::add($this->product);
+        Cart::add($this->product->slug);
+        Cart::add($this->product->slug);
         $this->assertEquals(2, Cart::get()->first()->getQuantity());
 
-        Cart::remove($this->product);
-        $this->assertFalse(Cart::get()->contains('id', $this->product->slug));
+        Cart::remove($this->product->slug);
+        $this->assertFalse(Cart::get()->contains('slug', $this->product->slug));
     }
 
     /** @test */
     public function the_cart_can_be_cleared()
     {
-        Cart::add($this->product);
-        Cart::add($this->product);
+        Cart::add($this->product->slug);
+        Cart::add($this->product->slug);
         $this->assertEquals(2, Cart::get()->first()->getQuantity());
 
         Cart::clear();
@@ -98,8 +98,8 @@ class CartTest extends TestCase
         $product1 = factory(Product::class)->create();
         $product2 = factory(Product::class)->create();
 
-        Cart::add($product1);
-        Cart::add($product2);
+        Cart::add($product1->slug);
+        Cart::add($product2->slug);
 
         $item1 = Cart::get()->first();
         $item2 = Cart::get()->last();
@@ -116,8 +116,8 @@ class CartTest extends TestCase
         $product1 = factory(Product::class)->create();
         $product2 = factory(Product::class)->create();
 
-        Cart::add($product1);
-        Cart::add($product2);
+        Cart::add($product1->slug);
+        Cart::add($product2->slug);
 
         $item1 = Cart::get()->first();
         $item1->nonSellable();
@@ -132,8 +132,8 @@ class CartTest extends TestCase
         $product1 = factory(Product::class)->create();
         $product2 = factory(Product::class)->create();
 
-        Cart::add($product1);
-        Cart::add($product2);
+        Cart::add($product1->slug);
+        Cart::add($product2->slug);
 
         $item1 = Cart::get()->first();
         $item1->nonSellable();
@@ -150,9 +150,9 @@ class CartTest extends TestCase
         $product1 = factory(Product::class)->create();
         $product2 = factory(Product::class)->create();
 
-        Cart::add($product1); // 1
-        Cart::add($product1); // +1
-        Cart::add($product2); // 2 + 1
+        Cart::add($product1->slug); // 1
+        Cart::add($product1->slug); // +1
+        Cart::add($product2->slug); // 2 + 1
 
         $this->assertEquals(3, Cart::totalItems());
     }

@@ -30,7 +30,7 @@ class Item
     /**
      * The id of the item, which does contain the product slug
      */
-    public string $id;
+    public string $slug;
 
     /**
      * The item name
@@ -67,11 +67,13 @@ class Item
      */
     private string $totalPrice;
 
-    public function __construct(Product $product)
+    public function __construct(string $slug)
     {
+        $product = Product::find($slug); // TODO: Refactor
+
         $this->available       = $product->available;
         $this->sellable        = true;
-        $this->id              = $product->slug;
+        $this->slug            = $slug;
         $this->name            = $product->title;
         $this->description     = $this->limitDescription($product->description);
         $this->taxRate         = $product->tax->percentage;
@@ -164,10 +166,10 @@ class Item
 
     private function product(): Product
     {
-        $cacheName = "product:{$this->id}";
+        $cacheName = "product:{$this->slug}";
 
         return Cache::remember($cacheName, 300, function () {
-            return Product::find($this->id);
+            return Product::find($this->slug);
         });
     }
 
