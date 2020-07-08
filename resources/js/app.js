@@ -12,6 +12,7 @@ import MoneyFieldtype from './components/fieldtypes/moneyFieldtype';
 import TaxFieldtype from './components/fieldtypes/taxFieldtype';
 
 import CreateButton from './partials/CreateButton';
+import PublishFormRedirect from './partials/PublishFormRedirect';
 
 Statamic.booting(() => {
     // Listings
@@ -31,4 +32,5 @@ Statamic.booting(() => {
 
     // Partials
     Statamic.$components.register('create-button', CreateButton);
+    Statamic.$components.register('publish-form-redirect', PublishFormRedirect);
 });
