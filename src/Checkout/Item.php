@@ -81,11 +81,11 @@ class Item
 
         $this->available       = $item->available;
         $this->sellable        = true;
-        $this->name            = $item->title;
-        $this->description     = $this->limitDescription($this->product->description);
-        $this->taxRate         = $item->tax->percentage;
         $this->quantity        = 1;
         $this->availableStock  = $item->stock;
+        $this->name            = $item->title;
+        $this->description     = $this->limitedDescription();
+        $this->taxRate         = $item->tax->percentage;
         $this->singlePrice     = $item->price;
         $this->totalPrice      = $this->totalPrice();
         $this->shippingProfile = $item->shippingProfile;
@@ -164,13 +164,13 @@ class Item
         $this->available      = $this->item()->available;
         $this->availableStock = $this->item()->stock;
         $this->singlePrice    = $this->item()->price;
-        $this->description    = $this->limitDescription($this->product()->description);
+        $this->description    = $this->limitedDescription();
         $this->totalPrice     = $this->totalPrice();
     }
 
-    private function limitDescription($text)
+    private function limitedDescription()
     {
-        return Str::limit($text, 100, '...');
+        return Str::limit($this->product()->description, 100, '...');
     }
 
     private function product(): Product
