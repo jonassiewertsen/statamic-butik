@@ -51,7 +51,7 @@ class ProductUpdateTest extends TestCase
 //    }
 
     /** @test */
-    public function the_base_price_can_be_updated()
+    public function the_price_can_be_updated()
     {
         $product = create(Product::class)->first();
         $product->price = 4321;

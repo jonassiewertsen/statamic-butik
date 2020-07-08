@@ -29,7 +29,7 @@ class ShippingTest extends TestCase
 
         Config::set('butik.country', $country->name);
 
-        Cart::add($this->product);
+        Cart::add($this->product->slug);
     }
 
     /** @test */
@@ -76,7 +76,8 @@ class ShippingTest extends TestCase
     /** @test */
     public function multiple_profiles_will_be_deteced()
     {
-        Cart::add(create(Product::class)->first());
+        $product = create(Product::class)->first();
+        Cart::add($product->slug);
 
         $shipping = new Shipping(Cart::get());
         $shipping->handle();
@@ -89,9 +90,8 @@ class ShippingTest extends TestCase
     {
         $profile = Cart::get()->first()->shippingProfile;
 
-        Cart::add(create(Product::class, [
-            'shipping_profile_slug' => $profile['slug']
-        ])->first());
+        $product = create(Product::class, ['shipping_profile_slug' => $profile['slug']])->first();
+        Cart::add($product->slug);
 
         $shipping = new Shipping(Cart::get());
         $shipping->handle();

@@ -19,7 +19,7 @@ class CheckoutPaymentTest extends TestCase
         $this->customer = new Customer($this->createUserData());
         $this->product  = create(Product::class)->first();
 
-        Cart::add($this->product);
+        Cart::add($this->product->slug);
     }
 
 //    Failing in GitHub actions. Why?
@@ -137,8 +137,8 @@ class CheckoutPaymentTest extends TestCase
     /** @test */
     public function the_product_information_will_be_displayed() {
         Session::put('butik.customer', $this->customer);
-        Cart::add($this->product);
-        Cart::add($this->product);
+        Cart::add($this->product->slug);
+        Cart::add($this->product->slug);
 
         $item = Cart::get()->first();
 

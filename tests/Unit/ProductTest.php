@@ -5,6 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
+use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class ProductTest extends TestCase
@@ -12,7 +13,7 @@ class ProductTest extends TestCase
     /** @test */
     public function it_is_available_as_default()
     {
-        $product = create(Product::class)->first();
+        create(Product::class)->first();
         $this->assertTrue(Product::first()->available);
     }
 
@@ -131,5 +132,45 @@ class ProductTest extends TestCase
         $product = create(Product::class)->first();
 
         $this->assertInstanceOf('Illuminate\Support\Collection', $product->categories);
+    }
+
+    /** @test */
+    public function it_has_many_variants()
+    {
+        $product = create(Product::class)->first();
+
+        $this->assertInstanceOf('Illuminate\Support\Collection', $product->variants);
+    }
+    
+    /** @test */
+    public function a_product_can_return_the_belonging_variant()
+    {
+        $variant = create(Variant::class)->first();
+        $product = $variant->product;
+
+        $this->assertEquals(
+            $variant->title,
+            $product->getVariant($variant->original_title)->title
+        );
+    }
+
+    /** @test */
+    public function a_product_will_return_null_if_the_belonging_variant_does_not_exist()
+    {
+        $variant = create(Variant::class)->first();
+        $product = $variant->product;
+
+        $this->assertEquals(null, $product->getVariant('not existing'));
+    }
+
+    /** @test */
+    public function a_product_can_check_if_variants_do_exist()
+    {
+        $product = create(Product::class)->first();
+        $this->assertFalse(Product::first()->hasVariants());
+
+        create(Variant::class, ['product_slug' => $product->slug])->first();
+
+        $this->assertTrue(Product::first()->hasVariants());
     }
 }

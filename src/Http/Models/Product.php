@@ -15,10 +15,10 @@ class Product extends ButikModel
 
     protected $casts = [
         'available'       => 'boolean',
-        'price'           => 'integer',
-        'stock'           => 'integer',
         'description'     => 'array',
         'images'          => 'array',
+        'price'           => 'integer',
+        'stock'           => 'integer',
         'stock_unlimited' => 'boolean',
     ];
 
@@ -40,7 +40,8 @@ class Product extends ButikModel
     /**
      * A Product has categories
      */
-    public function categories() {
+    public function categories()
+    {
         return $this->belongsToMany(Category::class, 'butik_category_product');
     }
 
@@ -50,6 +51,31 @@ class Product extends ButikModel
     public function shippingProfile()
     {
         return $this->belongsTo(ShippingProfile::class, 'shipping_profile_slug', 'slug');
+    }
+
+    /**
+     * A Product has variants
+     */
+    public function variants()
+    {
+        return $this->hasMany(Variant::class);
+    }
+
+    /**
+     * The product will return the belonging variant. Null will be returned,
+     * in case a variant can't be connected to the given slug
+     */
+    public function getVariant(String $variantTitle)
+    {
+        return $this->variants()->where('title', $variantTitle)->first();
+    }
+
+    /**
+     * Do variants exsist?
+     */
+    public function hasVariants()
+    {
+        return $this->variants->count() !== 0;
     }
 
     /**
@@ -105,13 +131,5 @@ class Product extends ButikModel
     public function getCurrencyAttribute()
     {
         return config('butik.currency_symbol');
-    }
-
-    /**
-     * The route to the base shop
-     */
-    private function shopRoute()
-    {
-        return config('butik.route_shop-prefix');
     }
 }

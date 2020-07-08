@@ -1,11 +1,11 @@
 <template>
-    <div class="flex">
+    <div class="flex mt-6 mb-6">
         <section class="flex-grow">
-            <header class="flex mb-3">
+            <header class="flex justify-between mb-3">
                 <h1>Categories</h1>
                 <create-button
                     :label="'New category'"
-                    :classes="'bg-white ml-3'"
+                    :classes="'bg-white'"
                     @clicked="showNewCategory = ! showNewCategory"
                 ></create-button>
             </header>
@@ -18,16 +18,21 @@
             <div class="publish-section">
                 <table class="data-table">
                     <tbody>
-                    <tr v-for="category in updatedCategories">
-                        <th class="pl-2 py-1 w-1/4 text-base">{{ category.name }}</th>
+                    <tr v-for="category in categories" :class="{ 'bg-grey-30 opacity-75': ! category.is_attached }">
+                        <td class="pl-2 py-1 text-base">{{ category.name }}</td>
                         <td>
                             <toggle-input v-model="category.is_attached" @input="update(category)"></toggle-input>
                         </td>
                         <td>
-                            <button class="text-red hover:text-red-light" @click="deleteCategory(category)">{{ __('Delete') }}</button>
+                            <dropdown-list class="flex justify-end">
+                                <dropdown-item
+                                    :text="__('Delete')"
+                                    class="warning"
+                                    @click="deleteCategory(category)"/>
+                            </dropdown-list>
                         </td>
                     </tr>
-                    <tr v-if="updatedCategories.length === 0">
+                    <tr v-if="! categories || categories.length === 0">
                         <td>No Categories have been created yet.</td>
                     </tr>
                     </tbody>
@@ -46,13 +51,13 @@
 
     export default {
         props: {
-            categories: {
-                type: Array,
-                default: [],
-            },
             productSlug: {
                 type: String,
                 default: '',
+            },
+            categoryIndexRoute: {
+                type: String,
+                default: ''
             },
             categoryAttachRoute: {
                 type: String,
@@ -69,12 +74,12 @@
         },
 
         mounted() {
-          this.updatedCategories = this.categories
+          this.categories = this.fetchCategories()
         },
 
         data() {
             return {
-                updatedCategories: [],
+                categories: [],
                 showNewCategory: false,
             }
         },
@@ -86,6 +91,16 @@
                 } else {
                     this.detachCategory(category)
                 }
+            },
+
+            fetchCategories() {
+                axios.get(this.categoryIndexRoute)
+                    .then((response) => {
+                        this.categories = response.data
+                    })
+                    .catch(error => {
+                        this.$toast.error(error)
+                    })
             },
 
             attachCategory(category) {
@@ -111,6 +126,7 @@
             deleteCategory(category) {
                 axios.delete(this.categoryDeleteRoute(category))
                     .then(() => {
+                        this.fetchCategories()
                         this.$toast.success(__('Deleted'))
                     })
                     .catch(error => {
@@ -126,6 +142,7 @@
                         slug: this.categoryName.toLowerCase(),
                     })
                     .then(() => {
+                        this.fetchCategories()
                         this.$toast.success(__('Saved'))
                     })
                     .catch(error => {

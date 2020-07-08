@@ -68,7 +68,7 @@ class Transaction {
 
         $this->items = $value->map(function($item) {
             return [
-                'id'             => $item->id,
+                'id'             => $item->slug,
                 'name'           => $item->name,
                 'description'    => $item->description,
                 'quantity'       => $item->getQuantity(),

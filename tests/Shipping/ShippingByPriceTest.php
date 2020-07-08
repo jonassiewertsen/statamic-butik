@@ -57,8 +57,8 @@ class ShippingByPriceTest extends TestCase
     /** @test */
     public function the_correct_total_item_value_will_be_calculated()
     {
-        Cart::add($this->product1);
-        Cart::add($this->product2);
+        Cart::add($this->product1->slug);
+        Cart::add($this->product2->slug);
 
         $shipping = new ShippingByPrice();
         $shipping->set(Cart::get(), ShippingZone::first());
@@ -73,9 +73,8 @@ class ShippingByPriceTest extends TestCase
     /** @test */
     public function the_standard_shipping_rate_will_be_selected()
     {
-        Cart::add(create(Product::class,
-            ['price' => 49.99]
-        )->first());
+        $product = create(Product::class, ['price' => 49.99])->first();
+        Cart::add($product->slug);
 
         $shipping = new ShippingByPrice();
         $shipping->set(Cart::get(), ShippingZone::first());
@@ -86,9 +85,8 @@ class ShippingByPriceTest extends TestCase
     /** @test */
     public function the_standard_shipping_rate_wont_be_used_if_the_amount_does_match()
     {
-        Cart::add(create(Product::class,
-            ['price' => '50,00']
-        )->first());
+        $product = create(Product::class, ['price' => '50,00'])->first();
+        Cart::add($product->slug);
 
         $shipping = new ShippingByPrice();
         $shipping->set(Cart::get(), ShippingZone::first());
@@ -99,9 +97,9 @@ class ShippingByPriceTest extends TestCase
     /** @test */
     public function the_free_shipping_amount_will_be_calculated()
     {
-        Cart::add($this->product1);
-        Cart::add($this->product2);
-        Cart::add($this->product3);
+        Cart::add($this->product1->slug);
+        Cart::add($this->product2->slug);
+        Cart::add($this->product3->slug);
 
         $shipping = new ShippingByPrice();
         $shipping->set(Cart::get(), ShippingZone::first());
@@ -112,11 +110,12 @@ class ShippingByPriceTest extends TestCase
     /** @test */
     public function the_cart_will_output_the_correct_amount()
     {
-        Cart::add(create(Product::class, [
+        $product = create(Product::class, [
             'shipping_profile_slug' => ShippingProfile::first()->slug,
             'price'                 => 4,
-        ])->first());
+        ])->first();
 
+        Cart::add($product->slug);
         $shipping = Cart::shipping();
 
         $this->assertEquals('6,00', $shipping->first()->total);
@@ -125,11 +124,12 @@ class ShippingByPriceTest extends TestCase
     /** @test */
     public function the_cart_does_return_the_total_shipping_amount()
     {
-        Cart::add(create(Product::class, [
+        $product = create(Product::class, [
             'shipping_profile_slug' => ShippingProfile::first()->slug,
             'price'                 => 4,
-        ])->first());
+        ])->first();
 
+        Cart::add($product->slug);
         $total = Cart::totalShipping();
 
         $this->assertEquals('6,00', $total);

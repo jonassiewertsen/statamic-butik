@@ -5,6 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Jonassiewertsen\StatamicButik\Blueprints\ProductBlueprint;
+use Jonassiewertsen\StatamicButik\Blueprints\VariantBlueprint;
 use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
 use Jonassiewertsen\StatamicButik\Http\Models\Category;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
@@ -68,38 +69,30 @@ class ProductsController extends CpController
         $fields    = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
         $values = $fields->process()->values();
-        $product = Product::create($values->toArray());
-
-        /**
-         * We will return our product slug, so we can redirect to the edit page after
-         * saving a new product in our butik cp.
-         */
-        return [
-            'slug' => $product->slug
-        ];
+        Product::create($values->toArray());
     }
 
     public function edit(Product $product)
     {
         $this->authorize('edit', $product);
 
-        $values    = $product->toArray();
-        $blueprint = new ProductBlueprint();
-        $fields    = $blueprint()->fields()->addValues($values)->preProcess();
+        $prodcutValues    = $product->toArray();
+        $productBlueprint = new ProductBlueprint();
+        $productFields    = $productBlueprint()->fields()->addValues($prodcutValues)->preProcess();
 
-        $categories = Category::orderBy('name')->get()->map(function ($category) use ($product) {
-            return [
-                'name'        => $category->name,
-                'slug'        => $category->slug,
-                'is_attached' => $category->isProductAttached($product),
-            ];
-        });
+        $variantBlueprint = new VariantBlueprint();
+        $variantFields    = $variantBlueprint()->fields()->addValues([])->preProcess();
 
         return view('butik::cp.products.edit', [
-            'blueprint'  => $blueprint()->toPublishArray(),
-            'values'     => $fields->values(),
-            'meta'       => $fields->meta(),
-            'categories' => $categories,
+            'productBlueprint' => $productBlueprint()->toPublishArray(),
+            'productValues'    => $productFields->values(),
+            'productMeta'      => $productFields->meta(),
+
+            'variantBlueprint'   => $variantBlueprint()->toPublishArray(),
+            'variantValues'      => $variantFields->values(),
+            'variantMeta'        => $variantFields->meta(),
+            'variantIndexRoute'  => cp_route('butik.variants.from-product', $product),
+            'variantManageRoute' => cp_route('butik.variants.store'),
         ]);
     }
 

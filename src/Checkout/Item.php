@@ -6,6 +6,7 @@ namespace Jonassiewertsen\StatamicButik\Checkout;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 
 class Item
@@ -30,7 +31,7 @@ class Item
     /**
      * The id of the item, which does contain the product slug
      */
-    public string $id;
+    public string $slug;
 
     /**
      * The item name
@@ -46,6 +47,11 @@ class Item
      * The product the item does base on
      */
     public Product $product;
+
+    /**
+     * The variant we do use. Null if not defined
+     */
+    public Variant $variant;
 
     /**
      * The taxrate of the product
@@ -67,24 +73,27 @@ class Item
      */
     private string $totalPrice;
 
-    public function __construct(Product $product)
+    public function __construct(string $slug)
     {
-        $this->available       = $product->available;
+        $this->slug = $slug;
+
+        $item = $this->defineItemData();
+
+        $this->available       = $item->available;
         $this->sellable        = true;
-        $this->id              = $product->slug;
-        $this->name            = $product->title;
-        $this->description     = $this->limitDescription($product->description);
-        $this->taxRate         = $product->tax->percentage;
         $this->quantity        = 1;
-        $this->availableStock  = $product->stock;
-        $this->singlePrice     = $product->price;
+        $this->availableStock  = $item->stock;
+        $this->name            = $item->title;
+        $this->description     = $this->limitedDescription();
+        $this->taxRate         = $item->tax->percentage;
+        $this->singlePrice     = $item->price;
         $this->totalPrice      = $this->totalPrice();
-        $this->shippingProfile = $product->shippingProfile;
+        $this->shippingProfile = $item->shippingProfile;
     }
 
     public function increase()
     {
-        if ($this->getQuantity() >= $this->product()->stock) {
+        if ($this->getQuantity() >= $this->item()->stock) {
             $this->setQuantityToStock();
             return;
         }
@@ -99,7 +108,7 @@ class Item
             return;
         }
 
-        if ($this->getQuantity() > $this->product()->stock) {
+        if ($this->getQuantity() > $this->item()->stock) {
             $this->setQuantityToStock();
             return;
         }
@@ -121,12 +130,12 @@ class Item
 
     public function singlePrice(): string
     {
-        return $this->product()->price;
+        return $this->item()->price;
     }
 
     public function totalPrice()
     {
-        $price = $this->makeAmountSaveable($this->product()->price);
+        $price = $this->makeAmountSaveable($this->singlePrice);
         return $this->makeAmountHuman($price * $this->quantity);
     }
 
@@ -142,42 +151,82 @@ class Item
 
     public function update(): void
     {
+        $this->defineItemData();
+
         if (!$this->StockAvailable()) {
             $this->setQuantityToStock();
         }
 
-        if (!$this->product()->available) {
+        if (!$this->item()->available) {
             $this->quantity = 0;
         }
 
-        $this->available      = $this->product()->available;
-        $this->availableStock = $this->product()->stock;
-        $this->singlePrice    = $this->product()->price;
-        $this->description    = $this->limitDescription($this->product()->description);
+        $this->available      = $this->item()->available;
+        $this->availableStock = $this->item()->stock;
+        $this->singlePrice    = $this->item()->price;
+        $this->description    = $this->limitedDescription();
         $this->totalPrice     = $this->totalPrice();
     }
 
-    private function limitDescription($text)
+    private function limitedDescription()
     {
-        return Str::limit($text, 100, '...');
+        return Str::limit($this->product()->description, 100, '...');
     }
 
     private function product(): Product
     {
-        $cacheName = "product:{$this->id}";
+        $cacheName = "product:{$this->productSlug()}";
 
         return Cache::remember($cacheName, 300, function () {
-            return Product::find($this->id);
+            return Product::find($this->productSlug());
         });
     }
 
     private function setQuantityToStock(): void
     {
-        $this->setQuantity($this->product()->stock);
+        $this->setQuantity($this->item()->stock);
     }
 
     private function stockAvailable()
     {
-        return $this->getQuantity() <= $this->product()->stock;
+        return $this->getQuantity() <= $this->item()->stock;
+    }
+
+    protected function isVariant()
+    {
+        return Str::contains($this->slug, '::');
+    }
+
+    private function defineItemData()
+    {
+        if ($this->isVariant()) {
+            $this->product = $this->product();
+            return $this->variant = Variant::find($this->variantSlug());
+        } else {
+            return $this->product =  $this->product();
+        }
+    }
+
+    private function productSlug() {
+        if (! $this->isVariant()) {
+            return $this->slug;
+        }
+
+        return Str::of($this->slug)->explode('::')[0];
+    }
+
+    private function variantSlug() {
+        if (! $this->isVariant()) {
+            return null;
+        }
+
+        return Str::of($this->slug)->explode('::')[1];
+    }
+
+    private function item()
+    {
+       return $this->isVariant() ?
+           $this->variant :
+           $this->product;
     }
 }
