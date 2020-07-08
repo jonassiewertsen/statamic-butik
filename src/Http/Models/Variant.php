@@ -138,4 +138,20 @@ class Variant extends ButikModel
     {
         return "{$this->product_slug}::{$this->id}";
     }
+
+    /**
+     * It inherits the tax from it's parent
+     */
+    public function getTaxAttribute()
+    {
+        return $this->product->tax;
+    }
+
+    /**
+     * It inherits the shipping profile from it's parent
+     */
+    public function getShippingProfileAttribute()
+    {
+        return $this->product->shippingProfile;
+    }
 }

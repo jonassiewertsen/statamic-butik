@@ -38,6 +38,15 @@ class VariantTest extends TestCase
     }
 
     /** @test */
+    public function it_has_a_shipping_profile()
+    {
+        $this->assertEquals(
+            $this->variant->shippingProfile,
+            $this->product->shippingProfile
+        );
+    }
+
+    /** @test */
     public function it_has_a_show_url()
     {
         $this->assertEquals(
@@ -177,5 +186,11 @@ class VariantTest extends TestCase
         $this->variant->update();
 
         $this->assertTrue($this->variant->stock_unlimited);
+    }
+
+    /** @test */
+    public function it_inherits_the_tax_from_his_parent()
+    {
+        $this->assertEquals($this->variant->tax, $this->product->tax);
     }
 }

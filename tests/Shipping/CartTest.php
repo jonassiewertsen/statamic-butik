@@ -2,11 +2,13 @@
 
 namespace Jonassiewertsen\StatamicButik\Tests\Shipping;
 
+use Illuminate\Contracts\Validation\ImplicitRule;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Http\Models\Country as CountryModel;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
@@ -15,18 +17,21 @@ class CartTest extends TestCase
     use MoneyTrait;
 
     protected Product $product;
+    protected Variant $variant;
 
     public function setUp(): void {
         parent::setUp();
         $this->product = create(Product::class)->first();
+        create(Variant::class, ['product_slug' => $this->product->slug])->first();
+        $this->variant = Variant::first();
     }
 
     /** @test */
-    public function a_product_can_be_added_as_item()
+    public function a_variant_can_be_added_as_item()
     {
         $this->assertNull(Session::get('butik.cart'));
 
-        Cart::add($this->product->slug);
+        Cart::add($this->variant->slug);
 
         $this->assertCount(1, Cart::get());
     }
@@ -40,7 +45,7 @@ class CartTest extends TestCase
     }
 
     /** @test */
-    public function the_quanitity_will_be_increase_if_the_product_already_has_been_added()
+    public function the_quanitity_will_be_increased_if_the_product_already_has_been_added()
     {
         Cart::add($this->product->slug);
         $this->assertEquals(1, Cart::get()->first()->getQuantity());
@@ -50,7 +55,17 @@ class CartTest extends TestCase
     }
 
     /** @test */
-    public function an_item_can_be_removed()
+    public function the_quanitity_will_be_increased_if_the_variant_already_has_been_added()
+    {
+        Cart::add($this->variant->slug);
+        $this->assertEquals(1, Cart::get()->first()->getQuantity());
+
+        Cart::add($this->variant->slug);
+        $this->assertEquals(2, Cart::get()->first()->getQuantity());
+    }
+
+    /** @test */
+    public function a_product_can_be_removed()
     {
         Cart::add($this->product->slug);
         $this->assertTrue(Cart::get()->contains('slug', $this->product->slug));
@@ -60,7 +75,17 @@ class CartTest extends TestCase
     }
 
     /** @test */
-    public function an_item_with_more_then_one_item_will_only_be_decreased()
+    public function a_variant_can_be_removed()
+    {
+        Cart::add($this->variant->slug);
+        $this->assertTrue(Cart::get()->contains('slug', $this->variant->slug));
+
+        Cart::reduce($this->variant->slug);
+        $this->assertFalse(Cart::get()->contains('slug', $this->variant->slug));
+    }
+
+    /** @test */
+    public function an_product_with_more_then_one_items_will_only_be_decreased()
     {
         Cart::add($this->product->slug);
         Cart::add($this->product->slug);
@@ -71,7 +96,18 @@ class CartTest extends TestCase
     }
 
     /** @test */
-    public function an_item_can_be_completly_removed()
+    public function an_variant_with_more_then_one_items_will_only_be_decreased()
+    {
+        Cart::add($this->variant->slug);
+        Cart::add($this->variant->slug);
+        $this->assertEquals(2, Cart::get()->first()->getQuantity());
+
+        Cart::reduce($this->variant->slug);
+        $this->assertEquals(1, Cart::get()->first()->getQuantity());
+    }
+
+    /** @test */
+    public function a_product_can_be_completly_removed()
     {
         Cart::add($this->product->slug);
         Cart::add($this->product->slug);
@@ -79,6 +115,17 @@ class CartTest extends TestCase
 
         Cart::remove($this->product->slug);
         $this->assertFalse(Cart::get()->contains('slug', $this->product->slug));
+    }
+
+    /** @test */
+    public function a_variant_can_be_completly_removed()
+    {
+        Cart::add($this->variant->slug);
+        Cart::add($this->variant->slug);
+        $this->assertEquals(2, Cart::get()->first()->getQuantity());
+
+        Cart::remove($this->variant->slug);
+        $this->assertFalse(Cart::get()->contains('slug', $this->variant->slug));
     }
 
     /** @test */
