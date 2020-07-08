@@ -7,7 +7,8 @@ use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 
 $factory->define(Order::class, function (Faker $faker) {
-    $items = new Item(create(Product::class)->first());
+    $product = create(Product::class)->first();
+    $items = new Item($product->slug);
     $items = collect()->push($items);
 
     $transaction = (new Transaction())->items($items);

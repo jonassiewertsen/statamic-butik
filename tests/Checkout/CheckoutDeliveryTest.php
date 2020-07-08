@@ -17,7 +17,7 @@ class CheckoutDeliveryTest extends TestCase
         parent::setUp();
 
         $this->product = create(Product::class)->first();
-        Cart::add($this->product);
+        Cart::add($this->product->slug);
     }
 
 // Failing in GitHub actions. Why?

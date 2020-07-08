@@ -88,11 +88,11 @@ class TransactionTest extends TestCase
     public function items_will_be_added_and_mapped_correctly()
     {
         $product = create(Product::class, [])->first();
-        $items = collect()->push(new Item($product));
+        $items = collect()->push(new Item($product->slug));
 
         $mappedItems = $items->map(function($item) {
             return [
-                'id'            => $item->id,
+                'id'            => $item->slug,
                 'name'          => $item->name,
                 'description'   => $item->description,
                 'quantity'      => $item->getQuantity(),
