@@ -19,7 +19,7 @@
                     <h1 class="b-mt-4 b-text-2xl b-text-center b-leading-none">{{ $product->title }}</h1>
 
                     @unless ($product->stock_unlimited || $product->stock  > 0)
-                        <p class="b-text-sm b-block b-text-center b-ml-2">{{ __('butik::product.sold_out') }}</p>
+                        <p class="b-text-sm b-block b-text-center b-font-light b-ml-2">{{ __('butik::product.sold_out') }}</p>
                     @else
                         <div class="b-text-gray-500 b-text-xl b-text-center">{{ currency() }} {{ $product->price }}</div>
                     @endunless

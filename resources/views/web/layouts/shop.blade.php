@@ -6,7 +6,7 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title>Shop | {{ config('app.name') }}</title>
 
-        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="/vendor/butik/css/statamic-butik.css">
         @livewireStyles
     </head>
