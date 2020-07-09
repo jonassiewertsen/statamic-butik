@@ -9,7 +9,9 @@ class ShopController extends WebController
 {
     public function index()
     {
-        return view(config('butik.template_product-index'));
+        $products = Product::all();
+
+        return view(config('butik.template_product-index'), compact('products'));
     }
 
     public function show(Product $product, $variant = null)
