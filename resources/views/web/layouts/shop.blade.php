@@ -27,14 +27,10 @@
                 @livewire('butik::cart-icon')
             </header>
 
-            <main class="b-w-full">
-
+            <main class="b-mt-8 md:b-mt-12 b-px-6">
                 @yield('content')
-
             </main>
         </div>
-
-        <hr class="b-mt-8">
 
         <footer class="b-flex b-justify-center b-max-w-6xl b-mx-auto b-py-10">
             <div class="b-flex b-flex-wrap b-justify-center b-text-gray-600">
