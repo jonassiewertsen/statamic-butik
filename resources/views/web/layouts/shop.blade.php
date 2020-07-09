@@ -6,11 +6,12 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title>Shop | {{ config('app.name') }}</title>
 
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="/vendor/butik/css/statamic-butik.css">
         @livewireStyles
     </head>
 
-    <body>
+    <body style="font-family: 'Nunito Sans', sans-serif;">
         <div class="b-max-w-6xl b-mx-auto">
             <header class="b-flex b-justify-between b-w-full b-py-8 b-px-5 md:b-py-10">
                 <button class="b-px-2">
