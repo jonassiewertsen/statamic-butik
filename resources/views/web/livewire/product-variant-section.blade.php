@@ -21,7 +21,7 @@
     @if ($stock_unlimited || $stock  > 0)
         <div class="b-flex b-mt-5">
             <a class="b-bg-gray-900 b-flex-grow b-block b-py-2 b-rounded b-text-center b-text-white b-text-xl hover:b-bg-gray-800"
-               href="{{ $product->express_delivery_url }}"
+               href="{{ $express_delivery_url }}"
             >
                 {{ __('butik::payment.express_checkout') }}
             </a>
