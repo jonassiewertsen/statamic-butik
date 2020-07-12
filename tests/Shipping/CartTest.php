@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Http\Models\Country as CountryModel;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
@@ -21,6 +23,7 @@ class CartTest extends TestCase
 
     public function setUp(): void {
         parent::setUp();
+        $this->setCountry();
         $this->product = create(Product::class)->first();
         create(Variant::class, ['product_slug' => $this->product->slug])->first();
         $this->variant = Variant::first();
@@ -225,7 +228,7 @@ class CartTest extends TestCase
     public function we_can_set_any_country_we_want()
     {
         $country = create(CountryModel::class)->first();
-        Cart::setCountry($country->name);
+        Cart::setCountry($country->slug);
 
         $this->assertEquals(Cart::country()['name'], $country->name);
     }

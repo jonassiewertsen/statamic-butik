@@ -21,7 +21,7 @@ class CountryTest extends TestCase
    public function a_country_can_be_set()
    {
        $country = create(CountryModel::class)->first();
-       Country::set($country->name);
+       Country::set($country->slug);
 
        $this->assertEquals(Country::get()['name'], $country->name);
    }

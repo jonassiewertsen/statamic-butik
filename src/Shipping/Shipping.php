@@ -57,6 +57,8 @@ class Shipping
             if ($zone === null) {
                 $items->each->nonSellable();
                 break;
+            } else {
+                $items->each->sellable();
             }
 
             $shippingStrategy = $this->getShippingStrategy($zone);
@@ -76,7 +78,7 @@ class Shipping
      */
     protected function detectCountry()
     {
-        $this->country = CountryHelper::get(false);
+        $this->country = CountryHelper::get($returnArray = false);
     }
 
     /**

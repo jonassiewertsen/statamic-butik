@@ -75,7 +75,7 @@ class TestCase extends OrchestraTestCase
     protected function setCountry(): void
     {
         $country = create(Country::class)->first();
-        Config::set('butik.country', $country->name);
+        Config::set('butik.country', $country->slug);
     }
 
     /**

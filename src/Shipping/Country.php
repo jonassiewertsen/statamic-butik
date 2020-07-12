@@ -40,12 +40,12 @@ class Country
     /**
      * Fetching all needed information from our country model
      */
-    protected static function fetchCountryModel($name): CountryModel
+    protected static function fetchCountryModel($slug): CountryModel
     {
-        $country =  CountryModel::where('name', 'LIKE', '%' . $name . '%')->first();
+        $country =  CountryModel::where('slug', 'LIKE', '%' . $slug . '%')->first();
 
         if ($country === null) {
-            throw new ButikConfigException('The defined Country "' . $name . '" does not exist.');
+            throw new ButikConfigException('The defined Country with the slug "' . $slug . '" does not exist.');
         }
 
         return $country;

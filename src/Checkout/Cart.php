@@ -32,7 +32,6 @@ class Cart
             // Add new Item
             static::$cart->push(new Item($slug));
         }
-
         static::set(static::$cart);
     }
 
@@ -124,7 +123,10 @@ class Cart
             static::$totalPrice += static::makeAmountSaveableStatic($item->totalPrice());
         });
 
-        return static::makeAmountHumanStatic(static::$totalPrice);
+        // Adding the shipping costs to the total price
+        $total = static::$totalPrice + static::makeAmountSaveableStatic(static::totalShipping());
+
+        return static::makeAmountHumanStatic($total);
     }
 
     /**
@@ -179,9 +181,9 @@ class Cart
     /**
      * Set a different country to checkout to.
      */
-    public static function setCountry(string $name): void
+    public static function setCountry(string $slug): void
     {
-        Country::set($name);
+        Country::set($slug);
     }
 
     public static function removeNonSellableItems(): void
