@@ -11,13 +11,7 @@ class ExpressCheckoutController extends Checkout
 {
     public function delivery(Product $product, $variant = null)
     {
-        if ($variant) {
-            if (! $product->variantExists($variant)) {
-                abort(404);
-            }
-
-            $product = $product->getVariant($variant);
-        }
+        $product = $this->defineProductData($product, $variant);
 
         $customer = session()->has('butik.customer') ?
             Session::get('butik.customer') :
@@ -40,15 +34,21 @@ class ExpressCheckoutController extends Checkout
     public function payment(Product $product, $variant = null)
     {
         $customer = session('butik.customer');
+        $product  = $this->defineProductData($product, $variant);
 
+        return view(config('butik.template_express-checkout-payment'), compact('customer', 'product'));
+    }
+
+    private function defineProductData(Product $product, $variant)
+    {
         if ($variant) {
             if (! $product->variantExists($variant)) {
                 abort(404);
             }
 
-            $product = $product->getVariant($variant);
+            return $product->getVariant($variant);
         }
 
-        return view(config('butik.template_express-checkout-payment'), compact('customer', 'product'));
+        return $product;
     }
 }
