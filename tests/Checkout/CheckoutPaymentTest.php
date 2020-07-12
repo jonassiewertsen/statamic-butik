@@ -17,6 +17,7 @@ class CheckoutPaymentTest extends TestCase
     {
         parent::setUp();
 
+        $this->setCountry();
         $this->customer = new Customer($this->createUserData());
         $this->product  = create(Product::class)->first();
 
