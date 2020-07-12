@@ -1,7 +1,7 @@
 <div class="b-mx-auto b-my-10">
     <div class="b-flex b-justify-center b-mt-5">
         @if (! empty($product->images))
-            <img class="b-w-1/2" src="/assets/{{ $product->images->first() }}">
+            <img class="b-w-1/2" src="/assets/{{ $product->images[0] }}">
         @else
             <div class="b-w-full">
                 @include('butik::web.shop.partials.placeholder')
