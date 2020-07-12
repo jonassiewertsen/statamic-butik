@@ -16,10 +16,12 @@ class CheckoutController extends Checkout
             Session::get('butik.customer') :
             (new Customer())->empty();
 
-        $items         = Cart::get();
-        $totalPrice    = Cart::totalPrice();
-
-        return view(config('butik.template_checkout-delivery'), compact('customer', 'items', 'totalPrice'));
+        return view(config('butik.template_checkout-delivery'), [
+            'customer'       => $customer,
+            'items'          => Cart::get(),
+            'total_price'    => Cart::totalPrice(),
+            'total_shipping' => Cart::totalShipping(),
+        ]);
     }
 
     public function saveCustomerData()
@@ -37,11 +39,12 @@ class CheckoutController extends Checkout
     {
         Cart::removeNonSellableItems();
 
-        $customer      = session('butik.customer');
-        $items         = Cart::get();
-        $totalPrice    = Cart::totalPrice();
-
-        return view(config('butik.template_checkout-payment'), compact('customer', 'items', 'totalPrice'));
+        return view(config('butik.template_checkout-payment'), [
+            'customer'       => session('butik.customer'),
+            'items'          => Cart::get(),
+            'total_price'    => Cart::totalPrice(),
+            'total_shipping' => Cart::totalShipping(),
+        ]);
     }
 
     public function receipt(Request $request, $order)
