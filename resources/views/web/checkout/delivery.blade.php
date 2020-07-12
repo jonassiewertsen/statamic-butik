@@ -22,8 +22,8 @@
             @foreach ($items as $item)
                 <section class="b-flex b-mt-3f">
                     <figure class="b-w-1/5 b-mr-5">
-                        @if (! empty($product->images))
-                            <img class="b-w-1/2" src="/assets/{{ $product->images->first() }}">
+                        @if (! empty($item->images))
+                            <img src="/assets/{{ $item->images[0] }}">
                         @else
                             <div class="b-w-full">
                                 @include('butik::web.shop.partials.placeholder')

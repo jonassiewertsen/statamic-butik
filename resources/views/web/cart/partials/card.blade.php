@@ -1,6 +1,13 @@
 <div class="{{ $item->sellable ? 'b-bg-gray-100' : 'b-bg-red-200' }} b-flex b-w-full b-rounded b-px-8 b-py-5 b-mb-6">
     <header class="b-w-40 b-w-1/5">
-        @include('butik::web.shop.partials.placeholder')
+{{--        {{ dd($item) }}--}}
+        @if (! empty($item->images))
+            <img src="/assets/{{ $item->images[0] }}">
+        @else
+            <div class="b-w-full">
+                @include('butik::web.shop.partials.placeholder')
+            </div>
+        @endif
     </header>
     <section class="b-flex b-flex-col b-justify-between b-ml-12 b-w-4/5">
         <div>
