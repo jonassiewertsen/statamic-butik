@@ -140,6 +140,9 @@ class TestCase extends OrchestraTestCase
         // Setting the user repository to the default flat file system
         $app['config']->set('statamic.users.repository', 'file');
 
+        // Assume the pro edition within tests
+        $app['config']->set('statamic.editions.pro', true);
+
         Statamic::pushCpRoutes(function () {
             return require_once realpath(__DIR__ . '/../routes/cp.php');
         });
