@@ -193,4 +193,11 @@ class VariantTest extends TestCase
     {
         $this->assertEquals($this->variant->tax, $this->product->tax);
     }
+
+    /** @test */
+    public function it_inherits_the_imagesx_from_his_parent()
+    {
+        $this->product->update(['images' => 'some.jpg']);
+        $this->assertEquals($this->variant->images, $this->product->images);
+    }
 }

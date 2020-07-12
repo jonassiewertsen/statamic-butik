@@ -154,4 +154,12 @@ class Variant extends ButikModel
     {
         return $this->product->shippingProfile;
     }
+
+    /**
+     * It inherits the images from it's parent
+     */
+    public function getImagesAttribute()
+    {
+        return $this->product->images;
+    }
 }
