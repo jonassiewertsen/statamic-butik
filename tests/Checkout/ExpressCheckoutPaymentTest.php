@@ -5,6 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Tests\Checkout;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class ExpressCheckoutPaymentTestTest extends TestCase
@@ -149,6 +150,21 @@ class ExpressCheckoutPaymentTestTest extends TestCase
             ->assertSee($this->product->taxes_amount)
             ->assertSee($this->product->taxes_percentage)
             ->assertSee($this->product->shipping_amount);
+    }
+
+    /** @test */
+    public function the_variant_information_will_be_displayed() {
+        Session::put('butik.customer', $this->customer);
+        $variant = create(Variant::class, ['product_slug' => $this->product->slug])->first();
+
+        $this->get(route('butik.checkout.express.payment', ['product' => $this->product, 'variant' => $variant->original_title]))
+            ->assertOk()
+            ->assertSee($variant->title)
+            ->assertSee($variant->price)
+            ->assertSee($variant->total_price)
+            ->assertSee($variant->taxes_amount)
+            ->assertSee($variant->taxes_percentage)
+            ->assertSee($variant->shipping_amount);
     }
 
     /** @test */
