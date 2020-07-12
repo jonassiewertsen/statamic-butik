@@ -42,7 +42,7 @@ class ProductStockTest extends TestCase
         $product = create(Product::class)->first();
         $stock   = $product->stock;
 
-        $item    = (new Item($product->slug));
+        $item = (new Item($product->slug));
         $item->setQuantity(2);
 
         $transaction = (new Transaction())->items(collect()->push($item));

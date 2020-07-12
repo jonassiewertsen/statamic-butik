@@ -21,8 +21,9 @@ class CartTest extends TestCase
     }
 
     /** @test */
-    public function the_cart_route_does_exist() {
-         $this->get(route('butik.cart'))
+    public function the_cart_route_does_exist()
+    {
+        $this->get(route('butik.cart'))
             ->assertOk();
     }
 }

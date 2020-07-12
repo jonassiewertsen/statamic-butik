@@ -25,7 +25,7 @@ class OrderConfirmationMailTest extends TestCase
         $this->withoutExceptionHandling();
         $order = create(Order::class)->first();
 
-        $payment = new MolliePaymentSuccessful();
+        $payment     = new MolliePaymentSuccessful();
         $payment->id = $order->transaction_id;
 
         $this->mockMollie($payment);
@@ -35,24 +35,26 @@ class OrderConfirmationMailTest extends TestCase
     }
 
     /** @test */
-    public function a_purchase_confirmation_mail_will_be_addressed_correctly(){
+    public function a_purchase_confirmation_mail_will_be_addressed_correctly()
+    {
         $order = create(Order::class)->first();
 
-        $payment = new MolliePaymentSuccessful();
+        $payment     = new MolliePaymentSuccessful();
         $payment->id = $order->transaction_id;
         $this->mockMollie($payment);
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $payment->id]);
 
-        Mail::assertQueued(PurchaseConfirmation::class, function($mail) use ($order) {
+        Mail::assertQueued(PurchaseConfirmation::class, function ($mail) use ($order) {
             return $mail->hasTo(json_decode($order->customer)->mail);
         });
     }
 
     /** @test */
-    public function a_order_confirmation_mail_will_be_sent_to_the_seller() {
+    public function a_order_confirmation_mail_will_be_sent_to_the_seller()
+    {
         $order = create(Order::class)->first();
 
-        $payment = new MolliePaymentSuccessful();
+        $payment     = new MolliePaymentSuccessful();
         $payment->id = $order->transaction_id;
 
         $this->mockMollie($payment);
@@ -63,16 +65,17 @@ class OrderConfirmationMailTest extends TestCase
     }
 
     /** @test */
-    public function a_order_confirmation_mail_will_be_addressed_to_the_seller() {
+    public function a_order_confirmation_mail_will_be_addressed_to_the_seller()
+    {
         $order = create(Order::class)->first();
 
-        $payment = new MolliePaymentSuccessful();
+        $payment     = new MolliePaymentSuccessful();
         $payment->id = $order->transaction_id;
 
         $this->mockMollie($payment);
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $payment->id]);
 
-        Mail::assertQueued(OrderConfirmation::class, function($mail) {
+        Mail::assertQueued(OrderConfirmation::class, function ($mail) {
             return $mail->hasTo(config('butik.order-confirmations'));
         });
     }
