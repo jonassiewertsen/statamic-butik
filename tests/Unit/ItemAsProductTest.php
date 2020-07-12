@@ -47,6 +47,14 @@ class ItemAsProductTest extends TestCase
     }
 
     /** @test */
+    public function it_has_imagese()
+    {
+        $item = new Item($this->product->slug);
+
+        $this->assertEquals($item->images, $this->product->images);
+    }
+
+    /** @test */
     public function it_can_be_sellable()
     {
         $item = new Item($this->product->slug);

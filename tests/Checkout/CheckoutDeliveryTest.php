@@ -16,6 +16,7 @@ class CheckoutDeliveryTest extends TestCase
     {
         parent::setUp();
 
+        $this->setCountry();
         $this->product = create(Product::class)->first();
         Cart::add($this->product->slug);
     }
@@ -230,7 +231,6 @@ class CheckoutDeliveryTest extends TestCase
         $customer = session('butik.customer');
 
         $this->assertStringContainsString($customer->name, $page);
-        $this->assertStringContainsString($customer->country, $page);
         $this->assertStringContainsString($customer->mail, $page);
         $this->assertStringContainsString($customer->address1, $page);
         $this->assertStringContainsString($customer->address2, $page);

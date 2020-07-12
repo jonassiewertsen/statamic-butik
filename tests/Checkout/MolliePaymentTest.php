@@ -49,7 +49,7 @@ class MolliePaymentTest extends TestCase
     {
         $order = create(Order::class)->first();
 
-        $paymentResponse = new MolliePaymentSuccessful();
+        $paymentResponse     = new MolliePaymentSuccessful();
         $paymentResponse->id = $order->transaction_id;
 
         $this->mockMollie($paymentResponse);
@@ -60,7 +60,7 @@ class MolliePaymentTest extends TestCase
         $this->assertDatabaseHas('butik_orders', [
             'id'      => $order->id,
             'paid_at' => Carbon::parse($paymentResponse->paidAt),
-            'status'  => 'paid'
+            'status'  => 'paid',
         ]);
     }
 
@@ -78,7 +78,7 @@ class MolliePaymentTest extends TestCase
     {
         $order = create(Order::class)->first();
 
-        $paymentResponse = new MolliePaymentFailed();
+        $paymentResponse     = new MolliePaymentFailed();
         $paymentResponse->id = $order->transaction_id;
 
         $this->mockMollie($paymentResponse);
@@ -108,7 +108,7 @@ class MolliePaymentTest extends TestCase
     {
         $order = create(Order::class)->first();
 
-        $paymentResponse = new MolliePaymentExpired();
+        $paymentResponse     = new MolliePaymentExpired();
         $paymentResponse->id = $order->transaction_id;
 
         $this->mockMollie($paymentResponse);
@@ -137,7 +137,7 @@ class MolliePaymentTest extends TestCase
     {
         $order = create(Order::class)->first();
 
-        $paymentResponse = new MolliePaymentCanceled();
+        $paymentResponse     = new MolliePaymentCanceled();
         $paymentResponse->id = $order->transaction_id;
 
         $this->mockMollie($paymentResponse);
@@ -148,7 +148,7 @@ class MolliePaymentTest extends TestCase
         $this->assertDatabaseHas('butik_orders', [
             'id'             => $order->id,
             'transaction_id' => $paymentResponse->id,
-            'status'         => 'canceled'
+            'status'         => 'canceled',
         ]);
     }
 

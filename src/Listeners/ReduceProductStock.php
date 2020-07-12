@@ -6,6 +6,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Cache;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\Variant;
+use Statamic\Support\Str;
 
 class ReduceProductStock implements ShouldQueue
 {
@@ -16,17 +18,90 @@ class ReduceProductStock implements ShouldQueue
         $items = $event->transaction->items;
 
         foreach ($items as $item) {
+            /**
+             * The item can be either a variant or a product. We will fetch
+             * the correct and belonging data.
+             */
+            $product = $this->defineProduct($item);
 
-            $product = Product::findOrFail($item->id);
-
+            /**
+             * In case the stock ist unlimited, we will not reduce any.
+             */
             if ($product->stock_unlimited) {
                 return;
             }
 
-            $product->stock -= $item->quantity;
-            $product->save();
+            /**
+             * We need to check which stock we want to reduce. The variant stock will
+             * only be reduced, if it's a variant and the stock is not inherited.
+             * In all other cases, the parent stock will be reduced.
+             */
+            if ($this->isVariant($item) && ! $product->inherit_stock)  {
+                $this->reduceVariant($item);
+            } else {
+                $this->reduceParent($item);
+            }
 
             Cache::forget("product:{$product->slug}");
         }
+    }
+
+    /**
+     * Returing either a variant or a product.
+     */
+    private function defineProduct($item)
+    {
+        if ($this->isVariant($item)) {
+            return $this->getVariant($item);
+        }
+
+        return $this->getProduct($item);
+    }
+
+    /**
+     * Is the item a variant?
+     */
+    private function isVariant($item)
+    {
+        return Str::contains($item->id, '::');
+    }
+
+    /**
+     * We will get the product from the database.
+     */
+    private function getProduct($item)
+    {
+        $slug = Str::of($item->id)->explode('::')[0];
+
+        return Product::find($slug);
+    }
+
+    /**
+     * We will get the variant from the database.
+     */
+    private function getVariant($item)
+    {
+        $id = Str::of($item->id)->explode('::')[1];
+
+        return Variant::find($id);
+    }
+
+    /**
+     * Reducing the variant.
+     */
+    private function reduceVariant($item) {
+       $variant = $this->getVariant($item);
+       $variant->stock -= $item->quantity;
+       $variant->save();
+    }
+
+    /**
+     * Reducing the product or parent.
+     */
+    private function reduceParent($item)
+    {
+        $product = $this->getProduct($item);
+        $product->stock -= $item->quantity;
+        $product->save();
     }
 }

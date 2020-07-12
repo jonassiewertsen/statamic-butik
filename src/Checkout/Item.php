@@ -34,6 +34,11 @@ class Item
     public string $slug;
 
     /**
+     * The images of the item
+     */
+    public ?array $images;
+
+    /**
      * The item name
      */
     public string $name;
@@ -84,6 +89,7 @@ class Item
         $this->quantity        = 1;
         $this->availableStock  = $item->stock;
         $this->name            = $item->title;
+        $this->images          = $item->images;
         $this->description     = $this->limitedDescription();
         $this->taxRate         = $item->tax->percentage;
         $this->singlePrice     = $item->price;

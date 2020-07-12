@@ -3,23 +3,26 @@
 namespace Jonassiewertsen\StatamicButik\Http\Livewire;
 
 use Jonassiewertsen\StatamicButik\Checkout\Cart as ShoppingCart;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Livewire\Component;
 
 class Cart extends Component
 {
-    public function getTotalProperty()
+    public function getTotalPriceProperty()
     {
-        $total['price']    = ShoppingCart::totalPrice();
-        $total['shipping'] = ShoppingCart::totalShipping();
-        return $total;
+        return ShoppingCart::totalPrice();
+    }
+
+    public function getTotalShippingProperty()
+    {
+        return ShoppingCart::totalShipping();
     }
 
     public function render()
     {
         return view('butik::web.livewire.cart', [
-            'items' => ShoppingCart::get(),
-            'total' => $this->total,
+            'items'          => ShoppingCart::get(),
+            'total_price'    => $this->totalPrice,
+            'total_shipping' => $this->totalShipping,
         ]);
     }
 

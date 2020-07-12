@@ -25,7 +25,7 @@ class ExpressCheckoutReceiptTest extends TestCase
     {
         $route = URL::temporarySignedRoute('butik.payment.receipt', now()->addMinute(), ['order' => 'not_existing_id']);
 
-         $this->get($route)
+        $this->get($route)
             ->assertOk()
             ->assertViewIs('butik::web.checkout.invalid-receipt');
     }
@@ -85,9 +85,9 @@ class ExpressCheckoutReceiptTest extends TestCase
     /** @test */
     public function customer_data_will_be_displayed()
     {
-        $order = create(Order::class)->first();
+        $order    = create(Order::class)->first();
         $customer = json_decode($order->customer);
-        $route = URL::temporarySignedRoute('butik.payment.receipt', now()->addMinute(), ['order' => $order->id]);
+        $route    = URL::temporarySignedRoute('butik.payment.receipt', now()->addMinute(), ['order' => $order->id]);
 
         $this->get($route)->assertOk()
             ->assertSee($customer->name)

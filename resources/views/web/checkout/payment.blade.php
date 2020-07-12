@@ -31,8 +31,8 @@
             @foreach ($items as $item)
                 <section class="b-flex b-mt-3f">
                     <figure class="b-w-1/5 b-mr-5">
-                        @if (! empty($product->images))
-                            <img class="b-w-1/2" src="/assets/{{ $product->images->first() }}">
+                        @if (! empty($item->images))
+                            <img class="b-w-1/2" src="/assets/{{ $item->images[0] }}">
                         @else
                             <div class="b-w-full">
                                 @include('butik::web.shop.partials.placeholder')
@@ -59,14 +59,14 @@
 
                 <div class="b-flex b-my-3 b-justify-between b-max-w-sm b-mx-auto">
                     <span>{{ __('butik::payment.shipping') }}</span>
-                    <span>{{ currency() }} TOTAL SHIPPING HERE</span>
+                    <span>{{ currency() }} {{ $total_shipping }}</span>
                 </div>
 
                 <hr class="b-border-white b-my-5">
 
                 <div class="b-flex b-mt-3 b-justify-between b-max-w-sm b-mx-auto">
                     <span>{{ __('butik::payment.total') }}</span>
-                    <span class="b-font-black">{{ currency() }} {{ $totalPrice }}</span>
+                    <span class="b-font-black">{{ currency() }} {{ $total_price }}</span>
                 </div>
                 <div class="b-max-w-sm b-mx-auto b-pb-3 b-text-gray-500 b-text-right b-text-sm">
                     Including taxes
