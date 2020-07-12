@@ -67,7 +67,16 @@ class Product extends ButikModel
      */
     public function getVariant(String $variantTitle)
     {
-        return $this->variants()->where('title', $variantTitle)->first();
+        return $this->variants->where('original_title', $variantTitle)->first();
+    }
+
+    /**
+     * Will check if a variant with the given title does exist,
+     * related to this product.
+     */
+    public function variantExists($title): bool
+    {
+        return $this->variants->contains('original_title', $title);
     }
 
     /**

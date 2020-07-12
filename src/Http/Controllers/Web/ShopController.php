@@ -19,7 +19,7 @@ class ShopController extends WebController
          * If it does not exist, we will redirect to an existing variant
          * or redirect to the pare nt product.
          */
-        if ($variant !== null && !$product->variants->contains('original_title', $variant)) {
+        if ($variant !== null && ! $product->variantExists($variant)) {
             return $product->hasVariants() ?
                 $this->redirectToVariant($product) :
                 redirect($product->show_url);
