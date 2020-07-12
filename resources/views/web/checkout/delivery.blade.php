@@ -2,7 +2,6 @@
 
 @section('content')
 
-     Header
     @include('butik::web.checkout.partials.status', ['delivery' => true])
 
     <hr class="b-mb-5 b-mt-8">
