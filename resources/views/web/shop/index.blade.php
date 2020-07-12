@@ -1,7 +1,30 @@
 @extends('butik::web.layouts.shop')
 
 @section('content')
+    <div class="b-flex b-flex-wrap b--mx-4 md:b--mx-6">
+        @foreach($products as $product)
+            <div class="b-block b-px-4 md:b-px-6 b-mb-10 b-w-full sm:b-w-1/2 xl:b-w-1/3">
+                <a href="{{ $product->show_url }}" class="b-block b-w-full">
 
-    @livewire('butik::shop')
+                    @if (! empty($product->images))
+                        <img class="b-w-full b-rounded-xl b-h-64 b-object-cover b-transform b-duration-700 hover:b-shadow-2xl hover:b--translate-y-2"
+                             src="/assets/{{ $product->images[0] }}"
+                        >
+                    @else
+                        <div class="b-w-full">
+                            @include('butik::web.shop.partials.placeholder')
+                        </div>
+                    @endif
 
+                    <h1 class="b-mt-4 b-text-2xl b-text-center b-leading-none">{{ $product->title }}</h1>
+
+                    @unless ($product->stock_unlimited || $product->stock  > 0)
+                        <p class="b-text-sm b-block b-text-center b-font-light b-ml-2">{{ __('butik::product.sold_out') }}</p>
+                    @else
+                        <div class="b-text-gray-500 b-text-xl b-text-center">{{ currency() }} {{ $product->price }}</div>
+                    @endunless
+                </a>
+            </div>
+        @endforeach
+    </div>
 @endsection
