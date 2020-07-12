@@ -168,6 +168,14 @@ class ExpressCheckoutPaymentTestTest extends TestCase
     }
 
     /** @test */
+    public function a_not_existing_variant_will_thrown_an_404_error() {
+        Session::put('butik.customer', $this->customer);
+
+        $this->get(route('butik.checkout.express.payment', ['product' => $this->product, 'variant' => 'not-existing']))
+            ->assertNotFound();
+    }
+
+    /** @test */
     public function customer_data_will_be_displayed_inside_the_view() {
         Session::put('butik.customer', $this->customer);
         $customer = (array) $this->customer;
