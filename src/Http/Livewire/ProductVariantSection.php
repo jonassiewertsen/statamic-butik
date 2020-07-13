@@ -35,7 +35,6 @@ class ProductVariantSection extends Component
 
         return view('butik::web.livewire.product-variant-section', [
             'price'                => $this->variantData->price,
-            'express_delivery_url' => $this->variantData->express_delivery_url,
             'variant_title'        => $this->variantData->title,
             'variant_short_title'  => $this->variantData->original_title,
             'stock'                => $this->variantData->stock,

@@ -40,29 +40,9 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\Web')
         ->name('checkout.payment')
         ->middleware(['cartNotEmpty', 'validateCheckoutRoute']);
 
-
     Route::get('process/express-payment', 'PaymentGatewayController@processPayment')
         ->name('payment.process')
         ->middleware(['cartNotEmpty', 'validateCheckoutRoute']);
-
-    /**
-     * #################################################################################################################
-     *   Express Checkout routes
-     * #################################################################################################################
-     */
-    Route::get(config('butik.route_express-checkout-delivery').'/{product}/{variant?}', 'ExpressCheckoutController@delivery')
-        ->name('checkout.express.delivery');
-
-    Route::post(config('butik.route_express-checkout-delivery').'/{product}/{variant?}', 'ExpressCheckoutController@saveCustomerData')
-        ->name('checkout.express.delivery');
-
-    Route::get(config('butik.route_express-checkout-payment').'/{product}/{variant?}', 'ExpressCheckoutController@payment')
-        ->name('checkout.express.payment')
-        ->middleware('validateExpressCheckoutRoute');
-
-    Route::get('process/express-payment/{product}/{variant?}', 'PaymentGatewayController@processExpressPayment')
-        ->name('payment.express.process')
-        ->middleware('validateExpressCheckoutRoute');
 
     /**
      * #################################################################################################################

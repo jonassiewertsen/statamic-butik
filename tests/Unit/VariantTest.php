@@ -200,13 +200,4 @@ class VariantTest extends TestCase
         $this->product->update(['images' => 'some.jpg']);
         $this->assertEquals($this->variant->images, $this->product->images);
     }
-
-    /** @test */
-    public function it_has_a_express_delivery_url()
-    {
-        $this->assertEquals(
-            $this->product->express_delivery_url . '/' . $this->variant->original_title,
-            $this->variant->express_delivery_url
-        );
-    }
 }

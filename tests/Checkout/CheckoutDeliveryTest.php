@@ -41,29 +41,6 @@ class CheckoutDeliveryTest extends TestCase
     }
 
     /** @test */
-    public function translations_will_be_displayed()
-    {
-        $this->get(route('butik.checkout.express.delivery', $this->product))
-            ->assertSee('Delivery')
-            ->assertSee('Review & Payment')
-            ->assertSee('Receipt')
-            ->assertSee('Express Checkout')
-            ->assertSee('Subtotal')
-            ->assertSee('Shipping')
-            ->assertSee('Total')
-            ->assertSee('To payment')
-            ->assertSee('Your Information')
-            ->assertSee('Delivery Address')
-            ->assertSee('Name')
-            ->assertSee('Mail')
-            ->assertSee('Country')
-            ->assertSee('Address 1')
-            ->assertSee('Address 2')
-            ->assertSee('City')
-            ->assertSee('Zip');
-    }
-
-    /** @test */
     public function user_data_will_be_saved_inside_the_session()
     {
         $this->withoutExceptionHandling();
@@ -243,21 +220,6 @@ class CheckoutDeliveryTest extends TestCase
     {
         $this->post(route('butik.checkout.delivery'), (array)$this->createUserData())
             ->assertRedirect(route('butik.checkout.payment'));
-    }
-
-    /** @test */
-    public function existing_data_will_be_displayed_in_the_form()
-    {
-        $customer = new Customer($this->createUserData());
-        Session::put('butik.customer', $customer);
-
-        $this->get(route('butik.checkout.express.delivery', $this->product))
-            ->assertSee($customer->name)
-            ->assertSee($customer->mail)
-            ->assertSee($customer->address1)
-            ->assertSee($customer->address2)
-            ->assertSee($customer->city)
-            ->assertSee($customer->zip);
     }
 
     private function createUserData($key = null, $value = null)

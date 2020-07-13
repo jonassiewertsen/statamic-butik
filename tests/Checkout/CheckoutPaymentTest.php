@@ -37,6 +37,8 @@ class CheckoutPaymentTest extends TestCase
     /** @test */
     public function the_pament_view_will_be_shown()
     {
+        $this->withoutExceptionHandling();
+
         Session::put('butik.customer', $this->customer);
 
         $this->get(route('butik.checkout.payment'))
@@ -72,16 +74,6 @@ class CheckoutPaymentTest extends TestCase
             ->assertSee('Receipt')
 //            ->assertSee('Shipping') TODO: Add shipping back in again
             ->assertSee('Total');
-    }
-
-    /** @test */
-    public function the_payment_process_button_to_redirect_to_mollies_will_be_shown()
-    {
-        Session::put('butik.customer', $this->customer);
-
-        $this->get(route('butik.checkout.express.payment', $this->product))
-            ->assertOk()
-            ->assertSee(route('butik.payment.express.process', $this->product));
     }
 
     // TODO: Tests to remove products from the cart, which are sold out.

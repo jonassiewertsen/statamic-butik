@@ -32,17 +32,6 @@ class PaymentGatewayController extends WebController
         return $this->gateway->handle($customer, $items, $totalPrice);
     }
 
-    public function processExpressPayment(Product $product)
-    {
-        $customer   = Session::get('butik.customer');
-        $item       = new Item($product);
-        $totalPrice = $this->humanPriceWithDot($item->totalPrice());
-
-        $items = collect()->push($item);
-
-        return $this->gateway->handle($customer, $items, $totalPrice);
-    }
-
     public function webhook(Request $request): void {
         $this->gateway->webhook($request);
     }

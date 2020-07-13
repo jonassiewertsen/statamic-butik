@@ -162,14 +162,4 @@ class Variant extends ButikModel
     {
         return $this->product->images;
     }
-
-    /**
-     * A product has a express delivery checkout url
-     */
-    public function getExpressDeliveryUrlAttribute()
-    {
-        $checkout = config('butik.route_express-checkout-delivery');
-
-        return "{$this->shopRoute()}/{$checkout}/{$this->product->slug}/{$this->original_title}";
-    }
 }

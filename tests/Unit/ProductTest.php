@@ -75,18 +75,6 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function it_has_a_express_checkout_delivery_url()
-    {
-        $product = create(Product::class)->first();
-
-        $uri_prefix = config('butik.route_shop-prefix');
-        $this->assertEquals(
-            "/shop/express-checkout/delivery/{$product->slug}",
-            $product->expressDeliveryUrl
-        );
-    }
-
-    /** @test */
     public function it_has_a_tax()
     {
         $product = create(Product::class)->first();

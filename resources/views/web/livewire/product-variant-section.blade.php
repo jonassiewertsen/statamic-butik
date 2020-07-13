@@ -28,9 +28,9 @@
     @if ($stock_unlimited || $stock  > 0)
         <div class="b-flex b-mt-5">
             <a class="b-bg-gray-900 b-flex-grow b-block b-py-2 b-rounded b-text-center b-text-white b-text-xl hover:b-bg-gray-800"
-               href="{{ $express_delivery_url }}"
+               href="#"
             >
-                {{ __('butik::payment.express_checkout') }}
+                Proceed to Checkout
             </a>
             <button wire:click="addToCart()" class="b-inline-block b-ml-5 b-bg-gray-300 b-py-4 b-px-5 b-rounded-xl">
                 Add to bag

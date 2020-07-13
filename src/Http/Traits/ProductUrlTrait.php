@@ -20,14 +20,4 @@ trait ProductUrlTrait {
     {
         return "{$this->shopRoute()}/{$this->slug}";
     }
-
-    /**
-     * A product has a express delivery checkout url
-     */
-    public function getExpressDeliveryUrlAttribute()
-    {
-        $checkout = config('butik.route_express-checkout-delivery');
-
-        return "{$this->shopRoute()}/{$checkout}/{$this->slug}";
-    }
 }
