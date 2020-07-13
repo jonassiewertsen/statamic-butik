@@ -31,7 +31,7 @@ class CountryTest extends TestCase
    {
        $country = create(CountryModel::class)->first();
 
-       Config::set('butik.country', $country->name);
+       Config::set('butik.country', $country->slug);
 
        $this->assertEquals(Country::get()['name'], $country->name);
    }

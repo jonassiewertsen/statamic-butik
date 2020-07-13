@@ -31,7 +31,7 @@ class ShippingByPriceTest extends TestCase
         $this->product3 = create(Product::class)->first();
 
         $this->country = create(Country::class)->first();
-        Config::set('butik.country', Country::first()->name);
+        Config::set('butik.country', Country::first()->slug);
 
         create(ShippingZone::class, [
             'shipping_profile_slug' => ShippingProfile::first()->slug,

@@ -219,7 +219,7 @@ class CartTest extends TestCase
     public function the_default_country_will_automatically_be_set()
     {
         $country = create(CountryModel::class)->first();
-        Config::set('butik.country', $country->name);
+        Config::set('butik.country', $country->slug);
 
         $this->assertEquals(Cart::country()['name'], $country->name);
     }

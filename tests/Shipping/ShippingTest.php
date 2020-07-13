@@ -27,7 +27,7 @@ class ShippingTest extends TestCase
         $zone = create(ShippingZone::class)->first();
         $zone->addCountry($country);
 
-        Config::set('butik.country', $country->name);
+        Config::set('butik.country', $country->slug);
 
         Cart::add($this->product->slug);
     }
