@@ -22,6 +22,10 @@ class Product extends ButikModel
         'stock_unlimited' => 'boolean',
     ];
 
+    protected $appends = [
+        'show_url',
+    ];
+
     protected $guarded = [];
 
     public function getRouteKeyName()

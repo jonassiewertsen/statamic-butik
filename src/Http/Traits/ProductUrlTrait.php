@@ -18,6 +18,6 @@ trait ProductUrlTrait {
      */
     public function getShowUrlAttribute()
     {
-        return "/{$this->shopRoute()}/{$this->slug}";
+        return "{$this->shopRoute()}/{$this->slug}";
     }
 }

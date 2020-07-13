@@ -4,6 +4,8 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Statamic\View\View as StatamicView;
+
 
 class ShopController extends WebController
 {
@@ -11,7 +13,12 @@ class ShopController extends WebController
     {
         $products = Product::all();
 
-        return view(config('butik.template_product-index'), compact('products'));
+        return (new StatamicView())
+            ->template(config('butik.template_product-index'))
+            ->layout(config('butik.layout_product-index'))
+            ->with(compact('products'));
+
+//        return view(config('butik.template_product-index'), compact('products'));
     }
 
     public function show(Product $product, $variant = null)
