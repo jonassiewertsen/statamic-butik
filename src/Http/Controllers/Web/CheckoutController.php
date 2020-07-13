@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
+use Jonassiewertsen\StatamicButik\Http\Models\Country;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 
 class CheckoutController extends Checkout
@@ -17,10 +18,12 @@ class CheckoutController extends Checkout
             (new Customer())->empty();
 
         return view(config('butik.template_checkout-delivery'), [
-            'customer'       => $customer,
-            'items'          => Cart::get(),
-            'total_price'    => Cart::totalPrice(),
-            'total_shipping' => Cart::totalShipping(),
+            'customer'         => $customer,
+            'countries'        => Country::pluck('name', 'slug'),
+            'selected_country' => Cart::country(),
+            'items'            => Cart::get(),
+            'total_price'      => Cart::totalPrice(),
+            'total_shipping'   => Cart::totalShipping(),
         ]);
     }
 

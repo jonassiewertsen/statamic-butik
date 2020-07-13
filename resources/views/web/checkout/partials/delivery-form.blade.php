@@ -25,9 +25,14 @@
 
     <h2 class="b-text-md b-uppercase">{{ __('butik::payment.delivery_address') }}</h2>
 
-    <label for="country" class="b-block b-my-3 b-cursor-not-allowed">
+    <label for="country" class="b-block b-my-3">
         <div class="b-font-bold b-text-g b-text-xs">{{ __('butik::payment.country') }}</div>
-        <input id="country" name="country" type="text" readonly value="{{ config('butik.country') }}" class="b-border-b b-border-gray-900 b-my-3 b-px-2 b-py-1 b-w-full">
+        <select id="country" name="country" class="b-border-b b-border-gray-900 b-my-3 b-px-2 b-py-1 b-w-full">
+            @foreach($countries as $slug => $name)
+                <option value="{{ $slug }}" @if($selected_country['slug'] == $slug) selected @endif>{{ $name }}</option>
+            @endforeach
+        </select>
+
         @error('country')
             <span class="b-text-red-600 b-block b--mt-2 b-text-xs">{{ $message }}</span>
         @enderror
