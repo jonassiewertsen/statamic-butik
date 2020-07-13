@@ -3,26 +3,28 @@
 return [
 
     /**
+     * More detailed information can be found here:
+     * https://butik.dev/installation/configuration
+     *
+     *
      * SHOP INFORMATION
      *
      * Put your shop information here. Those information will be usedby templates for the shop and emails.
      */
-    'name' => 'Statamic Butik', // Whats the Name of your Shop?
-
+    'name'     => 'Statamic Butik', // Whats the name of your Shop?
     'address1' => '132 Main Street',
     'address2' => 'Sea view, Fahrensodde', // can be left empty
     'zip_city' => '24937 Flensburg',
     'country'  => 'Germany', // Set your default country
-
-    'phone'                             => '+49 1294 238474934',
-    'mail'                              => 'butik@shop.com',
+    'phone'    => '+49 1294 238474934',
+    'mail'     => 'butik@shop.com',
 
     /**
      * MAIL
      *
      * Butik will send one confirmation email for every sold product to this address.
      */
-    'order-confirmations'               => 'your_mail@butik.com',
+    'order-confirmations' => 'your_mail@butik.com',
 
     /**
      * USEFUL LINKS
@@ -33,7 +35,7 @@ return [
      *
      * 'link' => 'name to be shown',
      */
-    'useful-links'                      => [
+    'useful-links' => [
 //        'https://butik.dev'    => 'Butik documentation',
 //        'https://statamic.com' => 'Statamic Website',
     ],
@@ -43,18 +45,17 @@ return [
      *
      * Define your shops currency
      */
-    'currency_name'                     => 'Euro',
-    'currency_isoCode'                  => 'EUR', // Make sure to use ISO_4217 https://en.wikipedia.org/wiki/ISO_4217
-    'currency_symbol'                   => '€',
-    'currency_delimiter'                => ',',
-
+    'currency_name'      => 'Euro',
+    'currency_isoCode'   => 'EUR', // Make sure to use ISO_4217 https://en.wikipedia.org/wiki/ISO_4217
+    'currency_symbol'    => '€',
+    'currency_delimiter' => ',',
 
     /**
      * WIDGETS
      *
      * Settings for your dashboard widgets
      */
-    'widget_orders-limit'               => 10,
+    'widget_orders-limit' => 10,
 
     /**
      * ROUTING
@@ -62,11 +63,11 @@ return [
      * Define your own custom route names to view the Statamic Butik
      * on the front-end.
      */
-    'route_shop-prefix'                 => 'shop',                       // yourshop.com/shop/
-    'route_cart'                        => 'cart',                       // yourshop.com/shop/cart
-    'route_checkout-delivery'           => 'checkout/delivery',           // yourshop.com/shop/checkout/delivery
-    'route_checkout-payment'            => 'checkout/payment',            // yourshop.com/shop/checkout/payment
-    'route_payment-receipt'             => 'payment/{order}/receipt',     // yourshop.com/shop/payment/xxxxxxxxx/receipt
+    'route_shop-prefix'       => 'shop',                       // yourshop.com/shop/
+    'route_cart'              => 'cart',                       // yourshop.com/shop/cart
+    'route_checkout-delivery' => 'checkout/delivery',           // yourshop.com/shop/checkout/delivery
+    'route_checkout-payment'  => 'checkout/payment',            // yourshop.com/shop/checkout/payment
+    'route_payment-receipt'   => 'payment/{order}/receipt',     // yourshop.com/shop/payment/xxxxxxxxx/receipt
 
     /**
      * LAYOUTS
@@ -74,13 +75,13 @@ return [
      * Define your own layouts for the frontend if you want. You can as well edit the
      * given layouts to fit your needs.
      */
-    'layout_product-index'              => 'layout',
-    'layout_product-show'               => 'layout',
-    'layout_cart'                       => 'layout',
-    'layout_checkout-delivery'          => 'layout',
-    'layout_checkout-payment'           => 'layout',
-    'layout_checkout-receipt'           => 'layout',
-    'layout_checkout-receipt-invalid'   => 'layout',
+    'layout_product-index'            => 'layout',
+    'layout_product-show'             => 'layout',
+    'layout_cart'                     => 'layout',
+    'layout_checkout-delivery'        => 'layout',
+    'layout_checkout-payment'         => 'layout',
+    'layout_checkout-receipt'         => 'layout',
+    'layout_checkout-receipt-invalid' => 'layout',
 
     /**
      * TEMPLATES
@@ -102,7 +103,7 @@ return [
      * If you want, you can implement your own shipping methods or disable those, you don't want to use.
      * https://butik.dev/shipping/custom-shipping
      */
-    'shipping'                          => [
+    'shipping' => [
         'price' => \Jonassiewertsen\StatamicButik\Shipping\ShippingByPrice::class,
     ],
 ];

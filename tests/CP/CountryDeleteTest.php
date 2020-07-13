@@ -8,16 +8,16 @@ use Jonassiewertsen\StatamicButik\Tests\TestCase;
 class CountryDeleteTest extends TestCase
 {
     /** @test */
-    public function A_product_can_be_deleted()
+    public function A_country_can_be_deleted()
     {
         $this->signInAdmin();
 
         $country = create(Country::class);
-        $this->assertEquals(1, $country->count());
+        $this->assertDatabaseHas('butik_countries', $country->toArray());
 
         $this->delete(route('statamic.cp.butik.countries.destroy', $country->first()))
             ->assertOk();
 
-        $this->assertEquals(0, Country::count());
+        $$this->assertDatabaseMissing('butik_countries', $country->toArray());
     }
 }

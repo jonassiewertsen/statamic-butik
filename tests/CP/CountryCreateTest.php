@@ -19,7 +19,7 @@ class CountryCreateTest extends TestCase
     {
         $country = raw(Country::class);
         $this->post(route('statamic.cp.butik.countries.store'), $country)->assertSessionHasNoErrors();
-        $this->assertEquals(1, Country::count());
+        $this->assertDatabaseHas('butik_countries', $country);
     }
 
     /** @test */

@@ -31,6 +31,8 @@ class TestCase extends OrchestraTestCase
         }
 
         $this->withFactories(__DIR__ . '/../database/factories');
+
+        $this->setCountry();
     }
 
     /**
@@ -74,7 +76,10 @@ class TestCase extends OrchestraTestCase
      */
     protected function setCountry(): void
     {
-        $country = create(Country::class)->first();
+        $country = create(Country::class, [
+            'name' => 'Germany',
+            'slug' => 'germany',
+        ])->first();
         Config::set('butik.country', $country->slug);
     }
 

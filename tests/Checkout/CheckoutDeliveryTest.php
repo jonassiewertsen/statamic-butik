@@ -17,7 +17,6 @@ class CheckoutDeliveryTest extends TestCase
     {
         parent::setUp();
 
-        $this->setCountry();
         $this->product = create(Product::class)->first();
         Cart::add($this->product->slug);
     }
@@ -44,7 +43,6 @@ class CheckoutDeliveryTest extends TestCase
     /** @test */
     public function user_data_will_be_saved_inside_the_session()
     {
-        $this->withoutExceptionHandling();
         $this->post(route('butik.checkout.delivery'), (array)$this->createUserData())
             ->assertSessionHas('butik.customer');
     }
@@ -226,6 +224,8 @@ class CheckoutDeliveryTest extends TestCase
     /** @test */
     public function if_a_new_country_has_been_selected_the_view_will_be_reloaded()
     {
+        create(Country::class, ['slug' => 'spain']);
+
         $deliveryRoute = route('butik.checkout.delivery');
 
         // view the form

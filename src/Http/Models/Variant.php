@@ -128,7 +128,7 @@ class Variant extends ButikModel
      */
     public function getShowUrlAttribute()
     {
-        return "{$this->shopRoute()}/{$this->product_slug}/{$this->original_title}";
+        return "/{$this->shopRoute()}/{$this->product_slug}/{$this->original_title}";
     }
 
     /**

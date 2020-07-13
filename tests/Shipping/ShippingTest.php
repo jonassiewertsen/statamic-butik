@@ -23,7 +23,7 @@ class ShippingTest extends TestCase
         parent::setUp();
 
         $this->product = create(Product::class)->first();
-        $country = create(Country::class)->first();
+        $country = Country::first();
         $zone = create(ShippingZone::class)->first();
         $zone->addCountry($country);
 

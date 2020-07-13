@@ -15,8 +15,6 @@ class CartTest extends TestCase
     {
         parent::setUp();
 
-        $this->setCountry();
-
         $this->product = create(Product::class)->first();
     }
 

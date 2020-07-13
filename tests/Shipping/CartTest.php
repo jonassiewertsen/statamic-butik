@@ -23,7 +23,6 @@ class CartTest extends TestCase
 
     public function setUp(): void {
         parent::setUp();
-        $this->setCountry();
         $this->product = create(Product::class)->first();
         create(Variant::class, ['product_slug' => $this->product->slug])->first();
         $this->variant = Variant::first();
