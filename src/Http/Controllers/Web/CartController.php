@@ -7,6 +7,6 @@ use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 class CartController extends WebController
 {
     public function index() {
-        return view(config('butik.template_cart-index'));
+        return view(config('butik.template_cart'));
     }
 }
