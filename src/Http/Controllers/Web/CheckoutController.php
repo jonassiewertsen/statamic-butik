@@ -32,8 +32,12 @@ class CheckoutController extends Checkout
         $validatedData = request()->validate($this->rules());
 
         $customer = new Customer($validatedData);
-
         Session::put('butik.customer', $customer);
+
+        if ($validatedData['country'] !== Cart::country()['slug']) {
+            Cart::setCountry($validatedData['country']);
+            return redirect()->back();
+        }
 
         return redirect()->route('butik.checkout.payment');
     }

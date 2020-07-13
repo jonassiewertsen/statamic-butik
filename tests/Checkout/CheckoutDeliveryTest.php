@@ -5,6 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Tests\Checkout;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
+use Jonassiewertsen\StatamicButik\Http\Models\Country;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
@@ -222,10 +223,34 @@ class CheckoutDeliveryTest extends TestCase
             ->assertRedirect(route('butik.checkout.payment'));
     }
 
+    /** @test */
+    public function if_a_new_country_has_been_selected_the_view_will_be_reloaded()
+    {
+        $deliveryRoute = route('butik.checkout.delivery');
+
+        // view the form
+        $this->get($deliveryRoute);
+
+        // submit the form
+        $this->post($deliveryRoute, (array)$this->createUserData('country', 'spain'))
+            ->assertRedirect($deliveryRoute);
+    }
+
+    /** @test */
+    public function if_a_new_country_has_been_selected_it_will_be_saved_in_the_card()
+    {
+        $this->withoutExceptionHandling();
+        $newCountry = create(Country::class, ['slug' => 'spain'])->first();
+
+        // submit the form
+        $this->post(route('butik.checkout.delivery'), (array)$this->createUserData('country', 'spain'));
+
+        $this->assertEquals($newCountry->slug, Cart::country()['slug']);
+    }
+
     private function createUserData($key = null, $value = null)
     {
         $customer = [
-            'country'      => 'Germany',
             'name'         => 'John Doe',
             'mail'         => 'johndoe@mail.de',
             'address1'     => 'Main Street 2',
@@ -234,6 +259,7 @@ class CheckoutDeliveryTest extends TestCase
             'state_region' => '',
             'zip'          => '24579',
             'phone'        => '013643-23837',
+            'country'      => 'germany',
         ];
 
         if ($key !== null || $value !== null) {

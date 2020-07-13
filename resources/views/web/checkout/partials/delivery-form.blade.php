@@ -25,19 +25,6 @@
 
     <h2 class="b-text-md b-uppercase">{{ __('butik::payment.delivery_address') }}</h2>
 
-    <label for="country" class="b-block b-my-3">
-        <div class="b-font-bold b-text-g b-text-xs">{{ __('butik::payment.country') }}</div>
-        <select id="country" name="country" class="b-border-b b-border-gray-900 b-my-3 b-px-2 b-py-1 b-w-full">
-            @foreach($countries as $slug => $name)
-                <option value="{{ $slug }}" @if($selected_country['slug'] == $slug) selected @endif>{{ $name }}</option>
-            @endforeach
-        </select>
-
-        @error('country')
-            <span class="b-text-red-600 b-block b--mt-2 b-text-xs">{{ $message }}</span>
-        @enderror
-    </label>
-
     <label for="address1" class="b-block b-my-3">
         <div class="b-font-bold b-text-g b-text-xs">{{ __('butik::payment.address1') }}</div>
         <input id="address1" name="address1" type="text" value="{{ old('address1') ?? $customer->address1 }}" class="b-border-b b-border-gray-900 b-my-3 b-px-2 b-py-1 b-w-full">
@@ -67,6 +54,19 @@
         <input id="zip" name="zip" type="text" value="{{ old('zip') ?? $customer->zip }}" class="b-border-b b-border-gray-900 b-my-3 b-px-2 b-py-1 b-w-full">
         @error('zip')
             <span class="b-text-red-600 b-block b--mt-2 b-text-xs">{{ $message }}</span>
+        @enderror
+    </label>
+
+    <label for="country" class="b-block b-my-3">
+        <div class="b-font-bold b-text-g b-text-xs">{{ __('butik::payment.country') }}</div>
+        <select id="country" name="country" class="b-border-b b-border-gray-900 b-my-3 b-px-2 b-py-1 b-w-full">
+            @foreach($countries as $slug => $name)
+                <option value="{{ $slug }}" @if($selected_country['slug'] == $slug) selected @endif>{{ $name }}</option>
+            @endforeach
+        </select>
+
+        @error('country')
+        <span class="b-text-red-600 b-block b--mt-2 b-text-xs">{{ $message }}</span>
         @enderror
     </label>
 

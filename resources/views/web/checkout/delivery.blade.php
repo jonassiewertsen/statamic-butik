@@ -18,8 +18,14 @@
 
         {{-- product card --}}
         <div class="b-bg-gray-200 b-px-10 b-py-8 b-w-full lg:b-w-1/2">
+            @if ($items->contains('sellable', false))
+                <div class="b-bg-red-300 b-px-5 b-py-4 b-rounded b-mb-16">
+                    Some items aren't available in your country. If you like we can proceed and will automatically remove those products.
+                </div>
+            @endif
+
             @foreach ($items as $item)
-                <section class="b-flex b-mt-3f">
+                <section class="b-flex b-mt-3">
                     <figure class="b-w-1/5 b-mr-5">
                         @if (! empty($item->images))
                             <img src="/assets/{{ $item->images[0] }}">
@@ -31,11 +37,15 @@
                     </figure>
 
                     <div class="b-w-full">
-                        <h3 class="b-font-bold">{{ $item->name }}</h3>
+                        <h3 class="b-font-bold @if(! $item->sellable)b-text-red-500 @endif">{{ $item->name }}</h3>
                         <p>{{ $item->description }}</p>
                         <div class="b-flex b-justify-end b-items-baseline">
                             <span class="b-mr-5 b-text-sm b-italic">{{ currency() }} {{ $item->singlePrice() }} x {{ $item->getQuantity() }}</span>
-                            <span class="b-font-bold">{{ currency() }} {{ $item->totalPrice() }}</span>
+                            @if ($item->sellable)
+                                <span class="b-font-bold">{{ currency() }} {{ $item->totalPrice() }}</span>
+                            @else
+                                <s>{{ currency() }} {{ $item->totalPrice() }}</s>
+                            @endif
                         </div>
                     </div>
                 </section>
