@@ -17,8 +17,6 @@ class ShopController extends WebController
             ->template(config('butik.template_product-index'))
             ->layout(config('butik.layout_product-index'))
             ->with(compact('products'));
-
-//        return view(config('butik.template_product-index'), compact('products'));
     }
 
     public function show(Product $product, $variant = null)
@@ -44,11 +42,14 @@ class ShopController extends WebController
         /**
          * We won't show unavailable products
          */
-        if (!$product->available) {
+        if (! $product->available) {
             return $this->redirectToShop();
         }
 
-        return view(config('butik.template_product-show'), compact('product'));
+        return (new StatamicView())
+            ->template(config('butik.template_product-show'))
+            ->layout(config('butik.layout_product-show'))
+            ->with(compact('product'));
     }
 
     private function redirectToVariant($product)
