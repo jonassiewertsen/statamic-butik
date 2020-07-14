@@ -8,6 +8,7 @@ use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Http\Models\Country;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
+use Statamic\View\View as StatamicView;
 
 class CheckoutController extends Checkout
 {
@@ -17,14 +18,33 @@ class CheckoutController extends Checkout
             Session::get('butik.customer') :
             (new Customer())->empty();
 
-        return view(config('butik.template_checkout-delivery'), [
-            'customer'         => $customer,
-            'countries'        => Country::pluck('name', 'slug'),
-            'selected_country' => Cart::country(),
-            'items'            => Cart::get(),
-            'total_price'      => Cart::totalPrice(),
-            'total_shipping'   => Cart::totalShipping(),
-        ]);
+        // TODO: Get back here and do some refactoring
+        $items = Cart::get()->map(function ($item) {
+            return [
+                'available'      => $item->available,
+                'sellable'       => $item->sellable,
+                'availableStock' => $item->availableStock,
+                'slug'           => $item->slug,
+                'images'         => $item->images,
+                'name'           => $item->name,
+                'description'    => $item->description,
+                'single_price'   => $item->singlePrice(),
+                'total_price'    => $item->totalPrice(),
+                'quantity'       => $item->getQuantity(),
+            ];
+        });
+
+        return (new StatamicView())
+           ->template(config('butik.template_checkout-delivery'))
+           ->layout(config('butik.layout_checkout-delivery'))
+           ->with([
+                'customer'         => $customer,
+                'countries'        => Country::pluck('name', 'slug'),
+                'selected_country' => Cart::country(),
+                'items'            => $items,
+                'total_price'      => Cart::totalPrice(),
+                'total_shipping'   => Cart::totalShipping(),
+            ]);
     }
 
     public function saveCustomerData()

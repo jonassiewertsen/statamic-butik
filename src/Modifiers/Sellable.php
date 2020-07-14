@@ -6,8 +6,18 @@ use Statamic\Modifiers\Modifier;
 
 class Sellable extends Modifier
 {
-    public function index($value, $params, $context)
+    public function index($values, $params, $context)
     {
-        return ! $value->contains('sellable', false);
+        foreach ($values as $value) {
+            if ($value['sellable'] === false) {
+                return false;
+            }
+        }
+
+        /**
+         * Only returning true if none of the items has
+         * been flagged as non sellable.
+         */
+        return true;
     }
 }
