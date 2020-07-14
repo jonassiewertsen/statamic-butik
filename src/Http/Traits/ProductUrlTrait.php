@@ -2,6 +2,8 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Traits;
 
+use Statamic\Support\Str;
+
 trait ProductUrlTrait {
     /**
      * A Product has a edit url
@@ -18,6 +20,7 @@ trait ProductUrlTrait {
      */
     public function getShowUrlAttribute()
     {
-        return "{$this->shopRoute()}/{$this->slug}";
+        $route = "{$this->shopRoute()}/{$this->slug}";
+        return Str::of($route)->start('/');
     }
 }

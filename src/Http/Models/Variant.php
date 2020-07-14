@@ -3,6 +3,7 @@
 namespace Jonassiewertsen\StatamicButik\Http\Models;
 
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
+use Statamic\Support\Str;
 
 class Variant extends ButikModel
 {
@@ -128,7 +129,8 @@ class Variant extends ButikModel
      */
     public function getShowUrlAttribute()
     {
-        return "{$this->shopRoute()}/{$this->product_slug}/{$this->original_title}";
+        $route = "{$this->shopRoute()}/{$this->product_slug}/{$this->original_title}";
+        return Str::of($route)->start('/');
     }
 
     /**
