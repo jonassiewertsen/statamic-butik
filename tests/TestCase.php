@@ -155,5 +155,23 @@ class TestCase extends OrchestraTestCase
         Statamic::pushWebRoutes(function () {
             return require_once realpath(__DIR__ . '/../routes/web.php');
         });
+
+        // Define butik config settings for all of our tests
+        $app['config']->set("butik", require(__DIR__ . "/../config/config.php"));
+
+        // Set all layouts to null to prevent an error thrown from a layout which could not be found.
+        $layouts = [
+            'layout_product-index',
+            'layout_product-show',
+            'layout_cart',
+            'layout_checkout-delivery',
+            'layout_checkout-payment',
+            'layout_checkout-receipt',
+            'layout_checkout-receipt-invalid',
+        ];
+
+        foreach($layouts as $layout) {
+            $app['config']->set('butik.' . $layout, null);
+        }
     }
 }

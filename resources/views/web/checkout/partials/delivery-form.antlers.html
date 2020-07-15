@@ -5,7 +5,7 @@
 
     <label for="name" class="b-block b-my-3">
         <div class="b-font-bold b-text-g b-text-xs">{{ trans key='butik::payment.name' }}</div>
-        <input id="name" name="name" type="text" value="{{ old('name') ?? $customer->name }}" autofocus class="b-border-b b-border-gray-900 b-my-3 b-px-2 b-py-1 b-w-full">
+        <input id="name" name="name" type="text" value="{{ old:name ?? customer:name }}" autofocus class="b-border-b b-border-gray-900 b-my-3 b-px-2 b-py-1 b-w-full">
         {{ if {error:name} }}
             <span class="b-text-red-600 b-block b--mt-2 b-text-xs">{{ error:name }}</span>
         {{ /if }}
@@ -13,7 +13,7 @@
 
     <label for="mail" class="b-block b-my-3">
         <div class="b-font-bold b-text-g b-text-xs">{{ trans key='butik::payment.mail' }}</div>
-        <input id="mail" name="mail" type="mail" value="{{ old('mail') ?? $customer->mail }}" class="b-border-b b-border-gray-900 b-my-3 b-px-2 b-py-1 b-w-full">
+        <input id="mail" name="mail" type="mail" value="{{ old:mail ?? customer:mail }}" class="b-border-b b-border-gray-900 b-my-3 b-px-2 b-py-1 b-w-full">
         {{ if {error:mail} }}
             <span class="b-text-red-600 b-block b--mt-2 b-text-xs">{{ error:mail }}</span>
         {{ /if }}
@@ -27,7 +27,7 @@
 
     <label for="address1" class="b-block b-my-3">
         <div class="b-font-bold b-text-g b-text-xs">{{ trans key='butik::payment.address1' }}</div>
-        <input id="address1" name="address1" type="text" value="{{ old('address1') ?? $customer->address1 }}" class="b-border-b b-border-gray-900 b-my-3 b-px-2 b-py-1 b-w-full">
+        <input id="address1" name="address1" type="text" value="{{ old:address1 ?? customer:address1 }}" class="b-border-b b-border-gray-900 b-my-3 b-px-2 b-py-1 b-w-full">
         {{ if {error:address1} }}
             <span class="b-text-red-600 b-block b--mt-2 b-text-xs">{{ error:address1 }}</span>
         {{ /if }}
@@ -35,7 +35,7 @@
 
     <label for="address2" class="b-block b-my-3">
         <div class="b-font-bold b-text-g b-text-xs">{{ trans key='butik::payment.address2' }}</div>
-        <input id="address2" name="address2" type="text" value="{{ old('address2') ?? $customer->address2 }}" class="b-border-b b-border-gray-900 b-my-3 b-px-2 b-py-1 b-w-full">
+        <input id="address2" name="address2" type="text" value="{{ old:address2 ?? customer:address2 }}" class="b-border-b b-border-gray-900 b-my-3 b-px-2 b-py-1 b-w-full">
         {{ if {error:address2} }}
             <span class="b-text-red-600 b-block b--mt-2 b-text-xs">{{ error:address2 }}</span>
         {{ /if }}
@@ -43,7 +43,7 @@
 
     <label for="city" class="b-block b-my-3">
         <div class="b-font-bold b-text-g b-text-xs">{{ trans key='butik::payment.city' }}</div>
-        <input id="city" name="city" type="text" value="{{ old('city') ?? $customer->city }}" class="b-border-b b-border-gray-900 b-my-3 b-px-2 b-py-1 b-w-full">
+        <input id="city" name="city" type="text" value="{{ old:city ?? customer:city }}" class="b-border-b b-border-gray-900 b-my-3 b-px-2 b-py-1 b-w-full">
         {{ if {error:city} }}
             <span class="b-text-red-600 b-block b--mt-2 b-text-xs">{{ error:city }}</span>
         {{ /if }}
@@ -51,7 +51,7 @@
 
     <label for="zip" class="b-block b-my-3">
         <div class="b-font-bold b-text-g b-text-xs">{{ trans key='butik::payment.zip' }}</div>
-        <input id="zip" name="zip" type="text" value="{{ old('zip') ?? $customer->zip }}" class="b-border-b b-border-gray-900 b-my-3 b-px-2 b-py-1 b-w-full">
+        <input id="zip" name="zip" type="text" value="{{ old:zip ?? customer:zip }}" class="b-border-b b-border-gray-900 b-my-3 b-px-2 b-py-1 b-w-full">
         {{ if {error:zip} }}
             <span class="b-text-red-600 b-block b--mt-2 b-text-xs">{{ error:zip }}</span>
         {{ /if }}

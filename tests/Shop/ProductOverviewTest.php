@@ -19,8 +19,7 @@ class ProductOverviewTest extends TestCase
     public function the_shop_overview_page_does_exist()
     {
         $this->get(route('butik.shop'))
-            ->assertOk()
-            ->assertViewIs(config('butik.template_product-index'));
+            ->assertOk();
     }
 
     /** @test */

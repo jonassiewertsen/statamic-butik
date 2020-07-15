@@ -18,13 +18,11 @@ class CheckoutController extends Checkout
             Session::get('butik.customer') :
             (new Customer())->empty();
 
-
-
         return (new StatamicView())
            ->template(config('butik.template_checkout-delivery'))
            ->layout(config('butik.layout_checkout-delivery'))
            ->with([
-                'customer'         => $customer,
+                'customer'         => (array) $customer,
                 'countries'        => Country::pluck('name', 'slug'),
                 'selected_country' => Cart::country(),
                 'items'            => $this->mappedCartItems(),

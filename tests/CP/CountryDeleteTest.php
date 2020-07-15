@@ -12,12 +12,11 @@ class CountryDeleteTest extends TestCase
     {
         $this->signInAdmin();
 
-        $country = create(Country::class);
-        $this->assertDatabaseHas('butik_countries', $country->toArray());
+        $this->assertEquals(1, Country::count());
 
-        $this->delete(route('statamic.cp.butik.countries.destroy', $country->first()))
+        $this->delete(route('statamic.cp.butik.countries.destroy', Country::first()))
             ->assertOk();
 
-        $$this->assertDatabaseMissing('butik_countries', $country->toArray());
+        $this->assertEquals(0, Country::count());
     }
 }
