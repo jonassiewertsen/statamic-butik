@@ -1,10 +1,10 @@
 @extends('statamic::layout')
-@section('title', __('butik::product.index'))
+@section('title', ucfirst(__('butik::cp.order_plural')))
 
 @section('content')
 
     <div class="flex mb-3">
-        <h1 class="flex-1">{{ __('butik::order.plural') }}</h1>
+        <h1 class="flex-1">{{ ucfirst(__('butik::cp.order_plural')) }}</h1>
     </div>
 
     @unless($orders->isEmpty())
@@ -18,7 +18,7 @@
     @else
 
         <div class="card">
-            {{ __('butik::order.description') }}
+            {{ __('butik::cp.order_description') }}
         </div>
 
     @endunless

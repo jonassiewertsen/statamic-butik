@@ -17,7 +17,7 @@ class CountryBlueprint extends Blueprint
                             'field'  => [
                                 'type'     => 'text',
                                 'width'    => '66',
-                                'display'  => __('butik::general.title'),
+                                'display'  => __('butik::cp.name'),
                                 'validate' => 'required',
                             ],
                         ],
@@ -25,7 +25,7 @@ class CountryBlueprint extends Blueprint
                             'handle' => 'iso',
                             'field'  => [
                                 'type'     => 'text',
-                                'display'  => __('butik::country.iso'),
+                                'display'  => __('butik::cp.country_iso'),
                                 'width'    => '33',
                                 'validate' => 'required',
                             ],
@@ -39,7 +39,7 @@ class CountryBlueprint extends Blueprint
                             'field'  => [
                                 'type'      => 'slug',
                                 'from'      => 'name',
-                                'display'   => __('butik::general.slug'),
+                                'display'   => __('butik::cp.slug'),
                                 'validate'  => ['required', $this->countryUniqueRule()],
                                 'read_only' => $this->slugReadOnly(),
                             ],

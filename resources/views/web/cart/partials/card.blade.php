@@ -1,6 +1,5 @@
 <div class="{{ $item->sellable ? 'b-bg-gray-100' : 'b-bg-red-200' }} b-flex b-w-full b-rounded b-px-8 b-py-5 b-mb-6">
     <header class="b-w-40 b-w-1/5">
-{{--        {{ dd($item) }}--}}
         @if (! empty($item->images))
             <img src="/assets/{{ $item->images[0] }}">
         @else
@@ -17,7 +16,7 @@
                 @if ($item->sellable)
                     <p>{{ $item->description }}</p>
                 @else
-                    <p>{{ __('butik::cart.not_available_in_country') }}</p>
+                    <p>{{ __('butik::web.not_available_in_country') }}</p>
                 @endif
                 <hr class="b-border-white b-my-3">
             @endif

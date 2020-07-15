@@ -1,14 +1,14 @@
 @extends('statamic::layout')
-@section('title', __('butik::tax.index'))
+@section('title', ucfirst(__('butik::cp.tax_plural')))
 
 @section('content')
 
     @unless($taxes->isEmpty())
 
         <div class="flex mb-3">
-            <h1 class="flex-1">{{ __('butik::tax.plural') }}</h1>
+            <h1 class="flex-1">{{ __('butik::cp.tax_plural') }}</h1>
             @can('create', 'Jonassiewertsen\StatamicButik\Http\Models\Tax')
-                <a href="{{ cp_route('butik.taxes.create') }}" class="btn-primary">{{ __('butik::tax.create') }}</a>
+                <a href="{{ cp_route('butik.taxes.create') }}" class="btn-primary">{{ __('butik::cp.tax_form_create') }}</a>
             @endcan
         </div>
 
@@ -21,8 +21,8 @@
     @else
 
         @include('statamic::partials.create-first', [
-            'resource' => __('butik::tax.singular'),
-            'description' => __('butik::tax.description'),
+            'resource' => __('butik::cp.tax_singular'),
+            'description' => __('butik::cp.tax_description'),
             'svg' => 'empty/collection',
             'route' => cp_route('butik.taxes.create'),
             'can' => auth()->user()->can('create', 'Jonassiewertsen\StatamicButik\Http\Models\Tax')

@@ -20,7 +20,7 @@ class ShippingZoneBlueprint extends Blueprint
                             'field'  => [
                                 'type'     => 'text',
                                 'width'    => '50',
-                                'display'  => __('butik::general.title'),
+                                'display'  => __('butik::cp.name'),
                                 'validate' => 'required',
                             ],
                         ],
@@ -30,7 +30,7 @@ class ShippingZoneBlueprint extends Blueprint
                                 'type'     => 'select',
                                 'width'    => '50',
                                 'options'  => $this->shippingTypes(),
-                                'display'  => __('butik::shipping.type'),
+                                'display'  => __('butik::cp.type'),
                                 'validate' => 'required',
                             ],
                         ],

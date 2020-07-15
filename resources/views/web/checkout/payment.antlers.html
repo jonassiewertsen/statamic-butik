@@ -3,7 +3,7 @@
 <hr class="b-mb-5 b-mt-8">
 
 <h1 class="b-block b-mb-6 b-text-center b-font-bold b-text-xl">
-    {{ trans key='butik::checkout.name' }}
+    {{ trans key='butik::web.name' }}
 </h1>
 
 {{# body #}}
@@ -17,7 +17,7 @@
         <a href="{{ route:butik.payment.process }}"
            rel="nofollow"
            class="b-block b-w-full b-mt-3 b-bg-gray-900 b-mt-6 b-py-2 b-rounded b-text-center b-text-white b-text-xl hover:b-bg-gray-800">
-            {{ trans key='butik::payment.pay_now' }}
+            {{ trans key='butik::web.pay_now' }}
         </a>
     </div>
 
@@ -51,23 +51,23 @@
 
         <section class="b-w-full b-mt-4">
 
-            <h3 class="b-font-bold b-block b-mt-5 b-text-3xl b-text-center">{{ trans key='butik::payment.shipping' }}</h3>
+            <h3 class="b-font-bold b-block b-mt-5 b-text-3xl b-text-center">{{ trans key='butik::web.shipping' }}</h3>
 
             <hr class="b-border-white b-my-5">
 
             <div class="b-flex b-my-3 b-justify-between b-max-w-sm b-mx-auto">
-                <span>{{ trans key='butik::payment.shipping' }}</span>
+                <span>{{ trans key='butik::web.shipping' }}</span>
                 <span>{{ total_shipping }}</span>
             </div>
 
             <hr class="b-border-white b-my-5">
 
             <div class="b-flex b-mt-3 b-justify-between b-max-w-sm b-mx-auto">
-                <span>{{ trans key='butik::payment.total' }}</span>
+                <span>{{ trans key='butik::web.total' }}</span>
                 <span class="b-font-black">{{ currency }} {{ total_price }}</span>
             </div>
             <div class="b-max-w-sm b-mx-auto b-pb-3 b-text-gray-500 b-text-right b-text-sm">
-                Including taxes
+                {{ trans key='butik::web.including_taxes' }}
             </div>
         </section>
     </div>

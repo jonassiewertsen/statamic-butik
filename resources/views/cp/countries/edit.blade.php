@@ -1,11 +1,11 @@
 @extends('statamic::layout')
 
-@section('title', __('butik::product.create'))
+@section('title', __('butik::cp.country_form_create'))
 @section('wrapper_class', 'max-w-3xl')
 
 @section('content')
     <publish-form
-        title="{{ __('butik::country.plural') }}"
+        title="{{ __('butik::cp.country_plural') }}"
         action="{{ cp_route('butik.countries.update', ['country' => $values['slug']]) }}"
         method="patch"
         :blueprint='@json($blueprint)'

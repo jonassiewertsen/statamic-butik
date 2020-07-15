@@ -4,12 +4,12 @@
     @else
         <h1 class="b-mt-2 b-font-bold b-text-4xl">
             <s>{{ $variant_title }}</s>
-            <span class="b-text-sm b-ml-2">{{ __('butik::product.sold_out') }}</span>
+            <span class="b-text-sm b-ml-2">{{ __('butik::web.sold_out') }}</span>
         </h1>
     @endif
 
     <div class="b-text-gray-700 b-text-3xl b-font-light b-mt-2">
-        {{ currency() }} {{ $price }} {{ __('butik::product.total') }}
+        {{ currency() }} {{ $price }} {{ __('butik::web.total') }}
         <span class="b-text-sm">+ shipping</span>
     </div>
 
@@ -30,10 +30,10 @@
             <a class="b-bg-gray-900 b-flex-grow b-block b-py-2 b-rounded b-text-center b-text-white b-text-xl hover:b-bg-gray-800"
                href="#"
             >
-                Proceed to Checkout
+                {{ __('butik::web.proceed_to_checkout') }}
             </a>
             <button wire:click="addToCart()" class="b-inline-block b-ml-5 b-bg-gray-300 b-py-4 b-px-5 b-rounded-xl">
-                Add to bag
+                {{ __('butik::web.add_to_bag') }}
             </button>
         </div>
     @endif

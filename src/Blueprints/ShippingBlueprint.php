@@ -17,7 +17,7 @@ class ShippingBlueprint extends Blueprint
                             'field'  => [
                                 'type'     => 'text',
                                 'width'    => '66',
-                                'display'  => __('butik::general.title'),
+                                'display'  => __('butik::cp.name'),
                                 'validate' => 'required',
                             ],
                         ],
@@ -25,7 +25,7 @@ class ShippingBlueprint extends Blueprint
                             'handle' => 'price',
                             'field'  => [
                                 'type'         => 'money',
-                                'display'      => __('butik::shipping.price'),
+                                'display'      => __('butik::cp.price'),
                                 'width'         => '33',
                                 'validate'      => 'required|min:0',
                             ],
@@ -38,7 +38,7 @@ class ShippingBlueprint extends Blueprint
                             'handle' => 'slug',
                             'field'  => [
                                 'type'     => 'slug',
-                                'display'  => __('butik::general.slug'),
+                                'display'  => __('butik::cp.slug'),
                                 'validate' => ['required', $this->shippingUniqueRule()],
                                 'read_only' => $this->slugReadOnly(),
                             ],

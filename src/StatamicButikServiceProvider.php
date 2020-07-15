@@ -214,28 +214,28 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         Nav::extend(function ($nav) {
 
             // Orders
-            $nav->create(__('butik::order.plural'))
+            $nav->create(__('butik::cp.order_plural'))
                 ->section('Butik')
                 ->can(auth()->user()->can('view orders'))
                 ->route('butik.orders.index')
                 ->icon('drawer-file');
 
             // Products
-            $nav->create(__('butik::product.plural'))
+            $nav->create(__('butik::cp.product_plural'))
                 ->section('Butik')
                 ->can(auth()->user()->can('view products'))
                 ->route('butik.products.index')
                 ->icon('tags');
 
             // Settings
-            $nav->create(__('butik::setting.plural'))
+            $nav->create(__('butik::cp.setting_plural'))
                 ->section('Butik')
                 ->route('butik.settings.index')
                 ->icon('settings-slider')
                 ->children([
-                    $nav->item(__('butik::country.plural'))->route('butik.countries.index')->can('view countries'),
-                    $nav->item(__('butik::shipping.singular'))->route('butik.shipping.index')->can('view shippings'),
-                    $nav->item(__('butik::tax.plural'))->route('butik.taxes.index')->can('view taxes'),
+                    $nav->item(__('butik::cp.country_plural'))->route('butik.countries.index')->can('view countries'),
+                    $nav->item(__('butik::cp.shipping_singular'))->route('butik.shipping.index')->can('view shippings'),
+                    $nav->item(__('butik::cp.tax_plural'))->route('butik.taxes.index')->can('view taxes'),
                 ]);
         });
     }
