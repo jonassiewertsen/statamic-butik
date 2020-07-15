@@ -8,6 +8,7 @@ use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Http\Models\Country;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
+use Statamic\View\View as StatamicView;
 
 class CheckoutController extends Checkout
 {
@@ -17,14 +18,17 @@ class CheckoutController extends Checkout
             Session::get('butik.customer') :
             (new Customer())->empty();
 
-        return view(config('butik.template_checkout-delivery'), [
-            'customer'         => $customer,
-            'countries'        => Country::pluck('name', 'slug'),
-            'selected_country' => Cart::country(),
-            'items'            => Cart::get(),
-            'total_price'      => Cart::totalPrice(),
-            'total_shipping'   => Cart::totalShipping(),
-        ]);
+        return (new StatamicView())
+           ->template(config('butik.template_checkout-delivery'))
+           ->layout(config('butik.layout_checkout-delivery'))
+           ->with([
+                'customer'         => (array) $customer,
+                'countries'        => Country::pluck('name', 'slug'),
+                'selected_country' => Cart::country(),
+                'items'            => $this->mappedCartItems(),
+                'total_price'      => Cart::totalPrice(),
+                'total_shipping'   => Cart::totalShipping(),
+            ]);
     }
 
     public function saveCustomerData()
@@ -46,12 +50,15 @@ class CheckoutController extends Checkout
     {
         Cart::removeNonSellableItems();
 
-        return view(config('butik.template_checkout-payment'), [
-            'customer'       => session('butik.customer'),
-            'items'          => Cart::get(),
-            'total_price'    => Cart::totalPrice(),
-            'total_shipping' => Cart::totalShipping(),
-        ]);
+        return (new StatamicView())
+            ->template(config('butik.template_checkout-payment'))
+            ->layout(config('butik.layout_checkout-payment'))
+            ->with([
+                'customer'       => (array) session('butik.customer'),
+                'items'          => $this->mappedCartItems(),
+                'total_price'    => Cart::totalPrice(),
+                'total_shipping' => Cart::totalShipping(),
+            ]);
     }
 
     public function receipt(Request $request, $order)
@@ -64,12 +71,40 @@ class CheckoutController extends Checkout
             return $this->showInvalidReceipt();
         }
 
-        $customer = json_decode($order->customer);
-
         if ($order->status === 'paid') {
             Session::forget('butik.customer');
         }
 
-        return view(config('butik.template_checkout-receipt'), compact('customer', 'order'));
+        return (new StatamicView())
+            ->template(config('butik.template_checkout-receipt'))
+            ->layout(config('butik.layout_checkout-receipt'))
+            ->with([
+                'customer' => (array) json_decode($order->customer),
+                'order'    => $order->toArray(),
+            ]);
+    }
+
+    /**
+     * Antlers can't handle objects and collections very well.
+     * To make them play nice together, we will return an
+     * array with all needed informations for the
+     * checkout process.
+     */
+    private function mappedCartItems()
+    {
+        return Cart::get()->map(function ($item) {
+            return [
+                'available'      => $item->available,
+                'sellable'       => $item->sellable,
+                'availableStock' => $item->availableStock,
+                'slug'           => $item->slug,
+                'images'         => $item->images,
+                'name'           => $item->name,
+                'description'    => $item->description,
+                'single_price'   => $item->singlePrice(),
+                'total_price'    => $item->totalPrice(),
+                'quantity'       => $item->getQuantity(),
+            ];
+        });
     }
 }

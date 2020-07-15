@@ -32,6 +32,19 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         \Jonassiewertsen\StatamicButik\Widgets\Orders::class,
     ];
 
+    protected $modifiers = [
+        \Jonassiewertsen\StatamicButik\Modifiers\Sellable::class,
+    ];
+
+    protected $tags = [
+        \Jonassiewertsen\StatamicButik\Tags\Bag::class,
+        \Jonassiewertsen\StatamicButik\Tags\Butik::class,
+        \Jonassiewertsen\StatamicButik\Tags\Currency::class,
+        \Jonassiewertsen\StatamicButik\Tags\Error::class,
+//        \Jonassiewertsen\StatamicButik\Tags\Product::class,
+        \Jonassiewertsen\StatamicButik\Tags\Products::class,
+    ];
+
     protected $fieldtypes = [
         \Jonassiewertsen\StatamicButik\Fieldtypes\Money::class,
         \Jonassiewertsen\StatamicButik\Fieldtypes\Tax::class,
@@ -190,10 +203,10 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
     protected function bootLivewireComponents(): void
     {
-        Livewire::component('butik::shop', \Jonassiewertsen\StatamicButik\Http\Livewire\Shop::class);
-        Livewire::component('butik::cart', \Jonassiewertsen\StatamicButik\Http\Livewire\Cart::class);
-        Livewire::component('butik::cart-icon', \Jonassiewertsen\StatamicButik\Http\Livewire\CartIcon::class);
-        Livewire::component('butik::product-variant-section', \Jonassiewertsen\StatamicButik\Http\Livewire\ProductVariantSection::class);
+        Livewire::component('butik.shop', \Jonassiewertsen\StatamicButik\Http\Livewire\Shop::class);
+        Livewire::component('butik.cart', \Jonassiewertsen\StatamicButik\Http\Livewire\Cart::class);
+        Livewire::component('butik.cart-icon', \Jonassiewertsen\StatamicButik\Http\Livewire\CartIcon::class);
+        Livewire::component('butik.product-variant-section', \Jonassiewertsen\StatamicButik\Http\Livewire\ProductVariantSection::class);
     }
 
     private function createNavigation(): void

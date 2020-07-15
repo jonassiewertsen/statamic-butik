@@ -70,20 +70,6 @@ return [
     'route_payment-receipt'   => 'payment/{order}/receipt',     // yourshop.com/shop/payment/xxxxxxxxx/receipt
 
     /**
-     * LAYOUTS
-     *
-     * Define your own layouts for the frontend if you want. You can as well edit the
-     * given layouts to fit your needs.
-     */
-    'layout_product-index'            => 'layout',
-    'layout_product-show'             => 'layout',
-    'layout_cart'                     => 'layout',
-    'layout_checkout-delivery'        => 'layout',
-    'layout_checkout-payment'         => 'layout',
-    'layout_checkout-receipt'         => 'layout',
-    'layout_checkout-receipt-invalid' => 'layout',
-
-    /**
      * TEMPLATES
      *
      * Define your own templates for the frontend if you want. You can as well edit the
@@ -96,6 +82,20 @@ return [
     'template_checkout-payment'         => 'butik::web.checkout.payment',
     'template_checkout-receipt'         => 'butik::web.checkout.receipt',
     'template_checkout-receipt-invalid' => 'butik::web.checkout.invalid-receipt',
+
+    /**
+     * LAYOUTS
+     *
+     * Define your own layouts for the frontend if you want. You can as well edit the
+     * given layouts to fit your needs.
+     */
+    'layout_product-index'            => 'layout',
+    'layout_product-show'             => 'layout',
+    'layout_cart'                     => 'layout',
+    'layout_checkout-delivery'        => 'layout',
+    'layout_checkout-payment'         => 'layout',
+    'layout_checkout-receipt'         => 'layout',
+    'layout_checkout-receipt-invalid' => 'layout',
 
     /**
      * SHIPPING

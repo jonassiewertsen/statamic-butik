@@ -48,22 +48,6 @@ class CheckoutDeliveryTest extends TestCase
     }
 
     /** @test */
-    public function a_country_is_required()
-    {
-        $data = $this->createUserData('country', '');
-        $this->post(route('butik.checkout.delivery'), (array)$data)
-            ->assertSessionHasErrors('country');
-    }
-
-    /** @test */
-    public function a_country_cant_be_to_long()
-    {
-        $data = $this->createUserData('country', str_repeat('a', 51));
-        $this->post(route('butik.checkout.delivery'), (array)$data)
-            ->assertSessionHasErrors('country');
-    }
-
-    /** @test */
     public function a_name_is_required()
     {
         $data = $this->createUserData('name', '');
@@ -200,25 +184,27 @@ class CheckoutDeliveryTest extends TestCase
     }
 
     /** @test */
-    public function existing_data_from_the_session_will_be_passed_to_the_delivery_view()
+    public function a_country_is_required()
     {
-        Session::put('butik.customer', new Customer($this->createUserData()));
-        $page     = $this->get(route('butik.checkout.delivery', $this->product))->content();
-        $customer = session('butik.customer');
-
-        $this->assertStringContainsString($customer->name, $page);
-        $this->assertStringContainsString($customer->mail, $page);
-        $this->assertStringContainsString($customer->address1, $page);
-        $this->assertStringContainsString($customer->address2, $page);
-        $this->assertStringContainsString($customer->city, $page);
-        $this->assertStringContainsString($customer->zip, $page);
+        $data = $this->createUserData('country', '');
+        $this->post(route('butik.checkout.delivery'), (array)$data)
+            ->assertSessionHasErrors('country');
     }
 
     /** @test */
-    public function after_a_valid_form_the_user_will_be_redirected_to_the_payment_page()
+    public function a_country_must_exist()
     {
-        $this->post(route('butik.checkout.delivery'), (array)$this->createUserData())
-            ->assertRedirect(route('butik.checkout.payment'));
+        $data = $this->createUserData('country', 'not-existing-country');
+        $this->post(route('butik.checkout.delivery'), (array)$data)
+            ->assertSessionHasErrors('country');
+    }
+
+    /** @test */
+    public function a_country_cant_be_to_long()
+    {
+        $data = $this->createUserData('country', str_repeat('a', 51));
+        $this->post(route('butik.checkout.delivery'), (array)$data)
+            ->assertSessionHasErrors('country');
     }
 
     /** @test */
@@ -246,6 +232,28 @@ class CheckoutDeliveryTest extends TestCase
         $this->post(route('butik.checkout.delivery'), (array)$this->createUserData('country', 'spain'));
 
         $this->assertEquals($newCountry->slug, Cart::country()['slug']);
+    }
+
+    /** @test */
+    public function existing_data_from_the_session_will_be_passed_to_the_delivery_view()
+    {
+        Session::put('butik.customer', new Customer($this->createUserData()));
+        $page     = $this->get(route('butik.checkout.delivery', $this->product))->content();
+        $customer = session('butik.customer');
+
+        $this->assertStringContainsString($customer->name, $page);
+        $this->assertStringContainsString($customer->mail, $page);
+        $this->assertStringContainsString($customer->address1, $page);
+        $this->assertStringContainsString($customer->address2, $page);
+        $this->assertStringContainsString($customer->city, $page);
+        $this->assertStringContainsString($customer->zip, $page);
+    }
+
+    /** @test */
+    public function after_a_valid_form_the_user_will_be_redirected_to_the_payment_page()
+    {
+        $this->post(route('butik.checkout.delivery'), (array)$this->createUserData())
+            ->assertRedirect(route('butik.checkout.payment'));
     }
 
     private function createUserData($key = null, $value = null)

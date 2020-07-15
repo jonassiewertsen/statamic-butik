@@ -3,6 +3,7 @@
 namespace Jonassiewertsen\StatamicButik\Http\Livewire;
 
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
+use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Livewire\Component;
 
 class ProductVariantSection extends Component
@@ -13,7 +14,7 @@ class ProductVariantSection extends Component
 
     public function mount($product): void
     {
-        $this->product      = $product;
+        $this->product      = Product::find($product['slug']);
         $this->variantTitle = request()->segment(3);
     }
 
