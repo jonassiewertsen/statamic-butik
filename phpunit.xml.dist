@@ -28,6 +28,9 @@
         <testsuite name="Shipping">
             <directory suffix="Test.php">tests/Shipping/</directory>
         </testsuite>
+        <testsuite name="Tags">
+            <directory suffix="Test.php">tests/Tags/</directory>
+        </testsuite>
         <testsuite name="Permissions">
             <directory suffix="Test.php">tests/Permissions/</directory>
         </testsuite>

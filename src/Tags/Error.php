@@ -8,6 +8,9 @@ class Error extends \Statamic\Tags\Tags
 {
     protected $errors;
 
+    /**
+     * {{ error:fieldname }}
+     */
     public function wildcard($name)
     {
         /**
