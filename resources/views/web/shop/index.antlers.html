@@ -17,7 +17,7 @@
                 <h1 class="b-mt-4 b-text-2xl b-text-center b-leading-none">{{ title }}</h1>
 
                 {{ if stock_unlimited || stock  > 0 }}
-                    <div class="b-text-gray-500 b-text-xl b-text-center">{{ currency() }} {{ price }}</div>
+                    <div class="b-text-gray-500 b-text-xl b-text-center">{{ currency }} {{ price }}</div>
                 {{ else }}
                     <p class="b-text-sm b-block b-text-center b-font-light b-ml-2">{{ trans key="butik::product.sold_out" }}</p>
                 {{ endif }}

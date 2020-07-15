@@ -42,8 +42,8 @@
                     <h3 class="b-font-bold">{{ name }}</h3>
                     <p>{{ description }}</p>
                     <div class="b-flex b-justify-end b-items-baseline">
-                        <span class="b-mr-5 b-text-sm b-italic">{{ single_price }} x {{ quantity }}</span>
-                        <span class="b-font-bold">{{ total_price }}</span>
+                        <span class="b-mr-5 b-text-sm b-italic">{{ currency }} {{ single_price }} x {{ quantity }}</span>
+                        <span class="b-font-bold">{{ currency }} {{ total_price }}</span>
                     </div>
                 </div>
             </section>
@@ -64,7 +64,7 @@
 
             <div class="b-flex b-mt-3 b-justify-between b-max-w-sm b-mx-auto">
                 <span>{{ trans key='butik::payment.total' }}</span>
-                <span class="b-font-black">{{ total_price }}</span>
+                <span class="b-font-black">{{ currency }} {{ total_price }}</span>
             </div>
             <div class="b-max-w-sm b-mx-auto b-pb-3 b-text-gray-500 b-text-right b-text-sm">
                 Including taxes
