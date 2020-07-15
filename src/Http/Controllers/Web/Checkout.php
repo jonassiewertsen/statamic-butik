@@ -10,7 +10,7 @@ abstract class Checkout extends WebController
     protected function rules()
     {
         return [
-            'country'      => 'required|max:50',
+            'country'      => 'required|max:50|exists:butik_countries,slug',
             'name'         => 'required|min:5|max:50',
             'mail'         => 'required|email',
             'address1'     => 'required|max:80',
