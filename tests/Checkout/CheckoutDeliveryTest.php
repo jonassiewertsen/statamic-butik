@@ -37,7 +37,7 @@ class CheckoutDeliveryTest extends TestCase
         $this->withoutExceptionHandling();
 
         $this->get(route('butik.checkout.delivery', $this->product))
-            ->assertSee('Checkout');
+            ->assertSee('checkout');
     }
 
     /** @test */

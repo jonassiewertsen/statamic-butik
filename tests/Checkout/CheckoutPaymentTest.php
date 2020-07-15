@@ -50,29 +50,28 @@ class CheckoutPaymentTest extends TestCase
         Session::put('butik.customer', $this->customer);
 
         $this->get(route('butik.checkout.payment'))
-            ->assertSee('Ship to')
-            ->assertSee('Go to payment')
-            ->assertSee('Name')
-            ->assertSee('Mail')
-            ->assertSee('Country')
-            ->assertSee('Address 1')
-            ->assertSee('City')
-            ->assertSee('Zip');
+            ->assertSee('ship to')
+            ->assertSee('pay now')
+            ->assertSee('name')
+            ->assertSee('mail')
+            ->assertSee('country')
+            ->assertSee('address line 1')
+            ->assertSee('city')
+            ->assertSee('zip');
     }
 
     /** @test */
     public function translations_will_be_displayed_on_product_cards()
     {
-        $this->withoutExceptionHandling();
         Session::put('butik.customer', $this->customer);
 
         $this->get(route('butik.checkout.payment'))
-            ->assertSee('Delivery')
-            ->assertSee('Review')
-            ->assertSee('Payment')
-            ->assertSee('Receipt')
-            ->assertSee('Shipping')
-            ->assertSee('Total');
+            ->assertSee('delivery')
+            ->assertSee('review')
+            ->assertSee('payment')
+            ->assertSee('receipt')
+            ->assertSee('shipping')
+            ->assertSee('total');
     }
 
     // TODO: Tests to remove products from the cart, which are sold out.

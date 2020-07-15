@@ -20,7 +20,7 @@
 
     @if ($items->count() !== 0)
         <a href="{{ route('butik.checkout.delivery') }}" class="b-bg-gray-900 b-block b-mt-5 b-py-2 b-rounded b-text-center b-text-white b-text-xl hover:b-bg-gray-800">
-            ?????
+            {{ ucfirst(__('butik::web.checkout')) }}
         </a>
     @endif
 </section>
