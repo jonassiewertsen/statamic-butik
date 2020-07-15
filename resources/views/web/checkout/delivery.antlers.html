@@ -3,7 +3,7 @@
 <hr class="b-mb-5 b-mt-8">
 
 <h1 class="b-block b-mb-10 md:b-mb-20 b-text-center b-font-bold b-text-xl">
-    {{ trans key='butik::checkout.name' }}
+    {{ trans key='butik::web.name' }}
 </h1>
 
 {{# body #}}
@@ -17,7 +17,7 @@
     <div class="b-bg-gray-200 b-px-10 b-py-8 b-w-full lg:b-w-1/2">
         {{ unless items | sellable }}
             <div class="b-bg-red-300 b-px-5 b-py-4 b-rounded b-mb-16">
-                Some items aren't available in your country. If you like we can proceed and will automatically remove those products.
+                {{ trans key='butik::web.some_items_not_available' }}
             </div>
         {{ /unless }}
 
@@ -55,24 +55,24 @@
             <section class="b-w-full b-mt-4">
 
                 <h3 class="b-font-bold b-block b-mt-5 b-text-3xl b-text-center">
-                    {{ trans key='butik::payment.total' }}
+                    {{ trans key='butik::web.total' }}
                 </h3>
 
                 <hr class="b-border-white b-my-5">
 
                 <div class="b-flex b-my-3 b-justify-between b-max-w-sm b-mx-auto">
-                    <span>{{ trans key='butik::payment.shipping' }}</span>
+                    <span>{{ trans key='butik::web.shipping' }}</span>
                     <span>{{ total_shipping }}</span>
                 </div>
 
                 <hr class="b-border-white b-my-5">
 
                 <div class="b-flex b-mt-3 b-justify-between b-max-w-sm b-mx-auto">
-                    <span>{{ trans key='butik::payment.total' }}</span>
+                    <span>{{ trans key='butik::web.total' }}</span>
                     <span class="b-font-black">{{ currency }} {{ total_price }}</span>
                 </div>
                 <div class="b-max-w-sm b-mx-auto b-pb-3 b-text-gray-500 b-text-right b-text-sm">
-                    Including taxes
+                    {{ trans key='butik::web.including_taxes' }}
                 </div>
             </section>
     </div>

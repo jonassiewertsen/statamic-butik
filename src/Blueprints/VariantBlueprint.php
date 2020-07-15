@@ -19,7 +19,7 @@ class VariantBlueprint extends Blueprint
                                 'type'     => 'toggle',
                                 'width'    => 25,
                                 'default'  => true,
-                                'display'  => __('butik::product.available'),
+                                'display'  => __('butik::cp.available'),
                             ],
                         ],
                         [
@@ -27,7 +27,7 @@ class VariantBlueprint extends Blueprint
                             'field'  => [
                                 'type'       => 'text',
                                 'width'      => 75,
-                                'display'    => __('butik::product.title'),
+                                'display'    => __('butik::cp.name'),
                                 'validate'   => 'required',
                             ],
                         ],
@@ -35,7 +35,7 @@ class VariantBlueprint extends Blueprint
                             'handle' => 'price_section',
                             'field'  => [
                                 'type'    => 'section',
-                                'display' => __('butik::product.price_section'),
+                                'display' => ucfirst(__('butik::cp.price_section')),
                             ],
                         ],
                         [
@@ -44,7 +44,7 @@ class VariantBlueprint extends Blueprint
                                 'type'    => 'toggle',
                                 'default' => true,
                                 'width'   => 25,
-                                'display' => __('butik::product.price_linked'),
+                                'display' => __('butik::cp.link_price'),
                             ],
                         ],
                         [
@@ -52,7 +52,7 @@ class VariantBlueprint extends Blueprint
                             'field'  => [
                                 'type'     => 'money',
                                 'width'    => 75,
-                                'display'  => __('butik::product.price'),
+                                'display'  => __('butik::cp.price'),
                                 'validate' => 'nullable',
                                 'unless'   => [
                                     'inherit_price' => 'equals true',
@@ -63,7 +63,7 @@ class VariantBlueprint extends Blueprint
                             'handle' => 'stock_section',
                             'field'  => [
                                 'type'    => 'section',
-                                'display' => __('butik::product.stock_section'),
+                                'display' => ucfirst(__('butik::cp.stock_section')),
                             ],
                         ],
                         [
@@ -72,7 +72,7 @@ class VariantBlueprint extends Blueprint
                                 'type'    => 'toggle',
                                 'default' => false,
                                 'width'   => 25,
-                                'display' => __('butik::product.stock_linked'),
+                                'display' => __('butik::cp.inherit_stock'),
                             ],
                         ],
                         [
@@ -81,7 +81,7 @@ class VariantBlueprint extends Blueprint
                                 'type'       => 'integer',
                                 'width'      => 50,
                                 'default'    => 0,
-                                'display'    => __('butik::product.stock'),
+                                'display'    => __('butik::cp.stock'),
                                 'validate'   => 'nullable',
                                 'unless_any' => [
                                     'inherit_stock'   => 'equals true',
@@ -94,7 +94,7 @@ class VariantBlueprint extends Blueprint
                             'field'  => [
                                 'type'    => 'toggle',
                                 'width'   => 25,
-                                'display' => __('butik::product.stock_unlimited'),
+                                'display' => __('butik::cp.stock_unlimited'),
                                 'unless'  => [
                                     'inherit_stock' => 'equals true',
                                 ],

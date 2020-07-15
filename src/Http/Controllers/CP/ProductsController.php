@@ -37,12 +37,12 @@ class ProductsController extends CpController
             'products' => $products,
             'columns'  => [
                 Column::make('available')->label(''),
-                Column::make('title')->label(__('butik::product.title')),
-                Column::make('base_price')->label(__('butik::product.base_price')),
-                Column::make('stock_unlimited')->label(__('butik::product.stock_unlimited')),
-                Column::make('stock')->label(__('butik::product.stock')),
-                Column::make('price')->label(__('butik::product.price')),
-                Column::make('slug')->label(__('butik::product.slug')),
+                Column::make('title')->label(__('butik::cp.name')),
+                Column::make('price')->label(__('butik::cp.price')),
+                Column::make('stock_unlimited')->label(__('butik::cp.stock_unlimited')),
+                Column::make('stock')->label(__('butik::cp.stock')),
+                Column::make('price')->label(__('butik::cp.price')),
+                Column::make('slug')->label(__('butik::cp.slug')),
             ],
         ]);
     }

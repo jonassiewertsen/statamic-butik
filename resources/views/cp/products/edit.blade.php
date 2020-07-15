@@ -1,12 +1,12 @@
 @extends('statamic::layout')
 
-@section('title', __('butik::product.create'))
+@section('title', ucfirst(__('butik::cp.product_form_edit')))
 @section('wrapper_class', 'max-w-3xl')
 
 @section('content')
     <publish-form
         name="product edit stack"
-        title="{{ __('butik::product.form_title') }}"
+        title="{{ __('butik::cp.product_form_edit') }}"
         action="{{ cp_route('butik.products.update', ['product' => $productValues['slug']]) }}"
         method="patch"
         :blueprint='@json($productBlueprint)'

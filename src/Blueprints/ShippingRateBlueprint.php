@@ -18,7 +18,7 @@ class ShippingRateBlueprint extends Blueprint
                             'handle' => 'title',
                             'field'  => [
                                 'type'     => 'text',
-                                'display'  => __('butik::general.title'),
+                                'display'  => __('butik::cp.name'),
                                 'validate' => 'required',
                             ],
                         ],
@@ -27,8 +27,8 @@ class ShippingRateBlueprint extends Blueprint
                             'field'  => [
                                 'type'         => 'integer',
                                 'default'      => 0,
-                                'display'      => __('butik::shipping.minimum'),
-                                'instructions' => __('butik::shipping.minimum_instructions'),
+                                'display'      => __('butik::cp.minimum'),
+                                'instructions' => __('butik::cp.shipping_minimum_description'),
                                 'validate'     => 'required|numeric|min:0',
                             ],
                         ],
@@ -36,7 +36,7 @@ class ShippingRateBlueprint extends Blueprint
                             'handle' => 'price',
                             'field'  => [
                                 'type'     => 'money',
-                                'display'  => __('butik::product.price'),
+                                'display'  => __('butik::cp.price'),
                                 'validate' => 'required|min:0',
                             ],
                         ],

@@ -1,11 +1,11 @@
 @extends('statamic::layout')
 
-@section('title', __('butik::product.create'))
+@section('title', __('butik::cp.product_form_create'))
 @section('wrapper_class', 'max-w-3xl')
 
 @section('content')
     <publish-form-redirect
-        title="{{ __('butik::product.form_title') }}"
+        title="{{ __('butik::cp.product_form_create') }}"
         action="{{ cp_route('butik.products.store') }}"
         :blueprint='@json($blueprint)'
         :meta='@json($meta)'

@@ -5,7 +5,7 @@
     <div class="card p-0 content">
         <div class="py-3 px-4 border-b">
             <h1>Statamic Butik</h1>
-            <p>Configure Butik after your needs.</p>
+            <p>{{ __('butik::cp.configure_after_your_needs') }}</p>
         </div>
 
         <div class="flex flex-wrap p-2">

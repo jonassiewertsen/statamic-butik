@@ -1,11 +1,11 @@
 @extends('statamic::layout')
 
-@section('title', __('butik::tax.create'))
+@section('title', ucfirst(__('butik::tax.create')))
 @section('wrapper_class', 'max-w-3xl')
 
 @section('content')
     <publish-form
-        title="{{ __('butik::general.title') }}"
+        title="{{ __('butik::cp.tax_form_edit') }}"
         action="{{ cp_route('butik.taxes.update', ['tax' => $slug]) }}"
         method="patch"
         :blueprint='@json($blueprint)'

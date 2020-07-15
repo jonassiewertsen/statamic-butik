@@ -18,7 +18,7 @@ class ProductBlueprint extends Blueprint
                             'handle' => 'title',
                             'field'  => [
                                 'type'     => 'text',
-                                'display'  => __('butik::product.title'),
+                                'display'  => __('butik::cp.product_singular'),
                                 'validate' => 'required|string',
                             ],
                         ],
@@ -26,8 +26,8 @@ class ProductBlueprint extends Blueprint
                             'handle' => 'slug',
                             'field'  => [
                                 'type'          => 'slug',
-                                'display'       => __('butik::product.slug'),
-                                'instructions'  => __('butik::product.slug_description'),
+                                'display'       => __('butik::cp.slug'),
+                                'instructions'  => __('butik::cp.slug_description'),
                                 'validate'      => ['required', 'string', $this->productUniqueRule() ],
                                 'read_only'     => $this->slugReadOnly(),
                             ],
@@ -36,7 +36,7 @@ class ProductBlueprint extends Blueprint
                             'handle' => 'price',
                             'field'  => [
                                 'type'          => 'money',
-                                'display'       => __('butik::product.price'),
+                                'display'       => __('butik::cp.price'),
                                 'width'         => '25',
                                 'validate'      => 'required|min:0',
                             ],
@@ -45,7 +45,7 @@ class ProductBlueprint extends Blueprint
                             'handle' => 'tax_id',
                             'field'  => [
                                 'type'         => 'select',
-                                'display'      => __('butik::tax.singular'),
+                                'display'      => __('butik::cp.tax_singular'),
                                 'options'      => $this->fetchTaxOptions(),
                                 'width'         => '25',
                                 'validate'      => 'required|exists:butik_taxes,slug'
@@ -55,7 +55,7 @@ class ProductBlueprint extends Blueprint
                             'handle' => 'shipping_profile_slug',
                             'field'  => [
                                 'type'         => 'select',
-                                'display'      => __('butik::shipping.singular'),
+                                'display'      => __('butik::cp.shipping_singular'),
                                 'options'      => $this->fetchShippingOptions(),
                                 'width'         => '25',
                                 'validate'      => 'required|exists:butik_shipping_profiles,slug'
@@ -65,7 +65,7 @@ class ProductBlueprint extends Blueprint
                             'handle' => 'type',
                             'field'  => [
                                 'type'         => 'select',
-                                'display'      => __('butik::product.type'),
+                                'display'      => __('butik::cp.type'),
                                 'width'         => '25',
                                 'default' => 'physical',
                                 'options' => [
@@ -78,7 +78,7 @@ class ProductBlueprint extends Blueprint
                             'handle' => 'description',
                             'field'  => [
                                 'type'    => 'textarea',
-                                'display' => __('butik::product.description'),
+                                'display' => __('butik::cp.description'),
                                 'validate' => 'nullable',
                                 'buttons' => [
                                     'h2', 'bold', 'italic', 'underline', 'strikethrough', 'unorderedlist', 'orderedlist', 'anchor', 'quote',
@@ -94,7 +94,7 @@ class ProductBlueprint extends Blueprint
                             'field'  => [
                                 'type'     => 'toggle',
                                 'default'  => true,
-                                'display'  => __('butik::product.available'),
+                                'display'  => __('butik::cp.available'),
                                 'validate' => 'required|boolean',
                             ],
                         ],
@@ -104,7 +104,7 @@ class ProductBlueprint extends Blueprint
                                 'type'     => 'integer',
                                 'width'    => '50',
                                 'default'  => 0,
-                                'display'  => __('butik::product.stock'),
+                                'display'  => __('butik::cp.stock'),
                                 'validate' => 'required|integer',
                                 'unless'    => [
                                     'stock_unlimited' => true,
@@ -116,7 +116,7 @@ class ProductBlueprint extends Blueprint
                             'field'  => [
                                 'type'     => 'toggle',
                                 'width'    => '50',
-                                'display'  => __('butik::product.unlimited'),
+                                'display'  => __('butik::cp.stock_unlimited'),
                                 'validate' => 'required|boolean',
                             ],
                         ],
@@ -124,7 +124,7 @@ class ProductBlueprint extends Blueprint
                             'handle' => 'images',
                             'field'  => [
                                 'type'     => 'assets',
-                                'display'  => __('butik::product.images'),
+                                'display'  => __('butik::cp.images'),
                                 'validate' => 'nullable',
                                 'mode'     => 'grid',
                             ],

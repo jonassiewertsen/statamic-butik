@@ -17,7 +17,7 @@ class TaxBlueprint extends Blueprint
                             'field'  => [
                                 'type'     => 'text',
                                 'width'    => '66',
-                                'display'  => __('butik::general.title'),
+                                'display'  => __('butik::cp.name'),
                                 'validate' => 'required',
                             ],
                         ],
@@ -25,7 +25,7 @@ class TaxBlueprint extends Blueprint
                             'handle' => 'percentage',
                             'field'  => [
                                 'type'         => 'tax',
-                                'display'      => __('butik::general.percentage'),
+                                'display'      => __('butik::cp.percentage'),
                                 'width'         => '33',
                                 'validate'      => 'required|numeric|min:0|max:100',
                             ],
@@ -38,7 +38,7 @@ class TaxBlueprint extends Blueprint
                             'handle' => 'slug',
                             'field'  => [
                                 'type'     => 'slug',
-                                'display'  => __('butik::general.slug'),
+                                'display'  => __('butik::cp.slug'),
                                 'validate' => ['required', $this->taxesUniqueRule()],
                                 'read_only' => $this->slugReadOnly(),
                             ],

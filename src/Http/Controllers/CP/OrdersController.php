@@ -30,13 +30,13 @@ class OrdersController extends CpController
         return view('butik::cp.orders.index', [
             'orders' => $orders,
             'columns' => [
-                Column::make('id')->label(__('butik::general.id')),
-                Column::make('status')->label(__('butik::order.status')),
-                Column::make('customer')->label(__('butik::order.customer')),
-                Column::make('mail')->label(__('butik::order.mail')),
-                Column::make('method')->label(__('butik::order.method')),
-                Column::make('total_amount')->label(__('butik::order.total_amount')),
-                Column::make('created_at')->label(__('butik::order.created_at')),
+                Column::make('id')->label(__('butik::cp.id')),
+                Column::make('status')->label(__('butik::cp.status')),
+                Column::make('customer')->label(__('butik::cp.customer')),
+                Column::make('mail')->label(__('butik::cp.mail')),
+                Column::make('method')->label(__('butik::cp.method')),
+                Column::make('total_amount')->label(__('butik::cp.total_amount')),
+                Column::make('created_at')->label(__('butik::cp.created_at')),
             ],
         ]);
     }

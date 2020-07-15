@@ -17,7 +17,7 @@ class CategoryBlueprint extends Blueprint
                             'field'  => [
                                 'type'     => 'text',
                                 'width'    => '66',
-                                'display'  => __('butik::general.title'),
+                                'display'  => __('butik::cp.name'),
                                 'validate' => 'required',
                             ],
                         ],
@@ -25,7 +25,7 @@ class CategoryBlueprint extends Blueprint
                             'handle' => 'is_visible',
                             'field'  => [
                                 'type'     => 'toggle',
-                                'display'  => __('butik::category.visible'),
+                                'display'  => __('butik::cp.is_visible'),
                                 'width'    => '33',
                                 'default'  => true,
                                 'validate' => 'sometimes',
@@ -40,7 +40,7 @@ class CategoryBlueprint extends Blueprint
                             'field'  => [
                                 'type'      => 'slug',
                                 'from'      => 'name',
-                                'display'   => __('butik::general.slug'),
+                                'display'   => __('butik::cp.slug'),
                                 'validate'  => ['required', $this->categoryUniqueRule()],
                                 'read_only' => $this->slugReadOnly(),
                             ],
