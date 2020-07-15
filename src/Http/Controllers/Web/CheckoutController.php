@@ -56,7 +56,7 @@ class CheckoutController extends Checkout
             ->template(config('butik.template_checkout-payment'))
             ->layout(config('butik.layout_checkout-payment'))
             ->with([
-                'customer'       => session('butik.customer'),
+                'customer'       => (array) session('butik.customer'),
                 'items'          => $this->mappedCartItems(),
                 'total_price'    => Cart::totalPrice(),
                 'total_shipping' => Cart::totalShipping(),
