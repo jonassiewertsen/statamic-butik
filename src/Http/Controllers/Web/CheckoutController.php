@@ -18,21 +18,7 @@ class CheckoutController extends Checkout
             Session::get('butik.customer') :
             (new Customer())->empty();
 
-        // TODO: Get back here and do some refactoring
-        $items = Cart::get()->map(function ($item) {
-            return [
-                'available'      => $item->available,
-                'sellable'       => $item->sellable,
-                'availableStock' => $item->availableStock,
-                'slug'           => $item->slug,
-                'images'         => $item->images,
-                'name'           => $item->name,
-                'description'    => $item->description,
-                'single_price'   => $item->singlePrice(),
-                'total_price'    => $item->totalPrice(),
-                'quantity'       => $item->getQuantity(),
-            ];
-        });
+
 
         return (new StatamicView())
            ->template(config('butik.template_checkout-delivery'))
@@ -41,7 +27,7 @@ class CheckoutController extends Checkout
                 'customer'         => $customer,
                 'countries'        => Country::pluck('name', 'slug'),
                 'selected_country' => Cart::country(),
-                'items'            => $items,
+                'items'            => $this->mappedCartItems(),
                 'total_price'      => Cart::totalPrice(),
                 'total_shipping'   => Cart::totalShipping(),
             ]);
@@ -66,12 +52,15 @@ class CheckoutController extends Checkout
     {
         Cart::removeNonSellableItems();
 
-        return view(config('butik.template_checkout-payment'), [
-            'customer'       => session('butik.customer'),
-            'items'          => Cart::get(),
-            'total_price'    => Cart::totalPrice(),
-            'total_shipping' => Cart::totalShipping(),
-        ]);
+        return (new StatamicView())
+            ->template(config('butik.template_checkout-payment'))
+            ->layout(config('butik.layout_checkout-payment'))
+            ->with([
+                'customer'       => session('butik.customer'),
+                'items'          => $this->mappedCartItems(),
+                'total_price'    => Cart::totalPrice(),
+                'total_shipping' => Cart::totalShipping(),
+            ]);
     }
 
     public function receipt(Request $request, $order)
@@ -91,5 +80,29 @@ class CheckoutController extends Checkout
         }
 
         return view(config('butik.template_checkout-receipt'), compact('customer', 'order'));
+    }
+
+    /**
+     * Antlers can't handle objects and collections very well.
+     * To make them play nice together, we will return an
+     * array with all needed informations for the
+     * checkout process.
+     */
+    private function mappedCartItems()
+    {
+        return Cart::get()->map(function ($item) {
+            return [
+                'available'      => $item->available,
+                'sellable'       => $item->sellable,
+                'availableStock' => $item->availableStock,
+                'slug'           => $item->slug,
+                'images'         => $item->images,
+                'name'           => $item->name,
+                'description'    => $item->description,
+                'single_price'   => $item->singlePrice(),
+                'total_price'    => $item->totalPrice(),
+                'quantity'       => $item->getQuantity(),
+            ];
+        });
     }
 }
