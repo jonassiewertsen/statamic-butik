@@ -36,6 +36,10 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         \Jonassiewertsen\StatamicButik\Modifiers\Sellable::class,
     ];
 
+    protected $tags = [
+        \Jonassiewertsen\StatamicButik\Tags\Error::class,
+    ];
+
     protected $fieldtypes = [
         \Jonassiewertsen\StatamicButik\Fieldtypes\Money::class,
         \Jonassiewertsen\StatamicButik\Fieldtypes\Tax::class,
