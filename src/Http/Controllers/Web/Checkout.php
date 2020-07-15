@@ -3,6 +3,7 @@
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
+use Statamic\View\View as StatamicView;
 
 abstract class Checkout extends WebController
 {
@@ -49,6 +50,8 @@ abstract class Checkout extends WebController
 
     protected function showInvalidReceipt()
     {
-        return view(config('butik.template_checkout-receipt-invalid'));
+        return (new StatamicView())
+            ->template(config('butik.template_checkout-receipt-invalid'))
+            ->layout(config('butik.layout_checkout-receipt-invalid'));
     }
 }
