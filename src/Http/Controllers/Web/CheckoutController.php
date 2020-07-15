@@ -73,13 +73,17 @@ class CheckoutController extends Checkout
             return $this->showInvalidReceipt();
         }
 
-        $customer = json_decode($order->customer);
-
         if ($order->status === 'paid') {
             Session::forget('butik.customer');
         }
 
-        return view(config('butik.template_checkout-receipt'), compact('customer', 'order'));
+        return (new StatamicView())
+            ->template(config('butik.template_checkout-receipt'))
+            ->layout(config('butik.layout_checkout-receipt'))
+            ->with([
+                'customer' => (array) json_decode($order->customer),
+                'order'    => $order->toArray(),
+            ]);
     }
 
     /**
