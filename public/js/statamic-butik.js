@@ -6114,18 +6114,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         values: Array
     },
 
-    mounted: function mounted() {
-        console.log(this.redirectTo);
-    },
-
-
     methods: {
         saved: function saved(event) {
             var _this = this;
 
             setTimeout(function () {
                 return _this.redirect(event.data);
-            }, 400);
+            }, 600);
         },
         redirect: function redirect(slug) {
             window.location.href = this.createEditRoute(slug);

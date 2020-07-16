@@ -37,7 +37,7 @@ return [
     'product_singular'                        => 'product',
     'product_plural'                          => 'products',
     'product_form_create'                     => 'create your first amazing product.',
-    'product_form_edit'                       => 'edit you product',
+    'product_form_edit'                       => 'edit your product',
     'setting_singular'                        => 'setting',
     'setting_plural'                          => 'settings',
     'shipped_at'                              => 'shipped at',

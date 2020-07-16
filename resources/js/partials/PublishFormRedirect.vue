@@ -20,13 +20,9 @@
             values: Array,
         },
 
-        mounted() {
-            console.log(this.redirectTo)
-        },
-
         methods: {
             saved(event) {
-                setTimeout(() => this.redirect(event.data), 400)
+                setTimeout(() => this.redirect(event.data), 600)
             },
 
             redirect(slug) {

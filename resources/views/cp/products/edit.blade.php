@@ -6,7 +6,7 @@
 @section('content')
     <publish-form
         name="product edit stack"
-        title="{{ __('butik::cp.product_form_edit') }}"
+        title="{{ ucfirst(__('butik::cp.product_form_edit')) }}"
         action="{{ cp_route('butik.products.update', ['product' => $productValues['slug']]) }}"
         method="patch"
         :blueprint='@json($productBlueprint)'

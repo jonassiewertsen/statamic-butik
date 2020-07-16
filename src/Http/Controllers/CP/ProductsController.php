@@ -69,7 +69,13 @@ class ProductsController extends CpController
         $fields    = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
         $values = $fields->process()->values();
-        Product::create($values->toArray());
+        $product = Product::create($values->toArray());
+
+        /**
+         * We will return the slug, so we can redirect to the product edit page,
+         * after the product has succesfully been saved.
+         */
+        return $product->slug;
     }
 
     public function edit(Product $product)
