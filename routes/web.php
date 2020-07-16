@@ -62,4 +62,4 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\Web')
  * #################################################################################################################
  */
 Route::post('butik/webhook/mollie', '\\Jonassiewertsen\\StatamicButik\\Http\\Controllers\\Web\\PaymentGatewayController@webhook')
-    ->name('payment.webhook.mollie');
+    ->name('butik.payment.webhook.mollie');
