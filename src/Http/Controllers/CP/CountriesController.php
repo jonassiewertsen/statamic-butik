@@ -27,8 +27,8 @@ class CountriesController extends CpController
         return view('butik::cp.countries.index', [
             'countries' => $countries,
             'columns'   => [
-                Column::make('name')->label(__('butik::country.singular')),
-                Column::make('iso')->label(__('butik::country.iso')),
+                Column::make('name')->label(ucfirst(__('butik::cp.country_singular'))),
+                Column::make('iso')->label(ucfirst(__('butik::cp.country_iso'))),
             ],
         ]);
     }

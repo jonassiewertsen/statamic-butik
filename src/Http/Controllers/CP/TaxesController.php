@@ -28,8 +28,8 @@ class TaxesController extends CpController
         return view('butik::cp.taxes.index', [
             'taxes' => $taxes,
             'columns' => [
-                Column::make('title')->label(__('butik::tax.singular')),
-                Column::make('percentage')->label(__('butik::general.percentage')),
+                Column::make('title')->label(__('butik::cp.tax_singular')),
+                Column::make('percentage')->label(__('butik::cp.percentage')),
             ],
         ]);
     }

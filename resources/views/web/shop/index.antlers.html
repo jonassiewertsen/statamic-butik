@@ -1,4 +1,10 @@
 <div class="b-flex b-flex-wrap b--mx-4 md:b--mx-6">
+    {{ if products | count === 0 }}
+        <p class="b-mx-auto">
+            {{ trans key='butik::web.no_proucts_available' }}
+        </p>
+    {{ /if }}
+
     {{ products }}
         <div class="b-block b-px-4 md:b-px-6 b-mb-10 b-w-full sm:b-w-1/2 xl:b-w-1/3">
             <a href="{{ show_url }}" class="b-block b-w-full">

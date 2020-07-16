@@ -1,6 +1,6 @@
 <div>
     <h1 class="b-block b-mb-6 b-text-center b-font-bold b-text-xl">
-        {{ __('butik::cart.singular') }}
+        {{ __('butik::web.bag') }}
     </h1>
 
     <main class="b-px-8">

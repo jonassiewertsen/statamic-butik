@@ -6,7 +6,7 @@
     @unless($countries->isEmpty())
 
         <div class="flex mb-3">
-            <h1 class="flex-1">{{ __('butik::cp.country_plural') }}</h1>
+            <h1 class="flex-1">{{ ucfirst(__('butik::cp.country_plural')) }}</h1>
             @can('create', 'Jonassiewertsen\StatamicButik\Http\Models\Country')
                 <a href="{{ cp_route('butik.countries.create') }}" class="btn-primary">{{ __('butik::cp.country_form_create') }}</a>
             @endcan

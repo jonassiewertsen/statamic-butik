@@ -1,10 +1,12 @@
 <section class="b-w-1/2 b-ml-auto b-px-8 b-mb-16">
-    <h3 class="b-font-bold b-block b-mt-8 b-text-3xl b-text-center">{{ __('butik::web.total') }}</h3>
+    <h3 class="b-font-bold b-block b-mt-8 b-text-3xl b-text-center">
+        {{ ucfirst(__('butik::web.total')) }}
+    </h3>
 
     <hr class="b-border-gray-200 b-my-5">
 
     <div class="b-flex b-my-3 b-justify-between b-max-w-sm b-mx-auto">
-        <span>{{ __('butik::web.shipping') }}</span>
+        <span>{{ ucfirst(__('butik::web.shipping')) }}</span>
         <span>{{ currency() }} {{ $total_shipping }}</span>
     </div>
 

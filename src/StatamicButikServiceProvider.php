@@ -2,11 +2,9 @@
 
 namespace Jonassiewertsen\StatamicButik;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
-use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Jonassiewertsen\StatamicButik\Policies\OrderPolicy;
 use Jonassiewertsen\StatamicButik\Policies\ProductPolicy;
@@ -83,7 +81,6 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
     protected $policies = [
         Product::class  => ProductPolicy::class,
-        Shipping::class => ShippingPolicy::class,
         Tax::class      => TaxPolicy::class,
         Order::class    => OrderPolicy::class,
     ];
@@ -215,28 +212,28 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         Nav::extend(function ($nav) {
 
             // Orders
-            $nav->create(__('butik::cp.order_plural'))
+            $nav->create(ucfirst(__('butik::cp.order_plural')))
                 ->section('Butik')
                 ->can(auth()->user()->can('view orders'))
                 ->route('butik.orders.index')
                 ->icon('drawer-file');
 
             // Products
-            $nav->create(__('butik::cp.product_plural'))
+            $nav->create(ucfirst(__('butik::cp.product_plural')))
                 ->section('Butik')
                 ->can(auth()->user()->can('view products'))
                 ->route('butik.products.index')
                 ->icon('tags');
 
             // Settings
-            $nav->create(__('butik::cp.setting_plural'))
+            $nav->create(ucfirst(__('butik::cp.setting_plural')))
                 ->section('Butik')
                 ->route('butik.settings.index')
                 ->icon('settings-slider')
                 ->children([
-                    $nav->item(__('butik::cp.country_plural'))->route('butik.countries.index')->can('view countries'),
-                    $nav->item(__('butik::cp.shipping_singular'))->route('butik.shipping.index')->can('view shippings'),
-                    $nav->item(__('butik::cp.tax_plural'))->route('butik.taxes.index')->can('view taxes'),
+                    $nav->item(ucfirst(__('butik::cp.country_plural')))->route('butik.countries.index')->can('view countries'),
+                    $nav->item(ucfirst(__('butik::cp.shipping_singular')))->route('butik.shipping.index')->can('view shippings'),
+                    $nav->item(ucfirst(__('butik::cp.tax_plural')))->route('butik.taxes.index')->can('view taxes'),
                 ]);
         });
     }
