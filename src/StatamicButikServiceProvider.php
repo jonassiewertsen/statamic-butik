@@ -2,6 +2,7 @@
 
 namespace Jonassiewertsen\StatamicButik;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
@@ -20,7 +21,7 @@ use Statamic\Providers\AddonServiceProvider;
 class StatamicButikServiceProvider extends AddonServiceProvider
 {
     protected $commands = [
-        \Jonassiewertsen\StatamicButik\Commands\InstallButik::class,
+        \Jonassiewertsen\StatamicButik\Commands\SetUpButik::class,
     ];
 
     protected $routes = [
@@ -41,7 +42,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         \Jonassiewertsen\StatamicButik\Tags\Butik::class,
         \Jonassiewertsen\StatamicButik\Tags\Currency::class,
         \Jonassiewertsen\StatamicButik\Tags\Error::class,
-//        \Jonassiewertsen\StatamicButik\Tags\Product::class,
+        //        \Jonassiewertsen\StatamicButik\Tags\Product::class,
         \Jonassiewertsen\StatamicButik\Tags\Products::class,
     ];
 
@@ -242,6 +243,13 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
     private function enableForeignKeyConstraints(): void
     {
-        Schema::enableForeignKeyConstraints();
+        /**
+         * Enable foreign key constraints if a database is connected.
+         */
+        try {
+            Schema::enableForeignKeyConstraints();
+        } catch (\Throwable $e) {
+            // Do nothing
+        }
     }
 }

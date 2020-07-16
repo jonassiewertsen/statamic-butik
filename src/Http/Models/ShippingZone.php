@@ -6,7 +6,7 @@ use PHPUnit\Framework\Constraint\Count;
 
 class ShippingZone extends ButikModel
 {
-    protected $table        = 'butik_shipping_zones';
+    protected $table = 'butik_shipping_zones';
 
     protected $guarded = [];
 

@@ -54,12 +54,12 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\Web')
 
     Route::get('{product}/{variant?}', 'ShopController@show')
         ->name('shop.product');
-
-    /**
-     * #################################################################################################################
-     *   Mollie webhook
-     * #################################################################################################################
-     */
-    Route::post('payment/webhook/mollie', '\\Jonassiewertsen\\StatamicButik\\Http\\Controllers\\Web\\PaymentGatewayController@webhook')
-        ->name('payment.webhook.mollie');
 });
+
+/**
+ * #################################################################################################################
+ *   Mollie webhook
+ * #################################################################################################################
+ */
+Route::post('butik/webhook/mollie', '\\Jonassiewertsen\\StatamicButik\\Http\\Controllers\\Web\\PaymentGatewayController@webhook')
+    ->name('payment.webhook.mollie');
