@@ -11,15 +11,14 @@ use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Transaction;
 use Jonassiewertsen\StatamicButik\Events\PaymentSubmitted;
 use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
-use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
-use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Traits\MollyLocale;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Mollie\Laravel\Facades\Mollie;
 
-class MolliePaymentGateway extends WebController implements PaymentGatewayInterface
+class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInterface
 {
-    use MollyLocale, MoneyTrait;
+    use MollyLocale;
+    use MoneyTrait;
 
     /**
      * The total amount we will charge the customer with. The price
@@ -32,13 +31,14 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
      */
     protected Transaction $transaction;
 
-    public function handle(Customer $customer, Collection $items, string $totalPrice) {
+    public function handle(Customer $customer, Collection $items, string $totalPrice)
+    {
         $mollieCustomer = Mollie::api()->customers()->create([
-            'name' => $customer->name,
+            'name'  => $customer->name,
             'email' => $customer->mail,
-       ]);
+        ]);
 
-        $orderId = str_random(20);
+        $orderId          = str_random(20);
         $this->totalPrice = $totalPrice;
 
         $payment = Mollie::api()
@@ -62,8 +62,9 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
         return redirect($payment->getCheckoutUrl(), 303);
     }
 
-    public function webhook(Request $request) {
-        if (! $request->has('id')) {
+    public function webhook(Request $request)
+    {
+        if (!$request->has('id')) {
             return;
         }
         $payment = Mollie::api()->payments()->get($request->id);
@@ -86,56 +87,21 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
         }
     }
 
-    private function setOrderStatusToPaid($payment): void {
-        $order = Order::whereTransactionId($payment->id)->firstOrFail();
-        $order->update([
-           'status'  => 'paid',
-           'method'  => $payment->method,
-           'paid_at' => Carbon::parse($payment->paidAt)
-       ]);
-    }
-
-    private function setOrderStatusToFailed($payment): void {
-        $order = Order::whereTransactionId($payment->id)->firstOrFail();
-        $order->update([
-            'status'    => 'failed',
-            'method'    => $payment->method,
-            'failed_at' => Carbon::parse($payment->failedAt)
-       ]);
-    }
-
-    private function setOrderStatusToExpired($payment): void {
-        $order = Order::whereTransactionId($payment->id)->firstOrFail();
-        $order->update([
-            'method' => $payment->method,
-            'status' => 'expired',
-        ]);
-    }
-
-    private function setOrderStatusToCanceled($payment): void {
-        $order = Order::whereTransactionId($payment->id)->firstOrFail();
-        $order->update([
-            'method'    => $payment->method,
-            'status'    => 'canceled',
-       ]);
-    }
-
     private function paymentInformation($items, $mollieCustomer, $orderId)
     {
         $payment = [
-            'description'   => 'ORDER ' . $orderId,
-            'customerId'    => $mollieCustomer->id,
-            'metadata'      => $this->generateMetaData($items, $orderId),
-            'locale'        => $this->getLocale(),
-            'redirectUrl'   =>  URL::temporarySignedRoute('butik.payment.receipt', now()->addMinutes(5), ['order' => $orderId]),
-            'amount'        => [
-                'currency'  => config('butik.currency_isoCode'),
-                'value'     => $this->totalPrice,
+            'description' => 'ORDER ' . $orderId,
+            'customerId'  => $mollieCustomer->id,
+            'metadata'    => $this->generateMetaData($items, $orderId),
+            'locale'      => $this->getLocale(),
+            'redirectUrl' => URL::temporarySignedRoute('butik.payment.receipt', now()->addMinutes(5), ['order' => $orderId]),
+            'amount'      => [
+                'currency' => config('butik.currency_isoCode'),
+                'value'    => $this->totalPrice,
             ],
         ];
 
-
-        if (! App::environment(['local'])) {
+        if (!App::environment(['local'])) {
             // Only adding the mollie webhook, when not in local environment
             $payment = array_merge($payment, [
                 'webhookUrl' => route('butik.payment.webhook.mollie'),
@@ -152,7 +118,8 @@ class MolliePaymentGateway extends WebController implements PaymentGatewayInterf
         return $payment;
     }
 
-    private function generateMetaData($items, $orderId) {
+    private function generateMetaData($items, $orderId)
+    {
         $meta = 'ORDER ' . $orderId . ': ';
 
         foreach ($items as $item) {
