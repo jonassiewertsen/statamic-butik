@@ -42,7 +42,7 @@ return [
     'payment_successful'       => 'payment successful',
     'payment_thank_you'        => 'Thank you for your trust',
     'price'                    => 'price',
-    'proceed_to_checkoud'      => 'proceed to checkout',
+    'proceed_to_checkout'      => 'proceed to checkout',
     'review_payment'           => 'review payment',
     'receipt'                  => 'receipt',
     'ship_to'                  => 'ship to',
