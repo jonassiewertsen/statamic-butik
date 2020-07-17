@@ -156,44 +156,93 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     protected function bootPermissions(): void
     {
         $this->app->booted(function () {
-            Permission::group('butik', 'Statamic Butik', function () {
-                Permission::register('view orders', function ($permission) {
-                    $permission->children([
-                        Permission::make('show orders'),
-                        Permission::make('update orders'),
+            Permission::group('butik_general', __('butik::cp.permissions_general'), function () {
+                Permission::register('view products', function ($permission) {
+                    $permission
+                        ->label(__('butik::cp.permission_view_products'))
+                        ->description(__('butik::cp.permission_view_products_description'))
+                        ->children([
+                            Permission::make('edit products')
+                                ->label(__('butik::cp.permission_edit_products'))
+                                ->description(__('butik::cp.permission_edit_products_description'))
+                                ->children([
+                                    Permission::make('create products')
+                                        ->label(__('butik::cp.permission_create_products'))
+                                        ->description(__('butik::cp.permission_create_products_description')),
+                                    Permission::make('delete products')
+                                        ->label(__('butik::cp.permission_delete_products'))
+                                        ->description(__('butik::cp.permission_delete_products_description')),
+                            ]),
                     ]);
                 });
-                Permission::register('view products', function ($permission) {
-                    $permission->children([
-                        Permission::make('edit products')->children([
-                            Permission::make('create products'),
-                            Permission::make('delete products'),
-                        ]),
+                Permission::register('view orders', function ($permission) {
+                    $permission
+                        ->label(__('butik::cp.permission_view_orders'))
+                        ->description(__('butik::cp.permission_view_orders_description'))
+                        ->children([
+                            Permission::make('show orders')
+                                ->label(__('butik::cp.permission_show_orders'))
+                                ->description(__('butik::cp.permission_show_orders_description')),
+                            Permission::make('update orders')
+                                ->label(__('butik::cp.permission_update_orders'))
+                                ->description(__('butik::cp.permission_update_orders_description')),
+                        ]);
+                });
+            });
+            Permission::group('butik_settings', __('butik::cp.permissions_settings'), function () {
+                Permission::register('view countries', function ($permission) {
+                    $permission
+                        ->label(__('butik::cp.permission_view_countries'))
+                        ->description(__('butik::cp.permission_view_countries_description'))
+                        ->children([
+                            Permission::make('edit countries')
+                                ->label(__('butik::cp.permission_edit_countries'))
+                                ->description(__('butik::cp.permission_edit_countries_description'))
+                                ->children([
+                                    Permission::make('create countries')
+                                        ->label(__('butik::cp.permission_create_countries'))
+                                        ->description(__('butik::cp.permission_create_countries_description')),
+                                    Permission::make('delete countries')
+                                        ->label(__('butik::cp.permission_delete_countries'))
+                                        ->description(__('butik::cp.permission_delete_countries_description')),
+                                ]),
+                        ]);
+                });
+                Permission::register('view shippings', function ($permission) {
+                    $permission
+                        ->label(__('butik::cp.permission_view_shippings'))
+                        ->description(__('butik::cp.permission_view_shippings_description'))
+                        ->children([
+                            Permission::make('edit shippings')
+                                ->label(__('butik::cp.permission_edit_shippings'))
+                                ->description(__('butik::cp.permission_edit_shippings_description'))
+                                ->children([
+                                    Permission::make('create shippings')
+                                        ->label(__('butik::cp.permission_create_shippings'))
+                                        ->description(__('butik::cp.permission_create_shippings_description')),
+                                    Permission::make('delete shippings')
+                                        ->label(__('butik::cp.permission_delete_shippings'))
+                                        ->description(__('butik::cp.permission_delete_shippings_description')),
+                            ]),
                     ]);
                 });
                 Permission::register('view taxes', function ($permission) {
-                    $permission->children([
-                        Permission::make('edit taxes')->children([
-                            Permission::make('create taxes'),
-                            Permission::make('delete taxes'),
-                        ]),
-                    ]);
-                });
-                Permission::register('view shippings', function ($permission) {
-                    $permission->children([
-                        Permission::make('edit shippings')->children([
-                            Permission::make('create shippings'),
-                            Permission::make('delete shippings'),
-                        ]),
-                    ]);
-                });
-                Permission::register('view countries', function ($permission) {
-                    $permission->children([
-                        Permission::make('edit countries')->children([
-                            Permission::make('create countries'),
-                            Permission::make('delete countries'),
-                        ]),
-                    ]);
+                    $permission
+                        ->label(__('butik::cp.permission_view_taxes'))
+                        ->description(__('butik::cp.permission_view_taxes_description'))
+                        ->children([
+                            Permission::make('edit taxes')
+                                ->label(__('butik::cp.permission_edit_taxes'))
+                                ->description(__('butik::cp.permission_edit_taxes_description'))
+                                ->children([
+                                    Permission::make('create taxes')
+                                        ->label(__('butik::cp.permission_create_taxes'))
+                                        ->description(__('butik::cp.permission_create_taxes_description')),
+                                    Permission::make('delete taxes')
+                                        ->label(__('butik::cp.permission_delete_taxes'))
+                                        ->description(__('butik::cp.permission_delete_taxes_description')),
+                                ]),
+                        ]);
                 });
             });
         });
