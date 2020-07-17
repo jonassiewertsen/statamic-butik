@@ -65,9 +65,10 @@ return [
      */
     'route_shop-prefix'       => 'shop',                       // yourshop.com/shop/
     'route_cart'              => 'cart',                       // yourshop.com/shop/cart
+    'route_category'          => 'category/{category}',         // yourshop.com/shop/category/xxxxx
     'route_checkout-delivery' => 'checkout/delivery',           // yourshop.com/shop/checkout/delivery
     'route_checkout-payment'  => 'checkout/payment',            // yourshop.com/shop/checkout/payment
-    'route_payment-receipt'   => 'payment/{order}/receipt',     // yourshop.com/shop/payment/xxxxxxxxx/receipt
+    'route_payment-receipt'   => 'payment/{order}/receipt',     // yourshop.com/shop/payment/xxxxx/receipt
 
     /**
      * TEMPLATES

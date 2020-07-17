@@ -20,7 +20,6 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\Web')
      * #################################################################################################################
      */
     Route::get(config('butik.route_payment-receipt'), 'CheckoutController@receipt')
-
         ->name('payment.receipt');
 
     /**
@@ -51,6 +50,9 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\Web')
      */
     Route::get('/', 'ShopController@index')
         ->name('shop');
+
+    Route::get(config('butik.route_category'), 'ShopController@category')
+        ->name('category');
 
     Route::get('{product}/{variant?}', 'ShopController@show')
         ->name('shop.product');

@@ -57,4 +57,12 @@ class Category extends ButikModel
                 ->where('category_slug', $this->slug)
                 ->count() === 1;
     }
+
+    /**
+     * The url of the specific category
+     */
+    public function getUrlAttribute()
+    {
+        return route('butik.category', $this);
+    }
 }

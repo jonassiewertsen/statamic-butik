@@ -49,4 +49,13 @@ class CategoryTest extends TestCase
         $category->removeProduct($this->product);
         $this->assertFalse($category->isProductAttached($this->product));
     }
+
+    /** @test */
+    public function a_category_has_a_url()
+    {
+        create(Category::class);
+        $category = Category::first();
+
+        $this->assertEquals(route('butik.category', $category), $category->url);
+    }
 }
