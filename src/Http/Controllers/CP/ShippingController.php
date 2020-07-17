@@ -12,7 +12,7 @@ class ShippingController extends CpController
 {
     public function index()
     {
-//        $this->authorize('index', Shipping::class);
+        $this->authorize('index', ShippingProfile::class);
 
         $shippingProfileBlueprint = new ShippingProfileBlueprint();
         $shippingProfileFields    = $shippingProfileBlueprint()->fields()->preProcess();

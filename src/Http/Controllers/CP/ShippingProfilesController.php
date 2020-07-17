@@ -13,7 +13,7 @@ class ShippingProfilesController extends CpController
 {
     public function index()
     {
-//        $this->authorize('index', ShippingProfile::class); // TODO: Add authorization
+        $this->authorize('index', ShippingProfile::class);
 
         return ShippingProfile::all()->map(function ($shipping) {
             return [
@@ -26,6 +26,8 @@ class ShippingProfilesController extends CpController
 
     public function show(ShippingProfile $shippingProfile)
     {
+        $this->authorize('show', ShippingProfile::class);
+
         $zones = $shippingProfile->zones->map(function ($zone) {
             return [
                 'id'        => $zone->id,
@@ -56,7 +58,7 @@ class ShippingProfilesController extends CpController
 
     public function update(Request $request, ShippingProfile $shippingProfile)
     {
-//        $this->authorize('update', $shippingProfile);
+        $this->authorize('update', $shippingProfile);
 
         $blueprint = new ShippingProfileBlueprint();
         $fields    = $blueprint()->fields()->addValues($request->all());
@@ -67,7 +69,7 @@ class ShippingProfilesController extends CpController
 
     public function destroy(ShippingProfile $shippingProfile)
     {
-//        $this->authorize('delete', $shippingProfile);
+        $this->authorize('delete', $shippingProfile);
 
         $shippingProfile->delete();
     }

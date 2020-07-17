@@ -12,7 +12,7 @@ class VariantsController extends CpController
 {
     public function store(Request $request)
     {
-//        $this->authorize('store', Variant::class);
+        $this->authorize('store', Variant::class);
 
         /**
          * TODO: Remove this ugly fix as soon as custom rules can be used in blueprints.
@@ -43,7 +43,7 @@ class VariantsController extends CpController
 
     public function update(Request $request, Variant $variant)
     {
-//        $this->authorize('update', $variant); // TODO: Add authorization
+        $this->authorize('update', $variant);
 
         $blueprint = new VariantBlueprint();
         $fields    = $blueprint()->fields()->addValues($request->all());
@@ -63,7 +63,7 @@ class VariantsController extends CpController
 
     public function destroy(Variant $variant)
     {
-//        $this->authorize('delete', $variant);
+        $this->authorize('delete', $variant);
 
         $variant->delete();
     }

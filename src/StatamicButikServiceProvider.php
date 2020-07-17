@@ -3,13 +3,22 @@
 namespace Jonassiewertsen\StatamicButik;
 
 use Illuminate\Support\Facades\Schema;
+use Jonassiewertsen\StatamicButik\Http\Models\Country;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
+use Jonassiewertsen\StatamicButik\Http\Models\Variant;
+use Jonassiewertsen\StatamicButik\Policies\CountryPolicy;
 use Jonassiewertsen\StatamicButik\Policies\OrderPolicy;
 use Jonassiewertsen\StatamicButik\Policies\ProductPolicy;
-use Jonassiewertsen\StatamicButik\Policies\ShippingPolicy;
+use Jonassiewertsen\StatamicButik\Policies\ShippingProfilePolicy;
+use Jonassiewertsen\StatamicButik\Policies\ShippingRatePolicy;
+use Jonassiewertsen\StatamicButik\Policies\ShippingZonePolicy;
 use Jonassiewertsen\StatamicButik\Policies\TaxPolicy;
+use Jonassiewertsen\StatamicButik\Policies\VariantPolicy;
 use Livewire\Livewire;
 use Mollie\Laravel\MollieServiceProvider;
 use Statamic\Facades\CP\Nav;
@@ -80,9 +89,14 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     ];
 
     protected $policies = [
-        Product::class  => ProductPolicy::class,
-        Tax::class      => TaxPolicy::class,
-        Order::class    => OrderPolicy::class,
+        Country::class         => CountryPolicy::class,
+        Product::class         => ProductPolicy::class,
+        Order::class           => OrderPolicy::class,
+        ShippingProfile::class => ShippingProfilePolicy::class,
+        ShippingZone::class    => ShippingZonePolicy::class,
+        ShippingRate::class    => ShippingRatePolicy::class,
+        Tax::class             => TaxPolicy::class,
+        Variant::class         => VariantPolicy::class,
     ];
 
     public function boot(): void

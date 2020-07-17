@@ -35,7 +35,7 @@ class CountriesController extends CpController
 
     public function create()
     {
-//        $this->authorize('create', Country::class); TODO: Add authroization
+        $this->authorize('create', Country::class);
 
         $blueprint = new CountryBlueprint();
         $fields    = $blueprint()->fields()->preProcess();
@@ -49,7 +49,7 @@ class CountriesController extends CpController
 
     public function store(Request $request)
     {
-//        $this->authorize('store', Country::class); TODO: Add authorization
+        $this->authorize('store', Country::class);
 
         $blueprint = new CountryBlueprint();
         $fields    = $blueprint()->fields()->addValues($request->all());
@@ -60,7 +60,7 @@ class CountriesController extends CpController
 
     public function edit(Country $country)
     {
-//        $this->authorize('edit', $country);
+        $this->authorize('edit', $country);
 
         $values    = $country->toArray();
         $blueprint = new CountryBlueprint();

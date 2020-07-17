@@ -12,7 +12,7 @@ class CategoriesController extends CpController
 {
     public function store(Request $request)
     {
-//        $this->authorize('store', Country::class); TODO: Add authorization
+        $this->authorize('edit', Product::class);
 
         $blueprint = new CategoryBlueprint();
         $fields    = $blueprint()->fields()->addValues($request->all());
@@ -23,7 +23,7 @@ class CategoriesController extends CpController
 
     public function update(Request $request, Category $category)
     {
-//        $this->authorize('update', $country);
+        $this->authorize('edit', Product::class);
 
         $blueprint = new CategoryBlueprint();
         $fields    = $blueprint()->fields()->addValues($request->all());
@@ -34,7 +34,7 @@ class CategoriesController extends CpController
 
     public function destroy(Category $category)
     {
-//        $this->authorize('delete', $category);
+        $this->authorize('edit', Product::class);
 
         $category->delete();
     }

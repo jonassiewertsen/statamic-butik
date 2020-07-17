@@ -13,7 +13,7 @@ class ShippingZonesController extends CpController
 {
     public function store(Request $request)
     {
-//        $this->authorize('store', ShippingZone::class); TODO: Add authorization
+        $this->authorize('store', ShippingZone::class);
 
         $blueprint = new ShippingZoneBlueprint();
         $fields = $blueprint()->fields()->addValues($request->all());
@@ -24,7 +24,7 @@ class ShippingZonesController extends CpController
 
     public function update(Request $request, ShippingZone $shippingZone)
     {
-//        $this->authorize('update', $shippingProfile);
+        $this->authorize('update', $shippingZone);
 
         $blueprint = new ShippingZoneBlueprint();
         $fields = $blueprint()->fields()->addValues($request->all());
@@ -35,7 +35,7 @@ class ShippingZonesController extends CpController
 
     public function destroy(ShippingZone $shippingZone)
     {
-//        $this->authorize('delete', $shippingProfile);
+        $this->authorize('delete', $shippingZone);
 
         $shippingZone->delete();
     }
