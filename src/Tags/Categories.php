@@ -2,7 +2,6 @@
 
 namespace Jonassiewertsen\StatamicButik\Tags;
 
-
 use Jonassiewertsen\StatamicButik\Http\Models\Category;
 
 class Categories extends \Statamic\Tags\Tags
@@ -23,5 +22,15 @@ class Categories extends \Statamic\Tags\Tags
         });
 
         return $categories->toArray();
+    }
+
+    /**
+     * {{ categories:count }}
+     *
+     * Will return the number of available categories
+     */
+    public function count()
+    {
+        return Category::count();
     }
 }

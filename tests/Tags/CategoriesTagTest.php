@@ -33,4 +33,12 @@ class ProductsTagTest extends TestCase
                ]
            );
    }
+
+    /** @test */
+    public function categories_are_countable()
+    {
+        create(Category::class)->first();
+
+        $this->assertEquals(1, $this->categories->count());
+    }
 }

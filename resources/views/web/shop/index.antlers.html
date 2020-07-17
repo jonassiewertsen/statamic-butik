@@ -1,4 +1,13 @@
+<div class="b-flex b-justify-center b-m-12">
+    {{ if {categories:count} > 0 }}
+        {{ categories }}
+            <a href="{{ url }}">{{ name }}</a>
+        {{ /categories }}
+    {{ /if }}
+</div>
+
 <div class="b-flex b-flex-wrap b--mx-4 md:b--mx-6">
+
     {{ if products | count === 0 }}
         <p class="b-mx-auto">
             {{ trans key='butik::web.no_proucts_available' }}
