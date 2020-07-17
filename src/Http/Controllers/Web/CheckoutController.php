@@ -26,8 +26,6 @@ class CheckoutController extends Checkout
                 'countries'        => Country::pluck('name', 'slug'),
                 'selected_country' => Cart::country(),
                 'items'            => $this->mappedCartItems(),
-                'total_price'      => Cart::totalPrice(),
-                'total_shipping'   => Cart::totalShipping(),
             ]);
     }
 
@@ -56,8 +54,6 @@ class CheckoutController extends Checkout
             ->with([
                 'customer'       => (array) session('butik.customer'),
                 'items'          => $this->mappedCartItems(),
-                'total_price'    => Cart::totalPrice(),
-                'total_shipping' => Cart::totalShipping(),
             ]);
     }
 

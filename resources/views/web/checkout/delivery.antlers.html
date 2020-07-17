@@ -52,29 +52,29 @@
             {{ /items }}
         {{ /if }}
 
-            <section class="b-w-full b-mt-4">
+        <section class="b-w-full b-mt-4">
 
-                <h3 class="b-font-bold b-block b-mt-5 b-text-3xl b-text-center">
-                    {{ trans key='butik::web.total' }}
-                </h3>
+            <h3 class="b-font-bold b-block b-mt-5 b-text-3xl b-text-center">
+                {{ trans key='butik::web.total' }}
+            </h3>
 
-                <hr class="b-border-white b-my-5">
+            <hr class="b-border-white b-my-5">
 
-                <div class="b-flex b-my-3 b-justify-between b-max-w-sm b-mx-auto">
-                    <span>{{ trans key='butik::web.shipping' }}</span>
-                    <span>{{ total_shipping }}</span>
-                </div>
+            <div class="b-flex b-my-3 b-justify-between b-max-w-sm b-mx-auto">
+                <span>{{ trans key='butik::web.shipping' }}</span>
+                <span>{{ bag:total_shipping }}</span>
+            </div>
 
-                <hr class="b-border-white b-my-5">
+            <hr class="b-border-white b-my-5">
 
-                <div class="b-flex b-mt-3 b-justify-between b-max-w-sm b-mx-auto">
-                    <span>{{ trans key='butik::web.total' }}</span>
-                    <span class="b-font-black">{{ currency }} {{ total_price }}</span>
-                </div>
-                <div class="b-max-w-sm b-mx-auto b-pb-3 b-text-gray-500 b-text-right b-text-sm">
-                    {{ trans key='butik::web.including_taxes' }}
-                </div>
-            </section>
+            <div class="b-flex b-mt-3 b-justify-between b-max-w-sm b-mx-auto">
+                <span>{{ trans key='butik::web.total' }}</span>
+                <span class="b-font-black">{{ currency }} {{ bag:total_price }}</span>
+            </div>
+            <div class="b-max-w-sm b-mx-auto b-pb-3 b-text-gray-500 b-text-right b-text-sm">
+                {{ trans key='butik::web.including_taxes' }}
+            </div>
+        </section>
     </div>
 
 </div>
