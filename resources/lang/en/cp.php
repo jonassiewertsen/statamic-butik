@@ -43,6 +43,7 @@ return [
     'shipped_at'                              => 'shipped at',
     'shipping_singular'                       => 'shipping',
     'shipping_plural'                         => 'shippings',
+    'shipping_by_price'                       => 'Shipping by price',
     'shipping_form_create'                    => 'shippings',
     'shipping_minimum_description'            => 'What\'s the minimum shopping bag amount for this rate to be available ?',
     'shipping_rate_form_create'               => 'create a new shippgin rate',

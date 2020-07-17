@@ -101,7 +101,7 @@ return [
      * SHIPPING
      *
      * If you want, you can implement your own shipping methods or disable those, you don't want to use.
-     * https://butik.dev/shipping/custom-shipping
+     * https://butik.dev/
      */
     'shipping' => [
         'price' => \Jonassiewertsen\StatamicButik\Shipping\ShippingByPrice::class,

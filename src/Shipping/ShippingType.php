@@ -49,7 +49,7 @@ abstract class ShippingType implements ShippingTypeInterface
     protected function name(): string
     {
         $className = Str::snake(class_basename($this));
-        $key       = 'butik::shipping.' . $className;
+        $key       = 'butik::cp.' . $className;
         return __($key);
     }
 }
