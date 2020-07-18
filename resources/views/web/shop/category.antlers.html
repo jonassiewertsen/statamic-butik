@@ -1,4 +1,4 @@
-<div class="b-flex b-justify-center b-m-12">
+<div class="flex justify-center m-12">
     {{ if {categories:count} > 0 }}
         <a href="{{ butik:shop }}">Start</a>
         {{ categories }}
@@ -7,35 +7,35 @@
     {{ /if }}
 </div>
 
-<div class="b-flex b-flex-wrap b--mx-4 md:b--mx-6">
+<div class="flex flex-wrap -mx-4 md:-mx-6">
 
     {{ if products | count === 0 }}
-        <p class="b-mx-auto">
+        <p class="mx-auto">
             {{ trans key='butik::web.no_proucts_available_in_this_category' }}
         </p>
     {{ /if }}
 
     {{ products }}
-        <div class="b-block b-px-4 md:b-px-6 b-mb-10 b-w-full sm:b-w-1/2 xl:b-w-1/3">
-            <a href="{{ show_url }}" class="b-block b-w-full">
+        <div class="block px-4 md:px-6 m10 w-full sm:w-1/2 xl:w-1/3">
+            <a href="{{ show_url }}" class="block w-full">
                 {{ if images }}
                     {{ images limit="1" }}
-                        <img class="b-w-full b-rounded-xl b-h-64 b-object-cover b-transform b-duration-700 hover:b-shadow-2xl hover:b--translate-y-2"
+                        <img class="w-full rounded-xl h-64 object-cover transform duration-700 hover:shadow-2xl hover:-translate-y-2"
                              src="/assets/{{ value }}"
                         >
                     {{ /images }}
                 {{ else }}
-                    <div class="b-w-full">
+                    <div class="w-full">
                         {{ partial src="butik::web.shop.partials.placeholder" }}
                     </div>
                 {{ /if }}
 
-                <h1 class="b-mt-4 b-text-2xl b-text-center b-leading-none">{{ title }}</h1>
+                <h1 class="mt-4 text-2xl text-center leading-none">{{ title }}</h1>
 
                 {{ if stock_unlimited || stock  > 0 }}
-                    <div class="b-text-gray-500 b-text-xl b-text-center">{{ currency }} {{ price }}</div>
+                    <div class="text-gray-500 text-xl text-center">{{ currency }} {{ price }}</div>
                 {{ else }}
-                    <p class="b-text-sm b-block b-text-center b-font-light b-ml-2">{{ trans key="butik::web.sold_out" }}</p>
+                    <p class="text-sm block text-center font-light ml-2">{{ trans key="butik::web.sold_out" }}</p>
                 {{ endif }}
             </a>
         </div>

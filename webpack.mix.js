@@ -8,5 +8,9 @@ mix.js('resources/js/app.js', 'public/js/statamic-butik.js')
     ]);
 
 if (mix.inProduction()) {
-    mix.purgeCss();
+    mix.purgeCss({
+        content: [
+            "resources/views/**/*.html"
+        ]
+    });
 }

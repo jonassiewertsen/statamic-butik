@@ -1,33 +1,33 @@
-<div class="b-bordeer b-border b-border-gray-500 b-px-6 b-py-3 b-mt-8 lg:b-mt-0 b-rounded-md">
-    <h3 class="b-underline">{{ trans key='butik::web.ship_to' }}</h3>
+<div class="bordeer border border-gray-500 px-6 py-3 mt-8 lg:mt-0 rounded-md">
+    <h3 class="underline">{{ trans key='butik::web.ship_to' }}</h3>
     <div>
-        <span class="b-font-bold">{{ trans key='butik::web.name' }}</span>
+        <span class="font-bold">{{ trans key='butik::web.name' }}</span>
         <span>{{ customer:name }}</span>
     </div>
-    <div class="b-mb-2">
-        <span class="b-font-bold">{{ trans key='butik::web.mail' }}</span>
+    <div class="m2">
+        <span class="font-bold">{{ trans key='butik::web.mail' }}</span>
         <span>{{ customer:mail }}</span>
     </div>
     <div>
-        <span class="b-font-bold">{{ trans key='butik::web.address1' }}</span>
+        <span class="font-bold">{{ trans key='butik::web.address1' }}</span>
         <span>{{ customer:address1 }}</span>
     </div>
     {{ if customer:address2 }}
     <div>
-        <span class="b-font-bold">{{ trans key='butik::web.address2' }}</span>
+        <span class="font-bold">{{ trans key='butik::web.address2' }}</span>
         <span>{{ customer:address2 }}</span>
     </div>
     {{ /if }}
     <div>
-        <span class="b-font-bold">{{ trans key='butik::web.city' }}</span>
+        <span class="font-bold">{{ trans key='butik::web.city' }}</span>
         <span>{{ customer:city }}</span>
     </div>
     <div>
-        <span class="b-font-bold">{{ trans key='butik::web.zip' }}</span>
+        <span class="font-bold">{{ trans key='butik::web.zip' }}</span>
         <span>{{ customer:zip }}</span>
     </div>
     <div>
-        <span class="b-font-bold">{{ trans key='butik::web.country' }}</span>
+        <span class="font-bold">{{ trans key='butik::web.country' }}</span>
         <span>{{ customer:country }}</span>
     </div>
 </div>

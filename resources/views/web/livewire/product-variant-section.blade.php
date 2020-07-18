@@ -1,38 +1,38 @@
 <div>
     @if ($stock_unlimited || $stock  > 0)
-        <h1 class="b-mt-2 b-font-bold b-text-4xl">{{ $variant_title }}</h1>
+        <h1 class="mt-2 font-bold text-4xl">{{ $variant_title }}</h1>
     @else
-        <h1 class="b-mt-2 b-font-bold b-text-4xl">
+        <h1 class="mt-2 font-bold text-4xl">
             <s>{{ $variant_title }}</s>
-            <span class="b-text-sm b-ml-2">{{ __('butik::web.sold_out') }}</span>
+            <span class="text-sm ml-2">{{ __('butik::web.sold_out') }}</span>
         </h1>
     @endif
 
-    <div class="b-text-gray-700 b-text-3xl b-font-light b-mt-2">
+    <div class="text-gray-700 text-3xl font-light mt-2">
         {{ currency() }} {{ $price }} {{ __('butik::web.total') }}
-        <span class="b-text-sm">+ shipping</span>
+        <span class="text-sm">+ shipping</span>
     </div>
 
     @if ($product->variants)
-        <div class="b-flex b-mt-4">
+        <div class="flex mt-4">
             @foreach ($product->variants as $variant)
-                <button wire:click="variant('{{ $variant->original_title }}')" class="b-block b-border b-border-black b-px-3 b-rounded b-mr-2">{{ $variant->original_title }}</button>
+                <button wire:click="variant('{{ $variant->original_title }}')" class="block border border-black px-3 rounded mr-2">{{ $variant->original_title }}</button>
             @endforeach
         </div>
     @endif
 
     @if ($product->description )
-        <p class="b-mt-8 b-text-gray-700">{{ $product->description }}</p>
+        <p class="mt-8 text-gray-700">{{ $product->description }}</p>
     @endif
 
     @if ($stock_unlimited || $stock  > 0)
-        <div class="b-flex b-mt-5">
-            <a class="b-bg-gray-900 b-flex-grow b-block b-py-2 b-rounded b-text-center b-text-white b-text-xl hover:b-bg-gray-800"
+        <div class="flex mt-5">
+            <a class="bg-gray-900 flex-grow block py-2 rounded text-center text-white text-xl hover:bg-gray-800"
                href="#"
             >
                 {{ __('butik::web.proceed_to_checkout') }}
             </a>
-            <button wire:click="addToCart()" class="b-inline-block b-ml-5 b-bg-gray-300 b-py-4 b-px-5 b-rounded-xl">
+            <button wire:click="addToCart()" class="inline-block ml-5 bg-gray-300 py-4 px-5 rounded-xl">
                 {{ __('butik::web.add_to_bag') }}
             </button>
         </div>

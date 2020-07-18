@@ -1,73 +1,73 @@
-<form method="post" action="#heading" class="b-pl-5 b-mr-10 b-w-full md:b-w-1/2">
-    <h2 class="b-text-md b-uppercase" id="heading">{{ trans key='butik::web.your_information' }}</h2>
+<form method="post" action="#heading" class="pl-5 mr-10 w-full md:w-1/2">
+    <h2 class="text-md uppercase" id="heading">{{ trans key='butik::web.your_information' }}</h2>
 
     {{ csrf_field }}
 
-    <label for="name" class="b-block b-my-3">
-        <div class="b-font-bold b-text-g b-text-xs">{{ trans key='butik::web.name' }}</div>
-        <input id="name" name="name" type="text" value="{{ old:name ?? customer:name }}" autofocus class="b-border-b b-border-gray-900 b-my-3 b-px-2 b-py-1 b-w-full">
+    <label for="name" class="block my-3">
+        <div class="font-bold text-g text-xs">{{ trans key='butik::web.name' }}</div>
+        <input id="name" name="name" type="text" value="{{ old:name ?? customer:name }}" autofocus class="border-b border-gray-900 my-3 px-2 py-1 w-full">
         {{ if {error:name} }}
-            <span class="b-text-red-600 b-block b--mt-2 b-text-xs">{{ error:name }}</span>
+            <span class="text-red-600 block -mt-2 text-xs">{{ error:name }}</span>
         {{ /if }}
     </label>
 
-    <label for="mail" class="b-block b-my-3">
-        <div class="b-font-bold b-text-g b-text-xs">{{ trans key='butik::web.mail' }}</div>
-        <input id="mail" name="mail" type="mail" value="{{ old:mail ?? customer:mail }}" class="b-border-b b-border-gray-900 b-my-3 b-px-2 b-py-1 b-w-full">
+    <label for="mail" class="block my-3">
+        <div class="font-bold text-g text-xs">{{ trans key='butik::web.mail' }}</div>
+        <input id="mail" name="mail" type="mail" value="{{ old:mail ?? customer:mail }}" class="border-b border-gray-900 my-3 px-2 py-1 w-full">
         {{ if {error:mail} }}
-            <span class="b-text-red-600 b-block b--mt-2 b-text-xs">{{ error:mail }}</span>
+            <span class="text-red-600 block -mt-2 text-xs">{{ error:mail }}</span>
         {{ /if }}
     </label>
 
-    <h2 class="b-text-md b-uppercase">{{ trans key='butik::web.delivery_address' }}</h2>
+    <h2 class="text-md uppercase">{{ trans key='butik::web.delivery_address' }}</h2>
 
-    <label for="address1" class="b-block b-my-3">
-        <div class="b-font-bold b-text-g b-text-xs">{{ trans key='butik::web.address1' }}</div>
-        <input id="address1" name="address1" type="text" value="{{ old:address1 ?? customer:address1 }}" class="b-border-b b-border-gray-900 b-my-3 b-px-2 b-py-1 b-w-full">
+    <label for="address1" class="block my-3">
+        <div class="font-bold text-g text-xs">{{ trans key='butik::web.address1' }}</div>
+        <input id="address1" name="address1" type="text" value="{{ old:address1 ?? customer:address1 }}" class="border-b border-gray-900 my-3 px-2 py-1 w-full">
         {{ if {error:address1} }}
-            <span class="b-text-red-600 b-block b--mt-2 b-text-xs">{{ error:address1 }}</span>
+            <span class="text-red-600 block -mt-2 text-xs">{{ error:address1 }}</span>
         {{ /if }}
     </label>
 
-    <label for="address2" class="b-block b-my-3">
-        <div class="b-font-bold b-text-g b-text-xs">{{ trans key='butik::web.address2' }}</div>
-        <input id="address2" name="address2" type="text" value="{{ old:address2 ?? customer:address2 }}" class="b-border-b b-border-gray-900 b-my-3 b-px-2 b-py-1 b-w-full">
+    <label for="address2" class="block my-3">
+        <div class="font-bold text-g text-xs">{{ trans key='butik::web.address2' }}</div>
+        <input id="address2" name="address2" type="text" value="{{ old:address2 ?? customer:address2 }}" class="border-b border-gray-900 my-3 px-2 py-1 w-full">
         {{ if {error:address2} }}
-            <span class="b-text-red-600 b-block b--mt-2 b-text-xs">{{ error:address2 }}</span>
+            <span class="text-red-600 block -mt-2 text-xs">{{ error:address2 }}</span>
         {{ /if }}
     </label>
 
-    <label for="city" class="b-block b-my-3">
-        <div class="b-font-bold b-text-g b-text-xs">{{ trans key='butik::web.city' }}</div>
-        <input id="city" name="city" type="text" value="{{ old:city ?? customer:city }}" class="b-border-b b-border-gray-900 b-my-3 b-px-2 b-py-1 b-w-full">
+    <label for="city" class="block my-3">
+        <div class="font-bold text-g text-xs">{{ trans key='butik::web.city' }}</div>
+        <input id="city" name="city" type="text" value="{{ old:city ?? customer:city }}" class="border-b border-gray-900 my-3 px-2 py-1 w-full">
         {{ if {error:city} }}
-            <span class="b-text-red-600 b-block b--mt-2 b-text-xs">{{ error:city }}</span>
+            <span class="text-red-600 block -mt-2 text-xs">{{ error:city }}</span>
         {{ /if }}
     </label>
 
-    <label for="zip" class="b-block b-my-3">
-        <div class="b-font-bold b-text-g b-text-xs">{{ trans key='butik::web.zip' }}</div>
-        <input id="zip" name="zip" type="text" value="{{ old:zip ?? customer:zip }}" class="b-border-b b-border-gray-900 b-my-3 b-px-2 b-py-1 b-w-full">
+    <label for="zip" class="block my-3">
+        <div class="font-bold text-g text-xs">{{ trans key='butik::web.zip' }}</div>
+        <input id="zip" name="zip" type="text" value="{{ old:zip ?? customer:zip }}" class="border-b border-gray-900 my-3 px-2 py-1 w-full">
         {{ if {error:zip} }}
-            <span class="b-text-red-600 b-block b--mt-2 b-text-xs">{{ error:zip }}</span>
+            <span class="text-red-600 block -mt-2 text-xs">{{ error:zip }}</span>
         {{ /if }}
     </label>
 
-    <label for="country" class="b-block b-my-3">
-        <div class="b-font-bold b-text-g b-text-xs">{{ trans key='butik::web.country' }}</div>
-        <select id="country" name="country" class="b-border-b b-border-gray-900 b-my-3 b-px-2 b-py-1 b-w-full">
+    <label for="country" class="block my-3">
+        <div class="font-bold text-g text-xs">{{ trans key='butik::web.country' }}</div>
+        <select id="country" name="country" class="border-b border-gray-900 my-3 px-2 py-1 w-full">
             {{ foreach:countries as="slug|name" }}
                 <option value="{{ slug }}" {{ if selected_country:slug === slug }}selected{{ /if }}>{{ name }}</option>
             {{ /foreach:countries }}
         </select>
 
         {{ if {error:country} }}
-        <span class="b-text-red-600 b-block b--mt-2 b-text-xs">{{ error:country }}</span>
+        <span class="text-red-600 block -mt-2 text-xs">{{ error:country }}</span>
         {{ /if }}
     </label>
 
-    <div class="b-flex b-justify-end flex">
-        <button type="submit" class="b-bg-gray-900 b-block b-mt-3 b-px-6 b-py-2 b-rounded b-text-center b-text-white b-text-xl hover:b-bg-gray-800">
+    <div class="flex justify-end flex">
+        <button type="submit" class="bg-gray-900 block mt-3 px-6 py-2 rounded text-center text-white text-xl hover:bg-gray-800">
             {{ trans key='butik::web.to_payment' }}
         </button>
     </div>
