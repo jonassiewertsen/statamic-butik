@@ -7,10 +7,6 @@ use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class ProductOverviewTest extends TestCase
 {
-    public function setUp(): void {
-        parent::setUp();
-    }
-
     /** @test */
     public function the_shop_overview_page_does_exist()
     {
