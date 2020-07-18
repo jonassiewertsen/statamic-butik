@@ -26,9 +26,21 @@ class ProductOverviewTest extends TestCase
         $product = create(Product::class, [], 10)->first();
 
         $this->get(route('butik.shop'))
-            ->assertSee($product->total_price)
+            ->assertSee($product->title)
+            ->assertSee($product->price)
             ->assertSee($product->show_url)
             ->assertDontSee('sold out');
+    }
+
+    /** @test */
+    public function a_non_available_product_will_be_hidden()
+    {
+        $product = create(Product::class,['available' => false])->first();
+
+        $this->get(route('butik.shop'))
+            ->assertDontSee($product->title)
+            ->assertDontSee($product->price)
+            ->assertDontSee($product->show_url);
     }
 
     /** @test */

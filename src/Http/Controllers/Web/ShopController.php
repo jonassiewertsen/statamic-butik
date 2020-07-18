@@ -11,7 +11,7 @@ class ShopController extends WebController
 {
     public function index()
     {
-        $products = Product::all();
+        $products = Product::where('available', true)->get();
 
         return (new StatamicView())
             ->template(config('butik.template_product-index'))
