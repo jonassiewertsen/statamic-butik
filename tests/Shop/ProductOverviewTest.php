@@ -9,8 +9,6 @@ class ProductOverviewTest extends TestCase
 {
     public function setUp(): void {
         parent::setUp();
-
-        create(Product::class, [], 10);
     }
 
     /** @test */
@@ -23,7 +21,7 @@ class ProductOverviewTest extends TestCase
     /** @test */
     public function all_product_information_will_be_shown()
     {
-        $product = create(Product::class, [], 10)->first();
+        $product = create(Product::class)->first();
 
         $this->get(route('butik.shop'))
             ->assertSee($product->title)
@@ -46,6 +44,9 @@ class ProductOverviewTest extends TestCase
     /** @test */
     public function a_product_out_of_stock_will_be_shown_as_sold_out()
     {
+        // Sold out products will only be shown on the overview type all.
+        config()->set('butik.overview_type', 'all');
+
         create(Product::class, ['stock' => 0])->first();
         $this->get(route('butik.shop'))->assertSee('Sold out');
     }

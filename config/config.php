@@ -20,6 +20,20 @@ return [
     'mail'     => 'butik@shop.com',
 
     /**
+     * Shop overview
+     *
+     * What should be displayed on the start page of butik?
+     *
+     * all:      All products ordered by name. The limit will be ignored.
+     * name:     All products ordered by name. The limit will be respected.
+     * newest:   Showing the latest added products
+     * cheapest: Showing procuts with the best price first.
+     *
+     */
+    'overview_type'    => 'newest',
+    'overview_limit'   => '6',
+
+    /**
      * MAIL
      *
      * Butik will send one confirmation email for every sold product to this address.

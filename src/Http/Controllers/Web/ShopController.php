@@ -11,12 +11,12 @@ class ShopController extends WebController
 {
     public function index()
     {
-        $products = Product::where('available', true)->get();
-
         return (new StatamicView())
             ->template(config('butik.template_product-index'))
             ->layout(config('butik.layout_product-index'))
-            ->with(compact('products'));
+            ->with([
+                'products' => $this->fetchProducts(),
+            ]);
     }
 
     public function show(Product $product, $variant = null)
@@ -61,5 +61,43 @@ class ShopController extends WebController
     private function redirectToShop()
     {
         return redirect()->route('butik.shop');
+    }
+
+    private function fetchProducts()
+    {
+        $display = config('butik.overview_type', 'newest');
+        $limit   = config ('butik.overview_limit', '6');
+
+        switch($display) {
+            case 'all':
+                return Product::where('available', true)
+                            ->get();
+                break;
+            case 'name':
+                return Product::where('available', true)
+                    ->where('stock', '>', 0)
+                    ->orderBy('title')
+                    ->limit($limit)
+                    ->get();
+                break;
+                break;
+            case 'newest':
+                return Product::where('available', true)
+                            ->where('stock', '>', 0)
+                            ->orderByDesc('created_at')
+                            ->limit($limit)
+                            ->get();
+                break;
+            case 'cheapest':
+                return Product::where('available', true)
+                            ->where('stock', '>', 0)
+                            ->orderBy('price')
+                            ->limit($limit)
+                            ->get();
+                break;
+            default:
+                return Product::where('available', true)
+                            ->get();
+        }
     }
 }
