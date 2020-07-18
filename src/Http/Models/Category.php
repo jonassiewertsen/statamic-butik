@@ -24,10 +24,10 @@ class Category extends ButikModel
     public function products()
     {
         return $this->belongsToMany(
-            Category::class,
+            Product::class,
             'butik_category_product',
             'category_slug',
-            'product_slug'
+            'product_slug',
         );
     }
 
@@ -63,6 +63,6 @@ class Category extends ButikModel
      */
     public function getUrlAttribute()
     {
-        return route('butik.category', $this);
+        return route('butik.shop.category', $this);
     }
 }

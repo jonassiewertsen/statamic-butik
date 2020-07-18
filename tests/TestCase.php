@@ -162,6 +162,7 @@ class TestCase extends OrchestraTestCase
         // Set all layouts to null to prevent an error thrown from a layout which could not be found.
         $layouts = [
             'layout_product-index',
+            'layout_product-category',
             'layout_product-show',
             'layout_cart',
             'layout_checkout-delivery',

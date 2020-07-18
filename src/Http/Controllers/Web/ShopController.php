@@ -3,6 +3,7 @@
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
+use Jonassiewertsen\StatamicButik\Http\Models\Category;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Statamic\View\View as StatamicView;
 
@@ -16,6 +17,16 @@ class ShopController extends WebController
             ->layout(config('butik.layout_product-index'))
             ->with([
                 'products' => $this->fetchProducts(),
+            ]);
+    }
+
+    public function category(Category $category)
+    {
+        return (new StatamicView())
+            ->template(config('butik.template_product-category'))
+            ->layout(config('butik.layout_product-category'))
+            ->with([
+                'products' => $category->products()->orderBy('title')->get(),
             ]);
     }
 

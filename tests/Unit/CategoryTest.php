@@ -18,6 +18,19 @@ class CategoryTest extends TestCase
     }
 
     /** @test */
+    public function a_category_has_many_products()
+    {
+        $this->assertCount(0, Category::all());
+
+        create(Category::class);
+        $category = Category::first();
+        $category->addProduct($this->product);
+
+        $this->assertCount(1, $category->products);
+
+    }
+
+    /** @test */
     public function it_is_available_as_default()
     {
         $category = create(Category::class)->first();

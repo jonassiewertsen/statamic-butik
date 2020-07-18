@@ -91,6 +91,7 @@ return [
      * given layouts to fit your needs.
      */
     'template_product-index'            => 'butik::web.shop.index',
+    'template_product-category'         => 'butik::web.shop.category',
     'template_product-show'             => 'butik::web.shop.show',
     'template_cart'                     => 'butik::web.cart.index',
     'template_checkout-delivery'        => 'butik::web.checkout.delivery',
@@ -105,6 +106,7 @@ return [
      * given layouts to fit your needs.
      */
     'layout_product-index'            => 'layout',
+    'layout_product-category'         => 'layout',
     'layout_product-show'             => 'layout',
     'layout_cart'                     => 'layout',
     'layout_checkout-delivery'        => 'layout',
