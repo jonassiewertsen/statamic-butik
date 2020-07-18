@@ -6,7 +6,7 @@ use Jonassiewertsen\StatamicButik\Http\Models\Category;
 use Jonassiewertsen\StatamicButik\Tags\Categories;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
-class ProductsTagTest extends TestCase
+class CategoriesTagTest extends TestCase
 {
     public $categories;
 
