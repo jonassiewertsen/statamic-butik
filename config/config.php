@@ -27,7 +27,7 @@ return [
      * all:      All products ordered by name. The limit will be ignored.
      * name:     All products ordered by name. The limit will be respected.
      * newest:   Showing the latest added products
-     * cheapest: Showing procuts with the best price first.
+     * cheapest: Showing products with the best price first.
      *
      */
     'overview_type'    => 'newest',
