@@ -70,8 +70,7 @@ class ShopController extends WebController
 
         switch($display) {
             case 'all':
-                return Product::where('available', true)
-                            ->get();
+                return Product::where('available', true)->get();
                 break;
             case 'name':
                 return Product::where('available', true)
@@ -83,21 +82,20 @@ class ShopController extends WebController
                 break;
             case 'newest':
                 return Product::where('available', true)
-                            ->where('stock', '>', 0)
-                            ->orderByDesc('created_at')
-                            ->limit($limit)
-                            ->get();
+                    ->where('stock', '>', 0)
+                    ->orderByDesc('created_at')
+                    ->limit($limit)
+                    ->get();
                 break;
             case 'cheapest':
                 return Product::where('available', true)
-                            ->where('stock', '>', 0)
-                            ->orderBy('price')
-                            ->limit($limit)
-                            ->get();
+                    ->where('stock', '>', 0)
+                    ->orderBy('price')
+                    ->limit($limit)
+                    ->get();
                 break;
             default:
-                return Product::where('available', true)
-                            ->get();
+                return Product::where('available', true)->get();
         }
     }
 }
