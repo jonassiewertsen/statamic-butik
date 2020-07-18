@@ -129,7 +129,7 @@ class ProductTest extends TestCase
 
         $this->assertInstanceOf('Illuminate\Support\Collection', $product->variants);
     }
-    
+
     /** @test */
     public function a_product_can_return_the_belonging_variant()
     {
