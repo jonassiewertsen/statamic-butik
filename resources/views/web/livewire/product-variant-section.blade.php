@@ -27,13 +27,8 @@
 
     @if ($stock_unlimited || $stock  > 0)
         <div class="flex mt-5">
-            <a class="bg-gray-900 flex-grow block py-2 rounded text-center text-white text-xl hover:bg-gray-800"
-               href="#"
-            >
-                {{ __('butik::web.proceed_to_checkout') }}
-            </a>
-            <button wire:click="addToCart()" class="inline-block ml-5 bg-gray-300 py-4 px-5 rounded-xl">
-                {{ __('butik::web.add_to_bag') }}
+            <button wire:click="addToCart()" class="flex bg-accent text-white py-4 px-5 rounded-xl">
+                <img class="mr-3" src="/vendor/butik/images/bag-white.svg" alt="add to bag"> {{ __('butik::web.add_to_bag') }}
             </button>
         </div>
     @endif
