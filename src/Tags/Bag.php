@@ -35,7 +35,7 @@ class Bag extends \Statamic\Tags\Tags
             return [
                 'available'      => $item->available,
                 'sellable'       => $item->sellable,
-                'availableStock' => $item->availableStock,
+                'available_stock' => $item->availableStock,
                 'slug'           => $item->slug,
                 'images'         => $item->images,
                 'name'           => $item->name,
