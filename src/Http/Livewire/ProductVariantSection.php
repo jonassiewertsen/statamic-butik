@@ -34,7 +34,7 @@ class ProductVariantSection extends Component
     {
         $this->variantData = $this->productData();
 
-        return view('butik::web.livewire.product-variant-section', [
+        return view('butik::web.components.product-variant-section', [
             'price'                => $this->variantData->price,
             'variant_title'        => $this->variantData->title,
             'variant_short_title'  => $this->variantData->original_title,

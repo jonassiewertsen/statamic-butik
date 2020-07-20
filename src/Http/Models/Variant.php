@@ -44,7 +44,7 @@ class Variant extends ButikModel
      */
     public function getTitleAttribute()
     {
-        return $this->product->title . ' - ' . $this->getRawOriginal('title');
+        return $this->product->title . ' // ' . $this->getRawOriginal('title');
     }
 
     /**

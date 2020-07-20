@@ -1,25 +1,16 @@
-<div class="block md:flex">
-
-    {{# Images #}}
-    <aside class="pr-6 w-full md:w-1/2">
+<div class="grid grid-cols-1 md:grid-cols-2 row-gap-8 col-gap-20">
+    <aside>
         {{ if product:images }}
             {{ product:images limit="1" }}
                 <img class="rounded-xl" src="/assets/{{ value }}">
             {{ /product:images }}
         {{ else }}
-            <div class="w-full">
-                {{ partial src="butik::web.shop.partials.placeholder" }}
+            <div class="w-full bg-gray-light rounded-xl">
+                {{ partial src="butik::web/components/placeholder-image" }}
             </div>
         {{ /if }}
     </aside>
-
-    <div class="pl-6 md:w-1/2 w-full">
-
+    <div>
         {{ livewire:butik.product-variant-section :product="product" }}
-
-        <a class="lg:hidden -m3 block flex mt-8 text-gray-400 hover:text-gray-500" href="{{ route('butik.shop') }}">
-            <svg class="fill-current mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M5.41 11H21a1 1 0 0 1 0 2H5.41l5.3 5.3a1 1 0 0 1-1.42 1.4l-7-7a1 1 0 0 1 0-1.4l7-7a1 1 0 0 1 1.42 1.4L5.4 11z"/></svg>
-            <span>{{ trans key='butik::web.back' }}</span>
-        </a>
     </div>
 </div>
