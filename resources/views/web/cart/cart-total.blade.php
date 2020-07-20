@@ -13,7 +13,6 @@
         </div>
     </div>
 
-
     @if ($items->count() !== 0)
         <a href="{{ route('butik.checkout.delivery') }}" class="bg-accent block mt-5 py-2 rounded text-center text-white text-xl">
             {{ ucfirst(__('butik::web.checkout')) }}

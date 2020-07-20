@@ -1,0 +1,30 @@
+<section class="hidden md:block">
+    <div class="border-b border-gray-light pb-12">
+        {{ unless items | sellable }}
+        <div class="bg-red-300 px-5 py-4 rounded m16">
+            {{ trans key='butik::web.some_items_not_available' }}
+        </div>
+        {{ /unless }}
+
+        {{ if items }}
+            {{ items }}
+                {{ partial src="butik::web.checkout.bag-item" }}
+            {{ /items }}
+        {{ /if }}
+    </div>
+
+    <section class="w-2/3 ml-auto mt-12 text-dark">
+        <div class="flex justify-between">
+            <span>{{ trans key='butik::web.shipping' }}</span>
+            <span class="text-xl">{{ currency }} {{ bag:total_shipping }}</span>
+        </div>
+
+        <div class="flex mt-8 justify-between">
+            <span>{{ trans key='butik::web.total' }}</span>
+            <span class="text-3xl">{{ currency }} {{ bag:total_price }}</span>
+        </div>
+        <div class="text-right text-sm text-gray">
+            {{ trans key='butik::web.including_taxes' }}
+        </div>
+    </section>
+</section>
