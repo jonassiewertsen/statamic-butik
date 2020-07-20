@@ -1,14 +1,6 @@
-<div class="flex justify-center m-12">
-    {{ if {categories:count} > 0 }}
-        <a href="{{ butik:shop }}">Start</a>
-        {{ categories }}
-            <a href="{{ url }}">{{ name }}</a>
-        {{ /categories }}
-    {{ /if }}
-</div>
+{{ partial src="butik::web/components/category-menu" }}
 
-<div class="flex flex-wrap -mx-4 md:-mx-6">
-
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 col-gap-20 row-gap-16">
     {{ if products | count === 0 }}
         <p class="mx-auto">
             {{ trans key='butik::web.no_proucts_available' }}
@@ -16,28 +8,6 @@
     {{ /if }}
 
     {{ products }}
-        <div class="block px-4 md:px-6 m10 w-full sm:w-1/2 xl:w-1/3">
-            <a href="{{ show_url }}" class="block w-full">
-                {{ if images }}
-                    {{ images limit="1" }}
-                        <img class="w-full rounded-xl h-64 object-cover transform duration-700 hover:shadow-2xl hover:-translate-y-2"
-                             src="/assets/{{ value }}"
-                        >
-                    {{ /images }}
-                {{ else }}
-                    <div class="w-full">
-                        {{ partial src="butik::web.shop.partials.placeholder" }}
-                    </div>
-                {{ /if }}
-
-                <h1 class="mt-4 text-2xl text-center leading-none">{{ title }}</h1>
-
-                {{ if stock_unlimited || stock  > 0 }}
-                    <div class="text-gray-500 text-xl text-center">{{ currency }} {{ price }}</div>
-                {{ else }}
-                    <p class="text-sm block text-center font-light ml-2">{{ trans key="butik::web.sold_out" }}</p>
-                {{ endif }}
-            </a>
-        </div>
+        {{ partial src="butik::web/components/product-card" }}
     {{ /products }}
 </div>

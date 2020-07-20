@@ -63,6 +63,6 @@ class Category extends ButikModel
      */
     public function getUrlAttribute()
     {
-        return route('butik.shop.category', $this);
+        return route('butik.shop.category', $this, false);
     }
 }
