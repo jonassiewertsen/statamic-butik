@@ -6,7 +6,7 @@ use Jonassiewertsen\StatamicButik\Checkout\Cart as ShoppingCart;
 use Jonassiewertsen\StatamicButik\Http\Models\Country;
 use Livewire\Component;
 
-class Cart extends Component
+class CartList extends Component
 {
     public $country;
 
@@ -29,7 +29,7 @@ class Cart extends Component
     {
         ShoppingCart::setCountry($this->country);
 
-        return view('butik::web.livewire.cart', [
+        return view('butik::web.cart.cart-list', [
             'country'        => $this->country,
             'countries'      => Country::pluck('name', 'slug'),
             'items'          => ShoppingCart::get(),

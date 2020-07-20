@@ -5,7 +5,7 @@
             <path d="M1.19995 5H19.1999" stroke="#2D3748" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M14.2 9C14.2 11.2091 12.4091 13 10.2 13C7.99081 13 6.19995 11.2091 6.19995 9" stroke="#2D3748" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <div class="hidden absolute bg-black rounded-full w-6 h-6 border-2 border-white bottom-0 -m-1 text-white font-bold flex justify-center items-center">
+        <div class="absolute -m-2 bg-accent rounded-full w-5 h-5 text-xs border-2 border-white bottom-0 right-0 text-white flex justify-center items-center">
             {{ $total }}
         </div>
     </a>
