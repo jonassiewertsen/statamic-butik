@@ -11,10 +11,10 @@
 <h1 class="block my-8 text-center font-bold text-xl">{{ trans key='butik::payment.receipt_invalid' }}</h1>
 
 <div class="flex flex-col text-center max-w-3xl mx-auto">
-    <p class="block py-3">{{ trans key='butik::web.link_invalid' }}</p>
-    <p class="block py-3">{{ trans key='butik::web.why_invalid' }}</p>
+    <p class="block py-3">{{ 'butik::web.link_invalid' | trans | ucfirst }}</p>
+    <p class="block py-3">{{ 'butik::web.why_invalid' | trans | ucfirst }}</p>
 
     <a href="/shop" class="block w-full mt-3 bg-gray-900 mt-6 py-2 rounded text-center text-white text-xl hover:bg-gray-800">
-        {{ trans key='butik::web.go_back' }}
+        {{ 'butik::web.go_back' | trans | ucfirst }}
     </a>
 </div>

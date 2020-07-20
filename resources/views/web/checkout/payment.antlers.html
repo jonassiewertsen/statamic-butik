@@ -3,7 +3,7 @@
 <hr class="m5 mt-8">
 
 <h1 class="block m6 text-center font-bold text-xl">
-    {{ trans key='butik::web.payment' }}
+    {{ 'butik::web.payment' | trans | ucfirst }}
 </h1>
 
 {{# body #}}
@@ -17,7 +17,7 @@
         <a href="{{ route:butik.payment.process }}"
            rel="nofollow"
            class="block w-full mt-3 bg-gray-900 mt-6 py-2 rounded text-center text-white text-xl hover:bg-gray-800">
-            {{ trans key='butik::web.pay_now' }}
+            {{ 'butik::web.pay_now' | trans | ucfirst }}
         </a>
     </div>
 
@@ -51,23 +51,23 @@
 
         <section class="w-full mt-4">
 
-            <h3 class="font-bold block mt-5 text-3xl text-center">{{ trans key='butik::web.shipping' }}</h3>
+            <h3 class="font-bold block mt-5 text-3xl text-center">{{ 'butik::web.shipping' | trans | ucfirst }}</h3>
 
             <hr class="border-white my-5">
 
             <div class="flex my-3 justify-between max-w-sm mx-auto">
-                <span>{{ trans key='butik::web.shipping' }}</span>
+                <span>{{ 'butik::web.shipping' | trans | ucfirst }}</span>
                 <span>{{ bag:total_shipping }}</span>
             </div>
 
             <hr class="border-white my-5">
 
             <div class="flex mt-3 justify-between max-w-sm mx-auto">
-                <span>{{ trans key='butik::web.total' }}</span>
+                <span>{{ 'butik::web.total' | trans | ucfirst }}</span>
                 <span class="font-black">{{ currency }} {{ bag:total_price }}</span>
             </div>
             <div class="max-w-sm mx-auto p3 text-gray-500 text-right text-sm">
-                {{ trans key='butik::web.including_taxes' }}
+                {{ 'butik::web.including_taxes' | trans | ucfirst }}
             </div>
         </section>
     </div>
