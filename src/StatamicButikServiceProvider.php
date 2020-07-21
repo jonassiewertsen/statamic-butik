@@ -141,7 +141,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
                 __DIR__ . '/../public/css' => public_path('vendor/butik/css'),
             ], 'butik-resources');
             $this->publishes([
-                __DIR__ . '/../public/js' => public_path('vendor/butik/js'),
+                __DIR__ . '/../public/js' => public_path('vendor/statamic-butik/js'),
             ], 'butik-resources');
 
             // Lang
