@@ -1,75 +1,19 @@
 {{ partial src='butik::web.checkout.status' review='true' }}
 
-<hr class="m5 mt-8">
-
-<h1 class="block m6 text-center font-bold text-xl">
-    {{ 'butik::web.payment' | trans | ucfirst }}
+<h1 class="block font-bold mb-8 text-5xl leading-none">
+    {{ 'butik::web.review_payment' | trans | ucfirst }}
 </h1>
 
-{{# body #}}
-<div class="flex flex-col-reverse lg:flex-row px-5 lg:px-0  m20 mt-6">
-    <div class="w-full mr-10 lg:ml-5 lg:px-0 lg:w-1/2 xl:ml-0">
+<div class="grid grid-cols-1 md:grid-cols-2 col-gap-24">
+    {{ partial src='butik::web.checkout.bag-overview' }}
+    <div>
+        {{ partial src='butik::web.checkout.address-review' }}
 
-        {{# ship to card #}}
-        {{ partial src='butik::web.checkout.partials.ship-to-card' }}
-
-        {{# pay now button #}}
         <a href="{{ route:butik.payment.process }}"
            rel="nofollow"
-           class="block w-full mt-3 bg-gray-900 mt-6 py-2 rounded text-center text-white text-xl hover:bg-gray-800">
+           class="block w-full mt-3 bg-accent mt-6 py-2 rounded text-center text-white text-xl">
             {{ 'butik::web.pay_now' | trans | ucfirst }}
         </a>
     </div>
 
-    {{# Product listing #}}
-    <div class="bg-gray-200 px-10 py-8 w-full lg:w-1/2">
-
-        {{ items }}
-            <section class="flex mt-3f">
-                <figure class="w-1/5 mr-5">
-                    {{ if images }}
-                        {{ images limit="1" }}
-                            <img src="/assets/{{ value }}">
-                        {{ /images }}
-                    {{ else }}
-                        <div class="w-full">
-                            {{ partial src='butik::web.shop.partials.placeholder' }}
-                        </div>
-                    {{ /if }}
-                </figure>
-
-                <div class="w-full">
-                    <h3 class="font-bold">{{ name }}</h3>
-                    <p>{{ description }}</p>
-                    <div class="flex justify-end items-baseline">
-                        <span class="mr-5 text-sm italic">{{ currency }} {{ single_price }} x {{ quantity }}</span>
-                        <span class="font-bold">{{ currency }} {{ total_price }}</span>
-                    </div>
-                </div>
-            </section>
-        {{ /items }}
-
-        <section class="w-full mt-4">
-
-            <h3 class="font-bold block mt-5 text-3xl text-center">{{ 'butik::web.shipping' | trans | ucfirst }}</h3>
-
-            <hr class="border-white my-5">
-
-            <div class="flex my-3 justify-between max-w-sm mx-auto">
-                <span>{{ 'butik::web.shipping' | trans | ucfirst }}</span>
-                <span>{{ bag:total_shipping }}</span>
-            </div>
-
-            <hr class="border-white my-5">
-
-            <div class="flex mt-3 justify-between max-w-sm mx-auto">
-                <span>{{ 'butik::web.total' | trans | ucfirst }}</span>
-                <span class="font-black">{{ currency }} {{ bag:total_price }}</span>
-            </div>
-            <div class="max-w-sm mx-auto p3 text-gray-500 text-right text-sm">
-                {{ 'butik::web.including_taxes' | trans | ucfirst }}
-            </div>
-        </section>
-    </div>
 </div>
-
