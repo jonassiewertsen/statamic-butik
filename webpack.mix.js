@@ -4,9 +4,16 @@ const tailwindcss = require('tailwindcss');
 
 mix.js('resources/js/app.js', 'public/js/statamic-butik.js')
     .postCss('resources/css/statamic-butik.css', 'public/css', [
-        tailwindcss('tailwind.config.js')
+        require('postcss-import'),
+        require('tailwindcss'),
+        require('postcss-nested'),
+        require('postcss-preset-env')({stage: 0})
     ]);
 
 if (mix.inProduction()) {
-    mix.purgeCss();
+    mix.purgeCss({
+        content: [
+            "resources/views/**/*.html"
+        ]
+    });
 }

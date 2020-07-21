@@ -1,0 +1,26 @@
+<section class="flex align-center mb-8">
+    {{ if images }}
+        {{ images limit="1" }}
+            <img class="w-32 h-32 flex-shrink-0 rounded-xl shadow object-cover mr-5" src="/assets/{{ value }}">
+        {{ /images }}
+    {{ else }}
+        <div class="flex flex-shrink-0 items-center w-32 h-32 rounded-xl shadow object-cover mr-5">
+            {{ partial src='butik::web.components.placeholder-image' }}
+        </div>
+    {{ /if }}
+
+    <div class="flex flex-col justify-center flex-1">
+        <h3 class="font-bold block text-lg {{ unless sellable }}text-danger {{ /if }}">
+            {{ quantity }} x {{ name }}
+        </h3>
+        <div class="text-gray font-light">{{ currency }} {{ single_price }}</div>
+    </div>
+    <div class="flex flex-col justify-center items-end">
+        {{ if sellable }}
+            <div class="text-xl">{{ currency }} {{ total_price }}</div>
+        {{ else }}
+            <div class="text-xl"><s>{{ currency }} {{ total_price }}</s></div>
+        {{ /if }}
+        <span class="text-gray">{{ quantity }} x {{ currency }} {{ single_price }}</span>
+    </div>
+</section>

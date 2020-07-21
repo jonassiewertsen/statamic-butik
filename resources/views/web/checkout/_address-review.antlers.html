@@ -1,0 +1,32 @@
+<div class="text-md text-dark">
+    <div class="mb-3">
+        <div class="text-gray leading-none">{{ 'butik::web.name' | trans | ucfirst }}</div>
+        <span class="text-2xl">{{ customer:name }}</span>
+    </div>
+    <div class="mb-3">
+        <div class="text-gray leading-none">{{ 'butik::web.mail' | trans | ucfirst }}</div>
+        <span class="text-2xl">{{ customer:mail }}</span>
+    </div>
+    <div class="mb-3">
+        <div class="text-gray leading-none">{{ 'butik::web.address1' | trans | ucfirst }}</div>
+        <span class="text-2xl">{{ customer:address1 }}</span>
+    </div>
+    {{ if customer:address2 }}
+    <div class="mb-3">
+        <div class="text-gray leading-none">{{ 'butik::web.address2' | trans | ucfirst }}</div>
+        <span class="text-2xl">{{ customer:address2 }}</span>
+    </div>
+    {{ /if }}
+    <div class="mb-3">
+        <div class="text-gray leading-none">{{ 'butik::web.city' | trans | ucfirst }}</div>
+        <span class="text-2xl">{{ customer:city }}</span>
+    </div>
+    <div class="mb-3">
+        <div class="text-gray leading-none">{{ 'butik::web.zip' | trans | ucfirst }}</div>
+        <span class="text-2xl">{{ customer:zip }}</span>
+    </div>
+    <div class="mb-3">
+        <div class="text-gray leading-none">{{ 'butik::web.country' | trans | ucfirst }}</div>
+        <span class="text-2xl">{{ customer:country }}</span>
+    </div>
+</div>

@@ -23,14 +23,4 @@ class Butik extends \Statamic\Tags\Tags
     {
         return route('butik.cart');
     }
-
-    /**
-     * {{ butik:bag }}
-     *
-     * Will return the shop overview route
-     */
-    public function cart()
-    {
-        return $this->bag();
-    }
 }

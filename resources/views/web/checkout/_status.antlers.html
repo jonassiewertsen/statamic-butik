@@ -1,0 +1,39 @@
+<div class="md:mx-5 mb-12">
+    <div class="flex justify-around text-gray md:w-2/3 mx-auto">
+        {{ if delivery }}
+            <div class="flex items-center">
+                <div class="text-sm bg-accent text-white flex w-5 h-5 items-center justify-center rounded-full mr-2">1</div>
+                <span class="text-md">{{ 'butik::web.delivery' | trans | ucfirst }}</span>
+            </div>
+        {{ else }}
+            <div class="flex items-center">
+                <div class="text-sm border border-gray flex w-5 h-5 items-center justify-center rounded-full mr-2">1</div>
+                <span class="hidden md:block text-md">{{ 'butik::web.delivery' | trans | ucfirst }}</span>
+            </div>
+        {{ /if }}
+
+        {{ if review }}
+            <div class="flex items-center">
+                <div class="text-sm bg-accent text-white flex w-5 h-5 items-center justify-center rounded-full mr-2">2</div>
+                <span class="text-md">{{ 'butik::web.review_payment' | trans | ucfirst }}</span>
+            </div>
+        {{ else }}
+        <div class="flex items-center">
+            <div class="text-sm border border-gray flex w-5 h-5 items-center justify-center rounded-full mr-2">2</div>
+                <span class="hidden md:block text-gray-400 mt-1">{{ 'butik::web.review_payment' | trans | ucfirst }}</span>
+            </div>
+        {{ /if }}
+
+        {{ if receipt }}
+            <div class="flex items-center">
+                <div class="text-sm bg-accent text-white flex w-5 h-5 items-center justify-center rounded-full mr-2">3</div>
+                <span class="text-md">{{ 'butik::web.receipt' | trans | ucfirst }}</span>
+            </div>
+        {{ else }}
+            <div class="flex items-center">
+                <div class="text-sm border border-gray flex w-5 h-5 items-center justify-center rounded-full mr-2">3</div>
+                <span class="hidden md:block text-gray-500 mt-1">{{ 'butik::web.receipt' | trans | ucfirst }}</span>
+            </div>
+        {{ /if }}
+    </div>
+</div>

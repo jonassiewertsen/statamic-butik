@@ -17,7 +17,7 @@ class CartIcon extends Component
 
     public function render()
     {
-        return view('butik::web.livewire.cart-icon', [
+        return view('butik::web.components.cart-icon', [
             'total' => $this->total,
         ]);
     }

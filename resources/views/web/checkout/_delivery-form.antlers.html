@@ -1,0 +1,68 @@
+<form method="post" action="#heading" class="w-full grid grid-cols-1 row-gap-5">
+    {{ csrf_field }}
+
+    {{ unless items | sellable }}
+    <div class="bg-danger-light border-l-4 border-danger font-bold text-danger px-5 py-4">
+        {{ 'butik::web.some_items_not_available' | trans | ucfirst }}
+    </div>
+    {{ /unless }}
+
+    <label for="name" class="block">
+        <span class="block text-gray-dark text-lg mb-2">{{ 'butik::web.name' | trans | ucfirst }}</span>
+        <input id="name" name="name" type="text" value="{{ old:name ?? customer:name }}" autofocus
+               class="border {{ if {error:name} }}border-danger{{ else }} border-gray {{ /if }} rounded px-4 py-2 w-full focus:outline-none focus:border-accent"
+        >
+    </label>
+
+    <label for="mail" class="block">
+        <span class="block text-gray-dark text-lg mb-2">{{ 'butik::web.mail' | trans | ucfirst }}</span>
+        <input id="mail" name="mail" type="mail" value="{{ old:mail ?? customer:mail }}"
+               class="border {{ if {error:mail} }}border-danger{{ else }} border-gray {{ /if }} rounded px-4 py-2 w-full focus:outline-none focus:border-accent"
+        >
+    </label>
+
+    <label for="address1" class="block">
+        <span class="block text-gray-dark text-lg mb-2">{{ 'butik::web.address1' | trans | ucfirst }}</span>
+        <input id="address1" name="address1" type="text" value="{{ old:address1 ?? customer:address1 }}"
+               class="border {{ if {error:address1} }}border-danger{{ else }} border-gray {{ /if }} rounded px-4 py-2 w-full focus:outline-none focus:border-accent"
+        >
+    </label>
+
+    <label for="address2" class="block">
+        <span class="block text-gray-dark text-lg mb-2">{{ 'butik::web.address2' | trans | ucfirst }}</span>
+        <input id="address2" name="address2" type="text" value="{{ old:address2 ?? customer:address2 }}"
+               class="border {{ if {error:address2} }}border-danger{{ else }} border-gray {{ /if }} rounded px-4 py-2 w-full focus:outline-none focus:border-accent"
+        >
+    </label>
+
+    <label for="city" class="block">
+        <span class="block text-gray-dark text-lg mb-2">{{ 'butik::web.city' | trans | ucfirst }}</span>
+        <input id="city" name="city" type="text" value="{{ old:city ?? customer:city }}"
+               class="border {{ if {error:city} }}border-danger{{ else }} border-gray {{ /if }} rounded px-4 py-2 w-full focus:outline-none focus:border-accent"
+        >
+    </label>
+
+    <label for="zip" class="block">
+        <span class="block text-gray-dark text-lg mb-2">{{ 'butik::web.zip' | trans | ucfirst }}</span>
+        <input id="zip" name="zip" type="text" value="{{ old:zip ?? customer:zip }}"
+               class="border {{ if {error:zip} }}border-danger{{ else }} border-gray {{ /if }} rounded px-4 py-2 w-full focus:outline-none focus:border-accent"
+        >
+    </label>
+
+    <label for="country" class="block">
+        <span class="block text-gray-dark text-lg mb-2">{{ 'butik::web.country' | trans | ucfirst }}</span>
+        <select id="country" name="country"
+                class="border {{ if {error:country} }}border-danger{{ else }} border-gray {{ /if }} rounded px-4 py-2 w-full focus:outline-none focus:border-accent"
+        >
+            {{ foreach:countries as="slug|name" }}
+            <option value="{{ slug }}" {{ if selected_country:slug === slug }}selected{{ /if }}>{{ name }}</option>
+            {{ /foreach:countries }}
+        </select>
+    </label>
+
+    <div class="flex justify-end flex">
+        <button type="submit" class="bg-accent block mt-3 px-6 py-2 rounded text-center text-white text-xl">
+            {{ 'butik::web.to_payment' | trans | ucfirst }}
+        </button>
+    </div>
+</form>

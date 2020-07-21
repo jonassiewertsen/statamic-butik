@@ -1,0 +1,25 @@
+<div class="block">
+    <a href="{{ show_url }}" class="block w-full">
+        {{ if images }}
+            {{ images limit="1" }}
+                <img class="w-full rounded-xl h-64 object-cover transform duration-700 hover:shadow-2xl hover:-translate-y-2"
+                     src="/assets/{{ value }}"
+                >
+            {{ /images }}
+        {{ else }}
+            <div class="bg-gray-light rounded-xl transform duration-700 hover:shadow-2xl hover:-translate-y-2">
+                {{ partial src="butik::web/components/placeholder-image" }}
+            </div>
+        {{ /if }}
+
+        <h1 class="mt-6 text-2xl text-center leading-none">{{ title }}</h1>
+
+        <p class="text-gray-dark mt-1 text-xl text-center">
+            {{ if stock_unlimited || stock  > 0 }}
+                {{ currency }} {{ price }}
+            {{ else }}
+                {{ 'butik::web.sold_out' | trans | ucfirst }}
+            {{ endif }}
+        </p>
+    </a>
+</div>

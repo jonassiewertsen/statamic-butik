@@ -11,6 +11,9 @@
     },
     "devDependencies": {
         "cross-env": "^5.1",
+        "postcss-import": "^12.0.1",
+        "postcss-nested": "^4.2.1",
+        "postcss-preset-env": "^6.7.0",
         "laravel-mix": "^2.0",
         "laravel-mix-purgecss": "^4.2.0"
     },

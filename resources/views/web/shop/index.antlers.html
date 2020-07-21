@@ -1,43 +1,13 @@
-<div class="b-flex b-justify-center b-m-12">
-    {{ if {categories:count} > 0 }}
-        <a href="{{ butik:shop }}">Start</a>
-        {{ categories }}
-            <a href="{{ url }}">{{ name }}</a>
-        {{ /categories }}
-    {{ /if }}
-</div>
+{{ partial src="butik::web/components/category-menu" }}
 
-<div class="b-flex b-flex-wrap b--mx-4 md:b--mx-6">
-
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 col-gap-20 row-gap-16">
     {{ if products | count === 0 }}
-        <p class="b-mx-auto">
-            {{ trans key='butik::web.no_proucts_available' }}
+        <p class="mx-auto">
+            {{ 'butik::web.no_proucts_available' | trans | ucfirst }}
         </p>
     {{ /if }}
 
     {{ products }}
-        <div class="b-block b-px-4 md:b-px-6 b-mb-10 b-w-full sm:b-w-1/2 xl:b-w-1/3">
-            <a href="{{ show_url }}" class="b-block b-w-full">
-                {{ if images }}
-                    {{ images limit="1" }}
-                        <img class="b-w-full b-rounded-xl b-h-64 b-object-cover b-transform b-duration-700 hover:b-shadow-2xl hover:b--translate-y-2"
-                             src="/assets/{{ value }}"
-                        >
-                    {{ /images }}
-                {{ else }}
-                    <div class="b-w-full">
-                        {{ partial src="butik::web.shop.partials.placeholder" }}
-                    </div>
-                {{ /if }}
-
-                <h1 class="b-mt-4 b-text-2xl b-text-center b-leading-none">{{ title }}</h1>
-
-                {{ if stock_unlimited || stock  > 0 }}
-                    <div class="b-text-gray-500 b-text-xl b-text-center">{{ currency }} {{ price }}</div>
-                {{ else }}
-                    <p class="b-text-sm b-block b-text-center b-font-light b-ml-2">{{ trans key="butik::web.sold_out" }}</p>
-                {{ endif }}
-            </a>
-        </div>
+        {{ partial src="butik::web/components/product-card" }}
     {{ /products }}
 </div>

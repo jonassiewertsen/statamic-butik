@@ -1,80 +1,12 @@
-{{ partial src='butik::web.checkout.partials.status' delivery='true' }}
+{{ partial src='butik::web.checkout.status' delivery='true' }}
 
-<hr class="b-mb-5 b-mt-8">
-
-<h1 class="b-block b-mb-10 md:b-mb-20 b-text-center b-font-bold b-text-xl">
-    {{ trans key='butik::web.checkout' }}
+<h1 class="block font-bold mb-8 text-5xl">
+    {{ 'butik::web.checkout' | trans | ucfirst }}
 </h1>
 
-{{# body #}}
-<div class="b-mt-6 b-mb-20 md:b-flex">
-
-    {{# delivery form #}}
-
-    {{ partial src='butik::web.checkout.partials.delivery-form' }}
-
-    {{# product card #}}
-    <div class="b-bg-gray-200 b-px-10 b-py-8 b-w-full lg:b-w-1/2">
-        {{ unless items | sellable }}
-            <div class="b-bg-red-300 b-px-5 b-py-4 b-rounded b-mb-16">
-                {{ trans key='butik::web.some_items_not_available' }}
-            </div>
-        {{ /unless }}
-
-        {{ if items }}
-            {{ items | to_json }}
-                <section class="b-flex b-mt-3">
-                    <figure class="b-w-1/5 b-mr-5">
-                        {{ if images }}
-                            {{ images limit="1" }}
-                                <img src="/assets/{{ value }}">
-                            {{ /images }}
-                        {{ else }}
-                            <div class="b-w-full">
-                                {{ partial src='butik::web.shop.partials.placeholder' }}
-                            </div>
-                        {{ /if }}
-                    </figure>
-
-                    <div class="b-w-full">
-                        <h3 class="b-font-bold {{ unless sellable }}b-text-red-500 {{ /if }}">{{ name }}</h3>
-                        <p>{{ description }}</p>
-                        <div class="b-flex b-justify-end b-items-baseline">
-                            <span class="b-mr-5 b-text-sm b-italic">{{ single_price }} x {{ quantity }}</span>
-                            {{ if sellable }}
-                                <span class="b-font-bold">{{ currency }} {{ total_price }}</span>
-                            {{ else }}
-                                <s>{{ currency }} {{ total_price }}</s>
-                            {{ /if }}
-                        </div>
-                    </div>
-                </section>
-            {{ /items }}
-        {{ /if }}
-
-        <section class="b-w-full b-mt-4">
-
-            <h3 class="b-font-bold b-block b-mt-5 b-text-3xl b-text-center">
-                {{ trans key='butik::web.total' }}
-            </h3>
-
-            <hr class="b-border-white b-my-5">
-
-            <div class="b-flex b-my-3 b-justify-between b-max-w-sm b-mx-auto">
-                <span>{{ trans key='butik::web.shipping' }}</span>
-                <span>{{ bag:total_shipping }}</span>
-            </div>
-
-            <hr class="b-border-white b-my-5">
-
-            <div class="b-flex b-mt-3 b-justify-between b-max-w-sm b-mx-auto">
-                <span>{{ trans key='butik::web.total' }}</span>
-                <span class="b-font-black">{{ currency }} {{ bag:total_price }}</span>
-            </div>
-            <div class="b-max-w-sm b-mx-auto b-pb-3 b-text-gray-500 b-text-right b-text-sm">
-                {{ trans key='butik::web.including_taxes' }}
-            </div>
-        </section>
-    </div>
-
+<div class="grid grid-cols-1 md:grid-cols-2 col-gap-24">
+    <span class="hidden md:block">{{# Let's hide the shopping bag overview on mobile #}}
+        {{ partial src='butik::web.checkout.bag-overview' }}
+    </span>
+    {{ partial src='butik::web.checkout.delivery-form' }}
 </div>

@@ -26,10 +26,4 @@ class ButikTagTest extends TestCase
     {
         $this->assertEquals(route('butik.cart'), $this->tag->bag(),);
     }
-
-    /** @test */
-    public function it_will_return_the_cart_route()
-    {
-        $this->assertEquals(route('butik.cart'), $this->tag->cart(),);
-    }
 }
