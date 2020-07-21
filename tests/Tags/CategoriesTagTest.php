@@ -16,24 +16,6 @@ class CategoriesTagTest extends TestCase
         $this->categories = new Categories();
     }
 
-   /** @test */
-   public function it_will_return_all_categories_in_the_expected_format()
-   {
-       create(Category::class)->first();
-       $category = Category::first();
-
-           $this->assertEquals(
-               $this->categories->index(),
-               [
-                   [
-                       'name' => $category->name,
-                       'slug' => $category->slug,
-                       'url'  => $category->url
-                   ],
-               ]
-           );
-   }
-
     /** @test */
     public function categories_are_countable()
     {

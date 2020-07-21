@@ -69,6 +69,6 @@ class CategoryTest extends TestCase
         create(Category::class);
         $category = Category::first();
 
-        $this->assertEquals(route('butik.shop.category', $category), $category->url);
+        $this->assertEquals(route('butik.shop.category', $category, false), $category->url);
     }
 }

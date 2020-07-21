@@ -50,14 +50,13 @@ class CheckoutPaymentTest extends TestCase
         Session::put('butik.customer', $this->customer);
 
         $this->get(route('butik.checkout.payment'))
-            ->assertSee('ship to')
-            ->assertSee('pay now')
-            ->assertSee('name')
-            ->assertSee('mail')
-            ->assertSee('country')
-            ->assertSee('address line 1')
-            ->assertSee('city')
-            ->assertSee('zip');
+            ->assertSee('Pay now')
+            ->assertSee('Name')
+            ->assertSee('Mail')
+            ->assertSee('Country')
+            ->assertSee('Address line 1')
+            ->assertSee('City')
+            ->assertSee('Zip');
     }
 
     /** @test */
@@ -66,12 +65,11 @@ class CheckoutPaymentTest extends TestCase
         Session::put('butik.customer', $this->customer);
 
         $this->get(route('butik.checkout.payment'))
-            ->assertSee('delivery')
-            ->assertSee('review')
-            ->assertSee('payment')
-            ->assertSee('receipt')
-            ->assertSee('shipping')
-            ->assertSee('total');
+            ->assertSee('Delivery')
+            ->assertSee('Review')
+            ->assertSee('Receipt')
+            ->assertSee('Shipping')
+            ->assertSee('Total');
     }
 
     // TODO: Tests to remove products from the cart, which are sold out.
@@ -145,7 +143,6 @@ class CheckoutPaymentTest extends TestCase
         $this->get(route('butik.checkout.payment'))
             ->assertOk()
             ->assertSee($item->name)
-            ->assertSee($item->description)
             ->assertSee($item->singlePrice())
             ->assertSee($item->totalPrice())
             ->assertSee($item->getQuantity());

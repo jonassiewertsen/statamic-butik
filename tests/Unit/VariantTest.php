@@ -60,7 +60,7 @@ class VariantTest extends TestCase
     {
         $this->assertEquals(
             $this->variant->title,
-            $this->product->title . ' - ' . $this->variant->getRawOriginal('title')
+            $this->product->title . ' // ' . $this->variant->getRawOriginal('title')
         );
     }
 
