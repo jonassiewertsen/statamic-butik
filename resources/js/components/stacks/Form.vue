@@ -1,5 +1,5 @@
 <template>
-    <stack :narrow="narrow">
+    <stack :narrow="narrow" @closed="close">
         <div class="h-full bg-grey-30 p-4 overflow-auto">
             <header class="pb-3 py-1 border-b border-grey-30 text-lg font-medium flex items-center justify-between">
                 Shipping

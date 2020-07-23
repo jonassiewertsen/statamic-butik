@@ -1,5 +1,5 @@
 <template>
-    <stack>
+    <stack @closed="close">
         <div class="h-full bg-white p-4 overflow-auto">
             <header class="pb-5 py-2 border-grey-30 text-lg font-medium flex items-center justify-between">
                 <div class="flex items-center">
