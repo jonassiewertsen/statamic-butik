@@ -5,7 +5,7 @@
 
 @section('content')
     <publish-form
-        title="{{ __('butik::web.tax_singular') }}"
+        title="{{ __('butik::cp.tax_singular') }}"
         action="{{ cp_route('butik.taxes.store') }}"
         :blueprint='@json($blueprint)'
         :meta='@json($meta)'
