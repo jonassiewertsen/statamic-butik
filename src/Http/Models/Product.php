@@ -3,10 +3,14 @@
 namespace Jonassiewertsen\StatamicButik\Http\Models;
 
 use Jonassiewertsen\StatamicButik\Http\Traits\ProductUrlTrait;
+use Jonassiewertsen\StatamicButik\Blueprints\ProductBlueprint;
+use Statamic\Contracts\Data\Augmentable;
+use Statamic\Data\HasAugmentedData;
 
-class Product extends ButikModel
+class Product extends ButikModel implements Augmentable
 {
     use ProductUrlTrait;
+    use HasAugmentedData;
 
     public    $incrementing = false;
     protected $table        = 'butik_products';
@@ -48,6 +52,11 @@ class Product extends ButikModel
     {
         return $this->belongsToMany(Category::class, 'butik_category_product');
     }
+
+//    public function getImagesAttribute()
+//    {
+//        return $this->augmentedValue('images')->value();
+//    }
 
     /**
      * A Product has a shipping relation
@@ -144,5 +153,16 @@ class Product extends ButikModel
     public function getCurrencyAttribute()
     {
         return config('butik.currency_symbol');
+    }
+
+    public function blueprint()
+    {
+        $blueprint = new ProductBlueprint();
+        return $blueprint();
+    }
+
+    public function augmentedArrayData()
+    {
+        return $this->attributesToArray();
     }
 }

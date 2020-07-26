@@ -12,7 +12,7 @@ class CartList extends Component
 
     public function mount()
     {
-        $this->country = ShoppingCart::country()['slug'];
+        $this->countrySlug = ShoppingCart::country()['slug'];
     }
 
     public function getCountryProperty()

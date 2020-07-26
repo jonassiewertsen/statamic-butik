@@ -9,6 +9,7 @@ use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Statamic\Facades\Asset;
 
 class ItemAsProductTest extends TestCase
 {
@@ -47,11 +48,11 @@ class ItemAsProductTest extends TestCase
     }
 
     /** @test */
-    public function it_has_imagese()
+    public function it_has_imagese_returned_as_assets()
     {
         $item = new Item($this->product->slug);
 
-        $this->assertEquals($item->images, $this->product->images);
+        $this->assertEquals(Asset::find($item->images), $this->product->images);
     }
 
     /** @test */
