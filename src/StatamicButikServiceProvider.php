@@ -320,8 +320,8 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
     private function publishAssets(): void {
         Statamic::afterInstalled(function() {
-            Artisan::call('vendor:publish --tag=butik-config --force');
-            Artisan::call('vendor:publish --tag=butik-images --force');
+            Artisan::call('vendor:publish --tag=butik-config');
+            Artisan::call('vendor:publish --tag=butik-images');
             Artisan::call('vendor:publish --tag=butik-resources --force');
         });
     }
