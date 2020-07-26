@@ -8,34 +8,17 @@ use Livewire\Component;
 
 class CartList extends Component
 {
-    public $country;
+    public $countrySlug;
 
     public function mount()
     {
         $this->country = ShoppingCart::country()['slug'];
     }
 
-    public function getTotalPriceProperty()
+    public function getCountryProperty()
     {
-        return ShoppingCart::totalPrice();
-    }
-
-    public function getTotalShippingProperty()
-    {
-        return ShoppingCart::totalShipping();
-    }
-
-    public function render()
-    {
-        ShoppingCart::setCountry($this->country);
-
-        return view('butik::web.cart.cart-list', [
-            'country'        => $this->country,
-            'countries'      => Country::pluck('name', 'slug'),
-            'items'          => ShoppingCart::get(),
-            'total_price'    => $this->totalPrice,
-            'total_shipping' => $this->totalShipping,
-        ]);
+        ShoppingCart::setCountry($this->countrySlug);
+        return $this->countrySlug;
     }
 
     public function add($slug)
@@ -48,5 +31,16 @@ class CartList extends Component
     {
         ShoppingCart::reduce($slug);
         $this->emit('cartUpdated');
+    }
+
+    public function render()
+    {
+        return view('butik::web.cart.cart-list', [
+            'country'        => $this->country,
+            'countries'      => Country::pluck('name', 'slug'),
+            'items'          => ShoppingCart::get(),
+            'total_price'    => ShoppingCart::totalPrice(),
+            'total_shipping' => ShoppingCart::totalShipping(),
+        ]);
     }
 }
