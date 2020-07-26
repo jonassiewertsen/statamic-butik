@@ -2,6 +2,7 @@
 
 namespace Jonassiewertsen\StatamicButik;
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 use Jonassiewertsen\StatamicButik\Http\Models\Country;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
@@ -24,9 +25,12 @@ use Mollie\Laravel\MollieServiceProvider;
 use Statamic\Facades\CP\Nav;
 use Statamic\Facades\Permission;
 use Statamic\Providers\AddonServiceProvider;
+use Statamic\Statamic;
 
 class StatamicButikServiceProvider extends AddonServiceProvider
 {
+    protected $publishAfterInstall = false;
+
     protected $commands = [
         \Jonassiewertsen\StatamicButik\Commands\SetUpButik::class,
     ];
@@ -113,6 +117,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         $this->bootPermissions();
         $this->createNavigation();
         $this->bootLivewireComponents();
+        $this->publishAssets();
 
         if ($this->app->runningInConsole()) {
             // Config
@@ -311,5 +316,13 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         } catch (\Throwable $e) {
             // Do nothing
         }
+    }
+
+    private function publishAssets(): void {
+        Statamic::afterInstalled(function() {
+            Artisan::call('vendor:publish --tag=butik-config --force');
+            Artisan::call('vendor:publish --tag=butik-images --force');
+            Artisan::call('vendor:publish --tag=butik-resources --force');
+        });
     }
 }
