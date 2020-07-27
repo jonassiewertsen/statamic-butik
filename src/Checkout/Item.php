@@ -3,6 +3,7 @@
 
 namespace Jonassiewertsen\StatamicButik\Checkout;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
@@ -36,7 +37,7 @@ class Item
     /**
      * The images of the item
      */
-    public ?array $images;
+    public ?Collection $images;
 
     /**
      * The item name
@@ -89,7 +90,7 @@ class Item
         $this->quantity        = 1;
         $this->availableStock  = $item->stock;
         $this->name            = $item->title;
-        $this->images          = $item->images;
+        $this->images          = $this->product->augmentedValue('images')->value();
         $this->description     = $this->limitedDescription();
         $this->taxRate         = $item->tax->percentage;
         $this->singlePrice     = $item->price;
@@ -209,7 +210,7 @@ class Item
             $this->product = $this->product();
             return $this->variant = Variant::find($this->variantSlug());
         } else {
-            return $this->product =  $this->product();
+            return $this->product = $this->product();
         }
     }
 

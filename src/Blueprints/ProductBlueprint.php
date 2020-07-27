@@ -75,6 +75,15 @@ class ProductBlueprint extends Blueprint
                             ],
                         ],
                         [
+                            'handle' => 'images',
+                            'field'  => [
+                                'type'     => 'assets',
+                                'display'  => __('butik::cp.images'),
+                                'validate' => 'nullable',
+                                'mode'     => 'grid',
+                            ],
+                        ],
+                        [
                             'handle' => 'description',
                             'field'  => [
                                 'type'    => 'textarea',
@@ -118,15 +127,6 @@ class ProductBlueprint extends Blueprint
                                 'width'    => '50',
                                 'display'  => __('butik::cp.stock_unlimited'),
                                 'validate' => 'required|boolean',
-                            ],
-                        ],
-                        [
-                            'handle' => 'images',
-                            'field'  => [
-                                'type'     => 'assets',
-                                'display'  => __('butik::cp.images'),
-                                'validate' => 'nullable',
-                                'mode'     => 'grid',
                             ],
                         ],
                     ],

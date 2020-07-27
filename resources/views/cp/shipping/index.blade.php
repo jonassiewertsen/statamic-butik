@@ -16,7 +16,7 @@
         :shipping-profile-meta='@json($shippingProfileFields->meta())'
 
         :shipping-zone-route="'{{ cp_route('butik.shipping-zones.store') }}'"
-        :shipping-zone-create-title="'{{ __('butik::shipping.create_zone') }}'"
+        :shipping-zone-create-title="'{{ __('butik::cp.shipping_zone_form_create') }}'"
         :shipping-zone-blueprint='@json($shippingZoneBlueprint)'
         :shipping-zone-values='@json($shippingZoneFields->values())'
         :shipping-zone-meta='@json($shippingZoneFields->meta())'

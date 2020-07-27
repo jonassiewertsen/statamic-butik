@@ -13,6 +13,10 @@ abstract class Blueprint
      */
     protected function isRoute($route): bool
     {
+        if (! isset(request()->route()->action['as'])) {
+            return false;
+        }
+
         return request()->route()->action['as'] === $route;
     }
 

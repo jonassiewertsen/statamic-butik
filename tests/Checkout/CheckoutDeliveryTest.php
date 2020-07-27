@@ -34,8 +34,6 @@ class CheckoutDeliveryTest extends TestCase
     /** @test */
     public function the_product_information_will_be_displayed_without_saved_customer_data()
     {
-        $this->withoutExceptionHandling();
-
         $this->get(route('butik.checkout.delivery', $this->product))
             ->assertSee('Checkout');
     }

@@ -60,7 +60,7 @@ class ShopController extends WebController
         return (new StatamicView())
             ->template(config('butik.template_product-show'))
             ->layout(config('butik.layout_product-show'))
-            ->with(compact('product'));
+            ->with(['product' => $product->toAugmentedArray()]);
     }
 
     private function redirectToVariant($product)
@@ -85,7 +85,6 @@ class ShopController extends WebController
                 break;
             case 'name':
                 return Product::where('available', true)
-                    ->where('stock', '>', 0)
                     ->orderBy('title')
                     ->limit($limit)
                     ->get();
@@ -93,14 +92,12 @@ class ShopController extends WebController
                 break;
             case 'newest':
                 return Product::where('available', true)
-                    ->where('stock', '>', 0)
                     ->orderByDesc('created_at')
                     ->limit($limit)
                     ->get();
                 break;
             case 'cheapest':
                 return Product::where('available', true)
-                    ->where('stock', '>', 0)
                     ->orderBy('price')
                     ->limit($limit)
                     ->get();

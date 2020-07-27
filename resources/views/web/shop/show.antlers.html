@@ -2,7 +2,7 @@
     <aside>
         {{ if product:images }}
             {{ product:images limit="1" }}
-                <img class="rounded-xl" src="/assets/{{ value }}">
+                <img class="rounded-xl" src="{{ url }}" alt="{{ alt }}">
             {{ /product:images }}
         {{ else }}
             <div class="w-full bg-gray-light rounded-xl">

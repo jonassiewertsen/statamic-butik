@@ -15,27 +15,11 @@ class CartList extends Component
         $this->country = ShoppingCart::country();
     }
 
-    public function getTotalPriceProperty()
-    {
-        return ShoppingCart::totalPrice();
-    }
-
-    public function getTotalShippingProperty()
-    {
-        return ShoppingCart::totalShipping();
-    }
-
-    public function render()
+    public function getCountryProperty()
     {
         ShoppingCart::setCountry($this->country);
-
-        return view('butik::web.cart.cart-list', [
-            'country'        => $this->country,
-            'countries'      => Country::list(),
-            'items'          => ShoppingCart::get(),
-            'total_price'    => $this->totalPrice,
-            'total_shipping' => $this->totalShipping,
-        ]);
+      
+        return $this->country;
     }
 
     public function add($slug)
@@ -48,5 +32,16 @@ class CartList extends Component
     {
         ShoppingCart::reduce($slug);
         $this->emit('cartUpdated');
+    }
+
+    public function render()
+    {
+        return view('butik::web.cart.cart-list', [
+            'country'        => $this->country,
+            'countries'      => Country::list(),
+            'items'          => ShoppingCart::get(),
+            'total_price'    => ShoppingCart::totalPrice(),
+            'total_shipping' => ShoppingCart::totalShipping(),
+        ]);
     }
 }

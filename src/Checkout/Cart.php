@@ -184,6 +184,7 @@ class Cart
     public static function setCountry(string $code): void
     {
         Country::set($code);
+        static::totalPrice();
     }
 
     public static function removeNonSellableItems(): void
