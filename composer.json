@@ -60,9 +60,9 @@
     "scripts": {
         "test": "vendor/bin/phpunit",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
-
     },
     "config": {
+        "process-timeout": 0,
         "sort-packages": true
     },
     "extra": {

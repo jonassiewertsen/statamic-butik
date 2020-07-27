@@ -5,7 +5,6 @@ namespace Jonassiewertsen\StatamicButik\Tests;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Config;
-use Jonassiewertsen\StatamicButik\Http\Models\Country;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Statamic\Extend\Manifest;
 use Statamic\Facades\Role;
@@ -76,11 +75,7 @@ class TestCase extends OrchestraTestCase
      */
     protected function setCountry(): void
     {
-        $country = create(Country::class, [
-            'name' => 'Germany',
-            'slug' => 'germany',
-        ])->first();
-        Config::set('butik.country', $country->slug);
+        Config::set('butik.country', 'DE');
     }
 
     /**
