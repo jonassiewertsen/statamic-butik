@@ -13,6 +13,11 @@ class ShippingProfile extends ButikModel
 
     protected $guarded = [];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
+
 //    protected $with = [''];
 
     public function zones()
@@ -20,12 +25,10 @@ class ShippingProfile extends ButikModel
         return $this->hasMany(ShippingZone::class, 'shipping_profile_slug');
     }
 
-    public function whereZoneFrom(Country $country): ?ShippingZone
+    public function whereZoneFrom($country_code): ?ShippingZone
     {
         return $this->zones()
-                    ->leftJoin('butik_country_shipping_zone', 'butik_shipping_zones.id', '=', 'butik_country_shipping_zone.shipping_zone_id')
-                    ->select('id', 'title', 'slug', 'type', 'shipping_profile_slug', 'shipping_zone_id', 'country_slug')
-                    ->where('country_slug', $country->slug)
+                    ->where('countries', 'LIKE', "%\"$country_code\"%")
                     ->first();
     }
 }

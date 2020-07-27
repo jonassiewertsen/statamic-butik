@@ -17,6 +17,11 @@ class ShippingRate extends ButikModel
 
     protected $guarded = [];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
+
     /**
      * Will return the base price for this item
      */

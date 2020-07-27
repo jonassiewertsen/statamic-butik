@@ -3,7 +3,9 @@
 namespace Jonassiewertsen\StatamicButik\Blueprints;
 
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Statamic\Facades\Blueprint as StatamicBlueprint;
+use Symfony\Component\Intl\Countries;
 
 class ShippingZoneBlueprint extends Blueprint
 {
@@ -41,6 +43,44 @@ class ShippingZoneBlueprint extends Blueprint
                                 'validate' => 'required|exists:butik_shipping_profiles,slug',
                             ],
                         ],
+                        [
+                            'handle' => 'countries',
+                            'field' => [
+                                'type' => 'select',
+                                'options' => Countries::getNames(app()->getLocale()),
+                                'clearable' => false,
+                                'multiple' => true,
+                                'searchable' => true,
+                                'taggable' => false,
+                                'push_tags' => false,
+                                'cast_booleans' => false,
+                                'localizable' => false,
+                                'listable' => true,
+                                'display' => 'Countries',
+                                'validate' => ['required', 'array',
+                                    function ($attribute, $value, $fail) {
+                                        foreach ($value as $country_code) {
+                                            if (! Countries::exists($country_code)) {
+                                                $fail('Invalid country code: ' . $country_code);
+                                            }
+                                        }
+                                    },
+                                    function ($attribute, $value, $fail) {
+                                        if(ShippingZone::all()
+                                            ->filter(function($shipping_zone) use ($value) {
+                                                foreach ($value as $country_code) {
+                                                    if ($shipping_zone->countries->contains($country_code)) {
+                                                        return true;
+                                                    }
+                                                }
+                                            })
+                                            ->count() > 1) {
+                                            $fail('One of the countries is already added to another shipping zone.');
+                                        }
+                                    }
+                                ]
+                            ]
+                        ]
                     ],
                 ],
             ],

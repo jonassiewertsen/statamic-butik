@@ -85,15 +85,7 @@ class SetUpButik extends Command
         $this->info('################################################################');
         $this->info('');
 
-        $countryName = $this->ask('Whats your Country Name? Fx: Germany');
-        $countrySlug = $this->ask('Whats your Country slug? Small letters and no spaces please. Fx: germany OR united-states');
         $countryIso = $this->ask('Whats your Country iso code? Your locale. Fx: de');
-
-        $country = Country::create([
-            'name' => $countryName,
-            'slug' => $countrySlug,
-            'iso' => $countryIso,
-        ]);
 
         $this->line('Make sure to define your default country in your config file:');
         $this->warn('https://butik.dev/installation/configuration#shop-information');
@@ -131,9 +123,8 @@ class SetUpButik extends Command
                'title' => $countryName ?? 'Default',
                'type' => 'price',
                'shipping_profile_slug' => $shippingProfile->slug,
+               'countries' => [$countryIso]
             ]);
-
-            $shippingZone->addCountry($country);
 
             ShippingRate::create([
                 'shipping_zone_id' => $shippingZone->id,

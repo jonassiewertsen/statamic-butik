@@ -10,7 +10,11 @@ abstract class Checkout extends WebController
     protected function rules()
     {
         return [
-            'country'      => 'required|max:50|exists:butik_countries,slug',
+            'country'      => ['required', function ($attribute, $value, $fail) {
+                if (! Countries::exists($value)) {
+                    $fail('Invalid country code: ' . $value);
+                }
+            }],
             'name'         => 'required|min:5|max:50',
             'mail'         => 'required|email',
             'address1'     => 'required|max:80',

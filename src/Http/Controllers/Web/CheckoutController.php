@@ -8,6 +8,7 @@ use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Http\Models\Country;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Statamic\View\View as StatamicView;
 
 class CheckoutController extends Checkout
@@ -23,7 +24,7 @@ class CheckoutController extends Checkout
            ->layout(config('butik.layout_checkout-delivery'))
            ->with([
                 'customer'         => (array) $customer,
-                'countries'        => Country::pluck('name', 'slug'),
+                'countries'        => \Jonassiewertsen\StatamicButik\Shipping\Country::list(),
                 'selected_country' => Cart::country(),
                 'items'            => $this->mappedCartItems(),
             ]);
@@ -36,7 +37,7 @@ class CheckoutController extends Checkout
         $customer = new Customer($validatedData);
         Session::put('butik.customer', $customer);
 
-        if ($validatedData['country'] !== Cart::country()['slug']) {
+        if ($validatedData['country'] !== Cart::country()) {
             Cart::setCountry($validatedData['country']);
             return redirect()->back();
         }

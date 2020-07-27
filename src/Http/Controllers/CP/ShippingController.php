@@ -27,16 +27,13 @@ class ShippingController extends CpController
             'shippingProfiles' => ShippingProfile::all(),
 
             'shippingProfileBlueprint' => $shippingProfileBlueprint()->toPublishArray(),
-            'shippingProfileValues'    => $shippingProfileFields->values(),
-            'shippingProfileMeta'      => $shippingProfileFields->meta(),
+            'shippingProfileFields' => $shippingProfileFields,
 
             'shippingZoneBlueprint' => $shippingZoneBlueprint()->toPublishArray(),
-            'shippingZoneValues'    => $shippingZoneFields->values(),
-            'shippingZoneMeta'      => $shippingZoneFields->meta(),
+            'shippingZoneFields' => $shippingZoneFields,
 
             'shippingRateBlueprint' => $shippingRateBlueprint()->toPublishArray(),
-            'shippingRateValues'    => $shippingRateFields->values(), // needed ?
-            'shippingRateMeta'      => $shippingRateFields->meta(), // needed ?
+            'shippingRateFields' => $shippingRateFields,
         ]);
     }
 }

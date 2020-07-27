@@ -48,10 +48,6 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\CP')
         Route::delete('category/{category}/attach/{product}', 'CategoriesController@detachProduct')
             ->name('category.attach-product');
 
-        Route::resource('countries', 'CountriesController')->only([
-           'index', 'create', 'store', 'edit', 'update', 'destroy'
-        ]);
-
         Route::resource('shipping', 'ShippingController')->only([
             'index',
         ]);
@@ -67,14 +63,5 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\CP')
         Route::resource('shipping-rates', 'ShippingRatesController')->only([
             'store', 'update', 'destroy'
         ]);
-
-        Route::get('country-shipping-zone/{shippingZone}', 'CountryShippingZoneController@index')
-            ->name('country-shipping-zone.index');
-
-        Route::post('country-shipping-zone/{shippingZone}/add/{country}', 'CountryShippingZoneController@store')
-            ->name('country-shipping-zone.store');
-
-        Route::delete('country-shipping-zone/{shippingZone}/remove/{country}', 'CountryShippingZoneController@destroy')
-            ->name('country-shipping-zone.destroy');
     });
 });
