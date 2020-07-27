@@ -36,7 +36,7 @@ class Country
      */
     public static function set(string $code): void
     {
-        if (Countries::exists($code)) {
+        if (Countries::exists($code) && self::list()->has($code)) {
             Session::put(self::SESSION, $code);
         }
     }

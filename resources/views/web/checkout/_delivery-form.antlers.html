@@ -54,8 +54,8 @@
         <select id="country" name="country"
                 class="border {{ if {error:country} }}border-danger{{ else }} border-gray {{ /if }} rounded px-4 py-2 w-full focus:outline-none focus:border-accent"
         >
-            {{ foreach:countries as="slug|name" }}
-            <option value="{{ slug }}" {{ if selected_country:slug === slug }}selected{{ /if }}>{{ name }}</option>
+            {{ foreach:countries as="code|name" }}
+            <option value="{{ code }}" {{ if selected_country === code }}selected{{ /if }}>{{ name }}</option>
             {{ /foreach:countries }}
         </select>
     </label>
