@@ -77,7 +77,7 @@ class Shipping
      */
     protected function detectCountry()
     {
-        $this->country = CountryHelper::get($returnArray = false);
+        $this->country = CountryHelper::get();
     }
 
     /**

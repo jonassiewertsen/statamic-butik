@@ -15,11 +15,9 @@ class CartList extends Component
         $this->country = ShoppingCart::country();
     }
 
-    public function getCountryProperty()
+    public function updateCountry()
     {
         ShoppingCart::setCountry($this->country);
-      
-        return $this->country;
     }
 
     public function add($slug)

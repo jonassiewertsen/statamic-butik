@@ -17,14 +17,30 @@ class Country
      */
     public static function get()
     {
-        return Session::get(self::SESSION, config('butik.country'));
+        return Session::get(self::SESSION, self::getDefault());
+    }
+
+    private static function getDefault()
+    {
+        $country = config('butik.country');
+
+        if (! self::exists($country)) {
+            throw new ButikConfigException("Country with ISO code \"$country\" doesn't exist");
+        }
+
+        return $country;
+    }
+
+    private static function exists($country_code)
+    {
+        return Countries::exists($country_code);
     }
 
     public static function getName($country_code)
     {
         $country_code = strtoupper($country_code);
 
-        if (Countries::exists($country_code)) {
+        if (self::exists($country_code)) {
             return Countries::getName($country_code, app()->getLocale());
         }
 
@@ -36,7 +52,7 @@ class Country
      */
     public static function set(string $code): void
     {
-        if (Countries::exists($code) && self::list()->has($code)) {
+        if (self::exists($code) && self::list()->has($code)) {
             Session::put(self::SESSION, $code);
         }
     }
