@@ -3,6 +3,7 @@
 namespace Jonassiewertsen\StatamicButik\Tests\Shipping;
 
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
@@ -28,6 +29,10 @@ class ShippingProfileTest extends TestCase
             ]
         );
 
-        $this->assertEquals(ShippingZone::first()->id, $shippingProfile->whereZoneFrom($country_code)->id);
+        create(ShippingRate::class, [
+            'shipping_zone_id' => ShippingZone::first()
+        ]);
+
+        $this->assertEquals(ShippingZone::first(), $shippingProfile->whereZoneFrom($country_code));
     }
 }
