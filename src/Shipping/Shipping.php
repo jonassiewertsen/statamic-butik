@@ -9,7 +9,7 @@ use Jonassiewertsen\StatamicButik\Exceptions\ButikShippingException;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
-use Jonassiewertsen\StatamicButik\Shipping\Country as CountryHelper;
+use Jonassiewertsen\StatamicButik\Shipping\Country;
 
 class Shipping
 {
@@ -77,7 +77,7 @@ class Shipping
      */
     protected function detectCountry()
     {
-        $this->country = CountryHelper::get();
+        $this->country = Country::get();
     }
 
     /**
