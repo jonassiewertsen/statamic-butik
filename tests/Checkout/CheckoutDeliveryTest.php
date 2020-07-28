@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
+use Jonassiewertsen\StatamicButik\Shipping\Country;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class CheckoutDeliveryTest extends TestCase
@@ -214,15 +217,19 @@ class CheckoutDeliveryTest extends TestCase
     /** @test */
     public function if_a_new_country_has_been_selected_it_will_be_saved_in_the_cart()
     {
-        // TODO: This contradicts CheckoutController@saveCustomerData
-        $this->markTestSkipped(
-            'This contradicts CheckoutController@saveCustomerData.'
-        );
-        $this->withoutExceptionHandling();
         $country_code = 'ES';
 
+        create(ShippingZone::class, [
+            'countries' => [$country_code]
+        ]);
+
+        create(ShippingRate::class, [
+            'shipping_zone_id' => ShippingZone::first()
+        ]);
+
         // submit the form
-        $this->post(route('butik.checkout.delivery'), (array)$this->createUserData('country', $country_code));
+        $this->post(route('butik.checkout.delivery'), (array)$this->createUserData('country', $country_code))
+            ->assertRedirect();
 
         $this->assertEquals($country_code, Cart::country());
     }
