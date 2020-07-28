@@ -7,6 +7,7 @@
     </div>
     {{ /unless }}
 
+    {{ unless ( items | where:sellable:0 | count ) === ( items | count ) }}
     <label for="name" class="block">
         <span class="block text-gray-dark text-lg mb-2">{{ 'butik::web.name' | trans | ucfirst }}</span>
         <input id="name" name="name" type="text" value="{{ old:name ?? customer:name }}" autofocus
@@ -65,4 +66,5 @@
             {{ 'butik::web.to_payment' | trans | ucfirst }}
         </button>
     </div>
+    {{ /unless }}
 </form>
