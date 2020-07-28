@@ -35,7 +35,6 @@ class CartList extends Component
     public function render()
     {
         return view('butik::web.cart.cart-list', [
-            'country'        => $this->country,
             'countries'      => Country::list(),
             'items'          => ShoppingCart::get(),
             'total_price'    => ShoppingCart::totalPrice(),
