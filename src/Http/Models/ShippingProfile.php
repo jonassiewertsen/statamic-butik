@@ -28,6 +28,7 @@ class ShippingProfile extends ButikModel
     public function whereZoneFrom($country_code): ?ShippingZone
     {
         return $this->zones()
+                    ->has('rates')
                     ->where('countries', 'LIKE', "%\"$country_code\"%")
                     ->first();
     }
