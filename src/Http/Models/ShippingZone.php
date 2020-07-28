@@ -2,6 +2,7 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Models;
 
+use Jonassiewertsen\StatamicButik\Shipping\Country;
 use PHPUnit\Framework\Constraint\Count;
 use Symfony\Component\Intl\Countries;
 
@@ -25,7 +26,7 @@ class ShippingZone extends ButikModel
     public function getCountriesDisplayAttribute()
     {
         return $this->countries->map(function($countryCode) {
-            return Countries::getName($countryCode);
+            return Country::getName($countryCode);
         });
     }
 
