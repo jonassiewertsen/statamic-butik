@@ -12,22 +12,21 @@
         :shipping-profile-create-title="'{{ __('butik::cp.shipping_form_create') }}'"
         :shipping-profile-route="'{{ cp_route('butik.shipping-profiles.index') }}'"
         :shipping-profile-blueprint='@json($shippingProfileBlueprint)'
-        :shipping-profile-values='@json($shippingProfileValues)'
-        :shipping-profile-meta='@json($shippingProfileMeta)'
+        :shipping-profile-values='@json($shippingProfileFields->values())'
+        :shipping-profile-meta='@json($shippingProfileFields->meta())'
 
         :shipping-zone-route="'{{ cp_route('butik.shipping-zones.store') }}'"
         :shipping-zone-create-title="'{{ __('butik::cp.shipping_zone_form_create') }}'"
         :shipping-zone-blueprint='@json($shippingZoneBlueprint)'
-        :shipping-zone-values='@json($shippingZoneValues)'
-        :shipping-zone-meta='@json($shippingZoneMeta)'
+        :shipping-zone-values='@json($shippingZoneFields->values())'
+        :shipping-zone-meta='@json($shippingZoneFields->meta())'
 
         :shipping-rate-route="'{{ cp_route('butik.shipping-rates.store') }}'"
         :shipping-rate-create-title="'{{ __('butik::cp.shipping_rate_form_create') }}'"
         :shipping-rate-blueprint='@json($shippingRateBlueprint)'
-        :shipping-rate-values='@json($shippingRateValues)'
-        :shipping-rate-meta='@json($shippingRateMeta)'
+        :shipping-rate-values='@json($shippingRateFields->values())'
+        :shipping-rate-meta='@json($shippingRateFields->meta())'
 
-        :country-shipping-zone-route="'{{ cp_route('butik.country-shipping-zone.index', 'xxx') }}'"
     ></butik-shipping-overview>
 
 @endsection

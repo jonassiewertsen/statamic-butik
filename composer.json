@@ -34,7 +34,8 @@
         "jonassiewertsen/statamic-livewire": "^1.0",
         "livewire/livewire": "^1.0",
         "mollie/laravel-mollie": "^2.0",
-        "statamic/cms": "^3.0@beta"
+        "statamic/cms": "^3.0@beta",
+        "symfony/intl": "^5.1"
     },
     "require-dev": {
         "orchestra/testbench": "^5.0",
@@ -59,9 +60,9 @@
     "scripts": {
         "test": "vendor/bin/phpunit",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
-
     },
     "config": {
+        "process-timeout": 0,
         "sort-packages": true
     },
     "extra": {

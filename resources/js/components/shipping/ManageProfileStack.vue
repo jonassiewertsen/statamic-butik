@@ -25,7 +25,7 @@
                             </button>
                         </h3>
                         <ul class="flex leading-loose text-grey-70">
-                            <li class="mr-1" v-for="country in zone.countries">{{ country.name }}</li>
+                            <li class="mr-1" v-for="country in zone.countries_display">{{ country }}</li>
                         </ul>
                     </section>
                 </header>
@@ -119,7 +119,6 @@
                 :blueprint="shippingZoneBlueprint"
                 :meta="shippingZoneMeta"
                 :values="shippingZoneUpdatedValues"
-                :countryShippingZoneRoute="countryShippingZoneRoute"
                 @closed="closeShippingZoneManageStack()"
             ></manage-zone-stack>
 
@@ -149,10 +148,6 @@
 
         props: {
             slug: {
-                type: String,
-                default: null,
-            },
-            countryShippingZoneRoute: {
                 type: String,
                 default: null,
             },

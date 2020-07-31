@@ -27,6 +27,6 @@
     </div>
     <div class="mb-3">
         <div class="text-gray leading-none">{{ 'butik::web.country' | trans | ucfirst }}</div>
-        <span class="text-2xl">{{ customer:country }}</span>
+        <span class="text-2xl">{{ customer:country | country_name }}</span>
     </div>
 </div>

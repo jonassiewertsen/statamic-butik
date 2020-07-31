@@ -1,12 +1,11 @@
 <?php
 
-
 namespace Jonassiewertsen\StatamicButik\Shipping;
-
 
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Exceptions\ButikConfigException;
-use Jonassiewertsen\StatamicButik\Http\Models\Country as CountryModel;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
+use Symfony\Component\Intl\Countries;
 
 class Country
 {
@@ -16,48 +15,56 @@ class Country
      * We will get the country. In case no country has been defined, we will
      * fetch the default country from our config file.
      */
-    public static function get($returnArray = true)
+    public static function get()
     {
-        if (Session::exists(self::SESSION)) {
-            $country = Session::get(self::SESSION);
-            return $returnArray ? $country->toArray() : $country;
-        }
-
-        $country =  self::getDefaultCountryFromConfig();
-
-        return $returnArray ? $country->toArray() : $country;
+        return Session::get(self::SESSION, self::getDefault());
     }
 
-    /**
-     * Setting the country to our session
-     */
-    public static function set(string $name): void
+    private static function getDefault()
     {
-        $country = static::fetchCountryModel($name);
-        Session::put(self::SESSION, $country);
-    }
+        $country = config('butik.country');
 
-    /**
-     * Fetching all needed information from our country model
-     */
-    protected static function fetchCountryModel($slug): CountryModel
-    {
-        $country =  CountryModel::where('slug', 'LIKE', '%' . $slug . '%')->first();
-
-        if ($country === null) {
-            throw new ButikConfigException('The defined Country with the slug "' . $slug . '" does not exist.');
+        if (! self::exists($country)) {
+            throw new ButikConfigException("Country with ISO code \"$country\" doesn't exist");
         }
 
         return $country;
     }
 
-    /**
-     * Getting our default country from our config file.
-     */
-    private static function getDefaultCountryFromConfig()
+    private static function exists($country_code)
     {
-        $country = config('butik.country');
+        return Countries::exists($country_code);
+    }
 
-        return static::fetchCountryModel($country);
+    public static function getName($country_code)
+    {
+        $country_code = strtoupper($country_code);
+
+        if (self::exists($country_code)) {
+            return Countries::getName($country_code, app()->getLocale());
+        }
+
+        return $country_code;
+    }
+
+    /**
+     * Setting the country to our session
+     */
+    public static function set(string $code): void
+    {
+        if (self::exists($code) && self::list()->has($code)) {
+            Session::put(self::SESSION, $code);
+        }
+    }
+
+    public static function list()
+    {
+        return ShippingZone::all()->flatMap(function($shipping_zone) {
+            return $shipping_zone->countries;
+        })
+        ->sort()
+        ->mapWithKeys(function ($country_code) {
+            return [$country_code => self::getName($country_code)];
+        });
     }
 }

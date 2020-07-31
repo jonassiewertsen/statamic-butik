@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Shipping\Country;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class CheckoutPaymentTest extends TestCase
@@ -172,13 +173,13 @@ class CheckoutPaymentTest extends TestCase
             ->assertSee($customer['address2'])
             ->assertSee($customer['city'])
             ->assertSee($customer['zip'])
-            ->assertSee($customer['country']);
+            ->assertSee(Country::getName($customer['country']));
     }
 
     private function createUserData($key = null, $value = null): array
     {
         $customer = [
-            'country'      => 'Germany',
+            'country'      => 'DE',
             'name'         => 'John Doe',
             'mail'         => 'johndoe@mail.de',
             'address1'     => 'Main Street 2',

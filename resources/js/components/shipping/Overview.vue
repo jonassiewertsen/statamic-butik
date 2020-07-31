@@ -43,7 +43,6 @@
             :shippingRateMeta="shippingRateMeta"
             :shippingRateValues="shippingRateValues"
 
-            :countryShippingZoneRoute="countryShippingZoneRoute"
         ></manage-profile-stack>
     </div>
 </template>
@@ -74,8 +73,6 @@
             shippingRateBlueprint: Array,
             shippingRateValues: Array,
             shippingRateMeta: Array,
-
-            countryShippingZoneRoute: String,
         },
 
         components: {

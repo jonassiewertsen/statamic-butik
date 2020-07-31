@@ -3,7 +3,6 @@
 namespace Jonassiewertsen\StatamicButik\Tests\Checkout;
 
 use Illuminate\Support\Facades\Config;
-use Jonassiewertsen\StatamicButik\Http\Models\Country;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 

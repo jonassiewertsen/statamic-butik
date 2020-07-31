@@ -173,7 +173,7 @@ class Cart
     /**
      * Getting the actual choosen country
      */
-    public static function country(): array
+    public static function country()
     {
         return Country::get();
     }
@@ -181,9 +181,9 @@ class Cart
     /**
      * Set a different country to checkout to.
      */
-    public static function setCountry(string $slug): void
+    public static function setCountry(string $code): void
     {
-        Country::set($slug);
+        Country::set($code);
         static::totalPrice();
     }
 

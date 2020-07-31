@@ -4,7 +4,6 @@ namespace Jonassiewertsen\StatamicButik;
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
-use Jonassiewertsen\StatamicButik\Http\Models\Country;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
@@ -12,7 +11,6 @@ use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
-use Jonassiewertsen\StatamicButik\Policies\CountryPolicy;
 use Jonassiewertsen\StatamicButik\Policies\OrderPolicy;
 use Jonassiewertsen\StatamicButik\Policies\ProductPolicy;
 use Jonassiewertsen\StatamicButik\Policies\ShippingProfilePolicy;
@@ -45,6 +43,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     ];
 
     protected $modifiers = [
+        \Jonassiewertsen\StatamicButik\Modifiers\CountryName::class,
         \Jonassiewertsen\StatamicButik\Modifiers\Sellable::class,
     ];
 
@@ -94,7 +93,6 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     ];
 
     protected $policies = [
-        Country::class         => CountryPolicy::class,
         Product::class         => ProductPolicy::class,
         Order::class           => OrderPolicy::class,
         ShippingProfile::class => ShippingProfilePolicy::class,
@@ -210,24 +208,6 @@ class StatamicButikServiceProvider extends AddonServiceProvider
                 });
             });
             Permission::group('butik_settings', __('butik::cp.permissions_settings'), function () {
-                Permission::register('view countries', function ($permission) {
-                    $permission
-                        ->label(__('butik::cp.permission_view_countries'))
-                        ->description(__('butik::cp.permission_view_countries_description'))
-                        ->children([
-                            Permission::make('edit countries')
-                                ->label(__('butik::cp.permission_edit_countries'))
-                                ->description(__('butik::cp.permission_edit_countries_description'))
-                                ->children([
-                                    Permission::make('create countries')
-                                        ->label(__('butik::cp.permission_create_countries'))
-                                        ->description(__('butik::cp.permission_create_countries_description')),
-                                    Permission::make('delete countries')
-                                        ->label(__('butik::cp.permission_delete_countries'))
-                                        ->description(__('butik::cp.permission_delete_countries_description')),
-                                ]),
-                        ]);
-                });
                 Permission::register('view shippings', function ($permission) {
                     $permission
                         ->label(__('butik::cp.permission_view_shippings'))
@@ -299,7 +279,6 @@ class StatamicButikServiceProvider extends AddonServiceProvider
                 ->route('butik.settings.index')
                 ->icon('settings-slider')
                 ->children([
-                    $nav->item(ucfirst(__('butik::cp.country_plural')))->route('butik.countries.index')->can('view countries'),
                     $nav->item(ucfirst(__('butik::cp.shipping_singular')))->route('butik.shipping.index')->can('view shippings'),
                     $nav->item(ucfirst(__('butik::cp.tax_plural')))->route('butik.taxes.index')->can('view taxes'),
                 ]);

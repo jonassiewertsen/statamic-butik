@@ -3,22 +3,21 @@
 namespace Jonassiewertsen\StatamicButik\Http\Livewire;
 
 use Jonassiewertsen\StatamicButik\Checkout\Cart as ShoppingCart;
-use Jonassiewertsen\StatamicButik\Http\Models\Country;
+use Jonassiewertsen\StatamicButik\Shipping\Country;
 use Livewire\Component;
 
 class CartList extends Component
 {
-    public $countrySlug;
+    public $country;
 
     public function mount()
     {
-        $this->countrySlug = ShoppingCart::country()['slug'];
+        $this->country = ShoppingCart::country();
     }
 
-    public function getCountryProperty()
+    public function updateCountry()
     {
-        ShoppingCart::setCountry($this->countrySlug);
-        return $this->countrySlug;
+        ShoppingCart::setCountry($this->country);
     }
 
     public function add($slug)
@@ -36,8 +35,7 @@ class CartList extends Component
     public function render()
     {
         return view('butik::web.cart.cart-list', [
-            'country'        => $this->country,
-            'countries'      => Country::pluck('name', 'slug'),
+            'countries'      => Country::list(),
             'items'          => ShoppingCart::get(),
             'total_price'    => ShoppingCart::totalPrice(),
             'total_shipping' => ShoppingCart::totalShipping(),

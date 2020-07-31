@@ -28,21 +28,7 @@ class ShippingProfilesController extends CpController
     {
         $this->authorize('show', ShippingProfile::class);
 
-        $zones = $shippingProfile->zones->map(function ($zone) {
-            return [
-                'id'        => $zone->id,
-                'title'     => $zone->title,
-                'type'      => $zone->type,
-                'countries' => $zone->countries,
-                'rates'     => $zone->rates,
-            ];
-        });
-
-        return [
-            'title' => $shippingProfile->title,
-            'slug'  => $shippingProfile->slug,
-            'zones' => $zones,
-        ];
+        return $shippingProfile->load('zones.rates');
     }
 
     public function store(Request $request)

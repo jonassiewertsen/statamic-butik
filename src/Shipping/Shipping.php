@@ -6,11 +6,10 @@ namespace Jonassiewertsen\StatamicButik\Shipping;
 use Illuminate\Support\Collection;
 use Jonassiewertsen\StatamicButik\Exceptions\ButikConfigException;
 use Jonassiewertsen\StatamicButik\Exceptions\ButikShippingException;
-use Jonassiewertsen\StatamicButik\Http\Models\Country;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
-use Jonassiewertsen\StatamicButik\Shipping\Country as CountryHelper;
+use Jonassiewertsen\StatamicButik\Shipping\Country;
 
 class Shipping
 {
@@ -24,7 +23,7 @@ class Shipping
     /**
      * Which country should we ship to?
      */
-    public Country $country;
+    public $country;
 
     /**
      * Which shipping profiles are used in the acutal shopping bag?
@@ -78,7 +77,7 @@ class Shipping
      */
     protected function detectCountry()
     {
-        $this->country = CountryHelper::get($returnArray = false);
+        $this->country = Country::get();
     }
 
     /**

@@ -5,8 +5,10 @@ namespace Jonassiewertsen\StatamicButik\Tests\Checkout;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
-use Jonassiewertsen\StatamicButik\Http\Models\Country;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
+use Jonassiewertsen\StatamicButik\Shipping\Country;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class CheckoutDeliveryTest extends TestCase
@@ -198,17 +200,9 @@ class CheckoutDeliveryTest extends TestCase
     }
 
     /** @test */
-    public function a_country_cant_be_to_long()
-    {
-        $data = $this->createUserData('country', str_repeat('a', 51));
-        $this->post(route('butik.checkout.delivery'), (array)$data)
-            ->assertSessionHasErrors('country');
-    }
-
-    /** @test */
     public function if_a_new_country_has_been_selected_the_view_will_be_reloaded()
     {
-        create(Country::class, ['slug' => 'spain']);
+        $country_code = 'ES';
 
         $deliveryRoute = route('butik.checkout.delivery');
 
@@ -216,20 +210,28 @@ class CheckoutDeliveryTest extends TestCase
         $this->get($deliveryRoute);
 
         // submit the form
-        $this->post($deliveryRoute, (array)$this->createUserData('country', 'spain'))
+        $this->post($deliveryRoute, (array)$this->createUserData('country', $country_code))
             ->assertRedirect($deliveryRoute);
     }
 
     /** @test */
-    public function if_a_new_country_has_been_selected_it_will_be_saved_in_the_card()
+    public function if_a_new_country_has_been_selected_it_will_be_saved_in_the_cart()
     {
-        $this->withoutExceptionHandling();
-        $newCountry = create(Country::class, ['slug' => 'spain'])->first();
+        $country_code = 'ES';
+
+        create(ShippingZone::class, [
+            'countries' => [$country_code]
+        ]);
+
+        create(ShippingRate::class, [
+            'shipping_zone_id' => ShippingZone::first()
+        ]);
 
         // submit the form
-        $this->post(route('butik.checkout.delivery'), (array)$this->createUserData('country', 'spain'));
+        $this->post(route('butik.checkout.delivery'), (array)$this->createUserData('country', $country_code))
+            ->assertRedirect();
 
-        $this->assertEquals($newCountry->slug, Cart::country()['slug']);
+        $this->assertEquals($country_code, Cart::country());
     }
 
     /** @test */
@@ -265,7 +267,7 @@ class CheckoutDeliveryTest extends TestCase
             'state_region' => '',
             'zip'          => '24579',
             'phone'        => '013643-23837',
-            'country'      => 'germany',
+            'country'      => 'DE',
         ];
 
         if ($key !== null || $value !== null) {

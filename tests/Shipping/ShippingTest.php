@@ -6,9 +6,9 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
+use Jonassiewertsen\StatamicButik\Shipping\Country;
 use Jonassiewertsen\StatamicButik\Shipping\Shipping;
 use Jonassiewertsen\StatamicButik\Exceptions\ButikConfigException;
-use Jonassiewertsen\StatamicButik\Http\Models\Country;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
@@ -23,11 +23,10 @@ class ShippingTest extends TestCase
         parent::setUp();
 
         $this->product = create(Product::class)->first();
-        $country = Country::first();
-        $zone = create(ShippingZone::class)->first();
-        $zone->addCountry($country);
+        $country = Country::get();
+        $zone = create(ShippingZone::class, [ 'countries' => [$country] ])->first();
 
-        Config::set('butik.country', $country->slug);
+        Config::set('butik.country', $country);
 
         Cart::add($this->product->slug);
     }
@@ -38,19 +37,19 @@ class ShippingTest extends TestCase
         $shipping = new Shipping(Cart::get());
         $shipping->handle();
 
-        $this->assertEquals($shipping->country->name, Country::first()->name);
+        $this->assertEquals($shipping->country, Country::get());
     }
 
     /** @test */
     public function the_default_country_will_be_found_as_well_if_written_in_lower_case()
     {
-        $country = Country::first();
-        Config::set('butik.country', Str::lower($country->name));
+        $country = Country::get();
+        Country::set($country);
 
         $shipping = new Shipping(Cart::get());
         $shipping->handle();
 
-        $this->assertEquals($shipping->country->name,  $country->name);
+        $this->assertEquals($shipping->country,  $country);
     }
 
     /** @test */
@@ -102,7 +101,7 @@ class ShippingTest extends TestCase
     /** @test */
     public function if_a_profile_cant_detect_a_belonging_shipping_zone_the_items_will_be_declared_as_non_sellable()
     {
-        Cart::setCountry(create(Country::class)->first()->slug);
+        Cart::setCountry(Country::get());
 
         $shipping = new Shipping(Cart::get());
         $shipping->handle();

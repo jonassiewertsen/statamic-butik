@@ -4,12 +4,12 @@ namespace Jonassiewertsen\StatamicButik\Tests\Shipping;
 
 use Illuminate\Support\Facades\Config;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
-use Jonassiewertsen\StatamicButik\Http\Models\Country;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
+use Jonassiewertsen\StatamicButik\Shipping\Country;
 use Jonassiewertsen\StatamicButik\Shipping\ShippingByPrice;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
@@ -17,7 +17,6 @@ class ShippingByPriceTest extends TestCase
 {
     use MoneyTrait;
 
-    public Country $country;
     public Product $product1;
     public Product $product2;
     public Product $product3;
@@ -30,13 +29,10 @@ class ShippingByPriceTest extends TestCase
         $this->product2 = create(Product::class, ['shipping_profile_slug' => ShippingProfile::first()->slug])->first();
         $this->product3 = create(Product::class)->first();
 
-        $this->country = Country::first();
-
         create(ShippingZone::class, [
             'shipping_profile_slug' => ShippingProfile::first()->slug,
+            'countries' => [Country::get()]
         ]);
-
-        ShippingZone::first()->addCountry($this->country);
 
         create(ShippingRate::class, [
             'shipping_zone_id' => ShippingZone::first()->id,
