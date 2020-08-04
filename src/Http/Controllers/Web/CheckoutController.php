@@ -6,9 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
-use Jonassiewertsen\StatamicButik\Http\Models\Country;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
+use Jonassiewertsen\StatamicButik\Shipping\Country;
 use Statamic\View\View as StatamicView;
 
 class CheckoutController extends Checkout
@@ -24,7 +23,7 @@ class CheckoutController extends Checkout
            ->layout(config('butik.layout_checkout-delivery'))
            ->with([
                 'customer'         => (array) $customer,
-                'countries'        => \Jonassiewertsen\StatamicButik\Shipping\Country::list(),
+                'countries'        => Country::list(),
                 'selected_country' => Cart::country(),
                 'items'            => $this->mappedCartItems(),
             ]);

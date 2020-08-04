@@ -25,7 +25,7 @@
                             </button>
                         </h3>
                         <ul class="flex leading-loose text-grey-70">
-                            <li class="mr-1" v-for="country in zone.countries_display">{{ country }}</li>
+                            <li class="mr-1" v-for="country in zone.country_names">{{ country }}</li>
                         </ul>
                     </section>
                 </header>

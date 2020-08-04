@@ -13,14 +13,53 @@ class Country
 
     /**
      * We will get the country. In case no country has been defined, we will
-     * fetch the default country from our config file.
+     * fetch the default country from the config file.
      */
-    public static function get()
+    public static function get(): string
     {
         return Session::get(self::SESSION, self::getDefault());
     }
 
-    private static function getDefault()
+    /**
+     * Will return the localized country name.
+     */
+    public static function getName(string $countryCode): ?string
+    {
+        $countryCode = strtoupper($countryCode);
+
+        if (! self::exists($countryCode)) {
+           return null;
+        }
+
+        return Countries::getName($countryCode, app()->getLocale());
+    }
+
+    /**
+     * Setting the country to our session.
+     */
+    public static function set(string $countryCode): void
+    {
+        if (self::exists($countryCode) && self::list()->has($countryCode)) {
+            Session::put(self::SESSION, $countryCode);
+        }
+    }
+
+    /**
+     * Returning all countries, used by any Shipping Profile.
+     */
+    public static function list()
+    {
+        return ShippingZone::all()
+            ->unique()
+            ->flatMap(fn ($shippingZone) => $shippingZone->countries)
+            ->sort()
+            ->mapWithKeys(fn ($countryCode) => [ $countryCode => self::getName($countryCode) ]);
+    }
+
+    /**
+     * Returning the default country code from the config file.
+     */
+    private static function getDefault(): string
     {
         $country = config('butik.country');
 
@@ -31,40 +70,11 @@ class Country
         return $country;
     }
 
-    private static function exists($country_code)
-    {
-        return Countries::exists($country_code);
-    }
-
-    public static function getName($country_code)
-    {
-        $country_code = strtoupper($country_code);
-
-        if (self::exists($country_code)) {
-            return Countries::getName($country_code, app()->getLocale());
-        }
-
-        return $country_code;
-    }
-
     /**
-     * Setting the country to our session
+     * Checking if the given country code does exist.
      */
-    public static function set(string $code): void
+    private static function exists($countryCode)
     {
-        if (self::exists($code) && self::list()->has($code)) {
-            Session::put(self::SESSION, $code);
-        }
-    }
-
-    public static function list()
-    {
-        return ShippingZone::all()->flatMap(function($shipping_zone) {
-            return $shipping_zone->countries;
-        })
-        ->sort()
-        ->mapWithKeys(function ($country_code) {
-            return [$country_code => self::getName($country_code)];
-        });
+        return Countries::exists($countryCode);
     }
 }

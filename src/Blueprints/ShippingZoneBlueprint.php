@@ -9,8 +9,7 @@ use Symfony\Component\Intl\Countries;
 
 class ShippingZoneBlueprint extends Blueprint
 {
-    private array $shippingTypeNames;
-
+    // TODO: Refactor this blueprint
     public function __invoke()
     {
         return StatamicBlueprint::make()->setContents([
@@ -111,15 +110,15 @@ class ShippingZoneBlueprint extends Blueprint
 
     private function shippingTypes(): array
     {
-        $types                   = config('butik.shipping');
-        $this->shippingTypeNames = [];
+        $types             = config('butik.shipping');
+        $shippingTypeNames = [];
 
         foreach ($types as $slug => $shippingType) {
             $name = (new $shippingType())->name;
 
-            $this->shippingTypeNames[$slug] = $name;
+            $shippingTypeNames[$slug] = $name;
         }
 
-        return $this->shippingTypeNames;
+        return $shippingTypeNames;
     }
 }

@@ -19,9 +19,9 @@ class ShippingZone extends ButikModel
         'updated_at',
     ];
 
-    protected $appends = ['countries_display'];
+    protected $appends = ['country_names'];
 
-    public function getCountriesDisplayAttribute()
+    public function getCountryNamesAttribute()
     {
         return $this->countries->map(function ($countryCode) {
             return Country::getName($countryCode);

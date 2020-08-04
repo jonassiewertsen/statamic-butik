@@ -2,8 +2,6 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Models;
 
-use Illuminate\Support\Facades\DB;
-
 class ShippingProfile extends ButikModel
 {
     public    $incrementing = false;
@@ -25,11 +23,11 @@ class ShippingProfile extends ButikModel
         return $this->hasMany(ShippingZone::class, 'shipping_profile_slug');
     }
 
-    public function whereZoneFrom($country_code): ?ShippingZone
+    public function whereZoneFrom($countryCode): ?ShippingZone
     {
         return $this->zones()
                     ->has('rates')
-                    ->where('countries', 'LIKE', "%\"$country_code\"%")
+                    ->where('countries', 'LIKE', "%\"$countryCode\"%")
                     ->first();
     }
 }
