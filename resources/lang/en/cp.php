@@ -30,6 +30,7 @@ return [
     'order_singular'                          => 'order',
     'order_plural'                            => 'orders',
     'order_overview'                          => 'orders overview',
+    'order_successfull'                       => 'succesfull orders',
     'pait_at'                                 => 'pait at',
     'price'                                   => 'price',
     'price_section'                           => 'price section',
