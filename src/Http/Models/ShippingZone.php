@@ -3,8 +3,6 @@
 namespace Jonassiewertsen\StatamicButik\Http\Models;
 
 use Jonassiewertsen\StatamicButik\Shipping\Country;
-use PHPUnit\Framework\Constraint\Count;
-use Symfony\Component\Intl\Countries;
 
 class ShippingZone extends ButikModel
 {
@@ -13,19 +11,19 @@ class ShippingZone extends ButikModel
     protected $guarded = [];
 
     protected $casts = [
-        'countries' => 'collection'
+        'countries' => 'collection',
     ];
 
     protected $hidden = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     protected $appends = ['countries_display'];
 
     public function getCountriesDisplayAttribute()
     {
-        return $this->countries->map(function($countryCode) {
+        return $this->countries->map(function ($countryCode) {
             return Country::getName($countryCode);
         });
     }
@@ -49,7 +47,6 @@ class ShippingZone extends ButikModel
      */
     public function rates()
     {
-        return $this->hasMany(ShippingRate::class)
-                    ->orderBy('minimum');
+        return $this->hasMany(ShippingRate::class)->orderBy('minimum');
     }
 }

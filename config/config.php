@@ -15,7 +15,7 @@ return [
     'address1' => '132 Main Street',
     'address2' => 'Sea view, Fahrensodde', // can be left empty
     'zip_city' => '24937 Flensburg',
-    'country'  => 'DE', // Set your default country
+    'country'  => 'DE', // Set your countries iso code
     'phone'    => '+49 1294 238474934',
     'mail'     => 'butik@shop.com',
 
