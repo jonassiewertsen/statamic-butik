@@ -23,6 +23,10 @@ class ShippingZone extends ButikModel
 
     public function getCountryNamesAttribute()
     {
+        if (! $this->countries) {
+            return null;
+        }
+
         return $this->countries->map(function ($countryCode) {
             return Country::getName($countryCode);
         });
