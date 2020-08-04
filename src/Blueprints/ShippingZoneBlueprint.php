@@ -66,9 +66,9 @@ class ShippingZoneBlueprint extends Blueprint
                                     },
                                     function ($attribute, $value, $fail) {
                                         if(ShippingZone::all()
-                                            ->filter(function($shipping_zone) use ($value) {
+                                            ->filter(function($shippingZone) use ($value) {
                                                 foreach ($value as $country_code) {
-                                                    if ($shipping_zone->countries->contains($country_code)) {
+                                                    if ($shippingZone->countries && $shippingZone->countries->contains($country_code)) {
                                                         return true;
                                                     }
                                                 }
