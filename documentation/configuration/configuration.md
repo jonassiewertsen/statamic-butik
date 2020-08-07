@@ -13,18 +13,15 @@ Those information will mostly be used for view or email templates.
 'address1' => '132 Main Street',
 'address2' => 'Sea view, Fahrensodde', 
 'zip_city' => '24937 Flensburg',
-'country'  => 'Germany',
+'country'  => 'DE',
 'phone'    => '+49 1294 238474934',
 'mail'     => 'butik@shop.com',
 ```
 
 {% hint style="info" %}
-If the defined country in your config file won't match with any country from your control panel, an exception will be thrown.
+ You need to define your country via an alpha-2 iso code.  
+[https://en.wikipedia.org/wiki/ISO\_3166-1\_alpha-2\#Officially\_assigned\_code\_elements](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements)
 {% endhint %}
-
-Follow this link to see how you can define countries in your control panel.
-
-{% page-ref page="countries.md" %}
 
 The defined country will be set as your default country. As long as a user does not select another country in the checkout process, all shipping prices will be calculated on the basis of the default country.
 

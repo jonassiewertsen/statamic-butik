@@ -2,8 +2,6 @@
 
 Your shipping settings can be kept simple or really complex if you need them to be. 
 
-![Edit your shipping settings in the control panel.](../.gitbook/assets/shipping-menu.png)
-
 ## Shipping Profiles
 
 A shipping profile is the connection between your product and the calculation of the shipping price. You need to choose one shipping profile for each product.
@@ -53,7 +51,11 @@ To edit a shipping zone, you'll find the edit symbol beside the shipping zone na
 
 This is the place to connect or disconnect existing countries to your shipping zone.
 
-![Nice toggle buttons.](../.gitbook/assets/manage-shipping-zone.png)
+![The selected countries will be shown](../.gitbook/assets/manage-shipping-zone.png)
+
+To add more countries, start typing inside the field to search between all world countries. 
+
+![With an automatically integrated search](../.gitbook/assets/searching-for-countries.png)
 
 {% hint style="info" %}
 Every country can only be connected to one shipping zone per shipping profile. 

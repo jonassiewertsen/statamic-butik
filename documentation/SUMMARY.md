@@ -14,7 +14,6 @@
 
 * [Config File](configuration/configuration.md)
 * [Taxes](configuration/taxes.md)
-* [Countries](configuration/countries.md)
 * [Shipping](configuration/shipping.md)
 * [Products](configuration/products.md)
 * [Permissions](configuration/permissions.md)
