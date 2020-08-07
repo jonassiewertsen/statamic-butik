@@ -85,7 +85,9 @@ class SetUpButik extends Command
         $this->info('################################################################');
         $this->info('');
 
-        $countryIso = $this->ask('Whats your Country iso code? Your locale. Fx: de');
+        $this->info('Make sure to define your country as alpha-2 iso code.');
+        $this->warn('https://butik.dev/installation/configuration#shop-information');
+        $countryIso = $this->ask('Whats your Country iso alpha-2 code? Fx: DE, GB, ES, US');
 
         $this->line('Make sure to define your default country in your config file:');
         $this->warn('https://butik.dev/installation/configuration#shop-information');
