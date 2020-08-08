@@ -74,9 +74,6 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     ];
 
     protected $middlewareGroups = [
-        'validateExpressCheckoutRoute' => [
-            \Jonassiewertsen\StatamicButik\Http\Middleware\ValidateExpressCheckoutRoute::class,
-        ],
         'validateCheckoutRoute'        => [
             \Jonassiewertsen\StatamicButik\Http\Middleware\ValidateCheckoutRoute::class,
         ],
