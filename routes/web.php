@@ -39,7 +39,7 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\Web')
         ->name('checkout.payment')
         ->middleware(['cartNotEmpty', 'validateCheckoutRoute']);
 
-    Route::get('process/express-payment', 'PaymentGatewayController@processPayment')
+    Route::get('process/payment', 'PaymentGatewayController@processPayment')
         ->name('payment.process')
         ->middleware(['cartNotEmpty', 'validateCheckoutRoute']);
 
