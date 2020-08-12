@@ -53,7 +53,7 @@ class CheckoutPaymentTest extends TestCase
         $this->get(route('butik.checkout.payment'))
             ->assertSee('Pay now')
             ->assertSee('Name')
-            ->assertSee('Mail')
+            ->assertSee('Email')
             ->assertSee('Country')
             ->assertSee('Address line 1')
             ->assertSee('City')
