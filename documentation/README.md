@@ -87,7 +87,8 @@ What Butik can provide:
 
 #### Permissions
 
-* [x] manage your customers user permissions
+* [x] manage permissions for your team
+* [x] manage explicit actions
 
 #### Settings
 
