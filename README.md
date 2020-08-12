@@ -14,7 +14,7 @@ Right now, I am working hard to get version 2 out through the door. There will b
 Please check out the beta version and the very enhanced documentation: [butik.dev](https://www.butik.dev)
 
 # Links
-- [Documentation](https://www.butik.dev)
+- [Documentation (version 2)](https://www.butik.dev)
 - [Github issue tracking](https://github.com/jonassiewertsen/statamic-butik)
 - [Share your ideas & wishes with me](https://feedback.userreport.com/81c07a00-5ad7-4f63-b28d-503c3a76bfdc/)
 
