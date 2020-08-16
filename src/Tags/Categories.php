@@ -23,7 +23,7 @@ class Categories extends \Statamic\Tags\Tags
             ];
         });
 
-        if ($this->getBool('root', true)) {
+        if (function_exists($this->getBool('root')) && $this->getBool('root', true)) {
             $categories->prepend($this->rootData());
         }
 
