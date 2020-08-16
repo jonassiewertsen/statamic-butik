@@ -2,7 +2,6 @@
 
 namespace Jonassiewertsen\StatamicButik\Tests\Checkout;
 
-use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
@@ -14,6 +13,8 @@ use Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\MolliePayment
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
+use Jonassiewertsen\StatamicButik\Order\ItemCollection;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 use Jonassiewertsen\StatamicButik\Tests\Utilities\MollieCustomer;
 use Jonassiewertsen\StatamicButik\Tests\Utilities\MolliePaymentOpen;
@@ -22,7 +23,10 @@ use Mollie\Laravel\Facades\Mollie;
 
 class CreateOpenOrderTest extends TestCase
 {
+    use MoneyTrait;
+
     protected Customer $customer;
+    protected string $totalPrice;
     protected ?Collection $items;
 
     public function setUp(): void
@@ -32,6 +36,7 @@ class CreateOpenOrderTest extends TestCase
         $this->customer = (new Customer($this->createUserData()));
         $this->items    = collect();
         $this->items->push(new Item(factory(Product::class)->create()->slug));
+        $this->totalPrice = $this->items->first()->totalPrice();
 
         Session::put('butik.customer', $this->customer);
 
@@ -60,7 +65,7 @@ class CreateOpenOrderTest extends TestCase
         $this->checkout();
         $payment = new MolliePaymentSuccessful;
 
-        $this->assertDatabaseHas('butik_orders', ['transaction_id' => $payment->id]);
+        $this->assertDatabaseHas('butik_orders', ['id' => $payment->id]);
     }
 
     /** @test */
@@ -86,36 +91,32 @@ class CreateOpenOrderTest extends TestCase
         $this->checkout();
         $payment = new MolliePaymentSuccessful;
 
-        $value = number_format($payment->amount->value, 0);
+        $totalPrice = $this->makeAmountSaveable($this->totalPrice);
 
-        $this->assertDatabaseHas('butik_orders', ['total_amount' => $value * 100]);
+        $this->assertDatabaseHas('butik_orders', ['total_amount' => $totalPrice]);
     }
 
     /** @test */
     public function the_order_will_have_created_at_date()
     {
         $this->checkout();
-        $payment = new MolliePaymentSuccessful;
-
-        $this->assertDatabaseHas('butik_orders', ['created_at' => Carbon::parse($payment->createdAt)]);
+        $this->assertDatabaseHas('butik_orders', ['created_at' => now()]);
     }
 
     /** @test */
     public function paid_at_will_stay_null_for_the_moment()
     {
         $this->checkout();
-
         $this->assertDatabaseHas('butik_orders', ['paid_at' => null]);
     }
 
     /** @test */
-    public function the_express_checkout_product_will_be_saved_as_json()
+    public function the_products_will_be_saved_as_json()
     {
         $this->checkout();
 
-        $transaction = (new Transaction())->items($this->items);
-
-        $this->assertDatabaseHas('butik_orders', ['items' => json_encode($transaction->items)]);
+        $items = new ItemCollection($this->items);
+        $this->assertDatabaseHas('butik_orders', ['items' => json_encode($items)]);
     }
 
     /** @test */
@@ -130,12 +131,10 @@ class CreateOpenOrderTest extends TestCase
     {
         $openPayment = new MolliePaymentOpen();
         Mollie::shouldReceive('api->customers->create')->andReturn(new MollieCustomer());
-        Mollie::shouldReceive('api->payments->create')->andReturn($openPayment);
-        Mollie::shouldReceive('api->payments->get')->with($openPayment->id)->andReturn($openPayment);
+        Mollie::shouldReceive('api->orders->create')->andReturn($openPayment);
+        Mollie::shouldReceive('api->orders->get')->with($openPayment->id)->andReturn($openPayment);
 
-        $totalPrice = $this->items->first()->totalPrice();
-
-        (new MolliePaymentGateway())->handle($this->customer, $this->items, $totalPrice);
+        (new MolliePaymentGateway())->handle($this->customer, $this->items, $this->totalPrice);
     }
 
     private function createUserData($key = null, $value = null)

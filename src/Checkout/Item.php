@@ -201,7 +201,7 @@ class Item
         });
     }
 
-    private function totalTaxAmount()
+    public function totalTaxAmount()
     {
         $totalPrice = $this->makeAmountSaveable($this->totalPrice());
         $tax = $totalPrice * ($this->taxRate / (100 + $this->taxRate));

@@ -2,17 +2,16 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
-use Jonassiewertsen\StatamicButik\Checkout\Transaction;
 use Jonassiewertsen\StatamicButik\Events\OrderCreated;
-use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
+use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Traits\MollyLocale;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
+use Jonassiewertsen\StatamicButik\Order\ItemCollection;
 use Mollie\Laravel\Facades\Mollie;
 
 class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInterface
@@ -20,43 +19,14 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
     use MollyLocale;
     use MoneyTrait;
 
-    /**
-     * The total amount we will charge the customer with. The price
-     * needs to be written with dot notation to make Mollie happy.
-     */
-    protected string $totalPrice;
-
-    /**
-     * All data from this transaction
-     */
-    protected Transaction $transaction;
-
     public function handle(Customer $customer, Collection $items, string $totalPrice)
     {
-        $mollieCustomer = Mollie::api()->customers()->create([
-            'name'  => $customer->name,
-            'email' => $customer->mail,
-        ]);
+        $payment = Mollie::api()->orders()->create(
+            $this->createMollieOrderData($customer, $items, $totalPrice)
+        );
 
-        $orderId          = str_random(20);
-        $this->totalPrice = $totalPrice;
-
-        $payment = Mollie::api()
-            ->payments()
-            ->create($this->paymentInformation($items, $mollieCustomer, $orderId));
-
-        $payment = Mollie::api()->payments()->get($payment->id);
-
-        $this->transaction = (new Transaction())
-            ->id($orderId)
-            ->orderNumber($payment->id)
-            ->method($payment->method ?? '')
-            ->totalAmount($payment->amount->value)
-            ->createdAt(Carbon::parse($payment->createdAt))
-            ->items($items)
-            ->customer($customer);
-
-        event(new OrderCreated($this->transaction));
+        $order = $this->createOrder($customer, $items, $totalPrice, $payment);
+        event(new OrderCreated($order));
 
         // redirect customer to Mollie checkout page
         return redirect($payment->getCheckoutUrl(), 303);
@@ -67,7 +37,8 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
         if (!$request->has('id')) {
             return;
         }
-        $payment = Mollie::api()->payments()->get($request->id);
+
+        $payment = Mollie::api()->orders()->get($request->id);
 
         switch ($payment->status) {
             case 'paid':
@@ -88,46 +59,85 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
         }
     }
 
-    private function paymentInformation($items, $mollieCustomer, $orderId)
+    private function createOrder($customer, $items, $totalPrice, $payment): Order
     {
-        $payment = [
-            'description' => 'ORDER ' . $orderId,
-            'customerId'  => $mollieCustomer->id,
-            'metadata'    => $this->generateMetaData($items, $orderId),
-            'locale'      => $this->getLocale(),
-            'redirectUrl' => URL::temporarySignedRoute('butik.payment.receipt', now()->addMinutes(5), ['order' => $orderId]),
-            'amount'      => [
+        $order               = new Order();
+        $order->id           = $payment->id;
+        $order->number       = now()->format('Ymd_') . str_random(30);
+        $order->status       = 'open';
+        $order->method       = $payment->method;
+        $order->customer     = $customer;
+        $order->total_amount = $totalPrice;
+        $order->items        = new ItemCollection($items);
+        $order->save();
+
+        return $order;
+    }
+
+    private function createMollieOrderData($customer, $items, $totalPrice)
+    {
+        $orderData = [
+            'amount' => [
                 'currency' => config('butik.currency_isoCode'),
-                'value'    => $this->totalPrice,
+                'value'    => $totalPrice,
             ],
+            'billingAddress' => [
+                'givenName'       => $customer->name,
+                'familyName'      => $customer->name,
+                'streetAndNumber' => $customer->address1 . ', ' . $customer->address2,
+                'city'            => $customer->city,
+                'postalCode'      => $customer->zip,
+                'country'         => $customer->country,
+                'email'           => $customer->mail,
+            ],
+            'orderNumber' => $orderId = now()->format('Ymd_') . str_random(30),
+            'locale'      => $this->getLocale(),
+            'webhookUrl' => env('MOLLIE_NGROK_REDIRECT') . route('butik.payment.webhook.mollie', [], false),
+            'redirectUrl' => URL::temporarySignedRoute('butik.payment.receipt', now()->addMinutes(5), ['order' => $orderId]),
+            'lines'       => $this->mapItems($items),
         ];
 
         if (!App::environment(['local'])) {
             // Only adding the mollie webhook, when not in local environment
-            $payment = array_merge($payment, [
+            $orderData = array_merge($orderData, [
                 'webhookUrl' => route('butik.payment.webhook.mollie'),
             ]);
         } elseif (App::environment(['local']) && $this->ngrokSet()) {
             // When local env and the the NGROK has been set, it will add the ngrok url
             $route = env('MOLLIE_NGROK_REDIRECT') . route('butik.payment.webhook.mollie', [], false);
 
-            $payment = array_merge($payment, [
+            $orderData = array_merge($orderData, [
                 'webhookUrl' => $route,
             ]);
         }
 
-        return $payment;
+        return $orderData;
     }
 
-    private function generateMetaData($items, $orderId)
+    private function mapItems($items)
     {
-        $meta = 'ORDER ' . $orderId . ': ';
-
-        foreach ($items as $item) {
-            $meta = $meta . $item->getQuantity() . ' x ' . $item->name . '; ';
-        }
-
-        return $meta;
+        return $items->map(function($item) {
+            return [
+                'type'           => 'physical',
+                'sku'            => $item->slug,
+                'name'           => $item->name,
+                'imageUrl'       => $this->images[0] ?? null,
+                'quantity'       => $item->getQuantity(),
+                'vatRate'        => (string) number_format($item->taxRate, 2),
+                'unitPrice'      => [
+                    'currency' => config('butik.currency_isoCode'),
+                    'value'    => $this->humanPriceWithDot($item->singlePrice()),
+                ],
+                'totalAmount'    => [
+                    'currency' => config('butik.currency_isoCode'),
+                    'value'    => $this->humanPriceWithDot($item->totalPrice()),
+                ],
+                'vatAmount'      => [
+                    'currency' => config('butik.currency_isoCode'),
+                    'value'    => $this->humanPriceWithDot($item->taxAmount),
+                ]
+            ];
+        })->toArray();
     }
 
     private function ngrokSet(): bool

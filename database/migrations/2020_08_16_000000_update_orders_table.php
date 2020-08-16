@@ -17,6 +17,10 @@ class UpdateOrdersTable extends Migration
         });
 
         Schema::table('butik_orders', function (Blueprint $table) {
+            $table->renameColumn('transaction_id', 'number');
+        });
+
+        Schema::table('butik_orders', function (Blueprint $table) {
             $table->timestamp('expired_at')->nullable()->after('completed_at');
             $table->timestamp('canceled_at')->nullable()->after('expired_at');
         });

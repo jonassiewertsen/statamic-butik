@@ -39,4 +39,36 @@ class Order extends ButikModel
     {
         $this->attributes['total_amount'] = $this->makeAmountSaveable($value);
     }
+
+    /**
+     * Will return the base price for this item
+     */
+    public function getCustomerAttribute($value)
+    {
+        return json_decode($value);
+    }
+
+    /**
+     * Mutating from a the correct amount into a integer without commas
+     */
+    public function setCustomerAttribute($value)
+    {
+        $this->attributes['customer'] = json_encode($value);
+    }
+
+    /**
+     * Will return the base price for this item
+     */
+    public function getItemsAttribute($value)
+    {
+        return json_decode($value);
+    }
+
+    /**
+     * Mutating from a the correct amount into a integer without commas
+     */
+    public function setItemsAttribute($value)
+    {
+        $this->attributes['items'] = json_encode($value);
+    }
 }

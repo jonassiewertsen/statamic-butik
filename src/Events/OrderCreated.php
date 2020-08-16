@@ -4,6 +4,7 @@ namespace Jonassiewertsen\StatamicButik\Events;
 
 use Illuminate\Queue\SerializesModels;
 use Jonassiewertsen\StatamicButik\Checkout\Transaction;
+use Jonassiewertsen\StatamicButik\Http\Models\Order;
 
 class OrderCreated
 {
@@ -11,8 +12,8 @@ class OrderCreated
 
     public Transaction $transaction;
 
-    public function __construct(Transaction $transaction)
+    public function __construct(Order $order)
     {
-        $this->transaction = $transaction;
+        $this->order = $order;
     }
 }

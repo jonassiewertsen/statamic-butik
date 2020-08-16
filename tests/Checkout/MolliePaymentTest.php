@@ -22,7 +22,7 @@ class MolliePaymentTest extends TestCase
     /** @test */
     public function a_successful_payment_will_fire_the_an_event()
     {
-        $order = create(Order::class, ['transaction_id' => 'tr_fake_id'])->first();
+        $order = create(Order::class, ['number' => 'tr_fake_id'])->first();
         $this->mockMollie(new MolliePaymentSuccessful());
 
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $order->id]);
@@ -32,7 +32,7 @@ class MolliePaymentTest extends TestCase
     /** @test */
     public function a_successful_payment_without_payment_id_wont_fire_the_event()
     {
-        create(Order::class, ['transaction_id' => 'tr_fake_id']);
+        create(Order::class, ['number' => 'tr_fake_id']);
         $this->mockMollie(new MolliePaymentSuccessful());
 
         $this->post(route('butik.payment.webhook.mollie'));
@@ -45,13 +45,13 @@ class MolliePaymentTest extends TestCase
         $order = create(Order::class)->first();
 
         $paymentResponse     = new MolliePaymentSuccessful();
-        $paymentResponse->id = $order->transaction_id;
+        $paymentResponse->id = $order->number;
 
         $this->mockMollie($paymentResponse);
 
-        $this->assertDatabaseHas('butik_orders', ['transaction_id' => $order->transaction_id, 'status' => 'open']);
+        $this->assertDatabaseHas('butik_orders', ['number' => $order->number, 'status' => 'open']);
 
-        $this->post(route('butik.payment.webhook.mollie'), ['id' => $order->transaction_id]);
+        $this->post(route('butik.payment.webhook.mollie'), ['id' => $order->number]);
         $this->assertDatabaseHas('butik_orders', [
             'id'      => $order->id,
             'paid_at' => now(),
@@ -65,7 +65,7 @@ class MolliePaymentTest extends TestCase
         $order = create(Order::class)->first();
 
         $paymentResponse     = new MolliePaymentCanceled();
-        $paymentResponse->id = $order->transaction_id;
+        $paymentResponse->id = $order->number;
 
         $this->mockMollie($paymentResponse);
 
@@ -73,10 +73,10 @@ class MolliePaymentTest extends TestCase
 
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $order->id]);
         $this->assertDatabaseHas('butik_orders', [
-            'id'             => $order->id,
-            'transaction_id' => $paymentResponse->id,
-            'canceled_at'    => now(),
-            'status'         => 'canceled',
+            'id'          => $order->id,
+            'number'      => $paymentResponse->id,
+            'canceled_at' => now(),
+            'status'      => 'canceled',
         ]);
     }
 
@@ -95,7 +95,7 @@ class MolliePaymentTest extends TestCase
         $order = create(Order::class)->first();
 
         $paymentResponse     = new MolliePaymentExpired();
-        $paymentResponse->id = $order->transaction_id;
+        $paymentResponse->id = $order->number;
 
         $this->mockMollie($paymentResponse);
 
@@ -103,9 +103,9 @@ class MolliePaymentTest extends TestCase
 
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $order->id]);
         $this->assertDatabaseHas('butik_orders', [
-            'id'             => $order->id,
-            'transaction_id' => $paymentResponse->id,
-            'status'         => 'expired',
+            'id'     => $order->id,
+            'number' => $paymentResponse->id,
+            'status' => 'expired',
         ]);
     }
 
@@ -124,7 +124,7 @@ class MolliePaymentTest extends TestCase
         $order = create(Order::class)->first();
 
         $paymentResponse     = new MolliePaymentCanceled();
-        $paymentResponse->id = $order->transaction_id;
+        $paymentResponse->id = $order->number;
 
         $this->mockMollie($paymentResponse);
 
@@ -132,15 +132,15 @@ class MolliePaymentTest extends TestCase
 
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $order->id]);
         $this->assertDatabaseHas('butik_orders', [
-            'id'             => $order->id,
-            'transaction_id' => $paymentResponse->id,
-            'status'         => 'canceled',
+            'id'     => $order->id,
+            'number' => $paymentResponse->id,
+            'status' => 'canceled',
         ]);
     }
 
     public function mockMollie($mock)
     {
-        Mollie::shouldReceive('api->payments->get')
+        Mollie::shouldReceive('api->orders->get')
             ->andReturn($mock);
     }
 }

@@ -40,7 +40,7 @@ abstract class PaymentGateway extends WebController
 
     private function updateOrderStatus($payment): void
     {
-        $order = Order::whereTransactionId($payment->id)->firstOrFail();
+        $order = Order::whereNumber($payment->id)->firstOrFail();
         $timestamp = $payment->status . '_at';
         $order->update([
             'status'    => $payment->status,
