@@ -69,21 +69,22 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
         }
         $payment = Mollie::api()->payments()->get($request->id);
 
-        if ($payment->isPaid()) {
-            $this->setOrderStatusToPaid($payment);
-            event(new PaymentSuccessful($payment));
-        }
-
-        if ($payment->isFailed()) {
-            $this->setOrderStatusToFailed($payment);
-        }
-
-        if ($payment->isExpired()) {
-            $this->setOrderStatusToExpired($payment);
-        }
-
-        if ($payment->isCanceled()) {
-            $this->setOrderStatusToCanceled($payment);
+        switch ($payment->status) {
+            case 'paid':
+                $this->isPaid($payment);
+                break;
+            case 'authorized':
+                $this->isAuthorized($payment);
+                break;
+            case 'completed':
+                $this->isCompleted($payment);
+                break;
+            case 'expired':
+                $this->isExpired($payment);
+                break;
+            case 'canceled':
+                $this->isCanceled($payment);
+                break;
         }
     }
 

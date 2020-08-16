@@ -2,47 +2,49 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways;
 
-use Carbon\Carbon;
+use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 
 abstract class PaymentGateway extends WebController
 {
-    protected function setOrderStatusToPaid($payment): void
+    protected function isPaid($payment)
     {
-        $order = Order::whereTransactionId($payment->id)->firstOrFail();
-        $order->update([
-            'status'  => 'paid',
-            'method'  => $payment->method,
-            'paid_at' => Carbon::parse($payment->paidAt),
-        ]);
+        $this->updateOrderStatus($payment);
+        event(new PaymentSuccessful($payment));
     }
 
-    protected function setOrderStatusToFailed($payment): void
+    protected function isAuthorized($payment)
+    {
+        $this->updateOrderStatus($payment);
+        // TODO: Fire authorized event
+    }
+
+    protected function isCompleted($payment)
+    {
+        $this->updateOrderStatus($payment);
+        // TODO: Fire completed event
+    }
+
+    protected function isExpired($payment)
+    {
+        $this->updateOrderStatus($payment);
+        // TODO: Fire expired event
+    }
+
+    protected function isCanceled($payment)
+    {
+        $this->updateOrderStatus($payment);
+        // TODO: Fire canceled event
+    }
+
+    private function updateOrderStatus($payment): void
     {
         $order = Order::whereTransactionId($payment->id)->firstOrFail();
         $order->update([
-            'status'    => 'failed',
+            'status'    => $payment->status,
             'method'    => $payment->method,
-            'failed_at' => Carbon::parse($payment->failedAt),
-        ]);
-    }
-
-    protected function setOrderStatusToExpired($payment): void
-    {
-        $order = Order::whereTransactionId($payment->id)->firstOrFail();
-        $order->update([
-            'method' => $payment->method,
-            'status' => 'expired',
-        ]);
-    }
-
-    protected function setOrderStatusToCanceled($payment): void
-    {
-        $order = Order::whereTransactionId($payment->id)->firstOrFail();
-        $order->update([
-            'method' => $payment->method,
-            'status' => 'canceled',
+            // TODO: Define the last updated at date
         ]);
     }
 }
