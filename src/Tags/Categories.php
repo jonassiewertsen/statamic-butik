@@ -23,7 +23,7 @@ class Categories extends \Statamic\Tags\Tags
             ];
         });
 
-        if (function_exists($this->getBool('root')) && $this->getBool('root', true)) {
+        if ($this->params->bool('root', true)) {
             $categories->prepend($this->rootData());
         }
 
@@ -46,7 +46,7 @@ class Categories extends \Statamic\Tags\Tags
     protected function rootData()
     {
         return [
-            'name'       => $this->getParam('root_name', 'Start'),
+            'name'       => $this->params->get('root_name', 'Start'),
             'slug'       => null,
             'url'        => route('butik.shop'),
             'is_current' => URL::getCurrent() == route('butik.shop', [], false),

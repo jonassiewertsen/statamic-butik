@@ -30,8 +30,6 @@ class ProductCategoryTest extends TestCase
     /** @test */
     public function without_any_products_a_description_will_be_shown()
     {
-        $this->withoutExceptionHandling();
-
         $this->get(route('butik.shop.category', $this->category))
             ->assertSee(__('butik::web.no_proucts_available_in_this_category'));
     }
@@ -39,8 +37,6 @@ class ProductCategoryTest extends TestCase
     /** @test */
     public function only_a_product_of_this_category_will_be_shown()
     {
-        $this->withoutExceptionHandling();
-
         $this->category->addProduct($this->product);
 
         $this->get(route('butik.shop.category', $this->category))
