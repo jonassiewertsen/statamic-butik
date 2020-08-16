@@ -63,7 +63,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     ];
 
     protected $listen = [
-        \Jonassiewertsen\StatamicButik\Events\PaymentSubmitted::class  => [
+        \Jonassiewertsen\StatamicButik\Events\OrderCreated::class => [
             \Jonassiewertsen\StatamicButik\Listeners\CreateOpenOrder::class,
         ],
         \Jonassiewertsen\StatamicButik\Events\PaymentSuccessful::class => [

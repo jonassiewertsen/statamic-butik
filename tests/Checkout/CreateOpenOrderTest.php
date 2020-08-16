@@ -9,7 +9,7 @@ use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Checkout\Transaction;
-use Jonassiewertsen\StatamicButik\Events\PaymentSubmitted;
+use Jonassiewertsen\StatamicButik\Events\OrderCreated;
 use Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\MolliePaymentGateway;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
@@ -43,7 +43,7 @@ class CreateOpenOrderTest extends TestCase
     {
         Event::fake();
         $this->checkout();
-        Event::assertDispatched(PaymentSubmitted::class);
+        Event::assertDispatched(OrderCreated::class);
     }
 
     /** @test */

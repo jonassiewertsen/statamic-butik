@@ -4,15 +4,14 @@ namespace Jonassiewertsen\StatamicButik\Listeners;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\SerializesModels;
-use Jonassiewertsen\StatamicButik\Checkout\Transaction;
-use Jonassiewertsen\StatamicButik\Events\PaymentSubmitted;
+use Jonassiewertsen\StatamicButik\Events\OrderCreated;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 
 class CreateOpenOrder implements ShouldQueue
 {
     use SerializesModels;
 
-    public function handle(PaymentSubmitted $event)
+    public function handle(OrderCreated $event)
     {
         Order::create([
             'id'             => $event->transaction->id,

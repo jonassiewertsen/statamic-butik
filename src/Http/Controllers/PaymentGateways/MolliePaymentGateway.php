@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Transaction;
-use Jonassiewertsen\StatamicButik\Events\PaymentSubmitted;
+use Jonassiewertsen\StatamicButik\Events\OrderCreated;
 use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
 use Jonassiewertsen\StatamicButik\Http\Traits\MollyLocale;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
@@ -56,7 +56,7 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
             ->items($items)
             ->customer($customer);
 
-        event(new PaymentSubmitted($this->transaction));
+        event(new OrderCreated($this->transaction));
 
         // redirect customer to Mollie checkout page
         return redirect($payment->getCheckoutUrl(), 303);

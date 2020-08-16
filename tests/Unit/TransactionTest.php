@@ -41,7 +41,7 @@ class TransactionTest extends TestCase
         $id = 'some-id-234';
         $this->transaction->transactionId($id);
 
-        $this->assertEquals($id, $this->transaction->transactionId);
+        $this->assertEquals($id, $this->transaction->orderNumber);
     }
 
     /** @test */
