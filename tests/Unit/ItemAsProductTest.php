@@ -40,6 +40,14 @@ class ItemAsProductTest extends TestCase
     }
 
     /** @test */
+    public function it_has_a_taxAmount()
+    {
+        $item = new Item($this->product->slug);
+
+        $this->assertEquals($item->taxAmount, $this->product->tax_amount);
+    }
+
+    /** @test */
     public function it_has_a_name()
     {
         $item = new Item($this->product->slug);
