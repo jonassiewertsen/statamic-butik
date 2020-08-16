@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 
 class Transaction {
     public string     $id;
-    public string     $transactionId;
+    public string     $orderNumber;
     public string     $status;
     public string     $method;
     public string     $currencyIsoCode;
@@ -29,8 +29,8 @@ class Transaction {
         return $this;
     }
 
-    public function transactionId(string $value): self {
-        $this->transactionId = $value;
+    public function orderNumber(string $value): self {
+        $this->orderNumber = $value;
         return $this;
     }
 

@@ -3,9 +3,9 @@
 namespace Jonassiewertsen\StatamicButik\Tests\Checkout;
 
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
-use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Checkout\Transaction;
@@ -22,8 +22,8 @@ use Mollie\Laravel\Facades\Mollie;
 
 class CreateOpenOrderTest extends TestCase
 {
-    protected $customer;
-    protected $items;
+    protected Customer $customer;
+    protected ?Collection $items;
 
     public function setUp(): void
     {

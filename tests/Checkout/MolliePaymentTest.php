@@ -2,21 +2,17 @@
 
 namespace Jonassiewertsen\StatamicButik\Tests\Checkout;
 
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
 use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 use Jonassiewertsen\StatamicButik\Tests\Utilities\MolliePaymentCanceled;
 use Jonassiewertsen\StatamicButik\Tests\Utilities\MolliePaymentExpired;
-use Jonassiewertsen\StatamicButik\Tests\Utilities\MolliePaymentFailed;
 use Jonassiewertsen\StatamicButik\Tests\Utilities\MolliePaymentSuccessful;
 use Mollie\Laravel\Facades\Mollie;
 
 class MolliePaymentTest extends TestCase
 {
-    protected $payload;
-
     public function setUp(): void
     {
         parent::setUp();
@@ -26,7 +22,6 @@ class MolliePaymentTest extends TestCase
     /** @test */
     public function a_successful_payment_will_fire_the_an_event()
     {
-        $this->withoutExceptionHandling();
         $order = create(Order::class, ['transaction_id' => 'tr_fake_id'])->first();
         $this->mockMollie(new MolliePaymentSuccessful());
 
@@ -59,26 +54,17 @@ class MolliePaymentTest extends TestCase
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $order->transaction_id]);
         $this->assertDatabaseHas('butik_orders', [
             'id'      => $order->id,
-            'paid_at' => Carbon::parse($paymentResponse->paidAt),
+            'paid_at' => now(),
             'status'  => 'paid',
         ]);
     }
 
     /** @test */
-    public function a_failed_payment_wont_fire_the_event()
-    {
-        $this->mockMollie(new MolliePaymentFailed());
-
-        $this->post(route('butik.payment.webhook.mollie'));
-        Event::assertNotDispatched(PaymentSuccessful::class);
-    }
-
-    /** @test */
-    public function a_failed_payment_will_update_the_order_status()
+    public function a_canceled_payment_will_update_the_order_status()
     {
         $order = create(Order::class)->first();
 
-        $paymentResponse     = new MolliePaymentFailed();
+        $paymentResponse     = new MolliePaymentCanceled();
         $paymentResponse->id = $order->transaction_id;
 
         $this->mockMollie($paymentResponse);
@@ -89,15 +75,15 @@ class MolliePaymentTest extends TestCase
         $this->assertDatabaseHas('butik_orders', [
             'id'             => $order->id,
             'transaction_id' => $paymentResponse->id,
-            'failed_at'      => Carbon::parse($paymentResponse->failedAt),
-            'status'         => 'failed',
+            'canceled_at'    => now(),
+            'status'         => 'canceled',
         ]);
     }
 
     /** @test */
     public function an_expired_payment_wont_fire_the_event()
     {
-        $this->mockMollie(new MolliePaymentFailed());
+        $this->mockMollie(new MolliePaymentExpired());
 
         $this->post(route('butik.payment.webhook.mollie'));
         Event::assertNotDispatched(PaymentSuccessful::class);

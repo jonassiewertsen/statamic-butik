@@ -30,7 +30,5 @@ $factory->define(Order::class, function (Faker $faker) {
         ]),
         'total_amount'      => $faker->numberBetween(20, 150),
         'created_at'        => $faker->dateTimeBetween(now()->subMonth(), now()),
-        'paid_at'           => null,
-        'shipped_at'        => null,
     ];
 });

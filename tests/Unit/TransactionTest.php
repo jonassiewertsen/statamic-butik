@@ -39,7 +39,7 @@ class TransactionTest extends TestCase
     /** @test */
     public function a_transaction_id_can_be_added(){
         $id = 'some-id-234';
-        $this->transaction->transactionId($id);
+        $this->transaction->orderNumber($id);
 
         $this->assertEquals($id, $this->transaction->orderNumber);
     }

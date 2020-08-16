@@ -15,7 +15,7 @@ class CreateOpenOrder implements ShouldQueue
     {
         Order::create([
             'id'             => $event->transaction->id,
-            'transaction_id' => $event->transaction->transactionId,
+            'transaction_id' => $event->transaction->orderNumber,
             'status'         => 'open',
             'method'         => $event->transaction->method,
             'items'          => $event->transaction->items,

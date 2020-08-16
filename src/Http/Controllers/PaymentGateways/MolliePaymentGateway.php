@@ -49,7 +49,7 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
 
         $this->transaction = (new Transaction())
             ->id($orderId)
-            ->transactionId($payment->id)
+            ->orderNumber($payment->id)
             ->method($payment->method ?? '')
             ->totalAmount($payment->amount->value)
             ->createdAt(Carbon::parse($payment->createdAt))
