@@ -22,7 +22,7 @@
 
         @include('statamic::partials.create-first', [
             'resource' => __('butik::cp.tax_singular'),
-            'description' => __('butik::cp.tax_description'),
+            'description' => __('butik::cp.tax_form_description'),
             'svg' => 'empty/collection',
             'route' => cp_route('butik.taxes.create'),
             'can' => auth()->user()->can('create', 'Jonassiewertsen\StatamicButik\Http\Models\Tax')
