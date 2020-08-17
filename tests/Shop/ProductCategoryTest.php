@@ -4,7 +4,6 @@ namespace Jonassiewertsen\StatamicButik\Tests\Shop;
 
 use Jonassiewertsen\StatamicButik\Http\Models\Category;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
-use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class ProductCategoryTest extends TestCase
@@ -21,8 +20,9 @@ class ProductCategoryTest extends TestCase
     }
 
     /** @test */
-    public function the_view_of_a_single_product_does_exist()
+    public function the_view_of_a_single_category_does_exist()
     {
+        $this->withoutExceptionHandling();
         $this->get(route('butik.shop.category', $this->category))
             ->assertOk();
     }

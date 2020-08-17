@@ -60,6 +60,11 @@ class Item
     public Variant $variant;
 
     /**
+     * The tax amount of the product
+     */
+    public string $taxAmount;
+
+    /**
      * The taxrate of the product
      */
     public int $taxRate;
@@ -88,12 +93,13 @@ class Item
         $this->available       = $item->available;
         $this->sellable        = true;
         $this->quantity        = 1;
+        $this->singlePrice     = $item->price;
         $this->availableStock  = $item->stock;
         $this->name            = $item->title;
         $this->images          = $this->product->augmentedValue('images')->value();
         $this->description     = $this->limitedDescription();
         $this->taxRate         = $item->tax->percentage;
-        $this->singlePrice     = $item->price;
+        $this->taxAmount       = $this->totalTaxAmount();
         $this->totalPrice      = $this->totalPrice();
         $this->shippingProfile = $item->shippingProfile;
     }
@@ -173,6 +179,12 @@ class Item
         $this->singlePrice    = $this->item()->price;
         $this->description    = $this->limitedDescription();
         $this->totalPrice     = $this->totalPrice();
+        $this->taxAmount      = $this->totalTaxAmount();
+    }
+
+    protected function isVariant()
+    {
+        return Str::contains($this->slug, '::');
     }
 
     private function limitedDescription()
@@ -189,6 +201,13 @@ class Item
         });
     }
 
+    public function totalTaxAmount()
+    {
+        $totalPrice = $this->makeAmountSaveable($this->totalPrice());
+        $tax = $totalPrice * ($this->taxRate / (100 + $this->taxRate));
+        return $this->makeAmountHuman($tax);
+    }
+
     private function setQuantityToStock(): void
     {
         $this->setQuantity($this->item()->stock);
@@ -197,11 +216,6 @@ class Item
     private function stockAvailable()
     {
         return $this->getQuantity() <= $this->item()->stock;
-    }
-
-    protected function isVariant()
-    {
-        return Str::contains($this->slug, '::');
     }
 
     private function defineItemData()
@@ -214,16 +228,18 @@ class Item
         }
     }
 
-    private function productSlug() {
-        if (! $this->isVariant()) {
+    private function productSlug()
+    {
+        if (!$this->isVariant()) {
             return $this->slug;
         }
 
         return Str::of($this->slug)->explode('::')[0];
     }
 
-    private function variantSlug() {
-        if (! $this->isVariant()) {
+    private function variantSlug()
+    {
+        if (!$this->isVariant()) {
             return null;
         }
 
@@ -232,8 +248,8 @@ class Item
 
     private function item()
     {
-       return $this->isVariant() ?
-           $this->variant :
-           $this->product;
+        return $this->isVariant() ?
+            $this->variant :
+            $this->product;
     }
 }

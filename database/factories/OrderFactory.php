@@ -2,24 +2,22 @@
 
 use Faker\Generator as Faker;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
-use Jonassiewertsen\StatamicButik\Checkout\Transaction;
+use Jonassiewertsen\StatamicButik\Order\ItemCollection;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 
 $factory->define(Order::class, function (Faker $faker) {
     $product = create(Product::class)->first();
-    $items = new Item($product->slug);
-    $items = collect()->push($items);
-
-    $transaction = (new Transaction())->items($items);
+    $items = collect()->push(new Item($product->slug));
+    $itemCollection = new ItemCollection($items);
 
     return [
-        'id'                => str_random(20),
-        'transaction_id'    => 'tr_'. str_random(8),
+        'id'                => 'tr_'. str_random(8),
+        'number'            => str_random(20),
         'status'            => 'open',
         'method'            => 'paypal',
-        'items'             => json_encode($transaction->items),
-        'customer'          => json_encode([
+        'items'             => $itemCollection->items,
+        'customer'          => [
             'name'              => 'Jonas Siewertsen',
             'mail'              => 'something@mail.com',
             'address1'          => 'Dorfstrasse 4',
@@ -27,10 +25,8 @@ $factory->define(Order::class, function (Faker $faker) {
             'zip'               => '23454',
             'city'              => 'Flensburg',
             'country'           => 'Deutschland',
-        ]),
+        ],
         'total_amount'      => $faker->numberBetween(20, 150),
         'created_at'        => $faker->dateTimeBetween(now()->subMonth(), now()),
-        'paid_at'           => null,
-        'shipped_at'        => null,
     ];
 });
