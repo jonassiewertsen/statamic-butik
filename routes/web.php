@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\VerifyCsrfToken;
+
 Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\Web')
     ->prefix(config('butik.route_shop-prefix'))
     ->middleware(['web', 'butikRoutes'])
@@ -64,4 +66,5 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\Web')
  * #################################################################################################################
  */
 Route::post('butik/webhook/mollie', '\\Jonassiewertsen\\StatamicButik\\Http\\Controllers\\Web\\PaymentGatewayController@webhook')
-    ->name('butik.payment.webhook.mollie');
+    ->name('butik.payment.webhook.mollie')
+    ->withoutMiddleware([VerifyCsrfToken::class]);
