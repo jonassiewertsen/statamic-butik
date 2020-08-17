@@ -15,7 +15,6 @@ use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Order\ItemCollection;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
-use Jonassiewertsen\StatamicButik\Tests\Utilities\MollieCustomer;
 use Jonassiewertsen\StatamicButik\Tests\Utilities\MolliePaymentOpen;
 use Jonassiewertsen\StatamicButik\Tests\Utilities\MolliePaymentSuccessful;
 use Mollie\Laravel\Facades\Mollie;
@@ -54,7 +53,6 @@ class CreateOpenOrderTest extends TestCase
     public function an_open_order_will_be_created()
     {
         $this->checkout();
-
         $this->assertCount(1, Order::all());
     }
 
@@ -63,7 +61,6 @@ class CreateOpenOrderTest extends TestCase
     {
         $this->checkout();
         $payment = new MolliePaymentSuccessful;
-
         $this->assertDatabaseHas('butik_orders', ['id' => $payment->id]);
     }
 
@@ -71,7 +68,6 @@ class CreateOpenOrderTest extends TestCase
     public function the_order_will_have_status_open()
     {
         $this->checkout();
-
         $this->assertDatabaseHas('butik_orders', ['status' => 'created']);
     }
 
@@ -80,7 +76,6 @@ class CreateOpenOrderTest extends TestCase
     {
         $this->checkout();
         $payment = new MolliePaymentOpen();
-
         $this->assertDatabaseHas('butik_orders', ['method' => $payment->method]);
     }
 
@@ -88,10 +83,7 @@ class CreateOpenOrderTest extends TestCase
     public function the_order_will_have_an_total_amount()
     {
         $this->checkout();
-        $payment = new MolliePaymentSuccessful;
-
         $totalPrice = $this->makeAmountSaveable($this->totalPrice);
-
         $this->assertDatabaseHas('butik_orders', ['total_amount' => $totalPrice]);
     }
 
@@ -113,7 +105,6 @@ class CreateOpenOrderTest extends TestCase
     public function the_products_will_be_saved_as_json()
     {
         $this->checkout();
-
         $items = new ItemCollection($this->items);
         $this->assertDatabaseHas('butik_orders', ['items' => json_encode($items)]);
     }
@@ -122,7 +113,6 @@ class CreateOpenOrderTest extends TestCase
     public function the_express_checkout_customer_will_be_saved_as_json()
     {
         $this->checkout();
-
         $this->assertDatabaseHas('butik_orders', ['customer' => json_encode($this->customer)]);
     }
 
