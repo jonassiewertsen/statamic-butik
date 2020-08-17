@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
-use Jonassiewertsen\StatamicButik\Checkout\Transaction;
 use Jonassiewertsen\StatamicButik\Events\OrderCreated;
 use Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\MolliePaymentGateway;
 use Illuminate\Support\Facades\Session;
@@ -73,14 +72,14 @@ class CreateOpenOrderTest extends TestCase
     {
         $this->checkout();
 
-        $this->assertDatabaseHas('butik_orders', ['status' => 'open']);
+        $this->assertDatabaseHas('butik_orders', ['status' => 'created']);
     }
 
     /** @test */
     public function the_order_will_have_an_order_type()
     {
         $this->checkout();
-        $payment = new MolliePaymentSuccessful;
+        $payment = new MolliePaymentOpen();
 
         $this->assertDatabaseHas('butik_orders', ['method' => $payment->method]);
     }
@@ -130,7 +129,6 @@ class CreateOpenOrderTest extends TestCase
     private function checkout()
     {
         $openPayment = new MolliePaymentOpen();
-        Mollie::shouldReceive('api->customers->create')->andReturn(new MollieCustomer());
         Mollie::shouldReceive('api->orders->create')->andReturn($openPayment);
         Mollie::shouldReceive('api->orders->get')->with($openPayment->id)->andReturn($openPayment);
 

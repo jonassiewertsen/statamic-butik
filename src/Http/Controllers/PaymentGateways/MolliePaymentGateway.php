@@ -3,6 +3,7 @@
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
@@ -57,19 +58,19 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
 
         switch ($payment->status) {
             case 'paid':
-                $this->isPaid($order);
+                $this->isPaid($order, Carbon::parse($payment->paidAt), $payment->method);
                 break;
             case 'authorized':
-                $this->isAuthorized($order);
+                $this->isAuthorized($order, Carbon::parse($payment->authorizedAt), $payment->method);
                 break;
             case 'completed':
-                $this->isCompleted($order);
+                $this->isCompleted($order, Carbon::parse($payment->completedAt), $payment->method);
                 break;
             case 'expired':
-                $this->isExpired($order);
+                $this->isExpired($order, Carbon::parse($payment->expiredAt));
                 break;
             case 'canceled':
-                $this->isCanceled($order);
+                $this->isCanceled($order, Carbon::parse($payment->canceledAt));
                 break;
         }
     }

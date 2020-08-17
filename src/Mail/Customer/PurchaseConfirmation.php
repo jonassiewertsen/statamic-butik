@@ -6,17 +6,18 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Jonassiewertsen\StatamicButik\Checkout\Transaction;
+use Jonassiewertsen\StatamicButik\Http\Models\Order;
 
 class PurchaseConfirmation extends Mailable implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
-    protected Transaction $transaction;
+    protected Order $order;
 
-    public function __construct(Transaction $transaction)
+    public function __construct(Order $order)
     {
-        $this->transaction = $transaction;
+        $this->order = $order;
     }
 
     public function build()
@@ -24,10 +25,10 @@ class PurchaseConfirmation extends Mailable implements ShouldQueue
         return $this->subject(__('butik::order.confirmation'))
             ->view('butik::email.orders.purchaseConfirmationForCustomer')
             ->with([
-                'id'             => $this->transaction->id,
-                'totalAmount'    => $this->transaction->totalAmount,
-                'paidAt'         => $this->transaction->paidAt,
-                'items'          => $this->transaction->items,
+                'id'             => $this->order->id,
+                'totalAmount'    => $this->order->totalAmount,
+                'paidAt'         => $this->order->paidAt,
+                'items'          => $this->order->items,
             ]);
 
     }

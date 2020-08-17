@@ -40,12 +40,12 @@ class OrderConfirmationMailTest extends TestCase
         $order = create(Order::class)->first();
 
         $payment     = new MolliePaymentSuccessful();
-        $payment->id = $order->transaction_id;
+        $payment->id = $order->number;
         $this->mockMollie($payment);
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $payment->id]);
 
         Mail::assertQueued(PurchaseConfirmation::class, function ($mail) use ($order) {
-            return $mail->hasTo(json_decode($order->customer)->mail);
+            return $mail->hasTo($order->customer->mail);
         });
     }
 
@@ -55,7 +55,7 @@ class OrderConfirmationMailTest extends TestCase
         $order = create(Order::class)->first();
 
         $payment     = new MolliePaymentSuccessful();
-        $payment->id = $order->transaction_id;
+        $payment->id = $order->number;
 
         $this->mockMollie($payment);
 
@@ -70,7 +70,7 @@ class OrderConfirmationMailTest extends TestCase
         $order = create(Order::class)->first();
 
         $payment     = new MolliePaymentSuccessful();
-        $payment->id = $order->transaction_id;
+        $payment->id = $order->number;
 
         $this->mockMollie($payment);
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $payment->id]);

@@ -2,6 +2,7 @@
 
 namespace Jonassiewertsen\StatamicButik\Tests\Checkout;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Event;
 use Jonassiewertsen\StatamicButik\Events\OrderPaid;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
@@ -54,7 +55,7 @@ class MolliePaymentTest extends TestCase
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $order->number]);
         $this->assertDatabaseHas('butik_orders', [
             'id'      => $order->id,
-            'paid_at' => now(),
+            'paid_at' => Carbon::parse($paymentResponse->paidAt),
             'status'  => 'paid',
         ]);
     }
@@ -92,6 +93,7 @@ class MolliePaymentTest extends TestCase
     /** @test */
     public function an_expired_payment_will_update_the_order_status()
     {
+        $this->withoutExceptionHandling();
         $order = create(Order::class)->first();
 
         $paymentResponse     = new MolliePaymentExpired();
@@ -102,6 +104,7 @@ class MolliePaymentTest extends TestCase
         $this->assertDatabaseHas('butik_orders', ['id' => $order->id, 'status' => 'open']);
 
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $order->id]);
+
         $this->assertDatabaseHas('butik_orders', [
             'id'     => $order->id,
             'number' => $paymentResponse->id,

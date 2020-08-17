@@ -20,11 +20,12 @@ abstract class PaymentGateway extends WebController
     /**
      * Update the order, if it has been paid and fire the belonging event.
      */
-    protected function isPaid(Order $order, Carbon $paidAt = null)
+    protected function isPaid(Order $order, ?Carbon $paidAt = null, ?string $method = null)
     {
         $order->update([
             'status'    => 'paid',
-            'paid_at'  => $paidAt ?? now(),
+            'method'    => $method,
+            'paid_at'   => $paidAt ?? now(),
         ]);
 
         event(new OrderPaid($order));
@@ -33,10 +34,11 @@ abstract class PaymentGateway extends WebController
     /**
      * Update the order, if it has been authorized and fire the belonging event.
      */
-    protected function isAuthorized(Order $order, Carbon $authorizedAt = null)
+    protected function isAuthorized(Order $order, ?Carbon $authorizedAt = null, ?string $method = null)
     {
         $order->update([
             'status'        => 'authorized',
+            'method'        => $method,
             'authorized_at' => $authorizedAt ?? now(),
         ]);
 
@@ -46,10 +48,11 @@ abstract class PaymentGateway extends WebController
     /**
      * Update the order, if it has been completed and fire the belonging event.
      */
-    protected function isCompleted(Order $order, Carbon $completedAt = null)
+    protected function isCompleted(Order $order, ?Carbon $completedAt = null, ?string $method = null)
     {
         $order->update([
             'status'       => 'completed',
+            'method'       => $method,
             'completed_at' => $completedAt ?? now(),
         ]);
 
@@ -59,7 +62,7 @@ abstract class PaymentGateway extends WebController
     /**
      * Update the order, if it has been expired and fire the belonging event.
      */
-    protected function isExpired(Order $order, Carbon $expiredAt = null)
+    protected function isExpired(Order $order, ?Carbon $expiredAt = null)
     {
         $order->update([
             'status'     => 'expired',
@@ -72,7 +75,7 @@ abstract class PaymentGateway extends WebController
     /**
      * Update the order, if it has been canceled and fire the belonging event.
      */
-    protected function isCanceled(Order $order, Carbon $canceledAt = null)
+    protected function isCanceled(Order $order, ?Carbon $canceledAt = null)
     {
         $order->update([
             'status'        => 'canceled',
@@ -85,13 +88,14 @@ abstract class PaymentGateway extends WebController
     /**
      * Create the order in our database.
      */
-    protected function createOrder(string $id, Collection $items, Customer $customer, string $totalPrice, ?string $method): Order
+    protected function createOrder(string $id, Collection $items, Customer $customer, string $totalPrice, ?string $method = null): Order
     {
         $order = Order::create([
             'id'           => $id,
             'status'       => 'created',
             'customer'     => $customer,
             'total_amount' => $totalPrice,
+            'method'       => $method,
             'number'       => $this->createOrderNumber(),
             'items'        => new ItemCollection($items),
         ]);
