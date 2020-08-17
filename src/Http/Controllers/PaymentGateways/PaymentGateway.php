@@ -17,6 +17,9 @@ use Jonassiewertsen\StatamicButik\Order\ItemCollection;
 
 abstract class PaymentGateway extends WebController
 {
+    /**
+     * Update the order, if it has been paid and fire the belonging event.
+     */
     protected function isPaid(Order $order, Carbon $paidAt = null)
     {
         $order->update([
@@ -27,6 +30,9 @@ abstract class PaymentGateway extends WebController
         event(new OrderPaid($order));
     }
 
+    /**
+     * Update the order, if it has been authorized and fire the belonging event.
+     */
     protected function isAuthorized(Order $order, Carbon $authorizedAt = null)
     {
         $order->update([
@@ -37,6 +43,9 @@ abstract class PaymentGateway extends WebController
         event(new OrderAuthorized($order));
     }
 
+    /**
+     * Update the order, if it has been completed and fire the belonging event.
+     */
     protected function isCompleted(Order $order, Carbon $completedAt = null)
     {
         $order->update([
@@ -47,6 +56,9 @@ abstract class PaymentGateway extends WebController
         event(new OrderCompleted($order));
     }
 
+    /**
+     * Update the order, if it has been expired and fire the belonging event.
+     */
     protected function isExpired(Order $order, Carbon $expiredAt = null)
     {
         $order->update([
@@ -57,6 +69,9 @@ abstract class PaymentGateway extends WebController
         event(new OrderExpired($order));
     }
 
+    /**
+     * Update the order, if it has been canceled and fire the belonging event.
+     */
     protected function isCanceled(Order $order, Carbon $canceledAt = null)
     {
         $order->update([
@@ -67,6 +82,9 @@ abstract class PaymentGateway extends WebController
         event(new OrderCanceled($order));
     }
 
+    /**
+     * Create the order in our database.
+     */
     protected function createOrder(string $id, Collection $items, Customer $customer, string $totalPrice, ?string $method): Order
     {
         $order = Order::create([
@@ -83,11 +101,17 @@ abstract class PaymentGateway extends WebController
         return $order;
     }
 
+    /**
+     * Fetching a order belonging to the order number.
+     */
     protected function findOrder(string $orderNumber): ?Order
     {
         return Order::whereNumber($orderNumber)->firstOrFail();
     }
 
+    /**
+     * Create an order number
+     */
     protected function createOrderNumber(): string
     {
         return now()->format('Ymd_') . str_random(30);

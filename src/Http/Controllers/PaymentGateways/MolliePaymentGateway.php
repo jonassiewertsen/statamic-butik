@@ -16,6 +16,12 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
     use MollyLocale;
     use MoneyTrait;
 
+    /**
+     * We want to handle the payment process.
+     *
+     * We will create the Mollie Order, save those information into our
+     * database and will redirect for the payment itself to the Mollie checkout.
+     */
     public function handle(Customer $customer, Collection $items, string $totalPrice)
     {
         $payment = Mollie::api()->orders()->create(
@@ -34,7 +40,13 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
         return redirect($payment->getCheckoutUrl(), 303);
     }
 
-    public function webhook(Request $request)
+    /**
+     * To keep up to date with the actual payment status, we will listen for webook events fired
+     * by Mollie.
+     *
+     * Regarding to those webhooks, we will update our orders.
+     */
+    public function webhook(Request $request): void
     {
         if (!$request->has('id')) {
             return;
@@ -62,7 +74,12 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
         }
     }
 
-    private function createMollieOrderData($customer, $items, $totalPrice)
+    /**
+     * Preparing the payment informations, as described in the Mollie documentation:
+     *
+     * https://docs.mollie.com/reference/v2/orders-api/create-order#example
+     */
+    private function createMollieOrderData($customer, $items, $totalPrice): array
     {
         $orderData = [
             'amount' => [
@@ -102,7 +119,12 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
         return $orderData;
     }
 
-    private function mapItems($items)
+    /**
+     * The line items to need to be send in a specific format.
+     *
+     * https://docs.mollie.com/reference/v2/orders-api/create-order#order-lines-details
+     */
+    private function mapItems($items): array
     {
         return $items->map(function($item) {
             return [
@@ -128,6 +150,9 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
         })->toArray();
     }
 
+    /**
+     * Has a ngrook tunnel be set for local development?
+     */
     private function ngrokSet(): bool
     {
         return env('MOLLIE_NGROK_REDIRECT', false) == true;
