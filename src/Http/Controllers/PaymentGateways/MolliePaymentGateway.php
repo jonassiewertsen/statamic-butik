@@ -7,11 +7,8 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
-use Jonassiewertsen\StatamicButik\Events\OrderCreated;
-use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Traits\MollyLocale;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
-use Jonassiewertsen\StatamicButik\Order\ItemCollection;
 use Mollie\Laravel\Facades\Mollie;
 
 class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInterface
@@ -25,8 +22,13 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
             $this->createMollieOrderData($customer, $items, $totalPrice)
         );
 
-        $order = $this->createOrder($customer, $items, $totalPrice, $payment);
-        event(new OrderCreated($order));
+        $this->createOrder(
+            $payment->id,
+            $items,
+            $customer,
+            $totalPrice,
+            $payment->method
+        );
 
         // redirect customer to Mollie checkout page
         return redirect($payment->getCheckoutUrl(), 303);
@@ -39,39 +41,25 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
         }
 
         $payment = Mollie::api()->orders()->get($request->id);
+        $order   = $this->findOrder($payment->id);
 
         switch ($payment->status) {
             case 'paid':
-                $this->isPaid($payment);
+                $this->isPaid($order);
                 break;
             case 'authorized':
-                $this->isAuthorized($payment);
+                $this->isAuthorized($order);
                 break;
             case 'completed':
-                $this->isCompleted($payment);
+                $this->isCompleted($order);
                 break;
             case 'expired':
-                $this->isExpired($payment);
+                $this->isExpired($order);
                 break;
             case 'canceled':
-                $this->isCanceled($payment);
+                $this->isCanceled($order);
                 break;
         }
-    }
-
-    private function createOrder($customer, $items, $totalPrice, $payment): Order
-    {
-        $order               = new Order();
-        $order->id           = $payment->id;
-        $order->number       = now()->format('Ymd_') . str_random(30);
-        $order->status       = 'open';
-        $order->method       = $payment->method;
-        $order->customer     = $customer;
-        $order->total_amount = $totalPrice;
-        $order->items        = new ItemCollection($items);
-        $order->save();
-
-        return $order;
     }
 
     private function createMollieOrderData($customer, $items, $totalPrice)

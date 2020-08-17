@@ -26,7 +26,7 @@ class OrderConfirmationMailTest extends TestCase
         $order = create(Order::class)->first();
 
         $payment     = new MolliePaymentSuccessful();
-        $payment->id = $order->transaction_id;
+        $payment->id = $order->number;
 
         $this->mockMollie($payment);
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $payment->id]);
@@ -82,7 +82,7 @@ class OrderConfirmationMailTest extends TestCase
 
     public function mockMollie($mock)
     {
-        Mollie::shouldReceive('api->payments->get')
+        Mollie::shouldReceive('api->orders->get')
             ->andReturn($mock);
     }
 }

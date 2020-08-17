@@ -2,50 +2,90 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways;
 
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
+use Jonassiewertsen\StatamicButik\Checkout\Customer;
+use Jonassiewertsen\StatamicButik\Events\OrderCreated;
 use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
+use Jonassiewertsen\StatamicButik\Order\ItemCollection;
 
 abstract class PaymentGateway extends WebController
 {
-    protected function isPaid($payment)
+    protected function isPaid(Order $order, Carbon $paidAt = null)
     {
-        $this->updateOrderStatus($payment);
-        event(new PaymentSuccessful($payment));
+        $order->update([
+            'status'    => 'paid',
+            'paid_at'  => $paidAt ?? now(),
+        ]);
+
+        event(new PaymentSuccessful($order));
     }
 
-    protected function isAuthorized($payment)
+    protected function isAuthorized(Order $order, Carbon $authorizedAt = null)
     {
-        $this->updateOrderStatus($payment);
+        $order->update([
+            'status'        => 'authorized',
+            'authorized_at' => $authorizedAt ?? now(),
+        ]);
+
         // TODO: Fire authorized event
     }
 
-    protected function isCompleted($payment)
+    protected function isCompleted(Order $order, Carbon $completedAt = null)
     {
-        $this->updateOrderStatus($payment);
+        $order->update([
+            'status'       => 'completed',
+            'completed_at' => $completedAt ?? now(),
+        ]);
+
         // TODO: Fire completed event
     }
 
-    protected function isExpired($payment)
+    protected function isExpired(Order $order, Carbon $expiredAt = null)
     {
-        $this->updateOrderStatus($payment);
+        $order->update([
+            'status'     => 'expired',
+            'expired_at' => $expiredAt ?? now(),
+        ]);
+
         // TODO: Fire expired event
     }
 
-    protected function isCanceled($payment)
+    protected function isCanceled(Order $order, Carbon $canceledAt = null)
     {
-        $this->updateOrderStatus($payment);
+        $order->update([
+            'status'        => 'canceled',
+            'canceled_at' => $canceledAt ?? now(),
+        ]);
+
         // TODO: Fire canceled event
     }
 
-    private function updateOrderStatus($payment): void
+    protected function createOrder(string $id, Collection $items, Customer $customer, string $totalPrice, ?string $method): Order
     {
-        $order = Order::whereNumber($payment->id)->firstOrFail();
-        $timestamp = $payment->status . '_at';
-        $order->update([
-            'status'    => $payment->status,
-            'method'    => $payment->method,
-            $timestamp  => now(),
+        $order = Order::create([
+            'id'           => $id,
+            'status'       => 'created',
+            'customer'     => $customer,
+            'total_amount' => $totalPrice,
+            'number'       => $this->createOrderNumber(),
+            'items'        => new ItemCollection($items),
         ]);
+
+        event(new OrderCreated($order));
+
+        return $order;
+    }
+
+    protected function findOrder(string $orderNumber): ?Order
+    {
+        return Order::whereNumber($orderNumber)->firstOrFail();
+    }
+
+    protected function createOrderNumber(): string
+    {
+        return now()->format('Ymd_') . str_random(30);
     }
 }
