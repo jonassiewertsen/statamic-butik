@@ -3,7 +3,7 @@
 namespace Jonassiewertsen\StatamicButik\Tests\Checkout;
 
 use Illuminate\Support\Facades\Event;
-use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
+use Jonassiewertsen\StatamicButik\Events\OrderPaid;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 use Jonassiewertsen\StatamicButik\Tests\Utilities\MolliePaymentCanceled;
@@ -26,7 +26,7 @@ class MolliePaymentTest extends TestCase
         $this->mockMollie(new MolliePaymentSuccessful());
 
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $order->id]);
-        Event::assertDispatched(PaymentSuccessful::class);
+        Event::assertDispatched(OrderPaid::class);
     }
 
     /** @test */
@@ -36,7 +36,7 @@ class MolliePaymentTest extends TestCase
         $this->mockMollie(new MolliePaymentSuccessful());
 
         $this->post(route('butik.payment.webhook.mollie'));
-        Event::assertNotDispatched(PaymentSuccessful::class);
+        Event::assertNotDispatched(OrderPaid::class);
     }
 
     /** @test */
@@ -86,7 +86,7 @@ class MolliePaymentTest extends TestCase
         $this->mockMollie(new MolliePaymentExpired());
 
         $this->post(route('butik.payment.webhook.mollie'));
-        Event::assertNotDispatched(PaymentSuccessful::class);
+        Event::assertNotDispatched(OrderPaid::class);
     }
 
     /** @test */
@@ -115,7 +115,7 @@ class MolliePaymentTest extends TestCase
         $this->mockMollie(new MolliePaymentCanceled());
 
         $this->post(route('butik.payment.webhook.mollie'));
-        Event::assertNotDispatched(PaymentSuccessful::class);
+        Event::assertNotDispatched(OrderPaid::class);
     }
 
     /** @test */

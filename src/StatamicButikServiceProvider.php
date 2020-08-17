@@ -64,11 +64,15 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
     protected $listen = [
         \Jonassiewertsen\StatamicButik\Events\OrderCreated::class => [],
-        \Jonassiewertsen\StatamicButik\Events\PaymentSuccessful::class => [
+        \Jonassiewertsen\StatamicButik\Events\OrderPaid::class => [
             \Jonassiewertsen\StatamicButik\Listeners\SendPurchaseConfirmationToCustomer::class,
             \Jonassiewertsen\StatamicButik\Listeners\SendPurchaseConfirmationToSeller::class,
             \Jonassiewertsen\StatamicButik\Listeners\ReduceProductStock::class,
         ],
+        \Jonassiewertsen\StatamicButik\Events\OrderAuthorized::class => [],
+        \Jonassiewertsen\StatamicButik\Events\OrderCompleted::class => [],
+        \Jonassiewertsen\StatamicButik\Events\OrderExpired::class => [],
+        \Jonassiewertsen\StatamicButik\Events\OrderCanceled::class => [],
     ];
 
     protected $middlewareGroups = [

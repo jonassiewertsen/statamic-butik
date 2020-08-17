@@ -5,8 +5,12 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
+use Jonassiewertsen\StatamicButik\Events\OrderAuthorized;
+use Jonassiewertsen\StatamicButik\Events\OrderCanceled;
+use Jonassiewertsen\StatamicButik\Events\OrderCompleted;
 use Jonassiewertsen\StatamicButik\Events\OrderCreated;
-use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
+use Jonassiewertsen\StatamicButik\Events\OrderExpired;
+use Jonassiewertsen\StatamicButik\Events\OrderPaid;
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Order\ItemCollection;
@@ -20,7 +24,7 @@ abstract class PaymentGateway extends WebController
             'paid_at'  => $paidAt ?? now(),
         ]);
 
-        event(new PaymentSuccessful($order));
+        event(new OrderPaid($order));
     }
 
     protected function isAuthorized(Order $order, Carbon $authorizedAt = null)
@@ -30,7 +34,7 @@ abstract class PaymentGateway extends WebController
             'authorized_at' => $authorizedAt ?? now(),
         ]);
 
-        // TODO: Fire authorized event
+        event(new OrderAuthorized($order));
     }
 
     protected function isCompleted(Order $order, Carbon $completedAt = null)
@@ -40,7 +44,7 @@ abstract class PaymentGateway extends WebController
             'completed_at' => $completedAt ?? now(),
         ]);
 
-        // TODO: Fire completed event
+        event(new OrderCompleted($order));
     }
 
     protected function isExpired(Order $order, Carbon $expiredAt = null)
@@ -50,7 +54,7 @@ abstract class PaymentGateway extends WebController
             'expired_at' => $expiredAt ?? now(),
         ]);
 
-        // TODO: Fire expired event
+        event(new OrderExpired($order));
     }
 
     protected function isCanceled(Order $order, Carbon $canceledAt = null)
@@ -60,7 +64,7 @@ abstract class PaymentGateway extends WebController
             'canceled_at' => $canceledAt ?? now(),
         ]);
 
-        // TODO: Fire canceled event
+        event(new OrderCanceled($order));
     }
 
     protected function createOrder(string $id, Collection $items, Customer $customer, string $totalPrice, ?string $method): Order
