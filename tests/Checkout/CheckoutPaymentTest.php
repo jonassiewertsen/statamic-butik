@@ -78,10 +78,20 @@ class CheckoutPaymentTest extends TestCase
     // TODO: Tests to remove products from the cart, which are not available.
 
     /** @test */
-    public function the_payment_page_will_redirect_back_without_a_name()
+    public function the_payment_page_will_redirect_back_without_a_firstname()
     {
         $this->withoutExceptionHandling();
-        Session::put('butik.customer', new Customer($this->createUserData('name', '')));
+        Session::put('butik.customer', new Customer($this->createUserData('firstname', '')));
+
+        $this->get(route('butik.checkout.payment'))
+            ->assertRedirect(route('butik.checkout.delivery'));
+    }
+
+    /** @test */
+    public function the_payment_page_will_redirect_back_without_a_surname()
+    {
+        $this->withoutExceptionHandling();
+        Session::put('butik.customer', new Customer($this->createUserData('surname', '')));
 
         $this->get(route('butik.checkout.payment'))
             ->assertRedirect(route('butik.checkout.delivery'));
