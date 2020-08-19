@@ -130,7 +130,8 @@ class CreateOpenOrderTest extends TestCase
     {
         $customer = [
             'country'      => 'Germany',
-            'name'         => 'John Doe',
+            'firstname'    => 'John',
+            'surname'      => 'Doe',
             'mail'         => 'johndoe@mail.de',
             'address1'     => 'Main Street 2',
             'address2'     => '',

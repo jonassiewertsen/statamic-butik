@@ -167,7 +167,8 @@ class CheckoutPaymentTest extends TestCase
         $customer = (array)$this->customer;
 
         $this->get(route('butik.checkout.payment'))
-            ->assertSee($customer['name'])
+            ->assertSee($customer['firstname'])
+            ->assertSee($customer['surname'])
             ->assertSee($customer['mail'])
             ->assertSee($customer['address1'])
             ->assertSee($customer['address2'])
@@ -180,7 +181,8 @@ class CheckoutPaymentTest extends TestCase
     {
         $customer = [
             'country'      => 'DE',
-            'name'         => 'John Doe',
+            'firstname'    => 'John',
+            'surname'      => 'Doe',
             'mail'         => 'johndoe@mail.de',
             'address1'     => 'Main Street 2',
             'address2'     => '',
