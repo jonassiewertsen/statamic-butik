@@ -48,27 +48,51 @@ class CheckoutDeliveryTest extends TestCase
     }
 
     /** @test */
-    public function a_name_is_required()
+    public function a_firstname_is_required()
     {
-        $data = $this->createUserData('name', '');
+        $data = $this->createUserData('firstname', '');
         $this->post(route('butik.checkout.delivery'), (array)$data)
-            ->assertSessionHasErrors('name');
+            ->assertSessionHasErrors('firstname');
     }
 
     /** @test */
-    public function a_name_cant_be_to_short()
+    public function a_firstname_can_be_to_short()
     {
-        $data = $this->createUserData('name', str_repeat('a', 4));
+        $data = $this->createUserData('firstname', str_repeat('a', 1));
         $this->post(route('butik.checkout.delivery'), (array)$data)
-            ->assertSessionHasErrors('name');
+            ->assertSessionHasErrors('firstname');
     }
 
     /** @test */
-    public function a_name_cant_be_to_long()
+    public function a_firstname_can_be_to_long()
     {
-        $data = $this->createUserData('name', str_repeat('a', 51));
+        $data = $this->createUserData('firstname', str_repeat('a', 51));
         $this->post(route('butik.checkout.delivery', $this->product), (array)$data)
-            ->assertSessionHasErrors('name');
+            ->assertSessionHasErrors('firstname');
+    }
+
+    /** @test */
+    public function a_surname_is_required()
+    {
+        $data = $this->createUserData('surname', '');
+        $this->post(route('butik.checkout.delivery'), (array)$data)
+            ->assertSessionHasErrors('surname');
+    }
+
+    /** @test */
+    public function a_surname_can_be_to_short()
+    {
+        $data = $this->createUserData('surname', str_repeat('a', 1));
+        $this->post(route('butik.checkout.delivery'), (array)$data)
+            ->assertSessionHasErrors('surname');
+    }
+
+    /** @test */
+    public function a_surname_can_be_to_long()
+    {
+        $data = $this->createUserData('surname', str_repeat('a', 51));
+        $this->post(route('butik.checkout.delivery', $this->product), (array)$data)
+            ->assertSessionHasErrors('surname');
     }
 
     /** @test */
@@ -241,7 +265,8 @@ class CheckoutDeliveryTest extends TestCase
         $page     = $this->get(route('butik.checkout.delivery', $this->product))->content();
         $customer = session('butik.customer');
 
-        $this->assertStringContainsString($customer->name, $page);
+        $this->assertStringContainsString($customer->firstname, $page);
+        $this->assertStringContainsString($customer->surname, $page);
         $this->assertStringContainsString($customer->mail, $page);
         $this->assertStringContainsString($customer->address1, $page);
         $this->assertStringContainsString($customer->address2, $page);
@@ -259,7 +284,8 @@ class CheckoutDeliveryTest extends TestCase
     private function createUserData($key = null, $value = null)
     {
         $customer = [
-            'name'         => 'John Doe',
+            'firstname'    => 'John',
+            'surname'      => 'Doe',
             'mail'         => 'johndoe@mail.de',
             'address1'     => 'Main Street 2',
             'address2'     => '',

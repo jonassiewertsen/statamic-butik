@@ -16,7 +16,8 @@ abstract class Checkout extends WebController
                     $fail('Invalid country code: ' . $value);
                 }
             }],
-            'name'         => 'required|min:5|max:50',
+            'firstname'    => 'required|min:2|max:50',
+            'surname'      => 'required|min:2|max:50',
             'mail'         => 'required|email',
             'address1'     => 'required|max:80',
             'address2'     => 'nullable|max:80',

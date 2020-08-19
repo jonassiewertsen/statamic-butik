@@ -8,9 +8,16 @@
     {{ /unless }}
 
     {{ unless ( items | where:sellable:0 | count ) === ( items | count ) }}
-        <label for="name" class="block">
-            <span class="block text-gray-dark text-lg mb-2">{{ 'butik::web.name' | trans | ucfirst }}</span>
-            <input id="name" name="name" type="text" value="{{ old:name ?? customer:name }}" autofocus
+        <label for="firstname" class="block">
+            <span class="block text-gray-dark text-lg mb-2">{{ 'butik::web.firstname' | trans | ucfirst }}</span>
+            <input id="firstname" name="firstname" type="text" value="{{ old:firstname ?? customer:firstname }}" autofocus
+                   class="border {{ if {error:name} }}border-danger{{ else }} border-gray {{ /if }} rounded px-4 py-2 w-full focus:outline-none focus:border-accent"
+            >
+        </label>
+
+        <label for="surname" class="block">
+            <span class="block text-gray-dark text-lg mb-2">{{ 'butik::web.surname' | trans | ucfirst }}</span>
+            <input id="surname" name="surname" type="text" value="{{ old:surname ?? customer:surname }}" autofocus
                    class="border {{ if {error:name} }}border-danger{{ else }} border-gray {{ /if }} rounded px-4 py-2 w-full focus:outline-none focus:border-accent"
             >
         </label>

@@ -13,7 +13,8 @@ class CustomerTest extends TestCase
         parent::setUp();
 
         $this->jonDoe = [
-            'name'          => 'Jon Doe',
+            'firstname'     => 'Jon',
+            'surname'       => 'Doe',
             'mail'          => 'Jon@Doe.com',
             'address1'      => 'Test Street',
             'address2'      => 'Test Addition',
@@ -38,7 +39,8 @@ class CustomerTest extends TestCase
     {
         $customer = new Customer();
 
-        $customer->name($this->jonDoe['name']);
+        $customer->firstname($this->jonDoe['firstname']);
+        $customer->surname($this->jonDoe['surname']);
         $customer->mail($this->jonDoe['mail']);
         $customer->address1($this->jonDoe['address1']);
         $customer->address2($this->jonDoe['address2']);
@@ -48,7 +50,8 @@ class CustomerTest extends TestCase
         $customer->phone($this->jonDoe['phone']);
         $customer->country($this->jonDoe['country']);
 
-        $this->assertEquals($customer->name, $this->jonDoe['name']);
+        $this->assertEquals($customer->firstname, $this->jonDoe['firstname']);
+        $this->assertEquals($customer->surname, $this->jonDoe['surname']);
         $this->assertEquals($customer->mail, $this->jonDoe['mail']);
         $this->assertEquals($customer->address1, $this->jonDoe['address1']);
         $this->assertEquals($customer->address2, $this->jonDoe['address2']);

@@ -88,8 +88,8 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
                 'value'    => $totalPrice,
             ],
             'billingAddress' => [
-                'givenName'       => $customer->name,
-                'familyName'      => $customer->name,
+                'givenName'       => $customer->firstname,
+                'familyName'      => $customer->surname,
                 'streetAndNumber' => $customer->address1 . ', ' . $customer->address2,
                 'city'            => $customer->city,
                 'postalCode'      => $customer->zip,
