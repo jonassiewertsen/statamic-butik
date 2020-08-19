@@ -53,11 +53,6 @@ class Product extends ButikModel implements Augmentable
         return $this->belongsToMany(Category::class, 'butik_category_product');
     }
 
-//    public function getImagesAttribute()
-//    {
-//        return $this->augmentedValue('images')->value();
-//    }
-
     /**
      * A Product has a shipping relation
      */
