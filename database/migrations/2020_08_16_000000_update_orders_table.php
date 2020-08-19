@@ -21,6 +21,7 @@ class UpdateOrdersTable extends Migration
         });
 
         Schema::table('butik_orders', function (Blueprint $table) {
+            $table->json('shippings')->nullable()->after('total_amount');
             $table->timestamp('expired_at')->nullable()->after('completed_at');
             $table->timestamp('canceled_at')->nullable()->after('expired_at');
             $table->string('method')->nullable()->change();
@@ -38,7 +39,7 @@ class UpdateOrdersTable extends Migration
         });
 
         Schema::table('butik_orders', function (Blueprint $table) {
-            $table->dropColumn('expired_at', 'canceled_at');
+            $table->dropColumn('expired_at', 'canceled_at', 'total_amount');
         });
     }
 }

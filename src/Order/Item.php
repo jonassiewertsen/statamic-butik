@@ -6,7 +6,7 @@ class Item
 {
     public string $slug;
     public string $name;
-    public string $description;
+    public ?string $description;
     public int    $quantity;
     public string $singlePrice;
     public string $totalPrice;
@@ -16,7 +16,7 @@ class Item
     public function __construct(
         string $slug,
         string $name,
-        string $description,
+        ?string $description,
         int    $quantity,
         string $singlePrice,
         string $totalPrice,

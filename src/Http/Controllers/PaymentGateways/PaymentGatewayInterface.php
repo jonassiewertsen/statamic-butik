@@ -6,5 +6,5 @@ use Illuminate\Support\Collection;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 
 interface PaymentGatewayInterface {
-    public function handle(Customer $customer, Collection $items, string $totalPrice);
+    public function handle(Customer $customer, Collection $items, string $totalPrice, Collection $shippings);
 }

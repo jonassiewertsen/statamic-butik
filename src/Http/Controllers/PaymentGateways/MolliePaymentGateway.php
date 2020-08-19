@@ -23,10 +23,10 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
      * We will create the Mollie Order, save those information into our
      * database and will redirect for the payment itself to the Mollie checkout.
      */
-    public function handle(Customer $customer, Collection $items, string $totalPrice)
+    public function handle(Customer $customer, Collection $items, string $totalPrice, Collection $shippings)
     {
         $payment = Mollie::api()->orders()->create(
-            $this->createMollieOrderData($customer, $items, $totalPrice)
+            $this->createMollieOrderData($customer, $items, $totalPrice, $shippings)
         );
 
         $this->createOrder(
@@ -80,7 +80,7 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
      *
      * https://docs.mollie.com/reference/v2/orders-api/create-order#example
      */
-    private function createMollieOrderData($customer, $items, $totalPrice): array
+    private function createMollieOrderData($customer, $items, $totalPrice, $shippings): array
     {
         $orderData = [
             'amount' => [
@@ -100,7 +100,7 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
             'locale'      => $this->getLocale(),
             'webhookUrl' => env('MOLLIE_NGROK_REDIRECT') . route('butik.payment.webhook.mollie', [], false),
             'redirectUrl' => URL::temporarySignedRoute('butik.payment.receipt', now()->addMinutes(5), ['order' => $orderId]),
-            'lines'       => $this->mapItems($items),
+            'lines'       => $this->mapItems($items, $shippings),
         ];
 
         if (!App::environment(['local'])) {
@@ -125,9 +125,9 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
      *
      * https://docs.mollie.com/reference/v2/orders-api/create-order#order-lines-details
      */
-    private function mapItems($items): array
+    private function mapItems($items, $shippings): array
     {
-        return $items->map(function($item) {
+        $items = $items->map(function($item) {
             return [
                 'type'           => 'physical',
                 'sku'            => $item->slug,
@@ -149,6 +149,34 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
                 ]
             ];
         })->toArray();
+
+        return $this->addShippingToLineItems($items, $shippings);
+    }
+
+    private function addShippingToLineItems(array $items, Collection $shippings): array
+    {
+        $shippings = $shippings->map(function($shipping) {
+            return [
+                'type'           => 'shipping_fee',
+                'name'           => 'SHIPPING ' .$shipping->profileTitle . ' / ' . $shipping->rateTitle,
+                'quantity'       => 1,
+                'vatRate'        => $shipping->taxRate,
+                'unitPrice'      => [
+                    'currency' => config('butik.currency_isoCode'),
+                    'value'    => $this->humanPriceWithDot($shipping->total),
+                ],
+                'totalAmount'    => [
+                    'currency' => config('butik.currency_isoCode'),
+                    'value'    => $this->humanPriceWithDot($shipping->total),
+                ],
+                'vatAmount'      => [
+                    'currency' => config('butik.currency_isoCode'),
+                    'value'    => $this->humanPriceWithDot($shipping->taxAmount),
+                ]
+            ];
+        })->toArray();
+
+        return array_merge($items, $shippings);
     }
 
     /**

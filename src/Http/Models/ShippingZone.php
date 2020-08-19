@@ -53,4 +53,12 @@ class ShippingZone extends ButikModel
     {
         return $this->hasMany(ShippingRate::class)->orderBy('minimum');
     }
+
+    /**
+     * A shipping zone can have taxes
+     */
+    public function tax()
+    {
+        return $this->belongsTo(Tax::class, 'tax_slug', 'slug');
+    }
 }

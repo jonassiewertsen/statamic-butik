@@ -31,9 +31,10 @@ class PaymentGatewayController extends WebController
     {
         $customer   = Session::get('butik.customer');
         $items      = Session::get('butik.cart');
+        $shippings  = Cart::shipping();
         $totalPrice = $this->humanPriceWithDot(Cart::totalPrice());
 
-        return $this->gateway->handle($customer, $items, $totalPrice);
+        return $this->gateway->handle($customer, $items, $totalPrice, $shippings);
     }
 
     public function webhook(Request $request): void {

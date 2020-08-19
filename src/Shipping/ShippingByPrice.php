@@ -25,11 +25,11 @@ class ShippingByPrice extends ShippingType
     {
         $this->calculateSummedItemValue();
         $this->detectShippingRate($this->zone);
-
         return new ShippingAmount(
             $this->shippingCosts(),
             $this->zone->profile,
             $this->rate,
+            $this->zone->tax,
         );
     }
 

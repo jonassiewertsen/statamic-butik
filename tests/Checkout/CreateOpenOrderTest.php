@@ -5,6 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Tests\Checkout;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
+use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Events\OrderCreated;
@@ -122,7 +123,7 @@ class CreateOpenOrderTest extends TestCase
         Mollie::shouldReceive('api->orders->create')->andReturn($openPayment);
         Mollie::shouldReceive('api->orders->get')->with($openPayment->id)->andReturn($openPayment);
 
-        (new MolliePaymentGateway())->handle($this->customer, $this->items, $this->totalPrice);
+        (new MolliePaymentGateway())->handle($this->customer, $this->items, $this->totalPrice, Cart::shipping());
     }
 
     private function createUserData($key = null, $value = null)

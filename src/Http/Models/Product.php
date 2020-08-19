@@ -126,7 +126,7 @@ class Product extends ButikModel implements Augmentable
 
     public function getTaxAmountAttribute()
     {
-        $tax   = $data = str_replace(',', '.', $this->tax->percentage);
+        $tax   = str_replace(',', '.', $this->tax->percentage);
         $price = (int)$this->getRawOriginal('price');
         $total = $price * ($tax / (100 + $tax));
 

@@ -104,6 +104,7 @@ return [
     'tax_form_edit'                           => 'edit your tax rate',
     'tax_form_description'                    => 'most people don\'t like taxes, but be kind to them anyway.',
     'tax_rate'                                => 'tax rate',
+    'tax_none'                                => 'without taxes',
     'total_amount'                            => 'total amount',
     'total_price'                             => 'total price',
     'type'                                    => 'type',
