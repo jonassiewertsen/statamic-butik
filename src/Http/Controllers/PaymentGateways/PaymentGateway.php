@@ -97,7 +97,7 @@ abstract class PaymentGateway extends WebController
             'total_amount' => $totalPrice,
             'method'       => $method,
             'number'       => $this->createOrderNumber(),
-            'items'        => new ItemCollection($items),
+            'items'        => (new ItemCollection($items))->items,
         ]);
 
         event(new OrderCreated($order));

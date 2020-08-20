@@ -20,6 +20,11 @@ class Customer {
         }
     }
 
+    public function name(): string
+    {
+        return $this->firstname . ' ' . $this->surname;
+    }
+
     public function empty(): self {
 
         $fields = ['firstname', 'surname', 'mail', 'phone', 'address1', 'address2', 'city', 'stateRegion', 'zip', 'phone', 'country'];

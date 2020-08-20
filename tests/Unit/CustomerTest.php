@@ -7,22 +7,23 @@ use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class CustomerTest extends TestCase
 {
-    protected array    $jonDoe;
+    protected array $jonDoe;
 
-    public function setUp(): void {
+    public function setUp(): void
+    {
         parent::setUp();
 
         $this->jonDoe = [
-            'firstname'     => 'Jon',
-            'surname'       => 'Doe',
-            'mail'          => 'Jon@Doe.com',
-            'address1'      => 'Test Street',
-            'address2'      => 'Test Addition',
-            'city'          => 'Flensburg',
-            'stateRegion'   => 'SH',
-            'zip'           => '23454',
-            'phone'         => '1234567',
-            'country'       => 'Germania',
+            'firstname'   => 'Jon',
+            'surname'     => 'Doe',
+            'mail'        => 'Jon@Doe.com',
+            'address1'    => 'Test Street',
+            'address2'    => 'Test Addition',
+            'city'        => 'Flensburg',
+            'stateRegion' => 'SH',
+            'zip'         => '23454',
+            'phone'       => '1234567',
+            'country'     => 'Germania',
         ];
     }
 
@@ -31,7 +32,7 @@ class CustomerTest extends TestCase
     {
         $customer = new Customer($this->jonDoe);
 
-        $this->assertEquals($this->jonDoe, (array) $customer);
+        $this->assertEquals($this->jonDoe, (array)$customer);
     }
 
     /** @test */
@@ -60,5 +61,16 @@ class CustomerTest extends TestCase
         $this->assertEquals($customer->zip, $this->jonDoe['zip']);
         $this->assertEquals($customer->phone, $this->jonDoe['phone']);
         $this->assertEquals($customer->country, $this->jonDoe['country']);
+    }
+
+    /** @test */
+    public function a_full_name_can_be_returned()
+    {
+        $customer = new Customer($this->jonDoe);
+
+        $this->assertEquals(
+            $customer->name(),
+            $customer->firstname . ' ' . $customer->surname
+        );
     }
 }

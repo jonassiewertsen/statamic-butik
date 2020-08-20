@@ -8,7 +8,8 @@ use Statamic\CP\Column;
 
 class OrdersController extends CpController
 {
-    public function index() {
+    public function index()
+    {
         $this->authorize('index', Order::class);
 
         $orders = Order::select('id', 'status', 'total_amount', 'method', 'customer', 'created_at')
@@ -16,8 +17,8 @@ class OrdersController extends CpController
             ->map(function ($order) {
                 return [
                     'id'           => $order->id,
-                    'customer'     => json_decode($order->customer)->name,
-                    'mail'         => json_decode($order->customer)->mail,
+                    'customer'     => $order->customer->firstname . ' ' . $order->customer->surname,
+                    'mail'         => $order->customer->mail,
                     'status'       => $order->status,
                     'method'       => $order->method,
                     'total_amount' => $order->total_amount,
@@ -28,7 +29,7 @@ class OrdersController extends CpController
             })->sortByDesc('created_at')->values();
 
         return view('butik::cp.orders.index', [
-            'orders' => $orders,
+            'orders'  => $orders,
             'columns' => [
                 Column::make('id')->label(__('butik::cp.id')),
                 Column::make('status')->label(__('butik::cp.status')),
@@ -41,11 +42,12 @@ class OrdersController extends CpController
         ]);
     }
 
-    public function show(Order $order) {
+    public function show(Order $order)
+    {
         $this->authorize('show', $order);
 
-        $customer = json_decode($order->customer);
-        $items = json_decode($order->items);
+        $customer = $order->customer;
+        $items    = $order->items;
 
         return view('butik::cp.orders.show', compact('order', 'customer', 'items'));
     }

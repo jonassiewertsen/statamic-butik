@@ -50,7 +50,7 @@
         <table class="data-table">
             <tr>
                 <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.name') }}</th>
-                <td>{{ $customer->name }}</td>
+                <td>{{ $customer->firstname }} {{ $customer->surname }}</td>
             </tr>
             <tr>
                 <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.mail') }}</th>

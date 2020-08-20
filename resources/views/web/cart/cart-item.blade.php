@@ -1,6 +1,6 @@
 <section class="{{ $item->sellable ? '' : 'bg-danger-light' }} flex border-gray-light border-b pb-8 mb-8 w-full">
     <main class="flex flex-1 items-center">
-        @if (! empty($item->images))
+        @if ($item->images->count() > 0)
             <img class="w-40 h-40 rounded-xl shadow object-cover mr-5" src="/assets/{{ $item->images[0]->path() }}">
         @else
             <div class="flex items-center w-40 h-40 rounded-xl shadow object-cover mr-5">
