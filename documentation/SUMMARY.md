@@ -37,3 +37,7 @@
 * [Payment Gateway](extending/payment-gateway.md)
 * [Shipping](extending/shipping.md)
 
+---
+
+* [Roadmap](roadmap.md)
+
