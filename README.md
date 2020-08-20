@@ -7,23 +7,19 @@ The *Statamic Butik*  e-commerce solution will integrate nicely with your person
 
 You can use the light and simple design as shipped or customize it after your needs, to integrate it perfectly into your existing design.
 
-# Version 2
+## Documentation
+[Documentation for butik](https://www.butik.dev)
 
-Right now, I am working hard to get version 2 out through the door. There will be some bigger changes, but it's close. 
+You will find everything in here. Documentation, how to reach out etc. 
 
-Please check out the beta version and the very enhanced documentation: [butik.dev](https://www.butik.dev)
+## GitHub & Issues
+[Github issue tracking](https://github.com/jonassiewertsen/statamic-butik)
 
-# Links
-- [Documentation (version 2)](https://www.butik.dev)
-- [Github issue tracking](https://github.com/jonassiewertsen/statamic-butik)
-- [Share your ideas & wishes with me](https://feedback.userreport.com/81c07a00-5ad7-4f63-b28d-503c3a76bfdc/)
+## Missing something?
+[Share your ideas & wishes with me](https://feedback.userreport.com/81c07a00-5ad7-4f63-b28d-503c3a76bfdc/)
 
 # License 
 
-Before going into productions with *Statamic Butik*, you need to buy a license at the Statamic Marketplace. 
+Before going into productions with *Statamic Butik*, you need to buy a license at the [Statamic Marketplace](https://statamic.com/addons/jonassiewertsen/statamic-butik). 
 
 *Statamic Butik* is not free software. 
-
-# Beta
-
-"Butik" is an addon for Statamic v3, which is in beta right now. Until Statamic v3 is in beta, you **should be careful to use Butik in production. There can be breaking changes!**
