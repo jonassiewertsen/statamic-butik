@@ -17,7 +17,7 @@
 * [Shipping](configuration/shipping.md)
 * [Products](configuration/products.md)
 * [Permissions](configuration/permissions.md)
-* [Coupons](configuration/coupons.md)
+* [Widgets](configuration/coupons.md)
 
 ## Frontend
 
