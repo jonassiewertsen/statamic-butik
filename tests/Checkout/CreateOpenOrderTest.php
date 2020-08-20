@@ -106,7 +106,7 @@ class CreateOpenOrderTest extends TestCase
     public function the_products_will_be_saved_as_json()
     {
         $this->checkout();
-        $items = new ItemCollection($this->items);
+        $items = (new ItemCollection($this->items))->items;
         $this->assertDatabaseHas('butik_orders', ['items' => json_encode($items)]);
     }
 
