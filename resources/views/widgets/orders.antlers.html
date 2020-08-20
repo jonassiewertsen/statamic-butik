@@ -1,6 +1,6 @@
 <div class="card p-0 content">
     <div class="p-3">
-        <h1>{{ 'butik::cp.order_successfull' | trans | ucfirst }}</h1>
+        <h1>{{ 'butik::cp.order_successful' | trans | ucfirst }}</h1>
     </div>
 
     {{ if (orders | count) > 0  }}
@@ -24,7 +24,7 @@
                         </td>
                         <td class="px-3 py-1">{{ customer }}</td>
                         <td class="px-3 py-1">{{ mail}}</td>
-                        <td class="px-3 py-1">{{ total_amount }}</td>
+                        <td class="px-3 py-1">{{ currency }} {{ total_amount }}</td>
                         <td class="px-3 py-1">{{ created_at }}</td>
                     </tr>
                 {{ /orders }}
