@@ -98,11 +98,11 @@ What Butik can provide:
 * [x] swap layouts AND
 * [x] swap templates
 
-#### Requirements
+### Requirements
 
-* Statamic V3
+* Statamic 3
 * PHP &gt;= 7.4
-* Laravel 7.\*
+* Laravel &gt;= 7.20
 
 ## Payments
 

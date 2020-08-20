@@ -10,12 +10,6 @@ There a multiple options to test your e-mails locally.
 
 One popular option is [Mailtrap](https://mailtrap.io/).
 
-## Webhooks
-
-Remember to define the [csrf exception](https://butik.dev/installation/untitled#allow-webhooks)
-
-{% page-ref page="../configuration/configuration.md" %}
-
 ## Payment process
 
 {% hint style="warning" %}
@@ -36,7 +30,7 @@ MOLLIE_NGROK_REDIRECT=https://your_url.ngrok.io
 
 Define your redirect url in your .env and Mollie does know how to reach your local environment. 
 
-Paste your url witthout`/` at the end. 
+Paste your url without`/` at the end. 
 
 #### Laravel Valet
 
