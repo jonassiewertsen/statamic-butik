@@ -2,7 +2,7 @@
 
 
 
-![](.gitbook/assets/butik-logo.svg)
+![](.gitbook/assets/butik.svg)
 
 ## A Statamic e-commerce solution
 
