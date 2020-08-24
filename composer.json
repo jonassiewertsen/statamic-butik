@@ -34,7 +34,7 @@
         "jonassiewertsen/statamic-livewire": "^1.0",
         "livewire/livewire": "^1.0",
         "mollie/laravel-mollie": "^2.0",
-        "statamic/cms": "^3.0",
+        "statamic/cms": "3.0.*",
         "symfony/intl": "^5.1"
     },
     "require-dev": {
