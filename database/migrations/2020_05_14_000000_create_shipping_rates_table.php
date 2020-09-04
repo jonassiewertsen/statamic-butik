@@ -28,6 +28,6 @@ class CreateShippingRatesTable extends Migration
 
     public function down()
     {
-        Schema::drop('butik_shipping_rates');
+        Schema::dropIfExists('butik_shipping_rates');
     }
 }
