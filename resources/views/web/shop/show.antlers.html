@@ -1,9 +1,7 @@
 <div class="grid grid-cols-1 md:grid-cols-2 row-gap-8 col-gap-20">
     <aside>
         {{ if product:images }}
-            {{ product:images limit="1" }}
-                <img class="rounded-xl" src="{{ url }}" alt="{{ alt }}">
-            {{ /product:images }}
+            <img class="rounded-xl" src="{{ product:images:0:url }}" alt="{{ product:images:0:alt }}">
         {{ else }}
             <div class="w-full bg-gray-light rounded-xl">
                 {{ partial src="butik::web/components/placeholder-image" }}
