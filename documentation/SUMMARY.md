@@ -34,6 +34,7 @@
 
 ## Extending
 
+* [Events](extending/events.md)
 * [Payment Gateway](extending/payment-gateway.md)
 * [Shipping](extending/shipping.md)
 
