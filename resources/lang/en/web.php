@@ -37,7 +37,7 @@ return [
     'no_products_available'     => 'No products available at the moment',
     'no_products_available_in_this_category' => 'No products available in this category at the moment',
     'not_available_in_country' => 'Not available in your country! We will proceed the checkout without this product and won\'t charge for it .',
-    'pait_at'                  => 'pait at',
+    'paid_at'                  => 'pait at',
     'pay_now'                  => 'pay now',
     'payment'                  => 'payment',
     'payment_canceled'         => 'You did cancel your payment. Don\'t hesitate to try again',

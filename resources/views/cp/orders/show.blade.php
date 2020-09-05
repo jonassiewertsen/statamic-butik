@@ -33,7 +33,7 @@
             @endif
             @if ($order->paid_at)
                 <tr>
-                    <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.pait_at') }}</th>
+                    <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.paid_at') }}</th>
                     <td>{{ $order->paid_at }}</td>
                 </tr>
             @elseif ($order->failed_at)
