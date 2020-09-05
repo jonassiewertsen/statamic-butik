@@ -6,7 +6,7 @@
         <svg class="fill-current mx-auto" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="Page-1" stroke="none" stroke-width="1" fill-rule="evenodd"><g id="icon-shape"><path d="M2.92893219,17.0710678 C6.83417511,20.9763107 13.1658249,20.9763107 17.0710678,17.0710678 C20.9763107,13.1658249 20.9763107,6.83417511 17.0710678,2.92893219 C13.1658249,-0.976310729 6.83417511,-0.976310729 2.92893219,2.92893219 C-0.976310729,6.83417511 -0.976310729,13.1658249 2.92893219,17.0710678 L2.92893219,17.0710678 L2.92893219,17.0710678 Z M15.6568542,15.6568542 C18.7810486,12.5326599 18.7810486,7.46734008 15.6568542,4.34314575 C12.5326599,1.21895142 7.46734008,1.21895142 4.34314575,4.34314575 C1.21895142,7.46734008 1.21895142,12.5326599 4.34314575,15.6568542 C7.46734008,18.7810486 12.5326599,18.7810486 15.6568542,15.6568542 L15.6568542,15.6568542 Z M4,10 L6,8 L9,11 L14,6 L16,8 L9,15 L4,10 Z" id="Combined-Shape"></path></g></g></svg>
     </div>
 
-    <h1 class="block my-8 text-center font-bold text-xl">{{ 'butik::web.payment_successful' | trans | ucfirst }}</h1>
+    <h1 class="block my-8 text-center font-bold text-xl">{{ 'butik::web.payment_successful' | trans }}</h1>
 
 {{ elseif order:status == 'open' }}
 
@@ -14,7 +14,7 @@
         <svg class="fill-current" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="Page-1" stroke="none" stroke-width="1" fill-rule="evenodd"><g id="icon-shape"><path d="M12,10 L20,10 C20,7.44077682 19.0236893,4.88155365 17.0710678,2.92893219 C15.1184464,0.976310729 12.5592232,1.63312031e-10 10,1.63311142e-10 L10,8 C9.48815536,8 8.97631073,8.19526215 8.58578644,8.58578644 C7.80473785,9.36683502 7.80473785,10.633165 8.58578644,11.4142136 C9.36683502,12.1952621 10.633165,12.1952621 11.4142136,11.4142136 C11.8047379,11.0236893 12,10.5118446 12,10 L12,10 Z M19.9000864,11.4142136 C19.6060539,13.4838873 18.6630477,15.4790879 17.0710678,17.0710678 C13.1658249,20.9763107 6.83417511,20.9763107 2.92893219,17.0710678 C-0.976310729,13.1658249 -0.976310729,6.83417511 2.92893219,2.92893219 C4.52091212,1.33695225 6.51611265,0.39394606 8.58578644,0.0999136115 L8.58578644,2.12527585 C7.03175841,2.40295389 5.54404764,3.14224386 4.34314575,4.34314575 C1.21895142,7.46734008 1.21895142,12.5326599 4.34314575,15.6568542 C7.46734008,18.7810486 12.5326599,18.7810486 15.6568542,15.6568542 C16.8577561,14.4559524 17.5970461,12.9682416 17.8747242,11.4142136 L19.9000864,11.4142136 L19.9000864,11.4142136 Z M15.8318407,11.4142136 C15.5815375,12.4506982 15.0518041,13.4334772 14.2426407,14.2426407 C11.8994949,16.5857864 8.10050506,16.5857864 5.75735931,14.2426407 C3.41421356,11.8994949 3.41421356,8.10050506 5.75735931,5.75735931 C6.56652277,4.94819586 7.54930184,4.41846252 8.58578644,4.16815931 L8.58578644,6.25729053 C8.07014061,6.45178392 7.58660105,6.7565447 7.17157288,7.17157288 C5.60947571,8.73367004 5.60947571,11.26633 7.17157288,12.8284271 C8.73367004,14.3905243 11.26633,14.3905243 12.8284271,12.8284271 C13.2434553,12.4133989 13.5482161,11.9298594 13.7427095,11.4142136 L15.8318407,11.4142136 L15.8318407,11.4142136 Z" id="Combined-Shape"></path></g></g</svg>
     </div>
 
-    <h1 class="block my-8 text-center font-bold text-xl">{{ 'butik::web.payment_waiting' | trans | ucfirst }}</h1>
+    <h1 class="block my-8 text-center font-bold text-xl">{{ 'butik::web.payment_waiting' | trans }}</h1>
 
 {{ elseif order:status == 'waiting' }}
 
@@ -22,7 +22,7 @@
         <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 6H4.34a6 6 0 0 1 11.32 0z"></path></svg>
     </div>
 
-    <h1 class="block my-8 text-center font-bold text-xl">{{ 'butik::web.payment_failed' | trans | ucfirst }}</h1>
+    <h1 class="block my-8 text-center font-bold text-xl">{{ 'butik::web.payment_failed' | trans }}</h1>
 
 {{ elseif order:status == 'failed' }}
 
@@ -30,42 +30,42 @@
         <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 6H4.34a6 6 0 0 1 11.32 0z"></path></svg>
     </div>
 
-    <h1 class="block my-8 text-center font-bold text-xl">{{ 'butik::web.payment_canceled' | trans | ucfirst }}</h1>
+    <h1 class="block my-8 text-center font-bold text-xl">{{ 'butik::web.payment_canceled' | trans }}</h1>
 {{ /if }}
 
 <div class="flex flex-col-reverse lg:flex-row px-5 justify-center lg:px-0 m20 mt-6">
     <div class="w-full lg:ml-5 lg:px-0 lg:w-1/2 xl:ml-0">
 
         <div class="border border-gray px-6 py-3 mt-8 lg:mt-0 rounded-md">
-            <h3 class="underline">{{ 'butik::web.ship_to' | trans | ucfirst }}</h3>
+            <h3 class="underline">{{ 'butik::web.ship_to' | trans }}</h3>
             <div>
-                <span class="font-bold">{{ 'butik::web.name' | trans | ucfirst }}</span>
+                <span class="font-bold">{{ 'butik::web.name' | trans }}</span>
                 <span>{{ customer:name }}</span>
             </div>
             <div class="m2">
-                <span class="font-bold">{{ 'butik::web.mail' | trans | ucfirst }}</span>
+                <span class="font-bold">{{ 'butik::web.mail' | trans }}</span>
                 <span>{{ customer:mail }}</span>
             </div>
 
             <div>
-                <span class="font-bold">{{ 'butik::web.address1' | trans | ucfirst }}</span>
+                <span class="font-bold">{{ 'butik::web.address1' | trans }}</span>
                 <span>{{ customer:address1 }}</div>
             {{ if customer:address2 }}
             <div>
-                <span class="font-bold">{{ 'butik::web.address2' | trans | ucfirst }}</span>
+                <span class="font-bold">{{ 'butik::web.address2' | trans }}</span>
                 <span>{{ customer:address2 }}</span>
             </div>
             {{ /if }}
             <div>
-                <span class="font-bold">{{ 'butik::web.city' | trans | ucfirst }}</span>
+                <span class="font-bold">{{ 'butik::web.city' | trans }}</span>
                 <span>{{ customer:city }}</span>
             </div>
             <div>
-                <span class="font-bold">{{ 'butik::web.zip' | trans | ucfirst }}</span>
+                <span class="font-bold">{{ 'butik::web.zip' | trans }}</span>
                 <span>{{ customer:zip }}</span>
             </div>
             <div>
-                <span class="font-bold">{{ 'butik::web.country' | trans | ucfirst }}</span>
+                <span class="font-bold">{{ 'butik::web.country' | trans }}</span>
                 <span>{{ customer:country }}</span>
             </div>
         </div>
@@ -77,24 +77,24 @@
                 <span>{{ order:status }}</span>
             </div>
             <div>
-                <span class="font-bold">{{ 'butik::web.id' | trans | ucfirst }}</span>
+                <span class="font-bold">{{ 'butik::web.id' | trans }}</span>
                 <span>{{ order:id }}</span>
             </div>
             <div>
-                <span class="font-bold">{{ 'butik::web.method' | trans | ucfirst }}</span>
+                <span class="font-bold">{{ 'butik::web.method' | trans }}</span>
                 <span>{{ order:method }}</span>
             </div>
             <div>
-                <span class="font-bold">{{ 'butik::web.total' | trans | ucfirst }}</span>
+                <span class="font-bold">{{ 'butik::web.total' | trans }}</span>
                 <span>{{ currency }} {{ order:total_amount }}</span>
             </div>
             <div class="font-bold mt-3">
-                {{ 'butik::web.payment_thank_you' | trans | ucfirst }}
+                {{ 'butik::web.payment_thank_you' | trans }}
             </div>
         </div>
 
         <a href="{{ butik:shop }}" class="block w-full mt-3 bg-accent mt-6 py-2 rounded text-center text-white text-xl">
-            {{ 'butik::web.back_to_shop' | trans | ucfirst }}
+            {{ 'butik::web.back_to_shop' | trans }}
         </a>
 
     </div>

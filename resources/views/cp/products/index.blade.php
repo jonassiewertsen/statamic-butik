@@ -1,12 +1,12 @@
 @extends('statamic::layout')
-@section('title', ucfirst(__('butik::cp.product_plural')))
+@section('title', __('butik::cp.product_plural'))
 
 @section('content')
 
     @unless($products->isEmpty())
 
         <div class="flex mb-3">
-            <h1 class="flex-1">{{ ucfirst(__('butik::cp.product_plural')) }}</h1>
+            <h1 class="flex-1">{{ __('butik::cp.product_plural') }}</h1>
 
             @can('create', 'Jonassiewertsen\StatamicButik\Http\Models\Product')
                 <a href="{{ cp_route('butik.products.create') }}" class="btn-primary">{{ __('butik::cp.product_form_create') }}</a>

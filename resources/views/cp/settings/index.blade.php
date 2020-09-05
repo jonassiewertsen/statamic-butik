@@ -1,5 +1,5 @@
 @extends('statamic::layout')
-@section('title', ucfirst(__('butik::cp.setting_plural')))
+@section('title', __('butik::cp.setting_plural'))
 
 @section('content')
     <div class="card p-0 content">

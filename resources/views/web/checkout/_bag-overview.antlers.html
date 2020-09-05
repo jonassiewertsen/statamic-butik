@@ -2,7 +2,7 @@
     <div class="border-b border-gray-light pb-12">
         {{ unless items | sellable }}
         <div class="bg-red-300 px-5 py-4 rounded m16">
-            {{ 'butik::web.some_items_not_available' | trans | ucfirst }}
+            {{ 'butik::web.some_items_not_available' | trans }}
         </div>
         {{ /unless }}
 
@@ -15,16 +15,16 @@
 
     <section class="w-2/3 ml-auto mt-12 text-dark">
         <div class="flex justify-between">
-            <span>{{ 'butik::web.shipping' | trans | ucfirst }}</span>
+            <span>{{ 'butik::web.shipping' | trans }}</span>
             <span class="text-xl">{{ currency }} {{ bag:total_shipping }}</span>
         </div>
 
         <div class="flex mt-8 justify-between">
-            <span>{{ 'butik::web.total' | trans | ucfirst }}</span>
+            <span>{{ 'butik::web.total' | trans }}</span>
             <span class="text-3xl">{{ currency }} {{ bag:total_price }}</span>
         </div>
         <div class="text-right text-sm text-gray">
-            {{ 'butik::web.including_taxes' | trans | ucfirst }}
+            {{ 'butik::web.including_taxes' | trans }}
         </div>
     </section>
 </section>

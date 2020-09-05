@@ -1,7 +1,7 @@
 {{ partial src='butik::web.checkout.status' review='true' }}
 
 <h1 class="block font-bold mb-8 text-5xl leading-none">
-    {{ 'butik::web.review_payment' | trans | ucfirst }}
+    {{ 'butik::web.review_payment' | trans }}
 </h1>
 
 <div class="grid grid-cols-1 md:grid-cols-2 col-gap-24">
@@ -12,7 +12,7 @@
         <a href="{{ route:butik.payment.process }}"
            rel="nofollow"
            class="block w-full mt-3 bg-accent mt-6 py-2 rounded text-center text-white text-xl">
-            {{ 'butik::web.pay_now' | trans | ucfirst }}
+            {{ 'butik::web.pay_now' | trans }}
         </a>
     </div>
 

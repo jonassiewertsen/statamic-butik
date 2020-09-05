@@ -2,7 +2,7 @@
 @section('title', 'Test')
 
 @section('content')
-    <h2 class="mt-4 mb-2 font-bold text-xl">{{ ucfirst(__('butik::cp.order_singular')) }} {{ $order->number }}</h2>
+    <h2 class="mt-4 mb-2 font-bold text-xl">{{ __('butik::cp.order_singular') }} {{ $order->number }}</h2>
     <div class="card p-0">
         <table class="data-table">
             <tr>
