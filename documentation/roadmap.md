@@ -14,4 +14,6 @@ This roadmap will give some insight into the future plans of butik. Those are pl
 
 * Coupons 
 * Partial shipping with tracking
+* Product description inside a bard field, so it can be extended after every needs
+* additional product information can be added
 
