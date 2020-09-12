@@ -76,13 +76,13 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     ];
 
     protected $middlewareGroups = [
-        'validateCheckoutRoute'        => [
+        'validateCheckoutRoute' => [
             \Jonassiewertsen\StatamicButik\Http\Middleware\ValidateCheckoutRoute::class,
         ],
-        'cartNotEmpty'                 => [
+        'cartNotEmpty' => [
             \Jonassiewertsen\StatamicButik\Http\Middleware\CartNotEmpty::class,
         ],
-        'butikRoutes'                  => [
+        'butikRoutes' => [
             \Jonassiewertsen\StatamicButik\Http\Middleware\UpdateCart::class,
         ],
     ];
@@ -121,6 +121,14 @@ class StatamicButikServiceProvider extends AddonServiceProvider
             $this->publishes([
                 __DIR__ . '/../config/config.php' => config_path('butik.php'),
             ], 'butik-config');
+
+            // Blueprints & collections
+            $this->publishes([
+                __DIR__.'/../resources/blueprints' => resource_path('blueprints'),
+            ], 'butik-blueprints');
+            $this->publishes([
+                __DIR__.'/../resources/collections' => base_path('content/collections'),
+            ], 'butik-collections');
 
             // Views
             $this->publishes([
@@ -300,6 +308,8 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         Statamic::afterInstalled(function() {
             Artisan::call('vendor:publish --tag=butik-config');
             Artisan::call('vendor:publish --tag=butik-images');
+            Artisan::call('vendor:publish --tag=butik-blueprints');
+            Artisan::call('vendor:publish --tag=butik-collections');
             Artisan::call('vendor:publish --tag=butik-resources --force');
         });
     }
