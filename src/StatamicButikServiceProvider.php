@@ -277,7 +277,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
             $nav->create(ucfirst(__('butik::cp.product_plural')))
                 ->section('Butik')
                 ->can(auth()->user()->can('view products'))
-                ->route('butik.products.index')
+                ->route('collections.show', 'products')
                 ->icon('tags');
 
             // Settings
