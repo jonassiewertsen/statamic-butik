@@ -4,7 +4,7 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 use Jonassiewertsen\StatamicButik\Http\Models\Category;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Statamic\View\View as StatamicView;
 
 class ShopController extends WebController
@@ -29,8 +29,10 @@ class ShopController extends WebController
             ]);
     }
 
-    public function show(Product $product, $variant = null)
+    public function show(string $product, $variant = null)
     {
+        $product = Product::find($product);
+
         /**
          * We want to control if the given variant does exist so we can safely show it.
          * If it does not exist, we will redirect to an existing variant
@@ -59,7 +61,7 @@ class ShopController extends WebController
         return (new StatamicView())
             ->template(config('butik.template_product-show'))
             ->layout(config('butik.layout_product-show'))
-            ->with(['product' => $product->toAugmentedArray()]);
+            ->with(['product' => $product]);
     }
 
     private function redirectToVariant($product)
@@ -80,7 +82,7 @@ class ShopController extends WebController
 
         switch($display) {
             case 'all':
-                return Product::where('available', true)->get();
+                return Product::all();
                 break;
             case 'name':
                 return Product::where('available', true)

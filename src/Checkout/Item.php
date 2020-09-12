@@ -6,7 +6,8 @@ namespace Jonassiewertsen\StatamicButik\Checkout;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\Product as ProductModel;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 
@@ -52,7 +53,7 @@ class Item
     /**
      * The product the item does base on
      */
-    public Product $product;
+    public ProductModel $product;
 
     /**
      * The variant we do use. Null if not defined
@@ -96,7 +97,7 @@ class Item
         $this->singlePrice     = $item->price;
         $this->availableStock  = $item->stock;
         $this->name            = $item->title;
-        $this->images          = $this->product->augmentedValue('images')->value();
+        $this->images          = $this->product->images;
         $this->description     = $this->limitedDescription();
         $this->taxRate         = $item->tax->percentage;
         $this->taxAmount       = $this->totalTaxAmount();
@@ -192,7 +193,7 @@ class Item
         return Str::limit($this->product()->description, 100, '...');
     }
 
-    private function product(): Product
+    private function product(): ProductModel
     {
         $cacheName = "product:{$this->productSlug()}";
 

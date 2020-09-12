@@ -11,7 +11,7 @@ abstract class ButikModel extends Model {
     /**
      * The route to the base shop
      */
-    protected function shopRoute()
+    protected static function shopRoute()
     {
         return config('butik.route_shop-prefix');
     }

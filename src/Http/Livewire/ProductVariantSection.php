@@ -3,24 +3,24 @@
 namespace Jonassiewertsen\StatamicButik\Http\Livewire;
 
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Livewire\Component;
 
 class ProductVariantSection extends Component
 {
-    public $product;
-    public $variantTitle;
-    public $variantData;
+    public    $variantTitle;
+    public    $variantData;
+    protected $product;
 
     public function mount($product): void
     {
-        $this->product      = Product::find($product['slug']);
+        $this->product      = Product::find($product->slug);
         $this->variantTitle = request()->segment(3);
     }
 
     public function addToCart()
     {
-        Cart::add($this->variantData->slug);
+        Cart::add($this->variantData['slug']);
         $this->emit('cartUpdated');
     }
 
@@ -32,16 +32,9 @@ class ProductVariantSection extends Component
 
     public function render()
     {
-        $this->variantData = $this->productData();
-
-        return view('butik::web.components.product-variant-section', [
-            'price'                => $this->variantData->price,
-            'variant_title'        => $this->variantData->title,
-            'variant_short_title'  => $this->variantData->original_title,
-            'stock'                => $this->variantData->stock,
-            'stock_unlimited'      => $this->variantData->stock_unlimited,
-            'slug'                 => $this->variantData->slug,
-        ]);
+        return view('butik::web.components.product-variant-section',
+            $this->variantData = $this->productData(),
+        );
     }
 
     protected function productData()
@@ -53,6 +46,17 @@ class ProductVariantSection extends Component
             return $this->product->getVariant($this->variantTitle);
         }
 
-        return $this->product;
+        $product = $this->product;
+
+        return [
+            'price'               => $product->price,
+            'variant_title'       => $product->title,
+            'variant_short_title' => $product->original_title ?? null,
+            'stock'               => $product->stock,
+            'stock_unlimited'     => $product->stock_unlimited,
+            'slug'                => $product->slug,
+            'product'             => $product,
+        ];
+
     }
 }
