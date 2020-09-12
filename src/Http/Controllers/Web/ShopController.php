@@ -7,7 +7,6 @@ use Jonassiewertsen\StatamicButik\Http\Models\Category;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Statamic\View\View as StatamicView;
 
-
 class ShopController extends WebController
 {
     public function index()
