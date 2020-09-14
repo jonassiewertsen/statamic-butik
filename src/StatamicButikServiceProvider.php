@@ -59,6 +59,8 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
     protected $fieldtypes = [
         \Jonassiewertsen\StatamicButik\Fieldtypes\Money::class,
+        \Jonassiewertsen\StatamicButik\Fieldtypes\Number::class,
+        \Jonassiewertsen\StatamicButik\Fieldtypes\Shipping::class,
         \Jonassiewertsen\StatamicButik\Fieldtypes\Tax::class,
     ];
 

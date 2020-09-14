@@ -8,6 +8,8 @@
     export default {
         mixins: [Fieldtype],
 
-        data() {},
+        data() {
+            return {}
+        },
     };
 </script>

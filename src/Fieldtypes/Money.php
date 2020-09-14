@@ -2,7 +2,9 @@
 
 namespace Jonassiewertsen\StatamicButik\Fieldtypes;
 
-class Money extends \Statamic\Fields\Fieldtype
+use Statamic\Fields\Fieldtype;
+
+class Money extends Fieldtype
 {
     protected $icon = 'tags';
 

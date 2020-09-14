@@ -2,16 +2,16 @@
 
 namespace Jonassiewertsen\StatamicButik\Fieldtypes;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Tax as TaxModel;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Statamic\Fields\Fieldtype;
 
-class Tax extends Fieldtype
+class Shipping extends Fieldtype
 {
     protected $icon = 'tags';
 
     public function preload() {
         return [
-            'taxes' => $this->fetchTaxOptions(),
+            'shippings' => $this->fetchShippingOptions(),
         ];
     }
 
@@ -25,8 +25,8 @@ class Tax extends Fieldtype
          return $data;
     }
 
-    private function fetchTaxOptions(): array {
-         return TaxModel::pluck('title', 'slug')->map(function($key, $value) {
+    private function fetchShippingOptions(): array {
+         return ShippingProfile::pluck('title', 'slug')->map(function($key, $value) {
              return [
                  'value' => $value,
                  'label' => $key,
