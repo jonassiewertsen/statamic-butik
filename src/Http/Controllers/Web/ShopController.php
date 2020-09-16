@@ -61,7 +61,7 @@ class ShopController extends WebController
         return (new StatamicView())
             ->template(config('butik.template_product-show'))
             ->layout(config('butik.layout_product-show'))
-            ->with(['product' => $product]);
+            ->with(['product' => (array) $product]);
     }
 
     private function redirectToVariant($product)

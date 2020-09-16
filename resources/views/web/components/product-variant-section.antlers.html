@@ -23,8 +23,8 @@
     </div>
     {{ /if }}
 
-    {{ if description }}
-    <p class="mt-8 text-dark">{{ description }}</p>
+    {{ if product:description }}
+        <p class="mt-8 text-dark">{{ product:description }}</p>
     {{ /if }}
 
     {{ if stock_unlimited || stock > 0 }}

@@ -14,7 +14,7 @@ class ProductVariantSection extends Component
 
     public function mount($product): void
     {
-        $this->product      = Product::find($product->slug);
+        $this->product      = Product::find($product['slug']);
         $this->variantTitle = request()->segment(3);
     }
 
@@ -55,7 +55,7 @@ class ProductVariantSection extends Component
             'stock'               => $product->stock,
             'stock_unlimited'     => $product->stock_unlimited,
             'slug'                => $product->slug,
-            'product'             => $product,
+            'product'             => (array) $product,
         ];
 
     }
