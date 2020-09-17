@@ -7,9 +7,12 @@ use Statamic\Fields\Fieldtype;
 
 class Tax extends Fieldtype
 {
-    protected $icon = 'tags';
+    protected $icon       = 'tags';
+    protected $categories = ['butik'];
+    protected $selectable = false;
 
-    public function preload() {
+    public function preload()
+    {
         return [
             'taxes' => $this->fetchTaxOptions(),
         ];
@@ -22,15 +25,16 @@ class Tax extends Fieldtype
 
     public function preProcess($data)
     {
-         return $data;
+        return $data;
     }
 
-    private function fetchTaxOptions(): array {
-         return TaxModel::pluck('title', 'slug')->map(function($key, $value) {
-             return [
-                 'value' => $value,
-                 'label' => $key,
-             ];
-         })->toArray();
+    private function fetchTaxOptions(): array
+    {
+        return TaxModel::pluck('title', 'slug')->map(function ($key, $value) {
+            return [
+                'value' => $value,
+                'label' => $key,
+            ];
+        })->toArray();
     }
 }

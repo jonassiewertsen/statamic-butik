@@ -6,9 +6,12 @@ use Statamic\Fields\Fieldtype;
 
 class Money extends Fieldtype
 {
-    protected $icon = 'tags';
+    protected $categories = ['butik'];
+    protected $selectable = false;
+    protected $icon       = 'tags';
 
-    public function preload() {
+    public function preload()
+    {
         return [
             'currencySymbol' => currency(),
         ];

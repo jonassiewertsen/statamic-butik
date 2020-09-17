@@ -6,7 +6,8 @@ use Statamic\Fields\Fieldtype;
 
 class Number extends Fieldtype
 {
-    protected $icon = 'integer';
+    protected $icon       = 'integer';
+    protected $categories = ['butik', 'text'];
 
     public function process($data)
     {
