@@ -8,13 +8,13 @@ use Livewire\Component;
 
 class ProductVariantSection extends Component
 {
-    public    $variantTitle;
-    public    $variantData;
-    protected $product;
+    public $variantTitle;
+    public $variantData;
+    public $product;
 
     public function mount($product): void
     {
-        $this->product      = Product::find($product['slug']);
+        $this->product      = (array) Product::find($product['slug']);
         $this->variantTitle = request()->segment(3);
     }
 
@@ -32,31 +32,28 @@ class ProductVariantSection extends Component
 
     public function render()
     {
-        return view('butik::web.components.product-variant-section',
-            $this->variantData = $this->productData(),
-        );
+        $this->variantData = $this->productData();
+
+        return view('butik::web.components.product-variant-section', [
+            'price'               => $this->variantData['price'],
+            'variant_title'       => $this->variantData['title'],
+            'variant_short_title' => $this->variantData['original_titl'] ?? null,
+            'stock'               => $this->variantData['stock'],
+            'stock_unlimited'     => $this->variantData['stock_unlimited'],
+            'slug'                => $this->variantData['slug'],
+            'product'             => (array) $this->variantData,
+        ]);
     }
 
     protected function productData()
     {
-        if ($this->product->hasVariants()) {
-            /** check if exists, otherwise we
-             * will use the parents product data
-             */
-            return $this->product->getVariant($this->variantTitle);
-        }
+//        if ($this->product->hasVariants()) {
+//            /** check if exists, otherwise we
+//             * will use the parents product data
+//             */
+//            return $this->product->getVariant($this->variantTitle);
+//        }
 
-        $product = $this->product;
-
-        return [
-            'price'               => $product->price,
-            'variant_title'       => $product->title,
-            'variant_short_title' => $product->original_title ?? null,
-            'stock'               => $product->stock,
-            'stock_unlimited'     => $product->stock_unlimited,
-            'slug'                => $product->slug,
-            'product'             => (array) $product,
-        ];
-
+        return $this->product;
     }
 }

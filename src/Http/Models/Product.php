@@ -5,7 +5,6 @@ namespace Jonassiewertsen\StatamicButik\Http\Models;
 use Illuminate\Support\Collection;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Http\Traits\ProductUrlTrait;
-use Mockery\Exception;
 use Statamic\Entries\EntryCollection;
 use Statamic\Facades\Entry;
 
@@ -27,6 +26,7 @@ class Product
     {
         $entry = Entry::findBySlug($slug, self::COLLECTION_NAME);
 
+        // TODO: Refactor
         foreach ($entry->values() as $key => $attribute) {
             if ($key !== 'updated_by' && $key !== 'updated_at' && $key !== 'content') {
                 $this->$key = $entry->augmentedValue($key)->value();
@@ -46,30 +46,30 @@ class Product
         return $this->entry->published();
     }
 
-//    /**
-//     * A Product has taxes
-//     */
-//    public function tax()
-//    {
-//        return $this->belongsTo(Tax::class, 'tax_id', 'slug');
-//    }
-//
-//    /**
-//     * A Product has categories
-//     */
-//    public function categories()
-//    {
-//        return $this->belongsToMany(Category::class, 'butik_category_product');
-//    }
-//
-//    /**
-//     * A Product has a shipping relation
-//     */
-//    public function shippingProfile()
-//    {
-//        return $this->belongsTo(ShippingProfile::class, 'shipping_profile_slug', 'slug');
-//    }
-//
+    /**
+     * A Product has taxes
+     */
+    public function tax()
+    {
+        return Tax::firstWhere('slug', $this->tax_id);
+    }
+
+    /**
+     * A Product has categories
+     */
+    public function categories()
+    {
+        return; // TODO: Add categories relation
+    }
+
+    /**
+     * A Product has a shipping relation
+     */
+    public function shippingProfile()
+    {
+        return ShippingProfile::firstWhere('slug', $this->shipping_profile_slug);
+    }
+
     /**
      * A Product has variants
      */
@@ -155,20 +155,12 @@ class Product
         });
     }
 
-    // TODO: Should be remove if not needed anymore
-    /**
-     * Handle dynamic property calls.
-     */
-//    public function __get(string $property)
-//    {
-//        if (method_exists($this, $property)) {
-//            return call_user_func([$this, $property]);
-//        }
-//
-//        $message = '%s does not respond to the "%s" property or method.';
-//
-//        throw new \Exception(
-//            sprintf($message, static::class, $property)
-//        );
-//    }
+    public function __get(string $property)
+    {
+        if (! method_exists($this, $property)) {
+           return;
+        }
+
+        return call_user_func([$this, $property]);
+    }
 }
