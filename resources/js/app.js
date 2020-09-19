@@ -10,6 +10,7 @@ import MoneyFieldtype from './fieldtypes/moneyFieldtype';
 import NumberFieldtype from './fieldtypes/numberFieldtype';
 import ShippingFieldtype from './fieldtypes/shippingFieldtype';
 import TaxFieldtype from './fieldtypes/taxFieldtype';
+import VariantsFieldtype from './fieldtypes/variantsFieldtype';
 
 import CreateButton from './partials/CreateButton';
 import PublishFormRedirect from './partials/PublishFormRedirect';
@@ -29,6 +30,7 @@ Statamic.booting(() => {
     Statamic.$components.register('number-fieldtype', NumberFieldtype);
     Statamic.$components.register('shipping-fieldtype', ShippingFieldtype);
     Statamic.$components.register('tax-fieldtype', TaxFieldtype);
+    Statamic.$components.register('variants-fieldtype', VariantsFieldtype);
 
     // Partials
     Statamic.$components.register('create-button', CreateButton);

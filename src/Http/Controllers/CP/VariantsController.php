@@ -68,9 +68,9 @@ class VariantsController extends CpController
         $variant->delete();
     }
 
-    public function from(Product $product)
+    public function from($product)
     {
-        return Variant::where('product_slug', $product->slug)
+        return Variant::where('product_slug', $product)
             ->get()
             ->map(function ($variant) {
                 return [
