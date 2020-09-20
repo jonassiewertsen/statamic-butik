@@ -102,10 +102,8 @@
 
         methods: {
             fetchVariants() {
-                console.log('fetch')
                 axios.get(this.variantIndexRoute)
                     .then(response => {
-                        console.log(response.data)
                         this.variants = response.data
                     }).catch(error => {
                         this.$toast.error(error)
