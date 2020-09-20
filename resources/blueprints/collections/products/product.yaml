@@ -75,6 +75,18 @@ sections:
           type: bard
           listable: hidden
           display: Description
+      -
+        handle: variants
+        field:
+          type: variants
+          listable: hidden
+          display: Variants
+      -
+        handle: categories
+        field:
+          type: categories
+          listable: hidden
+          display: Categories
   sidebar:
     display: Sidebar
     fields:
