@@ -3,6 +3,8 @@
 namespace Jonassiewertsen\StatamicButik\Http\Models;
 
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
+
 use Statamic\Support\Str;
 
 class Variant extends ButikModel
@@ -33,10 +35,10 @@ class Variant extends ButikModel
     /**
      * A variant belongs to a product
      */
-//    public function product()
-//    {
-//        return $this->belongsTo(Product::class);
-//    }
+    public function product()
+    {
+        return Product::find($this->product_slug);
+    }
 
     /**
      * The title does contain of the parent name in combination with the variant title.
