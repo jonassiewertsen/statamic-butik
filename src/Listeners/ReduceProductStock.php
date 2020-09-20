@@ -10,6 +10,7 @@ use Statamic\Support\Str;
 
 class ReduceProductStock implements ShouldQueue
 {
+    // TODO: Rewrite with the new Product model.
     public function handle($event)
     {
         $items = $event->order->items;

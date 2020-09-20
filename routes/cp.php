@@ -11,10 +11,6 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\CP')
     ->name('butik.')
     ->group(function() {
 
-    Route::resource('products', 'ProductsController')->only([
-       'index', 'create', 'store', 'edit',  'update', 'destroy',
-    ]);
-
     Route::get('variants/from/{product}', 'VariantsController@from')
         ->name('variants.from-product');
     Route::resource('variants', 'VariantsController')->only([
