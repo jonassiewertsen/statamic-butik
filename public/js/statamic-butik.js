@@ -1223,10 +1223,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_orders_Listing___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_orders_Listing__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_shipping_Overview__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_shipping_Overview___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_shipping_Overview__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_categories_ManageProductCategories__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_categories_ManageProductCategories___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_categories_ManageProductCategories__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_variants_ManageProductVariants__ = __webpack_require__(58);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_variants_ManageProductVariants___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_variants_ManageProductVariants__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_variants_ManageProductVariants__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_variants_ManageProductVariants___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_variants_ManageProductVariants__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__fieldtypes_categoriesFieldtype__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__fieldtypes_categoriesFieldtype___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__fieldtypes_categoriesFieldtype__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__fieldtypes_moneyFieldtype__ = __webpack_require__(61);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__fieldtypes_moneyFieldtype___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__fieldtypes_moneyFieldtype__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__fieldtypes_numberFieldtype__ = __webpack_require__(64);
@@ -1265,10 +1265,11 @@ Statamic.booting(function () {
 
     Statamic.$components.register('butik-shipping-overview', __WEBPACK_IMPORTED_MODULE_2__components_shipping_Overview___default.a);
 
-    Statamic.$components.register('butik-manage-product-categories', __WEBPACK_IMPORTED_MODULE_3__components_categories_ManageProductCategories___default.a);
-    Statamic.$components.register('butik-manage-product-variants', __WEBPACK_IMPORTED_MODULE_4__components_variants_ManageProductVariants___default.a);
+    Statamic.$components.register('butik-manage-product-categories', ProductCategories);
+    Statamic.$components.register('butik-manage-product-variants', __WEBPACK_IMPORTED_MODULE_3__components_variants_ManageProductVariants___default.a);
 
     // Fieldtypes
+    Statamic.$components.register('categories-fieldtype', __WEBPACK_IMPORTED_MODULE_4__fieldtypes_categoriesFieldtype___default.a);
     Statamic.$components.register('money-fieldtype', __WEBPACK_IMPORTED_MODULE_5__fieldtypes_moneyFieldtype___default.a);
     Statamic.$components.register('number-fieldtype', __WEBPACK_IMPORTED_MODULE_6__fieldtypes_numberFieldtype___default.a);
     Statamic.$components.register('shipping-fieldtype', __WEBPACK_IMPORTED_MODULE_7__fieldtypes_shippingFieldtype___default.a);
@@ -4400,380 +4401,9 @@ if (false) {
 }
 
 /***/ }),
-/* 55 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(0)
-/* script */
-var __vue_script__ = __webpack_require__(56)
-/* template */
-var __vue_template__ = __webpack_require__(57)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/categories/ManageProductCategories.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-1f72d704", Component.options)
-  } else {
-    hotAPI.reload("data-v-1f72d704", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 56 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: {
-        productSlug: {
-            type: String,
-            default: ''
-        },
-        categoryIndexRoute: {
-            type: String,
-            default: ''
-        },
-        categoryAttachRoute: {
-            type: String,
-            default: ''
-        },
-        categoryManageRoute: {
-            type: String,
-            default: ''
-        },
-        categoryName: {
-            type: String,
-            default: ''
-        }
-    },
-
-    mounted: function mounted() {
-        this.categories = this.fetchCategories();
-    },
-    data: function data() {
-        return {
-            categories: [],
-            showNewCategory: false
-        };
-    },
-
-
-    methods: {
-        update: function update(category) {
-            if (category.is_attached) {
-                this.attachCategory(category);
-            } else {
-                this.detachCategory(category);
-            }
-        },
-        fetchCategories: function fetchCategories() {
-            var _this = this;
-
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(this.categoryIndexRoute).then(function (response) {
-                _this.categories = response.data;
-            }).catch(function (error) {
-                _this.$toast.error(error);
-            });
-        },
-        attachCategory: function attachCategory(category) {
-            var _this2 = this;
-
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(this.createAttachRoute(category)).then(function () {
-                _this2.$toast.success(__('Saved'));
-            }).catch(function (error) {
-                _this2.$toast.error(error);
-            });
-        },
-        detachCategory: function detachCategory(category) {
-            var _this3 = this;
-
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete(this.createAttachRoute(category)).then(function () {
-                _this3.$toast.success(__('Saved'));
-            }).catch(function (error) {
-                _this3.$toast.error(error);
-            });
-        },
-        deleteCategory: function deleteCategory(category) {
-            var _this4 = this;
-
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete(this.categoryDeleteRoute(category)).then(function () {
-                _this4.fetchCategories();
-                _this4.$toast.success(__('Deleted'));
-            }).catch(function (error) {
-                _this4.$toast.error(error);
-            });
-
-            this.categories.splice(category.slug, 1);
-        },
-        addCategory: function addCategory() {
-            var _this5 = this;
-
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(this.categoryManageRoute, {
-                name: this.categoryName,
-                slug: this.categoryName.toLowerCase()
-            }).then(function () {
-                _this5.fetchCategories();
-                _this5.$toast.success(__('Saved'));
-            }).catch(function (error) {
-                _this5.$toast.error(error);
-            });
-
-            // Add the category to the list
-            this.updatedCategories.push({
-                is_attached: false,
-                name: this.categoryName,
-                slug: this.categoryName.toLowerCase()
-            });
-
-            // Reset our name input
-            this.categoryName = '';
-        },
-        createAttachRoute: function createAttachRoute(category) {
-            var route = this.categoryAttachRoute;
-            route = route.replace('x-category', category.slug);
-            route = route.replace('x-product', this.productSlug);
-            return route;
-        },
-        categoryDeleteRoute: function categoryDeleteRoute(category) {
-            return this.categoryManageRoute + '/' + category.slug;
-        }
-    }
-});
-
-/***/ }),
-/* 57 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "flex mt-6 mb-6" }, [
-    _c("section", { staticClass: "flex-grow" }, [
-      _c(
-        "header",
-        { staticClass: "flex justify-between mb-3" },
-        [
-          _c("h1", [_vm._v("Categories")]),
-          _vm._v(" "),
-          _c("create-button", {
-            attrs: { label: "New category", classes: "bg-white" },
-            on: {
-              clicked: function($event) {
-                _vm.showNewCategory = !_vm.showNewCategory
-              }
-            }
-          })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _vm.showNewCategory
-        ? _c("div", { staticClass: "flex card mb-3" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.categoryName,
-                  expression: "categoryName"
-                }
-              ],
-              staticClass: "input-text",
-              domProps: { value: _vm.categoryName },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.categoryName = $event.target.value
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn-primary ml-2",
-                on: { click: _vm.addCategory }
-              },
-              [_vm._v(_vm._s(_vm.__("Save")))]
-            )
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _c("div", { staticClass: "publish-section" }, [
-        _c("table", { staticClass: "data-table" }, [
-          _c(
-            "tbody",
-            [
-              _vm._l(_vm.categories, function(category) {
-                return _c(
-                  "tr",
-                  { class: { "bg-grey-30 opacity-75": !category.is_attached } },
-                  [
-                    _c("td", { staticClass: "pl-2 py-1 text-base" }, [
-                      _vm._v(_vm._s(category.name))
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      [
-                        _c("toggle-input", {
-                          on: {
-                            input: function($event) {
-                              return _vm.update(category)
-                            }
-                          },
-                          model: {
-                            value: category.is_attached,
-                            callback: function($$v) {
-                              _vm.$set(category, "is_attached", $$v)
-                            },
-                            expression: "category.is_attached"
-                          }
-                        })
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      [
-                        _c(
-                          "dropdown-list",
-                          { staticClass: "flex justify-end" },
-                          [
-                            _c("dropdown-item", {
-                              staticClass: "warning",
-                              attrs: { text: _vm.__("Delete") },
-                              on: {
-                                click: function($event) {
-                                  return _vm.deleteCategory(category)
-                                }
-                              }
-                            })
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    )
-                  ]
-                )
-              }),
-              _vm._v(" "),
-              !_vm.categories || _vm.categories.length === 0
-                ? _c("tr", [
-                    _c("td", [_vm._v("No Categories have been created yet.")])
-                  ])
-                : _vm._e()
-            ],
-            2
-          )
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", {
-      staticClass: "hidden xl:block ml-2",
-      staticStyle: { width: "300px" }
-    })
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-1f72d704", module.exports)
-  }
-}
-
-/***/ }),
+/* 55 */,
+/* 56 */,
+/* 57 */,
 /* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5820,9 +5450,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         fetchVariants: function fetchVariants() {
             var _this = this;
 
-            console.log('fetch');
             __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(this.variantIndexRoute).then(function (response) {
-                console.log(response.data);
                 _this.variants = response.data;
             }).catch(function (error) {
                 _this.$toast.error(error);
@@ -6207,6 +5835,356 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 80 */,
+/* 81 */,
+/* 82 */,
+/* 83 */,
+/* 84 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(85)
+/* template */
+var __vue_template__ = __webpack_require__(86)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/fieldtypes/categoriesFieldtype.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2b7587b4", Component.options)
+  } else {
+    hotAPI.reload("data-v-2b7587b4", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 85 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mixins: [Fieldtype],
+
+    data: function data() {
+        return {
+            categories: [],
+            categoryIndexRoute: this.meta.categoryIndexRoute,
+            categoryAttachRoute: this.meta.categoryAttachRoute,
+            categoryManageRoute: this.meta.categoryManageRoute,
+            productSlug: this.meta.productSlug,
+            categoryName: '',
+            showNewCategory: false
+        };
+    },
+    mounted: function mounted() {
+        this.categories = this.fetchCategories();
+    },
+
+
+    methods: {
+        update: function update(category) {
+            if (category.is_attached) {
+                this.attachCategory(category);
+            } else {
+                this.detachCategory(category);
+            }
+        },
+        fetchCategories: function fetchCategories() {
+            var _this = this;
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(this.categoryIndexRoute).then(function (response) {
+                _this.categories = response.data;
+            }).catch(function (error) {
+                _this.$toast.error(error);
+            });
+        },
+        attachCategory: function attachCategory(category) {
+            var _this2 = this;
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(this.createAttachRoute(category)).then(function () {
+                _this2.$toast.success(__('Saved'));
+            }).catch(function (error) {
+                _this2.$toast.error(error);
+            });
+        },
+        detachCategory: function detachCategory(category) {
+            var _this3 = this;
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete(this.createAttachRoute(category)).then(function () {
+                _this3.$toast.success(__('Saved'));
+            }).catch(function (error) {
+                _this3.$toast.error(error);
+            });
+        },
+        deleteCategory: function deleteCategory(category) {
+            var _this4 = this;
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete(this.categoryDeleteRoute(category)).then(function () {
+                _this4.fetchCategories();
+                _this4.$toast.success(__('Deleted'));
+            }).catch(function (error) {
+                _this4.$toast.error(error);
+            });
+
+            this.categories.splice(category.slug, 1);
+        },
+        addCategory: function addCategory() {
+            var _this5 = this;
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(this.categoryManageRoute, {
+                name: this.categoryName,
+                slug: this.categoryName.toLowerCase()
+            }).then(function () {
+                _this5.fetchCategories();
+                _this5.$toast.success(__('Saved'));
+            }).catch(function (error) {
+                _this5.$toast.error(error);
+            });
+
+            // Add the category to the list
+            this.categories.push({
+                is_attached: false,
+                name: this.categoryName,
+                slug: this.categoryName.toLowerCase()
+            });
+
+            // Reset our name input
+            this.categoryName = '';
+        },
+        createAttachRoute: function createAttachRoute(category) {
+            var route = this.categoryAttachRoute;
+            route = route.replace('x-category', category.slug);
+            route = route.replace('x-product', this.productSlug);
+            return route;
+        },
+        categoryDeleteRoute: function categoryDeleteRoute(category) {
+            return this.categoryManageRoute + '/' + category.slug;
+        }
+    }
+});
+
+/***/ }),
+/* 86 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "flex" }, [
+    _c("section", { staticClass: "flex-grow" }, [
+      _c(
+        "header",
+        { staticClass: "flex justify-end -mt-5 mb-2 w-full" },
+        [
+          _c("create-button", {
+            attrs: { label: "New category", classes: "bg-grey-30 z-0" },
+            on: {
+              clicked: function($event) {
+                _vm.showNewCategory = !_vm.showNewCategory
+              }
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _vm.showNewCategory
+        ? _c("div", { staticClass: "flex card mb-3" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.categoryName,
+                  expression: "categoryName"
+                }
+              ],
+              staticClass: "input-text",
+              domProps: { value: _vm.categoryName },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.categoryName = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn-primary ml-2",
+                on: { click: _vm.addCategory }
+              },
+              [_vm._v(_vm._s(_vm.__("Save")))]
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "publish-section" }, [
+        _c("table", { staticClass: "data-table" }, [
+          _c(
+            "tbody",
+            [
+              _vm._l(_vm.categories, function(category) {
+                return _c(
+                  "tr",
+                  { class: { "bg-grey-30 opacity-75": !category.is_attached } },
+                  [
+                    _c("td", { staticClass: "pl-2 py-1 text-base" }, [
+                      _vm._v(_vm._s(category.name))
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      [
+                        _c("toggle-input", {
+                          on: {
+                            input: function($event) {
+                              return _vm.update(category)
+                            }
+                          },
+                          model: {
+                            value: category.is_attached,
+                            callback: function($$v) {
+                              _vm.$set(category, "is_attached", $$v)
+                            },
+                            expression: "category.is_attached"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      [
+                        _c(
+                          "dropdown-list",
+                          { staticClass: "flex justify-end" },
+                          [
+                            _c("dropdown-item", {
+                              staticClass: "warning",
+                              attrs: { text: _vm.__("Delete") },
+                              on: {
+                                click: function($event) {
+                                  return _vm.deleteCategory(category)
+                                }
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ]
+                )
+              }),
+              _vm._v(" "),
+              !_vm.categories || _vm.categories.length === 0
+                ? _c("tr", [
+                    _c("td", [_vm._v("No Categories have been created yet.")])
+                  ])
+                : _vm._e()
+            ],
+            2
+          )
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-2b7587b4", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

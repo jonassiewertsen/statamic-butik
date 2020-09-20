@@ -3,9 +3,9 @@ import OrdersListing from './components/orders/Listing';
 
 import ShippingOverview from "./components/shipping/Overview";
 
-import ProductCategories from "./components/categories/ManageProductCategories";
 import ProductVariants from "./components/variants/ManageProductVariants";
 
+import CategoriesFieldtype from './fieldtypes/categoriesFieldtype';
 import MoneyFieldtype from './fieldtypes/moneyFieldtype';
 import NumberFieldtype from './fieldtypes/numberFieldtype';
 import ShippingFieldtype from './fieldtypes/shippingFieldtype';
@@ -26,6 +26,7 @@ Statamic.booting(() => {
     Statamic.$components.register('butik-manage-product-variants', ProductVariants);
 
     // Fieldtypes
+    Statamic.$components.register('categories-fieldtype', CategoriesFieldtype);
     Statamic.$components.register('money-fieldtype', MoneyFieldtype);
     Statamic.$components.register('number-fieldtype', NumberFieldtype);
     Statamic.$components.register('shipping-fieldtype', ShippingFieldtype);

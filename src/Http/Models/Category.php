@@ -21,39 +21,37 @@ class Category extends ButikModel
         return 'slug';
     }
 
-    public function products()
+    /**
+     * Add a product to this category
+     */
+    public function addProduct($product): void
     {
-        return $this->belongsToMany(
-            Product::class,
-            'butik_category_product',
-            'category_slug',
-            'product_slug',
-        );
+        DB::table('butik_category_product')
+            ->insert([
+                'category_slug' => $this->slug,
+                'product_slug' => $product,
+            ]);
     }
 
     /**
      * Add a product to this category
      */
-    public function addProduct(Product $product): void
+    public function removeProduct(string $product): void
     {
-        $this->products()->attach($product);
-    }
-
-    /**
-     * Add a product to this category
-     */
-    public function removeProduct(Product $product): void
-    {
-        $this->products()->detach($product);
+        DB::table('butik_category_product')
+            ->where([
+                'category_slug' => $this->slug,
+                'product_slug' => $product,
+            ])->delete();
     }
 
     /**
      * Is a specific product attached to this category?
      */
-    public function isProductAttached(Product $product): bool
+    public function isProductAttached($product): bool
     {
         return DB::table('butik_category_product')
-                ->where('product_slug', $product->slug)
+                ->where('product_slug', $product)
                 ->where('category_slug', $this->slug)
                 ->count() === 1;
     }
