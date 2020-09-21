@@ -29,7 +29,7 @@ class Product
 
         // TODO: Refactor
         foreach ($entry->values() as $key => $attribute) {
-            if ($key !== 'updated_by' && $key !== 'updated_at' && $key !== 'content') {
+            if ($key !== 'updated_by' && $key !== 'updated_at' && $key !== 'content' && is_int($key)) {
                 $this->$key = $entry->augmentedValue($key)->value();
             } else {
                 $this->$key = $entry->augmentedValue($key);
@@ -150,7 +150,7 @@ class Product
     private function extend(EntryCollection $entry): Collection
     {
         return $entry->map(function ($entry) {
-            $entry->fluentlyGetOrSet('show_url')->args([$this->showUrl($entry->slug())]);
+            $entry->fluentlyGetOrSet('show_url')->args([$this->show_url($entry->slug())]);
             $entry->fluentlyGetOrSet('slug')->args([$entry->slug()]);
             return $entry;
         });

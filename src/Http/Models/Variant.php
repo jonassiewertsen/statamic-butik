@@ -35,7 +35,7 @@ class Variant extends ButikModel
     /**
      * A variant belongs to a product
      */
-    public function product()
+    public function getProductAttribute()
     {
         return Product::find($this->product_slug);
     }
@@ -46,7 +46,6 @@ class Variant extends ButikModel
      */
     public function getTitleAttribute()
     {
-        return 'test title'; // TODO: Fetch Entry title
         return $this->product->title . ' // ' . $this->getRawOriginal('title');
     }
 
@@ -72,9 +71,9 @@ class Variant extends ButikModel
      */
     public function getPriceAttribute($value)
     {
-//        if ($this->inherit_price) {
-//            return $this->product->price;
-//        } // TODO: Add back again
+        if ($this->inherit_price) {
+            return $this->product->price;
+        }
 
         return $this->makeAmountHuman($this->getRawOriginal('price'));
     }
@@ -100,9 +99,9 @@ class Variant extends ButikModel
      */
     public function getStockAttribute($value)
     {
-//        if ($this->inherit_stock) {
-//            return $this->product->stock;
-//        } // TODO: Activate
+        if ($this->inherit_stock) {
+            return $this->product->stock;
+        }
 
         return $this->getRawOriginal('stock');
     }
@@ -120,10 +119,9 @@ class Variant extends ButikModel
      */
     public function getStockUnlimitedAttribute($value)
     {
-        // TODO: Needs activation
-//        if ($this->inherit_stock) {
-//            return $this->product->stock_unlimited;
-//        }
+        if ($this->inherit_stock) {
+            return $this->product->stock_unlimited;
+        }
 
         return $this->getRawOriginal('stock_unlimited');
     }
@@ -133,7 +131,6 @@ class Variant extends ButikModel
      */
     public function getShowUrlAttribute()
     {
-        return; // TODO: Needs activation
         $route = "{$this->shopRoute()}/{$this->product_slug}/{$this->original_title}";
         return Str::of($route)->start('/');
     }
@@ -143,7 +140,6 @@ class Variant extends ButikModel
      */
     public function getSlugAttribute()
     {
-        return "test::{$this->id}"; // TODO: Needs activation
         return "{$this->product_slug}::{$this->id}";
     }
 
@@ -152,7 +148,6 @@ class Variant extends ButikModel
      */
     public function getTaxAttribute()
     {
-        return null; // TODO: add taxes back
         return $this->product->tax;
     }
 
@@ -161,7 +156,6 @@ class Variant extends ButikModel
      */
     public function getShippingProfileAttribute()
     {
-        // return null; // TODO: add shipping profile back
         return $this->product->shippingProfile;
     }
 
@@ -170,7 +164,6 @@ class Variant extends ButikModel
      */
     public function getImagesAttribute()
     {
-        return null; // TODO: Add images back again
         return $this->product->images;
     }
 }

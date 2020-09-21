@@ -3,26 +3,33 @@
 namespace Tests\Unit;
 
 use Jonassiewertsen\StatamicButik\Http\Models\Category;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\Product as ProductModel;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Statamic\Facades\Entry;
 
 class CategoryTest extends TestCase
 {
-    public ?Product $product;
+    public ?ProductModel $product;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->product       = new Product();
-        $this->product->slug = 'test-product';
+        Entry::make()
+            ->collection('products')
+            ->blueprint('products')
+            ->slug('test-product')
+            ->date(now())
+            ->data(['stock' => '5'])
+            ->save();
+
+        $this->product = Product::find('test-product');
     }
 
     /** @test */
     public function a_category_has_many_products()
     {
-        $this->withoutexceptionhandling();
-
         $this->assertCount(0, Category::all());
 
         create(Category::class);
@@ -30,7 +37,6 @@ class CategoryTest extends TestCase
         $category->addProduct($this->product->slug);
 
         $this->assertCount(1, $category->products);
-
     }
 
     /** @test */

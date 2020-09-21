@@ -20,7 +20,9 @@ class ItemAsProductTest extends TestCase
     public function setUp(): void {
         parent::setUp();
 
-        $this->product = create(Product::class, ['stock' => 5])->first();
+        $this->product       = new Product();
+        $this->product->slug = 'test-product';
+        $this->product->stock = 5;
     }
 
     /** @test */

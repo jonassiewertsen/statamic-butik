@@ -7,7 +7,9 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Config;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Statamic\Extend\Manifest;
+use Statamic\Facades\Blueprint;
 use Statamic\Facades\Role;
+use Statamic\Stache\Stores\UsersStore;
 use Statamic\Statamic;
 
 class TestCase extends OrchestraTestCase
@@ -139,6 +141,10 @@ class TestCase extends OrchestraTestCase
 
         // Setting the user repository to the default flat file system
         $app['config']->set('statamic.users.repository', 'file');
+        $app['config']->set('statamic.stache.stores.users', [
+            'class' => UsersStore::class,
+            'directory' => __DIR__.'/__fixtures/users',
+        ]);
 
         // Assume the pro edition within tests
         $app['config']->set('statamic.editions.pro', true);
@@ -169,5 +175,7 @@ class TestCase extends OrchestraTestCase
         foreach($layouts as $layout) {
             $app['config']->set('butik.' . $layout, null);
         }
+
+        Blueprint::setDirectory(__DIR__.'/../resources/blueprints');
     }
 }

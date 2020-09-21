@@ -2,30 +2,46 @@
 
 namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\Product as ProductModel;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Statamic\Facades\Entry;
 
 class VariantTest extends TestCase
 {
     use MoneyTrait;
 
     public Variant $variant;
-    public Product $product;
+    public ProductModel $product;
 
     public function setUp(): void {
         parent::setUp();
 
         $this->signInAdmin();
-        $this->variant = create(Variant::class)->first();
-        $this->product = Product::first();
+
+        Entry::make()
+            ->collection('products')
+            ->blueprint('products')
+            ->slug('test-product')
+            ->date(now())
+            ->data([
+                'stock' => '5',
+                'tax_id' => create(Tax::class)->first()->slug,
+            ])
+            ->save();
+
+        $this->product = Product::find('test-product');
+
+        $this->variant = create(Variant::class, ['product_slug' => $this->product->slug])->first();
     }
 
     /** @test */
     public function a_variant_belongs_to_a_product()
     {
-        $this->assertInstanceOf(Product::class, $this->variant->product);
+        $this->assertInstanceOf(ProductModel::class, $this->variant->product);
     }
 
     /** @test */
@@ -195,9 +211,10 @@ class VariantTest extends TestCase
     }
 
     /** @test */
-    public function it_inherits_the_imagesx_from_his_parent()
+    public function it_inherits_the_images_from_his_parent()
     {
-        $this->product->update(['images' => 'some.jpg']);
+        $this->product->images = 'some.jpg';
+
         $this->assertEquals($this->variant->images, $this->product->images);
     }
 }
