@@ -171,7 +171,7 @@ class Item
             $this->setQuantityToStock();
         }
 
-        if (!$this->item()->available) {
+        if (! $this->item()->available) {
             $this->quantity = 0;
         }
 

@@ -4,12 +4,15 @@ namespace Jonassiewertsen\StatamicButik\Http\Models;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Statamic\Entries\EntryCollection;
 use Statamic\Facades\Entry;
 use Statamic\Support\Str;
 
 class Product
 {
+    use MoneyTrait;
+
     protected const COLLECTION_NAME = 'products';
     public string  $slug;
     public bool    $available;
@@ -36,6 +39,7 @@ class Product
             }
         }
 
+        $this->price     = str_replace('.', config('butik.currency_delimiter'), $this->price);
         $this->slug      = $entry->slug();
         $this->available = $entry->published();
 
@@ -61,9 +65,9 @@ class Product
     public function categories()
     {
         return DB::table('butik_category_product')
-                ->where(['product_slug' => $this->slug])
-                ->join('butik_categories', 'butik_category_product.category_slug', '=', 'butik_categories.slug')
-                ->get();
+            ->where(['product_slug' => $this->slug])
+            ->join('butik_categories', 'butik_category_product.category_slug', '=', 'butik_categories.slug')
+            ->get();
     }
 
     /**
@@ -86,7 +90,7 @@ class Product
      * The product will return the belonging variant. Null will be returned,
      * in case a variant can't be connected to the given slug
      */
-    public function getVariant(String $variantTitle)
+    public function getVariant(string $variantTitle)
     {
         return $this->variants->where('original_title', $variantTitle)->first();
     }
@@ -119,10 +123,10 @@ class Product
     public function tax_amount()
     {
         $tax   = str_replace(',', '.', $this->tax->percentage);
-        $price = (float) $this->price;
+        $price = (float)$this->price;
         $total = $price * ($tax / (100 + $tax));
 
-        return round($total, 2);
+        return str_replace('.', config('butik.currency_delimiter'), round($total, 2));
     }
 
     /**
@@ -144,6 +148,21 @@ class Product
         return config('butik.currency_symbol');
     }
 
+    public function show_url()
+    {
+        $route = config('butik.route_shop-prefix') . '/' . $this->slug;
+        return Str::of($route)->start('/');
+    }
+
+    public function __get(string $property)
+    {
+        if (! method_exists($this, $property)) {
+            return;
+        }
+
+        return call_user_func([$this, $property]);
+    }
+
     /**
      * Adding some product information dynamically
      */
@@ -154,20 +173,5 @@ class Product
             $entry->fluentlyGetOrSet('slug')->args([$entry->slug()]);
             return $entry;
         });
-    }
-
-    public function show_url()
-    {
-        $route = config('butik.route_shop-prefix') . '/' . $this->slug;
-        return Str::of($route)->start('/');
-    }
-
-    public function __get(string $property)
-    {
-        if (! method_exists($this, $property)) {
-           return;
-        }
-
-        return call_user_func([$this, $property]);
     }
 }
