@@ -3,6 +3,7 @@
 namespace Jonassiewertsen\StatamicButik\Http\Models;
 
 use Illuminate\Support\Facades\DB;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 
 class Category extends ButikModel
 {
@@ -19,6 +20,24 @@ class Category extends ButikModel
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    /**
+     * Will fetch all related products
+     */
+    public function getProductsAttribute()
+    {
+        $products = collect();
+
+        $results = DB::table('butik_category_product')
+            ->where(['category_slug' => $this->slug])
+            ->get();
+
+        $results->each(function($result) use ($products) {
+            $products->push(Product::find($result->product_slug));
+        });
+
+        return $products;
     }
 
     /**

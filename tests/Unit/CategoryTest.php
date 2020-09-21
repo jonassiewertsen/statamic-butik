@@ -14,17 +14,20 @@ class CategoryTest extends TestCase
     {
         parent::setUp();
 
-        $this->product = create(Product::class)->first();
+        $this->product       = new Product();
+        $this->product->slug = 'test-product';
     }
 
     /** @test */
     public function a_category_has_many_products()
     {
+        $this->withoutexceptionhandling();
+
         $this->assertCount(0, Category::all());
 
         create(Category::class);
         $category = Category::first();
-        $category->addProduct($this->product);
+        $category->addProduct($this->product->slug);
 
         $this->assertCount(1, $category->products);
 
@@ -44,10 +47,10 @@ class CategoryTest extends TestCase
         create(Category::class);
         $category = Category::first();
 
-        $this->assertFalse($category->isProductAttached($this->product));
+        $this->assertFalse($category->isProductAttached($this->product->slug));
 
-        $category->addProduct($this->product);
-        $this->assertTrue($category->isProductAttached($this->product));
+        $category->addProduct($this->product->slug);
+        $this->assertTrue($category->isProductAttached($this->product->slug));
     }
 
     /** @test */
@@ -55,12 +58,12 @@ class CategoryTest extends TestCase
     {
         create(Category::class);
         $category = Category::first();
-        $category->addProduct($this->product);
+        $category->addProduct($this->product->slug);
 
-        $this->assertTrue($category->isProductAttached($this->product));
+        $this->assertTrue($category->isProductAttached($this->product->slug));
 
-        $category->removeProduct($this->product);
-        $this->assertFalse($category->isProductAttached($this->product));
+        $category->removeProduct($this->product->slug);
+        $this->assertFalse($category->isProductAttached($this->product->slug));
     }
 
     /** @test */
