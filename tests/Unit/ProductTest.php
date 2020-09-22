@@ -38,8 +38,9 @@ class ProductTest extends TestCase
         $price   = $this->product->price = '10.00';
 
         $priceWithoutTax = round($price / $divisor, 2);
+        $expectedAmount = str_replace('.', ',', $price - $priceWithoutTax);
 
-        $this->assertEquals($price - $priceWithoutTax, $this->product->tax_amount);
+        $this->assertEquals($expectedAmount, $this->product->tax_amount);
     }
 
     /** @test */
