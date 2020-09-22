@@ -20,22 +20,11 @@ class VariantTest extends TestCase
     public function setUp(): void {
         parent::setUp();
 
-        $this->signInAdmin();
+        $this->product = $this->makeProduct();
 
-        Entry::make()
-            ->collection('products')
-            ->blueprint('products')
-            ->slug('test-product')
-            ->date(now())
-            ->data([
-                'stock' => '5',
-                'tax_id' => create(Tax::class)->first()->slug,
-            ])
-            ->save();
-
-        $this->product = Product::find('test-product');
-
-        $this->variant = create(Variant::class, ['product_slug' => $this->product->slug])->first();
+        $this->variant = create(Variant::class, [
+            'product_slug' => $this->product->slug
+        ])->first();
     }
 
     /** @test */

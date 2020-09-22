@@ -34,8 +34,17 @@ trait MoneyTrait
 
     public function humanPriceWithDot($value): string
     {
+        $value = str_replace(',', '.', $value);
+
+        return number_format($value, 2, '.', '.');
+    }
+
+    public function humanPrice($value): string
+    {
+        $value = str_replace(',', '.', $value);
+
         $delimiter = config('butik.currency_delimiter');
-        return str_replace($delimiter, '.', $value);
+        return number_format($value, 2, $delimiter, '.');
     }
 
     /**

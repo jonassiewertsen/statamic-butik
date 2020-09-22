@@ -126,7 +126,7 @@ class Product
         $price = (float)$this->price;
         $total = $price * ($tax / (100 + $tax));
 
-        return str_replace('.', config('butik.currency_delimiter'), round($total, 2));
+        return $this->humanPrice($total);
     }
 
     /**

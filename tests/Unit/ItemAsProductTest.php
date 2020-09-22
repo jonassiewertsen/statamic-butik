@@ -6,9 +6,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Http\Models\Product as ProductModel;
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
-use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 use Statamic\Facades\Asset;
@@ -19,29 +17,12 @@ class ItemAsProductTest extends TestCase
     use MoneyTrait;
 
     protected ProductModel $product;
-    protected string       $slug;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->slug = str_random(4);
-
-        Entry::make()
-            ->collection('products')
-            ->blueprint('products')
-            ->slug($this->slug)
-            ->date(now())
-            ->data([
-                'title'  => 'Test Item Product',
-                'price'  => '20.00',
-                'stock'  => '5',
-                'tax_id' => create(Tax::class)->first()->slug,
-                'images' => collect(['someimage.png']),
-            ])
-            ->save();
-
-        $this->product = Product::find($this->slug);
+        $this->product = $this->makeProduct();
     }
 
     /** @test */
@@ -139,7 +120,7 @@ class ItemAsProductTest extends TestCase
     /** @test */
     public function an_item_can_max_increases_to_the_avialable_stock()
     {
-        Entry::findBySlug($this->slug, 'products')
+        Entry::findBySlug($this->product->slug, 'products')
             ->set('stock', 1)
             ->save();
 
@@ -205,7 +186,7 @@ class ItemAsProductTest extends TestCase
 
         $newDescription = 'new Description';
 
-        Entry::findBySlug($this->slug, 'products')->set('description', $newDescription)->save();
+        Entry::findBySlug($this->product->slug, 'products')->set('description', $newDescription)->save();
 
         Cache::flush();
         $item->update();
@@ -219,7 +200,7 @@ class ItemAsProductTest extends TestCase
         $item = new Item($this->product->slug);
 
         $newPrice = 9999;
-        Entry::findBySlug($this->slug, 'products')->set('price', $newPrice)->save();
+        Entry::findBySlug($this->product->slug, 'products')->set('price', $newPrice)->save();
         Cache::flush();
         $item->update();
 
@@ -232,7 +213,7 @@ class ItemAsProductTest extends TestCase
         $item = new Item($this->product->slug);
 
         $oldPrice = $item->totalPrice();
-        Entry::findBySlug($this->slug, 'products')->set('price', 999)->save();
+        Entry::findBySlug($this->product->slug, 'products')->set('price', 999)->save();
         Cache::flush();
         $item->update();
 
@@ -244,7 +225,7 @@ class ItemAsProductTest extends TestCase
     {
         $item = new Item($this->product->slug);
 
-        Entry::findBySlug($this->slug, 'products')->unpublish()->save();
+        Entry::findBySlug($this->product->slug, 'products')->unpublish()->save();
 
         Cache::flush();
         $item->update();
@@ -257,7 +238,7 @@ class ItemAsProductTest extends TestCase
     {
         $item = new Item($this->product->slug);
 
-        Entry::findBySlug($this->slug, 'products')->unpublish()->save();
+        Entry::findBySlug($this->product->slug, 'products')->unpublish()->save();
 
         Cache::flush();
         $item->update();

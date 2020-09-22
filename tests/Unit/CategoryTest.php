@@ -16,15 +16,7 @@ class CategoryTest extends TestCase
     {
         parent::setUp();
 
-        Entry::make()
-            ->collection('products')
-            ->blueprint('products')
-            ->slug('test-product')
-            ->date(now())
-            ->data(['stock' => '5'])
-            ->save();
-
-        $this->product = Product::find('test-product');
+        $this->product = $this->makeProduct();
     }
 
     /** @test */

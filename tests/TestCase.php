@@ -2,12 +2,15 @@
 
 namespace Jonassiewertsen\StatamicButik\Tests;
 
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Config;
+use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Statamic\Extend\Manifest;
 use Statamic\Facades\Blueprint;
+use Statamic\Facades\Entry;
 use Statamic\Facades\Role;
 use Statamic\Stache\Stores\UsersStore;
 use Statamic\Statamic;
@@ -177,5 +180,30 @@ class TestCase extends OrchestraTestCase
         }
 
         Blueprint::setDirectory(__DIR__.'/../resources/blueprints');
+    }
+
+    public function makeProduct(array $data = null)
+    {
+        $slug = str_random(4);
+
+        if ($data === null) {
+            $data = [
+                'title'  => 'Test Item Product',
+                'price'  => '20.00',
+                'stock'  => '5',
+                'tax_id' => create(Tax::class)->first()->slug,
+                'images' => collect(['someimage.png']),
+            ];
+        }
+
+        Entry::make()
+            ->collection('products')
+            ->blueprint('products')
+            ->slug($slug)
+            ->date(now())
+            ->data($data)
+            ->save();
+
+        return Product::find($slug);
     }
 }
