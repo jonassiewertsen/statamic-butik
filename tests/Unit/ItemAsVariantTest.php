@@ -5,22 +5,42 @@ namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\Product as ProductModel;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
+use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Statamic\Facades\Entry;
 
 class ItemAsVariantTest extends TestCase
 {
     use MoneyTrait;
 
-    protected Product $product;
+    protected ProductModel $product;
 
     public function setUp(): void {
         parent::setUp();
 
-        $this->product = create(Product::class, ['stock' => 5])->first();
+        $this->slug = str_random(4);
+
+        Entry::make()
+            ->collection('products')
+            ->blueprint('products')
+            ->slug($this->slug)
+            ->date(now())
+            ->data([
+                'title'  => 'Test Item Product',
+                'price'  => '20.00',
+                'stock'  => '5',
+                'tax_id' => create(Tax::class)->first()->slug,
+                'images' => collect(['someimage.png']),
+            ])
+            ->save();
+
+        $this->product = Product::find($this->slug);
+
         create(Variant::class, ['product_slug' => $this->product->slug])->first();
         $this->variant = Variant::first();
     }
@@ -28,6 +48,7 @@ class ItemAsVariantTest extends TestCase
     /** @test */
     public function it_has_a_id()
     {
+        $this->withoutexceptionhandling();
         $item = new Item($this->variant->slug);
 
         $this->assertEquals($item->slug, $this->variant->slug);
