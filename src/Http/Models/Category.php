@@ -43,12 +43,12 @@ class Category extends ButikModel
     /**
      * Add a product to this category
      */
-    public function addProduct($product): void
+    public function addProduct(string $slug): void
     {
         DB::table('butik_category_product')
             ->insert([
                 'category_slug' => $this->slug,
-                'product_slug' => $product,
+                'product_slug' => $slug,
             ]);
     }
 
