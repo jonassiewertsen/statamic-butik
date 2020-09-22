@@ -7,7 +7,7 @@ use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 $factory->define(Variant::class, function (Faker $faker) {
     return [
         'available'     => true,
-        'product_slug'  => '',
+        'product_slug'  => 'some-slug',
         'title'         => $faker->name,
         'inherit_price' => true,
         'price'         => null,
