@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Statamic\Entries\EntryCollection;
 use Statamic\Facades\Entry;
+use Statamic\Stache\Query\EntryQueryBuilder;
 use Statamic\Support\Str;
 
 class Product
@@ -14,8 +15,9 @@ class Product
     use MoneyTrait;
 
     protected const COLLECTION_NAME = 'products';
-    public string  $slug;
-    public bool    $available;
+    public string            $slug;
+    public bool              $available;
+    public EntryQueryBuilder $entries;
 
     public function all()
     {
@@ -44,6 +46,24 @@ class Product
         $this->available = $entry->published();
 
         return $this;
+    }
+
+    public function where(string $key, string $value): self
+    {
+        $this->entries = Entry::query()->where($key, $value);
+
+        return $this;
+    }
+
+    public function get(): Collection
+    {
+        $entries = collect();
+
+        $this->entries->get()->each(function($entry) use ($entries) {
+            $entries->push(\Facades\Jonassiewertsen\StatamicButik\Http\Models\Product::find($entry->slug()));
+        });
+
+        return $entries;
     }
 
     public function available(): bool

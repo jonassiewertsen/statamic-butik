@@ -23,7 +23,7 @@ class TaxDeleteTest extends TestCase
     }
 
     /** @test */
-    public function a_shipping_cant_be_deleted_if_it_related_to_any_existing_product()
+    public function a_tax_cant_be_deleted_if_related_to_any_existing_product()
     {
         $this->withoutexceptionhandling();
         $this->signInAdmin();
@@ -33,7 +33,7 @@ class TaxDeleteTest extends TestCase
 
         $this->delete(route('statamic.cp.butik.taxes.destroy', $product->tax))
             ->assertStatus(403);
-//
-//        $this->assertEquals(1, $product->tax->count());
+
+        $this->assertEquals(1, $product->tax->count());
     }
 }

@@ -3,7 +3,7 @@
 namespace Jonassiewertsen\StatamicButik\Http\Models;
 
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 
 class Tax extends ButikModel
 {
@@ -22,10 +22,9 @@ class Tax extends ButikModel
         return 'slug';
     }
 
-    public function getProductsAttribute() {
-        return DB::table('butik_categories')
-                ->where('tax_id', $this->slug)
-                ->get();
+    public function getProductsAttribute(): Collection
+    {
+        return Product::where('tax_id', $this->slug)->get();
     }
 
     public function editUrl()
