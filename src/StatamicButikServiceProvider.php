@@ -75,6 +75,9 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         \Jonassiewertsen\StatamicButik\Events\OrderCompleted::class  => [],
         \Jonassiewertsen\StatamicButik\Events\OrderExpired::class    => [],
         \Jonassiewertsen\StatamicButik\Events\OrderCanceled::class   => [],
+        \Statamic\Events\EntryDeleted::class => [
+            \Jonassiewertsen\StatamicButik\Listeners\ProductDeleted::class,
+        ],
     ];
 
     protected $middlewareGroups = [
