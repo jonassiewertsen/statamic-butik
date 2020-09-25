@@ -25,7 +25,6 @@ class TaxDeleteTest extends TestCase
     /** @test */
     public function a_tax_cant_be_deleted_if_related_to_any_existing_product()
     {
-        $this->withoutexceptionhandling();
         $this->signInAdmin();
 
         $product = $this->makeProduct();
