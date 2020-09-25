@@ -5,6 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Http\Models;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product as ProductFacade;
 use Statamic\Entries\EntryCollection;
 use Statamic\Facades\Entry;
 use Statamic\Stache\Query\EntryQueryBuilder;
@@ -60,10 +61,15 @@ class Product
         $entries = collect();
 
         $this->entries->get()->each(function($entry) use ($entries) {
-            $entries->push(\Facades\Jonassiewertsen\StatamicButik\Http\Models\Product::find($entry->slug()));
+            $entries->push(ProductFacade::find($entry->slug()));
         });
 
         return $entries;
+    }
+
+    public function exists(string $slug): bool
+    {
+        return Entry::findBySlug($slug, 'products') !== null;
     }
 
     public function available(): bool
