@@ -11,6 +11,7 @@ use Jonassiewertsen\StatamicButik\Order\ItemCollection;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 use Jonassiewertsen\StatamicButik\Tests\Utilities\MolliePaymentSuccessful;
 use Mollie\Laravel\Facades\Mollie;
+use Statamic\Facades\Entry;
 
 class ProductStockTest extends TestCase
 {
@@ -124,18 +125,18 @@ class ProductStockTest extends TestCase
     {
         $order = create(Order::class, ['number' => 'tr_fake_id'])->first();
 
-        $product                  = Product::first();
-        $product->stock_unlimited = true;
-        $product->save();
+        $product                  = $this->makeProduct();
+        $entry = Entry::findBySlug($product->slug, 'products');
+        $entry->set('stock_unlimited', true)->save();
 
-        $stock = Product::first()->stock;
+        $stock = $product->stock;
 
-        $this->assertEquals($stock, Product::first()->stock);
+        $this->assertEquals($stock, $product->stock);
 
         $this->mockMollie(new MolliePaymentSuccessful());
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $order->id]);
 
-        $this->assertEquals($stock, Product::first()->stock);
+        $this->assertEquals($stock, Product::find($product->slug)->stock);
     }
 
     public function mockMollie($mock)

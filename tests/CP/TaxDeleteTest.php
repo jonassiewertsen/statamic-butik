@@ -28,11 +28,8 @@ class TaxDeleteTest extends TestCase
         $this->signInAdmin();
 
         $product = $this->makeProduct();
-        $this->assertEquals(1, $product->tax->count());
 
         $this->delete(route('statamic.cp.butik.taxes.destroy', $product->tax))
             ->assertStatus(403);
-
-        $this->assertEquals(1, $product->tax->count());
     }
 }

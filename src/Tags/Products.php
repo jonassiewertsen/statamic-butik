@@ -2,7 +2,7 @@
 
 namespace Jonassiewertsen\StatamicButik\Tags;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 
 class Products extends \Statamic\Tags\Tags
 {

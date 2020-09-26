@@ -2,7 +2,7 @@
 
 namespace Tests\Tags;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tags\Products;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
