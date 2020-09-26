@@ -200,8 +200,6 @@ class ItemAsVariantTest extends TestCase
     {
         $item = new Item($this->variant->slug);
 
-        $this->variant->update(['available' => false]);
-
         Cache::flush();
         $item->update();
 

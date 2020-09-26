@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Http\Models\Product as ProductModel;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
@@ -204,7 +205,7 @@ class ItemAsProductTest extends TestCase
         Cache::flush();
         $item->update();
 
-        $this->assertEquals($item->singlePrice(), $this->product->price);
+        $this->assertEquals($item->singlePrice(), Product::find($this->product->slug)->price);
     }
 
     /** @test */

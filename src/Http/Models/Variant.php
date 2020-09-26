@@ -156,7 +156,7 @@ class Variant extends ButikModel
      */
     public function getShippingProfileAttribute()
     {
-        return $this->product->shippingProfile;
+        return $this->product->shipping_profile;
     }
 
     /**

@@ -6,10 +6,13 @@ use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Jonassiewertsen\StatamicButik\Order\ItemCollection;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Statamic\Facades\Collection;
 use Statamic\Facades\Entry;
 
 $factory->define(Order::class, function (Faker $faker) {
     $this->slug = str_random(4);
+
+    Collection::make('products')->save();
 
     Entry::make()
         ->collection('products')

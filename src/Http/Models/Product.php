@@ -102,7 +102,7 @@ class Product
     /**
      * A Product has a shipping relation
      */
-    public function shipping_profile()
+    public function shippingProfile()
     {
         return ShippingProfile::firstWhere('slug', $this->shipping_profile_slug);
     }
@@ -144,12 +144,12 @@ class Product
     /**
      * Will return the shipping price
      */
-    public function tax_percentage()
+    public function taxPercentage()
     {
         return $this->tax->percentage;
     }
 
-    public function tax_amount()
+    public function taxAmount()
     {
         $tax   = str_replace(',', '.', $this->tax->percentage);
         $price = (float)$this->price;
@@ -161,7 +161,7 @@ class Product
     /**
      * Is the product still in stock?
      */
-    public function sold_out()
+    public function soldOut()
     {
         if ($this->stock_unlimited) {
             return false;
@@ -177,7 +177,7 @@ class Product
         return config('butik.currency_symbol');
     }
 
-    public function show_url()
+    public function showUrl()
     {
         $route = config('butik.route_shop-prefix') . '/' . $this->slug;
         return Str::of($route)->start('/');
@@ -185,11 +185,18 @@ class Product
 
     public function __get(string $property)
     {
-        if (! method_exists($this, $property)) {
-            return;
+        if (method_exists($this, $property)) {
+            return call_user_func([$this, $property]);
         }
 
-        return call_user_func([$this, $property]);
+        /**
+         * You can call methods as well in snake syntax (show_url).
+         */
+        if (method_exists($this, Str::camel($property))) {
+            return call_user_func([$this, Str::camel($property)]);
+        }
+
+        return;
     }
 
     /**

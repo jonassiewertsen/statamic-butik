@@ -202,7 +202,7 @@ class VariantTest extends TestCase
     /** @test */
     public function it_inherits_the_images_from_his_parent()
     {
-        $this->product->images = 'some.jpg';
+        $this->product->images = collect()->push('someimage.png');
 
         $this->assertEquals($this->variant->images, $this->product->images);
     }

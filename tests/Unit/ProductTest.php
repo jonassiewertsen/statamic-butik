@@ -15,8 +15,7 @@ class ProductTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->product       = new Product();
-        $this->product->slug = 'test-product';
+        $this->product       = $this->makeProduct();
     }
 
     /** @test */
