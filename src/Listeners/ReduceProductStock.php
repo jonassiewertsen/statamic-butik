@@ -4,13 +4,13 @@ namespace Jonassiewertsen\StatamicButik\Listeners;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Cache;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
+use Statamic\Facades\Entry;
 use Statamic\Support\Str;
 
 class ReduceProductStock implements ShouldQueue
 {
-    // TODO: Rewrite with the new Product model.
     public function handle($event)
     {
         $items = $event->order->items;
@@ -99,7 +99,11 @@ class ReduceProductStock implements ShouldQueue
     private function reduceParent($item)
     {
         $product = $this->getProduct($item);
-        $product->stock -= $item->quantity;
+        $newStock = $product->stock - $item->quantity;
+
+        // Change will be made to the original entry
+        $product = Entry::findBySlug($product->slug, 'products');
+        $product->set('stock', $newStock);
         $product->save();
     }
 }

@@ -5,7 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Tests\Checkout;
 use Illuminate\Support\Facades\Mail;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Order\ItemCollection;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
@@ -26,20 +26,22 @@ class ProductStockTest extends TestCase
     public function the_prodcut_stock_will_be_reduced_by_one_for_a_single_product_after_checkout()
     {
         $order = create(Order::class, ['number' => 'tr_fake_id'])->first();
-        $stock = Product::first()->stock;
+        $product = Product::find($order->items[0]->slug);
+        $stock = $product->stock;
 
-        $this->assertEquals($stock, Product::first()->stock);
+        $this->assertEquals($stock, $product->stock);
 
         $this->mockMollie(new MolliePaymentSuccessful());
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $order->id]);
 
-        $this->assertEquals($stock - 1, Product::first()->stock);
+        $product = Product::find($product->slug);
+        $this->assertEquals($stock - 1, $product->stock);
     }
 
     /** @test */
     public function the_prodcut_stock_will_be_reduced_by_the_items_quantity_after_checkout()
     {
-        $product = create(Product::class)->first();
+        $product = $this->makeProduct();
         $stock   = $product->stock;
 
         $item = (new Item($product->slug));
@@ -52,19 +54,19 @@ class ProductStockTest extends TestCase
             'items'  => $collection->items,
         ])->first();
 
-        $this->assertEquals($stock, Product::first()->stock);
+        $this->assertEquals($stock, $product->stock);
 
         $this->mockMollie(new MolliePaymentSuccessful());
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $order->id]);
 
-        $this->assertEquals($stock - 2, $product->fresh()->stock);
+        $this->assertEquals($stock - 2, Product::find($product->slug)->stock);
     }
 
     /** @test */
     public function the_variant_stock_will_be_reduced_by_the_items_quantity_after_checkout()
     {
-        $this->withoutExceptionHandling();
-        $variant = create(Variant::class, ['inherit_stock' => false])->first();
+        $product = $this->makeProduct();
+        $variant = create(Variant::class, ['inherit_stock' => false, 'product_slug' => $product->slug])->first();
         $stock   = $variant->stock;
 
         $item = (new Item($variant->slug));
@@ -88,7 +90,7 @@ class ProductStockTest extends TestCase
     /** @test */
     public function the_parent_stock_will_be_reduced_if_the_stock_is_inherited()
     {
-        $product = create(Product::class)->first();
+        $product = $this->makeProduct();
         $variant = create(Variant::class, [
             'inherit_stock' => true,
             'product_slug'   => $product->slug,
@@ -107,14 +109,14 @@ class ProductStockTest extends TestCase
             'items'  => $collection->items,
         ])->first();
 
-        $this->assertEquals($productStock, Product::first()->stock);
+        $this->assertEquals($productStock, Product::find($product->slug)->stock);
         $this->assertEquals($variantStock, Variant::first()->original_stock);
 
         $this->mockMollie(new MolliePaymentSuccessful());
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $order->id]);
 
         $this->assertEquals($variantStock, Variant::first()->original_stock);
-        $this->assertEquals($productStock - 2, Product::first()->stock);
+        $this->assertEquals($productStock - 2, Product::find($product->slug)->stock);
     }
 
     /** @test */

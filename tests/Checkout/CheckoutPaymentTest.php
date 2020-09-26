@@ -19,7 +19,7 @@ class CheckoutPaymentTest extends TestCase
         parent::setUp();
 
         $this->customer = new Customer($this->createUserData());
-        $this->product  = create(Product::class)->first();
+        $this->product  = $this->makeProduct();
 
         Cart::add($this->product->slug);
     }

@@ -14,7 +14,7 @@ class CartTest extends TestCase
     {
         parent::setUp();
 
-        $this->product = create(Product::class)->first();
+        $this->product = $this->makeProduct();
     }
 
     /** @test */

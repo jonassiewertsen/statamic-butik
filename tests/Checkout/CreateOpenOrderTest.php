@@ -34,7 +34,7 @@ class CreateOpenOrderTest extends TestCase
 
         $this->customer = (new Customer($this->createUserData()));
         $this->items    = collect();
-        $this->items->push(new Item(factory(Product::class)->create()->slug));
+        $this->items->push(new Item($this->makeProduct()->slug));
         $this->totalPrice = $this->items->first()->totalPrice();
 
         Session::put('butik.customer', $this->customer);
