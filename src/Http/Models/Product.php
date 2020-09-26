@@ -33,20 +33,23 @@ class Product
             return null;
         }
 
-        // TODO: Refactor
+        $product = new Product();
+
         foreach ($entry->values() as $key => $attribute) {
             if ($key !== 'updated_by' && $key !== 'updated_at' && $key !== 'content' && is_int($key)) {
-                $this->$key = $entry->augmentedValue($key)->value();
+                $product->$key = $entry->augmentedValue($key)->value();
             } else {
-                $this->$key = $entry->augmentedValue($key);
+                $product->$key = $entry->augmentedValue($key);
             }
         }
 
-        $this->price     = str_replace('.', config('butik.currency_delimiter'), $this->price);
-        $this->slug      = $entry->slug();
-        $this->available = $entry->published();
+        $product->price     = str_replace('.', config('butik.currency_delimiter'), $product->price);
+        $product->slug      = $entry->slug();
+        $product->title     = $entry->get('title');
+        $product->stock     = (int) $product->stock;
+        $product->available = $entry->published();
 
-        return $this;
+        return $product;
     }
 
     public function where(string $key, string $value): self
@@ -60,7 +63,7 @@ class Product
     {
         $entries = collect();
 
-        $this->entries->get()->each(function($entry) use ($entries) {
+        $this->entries->get()->each(function ($entry) use ($entries) {
             $entries->push(ProductFacade::find($entry->slug()));
         });
 

@@ -6,6 +6,8 @@ use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Config;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Statamic\Extend\Manifest;
@@ -14,6 +16,7 @@ use Statamic\Facades\Entry;
 use Statamic\Facades\Role;
 use Statamic\Stache\Stores\UsersStore;
 use Statamic\Statamic;
+use Statamic\Support\Str;
 
 class TestCase extends OrchestraTestCase
 {
@@ -21,6 +24,36 @@ class TestCase extends OrchestraTestCase
     use WithFaker;
 
     protected $shouldFakeVersion = true;
+
+    public function makeProduct(array $data = null)
+    {
+        $shippingZone = create(ShippingZone::class)->first();
+
+        create(ShippingRate::class, [
+            'shipping_zone_id' => $shippingZone->id,
+            'minimum'          => 0,
+            'price'            => 0,
+        ]);
+
+        $entryData = [
+            'title'                 => $data['title'] ?? 'Test Item Product',
+            'price'                 => $data['price'] ?? '20.00',
+            'stock'                 => $data['stock'] ?? '5',
+            'tax_id'                => $data['tax_id'] ?? create(Tax::class)->first()->slug,
+            'shipping_profile_slug' => $data['shipping_profile_slug'] ?? $shippingZone->first()->profile->slug,
+            'images'                => $data['images'] ?? collect(['someimage.png']),
+        ];
+
+        Entry::make()
+            ->collection('products')
+            ->blueprint('products')
+            ->slug($slug = Str::random('6'))
+            ->date(now())
+            ->data($entryData)
+            ->save();
+
+        return Product::find($slug);
+    }
 
     /**
      * Setup the test environment.
@@ -145,8 +178,8 @@ class TestCase extends OrchestraTestCase
         // Setting the user repository to the default flat file system
         $app['config']->set('statamic.users.repository', 'file');
         $app['config']->set('statamic.stache.stores.users', [
-            'class' => UsersStore::class,
-            'directory' => __DIR__.'/__fixtures/users',
+            'class'     => UsersStore::class,
+            'directory' => __DIR__ . '/__fixtures/users',
         ]);
 
         // Assume the pro edition within tests
@@ -175,35 +208,10 @@ class TestCase extends OrchestraTestCase
             'layout_checkout-receipt-invalid',
         ];
 
-        foreach($layouts as $layout) {
+        foreach ($layouts as $layout) {
             $app['config']->set('butik.' . $layout, null);
         }
 
-        Blueprint::setDirectory(__DIR__.'/../resources/blueprints');
-    }
-
-    public function makeProduct(array $data = null)
-    {
-        $slug = str_random(4);
-
-        if ($data === null) {
-            $data = [
-                'title'  => 'Test Item Product',
-                'price'  => '20.00',
-                'stock'  => '5',
-                'tax_id' => create(Tax::class)->first()->slug,
-                'images' => collect(['someimage.png']),
-            ];
-        }
-
-        Entry::make()
-            ->collection('products')
-            ->blueprint('products')
-            ->slug($slug)
-            ->date(now())
-            ->data($data)
-            ->save();
-
-        return Product::find($slug);
+        Blueprint::setDirectory(__DIR__ . '/../resources/blueprints');
     }
 }

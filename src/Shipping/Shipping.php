@@ -85,7 +85,7 @@ class Shipping
     protected function detectUsedShippingProfiles(): void
     {
         $this->items->each(function ($item) {
-            if (!$this->profiles->contains($item->shippingProfile)) {
+            if (! $this->profiles->contains($item->shippingProfile)) {
                 $this->profiles->push($item->shippingProfile);
             }
         });
@@ -94,7 +94,7 @@ class Shipping
     /**
      * The detected shipping zone, belonging to our selected country.
      */
-    protected function detectShippingZone($profile): ?ShippingZone
+    protected function detectShippingZone(ShippingProfile $profile): ?ShippingZone
     {
         return $profile->whereZoneFrom($this->country);
     }

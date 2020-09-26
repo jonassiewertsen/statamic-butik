@@ -102,7 +102,7 @@ class Item
         $this->taxRate         = $item->tax->percentage;
         $this->taxAmount       = $this->totalTaxAmount();
         $this->totalPrice      = $this->totalPrice();
-        $this->shippingProfile = $item->shippingProfile;
+        $this->shippingProfile = $item->shipping_profile;
     }
 
     public function increase()

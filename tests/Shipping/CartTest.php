@@ -2,13 +2,9 @@
 
 namespace Jonassiewertsen\StatamicButik\Tests\Shipping;
 
-use Illuminate\Contracts\Validation\ImplicitRule;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
@@ -22,8 +18,9 @@ class CartTest extends TestCase
 
     public function setUp(): void {
         parent::setUp();
-        $this->product = create(Product::class)->first();
-        create(Variant::class, ['product_slug' => $this->product->slug])->first();
+
+        $this->product = $this->makeProduct();
+        create(Variant::class, ['product_slug' => $this->product->slug, 'stock' => 5])->first();
         $this->variant = Variant::first();
     }
 
@@ -143,8 +140,8 @@ class CartTest extends TestCase
     /** @test */
     public function the_cart_calculates_the_total_price()
     {
-        $product1 = factory(Product::class)->create();
-        $product2 = factory(Product::class)->create();
+        $product1 = $this->makeProduct();
+        $product2 = $this->makeProduct();
 
         Cart::add($product1->slug);
         Cart::add($product2->slug);
@@ -161,8 +158,8 @@ class CartTest extends TestCase
     /** @test */
     public function non_sellable_items_will_not_be_counted()
     {
-        $product1 = factory(Product::class)->create();
-        $product2 = factory(Product::class)->create();
+        $product1 = $this->makeProduct();
+        $product2 = $this->makeProduct();
 
         Cart::add($product1->slug);
         Cart::add($product2->slug);
@@ -177,8 +174,8 @@ class CartTest extends TestCase
     /** @test */
     public function we_can_remove_all_non_sellable_items()
     {
-        $product1 = factory(Product::class)->create();
-        $product2 = factory(Product::class)->create();
+        $product1 = $this->makeProduct();
+        $product2 = $this->makeProduct();
 
         Cart::add($product1->slug);
         Cart::add($product2->slug);
@@ -195,8 +192,8 @@ class CartTest extends TestCase
     /** @test */
     public function the_cart_calculates_total_items()
     {
-        $product1 = factory(Product::class)->create();
-        $product2 = factory(Product::class)->create();
+        $product1 = $this->makeProduct();
+        $product2 = $this->makeProduct();
 
         Cart::add($product1->slug); // 1
         Cart::add($product1->slug); // +1
