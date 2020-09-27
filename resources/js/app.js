@@ -16,13 +16,10 @@ import CreateButton from './partials/CreateButton';
 import PublishFormRedirect from './partials/PublishFormRedirect';
 
 Statamic.booting(() => {
-    // Listings
+    // Control Panel
     Statamic.$components.register('butik-tax-list', TaxesListing);
     Statamic.$components.register('butik-order-list', OrdersListing);
-
     Statamic.$components.register('butik-shipping-overview', ShippingOverview);
-
-    Statamic.$components.register('butik-manage-product-categories', ProductCategories);
     Statamic.$components.register('butik-manage-product-variants', ProductVariants);
 
     // Fieldtypes
