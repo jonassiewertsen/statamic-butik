@@ -1,0 +1,22 @@
+<div>
+    <h1 class="block pl-10 font-bold text-dark text-4xl">
+        {{ 'butik::web.bag' | trans }}
+    </h1>
+
+    <main class="px-8">
+        {{ partial src='butik::web.cart.country-select' }}
+
+        {{ items }}
+            {{ partial src='butik::web.cart.cart-item' }}
+        {{ /items }}
+
+        {{ if items | count === 0 }}
+            <div class="flex w-full rounded px-8 py-5 m6">
+                <p><strong>{{ 'butik::web.bag_empty' | trans }}</strong></p>
+            </div>
+        {{ /if }}
+
+    </main>
+
+    {{ partial src='butik::web.cart.cart-total' }}
+</div>

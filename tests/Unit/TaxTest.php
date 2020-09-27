@@ -19,13 +19,14 @@ class TaxTest extends TestCase
     /** @test */
     public function the_tax_will_be_saved_without_decimals()
     {
-        $this->tax->update(['percentage' => '7.7' ]);
+        $this->tax->update(['percentage' => '7.7']);
         $this->assertEquals('770', Tax::first()->getRawOriginal('percentage'));
     }
 
     /** @test */
-    public function a_tax_has_products(){
-        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->tax->products);
+    public function a_tax_has_products()
+    {
+        $this->assertInstanceOf('Illuminate\Support\Collection', $this->tax->products);
     }
 
     /** @test */

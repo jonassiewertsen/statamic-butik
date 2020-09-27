@@ -5,14 +5,12 @@ namespace Jonassiewertsen\StatamicButik;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Policies\OrderPolicy;
-use Jonassiewertsen\StatamicButik\Policies\ProductPolicy;
 use Jonassiewertsen\StatamicButik\Policies\ShippingProfilePolicy;
 use Jonassiewertsen\StatamicButik\Policies\ShippingRatePolicy;
 use Jonassiewertsen\StatamicButik\Policies\ShippingZonePolicy;
@@ -58,31 +56,38 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     ];
 
     protected $fieldtypes = [
+        \Jonassiewertsen\StatamicButik\Fieldtypes\Categories::class,
         \Jonassiewertsen\StatamicButik\Fieldtypes\Money::class,
+        \Jonassiewertsen\StatamicButik\Fieldtypes\Number::class,
+        \Jonassiewertsen\StatamicButik\Fieldtypes\Shipping::class,
         \Jonassiewertsen\StatamicButik\Fieldtypes\Tax::class,
+        \Jonassiewertsen\StatamicButik\Fieldtypes\Variants::class,
     ];
 
     protected $listen = [
-        \Jonassiewertsen\StatamicButik\Events\OrderCreated::class => [],
-        \Jonassiewertsen\StatamicButik\Events\OrderPaid::class => [
+        \Jonassiewertsen\StatamicButik\Events\OrderCreated::class    => [],
+        \Jonassiewertsen\StatamicButik\Events\OrderPaid::class       => [
             \Jonassiewertsen\StatamicButik\Listeners\SendPurchaseConfirmationToCustomer::class,
             \Jonassiewertsen\StatamicButik\Listeners\SendPurchaseConfirmationToSeller::class,
             \Jonassiewertsen\StatamicButik\Listeners\ReduceProductStock::class,
         ],
         \Jonassiewertsen\StatamicButik\Events\OrderAuthorized::class => [],
-        \Jonassiewertsen\StatamicButik\Events\OrderCompleted::class => [],
-        \Jonassiewertsen\StatamicButik\Events\OrderExpired::class => [],
-        \Jonassiewertsen\StatamicButik\Events\OrderCanceled::class => [],
+        \Jonassiewertsen\StatamicButik\Events\OrderCompleted::class  => [],
+        \Jonassiewertsen\StatamicButik\Events\OrderExpired::class    => [],
+        \Jonassiewertsen\StatamicButik\Events\OrderCanceled::class   => [],
+        \Statamic\Events\EntryDeleted::class => [
+            \Jonassiewertsen\StatamicButik\Listeners\ProductDeleted::class,
+        ],
     ];
 
     protected $middlewareGroups = [
-        'validateCheckoutRoute'        => [
+        'validateCheckoutRoute' => [
             \Jonassiewertsen\StatamicButik\Http\Middleware\ValidateCheckoutRoute::class,
         ],
-        'cartNotEmpty'                 => [
+        'cartNotEmpty'          => [
             \Jonassiewertsen\StatamicButik\Http\Middleware\CartNotEmpty::class,
         ],
-        'butikRoutes'                  => [
+        'butikRoutes'           => [
             \Jonassiewertsen\StatamicButik\Http\Middleware\UpdateCart::class,
         ],
     ];
@@ -92,7 +97,6 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     ];
 
     protected $policies = [
-        Product::class         => ProductPolicy::class,
         Order::class           => OrderPolicy::class,
         ShippingProfile::class => ShippingProfilePolicy::class,
         ShippingZone::class    => ShippingZonePolicy::class,
@@ -121,6 +125,14 @@ class StatamicButikServiceProvider extends AddonServiceProvider
             $this->publishes([
                 __DIR__ . '/../config/config.php' => config_path('butik.php'),
             ], 'butik-config');
+
+            // Blueprints & collections
+            $this->publishes([
+                __DIR__ . '/../resources/blueprints' => resource_path('blueprints'),
+            ], 'butik-blueprints');
+            $this->publishes([
+                __DIR__ . '/../resources/collections' => base_path('content/collections'),
+            ], 'butik-collections');
 
             // Views
             $this->publishes([
@@ -173,25 +185,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     protected function bootPermissions(): void
     {
         $this->app->booted(function () {
-            Permission::group('butik_general', __('butik::cp.permissions_general'), function () {
-                Permission::register('view products', function ($permission) {
-                    $permission
-                        ->label(__('butik::cp.permission_view_products'))
-                        ->description(__('butik::cp.permission_view_products_description'))
-                        ->children([
-                            Permission::make('edit products')
-                                ->label(__('butik::cp.permission_edit_products'))
-                                ->description(__('butik::cp.permission_edit_products_description'))
-                                ->children([
-                                    Permission::make('create products')
-                                        ->label(__('butik::cp.permission_create_products'))
-                                        ->description(__('butik::cp.permission_create_products_description')),
-                                    Permission::make('delete products')
-                                        ->label(__('butik::cp.permission_delete_products'))
-                                        ->description(__('butik::cp.permission_delete_products_description')),
-                            ]),
-                    ]);
-                });
+            Permission::group('butik_settings', __('butik::cp.permissions_settings'), function () {
                 Permission::register('view orders', function ($permission) {
                     $permission
                         ->label(__('butik::cp.permission_view_orders'))
@@ -205,8 +199,6 @@ class StatamicButikServiceProvider extends AddonServiceProvider
                                 ->description(__('butik::cp.permission_update_orders_description')),
                         ]);
                 });
-            });
-            Permission::group('butik_settings', __('butik::cp.permissions_settings'), function () {
                 Permission::register('view shippings', function ($permission) {
                     $permission
                         ->label(__('butik::cp.permission_view_shippings'))
@@ -222,8 +214,8 @@ class StatamicButikServiceProvider extends AddonServiceProvider
                                     Permission::make('delete shippings')
                                         ->label(__('butik::cp.permission_delete_shippings'))
                                         ->description(__('butik::cp.permission_delete_shippings_description')),
-                            ]),
-                    ]);
+                                ]),
+                        ]);
                 });
                 Permission::register('view taxes', function ($permission) {
                     $permission
@@ -247,6 +239,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         });
     }
 
+
     protected function bootLivewireComponents(): void
     {
         Livewire::component('butik.cart-list', \Jonassiewertsen\StatamicButik\Http\Livewire\CartList::class);
@@ -269,7 +262,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
             $nav->create(ucfirst(__('butik::cp.product_plural')))
                 ->section('Butik')
                 ->can(auth()->user()->can('view products'))
-                ->route('butik.products.index')
+                ->route('collections.show', 'products')
                 ->icon('tags');
 
             // Settings
@@ -296,10 +289,13 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         }
     }
 
-    private function publishAssets(): void {
-        Statamic::afterInstalled(function() {
+    private function publishAssets(): void
+    {
+        Statamic::afterInstalled(function () {
             Artisan::call('vendor:publish --tag=butik-config');
             Artisan::call('vendor:publish --tag=butik-images');
+            Artisan::call('vendor:publish --tag=butik-blueprints');
+            Artisan::call('vendor:publish --tag=butik-collections');
             Artisan::call('vendor:publish --tag=butik-resources --force');
         });
     }

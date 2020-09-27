@@ -8,22 +8,16 @@ use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class VariantIndexTest extends TestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->signInAdmin();
-
-        create(Variant::class);
-    }
-
     /** @test */
     public function to_a_product_belonging_variants_can_be_fetched()
     {
-        $variant = Variant::first();
-        $product = Product::first();
+        $this->signInAdmin();
 
-        $this->get(cp_route('butik.variants.from-product', $product))
+        $product = $this->makeProduct();
+        create(Variant::class, ['product_slug' => $product->slug]);
+        $variant = Variant::first();
+
+        $this->get(cp_route('butik.variants.from-product', $product->slug))
             ->assertJsonFragment([
                 'id'              => $variant->id,
                 'available'       => $variant->available,

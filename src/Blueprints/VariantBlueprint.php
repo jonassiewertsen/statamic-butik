@@ -104,7 +104,7 @@ class VariantBlueprint extends Blueprint
                             'handle' => 'product_slug',
                             'field'  => [
                                 'type'     => 'hidden',
-                                'validate' => 'required|exists:butik_products,slug',
+                                'validate' => 'required',
                             ],
                         ],
                     ],

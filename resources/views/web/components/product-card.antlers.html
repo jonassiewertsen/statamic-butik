@@ -2,7 +2,7 @@
     <a href="{{ show_url }}" class="block w-full">
         {{ if images }}
             {{ images limit="1" }}
-            <img class="w-full rounded-xl h-64 object-cover transform duration-700 hover:shadow-2xl hover:-translate-y-2" src="{{ images:0:url }}" alt="{{ images:0:alt }}">
+                <img class="w-full rounded-xl h-64 object-cover transform duration-700 hover:shadow-2xl hover:-translate-y-2" src="{{ glide:url width='315' height='255' }}" alt="{{ images:0:alt }}">
             {{ /images }}
         {{ else }}
             <div class="bg-gray-light rounded-xl transform duration-700 hover:shadow-2xl hover:-translate-y-2">

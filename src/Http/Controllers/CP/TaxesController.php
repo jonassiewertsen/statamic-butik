@@ -5,6 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
 use Illuminate\Http\Request;
 use Jonassiewertsen\StatamicButik\Blueprints\TaxBlueprint;
 use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
+use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Statamic\CP\Column;
 

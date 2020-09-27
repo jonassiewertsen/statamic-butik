@@ -41,6 +41,15 @@ class MoneyTraitTest extends TestCase
     }
 
     /** @test */
+    public function a_price_can_be_forced_to_return_as_defined_in_the_config()
+    {
+        $original = '5.32';
+        $converted = $this->humanPrice($original);
+
+        $this->assertEquals('5,32', $converted);
+    }
+
+    /** @test */
     public function does_not_care_about_dot_or_commas()
     {
         $original = '5.32';

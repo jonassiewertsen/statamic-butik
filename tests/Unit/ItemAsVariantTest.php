@@ -5,7 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\Product as ProductModel;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
@@ -15,19 +15,24 @@ class ItemAsVariantTest extends TestCase
 {
     use MoneyTrait;
 
-    protected Product $product;
+    protected ProductModel $product;
 
     public function setUp(): void {
         parent::setUp();
 
-        $this->product = create(Product::class, ['stock' => 5])->first();
-        create(Variant::class, ['product_slug' => $this->product->slug])->first();
+        $this->product = $this->makeProduct();
+
+        create(Variant::class, [
+            'product_slug' => $this->product->slug
+        ])->first();
+
         $this->variant = Variant::first();
     }
 
     /** @test */
     public function it_has_a_id()
     {
+        $this->withoutexceptionhandling();
         $item = new Item($this->variant->slug);
 
         $this->assertEquals($item->slug, $this->variant->slug);
@@ -194,8 +199,6 @@ class ItemAsVariantTest extends TestCase
     public function it_has_a_shipping_profile()
     {
         $item = new Item($this->variant->slug);
-
-        $this->variant->update(['available' => false]);
 
         Cache::flush();
         $item->update();

@@ -2,11 +2,16 @@
 
 namespace Jonassiewertsen\StatamicButik\Fieldtypes;
 
-class Money extends \Statamic\Fields\Fieldtype
-{
-    protected $icon = 'tags';
+use Statamic\Fields\Fieldtype;
 
-    public function preload() {
+class Money extends Fieldtype
+{
+    protected $categories = ['butik'];
+    protected $selectable = false;
+    protected $icon       = 'tags';
+
+    public function preload()
+    {
         return [
             'currencySymbol' => currency(),
         ];

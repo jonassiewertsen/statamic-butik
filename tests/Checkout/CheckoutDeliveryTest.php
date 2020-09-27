@@ -19,7 +19,7 @@ class CheckoutDeliveryTest extends TestCase
     {
         parent::setUp();
 
-        $this->product = create(Product::class)->first();
+        $this->product = $this->makeProduct();
         Cart::add($this->product->slug);
     }
 
@@ -36,7 +36,7 @@ class CheckoutDeliveryTest extends TestCase
     /** @test */
     public function the_product_information_will_be_displayed_without_saved_customer_data()
     {
-        $this->get(route('butik.checkout.delivery', $this->product))
+        $this->get(route('butik.checkout.delivery', $this->product->slug))
             ->assertSee('Checkout');
     }
 
@@ -67,7 +67,7 @@ class CheckoutDeliveryTest extends TestCase
     public function a_firstname_can_be_to_long()
     {
         $data = $this->createUserData('firstname', str_repeat('a', 51));
-        $this->post(route('butik.checkout.delivery', $this->product), (array)$data)
+        $this->post(route('butik.checkout.delivery', $this->product->slug), (array)$data)
             ->assertSessionHasErrors('firstname');
     }
 
@@ -91,7 +91,7 @@ class CheckoutDeliveryTest extends TestCase
     public function a_surname_can_be_to_long()
     {
         $data = $this->createUserData('surname', str_repeat('a', 51));
-        $this->post(route('butik.checkout.delivery', $this->product), (array)$data)
+        $this->post(route('butik.checkout.delivery', $this->product->slug), (array)$data)
             ->assertSessionHasErrors('surname');
     }
 
@@ -262,7 +262,7 @@ class CheckoutDeliveryTest extends TestCase
     public function existing_data_from_the_session_will_be_passed_to_the_delivery_view()
     {
         Session::put('butik.customer', new Customer($this->createUserData()));
-        $page     = $this->get(route('butik.checkout.delivery', $this->product))->content();
+        $page     = $this->get(route('butik.checkout.delivery', $this->product->slug))->content();
         $customer = session('butik.customer');
 
         $this->assertStringContainsString($customer->firstname, $page);

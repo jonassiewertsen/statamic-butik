@@ -2,18 +2,28 @@
 
 namespace Jonassiewertsen\StatamicButik\Tests;
 
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Config;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
+use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Statamic\Extend\Manifest;
+use Statamic\Facades\Blueprint;
+use Statamic\Facades\Collection;
+use Statamic\Facades\Entry;
 use Statamic\Facades\Role;
+use Statamic\Stache\Stores\UsersStore;
 use Statamic\Statamic;
+use Statamic\Support\Str;
 
 class TestCase extends OrchestraTestCase
 {
     use DatabaseMigrations;
     use WithFaker;
+    use PreventSavingStacheItemsToDisk;
 
     protected $shouldFakeVersion = true;
 
@@ -22,7 +32,11 @@ class TestCase extends OrchestraTestCase
      */
     protected function setUp(): void
     {
+        require_once __DIR__.'/ConsoleKernel.php';
+
         parent::setUp();
+
+        $this->preventSavingStacheItemsToDisk();
 
         if ($this->shouldFakeVersion) {
             \Facades\Statamic\Version::shouldReceive('get')->andReturn('3.0.0-testing');
@@ -32,6 +46,13 @@ class TestCase extends OrchestraTestCase
         $this->withFactories(__DIR__ . '/../database/factories');
 
         $this->setCountry();
+    }
+
+    public function tearDown(): void
+    {
+        $this->deleteFakeStacheDirectory();
+
+        parent::tearDown();
     }
 
     /**
@@ -70,12 +91,42 @@ class TestCase extends OrchestraTestCase
         return $user;
     }
 
-    /**
-     * This will set the country and write it to our config file
-     */
+    public function makeProduct(array $data = null)
+    {
+        $shippingZone = create(ShippingZone::class)->first();
+
+        create(ShippingRate::class, [
+            'shipping_zone_id' => $shippingZone->id,
+            'minimum'          => 0,
+            'price'            => 0,
+        ]);
+
+        $entryData = [
+            'title'                 => $data['title'] ?? 'Test Item Product',
+            'price'                 => $data['price'] ?? '20.00',
+            'stock'                 => $data['stock'] ?? '5',
+            'tax_id'                => $data['tax_id'] ?? create(Tax::class)->first()->slug,
+            'shipping_profile_slug' => $data['shipping_profile_slug'] ?? $shippingZone->first()->profile->slug,
+            'images'                => null,
+        ];
+
+        Collection::make('products')->save();
+
+        Entry::make()
+            ->collection('products')
+            ->blueprint('products')
+            ->slug($slug = Str::random('6'))
+            ->date(now())
+            ->data($entryData)
+            ->save();
+
+        return Product::find($slug);
+    }
+
     protected function setCountry(): void
     {
         Config::set('butik.country', 'DE');
+        Config::set('butik.currency_delimiter', ',');
     }
 
     /**
@@ -128,6 +179,8 @@ class TestCase extends OrchestraTestCase
     {
         parent::resolveApplicationConfiguration($app);
 
+        Blueprint::setDirectory(__DIR__ . '/../resources/blueprints');
+
         $configs = [
             'assets', 'cp', 'forms', 'routes', 'static_caching',
             'sites', 'stache', 'system', 'users',
@@ -139,6 +192,19 @@ class TestCase extends OrchestraTestCase
 
         // Setting the user repository to the default flat file system
         $app['config']->set('statamic.users.repository', 'file');
+        $app['config']->set('statamic.stache.stores.users', [
+            'class'     => UsersStore::class,
+            'directory' => __DIR__ . '/__fixtures/users',
+        ]);
+
+        // Set the path for our entries
+        $app['config']->set('statamic.stache.stores.taxonomies.directory', __DIR__.'/__fixtures__/content/taxonomies');
+        $app['config']->set('statamic.stache.stores.terms.directory', __DIR__.'/__fixtures__/content/taxonomies');
+        $app['config']->set('statamic.stache.stores.collections.directory', __DIR__.'/__fixtures__/content/collections');
+        $app['config']->set('statamic.stache.stores.entries.directory', __DIR__.'/__fixtures__/content/collections');
+        $app['config']->set('statamic.stache.stores.navigation.directory', __DIR__.'/__fixtures__/content/navigation');
+        $app['config']->set('statamic.stache.stores.globals.directory', __DIR__.'/__fixtures__/content/globals');
+        $app['config']->set('statamic.stache.stores.asset-containers.directory', __DIR__.'/__fixtures__/content/assets');
 
         // Assume the pro edition within tests
         $app['config']->set('statamic.editions.pro', true);
@@ -166,7 +232,7 @@ class TestCase extends OrchestraTestCase
             'layout_checkout-receipt-invalid',
         ];
 
-        foreach($layouts as $layout) {
+        foreach ($layouts as $layout) {
             $app['config']->set('butik.' . $layout, null);
         }
     }

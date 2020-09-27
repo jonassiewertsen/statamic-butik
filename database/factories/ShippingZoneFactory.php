@@ -11,6 +11,6 @@ $factory->define(ShippingZone::class, function (Faker $faker) {
         'type'                  => 'price',
         'shipping_profile_slug' => create(ShippingProfile::class)->first(),
         'tax_slug'              => create(Tax::class)->first(),
-        'countries'             => [$faker->countryCode],
+        'countries'             => ['DE'],
     ];
 });

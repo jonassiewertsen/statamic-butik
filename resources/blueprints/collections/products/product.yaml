@@ -1,0 +1,123 @@
+title: Product
+sections:
+  main:
+    display: Main
+    fields:
+      -
+        handle: title
+        field:
+          type: text
+          required: true
+          validate:
+            - required
+            - string
+          listable: true
+          input_type: text
+      -
+        handle: price
+        field:
+          type: money
+          display: Price
+          required: true
+          listable: true
+          validate:
+            - min:0
+          width: '25'
+      -
+        handle: tax_id
+        field:
+          display: Tax
+          type: tax
+          required: true
+          listable: false
+          width: '25'
+      -
+        handle: shipping_profile_slug
+        field:
+          display: Shipping
+          type: shipping
+          required: true
+          listable: false
+          width: '25'
+      -
+        handle: images
+        field:
+          mode: grid
+          restrict: false
+          allow_uploads: true
+          type: assets
+          listable: true
+          display: Images
+          validate:
+            - nullable
+      -
+        handle: description
+        field:
+          always_show_set_button: false
+          buttons:
+            - h2
+            - h3
+            - bold
+            - italic
+            - unorderedlist
+            - orderedlist
+            - removeformat
+            - quote
+            - anchor
+          save_html: false
+          toolbar_mode: fixed
+          link_noopener: false
+          link_noreferrer: false
+          target_blank: false
+          reading_time: false
+          fullscreen: true
+          allow_source: true
+          type: bard
+          listable: hidden
+          display: Description
+      -
+        handle: variants
+        field:
+          type: variants
+          listable: hidden
+          display: Variants
+      -
+        handle: categories
+        field:
+          type: categories
+          listable: hidden
+          display: Categories
+  sidebar:
+    display: Sidebar
+    fields:
+      -
+        handle: slug
+        field:
+          type: slug
+          required: true
+          localizable: true
+          validate:
+            - required
+      -
+        handle: stock
+        field:
+          type: integer
+          width: 50
+          default: 0
+          listable: true
+          display: Stock
+          validate:
+            - required
+            - integer
+          unless:
+            stock_unlimited: 'equals true'
+      -
+        handle: stock_unlimited
+        field:
+          type: toggle
+          width: 50
+          listable: true
+          display: 'Stock Unlimited'
+          validate:
+            - required
+            - boolean

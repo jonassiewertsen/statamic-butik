@@ -24,7 +24,7 @@ class TaxBlueprint extends Blueprint
                         [
                             'handle' => 'percentage',
                             'field'  => [
-                                'type'         => 'tax',
+                                'type'         => 'number',
                                 'display'      => __('butik::cp.percentage'),
                                 'width'         => '33',
                                 'validate'      => 'required|numeric|min:0|max:100',

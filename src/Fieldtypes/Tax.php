@@ -2,9 +2,21 @@
 
 namespace Jonassiewertsen\StatamicButik\Fieldtypes;
 
-class Tax extends \Statamic\Fields\Fieldtype
+use Jonassiewertsen\StatamicButik\Http\Models\Tax as TaxModel;
+use Statamic\Fields\Fieldtype;
+
+class Tax extends Fieldtype
 {
-    protected $icon = 'tags';
+    protected $icon       = 'tags';
+    protected $categories = ['butik'];
+    protected $selectable = false;
+
+    public function preload()
+    {
+        return [
+            'taxes' => $this->fetchTaxOptions(),
+        ];
+    }
 
     public function process($data)
     {
@@ -13,9 +25,16 @@ class Tax extends \Statamic\Fields\Fieldtype
 
     public function preProcess($data)
     {
-        // In case another dec point then '.' has been just, we will reformat
-        $data = str_replace(',', '.', $data);
+        return $data;
+    }
 
-        return number_format(floatval($data), 2, '.', '');
+    private function fetchTaxOptions(): array
+    {
+        return TaxModel::pluck('title', 'slug')->map(function ($key, $value) {
+            return [
+                'value' => $value,
+                'label' => $key,
+            ];
+        })->toArray();
     }
 }

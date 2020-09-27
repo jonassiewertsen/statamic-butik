@@ -3,12 +3,13 @@
 
 namespace Jonassiewertsen\StatamicButik\Checkout;
 
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\Product as ProductModel;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
+use Statamic\Fields\Value;
 
 class Item
 {
@@ -37,7 +38,7 @@ class Item
     /**
      * The images of the item
      */
-    public ?Collection $images;
+    public ?Value $images;
 
     /**
      * The item name
@@ -52,7 +53,7 @@ class Item
     /**
      * The product the item does base on
      */
-    public Product $product;
+    public ProductModel $product;
 
     /**
      * The variant we do use. Null if not defined
@@ -96,12 +97,12 @@ class Item
         $this->singlePrice     = $item->price;
         $this->availableStock  = $item->stock;
         $this->name            = $item->title;
-        $this->images          = $this->product->augmentedValue('images')->value();
+        $this->images          = $this->convertImage($this->product->images);
         $this->description     = $this->limitedDescription();
         $this->taxRate         = $item->tax->percentage;
         $this->taxAmount       = $this->totalTaxAmount();
         $this->totalPrice      = $this->totalPrice();
-        $this->shippingProfile = $item->shippingProfile;
+        $this->shippingProfile = $item->shipping_profile;
     }
 
     public function increase()
@@ -170,7 +171,7 @@ class Item
             $this->setQuantityToStock();
         }
 
-        if (!$this->item()->available) {
+        if (! $this->item()->available) {
             $this->quantity = 0;
         }
 
@@ -192,7 +193,7 @@ class Item
         return Str::limit($this->product()->description, 100, '...');
     }
 
-    private function product(): Product
+    private function product(): ProductModel
     {
         $cacheName = "product:{$this->productSlug()}";
 
@@ -251,5 +252,14 @@ class Item
         return $this->isVariant() ?
             $this->variant :
             $this->product;
+    }
+
+    private function convertImage($images)
+    {
+        if (! $images) {
+            return null;
+        }
+
+        return $images;
     }
 }

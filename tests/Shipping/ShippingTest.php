@@ -4,12 +4,10 @@ namespace Jonassiewertsen\StatamicButik\Tests\Shipping;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Str;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Shipping\Country;
 use Jonassiewertsen\StatamicButik\Shipping\Shipping;
 use Jonassiewertsen\StatamicButik\Exceptions\ButikConfigException;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
@@ -22,9 +20,9 @@ class ShippingTest extends TestCase
     {
         parent::setUp();
 
-        $this->product = create(Product::class)->first();
+        $this->product = $this->makeProduct();
         $country = Country::get();
-        $zone = create(ShippingZone::class, [ 'countries' => [$country] ])->first();
+        create(ShippingZone::class, [ 'countries' => [$country] ])->first();
 
         Config::set('butik.country', $country);
 
@@ -75,7 +73,7 @@ class ShippingTest extends TestCase
     /** @test */
     public function multiple_profiles_will_be_deteced()
     {
-        $product = create(Product::class)->first();
+        $product = $this->makeProduct(['shipping_profile_slug' => create(ShippingProfile::class)->first()->slug]);
         Cart::add($product->slug);
 
         $shipping = new Shipping(Cart::get());
@@ -89,7 +87,7 @@ class ShippingTest extends TestCase
     {
         $profile = Cart::get()->first()->shippingProfile;
 
-        $product = create(Product::class, ['shipping_profile_slug' => $profile['slug']])->first();
+        $product = $this->makeProduct(['shipping_profile_slug' => $profile['slug']]);
         Cart::add($product->slug);
 
         $shipping = new Shipping(Cart::get());
@@ -101,7 +99,8 @@ class ShippingTest extends TestCase
     /** @test */
     public function if_a_profile_cant_detect_a_belonging_shipping_zone_the_items_will_be_declared_as_non_sellable()
     {
-        Cart::setCountry(Country::get());
+        create(ShippingZone::class, ['countries' => ['DK']]);
+        Cart::setCountry('DK');
 
         $shipping = new Shipping(Cart::get());
         $shipping->handle();

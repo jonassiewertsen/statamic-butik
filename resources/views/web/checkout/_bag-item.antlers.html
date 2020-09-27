@@ -1,7 +1,7 @@
 <section class="flex align-center mb-8">
     {{ if images }}
         {{ images limit="1" }}
-            <img class="w-32 h-32 flex-shrink-0 rounded-xl shadow object-cover mr-5" src="{{ url }}" alt="{{ alt }}">
+            <img class="w-32 h-32 flex-shrink-0 rounded-xl shadow object-cover mr-5" src="{{ glide:url width='128' height='128' }}" alt="{{ alt }}">
         {{ /images }}
     {{ else }}
         <div class="flex flex-shrink-0 items-center w-32 h-32 rounded-xl shadow object-cover mr-5">

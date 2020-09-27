@@ -3,6 +3,7 @@
 namespace Jonassiewertsen\StatamicButik\Http\Models;
 
 use Illuminate\Support\Facades\DB;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 
 class Category extends ButikModel
 {
@@ -21,39 +22,55 @@ class Category extends ButikModel
         return 'slug';
     }
 
-    public function products()
+    /**
+     * Will fetch all related products
+     */
+    public function getProductsAttribute()
     {
-        return $this->belongsToMany(
-            Product::class,
-            'butik_category_product',
-            'category_slug',
-            'product_slug',
-        );
+        $products = collect();
+
+        $results = DB::table('butik_category_product')
+            ->where(['category_slug' => $this->slug])
+            ->get();
+
+        $results->each(function($result) use ($products) {
+            $products->push(Product::find($result->product_slug));
+        });
+
+        return $products;
     }
 
     /**
      * Add a product to this category
      */
-    public function addProduct(Product $product): void
+    public function addProduct(string $slug): void
     {
-        $this->products()->attach($product);
+        DB::table('butik_category_product')
+            ->insert([
+                'category_slug' => $this->slug,
+                'product_slug' => $slug,
+            ]);
     }
 
     /**
      * Add a product to this category
      */
-    public function removeProduct(Product $product): void
+    public function removeProduct(string $product): void
     {
-        $this->products()->detach($product);
+        DB::table('butik_category_product')
+            ->where([
+                'category_slug' => $this->slug,
+                'product_slug' => $product,
+            ])->delete();
     }
 
     /**
      * Is a specific product attached to this category?
      */
-    public function isProductAttached(Product $product): bool
+    public function isProductAttached($product): bool
     {
         return DB::table('butik_category_product')
-                ->where('product_slug', $product->slug)
+                ->where('product_slug', $product)
                 ->where('category_slug', $this->slug)
                 ->count() === 1;
     }

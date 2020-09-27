@@ -11,32 +11,29 @@
          processIsolation="true"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="Unit">
-            <directory suffix="Test.php">tests/Unit/</directory>
-        </testsuite>
         <testsuite name="Checkout">
             <directory suffix="Test.php">tests/Checkout/</directory>
         </testsuite>
         <testsuite name="CP">
             <directory suffix="Test.php">tests/CP/</directory>
         </testsuite>
-        <testsuite name="Products">
-            <directory suffix="Test.php">tests/Products/</directory>
+        <testsuite name="Permissions">
+            <directory suffix="Test.php">tests/Permissions/</directory>
         </testsuite>
-        <testsuite name="Shop">
-            <directory suffix="Test.php">tests/Shop/</directory>
+        <testsuite name="Rules">
+            <directory suffix="Test.php">tests/Rules/</directory>
         </testsuite>
         <testsuite name="Shipping">
             <directory suffix="Test.php">tests/Shipping/</directory>
         </testsuite>
+        <testsuite name="Shop">
+            <directory suffix="Test.php">tests/Shop/</directory>
+        </testsuite>
         <testsuite name="Tags">
             <directory suffix="Test.php">tests/Tags/</directory>
         </testsuite>
-        <testsuite name="Permissions">
-            <directory suffix="Test.php">tests/Permissions/</directory>
-        </testsuite>
-        <testsuite name="Commands">
-            <directory suffix="Test.php">tests/Commands/</directory>
+        <testsuite name="Unit">
+            <directory suffix="Test.php">tests/Unit/</directory>
         </testsuite>
     </testsuites>
     <filter>
