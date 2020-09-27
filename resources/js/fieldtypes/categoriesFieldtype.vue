@@ -1,6 +1,6 @@
 <template>
     <div class="flex">
-        <section class="flex-grow">
+        <section v-if="! isCreateRoute" class="flex-grow">
             <header class="flex justify-end -mt-5 mb-2 w-full">
                 <create-button
                     :label="'New category'"
@@ -32,8 +32,19 @@
                         </td>
                     </tr>
                     <tr v-if="! categories || categories.length === 0">
-                        <td>No Categories have been created yet.</td>
+                        <td colspan="3">No Categories have been created yet.</td>
                     </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <section v-else class="w-full">
+            <div class="publish-section">
+                <table class="data-table">
+                    <tbody>
+                        <tr>
+                            <td>You can create categories, after saving the product.</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -56,11 +67,14 @@ export default {
             productSlug: this.meta.productSlug,
             categoryName: '',
             showNewCategory: false,
+            isCreateRoute: this.meta.isCreateRoute,
         }
     },
 
     mounted() {
-        this.categories = this.fetchCategories()
+        if (! this.isCreateRoute) {
+            this.categories = this.fetchCategories()
+        }
     },
 
     methods: {

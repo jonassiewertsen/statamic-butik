@@ -1,8 +1,9 @@
 <template>
     <div class="flex">
-        <section class="flex-grow">
+        <section v-if="! isCreateRoute" class="flex-grow">
             <header class="flex justify-end -mt-5 mb-2 w-full">
                 <create-button
+                    v-if="! isCreateRoute"
                     :label="'New variant'"
                     :classes="'bg-grey-30 z-0'"
                     @clicked="openCreateVariantStack"
@@ -54,6 +55,17 @@
                 </table>
             </div>
         </section>
+        <section v-else class="w-full">
+            <div class="publish-section">
+                <table class="data-table">
+                    <tbody>
+                    <tr>
+                        <td colspan="3">You can create variants, after saving the product.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
         <form-stack
             name="variant stack"
@@ -93,11 +105,14 @@
                 stackAction: null,
                 stackMethod: 'post',
                 stackValues: null,
+                isCreateRoute: this.meta.isCreateRoute,
             }
         },
 
         mounted() {
-            this.fetchVariants()
+            if (! this.isCreateRoute) {
+                this.fetchVariants()
+            }
         },
 
         methods: {
