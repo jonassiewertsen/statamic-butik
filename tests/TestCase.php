@@ -107,7 +107,7 @@ class TestCase extends OrchestraTestCase
             'stock'                 => $data['stock'] ?? '5',
             'tax_id'                => $data['tax_id'] ?? create(Tax::class)->first()->slug,
             'shipping_profile_slug' => $data['shipping_profile_slug'] ?? $shippingZone->first()->profile->slug,
-            'images'                => $data['images'] ?? collect(['someimage.png']),
+            'images'                => null,
         ];
 
         Collection::make('products')->save();

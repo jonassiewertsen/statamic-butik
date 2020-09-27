@@ -3,13 +3,13 @@
 
 namespace Jonassiewertsen\StatamicButik\Checkout;
 
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Product as ProductModel;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
+use Statamic\Fields\Value;
 
 class Item
 {
@@ -38,7 +38,7 @@ class Item
     /**
      * The images of the item
      */
-    public ?\Statamic\Fields\Value $images;
+    public ?Value $images;
 
     /**
      * The item name
@@ -97,7 +97,7 @@ class Item
         $this->singlePrice     = $item->price;
         $this->availableStock  = $item->stock;
         $this->name            = $item->title;
-        $this->images          = $this->product->images;
+        $this->images          = $this->convertImage($this->product->images);
         $this->description     = $this->limitedDescription();
         $this->taxRate         = $item->tax->percentage;
         $this->taxAmount       = $this->totalTaxAmount();
@@ -252,5 +252,14 @@ class Item
         return $this->isVariant() ?
             $this->variant :
             $this->product;
+    }
+
+    private function convertImage($images)
+    {
+        if (! $images) {
+            return null;
+        }
+
+        return $images;
     }
 }

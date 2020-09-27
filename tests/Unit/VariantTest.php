@@ -4,11 +4,9 @@ namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
 use Jonassiewertsen\StatamicButik\Http\Models\Product as ProductModel;
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
-use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
-use Statamic\Facades\Entry;
 
 class VariantTest extends TestCase
 {
@@ -197,13 +195,5 @@ class VariantTest extends TestCase
     public function it_inherits_the_tax_from_his_parent()
     {
         $this->assertEquals($this->variant->tax, $this->product->tax);
-    }
-
-    /** @test */
-    public function it_inherits_the_images_from_his_parent()
-    {
-        $this->product->images = collect()->push('someimage.png');
-
-        $this->assertEquals($this->variant->images, $this->product->images);
     }
 }

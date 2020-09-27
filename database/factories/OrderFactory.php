@@ -24,7 +24,7 @@ $factory->define(Order::class, function (Faker $faker) {
             'price'  => '20.00',
             'stock'  => '5',
             'tax_id' => create(Tax::class)->first()->slug,
-            'images' => collect(['someimage.png']),
+            'images' => null,
         ])
         ->save();
 
