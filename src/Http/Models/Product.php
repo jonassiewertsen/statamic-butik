@@ -22,7 +22,23 @@ class Product
 
     public function all()
     {
-        return $this->extend(Entry::whereCollection(self::COLLECTION_NAME));
+        return $this->extend(
+            Entry::query()
+                ->where('collection', self::COLLECTION_NAME)
+                ->where('published', true)
+                ->get()
+        );
+    }
+
+    public function fromCategory(Category $category)
+    {
+        $slugs = $category->products->pluck('slug')->toArray();
+
+        $products = $this->all()->filter(function($product) use ($slugs) {
+            return in_array($product->slug(), $slugs);
+        });
+
+        return $this->extend($products);
     }
 
     public function find(string $slug)
@@ -46,17 +62,18 @@ class Product
         $product->price     = str_replace('.', config('butik.currency_delimiter'), $product->price);
         $product->slug      = $entry->slug();
         $product->title     = $entry->get('title');
-        $product->stock     = (int) $product->stock;
+        $product->stock     = (int) $entry->get('stock');
         $product->available = $entry->published();
+        $product->show_url = $product->showUrl($product->slug);
 
         return $product;
     }
 
-    public function where(string $key, string $value): self
+    public function where(string $key, string $value)
     {
-        $this->entries = Entry::query()->where($key, $value);
-
-        return $this;
+        return Entry::query()
+            ->where('collection', self::COLLECTION_NAME)
+            ->where($key, $value);
     }
 
     public function get(): Collection
@@ -67,12 +84,12 @@ class Product
             $entries->push(ProductFacade::find($entry->slug()));
         });
 
-        return $entries;
+        return $this->extend($entries);
     }
 
     public function exists(string $slug): bool
     {
-        return Entry::findBySlug($slug, 'products') !== null;
+        return Entry::findBySlug($slug, self::COLLECTION_NAME) !== null;
     }
 
     public function available(): bool
@@ -177,10 +194,10 @@ class Product
         return config('butik.currency_symbol');
     }
 
-    public function showUrl()
+    public function showUrl($slug): string
     {
-        $route = config('butik.route_shop-prefix') . '/' . $this->slug;
-        return Str::of($route)->start('/');
+        $route = config('butik.route_shop-prefix') . '/' . $slug;
+        return (string) Str::of($route)->start('/');
     }
 
     public function __get(string $property)
@@ -202,11 +219,12 @@ class Product
     /**
      * Adding some product information dynamically
      */
-    private function extend(EntryCollection $entry): Collection
+    public function extend(EntryCollection $entry): Collection
     {
         return $entry->map(function ($entry) {
-            $entry->fluentlyGetOrSet('show_url')->args([$this->show_url($entry->slug())]);
+            $entry->fluentlyGetOrSet('show_url')->args([$this->showUrl($entry->slug())]);
             $entry->fluentlyGetOrSet('slug')->args([$entry->slug()]);
+            $entry->fluentlyGetOrSet('price')->args([str_replace('.', config('butik.currency_delimiter'), $entry->get('price'))]);
             return $entry;
         });
     }

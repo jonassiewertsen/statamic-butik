@@ -2,8 +2,9 @@
 
 namespace Jonassiewertsen\StatamicButik\Tests\Shop;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Statamic\Facades\Entry;
 
 class ProductOverviewTest extends TestCase
 {
@@ -17,7 +18,7 @@ class ProductOverviewTest extends TestCase
     /** @test */
     public function all_product_information_will_be_shown()
     {
-        $product = create(Product::class)->first();
+        $product = $this->makeProduct();
 
         $this->get(route('butik.shop'))
             ->assertSee($product->title)
@@ -29,7 +30,12 @@ class ProductOverviewTest extends TestCase
     /** @test */
     public function a_non_available_product_will_be_hidden()
     {
-        $product = create(Product::class,['available' => false])->first();
+        $product = $this->makeProduct();
+
+        $entry = Entry::findBySlug($product->slug, 'products');
+        $entry->unpublish()->save();
+
+        $product = Product::find($product->slug);
 
         $this->get(route('butik.shop'))
             ->assertDontSee($product->title)
@@ -43,14 +49,24 @@ class ProductOverviewTest extends TestCase
         // Sold out products will only be shown on the overview type all.
         config()->set('butik.overview_type', 'all');
 
-        create(Product::class, ['stock' => 0])->first();
+        $product = $this->makeProduct();
+
+        $entry = Entry::findBySlug($product->slug, 'products');
+        $entry->set('stock', 0)->save();
+
         $this->get(route('butik.shop'))->assertSee('Sold out');
     }
 
     /** @test */
     public function a_product_with_unlimted_stock_wont_be_shown_as_sold_out()
     {
-        create(Product::class, ['stock_unlimited' => true, 'stock' => 0])->first();
+        $product = $this->makeProduct();
+
+        $entry = Entry::findBySlug($product->slug, 'products');
+        $entry->set('stock', 0);
+        $entry->set('stock_unlimited', true);
+        $entry->save();
+
         $this->get(route('butik.shop'))->assertDontSee('Sold out');
     }
 }

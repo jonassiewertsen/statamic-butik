@@ -1,9 +1,9 @@
-<div class="flex justify-center mt-12 mb-20">
-    <nav class="grid col-gap-5 grid-flow-col text-dark text-xl">
-        {{ if {categories:count} > 0 }}
+{{ if {categories:count} !== 0 }}
+    <div class="flex justify-center mt-12 mb-20">
+        <nav class="grid col-gap-5 grid-flow-col text-dark text-xl">
             {{ categories root_name="Start" }}
                 <a href="{{ url }}" class="relative {{ is_current ? 'font-bold category--active' : 'font-light' }}">{{ name }}</a>
             {{ /categories }}
-        {{ /if }}
-    </nav>
-</div>
+        </nav>
+    </div>
+{{ /if }}

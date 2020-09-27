@@ -25,7 +25,7 @@ class ShopController extends WebController
             ->template(config('butik.template_product-category'))
             ->layout(config('butik.layout_product-category'))
             ->with([
-                'products' => $category->products()->orderBy('title')->get(),
+                'products' => Product::fromCategory($category),
             ]);
     }
 
@@ -85,26 +85,25 @@ class ShopController extends WebController
                 return Product::all();
                 break;
             case 'name':
-                return Product::where('available', true)
+                return Product::extend(Product::where('published', true)
                     ->orderBy('title')
                     ->limit($limit)
-                    ->get();
-                break;
+                    ->get());
                 break;
             case 'newest':
-                return Product::where('available', true)
-                    ->orderByDesc('created_at')
+                return Product::extend(Product::where('published', true)
+                    ->orderBy('created_at')
                     ->limit($limit)
-                    ->get();
+                    ->get());
                 break;
             case 'cheapest':
-                return Product::where('available', true)
+                return Product::extend(Product::where('published', true)
                     ->orderBy('price')
                     ->limit($limit)
-                    ->get();
+                    ->get());
                 break;
             default:
-                return Product::where('available', true)->get();
+                return Product::where('published', true)->get();
         }
     }
 }

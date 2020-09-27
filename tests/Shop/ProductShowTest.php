@@ -2,9 +2,9 @@
 
 namespace Jonassiewertsen\StatamicButik\Tests\Shop;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Statamic\Facades\Entry;
 
 class ProductShowTest extends TestCase
 {
@@ -13,13 +13,13 @@ class ProductShowTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->product = create(Product::class)->first();
+        $this->product = $this->makeProduct();
     }
 
     /** @test */
     public function the_view_of_a_single_product_does_exist()
     {
-        $this->get(route('butik.shop.product', $this->product))
+        $this->get(route('butik.shop.product', $this->product->slug))
             ->assertOk();
     }
 
@@ -65,8 +65,10 @@ class ProductShowTest extends TestCase
     /** @test */
     public function a_product_must_be_available_to_be_shown()
     {
-        $this->product->update(['available' => false]);
-        $this->get(route('butik.shop.product', $this->product))
+        $entry = Entry::findBySlug($this->product->slug, 'products');
+        $entry->unpublish()->save();
+
+        $this->get(route('butik.shop.product', $this->product->slug))
             ->assertRedirect(route('butik.shop'));
     }
 
@@ -90,9 +92,12 @@ class ProductShowTest extends TestCase
     /** @test */
     public function a_product_with_unlimted_stock_wont_be_shown_as_sold_out()
     {
-        $product = create(Product::class, ['stock_unlimited' => true, 'stock' => 0])->first();
+        $entry = Entry::findBySlug($this->product->slug, 'products');
+        $entry->set('stock', 0);
+        $entry->set('stock_unlimited', true);
+        $entry->save();
 
-        $this->get(route('butik.shop.product', $product))
+        $this->get(route('butik.shop.product', $this->product->slug))
             ->assertDontSee('sold out');
     }
 }

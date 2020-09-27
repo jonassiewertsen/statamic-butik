@@ -123,12 +123,10 @@ class TestCase extends OrchestraTestCase
         return Product::find($slug);
     }
 
-    /**
-     * This will set the country and write it to our config file
-     */
     protected function setCountry(): void
     {
         Config::set('butik.country', 'DE');
+        Config::set('butik.currency_delimiter', ',');
     }
 
     /**
