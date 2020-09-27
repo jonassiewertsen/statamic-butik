@@ -1,6 +1,6 @@
 <section class="{{ sellable ? '' : 'bg-danger-light' }} flex border-gray-light border-b pb-8 mb-8 w-full">
     <main class="flex flex-1 items-center">
-        {{ if images | count > 0 }}
+        {{ if images }}
             {{ images limit='1' }}
                 <img class="w-40 h-40 rounded-xl shadow object-cover mr-5" src="{{ glide:url width='160' height='160' }}" alt="{{ alt }}">
             {{ /images }}
