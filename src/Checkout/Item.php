@@ -38,7 +38,7 @@ class Item
     /**
      * The images of the item
      */
-    public ?Collection $images;
+    public ?\Statamic\Fields\Value $images;
 
     /**
      * The item name
