@@ -62,11 +62,11 @@ class CheckoutController extends Checkout
 
     public function receipt(Request $request, $order)
     {
-        if (!$request->hasValidSignature()) {
+        if (! $request->hasValidSignature()) {
             return $this->showInvalidReceipt();
         }
 
-        if (!$order = Order::find($order)) {
+        if (! $order = Order::firstWhere('number', $order)) {
             return $this->showInvalidReceipt();
         }
 
@@ -78,7 +78,7 @@ class CheckoutController extends Checkout
             ->template(config('butik.template_checkout-receipt'))
             ->layout(config('butik.layout_checkout-receipt'))
             ->with([
-                'customer' => (array) json_decode($order->customer),
+                'customer' => (array) $order->customer,
                 'order'    => $order->toArray(),
             ]);
     }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Http\Traits\MollyLocale;
@@ -25,13 +26,16 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
      */
     public function handle(Customer $customer, Collection $items, string $totalPrice, Collection $shippings)
     {
+        $orderNumber = $this->createOrderNumber();
+
         $payment = Mollie::api()->orders()->create(
-            $this->createMollieOrderData($customer, $items, $totalPrice, $shippings)
+            $this->createMollieOrderData($customer, $items, $orderNumber, $totalPrice, $shippings)
         );
 
         $this->createOrder(
             $payment->id,
             $items,
+            $orderNumber,
             $customer,
             $totalPrice,
             $payment->method
@@ -49,12 +53,13 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
      */
     public function webhook(Request $request): void
     {
-        if (!$request->has('id')) {
+        if (! $request->has('id')) {
             return;
         }
 
         $payment = Mollie::api()->orders()->get($request->id);
-        $order   = $this->findOrder($payment->id);
+
+        $order = $this->findOrder($payment->id);
 
         switch ($payment->status) {
             case 'paid':
@@ -80,10 +85,10 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
      *
      * https://docs.mollie.com/reference/v2/orders-api/create-order#example
      */
-    private function createMollieOrderData($customer, $items, $totalPrice, $shippings): array
+    private function createMollieOrderData($customer, $items, $orderNumber, $totalPrice, $shippings): array
     {
         $orderData = [
-            'amount' => [
+            'amount'         => [
                 'currency' => config('butik.currency_isoCode'),
                 'value'    => $totalPrice,
             ],
@@ -96,14 +101,14 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
                 'country'         => $customer->country,
                 'email'           => $customer->mail,
             ],
-            'orderNumber' => $orderId = now()->format('Ymd_') . str_random(30),
-            'locale'      => $this->getLocale(),
-            'webhookUrl' => env('MOLLIE_NGROK_REDIRECT') . route('butik.payment.webhook.mollie', [], false),
-            'redirectUrl' => URL::temporarySignedRoute('butik.payment.receipt', now()->addMinutes(5), ['order' => $orderId]),
-            'lines'       => $this->mapItems($items, $shippings),
+            'orderNumber'    => $orderNumber,
+            'locale'         => $this->getLocale(),
+            'webhookUrl'     => env('MOLLIE_NGROK_REDIRECT') . route('butik.payment.webhook.mollie', [], false),
+            'redirectUrl'    => URL::temporarySignedRoute('butik.payment.receipt', now()->addMinutes(5), ['order' => $orderNumber]),
+            'lines'          => $this->mapItems($items, $shippings),
         ];
 
-        if (!App::environment(['local'])) {
+        if (! App::environment(['local'])) {
             // Only adding the mollie webhook, when not in local environment
             $orderData = array_merge($orderData, [
                 'webhookUrl' => route('butik.payment.webhook.mollie'),
@@ -127,26 +132,26 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
      */
     private function mapItems($items, $shippings): array
     {
-        $items = $items->map(function($item) {
+        $items = $items->map(function ($item) {
             return [
-                'type'           => 'physical',
-                'sku'            => $item->slug,
-                'name'           => $item->name,
-                'imageUrl'       => $this->images[0] ?? null,
-                'quantity'       => $item->getQuantity(),
-                'vatRate'        => (string) number_format($item->taxRate, 2),
-                'unitPrice'      => [
+                'type'        => 'physical',
+                'sku'         => $item->slug,
+                'name'        => $item->name,
+                'imageUrl'    => $this->images[0] ?? null,
+                'quantity'    => $item->getQuantity(),
+                'vatRate'     => (string)number_format($item->taxRate, 2),
+                'unitPrice'   => [
                     'currency' => config('butik.currency_isoCode'),
                     'value'    => $this->humanPriceWithDot($item->singlePrice()),
                 ],
-                'totalAmount'    => [
+                'totalAmount' => [
                     'currency' => config('butik.currency_isoCode'),
                     'value'    => $this->humanPriceWithDot($item->totalPrice()),
                 ],
-                'vatAmount'      => [
+                'vatAmount'   => [
                     'currency' => config('butik.currency_isoCode'),
                     'value'    => $this->humanPriceWithDot($item->taxAmount),
-                ]
+                ],
             ];
         })->toArray();
 
@@ -155,24 +160,24 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
 
     private function addShippingToLineItems(array $items, Collection $shippings): array
     {
-        $shippings = $shippings->map(function($shipping) {
+        $shippings = $shippings->map(function ($shipping) {
             return [
-                'type'           => 'shipping_fee',
-                'name'           => 'SHIPPING ' .$shipping->profileTitle . ' / ' . $shipping->rateTitle,
-                'quantity'       => 1,
-                'vatRate'        => $shipping->taxRate,
-                'unitPrice'      => [
+                'type'        => 'shipping_fee',
+                'name'        => 'SHIPPING ' . $shipping->profileTitle . ' / ' . $shipping->rateTitle,
+                'quantity'    => 1,
+                'vatRate'     => $shipping->taxRate,
+                'unitPrice'   => [
                     'currency' => config('butik.currency_isoCode'),
                     'value'    => $this->humanPriceWithDot($shipping->total),
                 ],
-                'totalAmount'    => [
+                'totalAmount' => [
                     'currency' => config('butik.currency_isoCode'),
                     'value'    => $this->humanPriceWithDot($shipping->total),
                 ],
-                'vatAmount'      => [
+                'vatAmount'   => [
                     'currency' => config('butik.currency_isoCode'),
                     'value'    => $this->humanPriceWithDot($shipping->taxAmount),
-                ]
+                ],
             ];
         })->toArray();
 
