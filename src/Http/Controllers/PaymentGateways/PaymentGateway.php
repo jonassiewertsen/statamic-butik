@@ -88,7 +88,7 @@ abstract class PaymentGateway extends WebController
     /**
      * Create the order in our database.
      */
-    protected function createOrder(string $id, Collection $items, Customer $customer, string $totalPrice, ?string $method = null): Order
+    protected function createOrder(string $id, Collection $items, string $orderNumber, Customer $customer, string $totalPrice, ?string $method = null): Order
     {
         $order = Order::create([
             'id'           => $id,
@@ -96,7 +96,7 @@ abstract class PaymentGateway extends WebController
             'customer'     => $customer,
             'total_amount' => $totalPrice,
             'method'       => $method,
-            'number'       => $this->createOrderNumber(),
+            'number'       => $orderNumber,
             'items'        => (new ItemCollection($items))->items,
         ]);
 
@@ -110,7 +110,7 @@ abstract class PaymentGateway extends WebController
      */
     protected function findOrder(string $orderNumber): ?Order
     {
-        return Order::whereNumber($orderNumber)->firstOrFail();
+        return Order::whereId($orderNumber)->firstOrFail();
     }
 
     /**
