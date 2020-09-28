@@ -1,9 +1,9 @@
 <div class="grid grid-cols-1 md:grid-cols-2 row-gap-8 col-gap-20">
     <aside>
-        {{ if product:images }}
-            {{ product:images limit='1' }}
+        {{ if images }}
+            {{ images limit='1' }}
                 <img class="rounded-xl" src="{{ glide:url width='512' }}" alt="{{ alt }}">
-            {{ /product:images }}
+            {{ /images }}
         {{ else }}
             <div class="w-full bg-gray-light rounded-xl">
                 {{ partial src="butik::web/components/placeholder-image" }}
@@ -11,6 +11,38 @@
         {{ /if }}
     </aside>
     <div>
-        {{ livewire:butik.product-variant-section :product="product" }}
+        <h1 class="font-bold text-4xl">
+            {{ title }}
+            {{ if stock_unlimited || stock == 0 }}
+                <span class="text-sm ml-2 text-danger">{{ 'butik::web.sold_out' | trans }}</span>
+            {{ /if }}
+        </h1>
+
+        <div class="text-dark text-3xl font-light mt-2">
+            {{ currency }} {{ price }} {{ 'butik::web.total' | trans }}
+            <span class="text-sm">+ shipping</span>
+        </div>
+
+        {{ if variants }}
+            <div class="flex mt-6">
+                {{ variants }}
+                    <a href="{{ show_url }}/{{ original_title }}"
+                            class="block text-gray-dark text-md py-1 px-3 mr-4 bg-gray-light rounded focus:text-accent focus:outline-none"
+                    >
+                        {{ original_title }}
+                    </a>
+                {{ /variants }}
+            </div>
+        {{ /if }}
+
+        {{ if description }}
+            <p class="mt-8 text-dark">{{ description }}</p>
+        {{ /if }}
+
+        {{ if true }}
+            <div class="flex mt-6">
+                {{ livewire:butik.add-to-cart slug="{{ slug }}" }}
+            </div>
+        {{ /if }}
     </div>
 </div>

@@ -242,9 +242,9 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
     protected function bootLivewireComponents(): void
     {
+        Livewire::component('butik.add-to-cart', \Jonassiewertsen\StatamicButik\Http\Livewire\AddToCart::class);
         Livewire::component('butik.cart-list', \Jonassiewertsen\StatamicButik\Http\Livewire\CartList::class);
         Livewire::component('butik.cart-icon', \Jonassiewertsen\StatamicButik\Http\Livewire\CartIcon::class);
-        Livewire::component('butik.product-variant-section', \Jonassiewertsen\StatamicButik\Http\Livewire\ProductVariantSection::class);
     }
 
     private function createNavigation(): void
