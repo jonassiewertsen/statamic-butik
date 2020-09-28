@@ -2,7 +2,7 @@
 
 namespace Jonassiewertsen\StatamicButik\Listeners;
 
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Statamic\Events\EntryDeleted;
 
 class ProductDeleted
@@ -21,7 +21,7 @@ class ProductDeleted
 
     private function deleteVariants($event)
     {
-        $variants = Product::find($event->entry->slug())->variants;
+        $variants = Variant::where('product_slug', $event->entry->slug());
 
         /**
          * No variants? Do nothing.
@@ -30,6 +30,6 @@ class ProductDeleted
             return;
         }
 
-        $variants->each->delete();
+        $variants->delete();
     }
 }
