@@ -10,7 +10,7 @@ class UpdateExistingShippingRatesTable extends Migration
     {
         if (Schema::hasTable('butik_shipping_rates')) {
             Schema::table('butik_shipping_rates', function (Blueprint $table) {
-                $table->unsignedBigInteger('shipping_zone_id')->index()->change();
+                $table->unsignedBigInteger('shipping_zone_id')->change();
 
                 $table->foreign('shipping_zone_id')
                     ->references('id')
