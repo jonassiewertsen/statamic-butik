@@ -58,10 +58,17 @@ class ShopController extends WebController
             return $this->redirectToShop();
         }
 
+        if ($product->hasVariants()) {
+            $variant = $product->variants->firstWhere('original_title', $variant)->toArray();
+            $product = array_merge((array) $product, $variant);
+        } else {
+            $product = (array) $product;
+        }
+
         return (new StatamicView())
             ->template(config('butik.template_product-show'))
             ->layout(config('butik.layout_product-show'))
-            ->with(['product' => (array) $product]);
+            ->with($product);
     }
 
     private function redirectToVariant($product)
