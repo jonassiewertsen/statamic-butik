@@ -26,11 +26,11 @@
         {{ if variants }}
             <div class="flex mt-6">
                 {{ variants }}
-                    <button href="#"
+                    <a href="{{ show_url }}/{{ original_title }}"
                             class="block text-gray-dark text-md py-1 px-3 mr-4 bg-gray-light rounded focus:text-accent focus:outline-none"
                     >
                         {{ original_title }}
-                    </button>
+                    </a>
                 {{ /variants }}
             </div>
         {{ /if }}

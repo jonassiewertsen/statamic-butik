@@ -59,8 +59,9 @@ class ShopController extends WebController
         }
 
         if ($product->hasVariants()) {
-            $variant = $product->variants->firstWhere('original_title', $variant)->toArray();
-            $product = array_merge((array) $product, $variant);
+            $variants = $product->variants;
+            $variant = $variants->firstWhere('original_title', $variant)->toArray();
+            $product = array_merge((array) $product, $variant, ['variants' => $variants->toArray() ]);
         } else {
             $product = (array) $product;
         }
