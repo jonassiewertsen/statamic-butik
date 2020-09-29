@@ -108,9 +108,9 @@ abstract class PaymentGateway extends WebController
     /**
      * Fetching a order belonging to the order number.
      */
-    protected function findOrder(string $orderNumber): ?Order
+    protected function findOrder(string $orderId): ?Order
     {
-        return Order::whereId($orderNumber)->firstOrFail();
+        return Order::whereId($orderId)->firstOrFail();
     }
 
     /**
