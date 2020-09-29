@@ -163,8 +163,15 @@ class Item
         $this->sellable = false;
     }
 
-    public function update(): void
+    public function update(): bool
     {
+        /**
+         * We won't update the cart, if the product does not exist anymore.
+         */
+        if (! Product::exists($this->productSlug())) {
+            return false;
+        }
+
         $this->defineItemData();
 
         if (!$this->StockAvailable()) {
@@ -181,6 +188,8 @@ class Item
         $this->description    = $this->limitedDescription();
         $this->totalPrice     = $this->totalPrice();
         $this->taxAmount      = $this->totalTaxAmount();
+
+        return true;
     }
 
     protected function isVariant()

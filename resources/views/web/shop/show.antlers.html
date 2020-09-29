@@ -13,7 +13,7 @@
     <div>
         <h1 class="font-bold text-4xl">
             {{ title }}
-            {{ if stock_unlimited || stock == 0 }}
+            {{ if ! stock_unlimited && stock === 0 }}
                 <span class="text-sm ml-2 text-danger">{{ 'butik::web.sold_out' | trans }}</span>
             {{ /if }}
         </h1>

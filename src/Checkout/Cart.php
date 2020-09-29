@@ -163,8 +163,8 @@ class Cart
     {
         static::$cart = static::get();
 
-        $items = static::$cart->each(function ($item) {
-            $item->update();
+        $items = static::$cart->filter(function ($item) {
+            return $item->update();
         });
 
         static::set($items);
