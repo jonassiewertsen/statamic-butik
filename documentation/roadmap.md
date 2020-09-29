@@ -13,6 +13,7 @@ This roadmap will give some insight into the future plans of butik. Those are pl
 ### Plans for the future
 
 * Coupons 
+* Digital products
 * Partial shipping with tracking
 * Product description inside a bard field, so it can be extended after every needs
 * additional product information can be added

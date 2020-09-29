@@ -34,7 +34,7 @@ class Product
     {
         $slugs = $category->products->pluck('slug')->toArray();
 
-        $products = $this->all()->filter(function($product) use ($slugs) {
+        $products = $this->all()->filter(function ($product) use ($slugs) {
             return in_array($product->slug(), $slugs);
         });
 
@@ -59,12 +59,13 @@ class Product
             }
         }
 
-        $product->price     = str_replace('.', config('butik.currency_delimiter'), $product->price);
-        $product->slug      = $entry->slug();
-        $product->title     = $entry->get('title');
-        $product->stock     = (int) $entry->get('stock');
-        $product->available = $entry->published();
-        $product->show_url = $product->showUrl($product->slug);
+        $product->price           = str_replace('.', config('butik.currency_delimiter'), $product->price);
+        $product->slug            = $entry->slug();
+        $product->title           = $entry->get('title');
+        $product->stock           = (int)$entry->get('stock');
+        $product->stock_unlimited = (bool)$entry->get('stock_unlimited');
+        $product->available       = $entry->published();
+        $product->show_url        = $product->showUrl($product->slug);
 
         return $product;
     }
@@ -197,7 +198,7 @@ class Product
     public function showUrl($slug): string
     {
         $route = config('butik.route_shop-prefix') . '/' . $slug;
-        return (string) Str::of($route)->start('/');
+        return (string)Str::of($route)->start('/');
     }
 
     public function __get(string $property)

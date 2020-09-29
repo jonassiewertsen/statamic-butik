@@ -22,11 +22,10 @@ class OrderConfirmationMailTest extends TestCase
     /** @test */
     public function a_purchase_confirmation_mail_will_be_sent_to_the_customer()
     {
-        $this->withoutExceptionHandling();
         $order = create(Order::class)->first();
 
         $payment     = new MolliePaymentSuccessful();
-        $payment->id = $order->number;
+        $payment->id = $order->id;
 
         $this->mockMollie($payment);
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $payment->id]);
@@ -40,7 +39,7 @@ class OrderConfirmationMailTest extends TestCase
         $order = create(Order::class)->first();
 
         $payment     = new MolliePaymentSuccessful();
-        $payment->id = $order->number;
+        $payment->id = $order->id;
         $this->mockMollie($payment);
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $payment->id]);
 
@@ -55,7 +54,7 @@ class OrderConfirmationMailTest extends TestCase
         $order = create(Order::class)->first();
 
         $payment     = new MolliePaymentSuccessful();
-        $payment->id = $order->number;
+        $payment->id = $order->id;
 
         $this->mockMollie($payment);
 
@@ -70,7 +69,7 @@ class OrderConfirmationMailTest extends TestCase
         $order = create(Order::class)->first();
 
         $payment     = new MolliePaymentSuccessful();
-        $payment->id = $order->number;
+        $payment->id = $order->id;
 
         $this->mockMollie($payment);
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $payment->id]);
