@@ -125,7 +125,7 @@
             deleteShippingProfile(slug) {
                 axios.delete(`${this.shippingProfileRoute}/${slug}`)
                     .then(() => {
-                        this.showShippingProfileManageStack = null
+                        this.showShippingProfileManageStack = false
                         this.fetchShippingProfiles()
                     })
                     .catch(error => {

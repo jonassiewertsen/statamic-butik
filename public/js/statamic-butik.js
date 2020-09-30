@@ -1849,7 +1849,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete(this.shippingProfileRoute + "/" + slug).then(function () {
-                _this2.showShippingProfileManageStack = null;
+                _this2.showShippingProfileManageStack = false;
                 _this2.fetchShippingProfiles();
             }).catch(function (error) {
                 _this2.$toast.error(error);
