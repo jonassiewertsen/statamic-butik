@@ -3,11 +3,11 @@
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Jonassiewertsen\StatamicButik\Blueprints\ShippingProfileBlueprint;
+use Jonassiewertsen\StatamicButik\Exceptions\ButikShippingException;
 use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
-use Statamic\CP\Column;
 
 class ShippingProfilesController extends CpController
 {
@@ -57,6 +57,15 @@ class ShippingProfilesController extends CpController
     {
         $this->authorize('delete', $shippingProfile);
 
+        if ($this->areProductsRelated($shippingProfile)) {
+            return abort('403', 'You can\'t delete this shipping profile, if related to a product.');
+        }
+
         $shippingProfile->delete();
+    }
+
+    private function areProductsRelated($shippingProfile): bool
+    {
+        return Product::where('shipping_profile_slug', $shippingProfile->slug)->get()->count() > 0;
     }
 }

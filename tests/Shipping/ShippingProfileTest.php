@@ -35,4 +35,29 @@ class ShippingProfileTest extends TestCase
 
         $this->assertEquals(ShippingZone::first(), $shippingProfile->whereZoneFrom($country_code));
     }
+
+    /** @test */
+    public function a_shipping_profile_can_be_deleted_if_no_product_is_related()
+    {
+        $this->signInAdmin();
+
+        $shippingProfile = create(ShippingProfile::class)->first();
+        $this->assertEquals(1, ShippingProfile::count());
+
+        $this->delete(cp_route('butik.shipping-profiles.destroy', $shippingProfile));
+
+        $this->assertEquals(0, ShippingProfile::count());
+    }
+
+    /** @test */
+    public function a_shipping_profile_cant_be_deleted_if_a_product_is_related()
+    {
+        $this->signInAdmin();
+
+        $shippingProfile = create(ShippingProfile::class)->first();
+        $this->makeProduct(['shipping_profile_slug' => $shippingProfile->slug]);
+        $this->delete(cp_route('butik.shipping-profiles.destroy', $shippingProfile));
+
+        $this->assertDatabaseHas('butik_shipping_profiles', $shippingProfile->toArray());
+    }
 }
