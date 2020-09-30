@@ -47,6 +47,8 @@ class Shipping
         $this->detectUsedShippingProfiles();
 
         foreach ($this->profiles as $profile) {
+            throw_unless($profile, new ButikShippingException('One of your products contains a relationship to a non existing shipping profile. Please check your products and assign all of them a existing shipping profile.'));
+
             $zone  = $this->detectShippingZone($profile);
             $items = $this->filterItems($profile);
 
