@@ -15,7 +15,7 @@ class ProductTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->product       = $this->makeProduct();
+        $this->product = $this->makeProduct();
     }
 
     /** @test */
@@ -37,7 +37,7 @@ class ProductTest extends TestCase
         $price   = $this->product->price = '10.00';
 
         $priceWithoutTax = round($price / $divisor, 2);
-        $expectedAmount = number_format($price - $priceWithoutTax, 2, ',', '');
+        $expectedAmount  = number_format($price - $priceWithoutTax, 2, ',', '');
 
         $this->assertEquals($expectedAmount, $this->product->tax_amount);
     }

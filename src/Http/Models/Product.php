@@ -61,6 +61,7 @@ class Product
 
         $product->price           = str_replace('.', config('butik.currency_delimiter'), $product->price);
         $product->slug            = $entry->slug();
+        $product->id              = $entry->id();
         $product->title           = $entry->get('title');
         $product->stock           = (int)$entry->get('stock');
         $product->stock_unlimited = (bool)$entry->get('stock_unlimited');

@@ -118,6 +118,7 @@ class TestCase extends OrchestraTestCase
             ->slug($slug = Str::random('6'))
             ->date(now())
             ->data($entryData)
+            ->id(Str::random('30'))
             ->save();
 
         return Product::find($slug);

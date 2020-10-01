@@ -75,6 +75,12 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         \Jonassiewertsen\StatamicButik\Events\OrderCompleted::class  => [],
         \Jonassiewertsen\StatamicButik\Events\OrderExpired::class    => [],
         \Jonassiewertsen\StatamicButik\Events\OrderCanceled::class   => [],
+        \Statamic\Events\EntrySaving::class => [
+            \Jonassiewertsen\StatamicButik\Listeners\CacheOldProductSlug::class,
+        ],
+        \Statamic\Events\EntrySaved::class => [
+            \Jonassiewertsen\StatamicButik\Listeners\RenameVariants::class,
+        ],
         \Statamic\Events\EntryDeleted::class => [
             \Jonassiewertsen\StatamicButik\Listeners\ProductDeleted::class,
         ],
