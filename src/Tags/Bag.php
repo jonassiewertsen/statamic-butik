@@ -76,4 +76,14 @@ class Bag extends \Statamic\Tags\Tags
     {
         return Cart::totalPrice();
     }
+
+    /**
+     * {{ bag:total_taxes }}
+     *
+     * Will return the total price for the complete shopping bag
+     */
+    public function totalTaxes()
+    {
+        return Cart::totalTaxes();
+    }
 }

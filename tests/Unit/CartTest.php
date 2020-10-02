@@ -4,9 +4,11 @@ namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
+use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
+use Jonassiewertsen\StatamicButik\Order\Tax;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class CartTest extends TestCase
@@ -200,6 +202,40 @@ class CartTest extends TestCase
         Cart::add($product2->slug); // 2 + 1
 
         $this->assertEquals(3, Cart::totalItems());
+    }
+
+    /** @test */
+    public function the_cart_has_total_taxes()
+    {
+        $product = $this->makeProduct();
+
+        Cart::add($product->slug);
+        $item = new Item($product->slug);
+
+        $this->assertEquals(
+            collect()->push(new Tax($item->taxRate, $item->taxAmount)),
+            Cart::totalTaxes()
+        );
+    }
+
+    /** @test */
+    public function the_total_taxes_will_sum_multiple_taxes_from_products()
+    {
+        $product1 = $this->makeProduct();
+        $product2 = $this->makeProduct(['tax_id' => $product1->tax_id]);
+
+        Cart::add($product1->slug);
+        Cart::add($product2->slug);
+        $item1 = new Item($product1->slug);
+        $item2 = new Item($product2->slug);
+
+        $totalTaxAmount = $this->makeAmountSaveable($item1->taxAmount) + $this->makeAmountSaveable($item2->taxAmount);
+        $totalTaxAmount = $this->makeAmountHuman($totalTaxAmount);
+
+        $this->assertEquals(
+            collect()->push(new Tax($item1->taxRate, $totalTaxAmount)),
+            Cart::totalTaxes()
+        );
     }
 
     /** @test */

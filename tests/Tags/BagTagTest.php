@@ -45,4 +45,10 @@ class BagTagTest extends TestCase
     {
         $this->assertEquals(Cart::totalPrice(), $this->bag->totalPrice(),);
     }
+
+    /** @test */
+    public function it_will_return_the_total_taxes()
+    {
+        $this->assertEquals(Cart::totalTaxes(), $this->bag->totalTaxes());
+    }
 }
