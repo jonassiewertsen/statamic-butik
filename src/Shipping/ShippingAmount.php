@@ -37,24 +37,36 @@ class ShippingAmount
     public string $taxRate;
     public string $taxAmount;
 
-    public function __construct(string $total, ShippingProfile $profile, ShippingRate $rate, Tax $tax)
+    public function __construct(string $total, ShippingProfile $profile, ShippingRate $rate, ?Tax $tax)
     {
         $this->profileTitle = $profile->title;
         $this->profileSlug  = $profile->slug;
         $this->rateTitle    = $rate->title;
         $this->total        = $total;
-        $this->taxRate      = (string) number_format($tax->percentage, 2);
-        $this->taxAmount    = $this->calculateTaxAmount($tax->percentage, $total);
+        $this->taxRate      = $this->taxRate($tax);
+        $this->taxAmount    = $this->calculateTaxAmount($tax, $total);
     }
 
-    private function calculateTaxAmount($taxRate, $amount): string
+    private function calculateTaxAmount(?Tax $tax, string $amount): string
     {
+        $taxRate = $this->taxPercentage($tax);
+
         // Format values
-        $amount = str_replace(',', '.', $amount);
+        $amount  = str_replace(',', '.', $amount);
         $taxRate = str_replace(',', '.', $taxRate);
         // Calculate tax amount
         $taxAmount = $amount * ($taxRate / (100 + $taxRate));
 
         return $this->humanPriceWithDot(round($taxAmount, 2));
+    }
+
+    private function taxRate(?Tax $tax): string
+    {
+        return (string) number_format($this->taxPercentage($tax), 2);
+    }
+
+    private function taxPercentage(?Tax $tax): int
+    {
+        return $tax ? $tax->percentage : 0;
     }
 }
