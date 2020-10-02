@@ -107,13 +107,26 @@ class Item
 
     public function increase()
     {
-        if ($this->getQuantity() >= $this->item()->stock) {
+        if (! $this->isIncreasable()) {
             $this->setQuantityToStock();
             return;
         }
 
         $this->quantity++;
         $this->update();
+    }
+
+    private function isIncreasable()
+    {
+        if ($this->item()->stock_unlimited) {
+            return true;
+        }
+
+        if ($this->getQuantity() < $this->item()->stock) {
+            return true;
+        }
+
+        return false;
     }
 
     public function decrease()
@@ -174,7 +187,7 @@ class Item
 
         $this->defineItemData();
 
-        if (!$this->StockAvailable()) {
+        if (! $this->StockAvailable() && ! $this->isIncreasable()) {
             $this->setQuantityToStock();
         }
 
@@ -206,7 +219,7 @@ class Item
     {
         $cacheName = "product:{$this->productSlug()}";
 
-        return Cache::remember($cacheName, 300, function () {
+        return Cache::remember($cacheName, 60, function () {
             return Product::find($this->productSlug());
         });
     }
