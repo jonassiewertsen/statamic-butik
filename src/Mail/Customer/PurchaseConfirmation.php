@@ -22,13 +22,13 @@ class PurchaseConfirmation extends Mailable implements ShouldQueue
 
     public function build()
     {
-        return $this->subject(__('butik::order.confirmation'))
-            ->view('butik::email.orders.purchaseConfirmationForCustomer')
+        return $this->subject(__('butik::web.order_confirmation'))
+            ->markdown('butik::email.orders.purchaseConfirmationForCustomer')
             ->with([
-                'id'             => $this->order->id,
-                'totalAmount'    => $this->order->totalAmount,
-                'paidAt'         => $this->order->paidAt,
-                'items'          => $this->order->items,
+                'order_id'     => $this->order->id,
+                'total_amount' => $this->order->total_amount,
+                'paid_at'      => $this->order->paid_at,
+                'items'        => $this->order->items,
             ]);
 
     }

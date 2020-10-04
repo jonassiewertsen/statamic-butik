@@ -71,8 +71,8 @@ class CheckoutController extends Checkout
         }
 
         if ($order->status === 'paid') {
-            Session::forget('butik.customer');
-            Cart::clear();
+//            Session::forget('butik.customer');
+//            Cart::clear();
         }
 
         return (new StatamicView())

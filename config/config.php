@@ -41,20 +41,6 @@ return [
     'order-confirmations'               => 'your_mail@butik.com',
 
     /**
-     * USEFUL LINKS
-     *
-     * Your mails will contain a useful links section at the buttom. Only if you want to.
-     * This could be a good spot to give your customer more information about your
-     * products, shipping information, refund informations etc ...
-     *
-     * 'link' => 'name to be shown',
-     */
-    'useful-links'                      => [
-//        'https://butik.dev'    => 'Butik documentation',
-//        'https://statamic.com' => 'Statamic Website',
-    ],
-
-    /**
      * CURRENCY
      *
      * Define your shops currency
