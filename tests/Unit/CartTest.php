@@ -8,7 +8,6 @@ use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
-use Jonassiewertsen\StatamicButik\Order\Tax;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class CartTest extends TestCase
@@ -213,7 +212,7 @@ class CartTest extends TestCase
         $item = new Item($product->slug);
 
         $this->assertEquals(
-            collect()->push(new Tax($item->taxRate, $item->taxAmount)),
+            collect()->push(['rate' => $item->taxRate, 'amount' => $item->taxAmount]),
             Cart::totalTaxes()
         );
     }
@@ -233,7 +232,7 @@ class CartTest extends TestCase
         $totalTaxAmount = $this->makeAmountHuman($totalTaxAmount);
 
         $this->assertEquals(
-            collect()->push(new Tax($item1->taxRate, $totalTaxAmount)),
+            collect()->push(['rate' => $item1->taxRate, 'amount' => $totalTaxAmount]),
             Cart::totalTaxes()
         );
     }
