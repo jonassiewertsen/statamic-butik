@@ -24,6 +24,26 @@ Will be published to `config/butik.php`
 
 The config file will automatically be published during the installation process. In case of updates, you need to change the config file manually. 
 
+## Collections
+
+```text
+php artisan vendor:publish --tag="butik-collection"
+```
+
+Will be published to `resources/blueprints/collections/`
+
+The product collection will automatically be published during the installation process.
+
+## Blueprints
+
+```text
+php artisan vendor:publish --tag="butik-blueprints"
+```
+
+Will be published to `resources/blueprints/collections/`
+
+The product blueprint will automatically be published during the installation process.
+
 ## Views
 
 ```text

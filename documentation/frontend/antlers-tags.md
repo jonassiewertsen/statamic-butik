@@ -8,16 +8,20 @@ If you are familiar with Statamic, you will know the Antlers template engine. Th
 
 In case you never worked with Antlers before, [read the Statamic introduction](https://statamic.dev/antlers). 
 
-## Bag
+## Cart
 
-A bag is the shopping cart in _butik._
+This is _butiks_ build in shopping bag. 
+
+{% hint style="info" %}
+_cart_ and _bag_ are synonyms. Use the therm you prefer. 
+{% endhint %}
 
 ### Items
 
 ```text
-{{ bag }} // short syntax
+{{ cart }} OR {{ bag }} // short syntax
 
-{{ bag:items }}
+{{ cart:items }} OR {{ bag:items }}
 ```
 
 Will return to all items from the actual bag \(shopping cart\).
@@ -37,7 +41,9 @@ Will return to all items from the actual bag \(shopping cart\).
 ### Total Items
 
 ```text
- {{ bag:total_items }}
+{{ cart:total_items }}
+
+{{ bag:total_items }}
 ```
 
 Counting the total amount of items in the bag.
@@ -45,18 +51,37 @@ Counting the total amount of items in the bag.
 ### Total Price
 
 ```text
-{{ bag:total_price }}
+{{ cart:total_price }}
 ```
+
+{% hint style="info" %}
+You can always use bag as a synonym. I wont continue to write it down here ...
+{% endhint %}
 
 Counting the costs of all items including shipping.
 
 ### Total Shipping
 
 ```text
-{{ bag:total_shipping }}
+{{ cart:total_shipping }}
 ```
 
 Summing the total shipping costs for all items in the shopping bag.
+
+### Total Taxes
+
+```text
+{{ cart:total_shipping }}
+```
+
+Summing the total taxes for all items in the shopping bag, sorted after tax rates. You can loop thorugh them:
+
+```markup
+{{ cart:total_shipping }}
+   {{ rate }}
+   {{ amount }}
+{{ /cart:total_shipping }}
+```
 
 ## Butik
 

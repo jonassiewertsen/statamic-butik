@@ -61,10 +61,6 @@ You need to set up your mails with Statamic correctly, before butik can successf
 
 See the [Statamic documentation](https://statamic.dev/email) for more information. You can easily send yourself a test mail from the control panel to confirm that you mail is working as expected.
 
-##  Useful links
-
-Those will be shown in our default e-mail template, to provide your customer with extra information after their shipment. 
-
 ## Currency
 
 ```text
@@ -91,6 +87,10 @@ The default is set to 10 entries. If you do use the _Orders_ widget and want to 
 ## Routing
 
 ```text
+'shop_route_active'     => true,
+'product_route_active'  => true, 
+'category_route_active' => true,
+
 'route_shop-prefix'       => 'shop',                      
 'route_cart'              => 'cart',            
 'route_category'          => 'category/{category}',     // keep {category}         
@@ -100,6 +100,8 @@ The default is set to 10 entries. If you do use the _Orders_ widget and want to 
 ```
 
 We made it easy to configure all standard routes. This could be handy in case you want localized routes.
+
+There may be cases where you don't want to use our default routes to view the shop, the product or categories. Set them to false to deactivate those routes.
 
 ## Layouts
 
