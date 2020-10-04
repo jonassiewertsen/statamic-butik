@@ -72,13 +72,4 @@ class CategoryTest extends TestCase
 
         $this->assertEquals(route('butik.shop.category', $category, false), $category->url);
     }
-
-    /** @test */
-    public function a_category_with_more_than_one_word_will_generate_a_proper_slug()
-    {
-        create(Category::class, ['slug' => 'outdoor plants']);
-        $category = Category::first();
-
-        $this->assertEquals('/shop/category/outdoor-plants', $category->url);
-    }
 }
