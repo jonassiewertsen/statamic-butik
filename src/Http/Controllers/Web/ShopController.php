@@ -20,10 +20,8 @@ class ShopController extends WebController
             ]);
     }
 
-    public function category($category)
+    public function category(Category $category)
     {
-        $category = Category::findOrFail(Str::deslugify($category));
-
         return (new StatamicView())
             ->template(config('butik.template_product-category'))
             ->layout(config('butik.layout_product-category'))

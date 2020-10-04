@@ -81,6 +81,6 @@ class Category extends ButikModel
      */
     public function getUrlAttribute()
     {
-        return route('butik.shop.category', Str::slug($this->slug), false);
+        return route('butik.shop.category', $this->slug, false);
     }
 }

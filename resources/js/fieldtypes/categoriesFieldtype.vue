@@ -158,7 +158,7 @@ export default {
         addCategory() {
             axios.post(this.categoryManageRoute, {
                 name: this.categoryName,
-                slug: this.categoryName.toLowerCase(),
+                slug: this.categoryName.toLowerCase().replaceAll(' ', '-'),
             })
                 .then(() => {
                     this.fetchCategories()
