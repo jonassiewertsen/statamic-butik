@@ -5,6 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 use Jonassiewertsen\StatamicButik\Http\Models\Category;
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Statamic\Support\Str;
 use Statamic\View\View as StatamicView;
 
 class ShopController extends WebController
@@ -19,8 +20,10 @@ class ShopController extends WebController
             ]);
     }
 
-    public function category(Category $category)
+    public function category($category)
     {
+        $category = Category::findOrFail(Str::deslugify($category));
+
         return (new StatamicView())
             ->template(config('butik.template_product-category'))
             ->layout(config('butik.layout_product-category'))

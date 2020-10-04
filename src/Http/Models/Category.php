@@ -4,6 +4,7 @@ namespace Jonassiewertsen\StatamicButik\Http\Models;
 
 use Illuminate\Support\Facades\DB;
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Illuminate\Support\Str;
 
 class Category extends ButikModel
 {
@@ -80,6 +81,6 @@ class Category extends ButikModel
      */
     public function getUrlAttribute()
     {
-        return route('butik.shop.category', $this, false);
+        return route('butik.shop.category', Str::slug($this->slug), false);
     }
 }
