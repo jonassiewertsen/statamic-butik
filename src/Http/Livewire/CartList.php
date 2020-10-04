@@ -42,6 +42,7 @@ class CartList extends Component
             'items'          => $this->mappedCartItems(),
             'total_price'    => ShoppingCart::totalPrice(),
             'total_shipping' => ShoppingCart::totalShipping(),
+            'total_taxes'    => ShoppingCart::totalTaxes(),
         ]);
     }
 }

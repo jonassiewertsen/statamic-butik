@@ -157,13 +157,17 @@ class Cart
          */
         foreach ($taxRates as $taxRate) {
             $totalTaxAmount = static::$cart
-                ->where('taxRate', $taxRate)->map(function($item) {
+                ->where('taxRate', $taxRate)->map(function ($item) {
                     return static::makeAmountSaveableStatic($item->taxAmount);
                 })->sum();
 
             $totalTaxAmount = static::makeAmountHumanStatic($totalTaxAmount);
 
-            static::$totalShipping->push(new Tax($taxRate, $totalTaxAmount));
+            // For better access in antlers views, the amount and rate will get added as an array.
+            static::$totalShipping->push([
+                'amount' => $totalTaxAmount,
+                'rate'   => $taxRate,
+            ]);
         }
 
         return static::$totalShipping;
