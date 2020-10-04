@@ -13,9 +13,11 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\CP')
 
     Route::get('variants/from/{product}', 'VariantsController@from')
         ->name('variants.from-product');
+
     Route::resource('variants', 'VariantsController')->only([
        'store', 'update', 'destroy',
     ]);
+
     Route::get('variants/{product}', 'VariantsController@from')
         ->name('variants.index');
 
@@ -34,6 +36,7 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\CP')
 
         Route::get('categories/from/{product}', 'CategoriesController@from')
             ->name('categories.from-product');
+
         Route::resource('categories', 'CategoriesController')->only([
            'store', 'update', 'destroy',
         ]);
