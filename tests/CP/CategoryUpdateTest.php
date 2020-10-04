@@ -7,32 +7,30 @@ use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class CategoryUpdateTest extends TestCase
 {
-    public function setUp(): void {
+    public Category $category;
+
+    public function setUp(): void
+    {
         parent::setUp();
 
+        create(Category::class)->first();
+        $this->category = Category::first();
+
         $this->signInAdmin();
-        create(Category::class);
     }
+
 
     /** @test */
-    public function the_name_can_be_updated()
+    public function a_title_can_be_updated()
     {
-        $category = Category::first();
-        $category->name = 'Updated Name';
-        $this->updateCategory($category)->assertSessionHasNoErrors();
-        $this->assertDatabaseHas('butik_categories', ['name' => 'Updated Name']);
+        $this->category->name = 'new name';
+        $this->updateCategory();
+
+        $this->assertDatabaseHas('butik_categories', ['name' => 'new name']);
     }
 
-    /** @test */
-    public function the_is_visible_can_be_updated()
+    private function updateCategory()
     {
-        $category = Category::first();
-        $category->is_visible = false;
-        $this->updateCategory($category)->assertSessionHasNoErrors();
-        $this->assertFalse(Category::first()->is_visible);
-    }
-
-    private function updateCategory($category) {
-        return $this->patch(route('statamic.cp.butik.categories.update', $category), $category->toArray());
+        return $this->patch(cp_route('butik.categories.update', $this->category), $this->category->getAttributes());
     }
 }

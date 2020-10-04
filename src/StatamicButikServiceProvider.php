@@ -46,7 +46,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     ];
 
     protected $tags = [
-        \Jonassiewertsen\StatamicButik\Tags\Bag::class,
+        \Jonassiewertsen\StatamicButik\Tags\Cart::class,
         \Jonassiewertsen\StatamicButik\Tags\Categories::class,
         \Jonassiewertsen\StatamicButik\Tags\Butik::class,
         \Jonassiewertsen\StatamicButik\Tags\Currency::class,

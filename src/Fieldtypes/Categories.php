@@ -2,7 +2,7 @@
 
 namespace Jonassiewertsen\StatamicButik\Fieldtypes;
 
-use Jonassiewertsen\StatamicButik\Blueprints\VariantBlueprint;
+use Jonassiewertsen\StatamicButik\Blueprints\CategoryBlueprint;
 use Jonassiewertsen\StatamicButik\Http\Traits\FieldsetHelper;
 use Statamic\Fields\Fieldtype;
 
@@ -20,11 +20,16 @@ class Categories extends Fieldtype
         }
 
         $product = $this->field()->parent();
+        $categoryBlueprint = new CategoryBlueprint();
+        $categoryFields    = $categoryBlueprint()->fields()->addValues([])->preProcess();
 
         return [
-            'categoryIndexRoute'  => cp_route('butik.categories.from-product', ['product' => $product->slug() ]),
+            'categoryIndexRoute'  => cp_route('butik.categories.from-product', ['product' => $product->slug()]),
             'categoryAttachRoute' => cp_route('butik.category.attach-product', ['category' => 'x-category', 'product' => 'x-product']),
             'categoryManageRoute' => cp_route('butik.categories.store'),
+            'categoryBlueprint'   => $categoryBlueprint()->toPublishArray(),
+            'categoryValues'      => $categoryFields->values(),
+            'categoryMeta'        => $categoryFields->meta(),
             'productSlug'         => $product->slug(),
         ];
     }

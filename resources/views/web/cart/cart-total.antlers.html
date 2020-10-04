@@ -5,16 +5,22 @@
         <span>{{ currency }} {{ total_shipping }}</span>
     </div>
 
-    <div class="flex justify-between mb-10">
+    <div class="flex justify-between mb-2">
         <span class="text-gray">{{ 'butik::web.total' | trans }}</span>
         <div class="text-right">
             <div class="text-4xl leading-none">{{ currency }} {{ total_price }}</div>
-            <div class="text-sm text-gray">{{ 'butik::web.including_taxes' | trans }}</div>
         </div>
     </div>
 
+    {{ total_taxes }}
+        <div class="flex mb-10 justify-between text-xs">
+            <span class="text-gray">{{ 'butik::web.vat' | trans }} {{ rate }} %</span>
+            <span>{{ currency }} {{ amount }}</span>
+        </div>
+    {{ /total_taxes }}
+
     {{ if items | count !== 0 }}
-    <a href="{{ route:butik.checkout.delivery }}" class="bg-accent block mt-5 py-2 rounded text-center text-white text-xl">
+    <a href="{{ route:butik.checkout.delivery.store }}" class="bg-accent block mt-5 py-2 rounded text-center text-white text-xl">
         {{ 'butik::web.checkout' | trans }}
     </a>
     {{ /if }}

@@ -37,8 +37,6 @@ class CheckoutPaymentTest extends TestCase
     /** @test */
     public function the_pament_view_will_be_shown()
     {
-        $this->withoutExceptionHandling();
-
         Session::put('butik.customer', $this->customer);
 
         $this->get(route('butik.checkout.payment'))
@@ -80,7 +78,6 @@ class CheckoutPaymentTest extends TestCase
     /** @test */
     public function the_payment_page_will_redirect_back_without_a_firstname()
     {
-        $this->withoutExceptionHandling();
         Session::put('butik.customer', new Customer($this->createUserData('firstname', '')));
 
         $this->get(route('butik.checkout.payment'))
@@ -166,7 +163,7 @@ class CheckoutPaymentTest extends TestCase
 
         $this->get(route('butik.checkout.payment'))
             ->assertOk()
-//            ->assertSee(Cart::totalShipping()) TODO: Add shipping back in again
+            ->assertSee(Cart::totalShipping())
             ->assertSee(Cart::totalPrice());
     }
 

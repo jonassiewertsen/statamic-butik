@@ -25,6 +25,10 @@
                         <td>
                             <dropdown-list class="flex justify-end">
                                 <dropdown-item
+                                    :text="__('Edit')"
+                                    @click="openEditCategoryStack(category)"
+                                ></dropdown-item>
+                                <dropdown-item
                                     :text="__('Delete')"
                                     class="warning"
                                     @click="deleteCategory(category)"/>
@@ -49,14 +53,31 @@
                 </table>
             </div>
         </section>
+
+        <form-stack
+            name="category stack"
+            v-if="showCategoryStack"
+            title="Edit this category"
+            :action="categoryAction"
+            :blueprint="categoryBlueprint"
+            :meta="categoryMeta"
+            :method="categoryMethod"
+            :values="categoryValues"
+            @closed="showCategoryStack = false"
+            @saved="closeCategoryStack"
+        ></form-stack>
+
     </div>
 </template>
 
 <script>
 import axios from "axios";
+import FormStack from "../components/stacks/Form";
 
 export default {
     mixins: [Fieldtype],
+
+    components: { FormStack },
 
     data() {
         return {
@@ -68,6 +89,11 @@ export default {
             categoryName: '',
             showNewCategory: false,
             isCreateRoute: this.meta.isCreateRoute,
+            showCategoryStack: false,
+            categoryBlueprint: this.meta.categoryBlueprint,
+            categoryValues: this.meta.categoryValues,
+            categoryMeta: this.meta.categoryMeta,
+            categoryMethod: 'patch',
         }
     },
 
@@ -132,7 +158,7 @@ export default {
         addCategory() {
             axios.post(this.categoryManageRoute, {
                 name: this.categoryName,
-                slug: this.categoryName.toLowerCase(),
+                slug: this.categoryName.toLowerCase().replaceAll(' ', '-'),
             })
                 .then(() => {
                     this.fetchCategories()
@@ -162,7 +188,18 @@ export default {
 
         categoryDeleteRoute(category) {
             return `${this.categoryManageRoute}/${category.slug}`
-        }
+        },
+
+        openEditCategoryStack(category) {
+            this.categoryValues = category
+            this.categoryAction = `${this.categoryManageRoute}/${category.slug}`
+            this.showCategoryStack = true
+        },
+
+        closeCategoryStack() {
+            this.fetchCategories()
+            this.showCategoryStack = false
+        },
     }
 }
 </script>

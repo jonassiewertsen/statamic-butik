@@ -23,8 +23,13 @@
             <span>{{ 'butik::web.total' | trans }}</span>
             <span class="text-3xl">{{ currency }} {{ bag:total_price }}</span>
         </div>
-        <div class="text-right text-sm text-gray">
-            {{ 'butik::web.including_taxes' | trans }}
-        </div>
+
+        {{ bag:total_taxes }}
+            <div class="flex mt-2 justify-between text-xs">
+                <span>{{ 'butik::web.vat' | trans }} {{ rate }} %</span>
+                <span>{{ currency }} {{ amount }}</span>
+            </div>
+        {{ /bag:total_taxes }}
+
     </section>
 </section>

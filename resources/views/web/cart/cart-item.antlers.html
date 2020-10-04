@@ -26,8 +26,8 @@
             </span>
         </div>
         <div class="flex flex-col justify-center leading-none pl-6 text-3xl text-gray">
-            <button wire:click="add('{{ slug }}')" class="border px-2 py-1 rounded-t">+</button>
-            <button wire:click="reduce('{{ slug }}')" class="border-b px-2 py-1 border-l border-r rounded-b">-</button>
+            <button wire:click="add('{{ slug }}')" class="border-l border-t border-r px-2 py-1 rounded-t {{ if availableStock <= quantity }}cursor-not-allowed border-gray-light text-gray-light{{ /if }}">+</button>
+            <button wire:click="reduce('{{ slug }}')" class="border px-2 py-1 rounded-b">-</button>
         </div>
     </aside>
 
