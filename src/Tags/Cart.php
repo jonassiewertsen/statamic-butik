@@ -2,15 +2,21 @@
 
 namespace Jonassiewertsen\StatamicButik\Tags;
 
-use Jonassiewertsen\StatamicButik\Checkout\Cart;
+use Jonassiewertsen\StatamicButik\Checkout\Cart as ShoppingCart;
 
-class Bag extends \Statamic\Tags\Tags
+class Cart extends \Statamic\Tags\Tags
 {
     /**
-     * {{ bag }}
+     * Using {{ cart:items }} or {{ bag:items }} is basically
+     * the same. Use whatever you prefer personally.
+     */
+    protected static $aliases = ['bag'];
+
+    /**
+     * {{ cart }}
      *
      * Will return all items from the bag / shopping cart
-     * Equivalent to {{ bag:items }}
+     * Equivalent to {{ cart:items }}
      */
     public function index()
     {
@@ -18,10 +24,10 @@ class Bag extends \Statamic\Tags\Tags
     }
 
     /**
-     * {{ bag:items }}
+     * {{ cart:items }}
      *
-     * Will return all items from the bag / shopping cart
-     * Equivalent to {{ bag }}
+     * Will return all items from the cart / shopping cart
+     * Equivalent to {{ cart }}
      */
     public function items()
     {
@@ -31,7 +37,7 @@ class Bag extends \Statamic\Tags\Tags
          * array with all needed informations for the
          * checkout process.
          */
-        return Cart::get()->map(function ($item) {
+        return ShoppingCart::get()->map(function ($item) {
             return [
                 'available'      => $item->available,
                 'sellable'       => $item->sellable,
@@ -48,42 +54,42 @@ class Bag extends \Statamic\Tags\Tags
     }
 
     /**
-     * {{ bag:total_items }}
+     * {{ cart:total_items }}
      *
-     * Will return the total count of the items in your bag
+     * Will return the total count of the items in your cart
      */
     public function totalItems()
     {
-        return Cart::totalItems();
+        return ShoppingCart::totalItems();
     }
 
     /**
-     * {{ bag:total_shipping }}
+     * {{ cart:total_shipping }}
      *
      * Will return the total shipping costs
      */
     public function totalShipping()
     {
-        return Cart::totalShipping();
+        return ShoppingCart::totalShipping();
     }
 
     /**
-     * {{ bag:total_price }}
+     * {{ cart:total_price }}
      *
-     * Will return the total price for the complete shopping bag
+     * Will return the total price for the complete shopping cart
      */
     public function totalPrice()
     {
-        return Cart::totalPrice();
+        return ShoppingCart::totalPrice();
     }
 
     /**
-     * {{ bag:total_taxes }}
+     * {{ cart:total_taxes }}
      *
-     * Will return the total price for the complete shopping bag
+     * Will return the total price for the complete shopping cart
      */
     public function totalTaxes()
     {
-        return Cart::totalTaxes();
+        return ShoppingCart::totalTaxes();
     }
 }
