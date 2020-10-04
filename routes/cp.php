@@ -42,7 +42,7 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\CP')
             ->name('category.attach-product');
 
         Route::delete('category/{category}/attach/{product}', 'CategoriesController@detachProduct')
-            ->name('category.attach-product');
+            ->name('category.detach-product');
 
         Route::resource('shipping', 'ShippingController')->only([
             'index',

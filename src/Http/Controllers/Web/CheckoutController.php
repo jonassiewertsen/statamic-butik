@@ -32,7 +32,7 @@ class CheckoutController extends Checkout
             ]);
     }
 
-    public function saveCustomerData()
+    public function storeCustomerData()
     {
         $validatedData = request()->validate($this->rules());
 
