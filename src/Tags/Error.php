@@ -2,8 +2,6 @@
 
 namespace Jonassiewertsen\StatamicButik\Tags;
 
-use Illuminate\Support\Facade\ViewErrorBag;
-
 class Error extends \Statamic\Tags\Tags
 {
     protected $errors;
