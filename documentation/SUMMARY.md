@@ -13,6 +13,7 @@
 ## Configuration
 
 * [Config File](configuration/configuration.md)
+* [Products](configuration/products-1.md)
 * [Taxes](configuration/taxes.md)
 * [Shipping](configuration/shipping.md)
 * [Products](configuration/products.md)
