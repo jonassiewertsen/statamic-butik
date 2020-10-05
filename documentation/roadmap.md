@@ -15,9 +15,8 @@ Those plans and ideas can change at any time.
 * Coupons 
 * Digital products
 * Partial shipping with tracking
-
-### Integrated in version 3
-
 * Product description inside a bard field, so it can be extended after every needs
 * additional product information can be added
+
+
 
