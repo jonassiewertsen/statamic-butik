@@ -74,7 +74,35 @@ After you saved your product, you will be redirected to the _edit view_ of your 
 
 This view is nearly identically with the create screen. Variations and categories can be edited from here as well. No hassle jumping to different views to edit a category, variation or similar.  
 
+## Extend the product blueprint
+
+{% hint style="danger" %}
+Remove those and you will break everything for sure. 
+{% endhint %}
+
+![This is the minimum requirement](../.gitbook/assets/product-minimum-requirements.png)
+
+Those are the minimum information _butik_ does need. We need a product price, a tax connected to the product, shipping information. 
+
+### Required product fields
+
+| Field | handle |
+| :--- | :--- |
+| **Titel** | title |
+| **Price** | price |
+| **Tax** | tax\_id |
+| **Shipping** | shipping\_profile\_slug |
+| **Description** | description |
+
+### How to extend products
+
+Open the product blueprint inside the control panel and add those fields you want to your product. That's it. Done.
+
 ##  Variants
+
+{% hint style="info" %}
+If you don't want to use variants, remove the variants fieldtype from the product blueprint.
+{% endhint %}
 
 You can create different variants for your existing products. This might be useful for different cases, like selling T-shirts in different sizes. 
 
@@ -97,6 +125,10 @@ You can create different variants for your existing products. This might be usef
 ![This overview will be shown on the product edit view.](../.gitbook/assets/product-variants-overview.png)
 
 ## Categories
+
+{% hint style="info" %}
+If you don't want to use categories, remove the variants fieldtype from the product blueprint.
+{% endhint %}
 
 Your shop does work perfectly without any categories. In case you\`re having a huge range of products, categories will help your customers find what they need faster. 
 
