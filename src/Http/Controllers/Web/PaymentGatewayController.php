@@ -29,8 +29,8 @@ class PaymentGatewayController extends WebController
 
     public function processPayment()
     {
-        $customer   = Session::get('butik.customer');
-        $items      = Session::get('butik.cart');
+        $items      = Cart::get();
+        $customer   = Cart::customer();
         $shippings  = Cart::shipping();
         $totalPrice = $this->humanPriceWithDot(Cart::totalPrice());
 
