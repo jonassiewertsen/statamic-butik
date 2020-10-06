@@ -6,50 +6,76 @@ description: >-
 
 # Payment Gateway
 
-{% hint style="info" %}
-This part of the docs requires more testing and polishing.
-{% endhint %}
+## Create a new gateway
 
-```text
-// config/butik.php
+Use our command to create a gateway boilerplate.  
 
-'payment_gateway' => SomeNamespace\YourPaymentGateway::class,
+```bash
+php please butik:gateway
 ```
 
-In your own implementation, you need to extend or `PaymentGateway` and implement our `PaymentGatewayInterface`
+This will give you the following boilerplate.
 
-```text
+```php
 <?php
 
-namespace SomeNamespace;
+namespace DummyNamespace;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
-use Jonassiewertsen\StatamicButik\Checkout\Transaction;
-use Jonassiewertsen\StatamicButik\Events\PaymentSubmitted;
-use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
+use Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\PaymentGateway;
+use Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\PaymentGatewayInterface;
+use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 
-class YourPaymentGateway extends PaymentGateway implements PaymentGatewayInterface
+class DummyClass extends PaymentGateway implements PaymentGatewayInterface
 {
-    public function handle(Customer $customer, Collection $items, string $totalPrice)
-    {
-        // Do your stuff
-        
-        $transaction = (new Transaction())
-            ->id()             // Order id used by Statamic
-            ->transactionId()  // From your payment provider
-            ->method()         // can be left empty
-            ->totalAmount($totalPrice)
-            ->createdAt()     // Carbon instance
-            ->items($items)
-            ->customer($customer);
+    use MoneyTrait;
 
-        event(new PaymentSubmitted($transaction));
+    /**
+     * We want to handle the payment process.
+     *
+     * This one way of doing it:
+     * Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\MolliePaymentGateway.php line 26
+     */
+    public function handle(Customer $customer, Collection $items, string $totalPrice, Collection $shippings)
+    {
+        $orderNumber = $this->createOrderNumber();
+
+        // handle the payment
+
+        // Shall we create the order for you?
+        $this->createOrder(
+            $payment->id,
+            $items,
+            $orderNumber,
+            $customer,
+            $totalPrice,
+            $payment->method
+        );
+
+        // What to after the payment has been handled?
     }
-    
-    public function webhook(Request $request)
-    { 
-        // event(new PaymentSuccessful($payment));
+
+    /**
+     * If you want, you can use webhooks. This is optional and can be left empty.
+     *
+     * This one way of doing it:
+     * Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\MolliePaymentGateway.php line 53
+     */
+    public function webhook(Request $request): void
+    {
+        // Do nothing.
     }
 }
+
 ```
+
+## Use your own payment gateway
+
+Swap the payment gateway class in your config file.
+
+{% page-ref page="../configuration/configuration.md" %}
+
+
 
