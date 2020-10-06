@@ -73,9 +73,46 @@ class DummyClass extends PaymentGateway implements PaymentGatewayInterface
 
 ## Use your own payment gateway
 
-Swap the payment gateway class in your config file.
+Swap the payment gateway class in your config file to use your own gateway. 
 
 {% page-ref page="../configuration/configuration.md" %}
 
+## Webhooks
 
+You can use webhooks if you want. 
+
+With our Mollie integration, our webhook does look like this. Maybe you'll find some inspiration:
+
+```php
+public function webhook(Request $request): void
+{
+    if (! $request->has('id')) {
+        return;
+    }
+
+    $payment = Mollie::api()->orders()->get($request->id);
+
+    $order = $this->findOrder($payment->id);
+
+    switch ($payment->status) {
+        case 'paid':
+            $this->isPaid($order, Carbon::parse($payment->paidAt), $payment->method);
+            break;
+        case 'authorized':
+            $this->isAuthorized($order, Carbon::parse($payment->authorizedAt), $payment->method);
+            break;
+        case 'completed':
+            $this->isCompleted($order, Carbon::parse($payment->completedAt), $payment->method);
+            break;
+        case 'expired':
+            $this->isExpired($order, Carbon::parse($payment->expiredAt));
+            break;
+        case 'canceled':
+            $this->isCanceled($order, Carbon::parse($payment->canceledAt));
+            break;
+    }
+}
+```
+
+Methods like `$this->isPaid()` will be provided for you, but you don't need to use them.
 
