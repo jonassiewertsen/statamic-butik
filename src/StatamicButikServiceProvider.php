@@ -29,6 +29,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
     protected $commands = [
         \Jonassiewertsen\StatamicButik\Commands\SetUpButik::class,
+        \Jonassiewertsen\StatamicButik\Commands\MakeGateway::class,
     ];
 
     protected $routes = [

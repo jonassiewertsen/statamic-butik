@@ -1,0 +1,51 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Jonassiewertsen\StatamicButik\Checkout\Customer;
+use Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\PaymentGateway;
+use Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\PaymentGatewayInterface;
+use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
+
+class DummyClass extends PaymentGateway implements PaymentGatewayInterface
+{
+    use MoneyTrait;
+
+    /**
+     * We want to handle the payment process.
+     *
+     * This one way of doing it:
+     * Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\MolliePaymentGateway.php line 26
+     */
+    public function handle(Customer $customer, Collection $items, string $totalPrice, Collection $shippings)
+    {
+        $orderNumber = $this->createOrderNumber();
+
+        // handle the payment
+
+        // Shall we create the order for you?
+        $this->createOrder(
+            $payment->id,
+            $items,
+            $orderNumber,
+            $customer,
+            $totalPrice,
+            $payment->method
+        );
+
+        // What to after the payment has been handled?
+    }
+
+    /**
+     * If you want, you can use webhooks. This is optional and can be left empty.
+     *
+     * This one way of doing it:
+     * Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\MolliePaymentGateway.php line 53
+     */
+    public function webhook(Request $request): void
+    {
+        // Do nothing.
+    }
+}
