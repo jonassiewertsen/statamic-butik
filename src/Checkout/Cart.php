@@ -6,7 +6,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
-use Jonassiewertsen\StatamicButik\Order\Tax;
 use Jonassiewertsen\StatamicButik\Shipping\Country;
 use Jonassiewertsen\StatamicButik\Shipping\Shipping;
 
@@ -46,6 +45,17 @@ class Cart
             Session::get('butik.cart') :
             static::empty();
     }
+
+    /**
+     * Fetch the customer from the session
+     */
+    public static function customer(): ?Customer
+    {
+        return Session::get('butik.customer') !== null ?
+            Session::get('butik.customer') :
+            null;
+    }
+
 
     /**
      * Clear the complete cart

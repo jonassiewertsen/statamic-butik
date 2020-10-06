@@ -39,7 +39,7 @@
             <p class="mt-8 text-dark">{{ description }}</p>
         {{ /if }}
 
-        {{ if true }}
+        {{ if stock_unlimited || stock > 0 }}
             <div class="flex mt-6">
                 {{ livewire:butik.add-to-cart slug="{{ slug }}" }}
             </div>
