@@ -9,11 +9,13 @@ use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
+use Statamic\Console\RunsInPlease;
 
 class SetUpButik extends Command
 {
-    protected $signature = 'butik:setup';
+    use RunsInPlease;
 
+    protected $signature   = 'butik:setup';
     protected $description = 'Let Statamic Butik help you through the setup process.';
 
     public function handle()
@@ -100,12 +102,12 @@ class SetUpButik extends Command
         $taxes = $this->ask('What\'sthe default tax rate in your country? (from 1 - 100)');
 
         Tax::create([
-            'title' => 'default',
-            'slug' => 'default',
+            'title'      => 'default',
+            'slug'       => 'default',
             'percentage' => $taxes,
         ]);
 
-        $this->line('Default taxes with '.$taxes.'% have been setup. In case you misstyped, change them later. No Problem.');
+        $this->line('Default taxes with ' . $taxes . '% have been setup. In case you misstyped, change them later. No Problem.');
 
         $this->info('### Step 6 ################################# Statamic Butik ####');
         $this->info('#### a shipping default #########################################');
@@ -117,21 +119,21 @@ class SetUpButik extends Command
         if ($shipping) {
             $shippingProfile = ShippingProfile::create([
                 'title' => 'Standard',
-                'slug' => 'standard',
+                'slug'  => 'standard',
             ]);
 
             $shippingZone = ShippingZone::create([
-               'title' => $countryName ?? 'Default',
-               'type' => 'price',
-               'shipping_profile_slug' => $shippingProfile->slug,
-               'countries' => [$countryIso]
+                'title'                 => $countryName ?? 'Default',
+                'type'                  => 'price',
+                'shipping_profile_slug' => $shippingProfile->slug,
+                'countries'             => [$countryIso],
             ]);
 
             ShippingRate::create([
                 'shipping_zone_id' => $shippingZone->id,
-                'title' => 'Free',
-                'price' => '0',
-                'minimum' => '0',
+                'title'            => 'Free',
+                'price'            => '0',
+                'minimum'          => '0',
             ]);
         }
 
@@ -142,9 +144,9 @@ class SetUpButik extends Command
 
         $this->confirm('Let me publish the Statamic Butik vendor files for you. Please confirm.');
 
-        Artisan::call('vendor:publish',[
+        Artisan::call('vendor:publish', [
             '--provider' => 'Jonassiewertsen\StatamicButik\StatamicButikServiceProvider',
-            '--force' => true,
+            '--force'    => true,
         ]);
 
         $this->info('Config: config/statamic-butik.php');
