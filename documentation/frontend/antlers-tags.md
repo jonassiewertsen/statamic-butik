@@ -13,7 +13,7 @@ In case you never worked with Antlers before, [read the Statamic introduction](h
 This is _butiks_ build in shopping bag. 
 
 {% hint style="info" %}
-_cart_ and _bag_ are synonyms. Use the therm you prefer. 
+_cart_ and _bag_ are synonyms, so you can use both.
 {% endhint %}
 
 ### Items
