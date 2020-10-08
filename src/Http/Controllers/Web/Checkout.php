@@ -8,26 +8,6 @@ use Symfony\Component\Intl\Countries;
 
 abstract class Checkout extends WebController
 {
-    protected function rules()
-    {
-        return [
-            'country'      => ['required', function ($attribute, $value, $fail) {
-                if (! Countries::exists($value)) {
-                    $fail('Invalid country code: ' . $value);
-                }
-            }],
-            'firstname'    => 'required|min:2|max:50',
-            'surname'      => 'required|min:2|max:50',
-            'mail'         => 'required|email',
-            'address1'     => 'required|max:80',
-            'address2'     => 'nullable|max:80',
-            'city'         => 'required|max:80',
-            'state_region' => 'nullable|max:80',
-            'zip'          => 'required|max:20',
-            'phone'        => 'nullable|max:50',
-        ];
-    }
-
     protected function transactionDataComplete()
     {
         $keys = [

@@ -3,6 +3,7 @@
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
@@ -32,9 +33,15 @@ class CheckoutController extends Checkout
             ]);
     }
 
-    public function storeCustomerData()
+    public function storeCustomerData(array $validatedData)
     {
-        $validatedData = request()->validate($this->rules());
+        /**
+         * We will call this controller from the CheckoutFormValidted event
+         * to handle the logic. The form validation will be taken care
+         * of from Statamic.
+         *
+         * Event: InforJonassiewertsen\StatamicButik\Listeners\CheckoutFormValidated;
+         */
 
         $customer = new Customer($validatedData);
         Session::put('butik.customer', $customer);
@@ -44,7 +51,7 @@ class CheckoutController extends Checkout
             return redirect()->back();
         }
 
-        return redirect()->route('butik.checkout.payment');
+        // The form itself will redirect to our payment page.
     }
 
     public function payment()

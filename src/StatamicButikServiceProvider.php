@@ -58,6 +58,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
     protected $fieldtypes = [
         \Jonassiewertsen\StatamicButik\Fieldtypes\Categories::class,
+        \Jonassiewertsen\StatamicButik\Fieldtypes\Countries::class,
         \Jonassiewertsen\StatamicButik\Fieldtypes\Money::class,
         \Jonassiewertsen\StatamicButik\Fieldtypes\Number::class,
         \Jonassiewertsen\StatamicButik\Fieldtypes\Shipping::class,
@@ -84,6 +85,9 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         ],
         \Statamic\Events\EntryDeleted::class => [
             \Jonassiewertsen\StatamicButik\Listeners\ProductDeleted::class,
+        ],
+        \Statamic\Events\FormSubmitted::class => [
+            \Jonassiewertsen\StatamicButik\Listeners\CheckoutFormValidated::class,
         ],
     ];
 

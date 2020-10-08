@@ -24,7 +24,7 @@ class ValidateCheckoutRoute
             return false;
         }
 
-        $keys = collect(['firstname', 'surname', 'mail', 'country', 'address1', 'city', 'zip']);
+        $keys = collect(['firstname', 'surname', 'email', 'country', 'address1', 'city', 'zip']);
 
         foreach ($keys as $key) {
             // Return false in case one of the keys does not exist inside the session data
