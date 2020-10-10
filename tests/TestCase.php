@@ -45,6 +45,8 @@ class TestCase extends OrchestraTestCase
 
         $this->withFactories(__DIR__ . '/../database/factories');
 
+        Blueprint::setDirectory(__DIR__ . '/../resources/blueprints');
+
         $this->setCountry();
     }
 
@@ -180,8 +182,6 @@ class TestCase extends OrchestraTestCase
     {
         parent::resolveApplicationConfiguration($app);
 
-        Blueprint::setDirectory(__DIR__ . '/../resources/blueprints');
-
         $configs = [
             'assets', 'cp', 'forms', 'routes', 'static_caching',
             'sites', 'stache', 'system', 'users',
@@ -193,10 +193,13 @@ class TestCase extends OrchestraTestCase
 
         // Setting the user repository to the default flat file system
         $app['config']->set('statamic.users.repository', 'file');
+        $app['config']->set('statamic.stache.watcher', false);
         $app['config']->set('statamic.stache.stores.users', [
             'class'     => UsersStore::class,
             'directory' => __DIR__ . '/__fixtures/users',
         ]);
+        // Set the path for our forms
+        $app['config']->set('statamic.forms.forms', __DIR__.'/../resources/forms/');
 
         // Set the path for our entries
         $app['config']->set('statamic.stache.stores.taxonomies.directory', __DIR__.'/__fixtures__/content/taxonomies');

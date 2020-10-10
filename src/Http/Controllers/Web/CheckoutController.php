@@ -3,7 +3,6 @@
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
@@ -42,9 +41,10 @@ class CheckoutController extends Checkout
          *
          * Event: InforJonassiewertsen\StatamicButik\Listeners\CheckoutFormValidated;
          */
-
         $customer = new Customer($validatedData);
         Session::put('butik.customer', $customer);
+
+
 
         if ($validatedData['country'] !== Cart::country()) {
             Cart::setCountry($validatedData['country']);
