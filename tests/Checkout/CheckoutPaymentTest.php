@@ -95,15 +95,6 @@ class CheckoutPaymentTest extends TestCase
     }
 
     /** @test */
-    public function the_payment_page_will_redirect_back_without_a_mail()
-    {
-        Session::put('butik.customer', new Customer($this->createUserData('mail', '')));
-
-        $this->get(route('butik.checkout.payment'))
-            ->assertRedirect(route('butik.checkout.delivery'));
-    }
-
-    /** @test */
     public function the_payment_page_will_redirect_back_without_a_country()
     {
         Session::put('butik.customer', new Customer($this->createUserData('country', '')));
@@ -176,7 +167,7 @@ class CheckoutPaymentTest extends TestCase
         $this->get(route('butik.checkout.payment'))
             ->assertSee($customer['firstname'])
             ->assertSee($customer['surname'])
-            ->assertSee($customer['mail'])
+            ->assertSee($customer['email'])
             ->assertSee($customer['address1'])
             ->assertSee($customer['address2'])
             ->assertSee($customer['city'])
@@ -190,7 +181,7 @@ class CheckoutPaymentTest extends TestCase
             'country'      => 'DE',
             'firstname'    => 'John',
             'surname'      => 'Doe',
-            'mail'         => 'johndoe@mail.de',
+            'email'        => 'johndoe@mail.de',
             'address1'     => 'Main Street 2',
             'address2'     => '',
             'city'         => 'Flensburg',

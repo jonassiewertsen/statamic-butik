@@ -57,8 +57,8 @@
                 <td>{{ $customer->firstname }} {{ $customer->surname }}</td>
             </tr>
             <tr>
-                <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.mail') }}</th>
-                <td>{{ $customer->mail }}</td>
+                <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.email') }}</th>
+                <td>{{ $customer->email }}</td>
             </tr>
             <tr>
                 <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.address') }}</th>

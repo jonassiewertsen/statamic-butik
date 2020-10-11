@@ -24,7 +24,7 @@
             </label>
 
             <label for="email" class="block">
-                <span class="block text-gray-dark text-lg mb-2">{{ 'butik::web.mail' | trans }}</span>
+                <span class="block text-gray-dark text-lg mb-2">{{ 'butik::web.email' | trans }}</span>
                 <input id="email" name="email" type="email" value="{{ old:email ?? customer:email }}"
                        class="border {{ if {error:email} }}border-danger{{ else }} border-gray {{ /if }} rounded px-4 py-2 w-full focus:outline-none focus:border-accent"
                 >

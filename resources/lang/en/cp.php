@@ -23,7 +23,7 @@ return [
     'inherit_stock'                           => 'Inherit stock',
     'is_visible'                              => 'Is visible',
     'link_price'                              => 'Link price',
-    'mail'                                    => 'Email',
+    'email'                                   => 'Email',
     'method'                                  => 'Method',
     'minimum'                                 => 'Minimum',
     'name'                                    => 'Name',

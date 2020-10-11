@@ -18,7 +18,7 @@ class OrdersController extends CpController
                 return [
                     'id'           => $order->id,
                     'customer'     => $order->customer->firstname . ' ' . $order->customer->surname,
-                    'mail'         => $order->customer->mail,
+                    'email'        => $order->customer->email,
                     'status'       => $order->status,
                     'method'       => $order->method,
                     'total_amount' => $order->total_amount,
@@ -34,7 +34,7 @@ class OrdersController extends CpController
                 Column::make('id')->label(__('butik::cp.id')),
                 Column::make('status')->label(__('butik::cp.status')),
                 Column::make('customer')->label(__('butik::cp.customer')),
-                Column::make('mail')->label(__('butik::cp.mail')),
+                Column::make('email')->label(__('butik::cp.email')),
                 Column::make('method')->label(__('butik::cp.method')),
                 Column::make('total_amount')->label(__('butik::cp.total_amount')),
                 Column::make('created_at')->label(__('butik::cp.created_at')),

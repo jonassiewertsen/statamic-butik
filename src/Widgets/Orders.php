@@ -21,7 +21,7 @@ class Orders extends Widget {
                 return [
                     'id'           => $order->id,
                     'customer'     => $order->customer->firstname . ' ' . $order->customer->surname,
-                    'mail'         => $order->customer->mail,
+                    'email'        => $order->customer->email,
                     'status'       => $order->status,
                     'method'       => $order->method,
                     'total_amount' => $order->total_amount,

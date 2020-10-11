@@ -176,7 +176,7 @@ class CheckoutDeliveryTest extends TestCase
         $customer = [
             'firstname'    => 'John',
             'surname'      => 'Doe',
-            'email'         => 'johndoe@mail.de',
+            'email'        => 'johndoe@mail.de',
             'address1'     => 'Main Street 2',
             'address2'     => '',
             'city'         => 'Flensburg',
