@@ -7,12 +7,11 @@ The *Statamic Butik*  e-commerce solution will integrate nicely with your person
 
 You can use the light and simple design as shipped or customize it after your needs, to integrate it perfectly into your existing design.
 
-## Documentation
-[Documentation for butik](https://www.butik.dev)
+## Link
+[Official butik documentation](https://www.butik.dev)
 
-You will find everything in here. Documentation, how to reach out etc. 
+[Discord help forum](https://discord.gg/9fbsBJv)
 
-## GitHub & Issues
 [Github issue tracking](https://github.com/jonassiewertsen/statamic-butik)
 
 ## Missing something?
