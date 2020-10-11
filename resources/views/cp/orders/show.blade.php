@@ -6,11 +6,11 @@
     <div class="card p-0">
         <table class="data-table">
             <tr>
-                <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.id') }}</th>
+                <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.order_singular') }} {{ __('butik::cp.id') }}</th>
                 <td>{{ $order->id }}</td>
             </tr>
             <tr>
-                <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.order_number') }}</th>
+                <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.order_singular') }} {{ __('butik::cp.order_number') }}</th>
                 <td>{{ $order->number }}</td>
             </tr>
             <tr>
@@ -75,6 +75,12 @@
                 <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.country_singular') }}</th>
                 <td>{{ $customer->country }}</td>
             </tr>
+             @foreach($additionalCustomerInformation as $information)
+                <tr>
+                    <th class="pl-2 py-1 w-1/4">{{ $information['name']  }}</th>
+                    <td>{{ $information['value'] }}</td>
+                </tr>
+            @endforeach
         </table>
     </div>
 
