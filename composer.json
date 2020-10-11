@@ -30,15 +30,16 @@
     "require": {
         "php": "^7.4",
         "doctrine/dbal": "^2.10",
-        "illuminate/support": "^7.20",
+        "illuminate/support": "^7.20 || ^8.0",
         "jonassiewertsen/statamic-livewire": "^2.0",
         "mollie/laravel-mollie": "^2.0",
         "statamic/cms": "^3.0.13",
         "symfony/intl": "^5.1"
     },
     "require-dev": {
-        "orchestra/testbench": "^5.0",
-        "phpunit/phpunit": "^8.5"
+        "orchestra/testbench": "^5.0 || ^6.0",
+        "phpunit/phpunit": "^8.5 || ^9.3",
+        "laravel/legacy-factories": "^1.0.4"
     },
     "autoload": {
         "files": [
