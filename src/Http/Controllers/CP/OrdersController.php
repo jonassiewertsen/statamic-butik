@@ -5,6 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
 use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Statamic\CP\Column;
+use Statamic\Support\Str;
 
 class OrdersController extends CpController
 {
@@ -18,7 +19,7 @@ class OrdersController extends CpController
                 return [
                     'id'           => $order->id,
                     'customer'     => $order->customer->firstname . ' ' . $order->customer->surname,
-                    'mail'         => $order->customer->mail,
+                    'email'        => $order->customer->email,
                     'status'       => $order->status,
                     'method'       => $order->method,
                     'total_amount' => $order->total_amount,
@@ -34,7 +35,7 @@ class OrdersController extends CpController
                 Column::make('id')->label(__('butik::cp.id')),
                 Column::make('status')->label(__('butik::cp.status')),
                 Column::make('customer')->label(__('butik::cp.customer')),
-                Column::make('mail')->label(__('butik::cp.mail')),
+                Column::make('email')->label(__('butik::cp.email')),
                 Column::make('method')->label(__('butik::cp.method')),
                 Column::make('total_amount')->label(__('butik::cp.total_amount')),
                 Column::make('created_at')->label(__('butik::cp.created_at')),
@@ -46,9 +47,30 @@ class OrdersController extends CpController
     {
         $this->authorize('show', $order);
 
-        $customer = $order->customer;
-        $items    = $order->items;
+        $customer                      = $order->customer;
+        $additionalCustomerInformation = $this->extractAdditionalInformation($customer);
+        $items                         = $order->items;
 
-        return view('butik::cp.orders.show', compact('order', 'customer', 'items'));
+        return view('butik::cp.orders.show', compact('order', 'customer', 'additionalCustomerInformation', 'items'));
+    }
+
+    /**
+     * We will only return those values, which aren't default values.
+     */
+    private function extractAdditionalInformation(\stdClass $customer)
+    {
+        $defaultValues  = ['firstname', 'surname', 'email', 'address1', 'address2', 'city', 'zip', 'country'];
+
+        return collect($customer)->filter(function ($value, $key) use ($defaultValues) {
+            // Filtering if additinal values do exist.
+            return ! in_array($key, $defaultValues);
+        })->map(function ($value, $key) {
+            // Returning additional values with a converted name.
+            // tax_id will become to Tax Id
+            return [
+                'name'  => (string)Str::of($key)->replace('_', ' ')->title(),
+                'value' => $value,
+            ];
+        });
     }
 }

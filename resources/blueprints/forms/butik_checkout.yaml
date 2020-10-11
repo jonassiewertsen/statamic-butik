@@ -1,0 +1,80 @@
+sections:
+  main:
+    display: Hauptteil
+    fields:
+      -
+        handle: firstname
+        field:
+          input_type: text
+          display: Firstname
+          type: text
+          icon: text
+          listable: hidden
+          validate:
+            - required
+      -
+        handle: surname
+        field:
+          input_type: text
+          display: Surname
+          type: text
+          icon: text
+          listable: hidden
+          validate:
+            - required
+      -
+        handle: email
+        field:
+          input_type: text
+          display: Email
+          type: text
+          icon: text
+          listable: hidden
+          validate:
+            - required
+            - email
+      -
+        handle: address1
+        field:
+          input_type: text
+          display: 'Address 1'
+          type: text
+          icon: text
+          listable: hidden
+          validate:
+            - required
+      -
+        handle: address2
+        field:
+          input_type: text
+          display: 'Address 2'
+          type: text
+          icon: text
+          listable: hidden
+      -
+        handle: city
+        field:
+          input_type: text
+          display: City
+          type: text
+          icon: text
+          listable: hidden
+          validate:
+            - required
+      -
+        handle: zip
+        field:
+          input_type: text
+          display: Zip
+          type: text
+          icon: text
+          listable: hidden
+          validate:
+            - required
+      -
+        handle: country
+        field:
+          type: countries
+          display: Country
+          validate:
+            - required

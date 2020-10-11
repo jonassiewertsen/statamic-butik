@@ -43,8 +43,8 @@
                 <span>{{ customer:name }}</span>
             </div>
             <div class="m2">
-                <span class="font-bold">{{ 'butik::web.mail' | trans }}</span>
-                <span>{{ customer:mail }}</span>
+                <span class="font-bold">{{ 'butik::web.email' | trans }}</span>
+                <span>{{ customer:email }}</span>
             </div>
 
             <div>
@@ -71,7 +71,7 @@
         </div>
 
         <div class="border border-gray px-6 py-3 mt-8 rounded-md">
-            <div>{{ trans key='butik::web.mail_sent' :mail='customer:mail' }}</div>
+            <div>{{ trans key='butik::web.email_sent' :email='customer:email' }}</div>
             <div class="my-2">
                 <span class="font-bold">{{ trans key='butik::web.status' }}</span>
                 <span>{{ order:status }}</span>

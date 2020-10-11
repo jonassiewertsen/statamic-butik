@@ -16,7 +16,7 @@ class CustomerTest extends TestCase
         $this->jonDoe = [
             'firstname'   => 'Jon',
             'surname'     => 'Doe',
-            'mail'        => 'Jon@Doe.com',
+            'email'       => 'Jon@Doe.com',
             'address1'    => 'Test Street',
             'address2'    => 'Test Addition',
             'city'        => 'Flensburg',
@@ -42,7 +42,7 @@ class CustomerTest extends TestCase
 
         $customer->firstname($this->jonDoe['firstname']);
         $customer->surname($this->jonDoe['surname']);
-        $customer->mail($this->jonDoe['mail']);
+        $customer->email($this->jonDoe['email']);
         $customer->address1($this->jonDoe['address1']);
         $customer->address2($this->jonDoe['address2']);
         $customer->city($this->jonDoe['city']);
@@ -53,7 +53,7 @@ class CustomerTest extends TestCase
 
         $this->assertEquals($customer->firstname, $this->jonDoe['firstname']);
         $this->assertEquals($customer->surname, $this->jonDoe['surname']);
-        $this->assertEquals($customer->mail, $this->jonDoe['mail']);
+        $this->assertEquals($customer->email, $this->jonDoe['email']);
         $this->assertEquals($customer->address1, $this->jonDoe['address1']);
         $this->assertEquals($customer->address2, $this->jonDoe['address2']);
         $this->assertEquals($customer->city, $this->jonDoe['city']);

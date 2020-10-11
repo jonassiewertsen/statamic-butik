@@ -32,19 +32,26 @@ class CheckoutController extends Checkout
             ]);
     }
 
-    public function storeCustomerData()
+    public function storeCustomerData(array $validatedData)
     {
-        $validatedData = request()->validate($this->rules());
-
+        /**
+         * We will call this controller from the CheckoutFormValidted event
+         * to handle the logic. The form validation will be taken care
+         * of from Statamic.
+         *
+         * Event: InforJonassiewertsen\StatamicButik\Listeners\CheckoutFormValidated;
+         */
         $customer = new Customer($validatedData);
         Session::put('butik.customer', $customer);
+
+
 
         if ($validatedData['country'] !== Cart::country()) {
             Cart::setCountry($validatedData['country']);
             return redirect()->back();
         }
 
-        return redirect()->route('butik.checkout.payment');
+        // The form itself will redirect to our payment page.
     }
 
     public function payment()

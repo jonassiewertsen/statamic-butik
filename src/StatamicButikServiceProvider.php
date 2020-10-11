@@ -58,6 +58,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
     protected $fieldtypes = [
         \Jonassiewertsen\StatamicButik\Fieldtypes\Categories::class,
+        \Jonassiewertsen\StatamicButik\Fieldtypes\Countries::class,
         \Jonassiewertsen\StatamicButik\Fieldtypes\Money::class,
         \Jonassiewertsen\StatamicButik\Fieldtypes\Number::class,
         \Jonassiewertsen\StatamicButik\Fieldtypes\Shipping::class,
@@ -84,6 +85,9 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         ],
         \Statamic\Events\EntryDeleted::class => [
             \Jonassiewertsen\StatamicButik\Listeners\ProductDeleted::class,
+        ],
+        \Statamic\Events\FormSubmitted::class => [
+            \Jonassiewertsen\StatamicButik\Listeners\CheckoutFormValidated::class,
         ],
     ];
 
@@ -133,13 +137,20 @@ class StatamicButikServiceProvider extends AddonServiceProvider
                 __DIR__ . '/../config/config.php' => config_path('butik.php'),
             ], 'butik-config');
 
-            // Blueprints & collections
+            // Blueprints
             $this->publishes([
                 __DIR__ . '/../resources/blueprints' => resource_path('blueprints'),
             ], 'butik-blueprints');
+
+            // Collections
             $this->publishes([
                 __DIR__ . '/../resources/collections' => base_path('content/collections'),
             ], 'butik-collections');
+
+            // Forms
+            $this->publishes([
+                __DIR__ . '/../resources/forms' => resource_path('forms'),
+            ], 'butik-forms');
 
             // Views
             $this->publishes([
@@ -301,6 +312,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         Statamic::afterInstalled(function () {
             Artisan::call('vendor:publish --tag=butik-config');
             Artisan::call('vendor:publish --tag=butik-images');
+            Artisan::call('vendor:publish --tag=butik-forms');
             Artisan::call('vendor:publish --tag=butik-blueprints');
             Artisan::call('vendor:publish --tag=butik-collections');
             Artisan::call('vendor:publish --tag=butik-resources --force');

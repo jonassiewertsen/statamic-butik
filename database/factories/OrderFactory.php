@@ -40,7 +40,7 @@ $factory->define(Order::class, function (Faker $faker) {
         'items'             => $itemCollection->items,
         'customer'          => [
             'name'              => 'Jonas Siewertsen',
-            'mail'              => 'something@mail.com',
+            'email'             => 'something@mail.com',
             'address1'          => 'Dorfstrasse 4',
             'address2'          => 'Hinterhaus',
             'zip'               => '23454',

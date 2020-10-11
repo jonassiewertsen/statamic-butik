@@ -98,7 +98,7 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
                 'city'            => $customer->city,
                 'postalCode'      => $customer->zip,
                 'country'         => $customer->country,
-                'email'           => $customer->mail,
+                'email'           => $customer->email,
             ],
             'orderNumber'    => $orderNumber,
             'locale'         => $this->getLocale(),

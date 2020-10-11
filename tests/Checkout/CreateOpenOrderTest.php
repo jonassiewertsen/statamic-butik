@@ -132,7 +132,7 @@ class CreateOpenOrderTest extends TestCase
             'country'      => 'Germany',
             'firstname'    => 'John',
             'surname'      => 'Doe',
-            'mail'         => 'johndoe@mail.de',
+            'email'        => 'johndoe@mail.de',
             'address1'     => 'Main Street 2',
             'address2'     => '',
             'city'         => 'Flensburg',
