@@ -3,6 +3,7 @@
 namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Statamic\Facades\Site;
 
 class GlobalHelperTest extends TestCase
 {
@@ -12,6 +13,15 @@ class GlobalHelperTest extends TestCase
         $this->assertEquals(
             currency(),
             config('butik.currency_symbol')
+        );
+    }
+
+    /** @test */
+    public function will_return_the_actual_locale()
+    {
+        $this->assertEquals(
+            locale(),
+            Site::current()->url(),
         );
     }
 }
