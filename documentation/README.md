@@ -27,15 +27,11 @@ Before working with _Statamic Butik_, you need to aqquire a license at the Stata
 _Statamic Butik_ is not free software.
 {% endhint %}
 
-## Beta
-
-_butik_ is an add-on for Statamic v3, which is currently in its beta phase. As long as Statamic v3 is in beta, you **should keep in mind that major changes during the development could lead to malfunctions in** _**Butik**_  **which we supervise and fix as soon as possible.**
-
 ### Stability
 
-The current version is backed up by **350 PHPUnit tests** with **676 assertions** to monitor if things are working as expected.
+The current version is backed up by round about **300 PHPUnit tests** with **550 assertions** to monitor if things are working as expected.
 
-When creating _Butik_ my highest goal was to provide a well functioning and fun to use e-commerce solution. _Butik_ is modeled after a Scandinavian mindset: starting as simple as possible with a solid foundation to continue from there on. Figuratively speaking: always keep in touch about the latest updates for the best user experience.
+When creating _butik_ my highest goal was to provide a well functioning and fun to use e-commerce solution. 
 
 ## Functionality
 
@@ -48,9 +44,10 @@ What Butik can provide:
 
 #### Product 
 
+* [x] customizable fields
+* [x] variants
 * [x] SEO friendly URLs
 * [x] taxes
-* [x] variations
 * [x] shipping costs
 * [x] stock management
 
@@ -63,7 +60,8 @@ What Butik can provide:
 
 #### Orders
 
-* [x] keep easily track off all your orders
+* [x] customizable checkout form
+* [x] keep easily track of all your orders
 * [x] optional _Orders_ widget for your dashboard
 
 #### Mails
@@ -74,9 +72,8 @@ What Butik can provide:
 
 #### Design
 
-* [x] templates written in Antlers Syntax
-* [x] comes with a beautiful whitelabel design, ready to use out of the box
-* [x] layouts can be customized or swapped with your own
+* [x] templates in Antlers Syntax
+* [x] beautiful Whitelabel design, ready to use out of the box
 * [x] templates can be customized or swapped with your own
 * [x] applies for e-mail layouts & templates as well
 
@@ -103,7 +100,7 @@ What Butik can provide:
 
 * Statamic 3
 * PHP &gt;= 7.4
-* Laravel &gt;= 7.20
+* Laravel &gt;= 7.20 or 8
 
 ## Payments
 
