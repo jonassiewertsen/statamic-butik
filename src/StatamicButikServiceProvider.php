@@ -286,6 +286,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
             // Settings
             $nav->create(ucfirst(__('butik::cp.setting_plural')))
                 ->section('Butik')
+                ->can(auth()->user()->can('view shippings') || auth()->user()->can('view taxes'))
                 ->route('butik.settings.index')
                 ->icon('settings-slider')
                 ->children([
