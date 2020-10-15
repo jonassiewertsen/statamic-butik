@@ -8,6 +8,7 @@ use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product as ProductFacade;
 use Statamic\Entries\EntryCollection;
 use Statamic\Facades\Entry;
+use Statamic\Facades\Site;
 use Statamic\Stache\Query\EntryQueryBuilder;
 use Statamic\Support\Str;
 
@@ -74,6 +75,7 @@ class Product
     public function where(string $key, string $value)
     {
         return Entry::query()
+            ->where('site', Site::current()->handle())
             ->where('collection', self::COLLECTION_NAME)
             ->where($key, $value);
     }
@@ -131,7 +133,7 @@ class Product
      */
     public function variants()
     {
-        return Variant::where('product_slug', $this->slug)->get();
+        return Variant::where('product_slug', $this->slug)->value();
     }
 
     /**
@@ -198,7 +200,7 @@ class Product
 
     public function showUrl($slug): string
     {
-        $route = config('butik.route_shop-prefix') . '/' . $slug;
+        $route = locale() . '/' . config('butik.route_shop-prefix') . '/' . $slug;
         return (string)Str::of($route)->start('/');
     }
 
@@ -221,13 +223,12 @@ class Product
     /**
      * Adding some product information dynamically
      */
-    public function extend(EntryCollection $entry): Collection
+    public function extend(EntryCollection $entries): Collection
     {
-        return $entry->map(function ($entry) {
-            $entry->fluentlyGetOrSet('show_url')->args([$this->showUrl($entry->slug())]);
+        return $entries->each(function ($entry) {
+            $entry->fluentlyGetOrSet('show_url')->args([$this->showUrl($entry->slug())]); // TODO: Add the locale
             $entry->fluentlyGetOrSet('slug')->args([$entry->slug()]);
-            $entry->fluentlyGetOrSet('price')->args([str_replace('.', config('butik.currency_delimiter'), $entry->get('price'))]);
-            return $entry;
+            $entry->fluentlyGetOrSet('price')->args([str_replace('.', config('butik.currency_delimiter'), $entry->value('price'))]);
         });
     }
 }

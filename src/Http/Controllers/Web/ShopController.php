@@ -5,7 +5,6 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 use Jonassiewertsen\StatamicButik\Http\Models\Category;
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
-use Statamic\Support\Str;
 use Statamic\View\View as StatamicView;
 
 class ShopController extends WebController
