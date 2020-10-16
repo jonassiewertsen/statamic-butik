@@ -44,7 +44,10 @@ class Product
 
     public function find(string $slug)
     {
-        $entry = Entry::findBySlug($slug, self::COLLECTION_NAME);
+        $entry = Entry::query()
+            ->where('slug', $slug)->where('collection', self::COLLECTION_NAME)
+            ->where('site', Site::current()->handle())
+            ->first();
 
         if ($entry === null) {
             return null;
@@ -63,9 +66,9 @@ class Product
         $product->price           = str_replace('.', config('butik.currency_delimiter'), $product->price);
         $product->slug            = $entry->slug();
         $product->id              = $entry->id();
-        $product->title           = $entry->get('title');
-        $product->stock           = (int)$entry->get('stock');
-        $product->stock_unlimited = (bool)$entry->get('stock_unlimited');
+        $product->title           = $entry->value('title');
+        $product->stock           = (int) $entry->value('stock');
+        $product->stock_unlimited = (bool) $entry->value('stock_unlimited');
         $product->available       = $entry->published();
         $product->show_url        = $product->showUrl($product->slug);
 
@@ -133,7 +136,7 @@ class Product
      */
     public function variants()
     {
-        return Variant::where('product_slug', $this->slug)->value();
+        return Variant::where('product_slug', $this->slug)->get();
     }
 
     /**
