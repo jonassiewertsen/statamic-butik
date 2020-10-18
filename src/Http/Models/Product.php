@@ -45,7 +45,8 @@ class Product
     public function find(string $slug)
     {
         $entry = Entry::query()
-            ->where('slug', $slug)->where('collection', self::COLLECTION_NAME)
+            ->where('slug', $slug)
+            ->where('collection', self::COLLECTION_NAME)
             ->where('site', Site::current()->handle())
             ->first();
 
@@ -96,7 +97,13 @@ class Product
 
     public function exists(string $slug): bool
     {
-        return Entry::findBySlug($slug, self::COLLECTION_NAME) !== null;
+        $count =  Entry::query()
+            ->where('slug', $slug)
+            ->where('collection', self::COLLECTION_NAME)
+            ->where('site', Site::current()->handle())
+            ->count();
+
+        return $count > 0;
     }
 
     public function available(): bool

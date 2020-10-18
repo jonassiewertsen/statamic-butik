@@ -4,7 +4,7 @@ namespace Jonassiewertsen\StatamicButik\Checkout;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Shipping\Country;
 use Jonassiewertsen\StatamicButik\Shipping\Shipping;
@@ -218,7 +218,7 @@ class Cart
         static::$cart = static::get();
 
         $items = static::$cart->filter(function ($item) {
-            return $item->update();
+            return Product::exists($item->slug) && $item->update();
         });
 
         static::set($items);
