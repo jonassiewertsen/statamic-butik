@@ -44,6 +44,7 @@ What Butik can provide:
 
 #### Product 
 
+* [x] can be translated
 * [x] customizable fields
 * [x] variants
 * [x] SEO friendly URLs
