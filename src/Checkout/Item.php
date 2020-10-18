@@ -9,6 +9,7 @@ use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Product as ProductModel;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
+use Statamic\Facades\Site;
 use Statamic\Fields\Value;
 
 class Item
@@ -44,6 +45,11 @@ class Item
      * The item name
      */
     public string $name;
+
+    /**
+     * The locale the item has been added from
+     */
+    public ?string $locale;
 
     /**
      * The description, shortened to 100 characters
@@ -85,18 +91,20 @@ class Item
      */
     private string $totalPrice;
 
-    public function __construct(string $slug)
+    public function __construct(string $slug, ?string $locale = null)
     {
-        $this->slug = $slug;
+        $this->slug   = $slug;
+        $this->locale = $locale;
 
+        $this->setCurrentLocale();
         $item = $this->defineItemData();
 
         $this->available       = $item->available;
         $this->sellable        = true;
         $this->quantity        = 1;
-        $this->singlePrice     = $item->price;
-        $this->availableStock  = $item->stock;
-        $this->name            = $item->title;
+        $this->availableStock  = (int)$item->stock;
+        $this->singlePrice     = (string)$item->price;
+        $this->name            = (string)$item->title;
         $this->images          = $this->convertImage($this->product->images);
         $this->description     = $this->limitedDescription();
         $this->taxRate         = $item->tax->percentage;
@@ -114,19 +122,6 @@ class Item
 
         $this->quantity++;
         $this->update();
-    }
-
-    private function isIncreasable()
-    {
-        if ($this->item()->stock_unlimited) {
-            return true;
-        }
-
-        if ($this->getQuantity() < $this->item()->stock) {
-            return true;
-        }
-
-        return false;
     }
 
     public function decrease()
@@ -205,9 +200,29 @@ class Item
         return true;
     }
 
+    public function totalTaxAmount()
+    {
+        $totalPrice = $this->makeAmountSaveable($this->totalPrice());
+        $tax        = $totalPrice * ($this->taxRate / (100 + $this->taxRate));
+        return $this->makeAmountHuman($tax);
+    }
+
     protected function isVariant()
     {
         return Str::contains($this->slug, '::');
+    }
+
+    private function isIncreasable()
+    {
+        if ($this->item()->stock_unlimited) {
+            return true;
+        }
+
+        if ($this->getQuantity() < $this->item()->stock) {
+            return true;
+        }
+
+        return false;
     }
 
     private function limitedDescription()
@@ -217,18 +232,11 @@ class Item
 
     private function product(): ProductModel
     {
-        $cacheName = "product:{$this->productSlug()}";
+        $cacheName = "product:{$this->productSlug()}:{$this->locale}";
 
         return Cache::remember($cacheName, 60, function () {
             return Product::find($this->productSlug());
         });
-    }
-
-    public function totalTaxAmount()
-    {
-        $totalPrice = $this->makeAmountSaveable($this->totalPrice());
-        $tax = $totalPrice * ($this->taxRate / (100 + $this->taxRate));
-        return $this->makeAmountHuman($tax);
     }
 
     private function setQuantityToStock(): void
@@ -243,6 +251,8 @@ class Item
 
     private function defineItemData()
     {
+        Site::setCurrent($this->locale);
+
         if ($this->isVariant()) {
             $this->product = $this->product();
             return $this->variant = Variant::find($this->variantSlug());
@@ -253,7 +263,7 @@ class Item
 
     private function productSlug()
     {
-        if (!$this->isVariant()) {
+        if (! $this->isVariant()) {
             return $this->slug;
         }
 
@@ -262,7 +272,7 @@ class Item
 
     private function variantSlug()
     {
-        if (!$this->isVariant()) {
+        if (! $this->isVariant()) {
             return null;
         }
 
@@ -283,5 +293,10 @@ class Item
         }
 
         return $images;
+    }
+
+    private function setCurrentLocale(): void
+    {
+        Site::setCurrent($this->locale);
     }
 }

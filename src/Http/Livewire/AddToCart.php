@@ -9,16 +9,18 @@ class AddToCart extends Component
 {
     public $slug;
     public $redirect;
+    public $locale;
 
     public function mount($slug, $redirect = null)
     {
         $this->slug     = $slug;
+        $this->locale   = locale();
         $this->redirect = $redirect;
     }
 
     public function add()
     {
-        Cart::add($this->slug);
+        Cart::add($this->slug, $this->locale);
         $this->emit('cartUpdated');
 
         if ($this->redirect) {
