@@ -11,7 +11,7 @@ class Butik extends \Statamic\Tags\Tags
      */
     public function shop()
     {
-        return route('butik.shop');
+        return $this->route('butik.shop');
     }
 
     /**
@@ -21,7 +21,7 @@ class Butik extends \Statamic\Tags\Tags
      */
     public function payment()
     {
-        return route('butik.checkout.payment');
+        return $this->route('butik.checkout.payment');
     }
 
     /**
@@ -31,7 +31,7 @@ class Butik extends \Statamic\Tags\Tags
      */
     public function cart()
     {
-        return route('butik.cart');
+        return $this->route('butik.cart');
     }
 
     /**
@@ -41,6 +41,13 @@ class Butik extends \Statamic\Tags\Tags
      */
     public function bag()
     {
-        return route('butik.cart');
+        return $this->cart();
+    }
+
+    private function route(string $routeName): string
+    {
+        $prefix = locale_url() === '/' ? '' : locale_url();
+
+        return $prefix . route($routeName, [], false);
     }
 }

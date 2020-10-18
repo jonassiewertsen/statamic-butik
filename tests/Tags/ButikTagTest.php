@@ -18,24 +18,57 @@ class ButikTagTest extends TestCase
    /** @test */
    public function it_will_return_the_default_shop_route()
    {
-       $this->assertEquals(route('butik.shop'), $this->tag->shop());
+       $route = route('butik.shop', [], false);
+       $this->assertEquals($route, $this->tag->shop());
    }
+
+    /** @test */
+    public function it_will_return_the_default_shop_route_in_a_multise()
+    {
+        $this->multisite();
+
+        $this->assertEquals($this->multisiteRoute('butik.shop'), $this->tag->shop());
+    }
 
     /** @test */
     public function it_will_return_the_cart_route()
     {
-        $this->assertEquals(route('butik.cart'), $this->tag->cart());
+        $this->assertEquals(route('butik.cart', [], false), $this->tag->cart());
+    }
+
+    /** @test */
+    public function it_will_return_the_cart_route_in_a_multise()
+    {
+        $this->multisite();
+
+        $this->assertEquals($this->multisiteRoute('butik.cart'), $this->tag->cart());
     }
 
     /** @test */
     public function it_will_return_the_bag_route()
     {
-        $this->assertEquals(route('butik.cart'), $this->tag->bag());
+        $this->assertEquals(route('butik.cart', [], false), $this->tag->bag());
     }
 
     /** @test */
-    public function it_will_return_the_relative_payment_path()
+    public function it_will_return_the_payment_path()
     {
-        $this->assertEquals(route('butik.checkout.payment'), $this->tag->payment());
+        $this->assertEquals(route('butik.checkout.payment', [], false), $this->tag->payment());
+    }
+
+    /** @test */
+    public function it_will_return_the_payment_route_in_a_multise()
+    {
+        $this->multisite();
+
+        $this->assertEquals($this->multisiteRoute('butik.checkout.payment'), $this->tag->payment());
+    }
+
+    private function multisiteRoute(string $routeName): string
+    {
+        $locale = locale();
+        $route = route($routeName, [], false);
+
+        return "/{$locale}{$route}";
     }
 }

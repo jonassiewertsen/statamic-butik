@@ -21,8 +21,18 @@ if (! function_exists('currency')) {
  * Return the actual used locale
  */
 if (! function_exists('locale')) {
-    function locale($ensureRight = false)
+    function locale()
     {
-        return Str::ensureRight(Site::current()->url(), $ensureRight ? '/' : '');
+        return (string) Str::of(Site::current()->locale())->explode('_')->first();
+    }
+}
+
+/**
+ * Return the multisite url
+ */
+if (! function_exists('locale_url')) {
+    function locale_url()
+    {
+        return (string) Site::current()->url();
     }
 }
