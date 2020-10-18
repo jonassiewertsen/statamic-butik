@@ -31,6 +31,7 @@
   * [Checkout Payment](frontend/templates/checkout-payment.md)
   * [Payment Receipt](frontend/templates/payment-receipt.md)
 * [Antlers Tags](frontend/antlers-tags.md)
+* [Localization](frontend/localization.md)
 
 ## Extending
 
