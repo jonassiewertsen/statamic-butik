@@ -52,7 +52,6 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         \Jonassiewertsen\StatamicButik\Tags\Butik::class,
         \Jonassiewertsen\StatamicButik\Tags\Currency::class,
         \Jonassiewertsen\StatamicButik\Tags\Error::class,
-        // \Jonassiewertsen\StatamicButik\Tags\Product::class,
         \Jonassiewertsen\StatamicButik\Tags\Products::class,
     ];
 
