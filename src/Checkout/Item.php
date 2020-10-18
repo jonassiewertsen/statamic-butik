@@ -234,7 +234,7 @@ class Item
     {
         $cacheName = "product:{$this->productSlug()}:{$this->locale}";
 
-        return Cache::remember($cacheName, 60, function () {
+        return Cache::remember($cacheName, 20, function () {
             return Product::find($this->productSlug());
         });
     }
