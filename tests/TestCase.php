@@ -15,6 +15,7 @@ use Statamic\Facades\Blueprint;
 use Statamic\Facades\Collection;
 use Statamic\Facades\Entry;
 use Statamic\Facades\Role;
+use Statamic\Facades\Site;
 use Statamic\Stache\Stores\UsersStore;
 use Statamic\Statamic;
 use Statamic\Support\Str;
@@ -27,12 +28,57 @@ class TestCase extends OrchestraTestCase
 
     protected $shouldFakeVersion = true;
 
+    public function tearDown(): void
+    {
+        $this->deleteFakeStacheDirectory();
+
+        parent::tearDown();
+    }
+
+    public function multisite($site = 'de'): void
+    {
+        Site::setCurrent($site);
+    }
+
+    public function makeProduct(array $data = null)
+    {
+        $shippingZone = create(ShippingZone::class)->first();
+
+        create(ShippingRate::class, [
+            'shipping_zone_id' => $shippingZone->id,
+            'minimum'          => 0,
+            'price'            => 0,
+        ]);
+
+        $entryData = [
+            'title'                 => $data['title'] ?? 'Test Item Product',
+            'price'                 => $data['price'] ?? '20.00',
+            'stock'                 => $data['stock'] ?? '5',
+            'tax_id'                => $data['tax_id'] ?? create(Tax::class)->first()->slug,
+            'shipping_profile_slug' => $data['shipping_profile_slug'] ?? $shippingZone->first()->profile->slug,
+            'images'                => null,
+        ];
+
+        Collection::make('products')->save();
+
+        Entry::make()
+            ->collection('products')
+            ->blueprint('products')
+            ->slug($slug = Str::random('6'))
+            ->date(now())
+            ->data($entryData)
+            ->id(Str::random('30'))
+            ->save();
+
+        return Product::find($slug);
+    }
+
     /**
      * Setup the test environment.
      */
     protected function setUp(): void
     {
-        require_once __DIR__.'/ConsoleKernel.php';
+        require_once __DIR__ . '/ConsoleKernel.php';
 
         parent::setUp();
 
@@ -48,13 +94,6 @@ class TestCase extends OrchestraTestCase
         Blueprint::setDirectory(__DIR__ . '/../resources/blueprints');
 
         $this->setCountry();
-    }
-
-    public function tearDown(): void
-    {
-        $this->deleteFakeStacheDirectory();
-
-        parent::tearDown();
     }
 
     /**
@@ -91,39 +130,6 @@ class TestCase extends OrchestraTestCase
         $user->id(1)->email('test@mail.de')->makeSuper();
         $this->be($user);
         return $user;
-    }
-
-    public function makeProduct(array $data = null)
-    {
-        $shippingZone = create(ShippingZone::class)->first();
-
-        create(ShippingRate::class, [
-            'shipping_zone_id' => $shippingZone->id,
-            'minimum'          => 0,
-            'price'            => 0,
-        ]);
-
-        $entryData = [
-            'title'                 => $data['title'] ?? 'Test Item Product',
-            'price'                 => $data['price'] ?? '20.00',
-            'stock'                 => $data['stock'] ?? '5',
-            'tax_id'                => $data['tax_id'] ?? create(Tax::class)->first()->slug,
-            'shipping_profile_slug' => $data['shipping_profile_slug'] ?? $shippingZone->first()->profile->slug,
-            'images'                => null,
-        ];
-
-        Collection::make('products')->save();
-
-        Entry::make()
-            ->collection('products')
-            ->blueprint('products')
-            ->slug($slug = Str::random('6'))
-            ->date(now())
-            ->data($entryData)
-            ->id(Str::random('30'))
-            ->save();
-
-        return Product::find($slug);
     }
 
     protected function setCountry(): void
@@ -192,10 +198,9 @@ class TestCase extends OrchestraTestCase
 
         // Creat two site for multi site testing
         $app['config']->set('statamic.sites', [
-            'default' => 'en',
-            'sites' => [
-                'en' => ['name' => 'English', 'locale' => 'en_US', 'url' => '/'],
-                'de' => ['name' => 'Deutsch', 'locale' => 'de_DE', 'url' => '/de/'],
+            'sites'   => [
+                'default' => ['name' => 'English', 'locale' => 'en_US', 'url' => '/'],
+                'de'      => ['name' => 'Deutsch', 'locale' => 'de_DE', 'url' => '/de/'],
             ],
         ]);
 
@@ -207,16 +212,16 @@ class TestCase extends OrchestraTestCase
             'directory' => __DIR__ . '/__fixtures/users',
         ]);
         // Set the path for our forms
-        $app['config']->set('statamic.forms.forms', __DIR__.'/../resources/forms/');
+        $app['config']->set('statamic.forms.forms', __DIR__ . '/../resources/forms/');
 
         // Set the path for our entries
-        $app['config']->set('statamic.stache.stores.taxonomies.directory', __DIR__.'/__fixtures__/content/taxonomies');
-        $app['config']->set('statamic.stache.stores.terms.directory', __DIR__.'/__fixtures__/content/taxonomies');
-        $app['config']->set('statamic.stache.stores.collections.directory', __DIR__.'/__fixtures__/content/collections');
-        $app['config']->set('statamic.stache.stores.entries.directory', __DIR__.'/__fixtures__/content/collections');
-        $app['config']->set('statamic.stache.stores.navigation.directory', __DIR__.'/__fixtures__/content/navigation');
-        $app['config']->set('statamic.stache.stores.globals.directory', __DIR__.'/__fixtures__/content/globals');
-        $app['config']->set('statamic.stache.stores.asset-containers.directory', __DIR__.'/__fixtures__/content/assets');
+        $app['config']->set('statamic.stache.stores.taxonomies.directory', __DIR__ . '/__fixtures__/content/taxonomies');
+        $app['config']->set('statamic.stache.stores.terms.directory', __DIR__ . '/__fixtures__/content/taxonomies');
+        $app['config']->set('statamic.stache.stores.collections.directory', __DIR__ . '/__fixtures__/content/collections');
+        $app['config']->set('statamic.stache.stores.entries.directory', __DIR__ . '/__fixtures__/content/collections');
+        $app['config']->set('statamic.stache.stores.navigation.directory', __DIR__ . '/__fixtures__/content/navigation');
+        $app['config']->set('statamic.stache.stores.globals.directory', __DIR__ . '/__fixtures__/content/globals');
+        $app['config']->set('statamic.stache.stores.asset-containers.directory', __DIR__ . '/__fixtures__/content/assets');
 
         // Assume the pro edition within tests
         $app['config']->set('statamic.editions.pro', true);
