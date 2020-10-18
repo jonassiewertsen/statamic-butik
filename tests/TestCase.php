@@ -183,13 +183,21 @@ class TestCase extends OrchestraTestCase
         parent::resolveApplicationConfiguration($app);
 
         $configs = [
-            'assets', 'cp', 'forms', 'routes', 'static_caching',
-            'sites', 'stache', 'system', 'users',
+            'assets', 'cp', 'routes', 'static_caching', 'sites', 'stache', 'system',
         ];
 
         foreach ($configs as $config) {
             $app['config']->set("statamic.$config", require(__DIR__ . "/../vendor/statamic/cms/config/{$config}.php"));
         }
+
+        // Creat two site for multi site testing
+        $app['config']->set('statamic.sites', [
+            'default' => 'en',
+            'sites' => [
+                'en' => ['name' => 'English', 'locale' => 'en_US', 'url' => '/'],
+                'de' => ['name' => 'Deutsch', 'locale' => 'de_DE', 'url' => '/de/'],
+            ],
+        ]);
 
         // Setting the user repository to the default flat file system
         $app['config']->set('statamic.users.repository', 'file');
