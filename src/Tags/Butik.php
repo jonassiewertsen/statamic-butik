@@ -46,8 +46,6 @@ class Butik extends \Statamic\Tags\Tags
 
     private function route(string $routeName): string
     {
-        $prefix = locale_url() === '/' ? '' : locale_url();
-
-        return $prefix . route($routeName, [], false);
+        return route($routeName, [], false);
     }
 }
