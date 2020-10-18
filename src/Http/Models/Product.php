@@ -220,7 +220,7 @@ class Product
             return call_user_func([$this, Str::camel($property)]);
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -229,9 +229,9 @@ class Product
     public function extend(EntryCollection $entries): Collection
     {
         return $entries->each(function ($entry) {
-            $entry->fluentlyGetOrSet('show_url')->args([$this->showUrl($entry->slug())]); // TODO: Add the locale
             $entry->fluentlyGetOrSet('slug')->args([$entry->slug()]);
-            $entry->fluentlyGetOrSet('price')->args([str_replace('.', config('butik.currency_delimiter'), $entry->value('price'))]);
+            $entry->fluentlyGetOrSet('show_url')->args([$this->showUrl($entry->slug())]);
+            $entry->fluentlyGetOrSet('price')->args([$this->humanPrice($entry->value('price'))]);
         });
     }
 }
