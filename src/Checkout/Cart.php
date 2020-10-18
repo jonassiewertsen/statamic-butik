@@ -4,7 +4,7 @@ namespace Jonassiewertsen\StatamicButik\Checkout;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Shipping\Country;
 use Jonassiewertsen\StatamicButik\Shipping\Shipping;
@@ -22,7 +22,7 @@ class Cart
     /**
      * A product can be added to the cart
      */
-    public static function add(string $slug): void
+    public static function add(string $slug, ?string $locale = null): void
     {
         static::$cart = static::get();
 
@@ -31,7 +31,7 @@ class Cart
             static::$cart->firstWhere('slug', $slug)->increase();
         } else {
             // Add new Item
-            static::$cart->push(new Item($slug));
+            static::$cart->push(new Item($slug, $locale ?? locale()));
         }
         static::set(static::$cart);
     }
@@ -218,7 +218,7 @@ class Cart
         static::$cart = static::get();
 
         $items = static::$cart->filter(function ($item) {
-            return $item->update();
+            return Product::exists($item->slug) && $item->update();
         });
 
         static::set($items);

@@ -12,9 +12,11 @@ class CartList extends Component
     use MapCartItems;
 
     public $country;
+    public $locale;
 
     public function mount()
     {
+        $this->locale  = locale();
         $this->country = ShoppingCart::country();
     }
 
@@ -25,7 +27,7 @@ class CartList extends Component
 
     public function add($slug)
     {
-        ShoppingCart::add($slug);
+        ShoppingCart::add($slug, $this->locale);
         $this->emit('cartUpdated');
     }
 

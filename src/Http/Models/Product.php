@@ -8,6 +8,7 @@ use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product as ProductFacade;
 use Statamic\Entries\EntryCollection;
 use Statamic\Facades\Entry;
+use Statamic\Facades\Site;
 use Statamic\Stache\Query\EntryQueryBuilder;
 use Statamic\Support\Str;
 
@@ -43,7 +44,11 @@ class Product
 
     public function find(string $slug)
     {
-        $entry = Entry::findBySlug($slug, self::COLLECTION_NAME);
+        $entry = Entry::query()
+            ->where('slug', $slug)
+            ->where('collection', self::COLLECTION_NAME)
+            ->where('site', Site::current()->handle())
+            ->first();
 
         if ($entry === null) {
             return null;
@@ -62,9 +67,9 @@ class Product
         $product->price           = str_replace('.', config('butik.currency_delimiter'), $product->price);
         $product->slug            = $entry->slug();
         $product->id              = $entry->id();
-        $product->title           = $entry->get('title');
-        $product->stock           = (int)$entry->get('stock');
-        $product->stock_unlimited = (bool)$entry->get('stock_unlimited');
+        $product->title           = $entry->value('title');
+        $product->stock           = (int) $entry->value('stock');
+        $product->stock_unlimited = (bool) $entry->value('stock_unlimited');
         $product->available       = $entry->published();
         $product->show_url        = $product->showUrl($product->slug);
 
@@ -74,6 +79,7 @@ class Product
     public function where(string $key, string $value)
     {
         return Entry::query()
+            ->where('site', Site::current()->handle())
             ->where('collection', self::COLLECTION_NAME)
             ->where($key, $value);
     }
@@ -91,7 +97,13 @@ class Product
 
     public function exists(string $slug): bool
     {
-        return Entry::findBySlug($slug, self::COLLECTION_NAME) !== null;
+        $count =  Entry::query()
+            ->where('slug', $slug)
+            ->where('collection', self::COLLECTION_NAME)
+            ->where('site', Site::current()->handle())
+            ->count();
+
+        return $count > 0;
     }
 
     public function available(): bool
@@ -198,8 +210,8 @@ class Product
 
     public function showUrl($slug): string
     {
-        $route = config('butik.route_shop-prefix') . '/' . $slug;
-        return (string)Str::of($route)->start('/');
+        $route = locale_url() . '/' . config('butik.route_shop-prefix') . '/' . $slug;
+        return (string) Str::of($route)->start('/');
     }
 
     public function __get(string $property)
@@ -215,19 +227,18 @@ class Product
             return call_user_func([$this, Str::camel($property)]);
         }
 
-        return;
+        return null;
     }
 
     /**
      * Adding some product information dynamically
      */
-    public function extend(EntryCollection $entry): Collection
+    public function extend(EntryCollection $entries): Collection
     {
-        return $entry->map(function ($entry) {
-            $entry->fluentlyGetOrSet('show_url')->args([$this->showUrl($entry->slug())]);
+        return $entries->each(function ($entry) {
             $entry->fluentlyGetOrSet('slug')->args([$entry->slug()]);
-            $entry->fluentlyGetOrSet('price')->args([str_replace('.', config('butik.currency_delimiter'), $entry->get('price'))]);
-            return $entry;
+            $entry->fluentlyGetOrSet('show_url')->args([$this->showUrl($entry->slug())]);
+            $entry->fluentlyGetOrSet('price')->args([$this->humanPrice($entry->value('price'))]);
         });
     }
 }
