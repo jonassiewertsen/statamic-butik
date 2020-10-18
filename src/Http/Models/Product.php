@@ -203,7 +203,7 @@ class Product
 
     public function showUrl($slug): string
     {
-        $route = locale() . '/' . config('butik.route_shop-prefix') . '/' . $slug;
+        $route = locale_url() . '/' . config('butik.route_shop-prefix') . '/' . $slug;
         return (string) Str::of($route)->start('/');
     }
 
