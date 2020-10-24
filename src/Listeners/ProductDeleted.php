@@ -12,7 +12,7 @@ class ProductDeleted
         /**
          * The entry is not a product? Let's do anything then.
          */
-        if (! $event->entry->collection()->handle() === 'products') {
+        if ($event->entry->collection()->handle() !== 'products') {
             return;
         }
 
