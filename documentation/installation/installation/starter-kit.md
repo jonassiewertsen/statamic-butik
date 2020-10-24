@@ -10,7 +10,7 @@ description: 'We provide a starter kit, so you don''t need to hassle with the se
 git clone git@github.com:jonassiewertsen/statamic-butik-starter-kit.git butik
 cd butik
 rm -rf .git
-composer install
+composer update
 cp .env.example .env && php artisan key:generate
 ```
 
@@ -23,6 +23,12 @@ Everything has been set up
 **Line 3**: Remove the github folder   
 **Line 4**: Install all dependencies  
 **Line 5**: Create your .env file and generate a fresh key
+
+{% hint style="danger" %}
+You may run into a composer memory issue. Instead of running `composer update`run:
+
+`COMPOSER_MEMORY_LIMIT=-1 composer update`
+{% endhint %}
 
 ## Create a user
 
@@ -74,7 +80,7 @@ Use our preset design or customize it according to your needs.
 
 ### Enjoy
 
-We hope you will have a postive experience using _butik_ and enjoy its results. 
+We hope you will have a positive experience using _butik_ and enjoy its results. 
 
 ### Having trouble?
 
