@@ -97,13 +97,18 @@ class Product
 
     public function exists(string $slug): bool
     {
-        $count =  Entry::query()
+        /**
+         * In case it's a variant, we will check if the variant does exist.
+         */
+        if (Str::contains($slug, '::')) {
+            return Variant::exists(Str::of($slug)->explode('::')[1]);
+        }
+
+        return (bool) Entry::query()
             ->where('slug', $slug)
             ->where('collection', self::COLLECTION_NAME)
             ->where('site', Site::current()->handle())
             ->count();
-
-        return $count > 0;
     }
 
     public function available(): bool
