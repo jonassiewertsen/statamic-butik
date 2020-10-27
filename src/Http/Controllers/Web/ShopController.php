@@ -2,6 +2,7 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 
+use Illuminate\Support\Collection;
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 use Jonassiewertsen\StatamicButik\Http\Models\Category;
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
@@ -15,17 +16,19 @@ class ShopController extends WebController
             ->template(config('butik.template_product-index'))
             ->layout(config('butik.layout_product-index'))
             ->with([
-                'products' => $this->fetchProducts(),
+                'products' => $this->convertToArray($this->fetchProducts()),
             ]);
     }
 
     public function category(Category $category)
     {
+        $products = $this->convertToArray(Product::fromCategory($category));
+
         return (new StatamicView())
             ->template(config('butik.template_product-category'))
             ->layout(config('butik.layout_product-category'))
             ->with([
-                'products' => Product::fromCategory($category),
+                'products' => $products,
             ]);
     }
 
@@ -60,10 +63,10 @@ class ShopController extends WebController
 
         if ($product->hasVariants()) {
             $variants = $product->variants;
-            $variant = $variants->firstWhere('original_title', $variant)->toArray();
-            $product = array_merge((array) $product, $variant, ['variants' => $variants->toArray() ]);
+            $variant  = $variants->firstWhere('original_title', $variant)->toArray();
+            $product  = array_merge((array)$product, $variant, ['variants' => $variants->toArray()]);
         } else {
-            $product = (array) $product;
+            $product = (array)$product;
         }
 
         return (new StatamicView())
@@ -86,32 +89,30 @@ class ShopController extends WebController
     private function fetchProducts()
     {
         $display = config('butik.overview_type', 'newest');
-        $limit   = config ('butik.overview_limit', '6');
 
-        switch($display) {
+        switch ($display) {
             case 'all':
                 return Product::all();
                 break;
             case 'name':
-                return Product::extend(Product::where('published', true)
-                    ->orderBy('title')
-                    ->limit($limit)
-                    ->get());
+                return Product::latestByName();
                 break;
             case 'newest':
-                return Product::extend(Product::where('published', true)
-                    ->orderBy('created_at')
-                    ->limit($limit)
-                    ->get());
+                return Product::latest();
                 break;
             case 'cheapest':
-                return Product::extend(Product::where('published', true)
-                    ->orderBy('price')
-                    ->limit($limit)
-                    ->get());
+                return Product::latestByPrice();
                 break;
             default:
-                return Product::where('published', true)->get();
+                return Product::all();
         }
     }
+
+    private function convertToArray(Collection $products)
+    {
+        return $products->transform(function ($entry) {
+            return (array) $entry;
+        });
+    }
+
 }
