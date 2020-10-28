@@ -1,9 +1,9 @@
 {{ if countries | count > 1 }}
     <aside class="text-right">{{ __('butik::web.ship_to') }}
         <select name="country" wire:model="country" wire:change="updateCountry">
-            {{ countries }}
-            <option value="{{ code }}">{{ name }}</option>
-            {{ /countries }}
+            {{ foreach:countries }}
+                <option value="{{ key }}">{{ value }}</option>
+            {{ /foreach:countries }}
         </select>
     </aside>
 {{ /if }}
