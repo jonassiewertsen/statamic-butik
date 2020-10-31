@@ -39,6 +39,9 @@ jobs:
                   extension-csv: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
                   coverage: none
 
+            - name: Downgrade to Composer version 1
+              run: composer self-update --1˚
+
             - name: Install dependencies
               run: |
                   composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" ${{ matrix.additional-deps }} --no-interaction --no-update
