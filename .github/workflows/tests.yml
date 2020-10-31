@@ -40,7 +40,7 @@ jobs:
                   coverage: none
 
             - name: Downgrade to Composer version 1
-              run: composer self-update --1˚
+              run: composer self-update --1
 
             - name: Install dependencies
               run: |
