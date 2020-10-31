@@ -44,6 +44,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     protected $modifiers = [
         \Jonassiewertsen\StatamicButik\Modifiers\CountryName::class,
         \Jonassiewertsen\StatamicButik\Modifiers\Sellable::class,
+        \Jonassiewertsen\StatamicButik\Modifiers\WithoutTax::class,
     ];
 
     protected $tags = [
