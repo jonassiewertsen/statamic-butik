@@ -8,8 +8,8 @@ use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product as ProductFacade;
 use Statamic\Entries\EntryCollection;
 use Statamic\Facades\Entry;
+use Statamic\Entries\Entry as StatamicEntry;
 use Statamic\Facades\Site;
-use Statamic\Stache\Query\EntryQueryBuilder;
 use Statamic\Support\Str;
 
 class Product
@@ -19,30 +19,29 @@ class Product
     protected const COLLECTION_NAME = 'products';
     public string            $slug;
     public bool              $available;
-    public EntryQueryBuilder $entries;
+    public Collection        $entries;
 
     public function all()
     {
-        return $this->extend(
-            Entry::query()
-                ->where('collection', self::COLLECTION_NAME)
-                ->where('published', true)
-                ->get()
-        );
+        $entries = Entry::query()
+            ->where('collection', self::COLLECTION_NAME)
+            ->where('site', Site::current()->handle())
+            ->where('published', true)
+            ->get();
+
+        return $this->transform($entries);
     }
 
     public function fromCategory(Category $category)
     {
-        $slugs = $category->products->pluck('slug')->toArray();
+        $productIds = $category->products->pluck('id')->toArray();
 
-        $products = $this->all()->filter(function ($product) use ($slugs) {
-            return in_array($product->slug(), $slugs);
+        return $this->all()->filter(function ($product) use ($productIds) {
+            return in_array($product->id, $productIds);
         });
-
-        return $this->extend($products);
     }
 
-    public function find(string $slug)
+    public function find(string $slug): ?Product
     {
         $entry = Entry::query()
             ->where('slug', $slug)
@@ -54,26 +53,7 @@ class Product
             return null;
         }
 
-        $product = new Product();
-
-        foreach ($entry->values() as $key => $attribute) {
-            if ($key !== 'updated_by' && $key !== 'updated_at' && $key !== 'content' && is_int($key)) {
-                $product->$key = $entry->augmentedValue($key)->value();
-            } else {
-                $product->$key = $entry->augmentedValue($key);
-            }
-        }
-
-        $product->price           = str_replace('.', config('butik.currency_delimiter'), $product->price);
-        $product->slug            = $entry->slug();
-        $product->id              = $entry->id();
-        $product->title           = $entry->value('title');
-        $product->stock           = (int) $entry->value('stock');
-        $product->stock_unlimited = (bool) $entry->value('stock_unlimited');
-        $product->available       = $entry->published();
-        $product->show_url        = $product->showUrl($product->slug);
-
-        return $product;
+        return $this->extend($entry);
     }
 
     public function where(string $key, string $value)
@@ -92,7 +72,46 @@ class Product
             $entries->push(ProductFacade::find($entry->slug()));
         });
 
-        return $this->extend($entries);
+        return $this->transform($entries);
+    }
+
+    public function firstByName()
+    {
+        $entries = Entry::query()
+            ->where('published', true)
+            ->where('site', Site::current()->handle())
+            ->where('collection', self::COLLECTION_NAME)
+            ->orderBy('title')
+            ->limit(config('butik.overview_limit', '6'))
+            ->get();
+
+        return $this->transform($entries);
+    }
+
+    public function latest()
+    {
+        $entries = Entry::query()
+            ->where('published', true)
+            ->where('site', Site::current()->handle())
+            ->where('collection', self::COLLECTION_NAME)
+            ->orderBy('created_at')
+            ->limit(config('butik.overview_limit', '6'))
+            ->get();
+
+        return $this->transform($entries);
+    }
+
+    public function latestByPrice()
+    {
+        $entries = Entry::query()
+            ->where('published', true)
+            ->where('site', Site::current()->handle())
+            ->where('collection', self::COLLECTION_NAME)
+            ->orderBy('price')
+            ->limit(config('butik.overview_limit', '6'))
+            ->get();
+
+        return $this->transform($entries);
     }
 
     public function exists(string $slug): bool
@@ -104,7 +123,7 @@ class Product
             return Variant::exists(Str::of($slug)->explode('::')[1]);
         }
 
-        return (bool) Entry::query()
+        return (bool)Entry::query()
             ->where('slug', $slug)
             ->where('collection', self::COLLECTION_NAME)
             ->where('site', Site::current()->handle())
@@ -235,15 +254,34 @@ class Product
         return null;
     }
 
-    /**
-     * Adding some product information dynamically
-     */
-    public function extend(EntryCollection $entries): Collection
+    private function transform(EntryCollection $entries): Collection
     {
-        return $entries->each(function ($entry) {
-            $entry->fluentlyGetOrSet('slug')->args([$entry->slug()]);
-            $entry->fluentlyGetOrSet('show_url')->args([$this->showUrl($entry->slug())]);
-            $entry->fluentlyGetOrSet('price')->args([$this->humanPrice($entry->value('price'))]);
+        return $entries->transform(function ($entry) {
+            return $this->extend($entry);
         });
+    }
+
+    private function extend(StatamicEntry $entry): Product
+    {
+        $product = new Product();
+
+        foreach ($entry->values() as $key => $attribute) {
+            if ($key !== 'updated_by' && $key !== 'updated_at' && $key !== 'content' && is_int($key)) {
+                $product->$key = $entry->augmentedValue($key)->value();
+            } else {
+                $product->$key = $entry->augmentedValue($key);
+            }
+        }
+
+        $product->price             = str_replace('.', config('butik.currency_delimiter'), $product->price);
+        $product->slug              = $entry->slug();
+        $product->id                = $entry->id();
+        $product->title             = $entry->value('title');
+        $product->stock             = (int)$entry->value('stock');
+        $product->stock_unlimited   = (bool)$entry->value('stock_unlimited');
+        $product->available         = (bool)$entry->published();
+        $product->show_url          = $product->showUrl($product->slug);
+
+        return $product;
     }
 }

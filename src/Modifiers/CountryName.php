@@ -7,8 +7,8 @@ use Statamic\Modifiers\Modifier;
 
 class CountryName extends Modifier
 {
-    public function index($value)
+    public function index($values)
     {
-        return Country::getName($value) ?: $value;
+        return Country::getName($values) ?: $values;
     }
 }

@@ -2,20 +2,30 @@
 
 namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
+use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class ProductTest extends TestCase
 {
-    public Product $product;
+    use MoneyTrait;
+
+    public $product;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->product = $this->makeProduct();
+    }
+
+    /** @test */
+    public function all_products_can_be_fetched()
+    {
+        $this->assertCount(1, Product::all());
+        $this->assertInstanceOf('Illuminate\Support\Collection', Product::all());
     }
 
     /** @test */

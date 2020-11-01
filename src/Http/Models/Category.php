@@ -4,7 +4,6 @@ namespace Jonassiewertsen\StatamicButik\Http\Models;
 
 use Illuminate\Support\Facades\DB;
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
-use Illuminate\Support\Str;
 
 class Category extends ButikModel
 {
@@ -38,7 +37,7 @@ class Category extends ButikModel
             $products->push(Product::find($result->product_slug));
         });
 
-        return $products;
+        return $products->filter();
     }
 
     /**

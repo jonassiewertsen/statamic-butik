@@ -31,7 +31,7 @@ return [
      *
      */
     'overview_type'  => 'newest',
-    'overview_limit' => '6',
+    'overview_limit' => 6,
 
     /**
      * MAIL
