@@ -35,7 +35,11 @@ To create a product, simply fill out all fields marked with a little red star.
     </tr>
     <tr>
       <td style="text-align:left">price</td>
-      <td style="text-align:left">Product price including taxes.</td>
+      <td style="text-align:left">
+        <p>Product price including taxes.</p>
+        <p><em>Use the without_tax modifier to show the price without taxes.</em>
+        </p>
+      </td>
     </tr>
     <tr>
       <td style="text-align:left">tax</td>
