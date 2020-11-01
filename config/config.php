@@ -112,6 +112,7 @@ return [
      */
     'shipping' => [
         'price' => \Jonassiewertsen\StatamicButik\Shipping\ShippingByPrice::class,
+        'per-item' => \Jonassiewertsen\StatamicButik\Shipping\ShippingPerItem::class,
     ],
 
     /**
