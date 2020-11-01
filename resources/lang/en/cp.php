@@ -87,6 +87,7 @@ return [
     'shipping_singular'                       => 'Shipping',
     'shipping_plural'                         => 'Shippings',
     'shipping_by_price'                       => 'Shipping by price',
+    'shipping_per_item'                       => 'Shipping per Item',
     'shipping_form_create'                    => 'Shippings',
     'shipping_minimum_description'            => 'What\'s the minimum shopping bag amount for this rate to be available ?',
     'shipping_rate_form_create'               => 'Create a new shipping rate',

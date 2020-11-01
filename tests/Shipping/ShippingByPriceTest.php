@@ -59,7 +59,7 @@ class ShippingByPriceTest extends TestCase
 
         $total = $this->makeAmountSaveable($this->product1->price) + $this->makeAmountSaveable($this->product2->price);
 
-        $this->assertEquals($total, $shipping->totalItemValue);
+        $this->assertEquals($total, $shipping->summedItemValue);
     }
 
 

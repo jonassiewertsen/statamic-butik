@@ -1,0 +1,21 @@
+<?php
+
+namespace Jonassiewertsen\StatamicButik\Shipping;
+
+class ShippingByPrice extends ShippingType
+{
+    /**
+     * Calculate the price as you need it. This example will return the price as defined
+     * in your shipping rate. This is how "shipping by price" does get calculated.
+     */
+    public function shippingCosts(): string
+    {
+        return $this->rate->price;
+
+        /**
+        * As an second example. This is how we do calculate the "price per item"
+        */
+        // $price = $this->makeAmountSaveable($this->rate->price);
+        // return $this->makeAmountHuman($price * $this->itemCount);
+    }
+}

@@ -2,7 +2,7 @@
 
 namespace Jonassiewertsen\StatamicButik\Shipping;
 
-class ShippingByPrice extends ShippingType
+class ShippingPerItem extends ShippingType
 {
     /**
      * The shipping costs are equal to the shipping price
@@ -10,6 +10,8 @@ class ShippingByPrice extends ShippingType
      */
     public function shippingCosts(): string
     {
-        return $this->rate->price;
+        $price = $this->makeAmountSaveable($this->rate->price);
+
+        return $this->makeAmountHuman($price * $this->itemCount);
     }
 }

@@ -121,7 +121,7 @@ class Shipping
     {
         $shippingStrategies = config('butik.shipping');
 
-        if (!key_exists($zone->type, $shippingStrategies)) {
+        if (! key_exists($zone->type, $shippingStrategies)) {
             throw new ButikShippingException('We could not find the "' . $zone->type . '" shipping class as defined in your butik config file.');
         }
 
