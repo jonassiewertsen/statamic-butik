@@ -52,4 +52,22 @@ abstract class ShippingType implements ShippingTypeInterface
         $key       = 'butik::cp.' . $className;
         return __($key);
     }
+
+
+    /**
+     * The shipping costs are equal to the shipping price
+     * of the selected shipping rate.
+     */
+    protected function shippingCosts(): string
+    {
+        return $this->rate->price;
+    }
+
+    /**
+     * Converts a value into cents
+     */
+    protected function convertIntoCents($value): int
+    {
+        return $value * 100;
+    }
 }

@@ -6,25 +6,21 @@ use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 
-class ShippingByPrice extends ShippingType
+class ShippingPerItem extends ShippingType
 {
     use MoneyTrait;
 
     public ShippingZone $zone;
     public ShippingRate $rate;
-    public int          $totalItemValue;
 
     public function __construct()
     {
         parent::__construct();
-
-        $this->totalItemValue = 0;
     }
 
     public function calculate(): ShippingAmount
     {
-        $this->calculateSummedItemValue();
-        $this->detectShippingRate($this->zone);
+        //
 
         return new ShippingAmount(
             $this->shippingCosts(),
@@ -40,8 +36,8 @@ class ShippingByPrice extends ShippingType
      */
     protected function detectShippingRate($zone): void
     {
-        // As the first step, we will only keep rates, where
-        // the total item value is bigger or equal
+        // As the first step, we will on keep the rates where,
+        // where the total item value is bigger or equal
         // as the minimum value of the shipping rate.
         $rates = $zone->rates->filter(function ($zone) {
             return $this->totalItemValue >= $this->convertIntoCents($zone->minimum);
