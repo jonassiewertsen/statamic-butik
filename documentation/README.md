@@ -21,7 +21,7 @@ You can use the light and simple design as offered or customize it according to 
 
 ## License
 
-Before working with _Statamic Butik_, you need to aqquire a license at the Statamic Marketplace.
+Before working with _Statamic Butik_, you need to acquire a license at the Statamic Marketplace.
 
 {% hint style="info" %}
 _Statamic Butik_ is not free software.
@@ -29,13 +29,13 @@ _Statamic Butik_ is not free software.
 
 ### Stability
 
-The current version is backed up by round about **300 PHPUnit tests** with **550 assertions** to monitor if things are working as expected.
+The current version is backed up by a little over **300 PHPUnit tests** and **550 assertions** to monitor if things are working as expected.
 
 When creating _butik_ my highest goal was to provide a well functioning and fun to use e-commerce solution. 
 
 ## Functionality
 
-What Butik can provide:
+What butik can provide:
 
 #### Installation
 

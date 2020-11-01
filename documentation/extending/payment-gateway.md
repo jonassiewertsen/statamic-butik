@@ -1,7 +1,5 @@
 ---
-description: >-
-  In case you want to implement your own Payment Gateway butik offers a
-  solution.
+description: In case you want to implement your own Payment Gateway.
 ---
 
 # Payment Gateway

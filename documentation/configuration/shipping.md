@@ -1,6 +1,25 @@
+---
+description: >-
+  Your shipping settings can be kept simple or really complex if you need them
+  to be.
+---
+
 # Shipping
 
-Your shipping settings can be kept simple or really complex if you need them to be. 
+## Shipping Types
+
+Out of the box, butik offers two different shipping types:
+
+| ate |  |
+| :--- | :--- |
+| **Shipping by Price** | The shipping price will be calculated on the base of the total item values in the shopping cart. |
+| **Shipping per Item** | The shipping price will be calculated for each item shipped. |
+
+{% hint style="success" %}
+Shipping types are defined per shipping zone. 
+{% endhint %}
+
+It's no problem to use different shipping types for different items. 
 
 ## Shipping Profiles
 
@@ -114,4 +133,8 @@ A customer could buy so many t-shirts, that shipping would be free for all of th
 By adding a surfboard to his shopping bag, which does belong to another shipping profile, he will probably pay shipping costs for it. 
 
 The shipping costs for his t-shirts would be free, but he has to pay shipping for his surfboard only.
+
+## Create your custom shipping type
+
+{% page-ref page="../extending/shipping.md" %}
 
