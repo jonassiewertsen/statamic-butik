@@ -2,28 +2,31 @@
 
 namespace Jonassiewertsen\StatamicButik\Tests\Checkout;
 
-use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
-use Jonassiewertsen\StatamicButik\Checkout\Transaction;
-use Jonassiewertsen\StatamicButik\Events\PaymentSubmitted;
+use Jonassiewertsen\StatamicButik\Events\OrderCreated;
 use Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\MolliePaymentGateway;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
+use Jonassiewertsen\StatamicButik\Order\ItemCollection;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
-use Jonassiewertsen\StatamicButik\Tests\Utilities\MollieCustomer;
 use Jonassiewertsen\StatamicButik\Tests\Utilities\MolliePaymentOpen;
 use Jonassiewertsen\StatamicButik\Tests\Utilities\MolliePaymentSuccessful;
 use Mollie\Laravel\Facades\Mollie;
 
 class CreateOpenOrderTest extends TestCase
 {
-    protected $customer;
-    protected $items;
+    use MoneyTrait;
+
+    protected Customer $customer;
+    protected string $totalPrice;
+    protected ?Collection $items;
 
     public function setUp(): void
     {
@@ -31,7 +34,8 @@ class CreateOpenOrderTest extends TestCase
 
         $this->customer = (new Customer($this->createUserData()));
         $this->items    = collect();
-        $this->items->push(new Item(factory(Product::class)->create()->slug));
+        $this->items->push(new Item($this->makeProduct()->slug));
+        $this->totalPrice = $this->items->first()->totalPrice();
 
         Session::put('butik.customer', $this->customer);
 
@@ -43,14 +47,13 @@ class CreateOpenOrderTest extends TestCase
     {
         Event::fake();
         $this->checkout();
-        Event::assertDispatched(PaymentSubmitted::class);
+        Event::assertDispatched(OrderCreated::class);
     }
 
     /** @test */
     public function an_open_order_will_be_created()
     {
         $this->checkout();
-
         $this->assertCount(1, Order::all());
     }
 
@@ -59,24 +62,21 @@ class CreateOpenOrderTest extends TestCase
     {
         $this->checkout();
         $payment = new MolliePaymentSuccessful;
-
-        $this->assertDatabaseHas('butik_orders', ['transaction_id' => $payment->id]);
+        $this->assertDatabaseHas('butik_orders', ['id' => $payment->id]);
     }
 
     /** @test */
     public function the_order_will_have_status_open()
     {
         $this->checkout();
-
-        $this->assertDatabaseHas('butik_orders', ['status' => 'open']);
+        $this->assertDatabaseHas('butik_orders', ['status' => 'created']);
     }
 
     /** @test */
     public function the_order_will_have_an_order_type()
     {
         $this->checkout();
-        $payment = new MolliePaymentSuccessful;
-
+        $payment = new MolliePaymentOpen();
         $this->assertDatabaseHas('butik_orders', ['method' => $payment->method]);
     }
 
@@ -84,66 +84,55 @@ class CreateOpenOrderTest extends TestCase
     public function the_order_will_have_an_total_amount()
     {
         $this->checkout();
-        $payment = new MolliePaymentSuccessful;
-
-        $value = number_format($payment->amount->value, 0);
-
-        $this->assertDatabaseHas('butik_orders', ['total_amount' => $value * 100]);
+        $totalPrice = $this->makeAmountSaveable($this->totalPrice);
+        $this->assertDatabaseHas('butik_orders', ['total_amount' => $totalPrice]);
     }
 
     /** @test */
     public function the_order_will_have_created_at_date()
     {
         $this->checkout();
-        $payment = new MolliePaymentSuccessful;
-
-        $this->assertDatabaseHas('butik_orders', ['created_at' => Carbon::parse($payment->createdAt)]);
+        $this->assertDatabaseHas('butik_orders', ['created_at' => now()]);
     }
 
     /** @test */
     public function paid_at_will_stay_null_for_the_moment()
     {
         $this->checkout();
-
         $this->assertDatabaseHas('butik_orders', ['paid_at' => null]);
     }
 
     /** @test */
-    public function the_express_checkout_product_will_be_saved_as_json()
+    public function the_products_will_be_saved_as_json()
     {
         $this->checkout();
-
-        $transaction = (new Transaction())->items($this->items);
-
-        $this->assertDatabaseHas('butik_orders', ['items' => json_encode($transaction->items)]);
+        $items = (new ItemCollection($this->items))->items;
+        $this->assertDatabaseHas('butik_orders', ['items' => json_encode($items)]);
     }
 
     /** @test */
     public function the_express_checkout_customer_will_be_saved_as_json()
     {
         $this->checkout();
-
         $this->assertDatabaseHas('butik_orders', ['customer' => json_encode($this->customer)]);
     }
 
     private function checkout()
     {
         $openPayment = new MolliePaymentOpen();
-        Mollie::shouldReceive('api->customers->create')->andReturn(new MollieCustomer());
-        Mollie::shouldReceive('api->payments->create')->andReturn($openPayment);
-        Mollie::shouldReceive('api->payments->get')->with($openPayment->id)->andReturn($openPayment);
+        Mollie::shouldReceive('api->orders->create')->andReturn($openPayment);
+        Mollie::shouldReceive('api->orders->get')->with($openPayment->id)->andReturn($openPayment);
 
-        $totalPrice = $this->items->first()->totalPrice();
-
-        (new MolliePaymentGateway())->handle($this->customer, $this->items, $totalPrice);
+        (new MolliePaymentGateway())->handle($this->customer, $this->items, $this->totalPrice, Cart::shipping());
     }
 
     private function createUserData($key = null, $value = null)
     {
         $customer = [
             'country'      => 'Germany',
-            'name'         => 'John Doe',
-            'mail'         => 'johndoe@mail.de',
+            'firstname'    => 'John',
+            'surname'      => 'Doe',
+            'email'        => 'johndoe@mail.de',
             'address1'     => 'Main Street 2',
             'address2'     => '',
             'city'         => 'Flensburg',

@@ -14,9 +14,9 @@
                 <button type="button" class="btn-close" @click="close">×</button>
             </header>
 
-            <section v-for="zone in profile.zones" class="mb-6">
+            <section v-for="zone in profile.zones" class="mb-6 max-w-md">
                 <header class="mb-1 flex items-start leading-none">
-                    <svg class="mr-2 text-grey-70" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <svg class="mr-2 text-grey-70 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
                     <section>
                         <h3 class="block text-2xl">
                             {{ zone.title }}
@@ -24,8 +24,8 @@
                                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path></svg>
                             </button>
                         </h3>
-                        <ul class="flex leading-loose text-grey-70">
-                            <li class="mr-1" v-for="country in zone.country_names">{{ country }}</li>
+                        <ul class="flex flex-wrap leading-loose text-grey-70 list-disc list-inside">
+                            <li class="mr-2" v-for="country in zone.country_names">{{ country }}</li>
                         </ul>
                     </section>
                 </header>

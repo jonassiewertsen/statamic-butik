@@ -41,6 +41,15 @@ class MoneyTraitTest extends TestCase
     }
 
     /** @test */
+    public function a_price_can_be_forced_to_return_as_defined_in_the_config()
+    {
+        $original = '5.32';
+        $converted = $this->humanPrice($original);
+
+        $this->assertEquals('5,32', $converted);
+    }
+
+    /** @test */
     public function does_not_care_about_dot_or_commas()
     {
         $original = '5.32';
@@ -50,11 +59,29 @@ class MoneyTraitTest extends TestCase
     }
 
     /** @test */
-    public function Amounts_will_be_made_human_again()
+    public function amounts_will_be_made_human_again()
     {
         $original = '543';
         $converted = $this->makeAmountHuman($original);
 
         $this->assertEquals('5,43', $converted);
+    }
+
+    /** @test */
+    public function will_return_a_human_price_with_dot()
+    {
+        $original = '5,43';
+        $converted = $this->humanPriceWithDot($original);
+
+        $this->assertEquals('5.43', $converted);
+    }
+
+    /** @test */
+    public function will_return_a_human_price_with_dot_always_with_2_decimals_after_the_comma()
+    {
+        $original = '0';
+        $converted = $this->humanPriceWithDot($original);
+
+        $this->assertEquals('0.00', $converted);
     }
 }

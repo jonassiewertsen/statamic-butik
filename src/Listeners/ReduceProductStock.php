@@ -3,19 +3,17 @@
 namespace Jonassiewertsen\StatamicButik\Listeners;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Cache;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
+use Statamic\Facades\Entry;
 use Statamic\Support\Str;
 
 class ReduceProductStock implements ShouldQueue
 {
-    use SerializesModels;
-
     public function handle($event)
     {
-        $items = $event->transaction->items;
+        $items = $event->order->items;
 
         foreach ($items as $item) {
             /**
@@ -63,7 +61,7 @@ class ReduceProductStock implements ShouldQueue
      */
     private function isVariant($item)
     {
-        return Str::contains($item->id, '::');
+        return Str::contains($item->slug, '::');
     }
 
     /**
@@ -71,7 +69,7 @@ class ReduceProductStock implements ShouldQueue
      */
     private function getProduct($item)
     {
-        $slug = Str::of($item->id)->explode('::')[0];
+        $slug = Str::of($item->slug)->explode('::')[0];
 
         return Product::find($slug);
     }
@@ -81,9 +79,9 @@ class ReduceProductStock implements ShouldQueue
      */
     private function getVariant($item)
     {
-        $id = Str::of($item->id)->explode('::')[1];
+        $variantSlug = Str::of($item->slug)->explode('::')[1];
 
-        return Variant::find($id);
+        return Variant::find($variantSlug);
     }
 
     /**
@@ -101,7 +99,11 @@ class ReduceProductStock implements ShouldQueue
     private function reduceParent($item)
     {
         $product = $this->getProduct($item);
-        $product->stock -= $item->quantity;
+        $newStock = $product->stock - $item->quantity;
+
+        // Change will be made to the original entry
+        $product = Entry::findBySlug($product->slug, 'products');
+        $product->set('stock', $newStock);
         $product->save();
     }
 }

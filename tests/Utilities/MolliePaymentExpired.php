@@ -13,7 +13,7 @@ class MolliePaymentExpired extends MollieResponse {
     public $id          = "tr_fake_id";
     public $mode;
     public $amount      = "20.00";
-    public $expiresAt;
+    public $expiredAt   = "2020-01-24T14:58:06+00:00";
     public $failedAt    = "2020-01-21T14:58:10+00:00";
     public $settlementAmount;
     public $amountRefunded;

@@ -2,163 +2,163 @@
 
 namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
+use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class ProductTest extends TestCase
 {
-    /** @test */
-    public function it_is_available_as_default()
+    use MoneyTrait;
+
+    public $product;
+
+    public function setUp(): void
     {
-        create(Product::class)->first();
-        $this->assertTrue(Product::first()->available);
+        parent::setUp();
+        $this->product = $this->makeProduct();
     }
 
     /** @test */
-    public function it_has_a_tax_percentage()
+    public function all_products_can_be_fetched()
     {
-        $product = create(Product::class)->first();
-        $this->assertEquals($product->tax->percentage, $product->tax_percentage);
-    }
-
-    /** @test */
-    public function it_has_tax_amount()
-    {
-        $product = create(Product::class)->first();
-
-        $divisor = $product->tax->percentage + 100;
-        $price   = $product->getRawOriginal('price');
-
-        $totalPriceWithoutTax = $price / $divisor * 100;
-        $tax                  = $product->makeAmountHuman($price - $totalPriceWithoutTax);
-        $this->assertEquals($tax, $product->tax_amount);
-    }
-
-    /** @test */
-    public function the_currency_will_be_converted_correctly()
-    {
-        $product = create(Product::class, ['price' => 2]);
-        $this->assertEquals('2,00', $product->first()->price);
-    }
-
-    /** @test */
-    public function the_currency_will_be_saved_without_decimals()
-    {
-        create(Product::class, ['price' => '2,00']);
-        $this->assertEquals('200', Product::first()->getRawOriginal('price'));
-    }
-
-    /** @test */
-    public function it_has_a_edit_url()
-    {
-        $product = create(Product::class)->first();
-
-        $this->assertEquals(
-            $product->editUrl,
-            '/' . config('statamic.cp.route') . "/butik/products/{$product->slug}/edit"
-        );
-    }
-
-    /** @test */
-    public function it_has_a_show_url()
-    {
-        $product = create(Product::class)->first();
-
-        $uri_prefix = config('butik.route_shop-prefix');
-        $this->assertEquals(
-            "/shop/{$product->slug}",
-            $product->showUrl
-        );
+        $this->assertCount(1, Product::all());
+        $this->assertInstanceOf('Illuminate\Support\Collection', Product::all());
     }
 
     /** @test */
     public function it_has_a_tax()
     {
-        $product = create(Product::class)->first();
+        $tax                   = create(Tax::class)->first();
+        $this->product->tax_id = $tax->slug;
 
-        $this->assertInstanceOf(Tax::class, $product->tax);
+        $this->assertInstanceOf(Tax::class, $this->product->tax);
+    }
+
+    /** @test */
+    public function it_has_tax_amount()
+    {
+        $tax                   = create(Tax::class)->first();
+        $this->product->tax_id = $tax->slug;
+
+        $divisor = $this->product->tax->percentage / 100 + 1;
+        $price   = $this->product->price = '10.00';
+
+        $priceWithoutTax = round($price / $divisor, 2);
+        $expectedAmount  = number_format($price - $priceWithoutTax, 2, ',', '');
+
+        $this->assertEquals($expectedAmount, $this->product->tax_amount);
+    }
+
+    /** @test */
+    public function it_has_a_tax_percentage()
+    {
+        $tax                   = create(Tax::class)->first();
+        $this->product->tax_id = $tax->slug;
+
+        $this->assertEquals($tax->percentage, $this->product->tax_percentage);
+    }
+
+    /** @test */
+    public function it_has_a_show_url()
+    {
+        $this->assertEquals(
+            "/shop/{$this->product->slug}",
+            $this->product->show_url
+        );
     }
 
     /** @test */
     public function it_is_sold_out_if_the_stock_is_null()
     {
-        $product = create(Product::class, ['stock' => 0, 'stock_unlimited' => false])->first();
+        $this->product->stock_unlimited = false;
+        $this->product->stock           = 0;
 
-        $this->assertTrue($product->soldOut);
+        $this->assertTrue($this->product->sold_out);
     }
 
     /** @test */
     public function it_is_not_sold_out_if_the_product_is_unlimited()
     {
-        $product = create(Product::class, ['stock' => 0, 'stock_unlimited' => true])->first();
+        $this->product->stock_unlimited = true;
+        $this->product->stock           = 0;
 
-        $this->assertFalse($product->soldOut);
+        $this->assertFalse($this->product->sold_out);
     }
 
     /** @test */
     public function it_has_a_currency()
     {
-        $product = create(Product::class)->first();
-
-        $this->assertEquals($product->currency, '€');
+        $this->assertEquals($this->product->currency, '€');
     }
 
     /** @test */
     public function it_belongs_to_a_shipping_profile()
     {
-        $product = create(Product::class)->first();
+        $profile                              = create(ShippingProfile::class)->first();
+        $this->product->shipping_profile_slug = $profile->slug;
 
-        $this->assertInstanceOf(ShippingProfile::class, $product->shippingProfile);
+        $this->assertInstanceOf(ShippingProfile::class, $this->product->shipping_profile);
     }
 
     /** @test */
     public function it_has_many_categories()
     {
-        $product = create(Product::class)->first();
-
-        $this->assertInstanceOf('Illuminate\Support\Collection', $product->categories);
+        $this->assertInstanceOf('Illuminate\Support\Collection', $this->product->categories);
     }
 
     /** @test */
     public function it_has_many_variants()
     {
-        $product = create(Product::class)->first();
-
-        $this->assertInstanceOf('Illuminate\Support\Collection', $product->variants);
+        $this->assertInstanceOf('Illuminate\Support\Collection', $this->product->variants);
     }
 
     /** @test */
     public function a_product_can_return_the_belonging_variant()
     {
-        $variant = create(Variant::class)->first();
-        $product = $variant->product;
+        $variant = create(Variant::class, [
+            'product_slug' => $this->product->slug,
+        ])->first();
 
         $this->assertEquals(
             $variant->title,
-            $product->getVariant($variant->original_title)->title
+            $this->product->getVariant($variant->original_title)->title
         );
     }
 
     /** @test */
     public function a_product_will_return_null_if_the_belonging_variant_does_not_exist()
     {
-        $variant = create(Variant::class)->first();
-        $product = $variant->product;
+        create(Variant::class, [
+            'product_slug' => $this->product->slug,
+        ])->first();
 
-        $this->assertEquals(null, $product->getVariant('not existing'));
+        $this->assertEquals(null, $this->product->getVariant('not existing'));
     }
 
     /** @test */
     public function a_product_can_check_if_variants_do_exist()
     {
-        $product = create(Product::class)->first();
-        $this->assertFalse(Product::first()->hasVariants());
+        $this->assertFalse($this->product->hasVariants());
 
-        create(Variant::class, ['product_slug' => $product->slug])->first();
+        create(Variant::class, [
+            'product_slug' => $this->product->slug,
+        ])->first();
 
-        $this->assertTrue(Product::first()->hasVariants());
+        $this->assertTrue($this->product->hasVariants());
+    }
+
+    /** @test */
+    public function we_can_check_if_a_variant_does_exist()
+    {
+        $this->assertFalse($this->product->variantExists('not existing'));
+
+        $variant = create(Variant::class, [
+            'product_slug' => $this->product->slug,
+        ])->first();
+
+        $this->assertTrue($this->product->variantExists($variant->original_title));
     }
 }

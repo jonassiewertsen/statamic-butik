@@ -11,17 +11,6 @@ class CreateCountryShippingZoneTable extends Migration
         Schema::create('butik_country_shipping_zone', function (Blueprint $table) {
             $table->string('shipping_zone_id')->nullable()->index();
             $table->string('country_slug')->nullable()->index();
-
-            $table->foreign('shipping_zone_id')
-                ->references('id')
-                ->on('butik_shipping_zones')
-                ->onDelete('cascade')
-                ->onDelete('cascade');
-
-            $table->foreign('country_slug')
-                ->references('slug')
-                ->on('butik_countries')
-                ->onDelete('cascade');
         });
     }
 

@@ -1,0 +1,38 @@
+<section class="{{ sellable ? '' : 'bg-danger-light' }} flex border-gray-light border-b pb-8 mb-8 w-full">
+    <main class="flex flex-1 items-center">
+        {{ if images }}
+            {{ images limit='1' }}
+                <img class="w-40 h-40 rounded-xl shadow object-cover mr-5" src="{{ glide:url width='160' height='160' }}" alt="{{ alt }}">
+            {{ /images }}
+        {{ else }}
+            <div class="flex items-center w-40 h-40 rounded-xl shadow object-cover mr-5">
+                {{ partial src='butik::web.components.placeholder-image' }}
+            </div>
+        {{ /if }}
+        <div>
+            <h3 class="font-bold text-dark block text-2xl">{{ name }}</h3>
+            <span class="text-gray text-xl">{{ currency }} {{ single_price }}</span>
+        </div>
+    </main>
+    <aside class="flex align-center pl-20">
+        <div class="flex flex-col items-end justify-center">
+            <span class="block font-bold text-2xl">{{ quantity }}</span>
+            <span class="text-gray text-xl">
+                {{ if sellable }}
+                    {{ currency }} {{ total_price }}
+                {{ else }}
+                    <s>{{ currency }} {{ total_price }}</s>
+                {{ /if }}
+            </span>
+        </div>
+        <div class="flex flex-col justify-center leading-none pl-6 text-3xl text-gray">
+            <button wire:click="add('{{ slug }}')" class="border-l border-t border-r px-2 py-1 rounded-t {{ if availableStock <= quantity }}cursor-not-allowed border-gray-light text-gray-light{{ /if }}">+</button>
+            <button wire:click="reduce('{{ slug }}')" class="border px-2 py-1 rounded-b">-</button>
+        </div>
+    </aside>
+
+</section>
+
+{{ if ! sellable }}
+    <p>{{ 'butik::web.not_available_in_country' | trans }}</p>
+{{ /if }}

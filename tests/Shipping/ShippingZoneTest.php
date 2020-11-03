@@ -2,9 +2,9 @@
 
 namespace Jonassiewertsen\StatamicButik\Tests\Shipping;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Shipping;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
+use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class ShippingZoneTest extends TestCase
@@ -28,5 +28,12 @@ class ShippingZoneTest extends TestCase
     {
         $shippingZone = create(ShippingZone::class)->first();
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $shippingZone->rates);
+    }
+
+    /** @test */
+    public function it_belongs_to_a_tax()
+    {
+        $shippingZone = create(ShippingZone::class)->first();
+        $this->assertInstanceOf(Tax::class, $shippingZone->tax);
     }
 }

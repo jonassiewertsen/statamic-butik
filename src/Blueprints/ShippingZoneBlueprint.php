@@ -2,8 +2,8 @@
 
 namespace Jonassiewertsen\StatamicButik\Blueprints;
 
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
+use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Statamic\Facades\Blueprint as StatamicBlueprint;
 use Symfony\Component\Intl\Countries;
 
@@ -20,7 +20,7 @@ class ShippingZoneBlueprint extends Blueprint
                             'handle' => 'title',
                             'field'  => [
                                 'type'     => 'text',
-                                'width'    => '50',
+                                'width'    => '100',
                                 'display'  => __('butik::cp.name'),
                                 'validate' => 'required',
                             ],
@@ -30,9 +30,21 @@ class ShippingZoneBlueprint extends Blueprint
                             'field'  => [
                                 'type'     => 'select',
                                 'width'    => '50',
+                                'default'  => 'price',
                                 'options'  => $this->shippingTypes(),
                                 'display'  => __('butik::cp.type'),
                                 'validate' => 'required',
+                            ],
+                        ],
+                        [
+                            'handle' => 'tax_slug',
+                            'field'  => [
+                                'type'     => 'select',
+                                'width'    => '50',
+                                'default'  => __('butik::cp.tax_none'),
+                                'options'  => $this->fetchTaxOptions(),
+                                'display'  => __('butik::cp.tax_plural'),
+                                'validate' => 'nullable',
                             ],
                         ],
                         [
@@ -103,9 +115,10 @@ class ShippingZoneBlueprint extends Blueprint
         );
     }
 
-    private function fetchShippingProfiles(): array
-    {
-        return ShippingProfile::pluck('title', 'slug')->toArray();
+    private function fetchTaxOptions(): array {
+        $taxes =  Tax::pluck('title', 'slug')->toArray();
+        // Prepending a no tax option
+        return ['' => __('butik::cp.tax_none')] + $taxes;
     }
 
     private function shippingTypes(): array

@@ -2,11 +2,11 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 
+use Illuminate\Support\Collection;
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 use Jonassiewertsen\StatamicButik\Http\Models\Category;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Statamic\View\View as StatamicView;
-
 
 class ShopController extends WebController
 {
@@ -16,22 +16,26 @@ class ShopController extends WebController
             ->template(config('butik.template_product-index'))
             ->layout(config('butik.layout_product-index'))
             ->with([
-                'products' => $this->fetchProducts(),
+                'products' => $this->convertToArray($this->fetchProducts()),
             ]);
     }
 
     public function category(Category $category)
     {
+        $products = $this->convertToArray(Product::fromCategory($category));
+
         return (new StatamicView())
             ->template(config('butik.template_product-category'))
             ->layout(config('butik.layout_product-category'))
             ->with([
-                'products' => $category->products()->orderBy('title')->get(),
+                'products' => $products,
             ]);
     }
 
-    public function show(Product $product, $variant = null)
+    public function show(string $product, $variant = null)
     {
+        $product = Product::find($product);
+
         /**
          * We want to control if the given variant does exist so we can safely show it.
          * If it does not exist, we will redirect to an existing variant
@@ -57,10 +61,18 @@ class ShopController extends WebController
             return $this->redirectToShop();
         }
 
+        if ($product->hasVariants()) {
+            $variants = $product->variants;
+            $variant  = $variants->firstWhere('original_title', $variant)->toArray();
+            $product  = array_merge((array)$product, $variant, ['variants' => $variants->toArray()]);
+        } else {
+            $product = (array)$product;
+        }
+
         return (new StatamicView())
             ->template(config('butik.template_product-show'))
             ->layout(config('butik.layout_product-show'))
-            ->with(['product' => $product->toAugmentedArray()]);
+            ->with($product);
     }
 
     private function redirectToVariant($product)
@@ -77,33 +89,30 @@ class ShopController extends WebController
     private function fetchProducts()
     {
         $display = config('butik.overview_type', 'newest');
-        $limit   = config ('butik.overview_limit', '6');
 
-        switch($display) {
+        switch ($display) {
             case 'all':
-                return Product::where('available', true)->get();
+                return Product::all();
                 break;
             case 'name':
-                return Product::where('available', true)
-                    ->orderBy('title')
-                    ->limit($limit)
-                    ->get();
-                break;
+                return Product::latestByName();
                 break;
             case 'newest':
-                return Product::where('available', true)
-                    ->orderByDesc('created_at')
-                    ->limit($limit)
-                    ->get();
+                return Product::latest();
                 break;
             case 'cheapest':
-                return Product::where('available', true)
-                    ->orderBy('price')
-                    ->limit($limit)
-                    ->get();
+                return Product::latestByPrice();
                 break;
             default:
-                return Product::where('available', true)->get();
+                return Product::all();
         }
     }
+
+    private function convertToArray(Collection $products)
+    {
+        return $products->transform(function ($entry) {
+            return (array) $entry;
+        });
+    }
+
 }

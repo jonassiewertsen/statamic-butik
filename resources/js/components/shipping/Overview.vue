@@ -125,11 +125,11 @@
             deleteShippingProfile(slug) {
                 axios.delete(`${this.shippingProfileRoute}/${slug}`)
                     .then(() => {
-                        this.showShippingProfileManageStack = null
+                        this.showShippingProfileManageStack = false
                         this.fetchShippingProfiles()
                     })
                     .catch(error => {
-                        this.$toast.error(error)
+                        this.$toast.error('You can\'t delete this shipping profile, if still related to a product.')
                     })
             }
         }

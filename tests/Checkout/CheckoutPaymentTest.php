@@ -19,7 +19,7 @@ class CheckoutPaymentTest extends TestCase
         parent::setUp();
 
         $this->customer = new Customer($this->createUserData());
-        $this->product  = create(Product::class)->first();
+        $this->product  = $this->makeProduct();
 
         Cart::add($this->product->slug);
     }
@@ -37,8 +37,6 @@ class CheckoutPaymentTest extends TestCase
     /** @test */
     public function the_pament_view_will_be_shown()
     {
-        $this->withoutExceptionHandling();
-
         Session::put('butik.customer', $this->customer);
 
         $this->get(route('butik.checkout.payment'))
@@ -53,7 +51,7 @@ class CheckoutPaymentTest extends TestCase
         $this->get(route('butik.checkout.payment'))
             ->assertSee('Pay now')
             ->assertSee('Name')
-            ->assertSee('Mail')
+            ->assertSee('Email')
             ->assertSee('Country')
             ->assertSee('Address line 1')
             ->assertSee('City')
@@ -78,19 +76,19 @@ class CheckoutPaymentTest extends TestCase
     // TODO: Tests to remove products from the cart, which are not available.
 
     /** @test */
-    public function the_payment_page_will_redirect_back_without_a_name()
+    public function the_payment_page_will_redirect_back_without_a_firstname()
     {
-        $this->withoutExceptionHandling();
-        Session::put('butik.customer', new Customer($this->createUserData('name', '')));
+        Session::put('butik.customer', new Customer($this->createUserData('firstname', '')));
 
         $this->get(route('butik.checkout.payment'))
             ->assertRedirect(route('butik.checkout.delivery'));
     }
 
     /** @test */
-    public function the_payment_page_will_redirect_back_without_a_mail()
+    public function the_payment_page_will_redirect_back_without_a_surname()
     {
-        Session::put('butik.customer', new Customer($this->createUserData('mail', '')));
+        $this->withoutExceptionHandling();
+        Session::put('butik.customer', new Customer($this->createUserData('surname', '')));
 
         $this->get(route('butik.checkout.payment'))
             ->assertRedirect(route('butik.checkout.delivery'));
@@ -156,7 +154,7 @@ class CheckoutPaymentTest extends TestCase
 
         $this->get(route('butik.checkout.payment'))
             ->assertOk()
-//            ->assertSee(Cart::totalShipping()) TODO: Add shipping back in again
+            ->assertSee(Cart::totalShipping())
             ->assertSee(Cart::totalPrice());
     }
 
@@ -167,8 +165,9 @@ class CheckoutPaymentTest extends TestCase
         $customer = (array)$this->customer;
 
         $this->get(route('butik.checkout.payment'))
-            ->assertSee($customer['name'])
-            ->assertSee($customer['mail'])
+            ->assertSee($customer['firstname'])
+            ->assertSee($customer['surname'])
+            ->assertSee($customer['email'])
             ->assertSee($customer['address1'])
             ->assertSee($customer['address2'])
             ->assertSee($customer['city'])
@@ -180,8 +179,9 @@ class CheckoutPaymentTest extends TestCase
     {
         $customer = [
             'country'      => 'DE',
-            'name'         => 'John Doe',
-            'mail'         => 'johndoe@mail.de',
+            'firstname'    => 'John',
+            'surname'      => 'Doe',
+            'email'        => 'johndoe@mail.de',
             'address1'     => 'Main Street 2',
             'address2'     => '',
             'city'         => 'Flensburg',

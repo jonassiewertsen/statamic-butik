@@ -4,7 +4,7 @@ namespace Jonassiewertsen\StatamicButik\Checkout;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Shipping\Country;
 use Jonassiewertsen\StatamicButik\Shipping\Shipping;
@@ -16,12 +16,13 @@ class Cart
     public static  $cart;
     private static $totalPrice;
     private static $totalShipping;
+    private static $totalTaxes;
     private static $totalItems;
 
     /**
      * A product can be added to the cart
      */
-    public static function add(string $slug): void
+    public static function add(string $slug, ?string $locale = null): void
     {
         static::$cart = static::get();
 
@@ -30,7 +31,7 @@ class Cart
             static::$cart->firstWhere('slug', $slug)->increase();
         } else {
             // Add new Item
-            static::$cart->push(new Item($slug));
+            static::$cart->push(new Item($slug, $locale ?? locale()));
         }
         static::set(static::$cart);
     }
@@ -44,6 +45,17 @@ class Cart
             Session::get('butik.cart') :
             static::empty();
     }
+
+    /**
+     * Fetch the customer from the session
+     */
+    public static function customer(): ?Customer
+    {
+        return Session::get('butik.customer') !== null ?
+            Session::get('butik.customer') :
+            null;
+    }
+
 
     /**
      * Clear the complete cart
@@ -115,7 +127,7 @@ class Cart
         static::resetTotalPrice();
 
         static::$cart->each(function ($item) {
-            if (!$item->sellable) {
+            if (! $item->sellable) {
                 // We won't charge for non sellable items
                 return;
             }
@@ -127,6 +139,48 @@ class Cart
         $total = static::$totalPrice + static::makeAmountSaveableStatic(static::totalShipping());
 
         return static::makeAmountHumanStatic($total);
+    }
+
+    public static function totalTaxes(): Collection
+    {
+        static::$totalShipping = collect();
+        $taxRates              = [];
+
+        /**
+         * Return an empty collection in case the cart is empty.
+         */
+        if (! static::$cart) {
+            return collect();
+        }
+
+        /**
+         * Let's collect all tax rates first
+         */
+        foreach (static::$cart as $item) {
+            if (! in_array($item->taxRate, $taxRates)) {
+                $taxRates[] = $item->taxRate;
+            }
+        }
+
+        /**
+         * We will loop through all tax rates and sum the amounts.
+         */
+        foreach ($taxRates as $taxRate) {
+            $totalTaxAmount = static::$cart
+                ->where('taxRate', $taxRate)->map(function ($item) {
+                    return static::makeAmountSaveableStatic($item->taxAmount);
+                })->sum();
+
+            $totalTaxAmount = static::makeAmountHumanStatic($totalTaxAmount);
+
+            // For better access in antlers views, the amount and rate will get added as an array.
+            static::$totalShipping->push([
+                'amount' => $totalTaxAmount,
+                'rate'   => $taxRate,
+            ]);
+        }
+
+        return static::$totalShipping;
     }
 
     /**
@@ -163,8 +217,8 @@ class Cart
     {
         static::$cart = static::get();
 
-        $items = static::$cart->each(function ($item) {
-            $item->update();
+        $items = static::$cart->filter(function ($item) {
+            return Product::exists($item->slug) && $item->update();
         });
 
         static::set($items);

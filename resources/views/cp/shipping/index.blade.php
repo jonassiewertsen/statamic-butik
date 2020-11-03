@@ -1,11 +1,11 @@
 @extends('statamic::layout')
-@section('title', ucfirst(__('butik::cp.shipping_plural')))
+@section('title', __('butik::cp.shipping_plural'))
 @section('wrapper_class', 'max-w-lg')
 
 @section('content')
 
     <div class="flex mb-3">
-        <h1 class="flex-1">{{ ucfirst(__('butik::cp.shipping_plural')) }}</h1>
+        <h1 class="flex-1">{{ __('butik::cp.shipping_plural') }}</h1>
     </div>
 
     <butik-shipping-overview

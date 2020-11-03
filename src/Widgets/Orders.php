@@ -20,8 +20,8 @@ class Orders extends Widget {
             ->map(function ($order) {
                 return [
                     'id'           => $order->id,
-                    'customer'     => json_decode($order->customer)->name,
-                    'mail'         => json_decode($order->customer)->mail,
+                    'customer'     => $order->customer->firstname . ' ' . $order->customer->surname,
+                    'email'        => $order->customer->email,
                     'status'       => $order->status,
                     'method'       => $order->method,
                     'total_amount' => $order->total_amount,

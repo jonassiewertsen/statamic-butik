@@ -22,11 +22,10 @@ class OrderConfirmationMailTest extends TestCase
     /** @test */
     public function a_purchase_confirmation_mail_will_be_sent_to_the_customer()
     {
-        $this->withoutExceptionHandling();
         $order = create(Order::class)->first();
 
         $payment     = new MolliePaymentSuccessful();
-        $payment->id = $order->transaction_id;
+        $payment->id = $order->id;
 
         $this->mockMollie($payment);
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $payment->id]);
@@ -40,12 +39,12 @@ class OrderConfirmationMailTest extends TestCase
         $order = create(Order::class)->first();
 
         $payment     = new MolliePaymentSuccessful();
-        $payment->id = $order->transaction_id;
+        $payment->id = $order->id;
         $this->mockMollie($payment);
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $payment->id]);
 
         Mail::assertQueued(PurchaseConfirmation::class, function ($mail) use ($order) {
-            return $mail->hasTo(json_decode($order->customer)->mail);
+            return $mail->hasTo($order->customer->email);
         });
     }
 
@@ -55,7 +54,7 @@ class OrderConfirmationMailTest extends TestCase
         $order = create(Order::class)->first();
 
         $payment     = new MolliePaymentSuccessful();
-        $payment->id = $order->transaction_id;
+        $payment->id = $order->id;
 
         $this->mockMollie($payment);
 
@@ -70,7 +69,7 @@ class OrderConfirmationMailTest extends TestCase
         $order = create(Order::class)->first();
 
         $payment     = new MolliePaymentSuccessful();
-        $payment->id = $order->transaction_id;
+        $payment->id = $order->id;
 
         $this->mockMollie($payment);
         $this->post(route('butik.payment.webhook.mollie'), ['id' => $payment->id]);
@@ -82,7 +81,7 @@ class OrderConfirmationMailTest extends TestCase
 
     public function mockMollie($mock)
     {
-        Mollie::shouldReceive('api->payments->get')
+        Mollie::shouldReceive('api->orders->get')
             ->andReturn($mock);
     }
 }

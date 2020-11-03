@@ -5,6 +5,8 @@ namespace Jonassiewertsen\StatamicButik\Tests\CP;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Statamic\Events\EntryDeleted;
+use Statamic\Facades\Entry;
 
 class VariantDeleteTest extends TestCase
 {
@@ -29,10 +31,13 @@ class VariantDeleteTest extends TestCase
     /** @test */
     public function a_variant_will_be_deleted_if_the_parent_product_gets_deleted()
     {
-        $variant = create(Variant::class)->first();
+        $product = $this->makeProduct();
+
+        create(Variant::class, ['product_slug' => $product->slug]);
         $this->assertCount(1, Variant::all());
 
-        $this->delete(cp_route('butik.products.destroy', Product::first()));
+        $entry = Entry::findBySlug($product->slug, 'products');
+        EntryDeleted::dispatch($entry);
 
         $this->assertCount(0, Variant::all());
     }

@@ -2,8 +2,6 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Traits;
 
-use Illuminate\Support\Str;
-
 /**
  * TODO: Should be refactored into it's own class
  */
@@ -13,7 +11,7 @@ trait MoneyTrait
      * The amount will be made readable. An
      * int of fx 532 will be converted to 5,32
      */
-    public static function makeAmountHumanStatic($value): string
+    public static function makeAmountHumanStatic($value)
     {
         $value = floatval($value) / 100;
 
@@ -36,8 +34,17 @@ trait MoneyTrait
 
     public function humanPriceWithDot($value): string
     {
+        $value = str_replace(',', '.', $value);
+
+        return number_format($value, 2, '.', '.');
+    }
+
+    public function humanPrice($value): string
+    {
+        $value = str_replace(',', '.', $value);
+
         $delimiter = config('butik.currency_delimiter');
-        return str_replace($delimiter, '.', $value);
+        return number_format($value, 2, $delimiter, '.');
     }
 
     /**

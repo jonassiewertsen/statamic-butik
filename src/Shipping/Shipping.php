@@ -47,6 +47,8 @@ class Shipping
         $this->detectUsedShippingProfiles();
 
         foreach ($this->profiles as $profile) {
+            throw_unless($profile, new ButikShippingException('One of your products contains a relationship to a non existing shipping profile. Please check your products and assign all of them a existing shipping profile.'));
+
             $zone  = $this->detectShippingZone($profile);
             $items = $this->filterItems($profile);
 
@@ -85,7 +87,7 @@ class Shipping
     protected function detectUsedShippingProfiles(): void
     {
         $this->items->each(function ($item) {
-            if (!$this->profiles->contains($item->shippingProfile)) {
+            if (! $this->profiles->contains($item->shippingProfile)) {
                 $this->profiles->push($item->shippingProfile);
             }
         });
@@ -94,7 +96,7 @@ class Shipping
     /**
      * The detected shipping zone, belonging to our selected country.
      */
-    protected function detectShippingZone($profile): ?ShippingZone
+    protected function detectShippingZone(ShippingProfile $profile): ?ShippingZone
     {
         return $profile->whereZoneFrom($this->country);
     }
@@ -119,7 +121,7 @@ class Shipping
     {
         $shippingStrategies = config('butik.shipping');
 
-        if (!key_exists($zone->type, $shippingStrategies)) {
+        if (! key_exists($zone->type, $shippingStrategies)) {
             throw new ButikShippingException('We could not find the "' . $zone->type . '" shipping class as defined in your butik config file.');
         }
 

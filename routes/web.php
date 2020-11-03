@@ -1,62 +1,71 @@
 <?php
 
+use App\Http\Middleware\VerifyCsrfToken;
+
 Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\Web')
-    ->prefix(config('butik.route_shop-prefix'))
+    ->prefix(locale_url() . '/' .  config('butik.route_shop-prefix'))
     ->middleware(['web', 'butikRoutes'])
     ->name('butik.')
-    ->group(function() {
+    ->group(function () {
 
-    /**
-     * #################################################################################################################
-     *   Shopping Cart
-     * #################################################################################################################
-     */
-    Route::get(config('butik.route_cart'), 'CartController@index')
-        ->name('cart');
+        /**
+         * #################################################################################################################
+         *   Shopping Cart
+         * #################################################################################################################
+         */
+        Route::get(config('butik.route_cart'), 'CartController@index')
+            ->name('cart');
 
-    /**
-     * #################################################################################################################
-     *   Payment receipt page
-     * #################################################################################################################
-     */
-    Route::get(config('butik.route_payment-receipt'), 'CheckoutController@receipt')
-        ->name('payment.receipt');
+        /**
+         * #################################################################################################################
+         *   Payment receipt page
+         * #################################################################################################################
+         */
+        Route::get(config('butik.route_payment-receipt'), 'CheckoutController@receipt')
+            ->name('payment.receipt');
 
-    /**
-     * #################################################################################################################
-     *   Checkout routes
-     * #################################################################################################################
-     */
-    Route::get(config('butik.route_checkout-delivery'), 'CheckoutController@delivery')
-        ->name('checkout.delivery')
-        ->middleware('cartNotEmpty');
+        /**
+         * #################################################################################################################
+         *   Checkout routes
+         * #################################################################################################################
+         */
+        Route::get(config('butik.route_checkout-delivery'), 'CheckoutController@delivery')
+            ->name('checkout.delivery')
+            ->middleware('cartNotEmpty');
 
-    Route::post(config('butik.route_checkout-delivery'), 'CheckoutController@saveCustomerData')
-        ->name('checkout.delivery')
-        ->middleware('cartNotEmpty');
+        Route::post(config('butik.route_checkout-delivery'), 'CheckoutController@storeCustomerData')
+            ->name('checkout.delivery.store')
+            ->middleware('cartNotEmpty');
 
-    Route::get(config('butik.route_checkout-payment'), 'CheckoutController@payment')
-        ->name('checkout.payment')
-        ->middleware(['cartNotEmpty', 'validateCheckoutRoute']);
+        Route::get(config('butik.route_checkout-payment'), 'CheckoutController@payment')
+            ->name('checkout.payment')
+            ->middleware(['cartNotEmpty', 'validateCheckoutRoute']);
 
-    Route::get('process/payment', 'PaymentGatewayController@processPayment')
-        ->name('payment.process')
-        ->middleware(['cartNotEmpty', 'validateCheckoutRoute']);
+        Route::get('process/payment', 'PaymentGatewayController@processPayment')
+            ->name('payment.process')
+            ->middleware(['cartNotEmpty', 'validateCheckoutRoute']);
 
-    /**
-     * #################################################################################################################
-     *   Shop pages
-     * #################################################################################################################
-     */
-    Route::get('/', 'ShopController@index')
-        ->name('shop');
+        /**
+         * #################################################################################################################
+         *   Shop pages
+         * #################################################################################################################
+         */
+        if (config('butik.shop_route_active')) {
+            Route::get('/', 'ShopController@index')
+                ->name('shop');
+        }
 
-    Route::get(config('butik.route_category'), 'ShopController@category')
-        ->name('shop.category');
+        if (config('butik.category_route_active')) {
+            Route::get(config('butik.route_category'), 'ShopController@category')
+                ->name('shop.category');
+        }
 
-    Route::get('{product}/{variant?}', 'ShopController@show')
-        ->name('shop.product');
-});
+        if (config('butik.product_route_active')) {
+            Route::get('{product}/{variant?}', 'ShopController@show')
+                ->name('shop.product');
+        }
+
+    });
 
 /**
  * #################################################################################################################
@@ -64,4 +73,5 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\Web')
  * #################################################################################################################
  */
 Route::post('butik/webhook/mollie', '\\Jonassiewertsen\\StatamicButik\\Http\\Controllers\\Web\\PaymentGatewayController@webhook')
-    ->name('butik.payment.webhook.mollie');
+    ->name('butik.payment.webhook.mollie')
+    ->withoutMiddleware([VerifyCsrfToken::class]);

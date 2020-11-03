@@ -3,8 +3,9 @@
 namespace Jonassiewertsen\StatamicButik\Checkout;
 
 class Customer {
-    public ?string $name;
-    public ?string $mail;
+    public ?string $firstname;
+    public ?string $surname;
+    public ?string $email;
     public ?string $address1;
     public ?string $address2;
     public ?string $city;
@@ -19,9 +20,14 @@ class Customer {
         }
     }
 
+    public function name(): string
+    {
+        return $this->firstname . ' ' . $this->surname;
+    }
+
     public function empty(): self {
 
-        $fields = ['name', 'mail', 'address1', 'address2', 'city', 'stateRegion', 'zip', 'phone', 'country'];
+        $fields = ['firstname', 'surname', 'email', 'phone', 'address1', 'address2', 'city', 'stateRegion', 'zip', 'phone', 'country'];
 
         foreach ($fields as $field) {
             $this->$field = '';
@@ -30,13 +36,18 @@ class Customer {
         return $this;
     }
 
-    public function name($value): self {
-        $this->name = $value;
+    public function firstname($value): self {
+        $this->firstname = $value;
         return $this;
     }
 
-    public function mail($value): self {
-        $this->mail = $value;
+    public function surname($value): self {
+        $this->surname = $value;
+        return $this;
+    }
+
+    public function email($value): self {
+        $this->email = $value;
         return $this;
     }
 

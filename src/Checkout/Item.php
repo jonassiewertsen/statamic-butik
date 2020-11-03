@@ -3,12 +3,14 @@
 
 namespace Jonassiewertsen\StatamicButik\Checkout;
 
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\Product as ProductModel;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
+use Statamic\Facades\Site;
+use Statamic\Fields\Value;
 
 class Item
 {
@@ -37,12 +39,17 @@ class Item
     /**
      * The images of the item
      */
-    public ?Collection $images;
+    public ?Value $images;
 
     /**
      * The item name
      */
     public string $name;
+
+    /**
+     * The locale the item has been added from
+     */
+    public ?string $locale;
 
     /**
      * The description, shortened to 100 characters
@@ -52,12 +59,17 @@ class Item
     /**
      * The product the item does base on
      */
-    public Product $product;
+    public ProductModel $product;
 
     /**
      * The variant we do use. Null if not defined
      */
     public Variant $variant;
+
+    /**
+     * The tax amount of the product
+     */
+    public string $taxAmount;
 
     /**
      * The taxrate of the product
@@ -79,28 +91,31 @@ class Item
      */
     private string $totalPrice;
 
-    public function __construct(string $slug)
+    public function __construct(string $slug, ?string $locale = null)
     {
-        $this->slug = $slug;
+        $this->slug   = $slug;
+        $this->locale = $locale;
 
+        $this->setCurrentLocale();
         $item = $this->defineItemData();
 
         $this->available       = $item->available;
         $this->sellable        = true;
         $this->quantity        = 1;
-        $this->availableStock  = $item->stock;
-        $this->name            = $item->title;
-        $this->images          = $this->product->augmentedValue('images')->value();
+        $this->availableStock  = (int)$item->stock;
+        $this->singlePrice     = (string)$item->price;
+        $this->name            = (string)$item->title;
+        $this->images          = $this->convertImage($this->product->images);
         $this->description     = $this->limitedDescription();
         $this->taxRate         = $item->tax->percentage;
-        $this->singlePrice     = $item->price;
+        $this->taxAmount       = $this->totalTaxAmount();
         $this->totalPrice      = $this->totalPrice();
-        $this->shippingProfile = $item->shippingProfile;
+        $this->shippingProfile = $item->shipping_profile;
     }
 
     public function increase()
     {
-        if ($this->getQuantity() >= $this->item()->stock) {
+        if (! $this->isIncreasable()) {
             $this->setQuantityToStock();
             return;
         }
@@ -156,15 +171,22 @@ class Item
         $this->sellable = false;
     }
 
-    public function update(): void
+    public function update(): bool
     {
+        /**
+         * We won't update the cart, if the product does not exist anymore.
+         */
+        if (! Product::exists($this->productSlug())) {
+            return false;
+        }
+
         $this->defineItemData();
 
-        if (!$this->StockAvailable()) {
+        if (! $this->StockAvailable() && ! $this->isIncreasable()) {
             $this->setQuantityToStock();
         }
 
-        if (!$this->item()->available) {
+        if (! $this->item()->available) {
             $this->quantity = 0;
         }
 
@@ -173,6 +195,34 @@ class Item
         $this->singlePrice    = $this->item()->price;
         $this->description    = $this->limitedDescription();
         $this->totalPrice     = $this->totalPrice();
+        $this->taxAmount      = $this->totalTaxAmount();
+
+        return true;
+    }
+
+    public function totalTaxAmount()
+    {
+        $totalPrice = $this->makeAmountSaveable($this->totalPrice());
+        $tax        = $totalPrice * ($this->taxRate / (100 + $this->taxRate));
+        return $this->makeAmountHuman($tax);
+    }
+
+    protected function isVariant()
+    {
+        return Str::contains($this->slug, '::');
+    }
+
+    private function isIncreasable()
+    {
+        if ($this->item()->stock_unlimited) {
+            return true;
+        }
+
+        if ($this->getQuantity() < $this->item()->stock) {
+            return true;
+        }
+
+        return false;
     }
 
     private function limitedDescription()
@@ -180,11 +230,11 @@ class Item
         return Str::limit($this->product()->description, 100, '...');
     }
 
-    private function product(): Product
+    private function product(): ProductModel
     {
-        $cacheName = "product:{$this->productSlug()}";
+        $cacheName = "product:{$this->productSlug()}:{$this->locale}";
 
-        return Cache::remember($cacheName, 300, function () {
+        return Cache::remember($cacheName, 20, function () {
             return Product::find($this->productSlug());
         });
     }
@@ -199,13 +249,10 @@ class Item
         return $this->getQuantity() <= $this->item()->stock;
     }
 
-    protected function isVariant()
-    {
-        return Str::contains($this->slug, '::');
-    }
-
     private function defineItemData()
     {
+        Site::setCurrent($this->locale);
+
         if ($this->isVariant()) {
             $this->product = $this->product();
             return $this->variant = Variant::find($this->variantSlug());
@@ -214,7 +261,8 @@ class Item
         }
     }
 
-    private function productSlug() {
+    private function productSlug()
+    {
         if (! $this->isVariant()) {
             return $this->slug;
         }
@@ -222,7 +270,8 @@ class Item
         return Str::of($this->slug)->explode('::')[0];
     }
 
-    private function variantSlug() {
+    private function variantSlug()
+    {
         if (! $this->isVariant()) {
             return null;
         }
@@ -232,8 +281,22 @@ class Item
 
     private function item()
     {
-       return $this->isVariant() ?
-           $this->variant :
-           $this->product;
+        return $this->isVariant() ?
+            $this->variant :
+            $this->product;
+    }
+
+    private function convertImage($images)
+    {
+        if (! $images) {
+            return null;
+        }
+
+        return $images;
+    }
+
+    private function setCurrentLocale(): void
+    {
+        Site::setCurrent($this->locale);
     }
 }

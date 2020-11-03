@@ -2,6 +2,9 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Models;
 
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Illuminate\Support\Collection;
+
 class Tax extends ButikModel
 {
     protected $table        = 'butik_taxes';
@@ -19,8 +22,9 @@ class Tax extends ButikModel
         return 'slug';
     }
 
-    public function products() {
-        return $this->hasMany(Product::class, 'tax_id');
+    public function getProductsAttribute(): Collection
+    {
+        return Product::where('tax_id', $this->slug)->get();
     }
 
     public function editUrl()

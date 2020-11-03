@@ -2,12 +2,16 @@
 @section('title', 'Test')
 
 @section('content')
-    <h2 class="mt-4 mb-2 font-bold text-xl">{{ __('butik::cp.order_singular') }}</h2>
+    <h2 class="mt-4 mb-2 font-bold text-xl">{{ __('butik::cp.order_singular') }} {{ $order->number }}</h2>
     <div class="card p-0">
         <table class="data-table">
             <tr>
-                <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.id') }}</th>
+                <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.order_singular') }} {{ __('butik::cp.id') }}</th>
                 <td>{{ $order->id }}</td>
+            </tr>
+            <tr>
+                <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.order_singular') }} {{ __('butik::cp.order_number') }}</th>
+                <td>{{ $order->number }}</td>
             </tr>
             <tr>
                 <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.status') }}</th>
@@ -29,7 +33,7 @@
             @endif
             @if ($order->paid_at)
                 <tr>
-                    <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.pait_at') }}</th>
+                    <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.paid_at') }}</th>
                     <td>{{ $order->paid_at }}</td>
                 </tr>
             @elseif ($order->failed_at)
@@ -50,11 +54,11 @@
         <table class="data-table">
             <tr>
                 <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.name') }}</th>
-                <td>{{ $customer->name }}</td>
+                <td>{{ $customer->firstname }} {{ $customer->surname }}</td>
             </tr>
             <tr>
-                <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.mail') }}</th>
-                <td>{{ $customer->mail }}</td>
+                <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.email') }}</th>
+                <td>{{ $customer->email }}</td>
             </tr>
             <tr>
                 <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.address') }}</th>
@@ -71,6 +75,12 @@
                 <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.country_singular') }}</th>
                 <td>{{ $customer->country }}</td>
             </tr>
+             @foreach($additionalCustomerInformation as $information)
+                <tr>
+                    <th class="pl-2 py-1 w-1/4">{{ $information['name']  }}</th>
+                    <td>{{ $information['value'] }}</td>
+                </tr>
+            @endforeach
         </table>
     </div>
 

@@ -1,6 +1,6 @@
 @extends('statamic::layout')
 
-@section('title', ucfirst(__('butik::cp.tax_form_create')))
+@section('title', __('butik::cp.tax_form_create'))
 @section('wrapper_class', 'max-w-3xl')
 
 @section('content')

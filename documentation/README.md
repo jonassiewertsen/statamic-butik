@@ -2,7 +2,7 @@
 
 
 
-![](.gitbook/assets/butik-logo.svg)
+![](.gitbook/assets/butik.svg)
 
 ## A Statamic e-commerce solution
 
@@ -15,7 +15,8 @@ You can use the light and simple design as offered or customize it according to 
 ## Reach out
 
 * [Github issue tracking](https://github.com/jonassiewertsen/statamic-butik)
-* [Discord Chat \(\#3rd-party\)](https://discord.com/invite/j4aQmZv)
+* [butik Discord Chat](https://discord.gg/KQXyh8)
+* [Statamic Discord Chat \(\#3rd-party\)](https://discord.com/invite/j4aQmZv)
 * [Share your ideas & wishes with me](https://feedback.userreport.com/81c07a00-5ad7-4f63-b28d-503c3a76bfdc/)
 
 ## License
@@ -87,7 +88,8 @@ What Butik can provide:
 
 #### Permissions
 
-* [x] manage your customers user permissions
+* [x] manage permissions for your team
+* [x] manage explicit actions
 
 #### Settings
 
@@ -97,11 +99,11 @@ What Butik can provide:
 * [x] swap layouts AND
 * [x] swap templates
 
-#### Requirements
+### Requirements
 
-* Statamic V3
+* Statamic 3
 * PHP &gt;= 7.4
-* Laravel 7.\*
+* Laravel &gt;= 7.20
 
 ## Payments
 

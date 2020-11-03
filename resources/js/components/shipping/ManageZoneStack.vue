@@ -75,6 +75,7 @@
         mounted() {
             this.values.title = this.zone.title
             this.values.type = this.zone.type
+            this.values.tax_slug = this.zone.tax_slug
             this.values.countries = this.zone.countries
         },
 

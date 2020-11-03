@@ -7,11 +7,14 @@ use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
+use Jonassiewertsen\StatamicButik\Http\Traits\MapCartItems;
 use Jonassiewertsen\StatamicButik\Shipping\Country;
 use Statamic\View\View as StatamicView;
 
 class CheckoutController extends Checkout
 {
+    use MapCartItems;
+
     public function delivery()
     {
         $customer = session()->has('butik.customer') ?
@@ -29,19 +32,26 @@ class CheckoutController extends Checkout
             ]);
     }
 
-    public function saveCustomerData()
+    public function storeCustomerData(array $validatedData)
     {
-        $validatedData = request()->validate($this->rules());
-
+        /**
+         * We will call this controller from the CheckoutFormValidted event
+         * to handle the logic. The form validation will be taken care
+         * of from Statamic.
+         *
+         * Event: InforJonassiewertsen\StatamicButik\Listeners\CheckoutFormValidated;
+         */
         $customer = new Customer($validatedData);
         Session::put('butik.customer', $customer);
+
+
 
         if ($validatedData['country'] !== Cart::country()) {
             Cart::setCountry($validatedData['country']);
             return redirect()->back();
         }
 
-        return redirect()->route('butik.checkout.payment');
+        // The form itself will redirect to our payment page.
     }
 
     public function payment()
@@ -59,48 +69,25 @@ class CheckoutController extends Checkout
 
     public function receipt(Request $request, $order)
     {
-        if (!$request->hasValidSignature()) {
+        if (! $request->hasValidSignature()) {
             return $this->showInvalidReceipt();
         }
 
-        if (!$order = Order::find($order)) {
+        if (! $order = Order::firstWhere('number', $order)) {
             return $this->showInvalidReceipt();
         }
 
         if ($order->status === 'paid') {
             Session::forget('butik.customer');
+            Cart::clear();
         }
 
         return (new StatamicView())
             ->template(config('butik.template_checkout-receipt'))
             ->layout(config('butik.layout_checkout-receipt'))
             ->with([
-                'customer' => (array) json_decode($order->customer),
+                'customer' => (array) $order->customer,
                 'order'    => $order->toArray(),
             ]);
-    }
-
-    /**
-     * Antlers can't handle objects and collections very well.
-     * To make them play nice together, we will return an
-     * array with all needed informations for the
-     * checkout process.
-     */
-    private function mappedCartItems()
-    {
-        return Cart::get()->map(function ($item) {
-            return [
-                'available'      => $item->available,
-                'sellable'       => $item->sellable,
-                'availableStock' => $item->availableStock,
-                'slug'           => $item->slug,
-                'images'         => $item->images,
-                'name'           => $item->name,
-                'description'    => $item->description,
-                'single_price'   => $item->singlePrice(),
-                'total_price'    => $item->totalPrice(),
-                'quantity'       => $item->getQuantity(),
-            ];
-        });
     }
 }
