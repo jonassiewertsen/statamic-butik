@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Shipping;
+namespace DummyNamespace;
 
-class ShippingByPrice extends ShippingType
+class DummyClass extends ShippingType
 {
     /**
      * Calculate the price as you need it. This example will return the price as defined
