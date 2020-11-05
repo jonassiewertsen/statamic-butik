@@ -102,9 +102,10 @@ class Item
         $this->available       = $item->available;
         $this->sellable        = true;
         $this->quantity        = 1;
-        $this->availableStock  = (int)$item->stock;
-        $this->singlePrice     = (string)$item->price;
-        $this->name            = (string)$item->title;
+        $this->availableStock  = (int) $item->stock;
+        $this->unlimited       = (bool) $item->stock_unlimited;
+        $this->singlePrice     = (string) $item->price;
+        $this->name            = (string) $item->title;
         $this->images          = $this->convertImage($this->product->images);
         $this->description     = $this->limitedDescription();
         $this->taxRate         = $item->tax->percentage;
@@ -130,7 +131,7 @@ class Item
             return;
         }
 
-        if ($this->getQuantity() > $this->item()->stock) {
+        if ($this->lessAvailableThenInCart()) {
             $this->setQuantityToStock();
             return;
         }
@@ -247,6 +248,15 @@ class Item
     private function stockAvailable()
     {
         return $this->getQuantity() <= $this->item()->stock;
+    }
+
+    private function lessAvailableThenInCart(): bool
+    {
+        if ($this->unlimited) {
+            return false;
+        }
+
+        return $this->getQuantity() > $this->item()->stock;
     }
 
     private function defineItemData()
