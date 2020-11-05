@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Jonassiewertsen\StatamicButik\Shipping;
-
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;

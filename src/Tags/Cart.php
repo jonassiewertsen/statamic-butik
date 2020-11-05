@@ -3,9 +3,12 @@
 namespace Jonassiewertsen\StatamicButik\Tags;
 
 use Jonassiewertsen\StatamicButik\Checkout\Cart as ShoppingCart;
+use Jonassiewertsen\StatamicButik\Http\Traits\MapCartItems;
 
 class Cart extends \Statamic\Tags\Tags
 {
+    use MapCartItems;
+
     /**
      * Using {{ cart:items }} or {{ bag:items }} is basically
      * the same. Use whatever you prefer personally.
@@ -37,20 +40,7 @@ class Cart extends \Statamic\Tags\Tags
          * array with all needed informations for the
          * checkout process.
          */
-        return ShoppingCart::get()->map(function ($item) {
-            return [
-                'available'      => $item->available,
-                'sellable'       => $item->sellable,
-                'available_stock' => $item->availableStock,
-                'slug'           => $item->slug,
-                'images'         => $item->images,
-                'name'           => $item->name,
-                'description'    => $item->description,
-                'single_price'   => $item->singlePrice(),
-                'total_price'    => $item->totalPrice(),
-                'quantity'       => $item->getQuantity(),
-            ];
-        });
+        return $this->mappedCartItems();
     }
 
     /**
