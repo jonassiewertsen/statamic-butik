@@ -4,7 +4,8 @@ namespace Jonassiewertsen\StatamicButik\Http\Traits;
 
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 
-trait MapCartItems {
+trait MapCartItems
+{
     /**
      * Antlers can't handle objects and collections very well.
      * To make them play nice together, we will return an

@@ -28,7 +28,7 @@ class Country
         $countryCode = strtoupper($countryCode);
 
         if (! self::exists($countryCode)) {
-           return null;
+            return null;
         }
 
         return Countries::getName($countryCode, app()->getLocale());
@@ -53,7 +53,7 @@ class Country
             ->unique()
             ->flatMap(fn ($shippingZone) => $shippingZone->countries)
             ->sort()
-            ->mapWithKeys(fn ($countryCode) => [ $countryCode => self::getName($countryCode) ]);
+            ->mapWithKeys(fn ($countryCode) => [$countryCode => self::getName($countryCode)]);
     }
 
     /**

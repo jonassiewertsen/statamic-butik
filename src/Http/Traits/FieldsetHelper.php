@@ -4,7 +4,8 @@ namespace Jonassiewertsen\StatamicButik\Http\Traits;
 
 use Statamic\Support\Str;
 
-trait FieldsetHelper {
+trait FieldsetHelper
+{
     /**
      * We will check in the requested routes, if we are calling a create route.
      */

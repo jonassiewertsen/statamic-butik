@@ -4,11 +4,11 @@ use Statamic\Facades\Site;
 use Statamic\Support\Str;
 
 /**
- * GLOBAL HELPER for Statamic Butik
+ * GLOBAL HELPER for Statamic Butik.
  */
 
 /**
- * Return the currency symbol
+ * Return the currency symbol.
  */
 if (! function_exists('currency')) {
     function currency()
@@ -18,7 +18,7 @@ if (! function_exists('currency')) {
 }
 
 /**
- * Return the actual used locale
+ * Return the actual used locale.
  */
 if (! function_exists('locale')) {
     function locale()
@@ -28,7 +28,7 @@ if (! function_exists('locale')) {
 }
 
 /**
- * Return the multisite url
+ * Return the multisite url.
  */
 if (! function_exists('locale_url')) {
     function locale_url()

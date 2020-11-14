@@ -3,7 +3,6 @@
 namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
 use Jonassiewertsen\StatamicButik\Http\Models\Product as ProductModel;
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
@@ -15,13 +14,14 @@ class VariantTest extends TestCase
     public Variant $variant;
     public ProductModel $product;
 
-    public function setUp(): void {
+    public function setUp(): void
+    {
         parent::setUp();
 
         $this->product = $this->makeProduct();
 
         $this->variant = create(Variant::class, [
-            'product_slug' => $this->product->slug
+            'product_slug' => $this->product->slug,
         ])->first();
     }
 
@@ -36,7 +36,7 @@ class VariantTest extends TestCase
     {
         $this->assertEquals(
             $this->variant->slug,
-            $this->product->slug . '::' . $this->variant->id
+            $this->product->slug.'::'.$this->variant->id
         );
     }
 
@@ -63,7 +63,7 @@ class VariantTest extends TestCase
     {
         $this->assertEquals(
             $this->variant->title,
-            $this->product->title . ' // ' . $this->variant->getRawOriginal('title')
+            $this->product->title.' // '.$this->variant->getRawOriginal('title')
         );
     }
 
@@ -112,7 +112,7 @@ class VariantTest extends TestCase
         );
     }
 
-       /** @test */
+    /** @test */
     public function the_price_will_be_converted_correctly()
     {
         $product = create(Variant::class, ['price' => 2, 'inherit_price' => false]);

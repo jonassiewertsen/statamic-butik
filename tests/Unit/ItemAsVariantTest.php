@@ -17,13 +17,14 @@ class ItemAsVariantTest extends TestCase
 
     protected ProductModel $product;
 
-    public function setUp(): void {
+    public function setUp(): void
+    {
         parent::setUp();
 
         $this->product = $this->makeProduct();
 
         create(Variant::class, [
-            'product_slug' => $this->product->slug
+            'product_slug' => $this->product->slug,
         ])->first();
 
         $this->variant = Variant::first();

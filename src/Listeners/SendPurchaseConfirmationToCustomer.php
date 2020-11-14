@@ -16,7 +16,7 @@ class SendPurchaseConfirmationToCustomer implements ShouldQueue
         try {
             Mail::to($event->order->customer->email)
                 ->queue(new PurchaseConfirmation($event->order));
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             report($e);
 
             return false;

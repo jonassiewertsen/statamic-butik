@@ -5,13 +5,11 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
 use Illuminate\Http\Request;
 use Jonassiewertsen\StatamicButik\Blueprints\TaxBlueprint;
 use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Statamic\CP\Column;
 
 class TaxesController extends CpController
 {
-
     public function index()
     {
         $this->authorize('index', Tax::class);
@@ -98,7 +96,8 @@ class TaxesController extends CpController
         $tax->delete();
     }
 
-    private function usedByProducts($tax) {
+    private function usedByProducts($tax)
+    {
         return $tax->products->count() !== 0;
     }
 }

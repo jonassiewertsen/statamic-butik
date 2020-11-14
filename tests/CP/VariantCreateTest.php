@@ -54,7 +54,7 @@ class VariantCreateTest extends TestCase
             ->assertSessionHasNoErrors();
     }
 
-// TODO: Not possible at the moment. See Jonassiewertsen\StatamicButik\Http\Controllers\CP\VariantsController
+    // TODO: Not possible at the moment. See Jonassiewertsen\StatamicButik\Http\Controllers\CP\VariantsController
 //    /** @test */
 //    public function a_price_is_required_if_not_inherited()
 //    {
@@ -79,6 +79,7 @@ class VariantCreateTest extends TestCase
     private function createVariant($data = [])
     {
         $variant = raw(Variant::class, $data);
+
         return $this->post(cp_route('butik.variants.store'), $variant);
     }
 }

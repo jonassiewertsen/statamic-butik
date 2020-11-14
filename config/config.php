@@ -4,7 +4,7 @@ return [
 
     /**
      * More detailed information can be found here:
-     * https://butik.dev/installation/configuration
+     * https://butik.dev/installation/configuration.
      *
      *
      * SHOP INFORMATION
@@ -20,7 +20,7 @@ return [
     'mail'     => 'butik@shop.com',
 
     /**
-     * Shop overview
+     * Shop overview.
      *
      * What should be displayed on the start page of butik?
      *
@@ -28,20 +28,19 @@ return [
      * name:     All products ordered by name. The limit will be respected.
      * newest:   Showing the latest added products
      * cheapest: Showing products with the best price first.
-     *
      */
     'overview_type'  => 'newest',
     'overview_limit' => 6,
 
     /**
-     * MAIL
+     * MAIL.
      *
      * Butik will send one confirmation email for every sold product to this address.
      */
     'order-confirmations' => 'your_mail@butik.com',
 
     /**
-     * CURRENCY
+     * CURRENCY.
      *
      * Define your shops currency
      */
@@ -51,14 +50,14 @@ return [
     'currency_delimiter' => ',',
 
     /**
-     * WIDGETS
+     * WIDGETS.
      *
      * Settings for your dashboard widgets
      */
     'widget_orders-limit' => 10,
 
     /**
-     * ROUTING
+     * ROUTING.
      *
      * Customize our custom routes as you need them. You can deactive some routes at all, if you want to
      * use your custom implementation or just rename our routes at all.
@@ -75,7 +74,7 @@ return [
     'route_payment-receipt'   => 'payment/{order}/receipt',     // yourshop.com/shop/payment/xxxxx/receipt
 
     /**
-     * TEMPLATES
+     * TEMPLATES.
      *
      * Define your own templates for the frontend if you want. You can as well edit the
      * given layouts to fit your needs.
@@ -90,7 +89,7 @@ return [
     'template_checkout-receipt-invalid' => 'butik::web.checkout.invalid-receipt',
 
     /**
-     * LAYOUTS
+     * LAYOUTS.
      *
      * Define your own layouts for the frontend if you want. You can as well edit the
      * given layouts to fit your needs.
@@ -105,7 +104,7 @@ return [
     'layout_checkout-receipt-invalid'   => 'layout',
 
     /**
-     * SHIPPING
+     * SHIPPING.
      *
      * If you want, you can implement your own shipping methods or disable those, you don't want to use.
      * https://butik.dev/configuration/shipping
@@ -116,7 +115,7 @@ return [
     ],
 
     /**
-     * PAYMENT
+     * PAYMENT.
      *
      * If you want, you can swap our payment gateway with your own integration.
      * https://butik.dev/extending/payment-gateway

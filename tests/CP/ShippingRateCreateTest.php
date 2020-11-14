@@ -88,5 +88,3 @@ class ShippingRateCreateTestCreateTest extends TestCase
             ->assertSessionHasErrors('shipping_zone_id');
     }
 }
-
-

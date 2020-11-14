@@ -2,8 +2,6 @@
 
 namespace Jonassiewertsen\StatamicButik\Blueprints;
 
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Statamic\Facades\Blueprint as StatamicBlueprint;
 
 class ShippingRateBlueprint extends Blueprint

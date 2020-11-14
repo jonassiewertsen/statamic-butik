@@ -2,10 +2,10 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Illuminate\Support\Collection;
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 use Jonassiewertsen\StatamicButik\Http\Models\Category;
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Statamic\View\View as StatamicView;
 
 class ShopController extends WebController
@@ -55,7 +55,7 @@ class ShopController extends WebController
         }
 
         /**
-         * We won't show unavailable products
+         * We won't show unavailable products.
          */
         if (! $product->available) {
             return $this->redirectToShop();
@@ -63,10 +63,10 @@ class ShopController extends WebController
 
         if ($product->hasVariants()) {
             $variants = $product->variants;
-            $variant  = $variants->firstWhere('original_title', $variant)->toArray();
-            $product  = array_merge((array)$product, $variant, ['variants' => $variants->toArray()]);
+            $variant = $variants->firstWhere('original_title', $variant)->toArray();
+            $product = array_merge((array) $product, $variant, ['variants' => $variants->toArray()]);
         } else {
-            $product = (array)$product;
+            $product = (array) $product;
         }
 
         return (new StatamicView())
@@ -78,6 +78,7 @@ class ShopController extends WebController
     private function redirectToVariant($product)
     {
         $variant = $product->variants->first();
+
         return redirect($variant->show_url);
     }
 
@@ -114,5 +115,4 @@ class ShopController extends WebController
             return (array) $entry;
         });
     }
-
 }

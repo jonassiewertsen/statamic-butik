@@ -12,27 +12,27 @@ class ShippingAmount
     use MoneyTrait;
 
     /**
-     * The Shipping profile title of this shipping amount
+     * The Shipping profile title of this shipping amount.
      */
     public string $profileTitle;
 
     /**
-     * The name of the choosen rate title
+     * The name of the choosen rate title.
      */
     public string $rateTitle;
 
     /**
-     * The Shipping profile slug of this shipping amount
+     * The Shipping profile slug of this shipping amount.
      */
     public string $profileSlug;
 
     /**
-     * The total amount for all items belonging to the named shipping profile
+     * The total amount for all items belonging to the named shipping profile.
      */
     public string $total;
 
     /**
-     * The tax amount for all items belonging for the used shipping
+     * The tax amount for all items belonging for the used shipping.
      */
     public string $taxRate;
     public string $taxAmount;
@@ -40,11 +40,11 @@ class ShippingAmount
     public function __construct(string $total, ShippingProfile $profile, ShippingRate $rate, ?Tax $tax)
     {
         $this->profileTitle = $profile->title;
-        $this->profileSlug  = $profile->slug;
-        $this->rateTitle    = $rate->title;
-        $this->total        = $total;
-        $this->taxRate      = $this->taxRate($tax);
-        $this->taxAmount    = $this->calculateTaxAmount($tax, $total);
+        $this->profileSlug = $profile->slug;
+        $this->rateTitle = $rate->title;
+        $this->total = $total;
+        $this->taxRate = $this->taxRate($tax);
+        $this->taxAmount = $this->calculateTaxAmount($tax, $total);
     }
 
     private function calculateTaxAmount(?Tax $tax, string $amount): string
@@ -52,7 +52,7 @@ class ShippingAmount
         $taxRate = $this->taxPercentage($tax);
 
         // Format values
-        $amount  = str_replace(',', '.', $amount);
+        $amount = str_replace(',', '.', $amount);
         $taxRate = str_replace(',', '.', $taxRate);
         // Calculate tax amount
         $taxAmount = $amount * ($taxRate / (100 + $taxRate));

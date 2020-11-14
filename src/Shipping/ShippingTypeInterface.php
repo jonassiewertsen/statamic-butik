@@ -2,7 +2,6 @@
 
 namespace Jonassiewertsen\StatamicButik\Shipping;
 
-
 use Illuminate\Support\Collection;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 

@@ -2,8 +2,8 @@
 
 namespace Jonassiewertsen\StatamicButik\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Illuminate\Contracts\Validation\Rule;
 
 class ProductSlugExists implements Rule
 {

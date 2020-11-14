@@ -2,12 +2,10 @@
 
 namespace Jonassiewertsen\StatamicButik\Tags;
 
-use Jonassiewertsen\StatamicButik\Checkout\Cart;
-
 class Currency extends \Statamic\Tags\Tags
 {
     /**
-     * {{ currency }}
+     * {{ currency }}.
      *
      * Will return by default the currency symbol
      * Equivalent to {{ currency:symbol }}
@@ -18,7 +16,7 @@ class Currency extends \Statamic\Tags\Tags
     }
 
     /**
-     * {{ currency:symbol }}
+     * {{ currency:symbol }}.
      *
      * Will return by default the currency symbol
      * Equivalent to {{ currency }}
@@ -29,7 +27,7 @@ class Currency extends \Statamic\Tags\Tags
     }
 
     /**
-     * {{ currency:name }}
+     * {{ currency:name }}.
      *
      * Will return the currency name
      */
@@ -39,7 +37,7 @@ class Currency extends \Statamic\Tags\Tags
     }
 
     /**
-     * {{ currency:iso }}
+     * {{ currency:iso }}.
      *
      * Will return the iso code
      */
@@ -49,7 +47,7 @@ class Currency extends \Statamic\Tags\Tags
     }
 
     /**
-     * {{ currency:delimiter }}
+     * {{ currency:delimiter }}.
      *
      * Will return the delimiter
      */

@@ -39,7 +39,7 @@ class ShippingZone extends ButikModel
     }
 
     /**
-     * A shipping zone belongs to a shipping profile
+     * A shipping zone belongs to a shipping profile.
      */
     public function profile()
     {
@@ -47,7 +47,7 @@ class ShippingZone extends ButikModel
     }
 
     /**
-     * A shipping zone belongs to many rates
+     * A shipping zone belongs to many rates.
      */
     public function rates()
     {
@@ -55,7 +55,7 @@ class ShippingZone extends ButikModel
     }
 
     /**
-     * A shipping zone can have taxes
+     * A shipping zone can have taxes.
      */
     public function tax()
     {
