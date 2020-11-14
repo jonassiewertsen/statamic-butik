@@ -7,7 +7,7 @@ use Statamic\Fields\Fieldtype;
 
 class Shipping extends Fieldtype
 {
-    protected $icon       = 'tags';
+    protected $icon = 'tags';
     protected $categories = ['butik'];
     protected $selectable = false;
 

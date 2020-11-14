@@ -5,7 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Tests\CP;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
-class ShippingRateCreateTestCreateTest extends TestCase
+class ShippingRateCreateTest extends TestCase
 {
     public function setUp(): void
     {
@@ -88,5 +88,3 @@ class ShippingRateCreateTestCreateTest extends TestCase
             ->assertSessionHasErrors('shipping_zone_id');
     }
 }
-
-

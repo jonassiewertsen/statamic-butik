@@ -2,11 +2,10 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
 
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Illuminate\Http\Request;
 use Jonassiewertsen\StatamicButik\Blueprints\ShippingProfileBlueprint;
-use Jonassiewertsen\StatamicButik\Exceptions\ButikShippingException;
 use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 
 class ShippingProfilesController extends CpController
@@ -36,7 +35,7 @@ class ShippingProfilesController extends CpController
         $this->authorize('store', ShippingProfile::class);
 
         $blueprint = new ShippingProfileBlueprint();
-        $fields    = $blueprint()->fields()->addValues($request->all());
+        $fields = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
         $values = $fields->process()->values();
         ShippingProfile::create($values->toArray());
@@ -47,7 +46,7 @@ class ShippingProfilesController extends CpController
         $this->authorize('update', $shippingProfile);
 
         $blueprint = new ShippingProfileBlueprint();
-        $fields    = $blueprint()->fields()->addValues($request->all());
+        $fields = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
         $values = $fields->process()->values();
         $shippingProfile->update($values->toArray());

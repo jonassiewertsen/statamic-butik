@@ -2,8 +2,7 @@
 
 namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
-use \Jonassiewertsen\StatamicButik\Http\Models\Tax;
+use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class TaxTest extends TestCase

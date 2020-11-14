@@ -16,34 +16,34 @@ class CartTagTest extends TestCase
         $this->cart = new Cart();
     }
 
-   /** @test */
-   public function it_will_return_the_bag()
-   {
-       $this->assertEquals(ShoppingCart::get(), $this->cart->index(),);
-   }
+    /** @test */
+    public function it_will_return_the_bag()
+    {
+        $this->assertEquals(ShoppingCart::get(), $this->cart->index(), );
+    }
 
     /** @test */
     public function it_will_return_the_bag_items()
     {
-        $this->assertEquals(ShoppingCart::get(), $this->cart->items(),);
+        $this->assertEquals(ShoppingCart::get(), $this->cart->items(), );
     }
 
     /** @test */
     public function it_will_return_the_toal_items()
     {
-        $this->assertEquals(ShoppingCart::totalItems(), $this->cart->totalItems(),);
+        $this->assertEquals(ShoppingCart::totalItems(), $this->cart->totalItems(), );
     }
 
     /** @test */
     public function it_will_return_the_toal_shipping()
     {
-        $this->assertEquals(ShoppingCart::totalShipping(), $this->cart->totalShipping(),);
+        $this->assertEquals(ShoppingCart::totalShipping(), $this->cart->totalShipping(), );
     }
 
     /** @test */
     public function it_will_return_the_toal_price()
     {
-        $this->assertEquals(ShoppingCart::totalPrice(), $this->cart->totalPrice(),);
+        $this->assertEquals(ShoppingCart::totalPrice(), $this->cart->totalPrice(), );
     }
 
     /** @test */

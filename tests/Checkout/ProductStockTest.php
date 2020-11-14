@@ -2,10 +2,10 @@
 
 namespace Jonassiewertsen\StatamicButik\Tests\Checkout;
 
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Illuminate\Support\Facades\Mail;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Order\ItemCollection;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
@@ -26,9 +26,9 @@ class ProductStockTest extends TestCase
     /** @test */
     public function the_prodcut_stock_will_be_reduced_by_one_for_a_single_product_after_checkout()
     {
-        $order   = create(Order::class, ['id' => 'tr_fake_id'])->first();
+        $order = create(Order::class, ['id' => 'tr_fake_id'])->first();
         $product = Product::find($order->items[0]->slug);
-        $stock   = $product->stock;
+        $stock = $product->stock;
 
         $this->assertEquals($stock, $product->stock);
 
@@ -43,7 +43,7 @@ class ProductStockTest extends TestCase
     public function the_prodcut_stock_will_be_reduced_by_the_items_quantity_after_checkout()
     {
         $product = $this->makeProduct();
-        $stock   = $product->stock;
+        $stock = $product->stock;
 
         $item = (new Item($product->slug));
         $item->setQuantity(2);
@@ -68,7 +68,7 @@ class ProductStockTest extends TestCase
     {
         $product = $this->makeProduct();
         $variant = create(Variant::class, ['inherit_stock' => false, 'product_slug' => $product->slug])->first();
-        $stock   = $variant->stock;
+        $stock = $variant->stock;
 
         $item = (new Item($variant->slug));
         $item->setQuantity(2);
@@ -126,7 +126,7 @@ class ProductStockTest extends TestCase
         $order = create(Order::class, ['number' => 'tr_fake_id'])->first();
 
         $product = $this->makeProduct();
-        $entry   = Entry::findBySlug($product->slug, 'products');
+        $entry = Entry::findBySlug($product->slug, 'products');
         $entry->set('stock_unlimited', true)->save();
 
         $stock = $product->stock;

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Jonassiewertsen\StatamicButik\Shipping;
 
 use Illuminate\Support\Collection;
@@ -15,7 +14,7 @@ class Shipping
     use MoneyTrait;
 
     /**
-     * Will save the total shipping amounts
+     * Will save the total shipping amounts.
      */
     public Collection $amounts;
 
@@ -30,14 +29,14 @@ class Shipping
     public Collection $profiles;
 
     /**
-     * The cart including all items in the shopping cart
+     * The cart including all items in the shopping cart.
      */
     public Collection $items;
 
     public function __construct(Collection $cart)
     {
-        $this->items    = $cart;
-        $this->amounts  = collect();
+        $this->items = $cart;
+        $this->amounts = collect();
         $this->profiles = collect();
     }
 
@@ -49,7 +48,7 @@ class Shipping
         foreach ($this->profiles as $profile) {
             throw_unless($profile, new ButikShippingException('One of your products contains a relationship to a non existing shipping profile. Please check your products and assign all of them a existing shipping profile.'));
 
-            $zone  = $this->detectShippingZone($profile);
+            $zone = $this->detectShippingZone($profile);
             $items = $this->filterItems($profile);
 
             // In case no zone could be detected, we will set the items to non sellable.
@@ -121,8 +120,8 @@ class Shipping
     {
         $shippingStrategies = config('butik.shipping');
 
-        if (! key_exists($zone->type, $shippingStrategies)) {
-            throw new ButikShippingException('We could not find the "' . $zone->type . '" shipping class as defined in your butik config file.');
+        if (! array_key_exists($zone->type, $shippingStrategies)) {
+            throw new ButikShippingException('We could not find the "'.$zone->type.'" shipping class as defined in your butik config file.');
         }
 
         return $shippingStrategies[$zone->type];

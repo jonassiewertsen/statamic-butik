@@ -25,7 +25,7 @@ class WithoutTaxTest extends TestCase
         $product = Product::find($slug);
 
         $price = $this->makeAmountSaveable($product->price);
-        $tax   = $this->makeAmountSaveable($product->tax_amount);
+        $tax = $this->makeAmountSaveable($product->tax_amount);
 
         $this->assertEquals(
             $this->makeAmountHuman($price - $tax),

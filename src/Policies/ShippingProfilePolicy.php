@@ -3,8 +3,8 @@
 namespace Jonassiewertsen\StatamicButik\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Statamic\Auth\User;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
+use Statamic\Auth\User;
 
 class ShippingProfilePolicy
 {
@@ -44,5 +44,4 @@ class ShippingProfilePolicy
     {
         return $user->hasPermission('delete shippings');
     }
-
 }

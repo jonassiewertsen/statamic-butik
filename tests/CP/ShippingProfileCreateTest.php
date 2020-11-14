@@ -5,9 +5,10 @@ namespace Jonassiewertsen\StatamicButik\Tests\CP;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
-class ShippingProfileCreateTestCreateTest extends TestCase
+class ShippingProfileCreateTest extends TestCase
 {
-    public function setUp(): void {
+    public function setUp(): void
+    {
         parent::setUp();
 
         $this->signInAdmin();
@@ -43,12 +44,12 @@ class ShippingProfileCreateTestCreateTest extends TestCase
         $slug = 'not-unique';
 
         // First shipping profile
-        $shippingProfile = raw(ShippingProfile::class, ['slug' => $slug ]);
+        $shippingProfile = raw(ShippingProfile::class, ['slug' => $slug]);
         $this->post(route('statamic.cp.butik.shipping-profiles.store'), $shippingProfile)
             ->assertSessionHasNoErrors();
 
         // Another shipping profile with the same slug
-        $shippingProfile = raw(ShippingProfile::class, ['slug' => $slug ]);
+        $shippingProfile = raw(ShippingProfile::class, ['slug' => $slug]);
         $this->post(route('statamic.cp.butik.shipping-profiles.store'), $shippingProfile)
             ->assertSessionHasErrors('slug');
     }

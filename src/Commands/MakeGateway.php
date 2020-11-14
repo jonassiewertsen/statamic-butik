@@ -8,10 +8,10 @@ class MakeGateway extends GeneratorCommand
 {
     use RunsInPlease;
 
-    protected $signature   = 'statamic:butik:gateway';
+    protected $signature = 'statamic:butik:gateway';
     protected $description = 'Creates a boilerplate payment gateway for butik.';
-    protected $stub        = 'PaymentGateway.php.stub';
-    protected $type        = 'Gateway';
+    protected $stub = 'PaymentGateway.php.stub';
+    protected $type = 'Gateway';
 
     public function handle()
     {

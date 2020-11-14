@@ -8,11 +8,8 @@ use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
-use Jonassiewertsen\StatamicButik\Shipping\Country;
-use Jonassiewertsen\StatamicButik\Shipping\ShippingByPrice;
 use Jonassiewertsen\StatamicButik\Shipping\ShippingPerItem;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
-use Statamic\Facades\Entry;
 
 class ShippingPerItemTest extends TestCase
 {
@@ -27,7 +24,7 @@ class ShippingPerItemTest extends TestCase
         parent::setUp();
 
         $shippingProfile = create(ShippingProfile::class)->first();
-        $shippingZone = create(ShippingZone::class,['type' => 'per-item'])->first();
+        $shippingZone = create(ShippingZone::class, ['type' => 'per-item'])->first();
 
         $this->product1 = $this->makeProduct();
         $this->product2 = $this->makeProduct(['shipping_profile_slug' => $shippingProfile->slug]);

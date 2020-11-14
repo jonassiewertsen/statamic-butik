@@ -4,8 +4,8 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
+use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Traits\MapCartItems;
 use Jonassiewertsen\StatamicButik\Shipping\Country;
@@ -25,11 +25,11 @@ class CheckoutController extends Checkout
            ->template(config('butik.template_checkout-delivery'))
            ->layout(config('butik.layout_checkout-delivery'))
            ->with([
-                'customer'         => (array) $customer,
-                'countries'        => Country::list(),
-                'selected_country' => Cart::country(),
-                'items'            => $this->mappedCartItems(),
-            ]);
+               'customer'         => (array) $customer,
+               'countries'        => Country::list(),
+               'selected_country' => Cart::country(),
+               'items'            => $this->mappedCartItems(),
+           ]);
     }
 
     public function storeCustomerData(array $validatedData)
@@ -44,10 +44,9 @@ class CheckoutController extends Checkout
         $customer = new Customer($validatedData);
         Session::put('butik.customer', $customer);
 
-
-
         if ($validatedData['country'] !== Cart::country()) {
             Cart::setCountry($validatedData['country']);
+
             return redirect()->back();
         }
 

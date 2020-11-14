@@ -45,7 +45,7 @@ class MolliePaymentTest extends TestCase
     {
         $order = create(Order::class)->first();
 
-        $paymentResponse     = new MolliePaymentSuccessful();
+        $paymentResponse = new MolliePaymentSuccessful();
         $paymentResponse->id = $order->id;
 
         $this->mockMollie($paymentResponse);
@@ -65,7 +65,7 @@ class MolliePaymentTest extends TestCase
     {
         $order = create(Order::class)->first();
 
-        $paymentResponse     = new MolliePaymentCanceled();
+        $paymentResponse = new MolliePaymentCanceled();
         $paymentResponse->id = $order->id;
 
         $this->mockMollie($paymentResponse);
@@ -94,7 +94,7 @@ class MolliePaymentTest extends TestCase
     {
         $order = create(Order::class)->first();
 
-        $paymentResponse     = new MolliePaymentExpired();
+        $paymentResponse = new MolliePaymentExpired();
         $paymentResponse->id = $order->id;
 
         $this->mockMollie($paymentResponse);
@@ -123,7 +123,7 @@ class MolliePaymentTest extends TestCase
     {
         $order = create(Order::class)->first();
 
-        $paymentResponse     = new MolliePaymentCanceled();
+        $paymentResponse = new MolliePaymentCanceled();
         $paymentResponse->id = $order->id;
 
         $this->mockMollie($paymentResponse);

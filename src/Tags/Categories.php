@@ -8,7 +8,7 @@ use Statamic\Facades\URL;
 class Categories extends \Statamic\Tags\Tags
 {
     /**
-     * {{ categories }}
+     * {{ categories }}.
      *
      * This tag can be used to create a nice menu to switch between categories
      */
@@ -31,7 +31,7 @@ class Categories extends \Statamic\Tags\Tags
     }
 
     /**
-     * {{ categories:count }}
+     * {{ categories:count }}.
      *
      * Will return the number of available categories
      */

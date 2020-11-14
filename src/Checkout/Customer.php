@@ -2,7 +2,8 @@
 
 namespace Jonassiewertsen\StatamicButik\Checkout;
 
-class Customer {
+class Customer
+{
     public ?string $firstname;
     public ?string $surname;
     public ?string $email;
@@ -14,7 +15,8 @@ class Customer {
     public ?string $phone;
     public ?string $country;
 
-    public function __construct(array $data = []) {
+    public function __construct(array $data = [])
+    {
         foreach ($data as $key => $attribute) {
             $this->$key = $attribute;
         }
@@ -22,11 +24,11 @@ class Customer {
 
     public function name(): string
     {
-        return $this->firstname . ' ' . $this->surname;
+        return $this->firstname.' '.$this->surname;
     }
 
-    public function empty(): self {
-
+    public function empty(): self
+    {
         $fields = ['firstname', 'surname', 'email', 'phone', 'address1', 'address2', 'city', 'stateRegion', 'zip', 'phone', 'country'];
 
         foreach ($fields as $field) {
@@ -36,53 +38,73 @@ class Customer {
         return $this;
     }
 
-    public function firstname($value): self {
+    public function firstname($value): self
+    {
         $this->firstname = $value;
+
         return $this;
     }
 
-    public function surname($value): self {
+    public function surname($value): self
+    {
         $this->surname = $value;
+
         return $this;
     }
 
-    public function email($value): self {
+    public function email($value): self
+    {
         $this->email = $value;
+
         return $this;
     }
 
-    public function address1($value): self {
+    public function address1($value): self
+    {
         $this->address1 = $value;
+
         return $this;
     }
 
-    public function address2($value): self {
+    public function address2($value): self
+    {
         $this->address2 = $value;
+
         return $this;
     }
 
-    public function city($value): self {
+    public function city($value): self
+    {
         $this->city = $value;
+
         return $this;
     }
 
-    public function stateRegion($value): self {
+    public function stateRegion($value): self
+    {
         $this->stateRegion = $value;
+
         return $this;
     }
 
-    public function zip($value): self {
+    public function zip($value): self
+    {
         $this->zip = $value;
+
         return $this;
     }
 
-    public function phone($value): self {
+    public function phone($value): self
+    {
         $this->phone = $value;
+
         return $this;
     }
 
-    public function country($value): self {
+    public function country($value): self
+    {
         $this->country = $value;
+
         return $this;
     }
 }

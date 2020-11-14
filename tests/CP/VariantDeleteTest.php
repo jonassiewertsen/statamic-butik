@@ -2,7 +2,6 @@
 
 namespace Jonassiewertsen\StatamicButik\Tests\CP;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 use Statamic\Events\EntryDeleted;

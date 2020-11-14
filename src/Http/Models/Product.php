@@ -2,13 +2,13 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Models;
 
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product as ProductFacade;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product as ProductFacade;
+use Statamic\Entries\Entry as StatamicEntry;
 use Statamic\Entries\EntryCollection;
 use Statamic\Facades\Entry;
-use Statamic\Entries\Entry as StatamicEntry;
 use Statamic\Facades\Site;
 use Statamic\Support\Str;
 
@@ -41,7 +41,7 @@ class Product
         });
     }
 
-    public function find(string $slug): ?Product
+    public function find(string $slug): ?self
     {
         $entry = Entry::query()
             ->where('slug', $slug)
@@ -123,7 +123,7 @@ class Product
             return Variant::exists(Str::of($slug)->explode('::')[1]);
         }
 
-        return (bool)Entry::query()
+        return (bool) Entry::query()
             ->where('slug', $slug)
             ->where('collection', self::COLLECTION_NAME)
             ->where('site', Site::current()->handle())
@@ -136,7 +136,7 @@ class Product
     }
 
     /**
-     * A Product has taxes
+     * A Product has taxes.
      */
     public function tax()
     {
@@ -144,7 +144,7 @@ class Product
     }
 
     /**
-     * A Product has categories
+     * A Product has categories.
      */
     public function categories()
     {
@@ -155,7 +155,7 @@ class Product
     }
 
     /**
-     * A Product has a shipping relation
+     * A Product has a shipping relation.
      */
     public function shippingProfile()
     {
@@ -163,7 +163,7 @@ class Product
     }
 
     /**
-     * A Product has variants
+     * A Product has variants.
      */
     public function variants()
     {
@@ -172,7 +172,7 @@ class Product
 
     /**
      * The product will return the belonging variant. Null will be returned,
-     * in case a variant can't be connected to the given slug
+     * in case a variant can't be connected to the given slug.
      */
     public function getVariant(string $variantTitle)
     {
@@ -197,7 +197,7 @@ class Product
     }
 
     /**
-     * Will return the shipping price
+     * Will return the shipping price.
      */
     public function taxPercentage()
     {
@@ -206,8 +206,8 @@ class Product
 
     public function taxAmount()
     {
-        $tax   = str_replace(',', '.', $this->tax->percentage);
-        $price = (float)$this->price;
+        $tax = str_replace(',', '.', $this->tax->percentage);
+        $price = (float) $this->price;
         $total = $price * ($tax / (100 + $tax));
 
         return $this->humanPrice($total);
@@ -221,11 +221,12 @@ class Product
         if ($this->stock_unlimited) {
             return false;
         }
+
         return $this->stock == 0;
     }
 
     /**
-     * Return the price with currency appended
+     * Return the price with currency appended.
      */
     public function currency()
     {
@@ -234,7 +235,8 @@ class Product
 
     public function showUrl($slug): string
     {
-        $route = locale_url() . '/' . config('butik.route_shop-prefix') . '/' . $slug;
+        $route = locale_url().'/'.config('butik.route_shop-prefix').'/'.$slug;
+
         return (string) Str::of($route)->start('/');
     }
 
@@ -261,9 +263,9 @@ class Product
         });
     }
 
-    private function extend(StatamicEntry $entry): Product
+    private function extend(StatamicEntry $entry): self
     {
-        $product = new Product();
+        $product = new self();
 
         foreach ($entry->values() as $key => $attribute) {
             if ($key !== 'updated_by' && $key !== 'updated_at' && $key !== 'content' && is_int($key)) {
@@ -273,14 +275,14 @@ class Product
             }
         }
 
-        $product->price             = str_replace('.', config('butik.currency_delimiter'), $product->price);
-        $product->slug              = $entry->slug();
-        $product->id                = $entry->id();
-        $product->title             = $entry->value('title');
-        $product->stock             = (int)$entry->value('stock');
-        $product->stock_unlimited   = (bool)$entry->value('stock_unlimited');
-        $product->available         = (bool)$entry->published();
-        $product->show_url          = $product->showUrl($product->slug);
+        $product->price = str_replace('.', config('butik.currency_delimiter'), $product->price);
+        $product->slug = $entry->slug();
+        $product->id = $entry->id();
+        $product->title = $entry->value('title');
+        $product->stock = (int) $entry->value('stock');
+        $product->stock_unlimited = (bool) $entry->value('stock_unlimited');
+        $product->available = (bool) $entry->published();
+        $product->show_url = $product->showUrl($product->slug);
 
         return $product;
     }

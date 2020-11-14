@@ -21,14 +21,14 @@ class OrderTest extends TestCase
     /** @test */
     public function the_currency_will_be_converted_correctly()
     {
-        $product = create(Order::class, ['total_amount' => 2.13 ]);
+        $product = create(Order::class, ['total_amount' => 2.13]);
         $this->assertEquals('2,13', $product->first()->total_amount);
     }
 
     /** @test */
     public function the_currency_will_be_saved_without_decimals()
     {
-        create(Order::class, ['total_amount' => '2.11' ]);
+        create(Order::class, ['total_amount' => '2.11']);
         $this->assertEquals('211', Order::first()->getRawOriginal('total_amount'));
     }
 }

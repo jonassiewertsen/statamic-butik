@@ -4,7 +4,6 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 use Statamic\View\View as StatamicView;
-use Symfony\Component\Intl\Countries;
 
 abstract class Checkout extends WebController
 {
@@ -20,7 +19,7 @@ abstract class Checkout extends WebController
             'customer',
         ];
         foreach ($keys as $key) {
-            if (!session()->has("butik.transaction.{$key}")) {
+            if (! session()->has("butik.transaction.{$key}")) {
                 return false;
             }
         }

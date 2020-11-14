@@ -13,8 +13,8 @@ class AddToCart extends Component
 
     public function mount($slug, $redirect = null)
     {
-        $this->slug     = $slug;
-        $this->locale   = locale();
+        $this->slug = $slug;
+        $this->locale = locale();
         $this->redirect = $redirect;
     }
 

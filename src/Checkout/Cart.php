@@ -2,9 +2,9 @@
 
 namespace Jonassiewertsen\StatamicButik\Checkout;
 
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Shipping\Country;
 use Jonassiewertsen\StatamicButik\Shipping\Shipping;
@@ -13,14 +13,14 @@ class Cart
 {
     use MoneyTrait;
 
-    public static  $cart;
+    public static $cart;
     private static $totalPrice;
     private static $totalShipping;
     private static $totalTaxes;
     private static $totalItems;
 
     /**
-     * A product can be added to the cart
+     * A product can be added to the cart.
      */
     public static function add(string $slug, ?string $locale = null): void
     {
@@ -37,7 +37,7 @@ class Cart
     }
 
     /**
-     * Fetch the cart from the session
+     * Fetch the cart from the session.
      */
     public static function get(): Collection
     {
@@ -47,7 +47,7 @@ class Cart
     }
 
     /**
-     * Fetch the customer from the session
+     * Fetch the customer from the session.
      */
     public static function customer(): ?Customer
     {
@@ -56,9 +56,8 @@ class Cart
             null;
     }
 
-
     /**
-     * Clear the complete cart
+     * Clear the complete cart.
      */
     public static function clear(): void
     {
@@ -66,7 +65,7 @@ class Cart
     }
 
     /**
-     * An item can be reduced or removed from the cart
+     * An item can be reduced or removed from the cart.
      */
     public static function reduce($slug): void
     {
@@ -81,6 +80,7 @@ class Cart
             // If the quantity is bigger than one, it will only decrease
             if ($item->slug === $slug && $item->getQuantity() > 1) {
                 $item->decrease();
+
                 return true;
             }
 
@@ -93,7 +93,7 @@ class Cart
     }
 
     /**
-     * An item can be completly removed from the cart
+     * An item can be completly removed from the cart.
      */
     public static function remove($slug): void
     {
@@ -107,7 +107,7 @@ class Cart
     }
 
     /**
-     * The total count of items
+     * The total count of items.
      */
     public static function totalItems()
     {
@@ -144,7 +144,7 @@ class Cart
     public static function totalTaxes(): Collection
     {
         static::$totalShipping = collect();
-        $taxRates              = [];
+        $taxRates = [];
 
         /**
          * Return an empty collection in case the cart is empty.
@@ -154,7 +154,7 @@ class Cart
         }
 
         /**
-         * Let's collect all tax rates first
+         * Let's collect all tax rates first.
          */
         foreach (static::$cart as $item) {
             if (! in_array($item->taxRate, $taxRates)) {
@@ -189,7 +189,7 @@ class Cart
      */
     public static function shipping(): Collection
     {
-        $shipping = new Shipping(Cart::get());
+        $shipping = new Shipping(self::get());
         $shipping->handle();
 
         return $shipping->amounts;
@@ -211,7 +211,7 @@ class Cart
     }
 
     /**
-     * Update the shopping cart
+     * Update the shopping cart.
      */
     public static function update()
     {
@@ -225,7 +225,7 @@ class Cart
     }
 
     /**
-     * Getting the actual choosen country
+     * Getting the actual choosen country.
      */
     public static function country()
     {
@@ -253,7 +253,7 @@ class Cart
     }
 
     /**
-     * An empty cart
+     * An empty cart.
      *
      * @return Collection
      */
@@ -274,7 +274,7 @@ class Cart
     }
 
     /**
-     * Set the cart to the session
+     * Set the cart to the session.
      */
     private static function set(Collection $cart): void
     {

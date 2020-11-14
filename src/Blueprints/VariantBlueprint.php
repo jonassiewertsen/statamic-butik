@@ -2,7 +2,6 @@
 
 namespace Jonassiewertsen\StatamicButik\Blueprints;
 
-use Jonassiewertsen\StatamicButik\Rules\VariantPriceRule;
 use Statamic\Facades\Blueprint as StatamicBlueprint;
 
 class VariantBlueprint extends Blueprint
