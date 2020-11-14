@@ -11,7 +11,7 @@ class Variants extends Fieldtype
     use FieldsetHelper;
 
     protected $categories = ['butik'];
-    protected $icon       = 'tags';
+    protected $icon = 'tags';
 
     public function preload()
     {
@@ -19,9 +19,9 @@ class Variants extends Fieldtype
             return ['isCreateRoute' => true];
         }
 
-        $product          = $this->field()->parent();
+        $product = $this->field()->parent();
         $variantBlueprint = new VariantBlueprint();
-        $variantFields    = $variantBlueprint()->fields()->addValues([])->preProcess();
+        $variantFields = $variantBlueprint()->fields()->addValues([])->preProcess();
 
         return [
             'action'             => cp_route('butik.variants.store'),

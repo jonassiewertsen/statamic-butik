@@ -7,7 +7,8 @@ use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class ShippingProfileUpdateTest extends TestCase
 {
-    public function setUp(): void {
+    public function setUp(): void
+    {
         parent::setUp();
 
         $this->signInAdmin();
@@ -29,7 +30,8 @@ class ShippingProfileUpdateTest extends TestCase
         $this->assertDatabaseHas('butik_shipping_profiles', ['title' => 'Updated Name']);
     }
 
-    private function updateShippingProfile($shippingProfile) {
+    private function updateShippingProfile($shippingProfile)
+    {
         return $this->patch(route('statamic.cp.butik.shipping-profiles.update', $shippingProfile), $shippingProfile->toArray());
     }
 }

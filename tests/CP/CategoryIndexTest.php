@@ -3,7 +3,6 @@
 namespace Jonassiewertsen\StatamicButik\Tests\CP;
 
 use Jonassiewertsen\StatamicButik\Http\Models\Category;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class CategoryIndexTest extends TestCase
@@ -18,7 +17,7 @@ class CategoryIndexTest extends TestCase
     /** @test */
     public function to_a_product_belonging_categories_can_be_fetched()
     {
-        $product  = $this->makeProduct();
+        $product = $this->makeProduct();
         create(Category::class)->first();
         $category = Category::first();
 
@@ -30,6 +29,5 @@ class CategoryIndexTest extends TestCase
                 'slug'        => $category->slug,
                 'is_attached' => $category->isProductAttached($product->slug),
             ]);
-
     }
 }

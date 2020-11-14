@@ -4,7 +4,6 @@ namespace Jonassiewertsen\StatamicButik\Tests\Modifiers;
 
 use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Modifiers\Sellable;
-
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 use Statamic\Modifiers\Modifier;
 

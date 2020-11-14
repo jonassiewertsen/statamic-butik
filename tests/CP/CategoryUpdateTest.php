@@ -19,7 +19,6 @@ class CategoryUpdateTest extends TestCase
         $this->signInAdmin();
     }
 
-
     /** @test */
     public function a_title_can_be_updated()
     {

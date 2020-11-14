@@ -4,10 +4,10 @@ namespace Jonassiewertsen\StatamicButik\Http\Models;
 
 class Order extends ButikModel
 {
-    protected $table        = 'butik_orders';
-    public    $incrementing = false;
-    protected $primaryKey   = 'id';
-    protected $keyType      = 'string';
+    protected $table = 'butik_orders';
+    public $incrementing = false;
+    protected $primaryKey = 'id';
+    protected $keyType = 'string';
 
     protected $casts = [
         'products'   => 'array',
@@ -25,7 +25,7 @@ class Order extends ButikModel
     }
 
     /**
-     * Will return the base price for this item
+     * Will return the base price for this item.
      */
     public function getTotalAmountAttribute($value)
     {
@@ -33,7 +33,7 @@ class Order extends ButikModel
     }
 
     /**
-     * Mutating from a the correct amount into a integer without commas
+     * Mutating from a the correct amount into a integer without commas.
      */
     public function setTotalAmountAttribute($value)
     {
@@ -41,7 +41,7 @@ class Order extends ButikModel
     }
 
     /**
-     * Will return the base price for this item
+     * Will return the base price for this item.
      */
     public function getCustomerAttribute($value)
     {
@@ -49,7 +49,7 @@ class Order extends ButikModel
     }
 
     /**
-     * Mutating from a the correct amount into a integer without commas
+     * Mutating from a the correct amount into a integer without commas.
      */
     public function setCustomerAttribute($value)
     {
@@ -57,7 +57,7 @@ class Order extends ButikModel
     }
 
     /**
-     * Will return the base price for this item
+     * Will return the base price for this item.
      */
     public function getItemsAttribute($value)
     {
@@ -65,7 +65,7 @@ class Order extends ButikModel
     }
 
     /**
-     * Mutating from a the correct amount into a integer without commas
+     * Mutating from a the correct amount into a integer without commas.
      */
     public function setItemsAttribute($value)
     {

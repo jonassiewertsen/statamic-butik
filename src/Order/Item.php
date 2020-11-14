@@ -17,20 +17,19 @@ class Item
         string $slug,
         string $name,
         ?string $description,
-        int    $quantity,
+        int $quantity,
         string $singlePrice,
         string $totalPrice,
         string $taxRate,
         string $taxAmount
-    )
-    {
-        $this->slug        = $slug;
-        $this->name        = $name;
+    ) {
+        $this->slug = $slug;
+        $this->name = $name;
         $this->description = $description;
-        $this->quantity    = $quantity;
+        $this->quantity = $quantity;
         $this->singlePrice = $singlePrice;
-        $this->totalPrice  = $totalPrice;
-        $this->taxRate     = $taxRate;
-        $this->taxAmount   = $taxAmount;
+        $this->totalPrice = $totalPrice;
+        $this->taxRate = $taxRate;
+        $this->taxAmount = $taxAmount;
     }
 }

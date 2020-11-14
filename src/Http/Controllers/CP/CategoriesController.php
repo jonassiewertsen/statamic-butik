@@ -15,7 +15,7 @@ class CategoriesController extends CpController
 //        $this->authorize('edit', Product::class);
 
         $blueprint = new CategoryBlueprint();
-        $fields    = $blueprint()->fields()->addValues($request->all());
+        $fields = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
         $values = $fields->process()->values();
         Category::create($values->toArray());
@@ -26,7 +26,7 @@ class CategoriesController extends CpController
 //        $this->authorize('edit', Product::class);
 
         $blueprint = new CategoryBlueprint();
-        $fields    = $blueprint()->fields()->addValues($request->all());
+        $fields = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
         $values = $fields->process()->values();
         $category->update($values->toArray());

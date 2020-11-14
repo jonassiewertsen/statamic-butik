@@ -16,7 +16,7 @@ class Cart extends \Statamic\Tags\Tags
     protected static $aliases = ['bag'];
 
     /**
-     * {{ cart }}
+     * {{ cart }}.
      *
      * Will return all items from the bag / shopping cart
      * Equivalent to {{ cart:items }}
@@ -27,7 +27,7 @@ class Cart extends \Statamic\Tags\Tags
     }
 
     /**
-     * {{ cart:items }}
+     * {{ cart:items }}.
      *
      * Will return all items from the cart / shopping cart
      * Equivalent to {{ cart }}
@@ -44,7 +44,7 @@ class Cart extends \Statamic\Tags\Tags
     }
 
     /**
-     * {{ cart:total_items }}
+     * {{ cart:total_items }}.
      *
      * Will return the total count of the items in your cart
      */
@@ -54,7 +54,7 @@ class Cart extends \Statamic\Tags\Tags
     }
 
     /**
-     * {{ cart:total_shipping }}
+     * {{ cart:total_shipping }}.
      *
      * Will return the total shipping costs
      */
@@ -64,7 +64,7 @@ class Cart extends \Statamic\Tags\Tags
     }
 
     /**
-     * {{ cart:total_price }}
+     * {{ cart:total_price }}.
      *
      * Will return the total price for the complete shopping cart
      */
@@ -74,7 +74,7 @@ class Cart extends \Statamic\Tags\Tags
     }
 
     /**
-     * {{ cart:total_taxes }}
+     * {{ cart:total_taxes }}.
      *
      * Will return the total price for the complete shopping cart
      */

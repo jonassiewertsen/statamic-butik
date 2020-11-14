@@ -8,10 +8,11 @@ use Livewire\Component;
 class CartIcon extends Component
 {
     protected $listeners = [
-      'cartUpdated' => '$refresh'
+        'cartUpdated' => '$refresh',
     ];
 
-    public function getTotalProperty() {
+    public function getTotalProperty()
+    {
         return ShoppingCart::totalItems();
     }
 

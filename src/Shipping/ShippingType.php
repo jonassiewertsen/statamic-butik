@@ -56,7 +56,7 @@ abstract class ShippingType implements ShippingTypeInterface
     public function set(Collection $items, ShippingZone $zone): void
     {
         $this->items = $items;
-        $this->zone  = $zone;
+        $this->zone = $zone;
 
         $this->calculateSummedItemValue();
         $this->calculateTotalItemCount();
@@ -71,7 +71,8 @@ abstract class ShippingType implements ShippingTypeInterface
     protected function name(): string
     {
         $className = Str::snake(class_basename($this));
-        $key       = 'butik::cp.' . $className;
+        $key = 'butik::cp.'.$className;
+
         return __($key);
     }
 
@@ -92,7 +93,7 @@ abstract class ShippingType implements ShippingTypeInterface
     {
         $this->itemCount = 0;
 
-        $this->items->each(function($item) {
+        $this->items->each(function ($item) {
             $this->itemCount += $item->getQuantity();
         });
     }
@@ -126,7 +127,7 @@ abstract class ShippingType implements ShippingTypeInterface
     }
 
     /**
-     * Converts a value into cents
+     * Converts a value into cents.
      */
     protected function convertIntoCents($value): int
     {

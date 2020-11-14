@@ -72,13 +72,13 @@ class ShippingZoneBlueprint extends Blueprint
                                     function ($attribute, $value, $fail) {
                                         foreach ($value as $country_code) {
                                             if (! Countries::exists($country_code)) {
-                                                $fail('Invalid country code: ' . $country_code);
+                                                $fail('Invalid country code: '.$country_code);
                                             }
                                         }
                                     },
                                     function ($attribute, $value, $fail) {
-                                        if(ShippingZone::all()
-                                            ->filter(function($shippingZone) use ($value) {
+                                        if (ShippingZone::all()
+                                            ->filter(function ($shippingZone) use ($value) {
                                                 foreach ($value as $country_code) {
                                                     if ($shippingZone->countries && $shippingZone->countries->contains($country_code)) {
                                                         return true;
@@ -88,10 +88,10 @@ class ShippingZoneBlueprint extends Blueprint
                                             ->count() > 1) {
                                             $fail('One of the countries is already added to another shipping zone.');
                                         }
-                                    }
-                                ]
-                            ]
-                        ]
+                                    },
+                                ],
+                            ],
+                        ],
                     ],
                 ],
             ],
@@ -99,7 +99,7 @@ class ShippingZoneBlueprint extends Blueprint
     }
 
     /**
-     * In case the Product will be edited, the slug will be read only
+     * In case the Product will be edited, the slug will be read only.
      */
     private function slugReadOnly(): bool
     {
@@ -115,15 +115,16 @@ class ShippingZoneBlueprint extends Blueprint
         );
     }
 
-    private function fetchTaxOptions(): array {
-        $taxes =  Tax::pluck('title', 'slug')->toArray();
+    private function fetchTaxOptions(): array
+    {
+        $taxes = Tax::pluck('title', 'slug')->toArray();
         // Prepending a no tax option
         return ['' => __('butik::cp.tax_none')] + $taxes;
     }
 
     private function shippingTypes(): array
     {
-        $types             = config('butik.shipping');
+        $types = config('butik.shipping');
         $shippingTypeNames = [];
 
         foreach ($types as $slug => $shippingType) {

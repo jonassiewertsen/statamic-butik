@@ -1,15 +1,13 @@
 <?php
 
-
 namespace Jonassiewertsen\StatamicButik\Blueprints;
-
 
 use Illuminate\Validation\Rule;
 
 abstract class Blueprint
 {
     /**
-     * Check if the actual route is equal to the given route
+     * Check if the actual route is equal to the given route.
      */
     protected function isRoute($route): bool
     {

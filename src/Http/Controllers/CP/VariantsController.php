@@ -23,9 +23,9 @@ class VariantsController extends CpController
         }
 
         $blueprint = new VariantBlueprint();
-        $fields    = $blueprint()->fields()->addValues($request->all());
+        $fields = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
-        $values  = $fields->process()->values();
+        $values = $fields->process()->values();
         $variant = $values->toArray();
 
         Variant::create([
@@ -45,7 +45,7 @@ class VariantsController extends CpController
         $this->authorize('update', $variant);
 
         $blueprint = new VariantBlueprint();
-        $fields    = $blueprint()->fields()->addValues($request->all());
+        $fields = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
         $values = $fields->process()->values()->toArray();
 

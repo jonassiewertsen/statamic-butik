@@ -6,8 +6,10 @@ use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Statamic\Facades\User;
 use Statamic\Widgets\Widget;
 
-class Orders extends Widget {
-    public function html() {
+class Orders extends Widget
+{
+    public function html()
+    {
         if (! User::current()->can('view orders')) {
             return;
         }
@@ -20,7 +22,7 @@ class Orders extends Widget {
             ->map(function ($order) {
                 return [
                     'id'           => $order->id,
-                    'customer'     => $order->customer->firstname . ' ' . $order->customer->surname,
+                    'customer'     => $order->customer->firstname.' '.$order->customer->surname,
                     'email'        => $order->customer->email,
                     'status'       => $order->status,
                     'method'       => $order->method,

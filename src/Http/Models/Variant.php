@@ -2,9 +2,8 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Models;
 
-use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
-
+use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Statamic\Support\Str;
 
 class Variant extends ButikModel
@@ -23,17 +22,17 @@ class Variant extends ButikModel
     ];
 
     protected $appends = [
-      'slug',
-      'original_title',
-      'original_price',
-      'original_stock',
-      'original_stock_unlimited',
+        'slug',
+        'original_title',
+        'original_price',
+        'original_stock',
+        'original_stock_unlimited',
     ];
 
     protected $guarded = [];
 
     /**
-     * A variant belongs to a product
+     * A variant belongs to a product.
      */
     public function getProductAttribute()
     {
@@ -42,16 +41,16 @@ class Variant extends ButikModel
 
     /**
      * The title does contain of the parent name in combination with the variant title.
-     * Fx.: Red Shirt - Large
+     * Fx.: Red Shirt - Large.
      */
     public function getTitleAttribute()
     {
-        return $this->product->title . ' // ' . $this->getRawOriginal('title');
+        return $this->product->title.' // '.$this->getRawOriginal('title');
     }
 
     /**
      * The original is without the parent extension.
-     * Fx.: Large
+     * Fx.: Large.
      */
     public function getOriginalTitleAttribute()
     {
@@ -59,7 +58,7 @@ class Variant extends ButikModel
     }
 
     /**
-     * Will return the original price for this variant
+     * Will return the original price for this variant.
      */
     public function getOriginalPriceAttribute($value)
     {
@@ -67,7 +66,7 @@ class Variant extends ButikModel
     }
 
     /**
-     * Will return the price repecting the inheritance
+     * Will return the price repecting the inheritance.
      */
     public function getPriceAttribute($value)
     {
@@ -79,7 +78,7 @@ class Variant extends ButikModel
     }
 
     /**
-     * Mutating from a the correct amount into a integer without commas
+     * Mutating from a the correct amount into a integer without commas.
      */
     public function setPriceAttribute($value)
     {
@@ -87,7 +86,7 @@ class Variant extends ButikModel
     }
 
     /**
-     * Will return the original price for this variant
+     * Will return the original price for this variant.
      */
     public function getOriginalStockAttribute($value)
     {
@@ -95,7 +94,7 @@ class Variant extends ButikModel
     }
 
     /**
-     * Will return the price repecting the inheritance
+     * Will return the price repecting the inheritance.
      */
     public function getStockAttribute($value)
     {
@@ -107,7 +106,7 @@ class Variant extends ButikModel
     }
 
     /**
-     * Will return the original price for this variant
+     * Will return the original price for this variant.
      */
     public function getOriginalStockUnlimitedAttribute($value)
     {
@@ -115,7 +114,7 @@ class Variant extends ButikModel
     }
 
     /**
-     * Will return the original price for this variant
+     * Will return the original price for this variant.
      */
     public function getStockUnlimitedAttribute($value)
     {
@@ -127,16 +126,17 @@ class Variant extends ButikModel
     }
 
     /**
-     * A variant has a show url
+     * A variant has a show url.
      */
     public function getShowUrlAttribute()
     {
         $route = "{$this->shopRoute()}/{$this->product_slug}/{$this->original_title}";
+
         return Str::of($route)->start('/');
     }
 
     /**
-     * A variant has a slug
+     * A variant has a slug.
      */
     public function getSlugAttribute()
     {
@@ -144,7 +144,7 @@ class Variant extends ButikModel
     }
 
     /**
-     * It inherits the tax from it's parent
+     * It inherits the tax from it's parent.
      */
     public function getTaxAttribute()
     {
@@ -152,7 +152,7 @@ class Variant extends ButikModel
     }
 
     /**
-     * It inherits the shipping profile from it's parent
+     * It inherits the shipping profile from it's parent.
      */
     public function getShippingProfileAttribute()
     {
@@ -160,7 +160,7 @@ class Variant extends ButikModel
     }
 
     /**
-     * It inherits the images from it's parent
+     * It inherits the images from it's parent.
      */
     public function getImagesAttribute()
     {

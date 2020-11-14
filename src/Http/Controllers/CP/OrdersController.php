@@ -18,7 +18,7 @@ class OrdersController extends CpController
             ->map(function ($order) {
                 return [
                     'id'           => $order->id,
-                    'customer'     => $order->customer->firstname . ' ' . $order->customer->surname,
+                    'customer'     => $order->customer->firstname.' '.$order->customer->surname,
                     'email'        => $order->customer->email,
                     'status'       => $order->status,
                     'method'       => $order->method,
@@ -47,9 +47,9 @@ class OrdersController extends CpController
     {
         $this->authorize('show', $order);
 
-        $customer                      = $order->customer;
+        $customer = $order->customer;
         $additionalCustomerInformation = $this->extractAdditionalInformation($customer);
-        $items                         = $order->items;
+        $items = $order->items;
 
         return view('butik::cp.orders.show', compact('order', 'customer', 'additionalCustomerInformation', 'items'));
     }
@@ -59,7 +59,7 @@ class OrdersController extends CpController
      */
     private function extractAdditionalInformation(\stdClass $customer)
     {
-        $defaultValues  = ['firstname', 'surname', 'email', 'address1', 'address2', 'city', 'zip', 'country'];
+        $defaultValues = ['firstname', 'surname', 'email', 'address1', 'address2', 'city', 'zip', 'country'];
 
         return collect($customer)->filter(function ($value, $key) use ($defaultValues) {
             // Filtering if additinal values do exist.
@@ -68,7 +68,7 @@ class OrdersController extends CpController
             // Returning additional values with a converted name.
             // tax_id will become to Tax Id
             return [
-                'name'  => (string)Str::of($key)->replace('_', ' ')->title(),
+                'name'  => (string) Str::of($key)->replace('_', ' ')->title(),
                 'value' => $value,
             ];
         });

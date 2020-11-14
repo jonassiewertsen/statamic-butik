@@ -2,14 +2,14 @@
 
 namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Tags\Butik;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class ProductPermissionsTest extends TestCase
 {
     /** @test */
-    public function a_view_permission_is_needed(){
+    public function a_view_permission_is_needed()
+    {
         // To keep this test quite.
         $this->assertTrue(true);
 
