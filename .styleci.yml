@@ -1,2 +1,4 @@
 preset: laravel
+enabled:
+  - not_operator_with_successor_space
 risky: true
