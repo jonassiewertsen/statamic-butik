@@ -15,7 +15,7 @@ class SetUpButik extends Command
 {
     use RunsInPlease;
 
-    protected $signature   = 'butik:setup';
+    protected $signature = 'butik:setup';
     protected $description = 'Let Statamic Butik help you through the setup process.';
 
     public function handle()
@@ -57,7 +57,7 @@ class SetUpButik extends Command
 
         if (! DB::connection()->getDatabaseName()) {
             $this->error('Canceled: I could not connect to your Database. Please set up your database correctly and try again.');
-            die();
+            exit();
         }
 
         $this->info('What a connection! We are already in touch with your database and it does feel good..');
@@ -77,7 +77,7 @@ class SetUpButik extends Command
             $continue = $this->confirm('Let me know if you did. If you did, we would create two default entires in your Dataase');
             if (! $continue) {
                 $this->info('Have fun using Butik. See you hopefully soon');
-                die();
+                exit();
             }
         }
 
@@ -107,7 +107,7 @@ class SetUpButik extends Command
             'percentage' => $taxes,
         ]);
 
-        $this->line('Default taxes with ' . $taxes . '% have been setup. In case you misstyped, change them later. No Problem.');
+        $this->line('Default taxes with '.$taxes.'% have been setup. In case you misstyped, change them later. No Problem.');
 
         $this->info('### Step 6 ################################# Statamic Butik ####');
         $this->info('#### a shipping default #########################################');

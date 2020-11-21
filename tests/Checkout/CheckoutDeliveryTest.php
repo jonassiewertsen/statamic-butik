@@ -3,8 +3,8 @@
 namespace Jonassiewertsen\StatamicButik\Tests\Checkout;
 
 use Illuminate\Support\Facades\Session;
-use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
+use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
@@ -21,7 +21,7 @@ class CheckoutDeliveryTest extends TestCase
         Cart::add($this->product->slug);
     }
 
-// Failing in GitHub actions. Why?
+    // Failing in GitHub actions. Why?
 //    /** @test */
 //    public function the_user_will_be_redirected_without_any_products()
 //    {
@@ -42,7 +42,7 @@ class CheckoutDeliveryTest extends TestCase
     public function user_data_will_be_saved_inside_the_session()
     {
         $this->withoutExceptionHandling();
-        $this->post($this->formSubmitRoute(), (array)$this->createUserData())
+        $this->post($this->formSubmitRoute(), (array) $this->createUserData())
             ->assertSessionHas('butik.customer');
     }
 
@@ -50,7 +50,7 @@ class CheckoutDeliveryTest extends TestCase
     public function a_firstname_is_required()
     {
         $data = $this->createUserData('firstname', '');
-        $this->post($this->formSubmitRoute(), (array)$data)
+        $this->post($this->formSubmitRoute(), (array) $data)
             ->assertSessionHasErrors('firstname', null, 'form.butik_checkout');
     }
 
@@ -58,7 +58,7 @@ class CheckoutDeliveryTest extends TestCase
     public function a_surname_is_required()
     {
         $data = $this->createUserData('surname', '');
-        $this->post($this->formSubmitRoute(), (array)$data)
+        $this->post($this->formSubmitRoute(), (array) $data)
             ->assertSessionHasErrors('surname', null, 'form.butik_checkout');
     }
 
@@ -66,7 +66,7 @@ class CheckoutDeliveryTest extends TestCase
     public function a_mail_address_is_required()
     {
         $data = $this->createUserData('email', '');
-        $this->post($this->formSubmitRoute(), (array)$data)
+        $this->post($this->formSubmitRoute(), (array) $data)
             ->assertSessionHasErrors('email', null, 'form.butik_checkout');
     }
 
@@ -74,7 +74,7 @@ class CheckoutDeliveryTest extends TestCase
     public function a_mail_address_bust_be_a_mail_address()
     {
         $data = $this->createUserData('email', 'jonas');
-        $this->post($this->formSubmitRoute(), (array)$data)
+        $this->post($this->formSubmitRoute(), (array) $data)
             ->assertSessionHasErrors('email', null, 'form.butik_checkout');
     }
 
@@ -82,7 +82,7 @@ class CheckoutDeliveryTest extends TestCase
     public function address_line_1_is_required()
     {
         $data = $this->createUserData('address1', '');
-        $this->post($this->formSubmitRoute(), (array)$data)
+        $this->post($this->formSubmitRoute(), (array) $data)
             ->assertSessionHasErrors('address1', null, 'form.butik_checkout');
     }
 
@@ -90,7 +90,7 @@ class CheckoutDeliveryTest extends TestCase
     public function address_line_2_is_optional()
     {
         $data = $this->createUserData('address2', '');
-        $this->post($this->formSubmitRoute(), (array)$data)
+        $this->post($this->formSubmitRoute(), (array) $data)
             ->assertSessionHasNoErrors();
     }
 
@@ -98,7 +98,7 @@ class CheckoutDeliveryTest extends TestCase
     public function city_is_required()
     {
         $data = $this->createUserData('city', '');
-        $this->post($this->formSubmitRoute(), (array)$data)
+        $this->post($this->formSubmitRoute(), (array) $data)
             ->assertSessionHasErrors('city', null, 'form.butik_checkout');
     }
 
@@ -106,7 +106,7 @@ class CheckoutDeliveryTest extends TestCase
     public function zip_is_required()
     {
         $data = $this->createUserData('zip', '');
-        $this->post($this->formSubmitRoute(), (array)$data)
+        $this->post($this->formSubmitRoute(), (array) $data)
             ->assertSessionHasErrors('zip', null, 'form.butik_checkout');
     }
 
@@ -114,7 +114,7 @@ class CheckoutDeliveryTest extends TestCase
     public function phone_is_optional()
     {
         $data = $this->createUserData('phone', '');
-        $this->post($this->formSubmitRoute(), (array)$data)
+        $this->post($this->formSubmitRoute(), (array) $data)
             ->assertSessionHasNoErrors();
     }
 
@@ -122,7 +122,7 @@ class CheckoutDeliveryTest extends TestCase
     public function a_country_is_required()
     {
         $data = $this->createUserData('country', '');
-        $this->post($this->formSubmitRoute(), (array)$data)
+        $this->post($this->formSubmitRoute(), (array) $data)
             ->assertSessionHasErrors('country', null, 'form.butik_checkout');
     }
 
@@ -149,7 +149,7 @@ class CheckoutDeliveryTest extends TestCase
         ]);
 
         // submit the form
-        $this->post($this->formSubmitRoute(), (array)$this->createUserData('country', $country_code))
+        $this->post($this->formSubmitRoute(), (array) $this->createUserData('country', $country_code))
             ->assertRedirect();
 
         $this->assertEquals($country_code, Cart::country());
@@ -159,7 +159,7 @@ class CheckoutDeliveryTest extends TestCase
     public function existing_data_from_the_session_will_be_passed_to_the_delivery_view()
     {
         Session::put('butik.customer', new Customer($this->createUserData()));
-        $page     = $this->get(route('butik.checkout.delivery', $this->product->slug))->content();
+        $page = $this->get(route('butik.checkout.delivery', $this->product->slug))->content();
         $customer = session('butik.customer');
 
         $this->assertStringContainsString($customer->firstname, $page);

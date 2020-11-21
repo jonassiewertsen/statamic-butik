@@ -2,11 +2,11 @@
 
 namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Http\Models\Product as ProductModel;
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
@@ -175,7 +175,7 @@ class ItemAsProductTest extends TestCase
         $item->setQuantity(3);
 
         $productPrice = $this->makeAmountSaveable($this->product->price);
-        $total        = $this->makeAmountHuman($productPrice * 3);
+        $total = $this->makeAmountHuman($productPrice * 3);
 
         $this->assertEquals($total, $item->totalPrice());
     }

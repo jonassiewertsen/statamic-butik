@@ -8,8 +8,10 @@ use Jonassiewertsen\StatamicButik\Tests\TestCase;
 class OrderCreateTest extends TestCase
 {
     // TODO: Ruhe!
+
     /** @test */
-    public function ruhe(){
+    public function ruhe()
+    {
         $this->assertTrue(true);
     }
 

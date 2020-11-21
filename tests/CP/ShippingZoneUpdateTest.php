@@ -8,7 +8,8 @@ use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class ShippingZoneUpdateTest extends TestCase
 {
-    public function setUp(): void {
+    public function setUp(): void
+    {
         parent::setUp();
 
         $this->signInAdmin();
@@ -39,7 +40,8 @@ class ShippingZoneUpdateTest extends TestCase
         $this->assertDatabaseHas('butik_shipping_zones', ['shipping_profile_slug' => $shippingZone->shipping_profile_slug]);
     }
 
-    private function updateShippingZone($shippingZone) {
+    private function updateShippingZone($shippingZone)
+    {
         return $this->patch(route('statamic.cp.butik.shipping-zones.update', $shippingZone), $shippingZone->toArray());
     }
 }

@@ -15,13 +15,13 @@ class ShippingController extends CpController
         $this->authorize('index', ShippingProfile::class);
 
         $shippingProfileBlueprint = new ShippingProfileBlueprint();
-        $shippingProfileFields    = $shippingProfileBlueprint()->fields()->preProcess();
+        $shippingProfileFields = $shippingProfileBlueprint()->fields()->preProcess();
 
         $shippingZoneBlueprint = new ShippingZoneBlueprint();
-        $shippingZoneFields    = $shippingZoneBlueprint()->fields()->preProcess();
+        $shippingZoneFields = $shippingZoneBlueprint()->fields()->preProcess();
 
         $shippingRateBlueprint = new ShippingRateBlueprint();
-        $shippingRateFields    = $shippingRateBlueprint()->fields()->preProcess();
+        $shippingRateFields = $shippingRateBlueprint()->fields()->preProcess();
 
         return view('butik::cp.shipping.index', [
             'shippingProfiles' => ShippingProfile::all(),

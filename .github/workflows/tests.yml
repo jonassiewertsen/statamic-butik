@@ -2,6 +2,8 @@ name: Run Tests
 
 on:
   push:
+    branches-ignore: 
+      - '3.x'
   pull_request:
   schedule:
       - cron: '0 0 * * *'

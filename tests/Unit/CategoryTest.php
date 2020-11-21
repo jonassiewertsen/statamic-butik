@@ -3,10 +3,8 @@
 namespace Tests\Unit;
 
 use Jonassiewertsen\StatamicButik\Http\Models\Category;
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Product as ProductModel;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
-use Statamic\Facades\Entry;
 
 class CategoryTest extends TestCase
 {

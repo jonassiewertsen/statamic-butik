@@ -8,7 +8,7 @@ use Statamic\Fields\Fieldtype;
 class Countries extends Fieldtype
 {
     protected $categories = ['butik'];
-    protected $icon       = 'tags';
+    protected $icon = 'tags';
 
     public function preload()
     {

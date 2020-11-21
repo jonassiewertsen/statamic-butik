@@ -7,10 +7,10 @@ use Illuminate\Support\Collection;
 
 class Tax extends ButikModel
 {
-    protected $table        = 'butik_taxes';
-    public    $incrementing = false;
-    protected $primaryKey   = 'slug';
-    protected $keyType      = 'string';
+    protected $table = 'butik_taxes';
+    public $incrementing = false;
+    protected $primaryKey = 'slug';
+    protected $keyType = 'string';
 
     protected $casts = [
         'percentage' => 'integer',
@@ -38,6 +38,7 @@ class Tax extends ButikModel
         if ($value % 100 === 0) {
             return $value / 100;
         }
+
         return $this->makeAmountHuman($value);
     }
 

@@ -18,9 +18,9 @@ class ValidateCheckoutRoute
         return $next($request);
     }
 
-    private function customerDataComplete(?Customer $customer): bool {
-        if ($customer === null)
-        {
+    private function customerDataComplete(?Customer $customer): bool
+    {
+        if ($customer === null) {
             return false;
         }
 

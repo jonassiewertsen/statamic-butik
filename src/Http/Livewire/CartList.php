@@ -16,7 +16,7 @@ class CartList extends Component
 
     public function mount()
     {
-        $this->locale  = locale();
+        $this->locale = locale();
         $this->country = ShoppingCart::country();
     }
 

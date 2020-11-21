@@ -99,7 +99,7 @@
                     <td>{{ $item->quantity }}</td>
                 </tr>
                 <tr>
-                    <th class="pl-2 py-1 w-1/4">S{{ __('butik::cp.summed_price') }}</th>
+                    <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.summed_price') }}</th>
                     <td>{{ $item->totalPrice }}</td>
                 </tr>
                 <tr>

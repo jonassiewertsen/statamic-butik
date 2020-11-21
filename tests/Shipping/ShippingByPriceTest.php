@@ -8,7 +8,6 @@ use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
-use Jonassiewertsen\StatamicButik\Shipping\Country;
 use Jonassiewertsen\StatamicButik\Shipping\ShippingByPrice;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 use Statamic\Facades\Entry;
@@ -61,7 +60,6 @@ class ShippingByPriceTest extends TestCase
 
         $this->assertEquals($total, $shipping->summedItemValue);
     }
-
 
     /** @test */
     public function the_standard_shipping_rate_will_be_selected()

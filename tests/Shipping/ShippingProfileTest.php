@@ -25,12 +25,12 @@ class ShippingProfileTest extends TestCase
         create(ShippingZone::class,
             [
                 'shipping_profile_slug' => ShippingProfile::first()->slug,
-                'countries' => [$country_code]
+                'countries' => [$country_code],
             ]
         );
 
         create(ShippingRate::class, [
-            'shipping_zone_id' => ShippingZone::first()
+            'shipping_zone_id' => ShippingZone::first(),
         ]);
 
         $this->assertEquals(ShippingZone::first(), $shippingProfile->whereZoneFrom($country_code));

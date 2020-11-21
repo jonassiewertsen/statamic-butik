@@ -43,16 +43,17 @@ class TaxBlueprint extends Blueprint
                                 'read_only' => $this->slugReadOnly(),
                             ],
                         ],
-                    ]
-                ]
+                    ],
+                ],
             ],
         ]);
     }
 
     /**
-     * In case the Product will be edited, the slug will be read only
+     * In case the Product will be edited, the slug will be read only.
      */
-    private function slugReadOnly() {
+    private function slugReadOnly()
+    {
         return $this->isRoute('statamic.cp.butik.taxes.edit');
     }
 
