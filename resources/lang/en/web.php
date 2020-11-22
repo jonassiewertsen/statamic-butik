@@ -30,7 +30,7 @@ return [
     'link_price'               => 'Link price',
     'link_invalid'             => 'This link is not valid anymore.',
     'email'                    => 'Email',
-    'email_sent'               => 'A confirmation email will be sent to :mail',
+    'email_sent'               => 'A confirmation email will be sent to :email',
     'method'                   => 'Method',
     'minimum'                  => 'Minimum',
     'name'                     => 'Name',
