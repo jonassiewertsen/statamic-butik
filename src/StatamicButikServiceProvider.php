@@ -154,7 +154,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
             // Views
             $this->publishes([
-                __DIR__.'/../resources/views/email' => resource_path('views/vendor/butik/emails'),
+                __DIR__.'/../resources/views/email' => resource_path('views/vendor/butik/email'),
             ], 'butik-views');
             $this->publishes([
                 __DIR__.'/../resources/views/web' => resource_path('views/vendor/butik/web'),
