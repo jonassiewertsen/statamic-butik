@@ -31,7 +31,7 @@ class PaymentGatewayController extends WebController
         $items = Cart::get();
         $customer = Cart::customer();
         $shippings = Cart::shipping();
-        $totalPrice = $this->humanPriceWithDot(Cart::totalPrice());
+        $totalPrice = Cart::totalPrice();
 
         return $this->gateway->handle($customer, $items, $totalPrice, $shippings);
     }

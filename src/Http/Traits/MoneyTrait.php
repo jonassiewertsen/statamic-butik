@@ -15,9 +15,7 @@ trait MoneyTrait
     {
         $value = floatval($value) / 100;
 
-        $delimiter = config('butik.currency_delimiter');
-
-        return number_format($value, 2, $delimiter, '');
+        return number_format($value, 2, static::delimiter(), '');
     }
 
     /**
@@ -44,9 +42,7 @@ trait MoneyTrait
     {
         $value = str_replace(',', '.', $value);
 
-        $delimiter = config('butik.currency_delimiter');
-
-        return number_format($value, 2, $delimiter, '.');
+        return number_format($value, 2, static::delimiter(), '.');
     }
 
     /**
@@ -63,5 +59,10 @@ trait MoneyTrait
     public function makeAmountSaveable($value)
     {
         return static::makeAmountSaveableStatic($value);
+    }
+
+    private static function delimiter(): string
+    {
+        return config('butik.currency_delimiter');
     }
 }
