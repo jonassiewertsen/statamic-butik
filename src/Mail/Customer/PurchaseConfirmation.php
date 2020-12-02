@@ -13,7 +13,7 @@ class PurchaseConfirmation extends Mailable implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    protected Order $order;
+    public Order $order;
 
     public function __construct(Order $order)
     {
@@ -25,10 +25,11 @@ class PurchaseConfirmation extends Mailable implements ShouldQueue
         return $this->subject(__('butik::web.order_confirmation'))
             ->markdown('butik::email.orders.purchaseConfirmationForCustomer')
             ->with([
-                'order_id'     => $this->order->id,
-                'total_amount' => $this->order->total_amount,
-                'paid_at'      => $this->order->paid_at,
+                'customer'     => $this->order->customer,
                 'items'        => $this->order->items,
+                'order_id'     => $this->order->id,
+                'paid_at'      => $this->order->paid_at,
+                'total_amount' => $this->order->total_amount,
             ]);
     }
 }
