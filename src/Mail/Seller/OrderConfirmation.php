@@ -25,7 +25,7 @@ class OrderConfirmation extends Mailable implements ShouldQueue
         return $this->subject(__('butik::web.new_purchase'))
             ->markdown('butik::email.orders.orderConfirmationToSeller')
             ->with([
-                'customer'     => $this->order->customer,
+//                'customer'     => $this->order->customer,
                 'items'        => $this->order->items,
                 'order_id'     => $this->order->id,
                 'paid_at'      => $this->order->paid_at,
