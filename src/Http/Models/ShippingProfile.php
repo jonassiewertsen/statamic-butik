@@ -5,9 +5,9 @@ namespace Jonassiewertsen\StatamicButik\Http\Models;
 class ShippingProfile extends ButikModel
 {
     public    $incrementing = false;
-    protected $table        = 'butik_shipping_profiles';
-    protected $primaryKey   = 'slug';
-    protected $keyType      = 'string';
+    protected $table = 'butik_shipping_profiles';
+    protected $primaryKey = 'slug';
+    protected $keyType = 'string';
 
     protected $guarded = [];
 
@@ -34,7 +34,7 @@ class ShippingProfile extends ButikModel
     public function getCountriesAttribute(): ?array
     {
         $shippingZones = $this->zones();
-        $countries     = collect();
+        $countries = collect();
 
         $shippingZones->each(function ($zone) use ($countries) {
             $countries->push($zone->countries->toArray());
