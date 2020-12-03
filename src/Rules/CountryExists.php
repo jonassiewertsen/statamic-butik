@@ -35,6 +35,6 @@ class CountryExists implements Rule
      */
     public function message()
     {
-        return 'Invalid country code: ' . $this->countryCode;
+        return 'Invalid country code: '.$this->countryCode;
     }
 }
