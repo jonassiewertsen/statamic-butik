@@ -21,6 +21,7 @@ class CountryExists implements Rule
         foreach ($values as $countryCode) {
             if (! Countries::exists($countryCode)) {
                 $this->countryCode = $countryCode;
+
                 return false;
             }
         }
