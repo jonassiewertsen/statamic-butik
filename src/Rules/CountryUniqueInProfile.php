@@ -42,7 +42,7 @@ class CountryUniqueInProfile implements Rule
      */
     public function message()
     {
-        return 'The Country code '.$this->countryCode.'has already been used inside this shipping profile.';
+        return 'The Country code '.$this->countryCode.' has already been used inside this shipping profile.';
     }
 
     /**
