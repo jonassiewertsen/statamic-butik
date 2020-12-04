@@ -2,8 +2,9 @@
 
 namespace Jonassiewertsen\StatamicButik\Blueprints;
 
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
+use Jonassiewertsen\StatamicButik\Rules\CountryExists;
+use Jonassiewertsen\StatamicButik\Rules\CountryUniqueInProfile;
 use Statamic\Facades\Blueprint as StatamicBlueprint;
 use Symfony\Component\Intl\Countries;
 
@@ -68,27 +69,13 @@ class ShippingZoneBlueprint extends Blueprint
                                 'localizable' => false,
                                 'listable' => true,
                                 'display' => 'Countries',
-                                'validate' => ['required', 'array',
-                                    function ($attribute, $value, $fail) {
-                                        foreach ($value as $country_code) {
-                                            if (! Countries::exists($country_code)) {
-                                                $fail('Invalid country code: '.$country_code);
-                                            }
-                                        }
-                                    },
-                                    function ($attribute, $value, $fail) {
-                                        if (ShippingZone::all()
-                                            ->filter(function ($shippingZone) use ($value) {
-                                                foreach ($value as $country_code) {
-                                                    if ($shippingZone->countries && $shippingZone->countries->contains($country_code)) {
-                                                        return true;
-                                                    }
-                                                }
-                                            })
-                                            ->count() > 1) {
-                                            $fail('One of the countries is already added to another shipping zone.');
-                                        }
-                                    },
+                                'validate' => [
+                                    'required',
+                                    'array',
+                                    new CountryExists(),
+                                    new CountryUniqueInProfile(
+                                        request()->get('shipping_profile_slug')
+                                    ),
                                 ],
                             ],
                         ],
