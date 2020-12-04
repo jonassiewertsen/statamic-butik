@@ -4,11 +4,11 @@ namespace Jonassiewertsen\StatamicButik\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
-use Symfony\Component\Intl\Countries;
 
 class CountryUniqueInProfile implements Rule
 {
     protected ?ShippingProfile $shippingProfile;
+    protected string $countryCode;
 
     public function __construct(string $shippingProfileSlug)
     {
@@ -26,6 +26,8 @@ class CountryUniqueInProfile implements Rule
     {
         foreach ($values as $countryCode) {
             if ($this->shippingZoneDoesContain($countryCode)) {
+                $this->countryCode = $countryCode;
+
                 return false;
             }
         }
@@ -40,9 +42,15 @@ class CountryUniqueInProfile implements Rule
      */
     public function message()
     {
-        return 'Error'; // TODO: Proper error message
+        return 'The Country code '.$this->countryCode.'has already been used inside this shipping profile.';
     }
 
+    /**
+     * Does the shipping zone contain this country code already?
+     *
+     * @param $countryCode
+     * @return bool
+     */
     private function shippingZoneDoesContain($countryCode)
     {
         return in_array($countryCode, $this->shippingProfile->countries);
