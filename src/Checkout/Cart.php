@@ -27,7 +27,7 @@ class Cart
         static::$cart = static::get();
 
         if (self::contains($slug)) {
-            // increase the quanitity
+            // increase the quantity
             static::$cart->firstWhere('slug', $slug)->increase();
         } else {
             // Add new Item
