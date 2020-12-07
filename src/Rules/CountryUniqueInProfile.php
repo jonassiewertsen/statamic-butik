@@ -24,7 +24,7 @@ class CountryUniqueInProfile implements Rule
         }
 
         $this->shippingProfile = ShippingProfile::find($shippingProfileSlug);
-        $this->shippingZone    = $shippingZone;
+        $this->shippingZone = $shippingZone;
     }
 
     /**
@@ -54,7 +54,7 @@ class CountryUniqueInProfile implements Rule
      */
     public function message()
     {
-        return 'The Country ' . $this->country . ' has already been used inside this shipping profile.';
+        return 'The Country '.$this->country.' has already been used inside this shipping profile.';
     }
 
     /**
