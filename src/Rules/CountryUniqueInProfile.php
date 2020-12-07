@@ -10,19 +10,11 @@ use Jonassiewertsen\StatamicButik\Shipping\Country;
 class CountryUniqueInProfile implements Rule
 {
     protected ?ShippingProfile $shippingProfile;
+    protected ?ShippingZone $shippingZone;
     protected string $country;
 
-    public function __construct(?string $shippingProfileSlug, ?ShippingZone $shippingZone)
+    public function __construct(?string $shippingProfileSlug = null, ?ShippingZone $shippingZone = null)
     {
-        /**
-         * If creating a new profile, the profile can not be passed. In case the
-         * slug is empty, the rule will pass which makes sense, because there
-         * can't be any country connected to this shipping profile already.
-         */
-        if (! $shippingProfileSlug || ! $shippingZone) {
-            return true;
-        }
-
         $this->shippingProfile = ShippingProfile::find($shippingProfileSlug);
         $this->shippingZone = $shippingZone;
     }
@@ -36,6 +28,15 @@ class CountryUniqueInProfile implements Rule
      */
     public function passes($attribute, $values)
     {
+        /**
+         * If creating a new profile, the profile can not be passed. In case the
+         * slug is empty, the rule will pass which makes sense, because there
+         * can't be any country connected to this shipping profile already.
+         */
+        if (! $this->shippingProfile || ! $this->shippingZone) {
+            return true;
+        }
+
         foreach ($values as $countryCode) {
             if ($this->countryNotSelectable($countryCode)) {
                 $this->country = Country::getName($countryCode);
