@@ -26,8 +26,20 @@ class ShippingProfile extends ButikModel
     public function whereZoneFrom($countryCode): ?ShippingZone
     {
         return $this->zones()
-                    ->has('rates')
-                    ->where('countries', 'LIKE', "%\"$countryCode\"%")
-                    ->first();
+            ->has('rates')
+            ->where('countries', 'LIKE', "%\"$countryCode\"%")
+            ->first();
+    }
+
+    public function getCountriesAttribute(): ?array
+    {
+        $shippingZones = $this->zones();
+        $countries = collect();
+
+        $shippingZones->each(function ($zone) use ($countries) {
+            $countries->push($zone->countries->toArray());
+        });
+
+        return $countries->flatten()->toArray();
     }
 }

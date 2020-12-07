@@ -24,7 +24,7 @@ class ShippingZonesController extends CpController
     {
         $this->authorize('update', $shippingZone);
 
-        $blueprint = new ShippingZoneBlueprint();
+        $blueprint = new ShippingZoneBlueprint($shippingZone);
         $fields = $blueprint()->fields()->addValues($request->all());
         $fields->validate();
         $values = $fields->process()->values();
