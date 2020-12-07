@@ -18,13 +18,13 @@ class CountryUniqueInProfile implements Rule
          * If creating a new profile, the profile can not be passed. In case the
          * slug is empty, the rule will pass which makes sense, because there
          * can't be any country connected to this shipping profile already.
-        */
+         */
         if (! $shippingProfileSlug || ! $shippingZone) {
             return true;
         }
 
         $this->shippingProfile = ShippingProfile::find($shippingProfileSlug);
-        $this->shippingZone = $shippingZone;
+        $this->shippingZone    = $shippingZone;
     }
 
     /**
@@ -54,7 +54,7 @@ class CountryUniqueInProfile implements Rule
      */
     public function message()
     {
-        return 'The Country '.$this->country.' has already been used inside this shipping profile.';
+        return 'The Country ' . $this->country . ' has already been used inside this shipping profile.';
     }
 
     /**
