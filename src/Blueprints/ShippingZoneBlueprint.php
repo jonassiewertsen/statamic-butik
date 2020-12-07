@@ -2,6 +2,7 @@
 
 namespace Jonassiewertsen\StatamicButik\Blueprints;
 
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Jonassiewertsen\StatamicButik\Rules\CountryExists;
 use Jonassiewertsen\StatamicButik\Rules\CountryUniqueInProfile;
@@ -10,6 +11,13 @@ use Symfony\Component\Intl\Countries;
 
 class ShippingZoneBlueprint extends Blueprint
 {
+    protected ?ShippingZone $shippingZone;
+
+    public function __construct(?ShippingZone $shippingZone = null)
+    {
+        $this->shippingZone = $shippingZone;
+    }
+
     // TODO: Refactor this blueprint
     public function __invoke()
     {
@@ -74,7 +82,8 @@ class ShippingZoneBlueprint extends Blueprint
                                     'array',
                                     new CountryExists(),
                                     new CountryUniqueInProfile(
-                                        request()->get('shipping_profile_slug')
+                                        request()->get('shipping_profile_slug'),
+                                        $this->shippingZone
                                     ),
                                 ],
                             ],

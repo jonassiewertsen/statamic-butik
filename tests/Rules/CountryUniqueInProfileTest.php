@@ -9,28 +9,33 @@ use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class CountryUniqueInProfileTest extends TestCase
 {
+    protected CountryUniqueInProfile $rule;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->rule = new CountryUniqueInProfile(
+            $this->createZones()->slug,
+            ShippingZone::first()
+        );
+    }
+
     /** @test */
     public function will_return_true_if_the_country_is_unique_in_this_profile()
     {
-        $rule = new CountryUniqueInProfile($this->createZones()->slug);
-
-        $this->assertTrue($rule->passes('attribute', ['US']));
+        $this->assertTrue($this->rule->passes('attribute', ['US']));
     }
 
     /** @test */
     public function will_return_true_if_the_country_code_is_only_present_in_another_shipping_profile()
     {
-        $rule = new CountryUniqueInProfile($this->createZones()->slug);
-
-        $this->assertTrue($rule->passes('attribute', ['GB']));
+        $this->assertTrue($this->rule->passes('attribute', ['GB']));
     }
 
     /** @test */
-    public function will_return_false_if_the_country_code_is_already_present_in_the_shipping_profile()
+    public function will_return_true_if_the_country_code_is_already_present_but_from_its_own_shipping_zone()
     {
-        $rule = new CountryUniqueInProfile($this->createZones()->slug);
-
-        $this->assertFalse($rule->passes('attribute', ['DE']));
+        $this->assertTrue($this->rule->passes('attribute', ['DE']));
     }
 
     private function createZones(): ShippingProfile
