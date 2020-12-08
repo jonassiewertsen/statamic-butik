@@ -14,6 +14,11 @@ class PurchaseConfirmation extends Mailable implements ShouldQueue
     use SerializesModels;
 
     public Order $order;
+    public $customer;
+    public $items;
+    public $order_id;
+    public $paid_at;
+    public $total_amount;
 
     public function __construct(Order $order)
     {
