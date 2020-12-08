@@ -32,6 +32,7 @@
   * [Payment Receipt](frontend/templates/payment-receipt.md)
 * [Antlers Tags](frontend/antlers-tags.md)
 * [Localization](frontend/localization.md)
+* [Mailables](frontend/mailables.md)
 
 ## Extending
 
