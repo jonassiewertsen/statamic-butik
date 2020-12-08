@@ -143,7 +143,7 @@ class Cart
 
     public static function totalTaxes(): Collection
     {
-        static::$totalShipping = collect();
+        static::$totalTaxes = collect();
         $taxRates = [];
 
         /**
@@ -174,13 +174,13 @@ class Cart
             $totalTaxAmount = static::makeAmountHumanStatic($totalTaxAmount);
 
             // For better access in antlers views, the amount and rate will get added as an array.
-            static::$totalShipping->push([
+            static::$totalTaxes->push([
                 'amount' => $totalTaxAmount,
                 'rate'   => $taxRate,
             ]);
         }
 
-        return static::$totalShipping;
+        return static::$totalTaxes;
     }
 
     /**
