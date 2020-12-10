@@ -4,7 +4,6 @@ namespace Jonassiewertsen\StatamicButik\Http\Models;
 
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
-use Statamic\Support\Str;
 
 class Variant extends ButikModel
 {
