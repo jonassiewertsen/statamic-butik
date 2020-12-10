@@ -130,9 +130,7 @@ class Variant extends ButikModel
      */
     public function getShowUrlAttribute()
     {
-        $route = "{$this->shopRoute()}/{$this->product_slug}/{$this->original_title}";
-
-        return Str::of($route)->start('/');
+        return route('butik.shop.product', ['product' => $this->product_slug, 'variant' => $this->original_title], false);
     }
 
     /**

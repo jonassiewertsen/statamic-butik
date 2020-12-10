@@ -67,6 +67,7 @@ return [
     'category_route_active' => true, // default: true. Set to false to deactive this route.
 
     'route_shop-prefix'       => 'shop',                       // yourshop.com/shop/
+    'route_product'           => '{product}/{variant?}',       // yourshop.com/shop/xxxxx
     'route_cart'              => 'cart',                       // yourshop.com/shop/cart
     'route_category'          => 'category/{category}',         // yourshop.com/shop/category/xxxxx
     'route_checkout-delivery' => 'checkout/delivery',           // yourshop.com/shop/checkout/delivery
