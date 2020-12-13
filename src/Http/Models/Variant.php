@@ -131,7 +131,7 @@ class Variant extends ButikModel
     {
         return route('butik.shop.product', [
             'product' => $this->product_slug,
-            'variant' => $this->original_title
+            'variant' => $this->original_title,
         ], false);
     }
 
