@@ -91,8 +91,9 @@ The default is set to 10 entries. If you do use the _Orders_ widget and want to 
 'product_route_active'  => true, 
 'category_route_active' => true,
 
-'route_shop-prefix'       => 'shop',                      
-'route_cart'              => 'cart',            
+'route_shop-prefix'       => 'shop',
+'route_product'           => '{product}/{variant?}',
+'route_cart'              => 'cart',
 'route_category'          => 'category/{category}',     // keep {category}         
 'route_checkout-delivery' => 'checkout/delivery',          
 'route_checkout-payment'  => 'checkout/payment',           
