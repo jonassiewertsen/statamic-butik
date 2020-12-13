@@ -129,7 +129,11 @@ class Variant extends ButikModel
      */
     public function getShowUrlAttribute()
     {
-        return route('butik.shop.product', ['product' => $this->product_slug, 'variant' => $this->original_title], false);
+        return route('butik.shop.product', [
+            'product' => $this->product_slug,
+            'variant' => $this->original_title],
+            false
+        );
     }
 
     /**
