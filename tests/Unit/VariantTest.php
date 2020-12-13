@@ -53,7 +53,7 @@ class VariantTest extends TestCase
     public function it_has_a_show_url()
     {
         $this->assertEquals(
-            "/shop/{$this->product->slug}/{$this->variant->original_title}",
+            "/shop/{$this->product->slug}/".rawurlencode($this->variant->original_title),
             $this->variant->show_url
         );
     }
