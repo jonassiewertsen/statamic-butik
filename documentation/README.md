@@ -14,10 +14,10 @@ You can use the light and simple design as offered or customize it according to 
 
 ## Reach out
 
-* [Github issue tracking](https://github.com/jonassiewertsen/statamic-butik)
+* [GitHub issue tracking](https://github.com/jonassiewertsen/statamic-butik)
+* [GitHub discussions & ideas ](https://github.com/jonassiewertsen/statamic-butik/discussions)
 * [butik Discord Chat](https://discord.gg/KQXyh8)
 * [Statamic Discord Chat \(\#3rd-party\)](https://discord.com/invite/j4aQmZv)
-* [Share your ideas & wishes with me](https://feedback.userreport.com/81c07a00-5ad7-4f63-b28d-503c3a76bfdc/)
 
 ## License
 
