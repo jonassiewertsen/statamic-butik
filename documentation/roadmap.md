@@ -14,6 +14,7 @@ Those plans and ideas can change at any time.
 
 * Coupons 
 * Digital products
+* Additional Payment Providers like Stripe
 * Partial shipping with tracking
 
 ### Already Integrated into version 3.0.0
