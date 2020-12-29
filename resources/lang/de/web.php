@@ -30,7 +30,7 @@ return [
     'link_price'               => 'Preis vererben',
     'link_invalid'             => 'Dieser Link ist nicht mehr gültig.',
     'email'                    => 'E-mail',
-    'email_sent'               => 'Eine Bestätigung wird an :mail gesendet',
+    'email_sent'               => 'Eine Bestätigung wird an :email gesendet',
     'method'                   => 'Methode',
     'minimum'                  => 'Minimum',
     'name'                     => 'Name',
