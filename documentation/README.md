@@ -16,7 +16,7 @@ You can use the light and simple design as offered or customize it according to 
 
 * [GitHub issue tracking](https://github.com/jonassiewertsen/statamic-butik)
 * [GitHub discussions & ideas ](https://github.com/jonassiewertsen/statamic-butik/discussions)
-* [butik Discord Chat](https://discord.gg/KQXyh8)
+* [butik Discord Chat](https://discord.gg/9fbsBJv)
 * [Statamic Discord Chat \(\#3rd-party\)](https://discord.com/invite/j4aQmZv)
 
 ## License
