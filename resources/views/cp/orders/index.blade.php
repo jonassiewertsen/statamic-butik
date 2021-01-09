@@ -1,5 +1,6 @@
 @extends('statamic::layout')
 @section('title', __('butik::cp.order_overview'))
+@section('wrapper_class', 'max-w-full')
 
 @section('content')
 
