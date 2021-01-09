@@ -5,14 +5,15 @@ namespace Jonassiewertsen\StatamicButik\Http\Resources;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Jonassiewertsen\StatamicButik\Blueprints\OrderBlueprint;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
-use Statamic\CP\Column;
 use Statamic\Http\Resources\CP\Concerns\HasRequestedColumns;
+use Statamic\Facades\Action;
+use Statamic\Facades\User;
 
 class OrderResource extends ResourceCollection
 {
     use HasRequestedColumns;
 
-    public $collects = Order::class;
+    public    $collects = Order::class;
     protected $blueprint;
     protected $columns;
 
@@ -20,7 +21,7 @@ class OrderResource extends ResourceCollection
     {
         parent::__construct($resource);
 
-        $orderBlueprint = new OrderBlueprint();
+        $orderBlueprint  = new OrderBlueprint();
         $this->blueprint = $orderBlueprint();
     }
 
@@ -31,33 +32,47 @@ class OrderResource extends ResourceCollection
         return $this;
     }
 
-    private function setColumns()
-    {
-        $columns = $this->blueprint
-            ->columns()
-            ->ensurePrepended(Column::make('datestamp')->label('Date'));
-
-        if ($key = $this->columnPreferenceKey) {
-            $columns->setPreferred($key);
-        }
-
-        $this->columns = $columns->rejectUnlisted()->values();
-    }
-
     public function toArray($request)
     {
         $this->setColumns();
 
         return [
-            'data' => $this->collection->each(function ($collection) {
-                $collection
-                    ->blueprint($this->blueprint)
-                    ->columns($this->requestedColumns());
+            'data' => $this->collection->transform(function ($order) {
+                $customer = $order->customer;
+
+                return [
+                    'id'           => $order->id,
+                    'number'       => $order->number,
+                    'status'       => $order->status,
+                    'method'       => $order->method,
+                    'items_count'  => collect($order->items)->count(),
+                    'name'         => $customer->firstname . ' ' . $customer->surname,
+                    'email'        => $customer->email,
+                    'total_amount' => $order->total_amount,
+                    'created_at'   => $order->created_at->format(config('statamic.cp.date_format')),
+
+//                    'permalink' => $order->absoluteUrl(),
+//                    'edit_url' => $order->editUrl(),
+                    'viewable' => User::current()->can('view orders', $order),
+                    'editable' => User::current()->can('update orders', $order),
+//                    'actions' => Action::for($entry, ['collection' => $order->handle()]),
+                ];
             }),
 
             'meta' => [
                 'columns' => $this->visibleColumns(),
             ],
         ];
+    }
+
+    private function setColumns()
+    {
+        $columns = $this->blueprint->columns();
+
+        if ($key = $this->columnPreferenceKey) {
+            $columns->setPreferred($key);
+        }
+
+        $this->columns = $columns->rejectUnlisted()->values();
     }
 }

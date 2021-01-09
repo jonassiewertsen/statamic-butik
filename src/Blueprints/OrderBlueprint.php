@@ -13,13 +13,71 @@ class OrderBlueprint extends Blueprint
                 'main'    => [
                     'fields' => [
                         [
+                            'handle' => 'name',
+                            'field'  => [
+                                'type'     => 'text',
+                                'listable' => true,
+                                'display'  => __('butik::cp.name'),
+                            ],
+                        ],
+                        [
+                            'handle' => 'email',
+                            'field'  => [
+                                'type'     => 'text',
+                                'display'  => __('butik::cp.email'),
+                            ],
+                        ],
+                        [
+                            'handle' => 'status',
+                            'field'  => [
+                                'type'     => 'text',
+                                'listable' => true,
+                                'display'  => __('butik::cp.status'),
+                            ],
+                        ],
+                        [
                             'handle' => 'id',
                             'field'  => [
                                 'type'     => 'text',
-                                'width'    => '66',
                                 'listable' => true,
-                                'display'  => __('butik::cp.name'),
-                                'validate' => 'required',
+                                'display'  => __('butik::cp.id'),
+                            ],
+                        ],
+                        [
+                            'handle' => 'number',
+                            'field'  => [
+                                'type'     => 'text',
+                                'display'  => __('butik::cp.order_number'),
+                            ],
+                        ],
+                        [
+                            'handle' => 'method',
+                            'field'  => [
+                                'type'     => 'text',
+                                'display'  => __('butik::cp.method'),
+                            ],
+                        ],
+                        [
+                            'handle' => 'items_count',
+                            'field'  => [
+                                'type'     => 'number',
+                                'display'  => __('butik::cp.items_count'),
+                            ],
+                        ],
+                        [
+                            'handle' => 'total_amount',
+                            'field'  => [
+                                'type'     => 'money',
+                                'listable' => true,
+                                'display'  => __('butik::cp.total_amount'),
+                            ],
+                        ],
+                        [
+                            'handle' => 'created_at',
+                            'field'  => [
+                                'type'     => 'date',
+                                'listable' => true,
+                                'display'  => __('butik::cp.created_at'),
                             ],
                         ],
                     ],

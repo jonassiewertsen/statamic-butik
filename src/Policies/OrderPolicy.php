@@ -21,6 +21,6 @@ class OrderPolicy
 
     public function update(User $user, $order)
     {
-        return $user->hasPermission('update products');
+        return $user->hasPermission('update orders');
     }
 }
