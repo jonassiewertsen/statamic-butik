@@ -5,15 +5,15 @@ namespace Jonassiewertsen\StatamicButik\Http\Resources;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Jonassiewertsen\StatamicButik\Blueprints\OrderBlueprint;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
-use Statamic\Http\Resources\CP\Concerns\HasRequestedColumns;
 use Statamic\Facades\Action;
 use Statamic\Facades\User;
+use Statamic\Http\Resources\CP\Concerns\HasRequestedColumns;
 
 class OrderResource extends ResourceCollection
 {
     use HasRequestedColumns;
 
-    public    $collects = Order::class;
+    public $collects = Order::class;
     protected $blueprint;
     protected $columns;
 
@@ -46,16 +46,16 @@ class OrderResource extends ResourceCollection
                     'status'       => $order->status,
                     'method'       => $order->method,
                     'items_count'  => collect($order->items)->count(),
-                    'name'         => $customer->firstname . ' ' . $customer->surname,
+                    'name'         => $customer->firstname.' '.$customer->surname,
                     'email'        => $customer->email,
                     'total_amount' => $order->total_amount,
                     'created_at'   => $order->created_at->format(config('statamic.cp.date_format')),
 
-//                    'permalink' => $order->absoluteUrl(),
-//                    'edit_url' => $order->editUrl(),
+                    // 'permalink' => $order->absoluteUrl(),
+                    // 'edit_url' => $order->editUrl(),
                     'viewable' => User::current()->can('view orders', $order),
                     'editable' => User::current()->can('update orders', $order),
-//                    'actions' => Action::for($entry, ['collection' => $order->handle()]),
+                    // 'actions' => Action::for($entry, ['collection' => $order->handle()]),
                 ];
             }),
 
