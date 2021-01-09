@@ -64,7 +64,7 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\CP')
         });
 
         // API Resource Controller
-        Route::prefix('api')->name('api.')->group(function() {
+        Route::prefix('api')->name('api.')->group(function () {
             Route::get('orders/get', 'Api\OrdersController@index')->name('orders.index');
         });
     });

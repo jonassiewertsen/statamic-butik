@@ -15,6 +15,6 @@ class OrdersController
         $paginator = new LengthAwarePaginator($orders, 2, 50, 0);
 
         return (new OrderResource($paginator))
-            ->columnPreferenceKey("id");
+            ->columnPreferenceKey('id');
     }
 }

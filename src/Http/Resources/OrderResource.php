@@ -21,7 +21,7 @@ class OrderResource extends ResourceCollection
     {
         parent::__construct($resource);
 
-        $orderBlueprint  = new OrderBlueprint();
+        $orderBlueprint = new OrderBlueprint();
         $this->blueprint = $orderBlueprint();
     }
 
