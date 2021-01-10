@@ -1,6 +1,13 @@
 <template>
     <div>
+        <div v-if="initializing" class="card loading">
+            <loading-graphic />
+        </div>
+
+        <slot name="no-results" v-if="! loading && ! searchQuery && items.length === 0" />
+
         <data-list
+            v-else-if="! initializing"
             :columns="columns"
             :rows="items"
             :sort="false"

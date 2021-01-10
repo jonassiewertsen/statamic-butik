@@ -8,20 +8,12 @@
         <h1 class="flex-1">{{ __('butik::cp.order_overview') }}</h1>
     </div>
 
-    @unless($orders->isEmpty())
-
-        <butik-order-list
-            :initial-rows="{{ json_encode($orders) }}"
-            :columns="{{ json_encode($columns) }}"
-            :endpoints="{}">
-        ></butik-order-list>
-
-    @else
-
-        <div class="card">
-            {{ __('butik::cp.no_orders_yet') }}
-        </div>
-
-    @endunless
+    <butik-order-list
+{{--            run-action-url="{{ cp_route('akismet.actions.run', $form->handle()) }}"--}}
+{{--            bulk-actions-url="{{ cp_route('akismet.actions.bulk', $form->handle()) }}"--}}
+        initial-sort-column="date"
+        initial-sort-direction="desc"
+        v-cloak
+    ></butik-order-list>
 
 @endsection

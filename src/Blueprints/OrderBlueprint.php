@@ -73,11 +73,11 @@ class OrderBlueprint extends Blueprint
                             ],
                         ],
                         [
-                            'handle' => 'created_at',
+                            'handle' => 'date',
                             'field'  => [
                                 'type'     => 'date',
                                 'listable' => true,
-                                'display'  => __('butik::cp.created_at'),
+                                'display'  => __('butik::cp.date'),
                             ],
                         ],
                     ],
