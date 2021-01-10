@@ -34,21 +34,21 @@
 
                     <data-list-table
                         v-if="items.length"
-                        :allow-bulk-actions="true"
+                        :allow-bulk-actions="false"
                         :allow-column-picker="true"
                         :column-preferences-key="preferencesKey('columns')"
                         @sorted="sorted"
                     >
-                        <template slot="cell-datestamp" slot-scope="{ row: submission, value }">
-                            <a :href="submissionUrl(submission)" class="text-blue">{{ value }}</a>
+                        <template slot="cell-datestamp" slot-scope="{ row: order, value }">
+                            <a :href="showUrl(order)" class="text-blue">{{ value }}</a>
                         </template>
-                        <template slot="actions" slot-scope="{ row: submission, index }">
+                        <template slot="actions" slot-scope="{ row: order, index }">
                             <dropdown-list>
-                                <dropdown-item :text="__('View')" :redirect="submissionUrl(submission)" />
+                                <dropdown-item :text="__('View')" :redirect="showUrl(order)" />
                                 <data-list-inline-actions
-                                    :item="submission.id"
+                                    :item="order.id"
                                     :url="runActionUrl"
-                                    :actions="submission.actions"
+                                    :actions="order.actions"
                                     @started="actionStarted"
                                     @completed="actionCompleted"
                                 />
@@ -74,19 +74,22 @@
 import DeletesListingRow from '../DeletesListingRow.js'
 export default {
     mixins: [DeletesListingRow, Listing],
-    props: [
-        'initial-rows',
-        'columns',
-    ],
+
+    props: {
+        ordersRequestUrl: '',
+        showRoute: '',
+    },
+
     data() {
         return {
             rows: this.initialRows,
-            requestUrl: cp_url('/butik/api/orders/get'),
+            requestUrl: this.ordersRequestUrl,
         }
     },
+
     methods: {
-        submissionUrl() {
-            return cp_url('#');
+        showUrl(order) {
+            return this.showRoute.replace('XXX', order.id)
         }
     }
 }

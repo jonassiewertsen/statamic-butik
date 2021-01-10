@@ -9,10 +9,10 @@
     </div>
 
     <butik-order-list
-{{--            run-action-url="{{ cp_route('', $order) }}"--}}
-{{--            bulk-actions-url="{{ cp_route('', $order)) }}"--}}
         initial-sort-column="date"
         initial-sort-direction="desc"
+        show-route="{{ cp_route('butik.orders.show', 'XXX') }}"
+        orders-request-url="{{ cp_route('butik.api.orders.index') }}"
         v-cloak
     >
         <div slot="no-results" class="card">
