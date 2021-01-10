@@ -49,7 +49,7 @@ class OrderResource extends ResourceCollection
                     'name'         => $customer->firstname.' '.$customer->surname,
                     'email'        => $customer->email,
                     'total_amount' => $order->total_amount,
-                    'date'          => $order->created_at->format(config('statamic.cp.date_format')),
+                    'date'          => $order->created_at->format(config('statamic.cp.date_format').' H:i'),
 
                     // 'permalink' => $order->absoluteUrl(),
                     // 'edit_url' => $order->editUrl(),

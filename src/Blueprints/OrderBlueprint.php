@@ -77,7 +77,7 @@ class OrderBlueprint extends Blueprint
                             'field'  => [
                                 'type'     => 'date',
                                 'listable' => true,
-                                'display'  => __('butik::cp.date'),
+                                'display'  => __('butik::cp.ordered_at'),
                             ],
                         ],
                     ],

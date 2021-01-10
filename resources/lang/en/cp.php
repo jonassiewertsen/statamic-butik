@@ -33,6 +33,7 @@ return [
     'order_number'                            => 'Number',
     'order_overview'                          => 'Orders overview',
     'order_successful'                        => 'Successful orders',
+    'ordered_at'                              => 'Ordered at',
     'paid_at'                                 => 'Paid at',
     'price'                                   => 'Price',
     'price_section'                           => 'Price section',

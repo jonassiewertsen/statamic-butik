@@ -33,6 +33,7 @@ return [
     'order_number'                            => 'Number',
     'order_overview'                          => 'Bestellübersicht',
     'order_successful'                        => 'Erfolgreiche Bestellungen.',
+    'ordered_at'                              => 'Bestellt am',
     'paid_at'                                 => 'Bezahlt am',
     'price'                                   => 'Preis',
     'price_section'                           => 'Preis Sektion',
