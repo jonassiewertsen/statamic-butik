@@ -9,11 +9,15 @@
     </div>
 
     <butik-order-list
-{{--            run-action-url="{{ cp_route('akismet.actions.run', $form->handle()) }}"--}}
-{{--            bulk-actions-url="{{ cp_route('akismet.actions.bulk', $form->handle()) }}"--}}
+{{--            run-action-url="{{ cp_route('', $order) }}"--}}
+{{--            bulk-actions-url="{{ cp_route('', $order)) }}"--}}
         initial-sort-column="date"
         initial-sort-direction="desc"
         v-cloak
-    ></butik-order-list>
+    >
+        <div slot="no-results" class="card">
+            {{ __('butik::cp.no_orders_yet') }}
+        </div>
+    </butik-order-list>
 
 @endsection

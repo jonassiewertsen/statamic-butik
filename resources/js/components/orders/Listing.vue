@@ -4,7 +4,7 @@
             <loading-graphic />
         </div>
 
-        <slot name="no-results" v-if="! loading && ! searchQuery && items.length === 0" />
+        <slot v-if="! loading && ! searchQuery && items.length === 0" name="no-results" />
 
         <data-list
             v-else-if="! initializing"
@@ -85,7 +85,7 @@ export default {
         }
     },
     methods: {
-        submissionUrl(submission) {
+        submissionUrl() {
             return cp_url('#');
         }
     }
