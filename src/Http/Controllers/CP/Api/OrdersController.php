@@ -19,7 +19,7 @@ class OrdersController
         );
 
         return (new OrderResource($orders))
-            ->columnPreferenceKey("created_at");
+            ->columnPreferenceKey('created_at');
     }
 
     /**

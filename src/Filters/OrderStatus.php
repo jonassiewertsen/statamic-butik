@@ -17,19 +17,19 @@ class OrderStatus extends Filter
                     'paid' => __('paid'),
                     'failed' => __('failed'),
                     'shipped' => __('shipped'),
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
     public function apply($query, $values)
     {
         switch ($values['order_status']) {
-            case 'paid';
+            case 'paid':
                 return $query->where('paid_at', '!', null);
-            case 'failed';
+            case 'failed':
                 return $query->where('failed_at', '!', null);
-            case 'shipped';
+            case 'shipped':
                 return $query->where('shipped_at', '!', null);
         }
     }
@@ -37,11 +37,11 @@ class OrderStatus extends Filter
     public function badge($values)
     {
         switch ($values['order_status']) {
-            case 'paid';
+            case 'paid':
                 return __('butik::cp.order_paid_filter_label');
-            case 'failed';
+            case 'failed':
                 return __('butik::cp.order_failed_filter_label');
-            case 'shipped';
+            case 'shipped':
                 return __('butik::cp.order_shipped_filter_label');
         }
     }
