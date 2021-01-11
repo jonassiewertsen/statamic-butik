@@ -3,6 +3,7 @@
 namespace Jonassiewertsen\StatamicButik\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Carbon;
 use Jonassiewertsen\StatamicButik\Blueprints\OrderBlueprint;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Statamic\Facades\User;
@@ -48,7 +49,10 @@ class OrderResource extends ResourceCollection
                     'name'         => $customer->firstname.' '.$customer->surname,
                     'email'        => $customer->email,
                     'total_amount' => $order->total_amount,
-                    'date'          => $order->created_at->format(config('statamic.cp.date_format').' H:i'),
+                    'created_at'   => $this->formatDate($order->created_at),
+                    'paid_at'      => $this->formatDate($order->paid_at),
+                    'failed_at'    => $this->formatDate($order->failed_at),
+                    'shipped_at'   => $this->formatDate($order->shipped_at),
 
                     'viewable' => User::current()->can('view orders', $order),
                     'editable' => User::current()->can('update orders', $order),
@@ -70,5 +74,16 @@ class OrderResource extends ResourceCollection
         }
 
         $this->columns = $columns->rejectUnlisted()->values();
+    }
+
+    private function formatDate(?Carbon $date): ?string
+    {
+        $format = config('statamic.cp.date_format').' H:i';
+
+        if (! $date) {
+            return null;
+        }
+
+        return $date->format($format);
     }
 }

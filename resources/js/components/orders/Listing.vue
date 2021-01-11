@@ -15,11 +15,14 @@
             :sort-direction="sortDirection"
         >
             <div slot-scope="{ hasSelections }">
-                <div class="relative p-0 card">
+                <div class="card p-0 relative">
                     <div class="data-list-header min-h-16">
                         <data-list-filters
+                            :filters="filters"
                             :search-query="searchQuery"
+                            @filter-changed="filterChanged"
                             @search-changed="searchChanged"
+                            @selected="selectPreset"
                             @reset="filtersReset"
                         />
                     </div>
@@ -34,9 +37,10 @@
 
                     <data-list-table
                         v-if="items.length"
-                        :allow-bulk-actions="false"
+                        :allow-bulk-actions="true"
+                        :loading="loading"
                         :allow-column-picker="true"
-                        :column-preferences-key="preferencesKey('columns')"
+                        :column-preferences-key="preferencesKey('name')"
                         @sorted="sorted"
                     >
                         <template slot="cell-datestamp" slot-scope="{ row: order, value }">
@@ -78,6 +82,7 @@ export default {
     props: {
         ordersRequestUrl: '',
         showRoute: '',
+        filters: [],
     },
 
     data() {

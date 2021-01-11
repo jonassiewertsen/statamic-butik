@@ -13,6 +13,7 @@
         initial-sort-direction="desc"
         show-route="{{ cp_route('butik.orders.show', 'XXX') }}"
         orders-request-url="{{ cp_route('butik.api.orders.index') }}"
+        :filters="{{ json_encode($filters) }}"
         v-cloak
     >
         <div slot="no-results" class="card">

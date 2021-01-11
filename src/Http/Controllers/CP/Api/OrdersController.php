@@ -19,7 +19,7 @@ class OrdersController
         );
 
         return (new OrderResource($orders))
-            ->columnPreferenceKey("date");
+            ->columnPreferenceKey("created_at");
     }
 
     /**
@@ -29,11 +29,7 @@ class OrdersController
     private function fetchOrders(): Collection
     {
         $sortOrder = request('order') ?? 'desc';
-        $sortBy = request('sort') ?? 'date';
-
-        // We do call our created_at field just date. To search via eloquent, we need to swap
-        // the naming to the original name though, in case searching for date.
-        $sortBy = $sortBy === 'date' ? 'created_at' : $sortBy;
+        $sortBy = request('sort') ?? 'created_at';
 
         if (! request()->filled('search')) {
             return Order::orderBy($sortBy, $sortOrder)->get();

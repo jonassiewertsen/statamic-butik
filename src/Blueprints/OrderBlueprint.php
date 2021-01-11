@@ -73,7 +73,7 @@ class OrderBlueprint extends Blueprint
                             ],
                         ],
                         [
-                            'handle' => 'date',
+                            'handle' => 'created_at',
                             'field'  => [
                                 'type'     => 'date',
                                 'listable' => true,

@@ -4,6 +4,7 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
 
 use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
+use Statamic\Facades\Scope;
 use Statamic\Support\Str;
 
 class OrdersController extends CpController
@@ -12,7 +13,9 @@ class OrdersController extends CpController
     {
         $this->authorize('index', Order::class);
 
-        return view('butik::cp.orders.index');
+        $filters = Scope::filters('butik', []);
+
+        return view('butik::cp.orders.index', compact('filters'));
     }
 
     public function show(Order $order)

@@ -1620,21 +1620,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mixins: [__WEBPACK_IMPORTED_MODULE_0__DeletesListingRow_js__["a" /* default */], Listing],
-    props: ['initial-rows', 'columns'],
+
+    props: {
+        ordersRequestUrl: '',
+        showRoute: '',
+        filters: []
+    },
+
     data: function data() {
         return {
             rows: this.initialRows,
-            requestUrl: cp_url('/butik/api/orders/get')
+            requestUrl: this.ordersRequestUrl
         };
     },
 
+
     methods: {
-        submissionUrl: function submissionUrl(submission) {
-            return cp_url('#');
+        showUrl: function showUrl(order) {
+            return this.showRoute.replace('XXX', order.id);
         }
     }
 });
@@ -1650,159 +1668,173 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("data-list", {
-        attrs: {
-          columns: _vm.columns,
-          rows: _vm.items,
-          sort: false,
-          "sort-column": _vm.sortColumn,
-          "sort-direction": _vm.sortDirection
-        },
-        scopedSlots: _vm._u([
-          {
-            key: "default",
-            fn: function(ref) {
-              var hasSelections = ref.hasSelections
-              return _c(
-                "div",
-                {},
-                [
-                  _c(
+      _vm.initializing
+        ? _c("div", { staticClass: "card loading" }, [_c("loading-graphic")], 1)
+        : _vm._e(),
+      _vm._v(" "),
+      !_vm.loading && !_vm.searchQuery && _vm.items.length === 0
+        ? _vm._t("no-results")
+        : !_vm.initializing
+        ? _c("data-list", {
+            attrs: {
+              columns: _vm.columns,
+              rows: _vm.items,
+              sort: false,
+              "sort-column": _vm.sortColumn,
+              "sort-direction": _vm.sortDirection
+            },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(ref) {
+                  var hasSelections = ref.hasSelections
+                  return _c(
                     "div",
-                    { staticClass: "relative p-0 card" },
+                    {},
                     [
                       _c(
                         "div",
-                        { staticClass: "data-list-header min-h-16" },
+                        { staticClass: "card p-0 relative" },
                         [
-                          _c("data-list-filters", {
-                            attrs: { "search-query": _vm.searchQuery },
-                            on: {
-                              "search-changed": _vm.searchChanged,
-                              reset: _vm.filtersReset
+                          _c(
+                            "div",
+                            { staticClass: "data-list-header min-h-16" },
+                            [
+                              _c("data-list-filters", {
+                                attrs: {
+                                  filters: _vm.filters,
+                                  "search-query": _vm.searchQuery
+                                },
+                                on: {
+                                  "filter-changed": _vm.filterChanged,
+                                  "search-changed": _vm.searchChanged,
+                                  selected: _vm.selectPreset,
+                                  reset: _vm.filtersReset
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("div", {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.items.length === 0,
+                                expression: "items.length === 0"
+                              }
+                            ],
+                            staticClass: "p-3 text-center text-grey-50",
+                            domProps: {
+                              textContent: _vm._s(_vm.__("No results"))
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _c("data-list-bulk-actions", {
+                            attrs: { url: _vm.bulkActionsUrl },
+                            on: {
+                              started: _vm.actionStarted,
+                              completed: _vm.actionCompleted
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.items.length
+                            ? _c("data-list-table", {
+                                attrs: {
+                                  "allow-bulk-actions": true,
+                                  loading: _vm.loading,
+                                  "allow-column-picker": true,
+                                  "column-preferences-key": _vm.preferencesKey(
+                                    "name"
+                                  )
+                                },
+                                on: { sorted: _vm.sorted },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "cell-datestamp",
+                                      fn: function(ref) {
+                                        var order = ref.row
+                                        var value = ref.value
+                                        return [
+                                          _c(
+                                            "a",
+                                            {
+                                              staticClass: "text-blue",
+                                              attrs: {
+                                                href: _vm.showUrl(order)
+                                              }
+                                            },
+                                            [_vm._v(_vm._s(value))]
+                                          )
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      key: "actions",
+                                      fn: function(ref) {
+                                        var order = ref.row
+                                        var index = ref.index
+                                        return [
+                                          _c(
+                                            "dropdown-list",
+                                            [
+                                              _c("dropdown-item", {
+                                                attrs: {
+                                                  text: _vm.__("View"),
+                                                  redirect: _vm.showUrl(order)
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("data-list-inline-actions", {
+                                                attrs: {
+                                                  item: order.id,
+                                                  url: _vm.runActionUrl,
+                                                  actions: order.actions
+                                                },
+                                                on: {
+                                                  started: _vm.actionStarted,
+                                                  completed: _vm.actionCompleted
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              })
+                            : _vm._e()
                         ],
                         1
                       ),
                       _vm._v(" "),
-                      _c("div", {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.items.length === 0,
-                            expression: "items.length === 0"
-                          }
-                        ],
-                        staticClass: "p-3 text-center text-grey-50",
-                        domProps: { textContent: _vm._s(_vm.__("No results")) }
-                      }),
-                      _vm._v(" "),
-                      _c("data-list-bulk-actions", {
-                        attrs: { url: _vm.bulkActionsUrl },
+                      _c("data-list-pagination", {
+                        staticClass: "mt-3",
+                        attrs: {
+                          "resource-meta": _vm.meta,
+                          "per-page": _vm.perPage
+                        },
                         on: {
-                          started: _vm.actionStarted,
-                          completed: _vm.actionCompleted
+                          "page-selected": _vm.selectPage,
+                          "per-page-changed": _vm.changePerPage
                         }
-                      }),
-                      _vm._v(" "),
-                      _vm.items.length
-                        ? _c("data-list-table", {
-                            attrs: {
-                              "allow-bulk-actions": true,
-                              "allow-column-picker": true,
-                              "column-preferences-key": _vm.preferencesKey(
-                                "columns"
-                              )
-                            },
-                            on: { sorted: _vm.sorted },
-                            scopedSlots: _vm._u(
-                              [
-                                {
-                                  key: "cell-datestamp",
-                                  fn: function(ref) {
-                                    var submission = ref.row
-                                    var value = ref.value
-                                    return [
-                                      _c(
-                                        "a",
-                                        {
-                                          staticClass: "text-blue",
-                                          attrs: {
-                                            href: _vm.submissionUrl(submission)
-                                          }
-                                        },
-                                        [_vm._v(_vm._s(value))]
-                                      )
-                                    ]
-                                  }
-                                },
-                                {
-                                  key: "actions",
-                                  fn: function(ref) {
-                                    var submission = ref.row
-                                    var index = ref.index
-                                    return [
-                                      _c(
-                                        "dropdown-list",
-                                        [
-                                          _c("dropdown-item", {
-                                            attrs: {
-                                              text: _vm.__("View"),
-                                              redirect: _vm.submissionUrl(
-                                                submission
-                                              )
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("data-list-inline-actions", {
-                                            attrs: {
-                                              item: submission.id,
-                                              url: _vm.runActionUrl,
-                                              actions: submission.actions
-                                            },
-                                            on: {
-                                              started: _vm.actionStarted,
-                                              completed: _vm.actionCompleted
-                                            }
-                                          })
-                                        ],
-                                        1
-                                      )
-                                    ]
-                                  }
-                                }
-                              ],
-                              null,
-                              true
-                            )
-                          })
-                        : _vm._e()
+                      })
                     ],
                     1
-                  ),
-                  _vm._v(" "),
-                  _c("data-list-pagination", {
-                    staticClass: "mt-3",
-                    attrs: {
-                      "resource-meta": _vm.meta,
-                      "per-page": _vm.perPage
-                    },
-                    on: {
-                      "page-selected": _vm.selectPage,
-                      "per-page-changed": _vm.changePerPage
-                    }
-                  })
-                ],
-                1
-              )
-            }
-          }
-        ])
-      })
+                  )
+                }
+              }
+            ])
+          })
+        : _vm._e()
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []
