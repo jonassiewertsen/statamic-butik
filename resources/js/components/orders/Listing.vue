@@ -4,10 +4,8 @@
             <loading-graphic />
         </div>
 
-        <slot v-if="! loading && ! searchQuery && items.length === 0" name="no-results" />
-
         <data-list
-            v-else-if="! initializing"
+            v-if="! initializing"
             :columns="columns"
             :rows="items"
             :sort="false"
@@ -16,9 +14,14 @@
         >
             <div slot-scope="{ hasSelections }">
                 <div class="card p-0 relative">
-                    <div class="data-list-header min-h-16">
+                    <div class="data-list-header">
                         <data-list-filters
                             :filters="filters"
+                            :active-preset="activePreset"
+                            :active-preset-payload="activePresetPayload"
+                            :active-filters="activeFilters"
+                            :active-filter-badges="activeFilterBadges"
+                            :active-count="activeFilterCount"
                             :search-query="searchQuery"
                             @filter-changed="filterChanged"
                             @search-changed="searchChanged"
@@ -82,7 +85,6 @@ export default {
     props: {
         ordersRequestUrl: '',
         showRoute: '',
-        filters: [],
     },
 
     data() {
@@ -96,7 +98,7 @@ export default {
         showUrl(order) {
             return this.showRoute.replace('XXX', order.id)
         }
-    }
+    },
 }
 </script>
 

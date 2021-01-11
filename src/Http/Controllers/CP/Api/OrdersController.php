@@ -2,37 +2,46 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP\Api;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Resources\OrderResource;
+use Statamic\Http\Requests\FilteredRequest;
+use Statamic\Query\Scopes\Filters\Concerns\QueriesFilters;
 
 class OrdersController
 {
+    use QueriesFilters;
+
     /**
      * The requested orders will be returned, respecting any typed search, order or pagination.
      */
-    public function index(): OrderResource
+    public function index(FilteredRequest $request): OrderResource
     {
-        $orders = $this->paginatedOrders(
-            $this->fetchOrders()
-        );
+        $query = $this->fetchOrders();
+
+        $activeFilterBadges = $this->queryFilters($query, $request->filters);
+
+        $orders = $this->paginatedOrders($query->get());
 
         return (new OrderResource($orders))
-            ->columnPreferenceKey('created_at');
+            ->columnPreferenceKey('created_at')
+            ->additional(['meta' => [
+                'activeFilterBadges' => $activeFilterBadges,
+            ]]);
     }
 
     /**
      * Fetching all orders with default ordering and sorting, in case none will be passed.
      * With no search query present, the search will be ignored.
      */
-    private function fetchOrders(): Collection
+    private function fetchOrders(): Builder
     {
         $sortOrder = request('order') ?? 'desc';
         $sortBy = request('sort') ?? 'created_at';
 
         if (! request()->filled('search')) {
-            return Order::orderBy($sortBy, $sortOrder)->get();
+            return Order::orderBy($sortBy, $sortOrder);
         }
 
         return $this->searchOrders();
@@ -43,18 +52,19 @@ class OrdersController
      * of that the following fields are searchable:
      * id, number, status, total amount and the date field.
      */
-    private function searchOrders(): Collection
+    private function searchOrders(): Builder
     {
         $search = request('search');
         $searchTerm = "%{$search}%";
 
-        return Order::where('customer', 'like', $searchTerm)
-            ->orWhere('id', 'like', $searchTerm)
-            ->orWhere('number', 'like', $searchTerm)
-            ->orWhere('status', 'like', $searchTerm)
-            ->orWhere('total_amount', 'like', $searchTerm)
-            ->orWhere('created_at', 'like', $searchTerm)
-            ->get();
+        return Order::where(function ($query) use ($searchTerm) {
+            $query->where('customer', 'like', $searchTerm)
+                ->orWhere('id', 'like', $searchTerm)
+                ->orWhere('number', 'like', $searchTerm)
+                ->orWhere('status', 'like', $searchTerm)
+                ->orWhere('total_amount', 'like', $searchTerm)
+                ->orWhere('created_at', 'like', $searchTerm);
+        });
     }
 
     /**

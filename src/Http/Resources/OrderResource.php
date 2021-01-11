@@ -52,7 +52,9 @@ class OrderResource extends ResourceCollection
                     'created_at'   => $this->formatDate($order->created_at),
                     'paid_at'      => $this->formatDate($order->paid_at),
                     'failed_at'    => $this->formatDate($order->failed_at),
+                    'canceled_at'    => $this->formatDate($order->canceled_at),
                     'shipped_at'   => $this->formatDate($order->shipped_at),
+                    'completed_at'   => $this->formatDate($order->completed_at),
 
                     'viewable' => User::current()->can('view orders', $order),
                     'editable' => User::current()->can('update orders', $order),

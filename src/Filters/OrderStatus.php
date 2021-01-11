@@ -16,7 +16,7 @@ class OrderStatus extends Filter
                 'options' => [
                     'paid' => __('paid'),
                     'failed' => __('failed'),
-                    'shipped' => __('shipped'),
+                    'completed' => __('completed'),
                 ],
             ],
         ];
@@ -26,11 +26,17 @@ class OrderStatus extends Filter
     {
         switch ($values['order_status']) {
             case 'paid':
-                return $query->where('paid_at', '!', null);
+                $query->where('paid_at', '!=', null);
+                break;
             case 'failed':
-                return $query->where('failed_at', '!', null);
-            case 'shipped':
-                return $query->where('shipped_at', '!', null);
+                $query->where(function ($query) {
+                    $query->where('canceled_at', '!=', null)
+                    ->orWhere('expired_at', '!=', null);
+                });
+                break;
+            case 'completed':
+                $query->where('completed_at', '!=', null);
+                break;
         }
     }
 
@@ -41,8 +47,8 @@ class OrderStatus extends Filter
                 return __('butik::cp.order_paid_filter_label');
             case 'failed':
                 return __('butik::cp.order_failed_filter_label');
-            case 'shipped':
-                return __('butik::cp.order_shipped_filter_label');
+            case 'completed':
+                return __('butik::cp.order_completed_filter_label');
         }
     }
 

@@ -80,6 +80,14 @@ class OrderBlueprint extends Blueprint
                                 'display'  => __('butik::cp.ordered_at'),
                             ],
                         ],
+                        [
+                            'handle' => 'completed_at',
+                            'field'  => [
+                                'type'     => 'date',
+                                'listable' => true,
+                                'display'  => __('butik::cp.completed_at'),
+                            ],
+                        ],
                     ],
                 ],
             ],
