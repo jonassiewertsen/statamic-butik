@@ -46,8 +46,8 @@
                         :column-preferences-key="preferencesKey('name')"
                         @sorted="sorted"
                     >
-                        <template slot="cell-datestamp" slot-scope="{ row: order, value }">
-                            <a :href="showUrl(order)" class="text-blue">{{ value }}</a>
+                        <template slot="cell-name" slot-scope="{ row: order, value }">
+                            <a :href="showUrl(order)">{{ value }}</a>
                         </template>
                         <template slot="actions" slot-scope="{ row: order, index }">
                             <dropdown-list>
