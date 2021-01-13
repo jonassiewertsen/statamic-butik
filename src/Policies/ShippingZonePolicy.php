@@ -2,41 +2,37 @@
 
 namespace Jonassiewertsen\StatamicButik\Policies;
 
-use Illuminate\Auth\Access\HandlesAuthorization;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
-use Statamic\Auth\User;
 
-class ShippingZonePolicy
+class ShippingZonePolicy extends Policies
 {
-    use HandlesAuthorization;
-
-    public function index(User $user)
+    public function index($user)
     {
-        return $user->hasPermission('view shippings');
+        return $this->hasPermission($user, 'view shippings');
     }
 
-    public function create(User $user)
+    public function create($user)
     {
-        return $user->hasPermission('create shippings');
+        return $this->hasPermission($user, 'create shippings');
     }
 
-    public function store(User $user)
+    public function store($user)
     {
-        return $user->hasPermission('create shippings');
+        return $this->hasPermission($user, 'create shippings');
     }
 
     public function edit($user, ShippingZone $shippingZone)
     {
-        return $user->hasPermission('edit shippings');
+        return $this->hasPermission($user, 'edit shippings');
     }
 
-    public function update(User $user, $shippingZone)
+    public function update($user, $shippingZone)
     {
-        return $user->hasPermission('edit shippings');
+        return $this->hasPermission($user, 'edit shippings');
     }
 
-    public function delete(User $user, ShippingZone $shippingZone)
+    public function delete($user, ShippingZone $shippingZone)
     {
-        return $user->hasPermission('delete shippings');
+        return $this->hasPermission($user, 'delete shippings');
     }
 }

@@ -2,41 +2,37 @@
 
 namespace Jonassiewertsen\StatamicButik\Policies;
 
-use Illuminate\Auth\Access\HandlesAuthorization;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
-use Statamic\Auth\User;
 
-class TaxPolicy
+class TaxPolicy extends Policies
 {
-    use HandlesAuthorization;
-
-    public function index(User $user)
+    public function index($user)
     {
-        return $user->hasPermission('view taxes');
+        return $this->hasPermission($user, 'view taxes');
     }
 
-    public function create(User $user)
+    public function create($user)
     {
-        return $user->hasPermission('create taxes');
+        return $this->hasPermission($user, 'create taxes');
     }
 
     public function store($user)
     {
-        return $user->hasPermission('create taxes');
+        return $this->hasPermission($user, 'create taxes');
     }
 
     public function edit($user, Tax $tax)
     {
-        return $user->hasPermission('edit taxes');
+        return $this->hasPermission($user, 'edit taxes');
     }
 
-    public function update(User $user, Tax $tax)
+    public function update($user, Tax $tax)
     {
-        return $user->hasPermission('edit taxes');
+        return $this->hasPermission($user, 'edit taxes');
     }
 
-    public function delete(User $user, Tax $tax)
+    public function delete($user, Tax $tax)
     {
-        return $user->hasPermission('delete taxes');
+        return $this->hasPermission($user, 'delete taxes');
     }
 }
