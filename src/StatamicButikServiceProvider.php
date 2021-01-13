@@ -43,7 +43,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         \Jonassiewertsen\StatamicButik\Widgets\Orders::class,
     ];
 
-    protected $filters = [
+    protected $scopes = [
         OrderStatus::class,
     ];
 
@@ -135,7 +135,6 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         $this->createNavigation();
         $this->bootLivewireComponents();
         $this->publishAssets();
-        $this->bootFilters();
 
         if ($this->app->runningInConsole()) {
             // Config
@@ -311,15 +310,6 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         } catch (\Throwable $e) {
             // Do nothing
         }
-    }
-
-    private function bootFilters()
-    {
-        foreach ($this->filters as $class) {
-            $class::register();
-        }
-
-        return $this;
     }
 
     private function publishAssets(): void
