@@ -2,25 +2,20 @@
 
 namespace Jonassiewertsen\StatamicButik\Policies;
 
-use Illuminate\Auth\Access\HandlesAuthorization;
-use Statamic\Auth\User;
-
-class OrderPolicy
+class OrderPolicy extends Policies
 {
-    use HandlesAuthorization;
-
-    public function index(User $user)
+    public function index($user)
     {
-        return $user->hasPermission('view orders');
+        return $this->hasPermission($user, 'view orders');
     }
 
-    public function show(User $user, $order)
+    public function show($user, $order)
     {
-        return $user->hasPermission('show orders');
+        return $this->hasPermission($user, 'show orders');
     }
 
-    public function update(User $user, $order)
+    public function update($user, $order)
     {
-        return $user->hasPermission('update orders');
+        return $this->hasPermission($user, 'update products');
     }
 }

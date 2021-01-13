@@ -2,41 +2,37 @@
 
 namespace Jonassiewertsen\StatamicButik\Policies;
 
-use Illuminate\Auth\Access\HandlesAuthorization;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
-use Statamic\Auth\User;
 
-class VariantPolicy
+class VariantPolicy extends Policies
 {
-    use HandlesAuthorization;
-
-    public function index(User $user)
+    public function index($user)
     {
-        return $user->hasPermission('edit products entries');
+        return $this->hasPermission($user, 'edit products entries');
     }
 
-    public function create(User $user)
+    public function create($user)
     {
-        return $user->hasPermission('edit products entries');
+        return $this->hasPermission($user, 'edit products entries');
     }
 
-    public function store(User $user)
+    public function store($user)
     {
-        return $user->hasPermission('edit products entries');
+        return $this->hasPermission($user, 'edit products entries');
     }
 
     public function edit($user, Variant $variant)
     {
-        return $user->hasPermission('edit products entries');
+        return $this->hasPermission($user, 'edit products entries');
     }
 
-    public function update(User $user, $variant)
+    public function update($user, $variant)
     {
-        return $user->hasPermission('edit products entries');
+        return $this->hasPermission($user, 'edit products entries');
     }
 
-    public function delete(User $user, Variant $variant)
+    public function delete($user, Variant $variant)
     {
-        return $user->hasPermission('edit products entries');
+        return $this->hasPermission($user, 'edit products entries');
     }
 }
