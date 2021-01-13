@@ -33,7 +33,7 @@
         "illuminate/support": "^7.20 || ^8.0",
         "jonassiewertsen/statamic-livewire": "^2.0",
         "mollie/laravel-mollie": "^2.0",
-        "statamic/cms": "^3.0.34",
+        "statamic/cms": "^3.0.38",
         "symfony/intl": "^5.1"
     },
     "require-dev": {
