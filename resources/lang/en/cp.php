@@ -114,7 +114,7 @@ return [
     'total_amount'                            => 'Total amount',
     'total_price'                             => 'Total price',
     'type'                                    => 'Type',
-    'order_completed_filter_label'              => 'order:completed',
+    'order_completed_filter_label'            => 'order:completed',
     'order_failed_filter_label'               => 'order:failed',
     'order_paid_filter_label'                 => 'order:paid',
     'updated_at'                              => 'Updated at',
