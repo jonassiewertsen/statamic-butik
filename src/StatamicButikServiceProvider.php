@@ -4,6 +4,7 @@ namespace Jonassiewertsen\StatamicButik;
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
+use Jonassiewertsen\StatamicButik\Filters\OrderStatus;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
@@ -40,6 +41,10 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
     protected $widgets = [
         \Jonassiewertsen\StatamicButik\Widgets\Orders::class,
+    ];
+
+    protected $filters = [
+        OrderStatus::class,
     ];
 
     protected $modifiers = [
@@ -130,6 +135,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         $this->createNavigation();
         $this->bootLivewireComponents();
         $this->publishAssets();
+        $this->bootFilters();
 
         if ($this->app->runningInConsole()) {
             // Config
@@ -305,6 +311,15 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         } catch (\Throwable $e) {
             // Do nothing
         }
+    }
+
+    private function bootFilters()
+    {
+        foreach ($this->filters as $class) {
+            $class::register();
+        }
+
+        return $this;
     }
 
     private function publishAssets(): void

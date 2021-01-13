@@ -1,0 +1,20 @@
+# Release Notes
+
+## 3.4.0
+- A new and better overview for orders has been implemented. Orders can be reordered and searched.
+- The orders overview UI does look a native collection overview
+
+### Update
+- Does the folder `resources/lang/vendor/butik` exist? Please update your lang files and add:
+
+'completed_at'                  => 'Completed at',
+
+'ordered_at'                    => 'Ordered at',
+
+'order_completed_filter_label'  => 'order:completed',
+
+'order_failed_filter_label'     => 'order:failed',
+
+'order_paid_filter_label'       => 'order:paid',
+
+- Does the folder not exist? Don't worry at all :-)

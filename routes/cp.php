@@ -62,4 +62,9 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\CP')
                 'store', 'update', 'destroy',
             ]);
         });
+
+        // API Resource Controller
+        Route::prefix('api')->name('api.')->group(function () {
+            Route::get('orders/get', 'Api\OrdersController@index')->name('orders.index');
+        });
     });
