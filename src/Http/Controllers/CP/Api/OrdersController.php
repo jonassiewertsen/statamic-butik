@@ -25,7 +25,7 @@ class OrdersController
         $orders = $this->paginatedOrders($query->get());
 
         return (new OrderResource($orders))
-            ->columnPreferenceKey('created_at')
+            ->columnPreferenceKey('butik.orders.columns')
             ->additional(['meta' => [
                 'activeFilterBadges' => $activeFilterBadges,
             ]]);

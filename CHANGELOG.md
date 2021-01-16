@@ -1,6 +1,7 @@
 # Release Notes
 
 ## Upcoming release
+- Respect saved listing preferences on the orders overview. (#181)
 - Bumping the lowest Statamic requirment to version 3.0.38
 - Register filters via the newly added $scopes attribute
 
