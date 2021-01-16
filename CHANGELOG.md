@@ -1,8 +1,11 @@
 # Release Notes
 
 ## Upcoming release
-- Bumping the lowest Statamic requirment to version 3.0.38
-- Register filters via the newly added $scopes attribute
+- Respect saved listing preferences on the orders overview. (#181)
+- Add the missing translation attribute 'items count'.
+- Make the categories menu responsive for mobile devices. (#171)
+- Bumping the lowest Statamic requirment to version 3.0.38.
+- Register filters via the newly added $scopes attribute.
 
 ## 3.4.0 (13. Jan 2021)
 - A new and better overview for orders has been implemented. Orders can be reordered and searched.

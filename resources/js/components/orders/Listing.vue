@@ -23,9 +23,13 @@
                             :active-filter-badges="activeFilterBadges"
                             :active-count="activeFilterCount"
                             :search-query="searchQuery"
+                            :saves-presets="true"
+                            :preferences-prefix="preferencesPrefix"
                             @filter-changed="filterChanged"
                             @search-changed="searchChanged"
-                            @selected="selectPreset"
+                            @saved="$refs.presets.setPreset($event)"
+                            @deleted="$refs.presets.refreshPresets()"
+                            @restore-preset="$refs.presets.viewPreset($event)"
                             @reset="filtersReset"
                         />
                     </div>
@@ -43,7 +47,7 @@
                         :allow-bulk-actions="true"
                         :loading="loading"
                         :allow-column-picker="true"
-                        :column-preferences-key="preferencesKey('name')"
+                        :column-preferences-key="preferencesKey('columns')"
                         @sorted="sorted"
                     >
                         <template slot="cell-name" slot-scope="{ row: order, value }">
@@ -91,6 +95,7 @@ export default {
         return {
             rows: this.initialRows,
             requestUrl: this.ordersRequestUrl,
+            preferencesPrefix: 'butik.orders',
         }
     },
 

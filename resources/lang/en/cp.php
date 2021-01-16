@@ -23,6 +23,7 @@ return [
     'images'                                  => 'Images',
     'inherit_stock'                           => 'Inherit stock',
     'is_visible'                              => 'Is visible',
+    'items_count'                             => 'Items',
     'link_price'                              => 'Link price',
     'email'                                   => 'Email',
     'method'                                  => 'Method',
