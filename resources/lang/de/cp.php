@@ -23,6 +23,7 @@ return [
     'images'                                  => 'Bilder',
     'inherit_stock'                           => 'Lagerbestand vererben',
     'is_visible'                              => 'Ist sichtbar',
+    'items_count'                             => 'Anzahl',
     'link_price'                              => 'Preis vererben',
     'email'                                   => 'E-mail',
     'method'                                  => 'Metode',

@@ -2,6 +2,7 @@
 
 ## Upcoming release
 - Respect saved listing preferences on the orders overview. (#181)
+- Add the missing translation attribute 'items count'
 - Bumping the lowest Statamic requirment to version 3.0.38
 - Register filters via the newly added $scopes attribute
 
