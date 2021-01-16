@@ -1,6 +1,6 @@
 # Release Notes
 
-## Upcoming release
+## 3.4.1 (16. Jan 2021)
 - Respect saved listing preferences on the orders overview. (#181)
 - Add the missing translation attribute 'items count'.
 - Make the categories menu responsive for mobile devices. (#171)
