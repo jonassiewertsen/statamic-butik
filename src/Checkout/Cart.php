@@ -121,6 +121,9 @@ class Cart
         return static::$totalItems;
     }
 
+    /**
+     * The total price of the complete cart.
+     */
     public static function totalPrice()
     {
         static::$cart = static::get();
@@ -141,6 +144,9 @@ class Cart
         return static::makeAmountHumanStatic($total);
     }
 
+    /**
+     * All taxes from products and shipping.
+     */
     public static function totalTaxes(): Collection
     {
         static::$totalTaxes = collect();
@@ -154,11 +160,20 @@ class Cart
         }
 
         /**
-         * Let's collect all tax rates first.
+         * Collecting all item tax rates
          */
         foreach (static::$cart as $item) {
             if (! in_array($item->taxRate, $taxRates)) {
                 $taxRates[] = $item->taxRate;
+            }
+        }
+
+        /**
+         * Add all tax rates on top from our shippings
+         */
+        foreach (static::shipping() as $shipping) {
+            if (! in_array($shipping->taxRate, $taxRates)) {
+                $taxRates[] = $shipping->taxRate;
             }
         }
 
@@ -170,6 +185,11 @@ class Cart
                 ->where('taxRate', $taxRate)->map(function ($item) {
                     return static::makeAmountSaveableStatic($item->taxAmount);
                 })->sum();
+
+            // On top of that we need to add the tax amounts from our shipping rates
+            if ($shipping = static::shipping()->firstWhere('taxRate', $taxRate)) {
+                $totalTaxAmount += static::makeAmountSaveableStatic($shipping->taxAmount);
+            }
 
             $totalTaxAmount = static::makeAmountHumanStatic($totalTaxAmount);
 

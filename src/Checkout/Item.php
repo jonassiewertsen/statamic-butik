@@ -73,7 +73,7 @@ class Item
     /**
      * The taxrate of the product.
      */
-    public int $taxRate;
+    public float $taxRate;
 
     /**
      * The quanitity of this item in the shopping cart.
@@ -107,7 +107,7 @@ class Item
         $this->name = (string) $item->title;
         $this->images = $this->convertImage($this->product->images);
         $this->description = $this->limitedDescription();
-        $this->taxRate = $item->tax->percentage;
+        $this->taxRate = number_format($item->tax->percentage, 2);
         $this->taxAmount = $this->totalTaxAmount();
         $this->totalPrice = $this->totalPrice();
         $this->shippingProfile = $item->shipping_profile;

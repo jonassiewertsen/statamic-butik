@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
+use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
@@ -215,6 +217,33 @@ class CartTest extends TestCase
         $this->assertEquals(
             collect()->push(['rate' => $item->taxRate, 'amount' => $item->taxAmount]),
             Cart::totalTaxes()
+        );
+    }
+
+    /** @test */
+    public function the_cart_does_include_shipping_taxes()
+    {
+        // Create a new shipping zone to use a zone with taxes.
+        $shippingZone = create(ShippingZone::class)->first();
+
+        create(ShippingRate::class, [
+            'shipping_zone_id' => $shippingZone->id,
+            'minimum' => 1,
+        ])->first();
+
+        $product = $this->makeProduct([
+            'tax_id' => $shippingZone->tax_slug,
+        ], $shippingZone);
+
+        Cart::add($product->slug);
+
+        $item = new Item($product->slug);
+        $totalTaxAmount = $this->makeAmountSaveable($item->taxAmount);
+        $totalTaxAmount += $this->makeAmountSaveable(Cart::shipping()->first()->taxAmount);
+
+        $this->assertEquals(
+            $this->makeAmountHuman($totalTaxAmount),
+            Cart::totalTaxes()->first()['amount']
         );
     }
 
