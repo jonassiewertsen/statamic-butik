@@ -15,7 +15,7 @@ You can use the light and simple design as shipped or customize it after your ne
 [Github issue tracking](https://github.com/jonassiewertsen/statamic-butik)
 
 ## Missing something?
-[Share your ideas & wishes with me](https://feedback.userreport.com/81c07a00-5ad7-4f63-b28d-503c3a76bfdc/)
+[Share your ideas & wishes with me](https://github.com/jonassiewertsen/statamic-butik/discussions)
 
 # License 
 

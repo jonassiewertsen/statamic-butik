@@ -14,22 +14,25 @@ class OrderConfirmation extends Mailable implements ShouldQueue
     use SerializesModels;
 
     public Order $order;
+    public $customer;
+    public $items;
+    public $order_id;
+    public $paid_at;
+    public $total_amount;
 
     public function __construct(Order $order)
     {
         $this->order = $order;
+        $this->items = $order->items;
+        $this->paid_at = $order->paid_at;
+        $this->order_id = $order->id;
+        $this->customer = $order->customer;
+        $this->total_amount = $order->total_amount;
     }
 
     public function build()
     {
         return $this->subject(__('butik::web.new_purchase'))
-            ->markdown('butik::email.orders.orderConfirmationToSeller')
-            ->with([
-                // 'customer'     => $this->order->customer,
-                'items'        => $this->order->items,
-                'order_id'     => $this->order->id,
-                'paid_at'      => $this->order->paid_at,
-                'total_amount' => $this->order->total_amount,
-            ]);
+            ->markdown('butik::email.orders.orderConfirmationToSeller');
     }
 }

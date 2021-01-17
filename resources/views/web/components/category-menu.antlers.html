@@ -1,6 +1,6 @@
 {{ if {categories:count} !== 0 }}
-    <div class="flex justify-center mt-12 mb-20">
-        <nav class="grid col-gap-5 grid-flow-col text-dark text-xl">
+    <div class="flex justify-center mt-12 mb-16">
+        <nav class="grid pb-4 col-gap-5 grid-flow-col text-dark text-xl overflow-x-scroll">
             {{ categories root_name="Start" }}
                 <a href="{{ url }}" class="relative {{ is_current ? 'font-bold category--active' : 'font-light' }}">{{ name }}</a>
             {{ /categories }}

@@ -4,6 +4,7 @@ namespace Jonassiewertsen\StatamicButik;
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
+use Jonassiewertsen\StatamicButik\Filters\OrderStatus;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
@@ -40,6 +41,10 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
     protected $widgets = [
         \Jonassiewertsen\StatamicButik\Widgets\Orders::class,
+    ];
+
+    protected $scopes = [
+        OrderStatus::class,
     ];
 
     protected $modifiers = [

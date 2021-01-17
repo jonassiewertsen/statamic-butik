@@ -2,6 +2,9 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Models;
 
+use Jonassiewertsen\StatamicButik\Blueprints\OrderBlueprint;
+use Statamic\Fields\Blueprint;
+
 class Order extends ButikModel
 {
     protected $table = 'butik_orders';
@@ -16,6 +19,11 @@ class Order extends ButikModel
     ];
 
     protected $guarded = [];
+
+    public function blueprint(): Blueprint
+    {
+        return call_user_func(new OrderBlueprint());
+    }
 
     public function getShowUrlAttribute()
     {

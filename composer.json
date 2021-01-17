@@ -1,6 +1,6 @@
 {
     "name": "jonassiewertsen/statamic-butik",
-    "description": "",
+    "description": "The Statamic Butik e-commerce solution will integrate nicely with your personal Statamic site and help to grow your online business.",
     "keywords": [
         "Statamic",
         "Butik",
@@ -28,12 +28,12 @@
         "email": "mail@jonassiewertsen.com"
     },
     "require": {
-        "php": "^7.4",
+        "php": "^7.4 || ^8.0",
         "doctrine/dbal": "^2.10",
         "illuminate/support": "^7.20 || ^8.0",
         "jonassiewertsen/statamic-livewire": "^2.0",
         "mollie/laravel-mollie": "^2.0",
-        "statamic/cms": "^3.0.13",
+        "statamic/cms": "^3.0.38",
         "symfony/intl": "^5.1"
     },
     "require-dev": {

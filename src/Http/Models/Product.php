@@ -235,9 +235,7 @@ class Product
 
     public function showUrl($slug): string
     {
-        $route = locale_url().'/'.config('butik.route_shop-prefix').'/'.$slug;
-
-        return (string) Str::of($route)->start('/');
+        return route('butik.shop.product', ['product' => $slug], false);
     }
 
     public function __get(string $property)
