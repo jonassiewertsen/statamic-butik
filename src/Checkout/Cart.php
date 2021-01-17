@@ -189,7 +189,7 @@ class Cart
      */
     public static function shipping(): Collection
     {
-        $shipping = new Shipping(Cart::get());
+        $shipping = new Shipping(static::get());
         $shipping->handle();
 
         return $shipping->amounts;
