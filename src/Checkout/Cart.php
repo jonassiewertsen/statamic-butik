@@ -160,7 +160,7 @@ class Cart
         }
 
         /**
-         * Collecting all item tax rates
+         * Collecting all item tax rates.
          */
         foreach (static::$cart as $item) {
             if (! in_array($item->taxRate, $taxRates)) {
@@ -169,7 +169,7 @@ class Cart
         }
 
         /**
-         * Add all tax rates on top from our shippings
+         * Add all tax rates on top from our shippings.
          */
         foreach (static::shipping() as $shipping) {
             if (! in_array($shipping->taxRate, $taxRates)) {
