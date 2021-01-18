@@ -29,7 +29,7 @@ class ShippingByPriceTest extends TestCase
 
         $this->productWithFreeShipping1 = $this->makeProduct();
         $this->productWithFreeShipping2 = $this->makeProduct();
-        $this->productWithShippingCots  = $this->makeProduct([], $shippingZone, false);
+        $this->productWithShippingCots = $this->makeProduct([], $shippingZone, false);
 
         create(ShippingRate::class, [
             'shipping_zone_id' => $shippingZone->id,
