@@ -256,6 +256,8 @@ class CartTest extends TestCase
 
         Cart::add($product1->slug);
         Cart::add($product2->slug);
+        Cart::update();
+
         $item1 = new Item($product1->slug);
         $item2 = new Item($product2->slug);
 
