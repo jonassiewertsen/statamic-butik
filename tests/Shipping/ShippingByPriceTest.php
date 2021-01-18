@@ -16,20 +16,20 @@ class ShippingByPriceTest extends TestCase
 {
     use MoneyTrait;
 
-    public Product $product1;
-    public Product $product2;
-    public Product $product3;
+    public Product $productWithFreeShipping1;
+    public Product $productWithShippingCots;
+    public Product $productWithFreeShipping2;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $shippingProfile = create(ShippingProfile::class)->first();
         $shippingZone = create(ShippingZone::class)->first();
+        create(ShippingProfile::class)->first();
 
-        $this->product1 = $this->makeProduct();
-        $this->product2 = $this->makeProduct(['shipping_profile_slug' => $shippingProfile->slug]);
-        $this->product3 = $this->makeProduct();
+        $this->productWithFreeShipping1 = $this->makeProduct();
+        $this->productWithFreeShipping2 = $this->makeProduct();
+        $this->productWithShippingCots  = $this->makeProduct([], $shippingZone, false);
 
         create(ShippingRate::class, [
             'shipping_zone_id' => $shippingZone->id,
@@ -49,14 +49,15 @@ class ShippingByPriceTest extends TestCase
     /** @test */
     public function the_correct_total_item_value_will_be_calculated()
     {
-        Cart::add($this->product1->slug);
-        Cart::add($this->product2->slug);
+        Cart::add($this->productWithFreeShipping1->slug);
+        Cart::add($this->productWithShippingCots->slug);
 
         $shipping = new ShippingByPrice();
         $shipping->set(Cart::get(), ShippingZone::first());
         $shipping->calculate();
 
-        $total = $this->makeAmountSaveable($this->product1->price) + $this->makeAmountSaveable($this->product2->price);
+        $total = $this->makeAmountSaveable($this->productWithFreeShipping1->price);
+        $total += $this->makeAmountSaveable($this->productWithShippingCots->price);
 
         $this->assertEquals($total, $shipping->summedItemValue);
     }
@@ -64,10 +65,10 @@ class ShippingByPriceTest extends TestCase
     /** @test */
     public function the_standard_shipping_rate_will_be_selected()
     {
-        $product = Entry::findBySlug($this->product1->slug, 'products');
+        $product = Entry::findBySlug($this->productWithShippingCots->slug, 'products');
         $product->set('price', '49.99')->save();
 
-        Cart::add($this->product1->slug);
+        Cart::add($this->productWithShippingCots->slug);
 
         $shipping = new ShippingByPrice();
         $shipping->set(Cart::get(), ShippingZone::first());
@@ -78,10 +79,10 @@ class ShippingByPriceTest extends TestCase
     /** @test */
     public function the_standard_shipping_rate_wont_be_used_if_the_amount_does_match()
     {
-        $product = Entry::findBySlug($this->product1->slug, 'products');
+        $product = Entry::findBySlug($this->productWithFreeShipping1->slug, 'products');
         $product->set('price', '50.00')->save();
 
-        Cart::add($this->product1->slug);
+        Cart::add($this->productWithFreeShipping1->slug);
 
         $shipping = new ShippingByPrice();
         $shipping->set(Cart::get(), ShippingZone::first());
@@ -92,9 +93,9 @@ class ShippingByPriceTest extends TestCase
     /** @test */
     public function the_free_shipping_amount_will_be_calculated()
     {
-        Cart::add($this->product1->slug);
-        Cart::add($this->product2->slug);
-        Cart::add($this->product3->slug);
+        Cart::add($this->productWithFreeShipping1->slug);
+        Cart::add($this->productWithShippingCots->slug);
+        Cart::add($this->productWithFreeShipping2->slug);
 
         $shipping = new ShippingByPrice();
         $shipping->set(Cart::get(), ShippingZone::first());
@@ -105,10 +106,10 @@ class ShippingByPriceTest extends TestCase
     /** @test */
     public function the_cart_will_output_the_correct_amount()
     {
-        $product = Entry::findBySlug($this->product1->slug, 'products');
+        $product = Entry::findBySlug($this->productWithShippingCots->slug, 'products');
         $product->set('price', '4.00')->save();
 
-        Cart::add($this->product1->slug);
+        Cart::add($this->productWithShippingCots->slug);
         $shipping = Cart::shipping();
 
         $this->assertEquals('6,00', $shipping->first()->total);
@@ -117,10 +118,10 @@ class ShippingByPriceTest extends TestCase
     /** @test */
     public function the_cart_does_return_the_total_shipping_amount()
     {
-        $product = Entry::findBySlug($this->product1->slug, 'products');
+        $product = Entry::findBySlug($this->productWithShippingCots->slug, 'products');
         $product->set('price', '4.00')->save();
 
-        Cart::add($this->product1->slug);
+        Cart::add($this->productWithShippingCots->slug);
         $total = Cart::totalShipping();
 
         $this->assertEquals('6,00', $total);

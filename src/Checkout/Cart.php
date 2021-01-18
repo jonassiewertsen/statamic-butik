@@ -193,6 +193,12 @@ class Cart
 
             $totalTaxAmount = static::makeAmountHumanStatic($totalTaxAmount);
 
+            // In case there is a product or shipping with an tax rate, but with an amount of zero, we will
+            // return early to not push the to the total taxes collection.
+            if ($totalTaxAmount === '0,00') {
+                continue;
+            }
+
             // For better access in antlers views, the amount and rate will get added as an array.
             static::$totalTaxes->push([
                 'amount' => $totalTaxAmount,

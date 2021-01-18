@@ -20,9 +20,10 @@ class ShippingTest extends TestCase
     {
         parent::setUp();
 
-        $this->product = $this->makeProduct();
         $country = Country::get();
-        create(ShippingZone::class, ['countries' => [$country]])->first();
+        $shippingZone = create(ShippingZone::class, ['countries' => [$country]])->first();
+
+        $this->product = $this->makeProduct([], $shippingZone, false);
 
         Config::set('butik.country', $country);
 
@@ -86,11 +87,11 @@ class ShippingTest extends TestCase
     public function the_same_shipping_profile_will_only_be_detected_once()
     {
         $profile = Cart::get()->first()->shippingProfile;
-
-        $product = $this->makeProduct(['shipping_profile_slug' => $profile['slug']]);
+        $product = $this->makeProduct([], $profile->zones->first());
         Cart::add($product->slug);
 
         $shipping = new Shipping(Cart::get());
+
         $shipping->handle();
 
         $this->assertCount(1, $shipping->profiles);
