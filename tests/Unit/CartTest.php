@@ -236,6 +236,7 @@ class CartTest extends TestCase
         ], $shippingZone);
 
         Cart::add($product->slug);
+        Cart::update();
 
         $item = new Item($product->slug);
         $totalTaxAmount = $this->makeAmountSaveable($item->taxAmount);
@@ -258,7 +259,8 @@ class CartTest extends TestCase
         $item1 = new Item($product1->slug);
         $item2 = new Item($product2->slug);
 
-        $totalTaxAmount = $this->makeAmountSaveable($item1->taxAmount) + $this->makeAmountSaveable($item2->taxAmount);
+        $totalTaxAmount = $this->makeAmountSaveable($item1->taxAmount);
+        $totalTaxAmount += $this->makeAmountSaveable($item2->taxAmount);
         $totalTaxAmount = $this->makeAmountHuman($totalTaxAmount);
 
         $this->assertEquals(
