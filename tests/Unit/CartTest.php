@@ -215,8 +215,8 @@ class CartTest extends TestCase
         $item = new Item($product->slug);
 
         $this->assertEquals(
-            collect()->push(['rate' => $item->taxRate, 'amount' => $item->taxAmount]),
-            Cart::totalTaxes()
+            $item->taxAmount,
+            Cart::totalTaxes()->first()['amount']
         );
     }
 
@@ -263,11 +263,10 @@ class CartTest extends TestCase
 
         $totalTaxAmount = $this->makeAmountSaveable($item1->taxAmount);
         $totalTaxAmount += $this->makeAmountSaveable($item2->taxAmount);
-        $totalTaxAmount = $this->makeAmountHuman($totalTaxAmount);
 
         $this->assertEquals(
-            collect()->push(['rate' => $item1->taxRate, 'amount' => $totalTaxAmount]),
-            Cart::totalTaxes()
+            $this->makeAmountHuman($totalTaxAmount),
+            Cart::totalTaxes()->first()['amount']
         );
     }
 
