@@ -34,7 +34,7 @@ class ShippingAmount
     /**
      * The tax amount for all items belonging for the used shipping.
      */
-    public string $taxRate;
+    public float $taxRate;
     public string $taxAmount;
 
     public function __construct(string $total, ShippingProfile $profile, ShippingRate $rate, ?Tax $tax)

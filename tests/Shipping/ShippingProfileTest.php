@@ -54,11 +54,11 @@ class ShippingProfileTest extends TestCase
     {
         $this->signInAdmin();
 
-        $shippingProfile = create(ShippingProfile::class)->first();
-        $this->makeProduct(['shipping_profile_slug' => $shippingProfile->slug]);
-        $this->delete(cp_route('butik.shipping-profiles.destroy', $shippingProfile));
+        $shippingZone = create(ShippingZone::class)->first();
+        $this->makeProduct([], $shippingZone);
+        $this->delete(cp_route('butik.shipping-profiles.destroy', $shippingZone->profile));
 
-        $this->assertDatabaseHas('butik_shipping_profiles', $shippingProfile->toArray());
+        $this->assertDatabaseHas('butik_shipping_profiles', $shippingZone->profile->toArray());
     }
 
     /** @test */

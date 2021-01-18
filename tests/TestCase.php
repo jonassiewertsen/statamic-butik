@@ -40,22 +40,24 @@ class TestCase extends OrchestraTestCase
         Site::setCurrent($site);
     }
 
-    public function makeProduct(array $data = null)
+    public function makeProduct(array $data = null, ShippingZone $shippingZone = null, bool $withShippingRate = true)
     {
-        $shippingZone = create(ShippingZone::class)->first();
+        $shippingZone = $shippingZone ?? create(ShippingZone::class)->first();
 
-        create(ShippingRate::class, [
-            'shipping_zone_id' => $shippingZone->id,
-            'minimum'          => 0,
-            'price'            => 0,
-        ]);
+        if ($withShippingRate) {
+            create(ShippingRate::class, [
+                'shipping_zone_id' => $shippingZone->id,
+                'minimum'          => 0,
+                'price'            => 0,
+            ]);
+        }
 
         $entryData = [
             'title'                 => $data['title'] ?? 'Test Item Product',
             'price'                 => $data['price'] ?? '20.00',
             'stock'                 => $data['stock'] ?? '5',
             'tax_id'                => $data['tax_id'] ?? create(Tax::class)->first()->slug,
-            'shipping_profile_slug' => $data['shipping_profile_slug'] ?? $shippingZone->first()->profile->slug,
+            'shipping_profile_slug' => $shippingZone->profile->slug,
             'images'                => null,
         ];
 
