@@ -38,6 +38,7 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
             $orderNumber,
             $customer,
             $totalPrice,
+            $shippings,
             $payment->method
         );
 

@@ -88,14 +88,15 @@ abstract class PaymentGateway extends WebController
     /**
      * Create the order in our database.
      */
-    protected function createOrder(string $id, Collection $items, string $orderNumber, Customer $customer, string $totalPrice, ?string $method = null): Order
+    protected function createOrder(string $id, Collection $items, string $orderNumber, Customer $customer, string $totalPrice, Collection $shippings, ?string $method = null): Order
     {
         $order = Order::create([
             'id'           => $id,
+            'method'       => $method,
             'status'       => 'created',
             'customer'     => $customer,
+            'shippings'    => $shippings,
             'total_amount' => $totalPrice,
-            'method'       => $method,
             'number'       => $orderNumber,
             'items'        => (new ItemCollection($items))->items,
         ]);
