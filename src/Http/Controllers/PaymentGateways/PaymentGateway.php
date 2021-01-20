@@ -95,9 +95,9 @@ abstract class PaymentGateway extends WebController
             'method'       => $method,
             'status'       => 'created',
             'customer'     => $customer,
-            'shippings'    => $shippings,
             'total_amount' => $totalPrice,
             'number'       => $orderNumber,
+            'shippings'    => json_encode($shippings->toArray()),
             'items'        => (new ItemCollection($items))->items,
         ]);
 
