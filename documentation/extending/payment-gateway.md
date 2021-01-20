@@ -52,7 +52,7 @@ class DummyClass extends PaymentGateway implements PaymentGatewayInterface
             $payment->method
         );
 
-        // What to after the payment has been handled?
+        // What to do after the payment has been handled?
     }
 
     /**
