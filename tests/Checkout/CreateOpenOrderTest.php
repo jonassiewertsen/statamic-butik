@@ -110,6 +110,16 @@ class CreateOpenOrderTest extends TestCase
     }
 
     /** @test */
+    public function shippings_will_be_saved_as_json()
+    {
+        Cart::add($this->makeProduct()->slug);
+
+        $this->checkout();
+
+        $this->assertDatabaseHas('butik_orders', ['shippings' => json_encode(Cart::shipping())]);
+    }
+
+    /** @test */
     public function the_express_checkout_customer_will_be_saved_as_json()
     {
         $this->checkout();
