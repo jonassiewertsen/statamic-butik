@@ -73,7 +73,7 @@ class Order extends ButikModel
     }
 
     /**
-     * Will return the shippings as an object
+     * Will return the shippings as an object.
      */
     public function getShippingsAttribute($value)
     {
