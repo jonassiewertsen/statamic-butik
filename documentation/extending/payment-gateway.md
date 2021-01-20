@@ -49,6 +49,7 @@ class DummyClass extends PaymentGateway implements PaymentGatewayInterface
             $orderNumber,
             $customer,
             $totalPrice,
+            $shippings,
             $payment->method
         );
 
