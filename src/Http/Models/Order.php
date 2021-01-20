@@ -65,9 +65,17 @@ class Order extends ButikModel
     }
 
     /**
-     * Will return the base price for this item.
+     * Will return the items as an object.
      */
     public function getItemsAttribute($value)
+    {
+        return json_decode($value);
+    }
+
+    /**
+     * Will return the shippings as an object.
+     */
+    public function getShippingsAttribute($value)
     {
         return json_decode($value);
     }

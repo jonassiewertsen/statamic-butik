@@ -22,11 +22,13 @@ class OrdersController extends CpController
     {
         $this->authorize('show', $order);
 
-        $customer = $order->customer;
-        $additionalCustomerInformation = $this->extractAdditionalInformation($customer);
-        $items = $order->items;
-
-        return view('butik::cp.orders.show', compact('order', 'customer', 'additionalCustomerInformation', 'items'));
+        return view('butik::cp.orders.show', [
+            'order' => $order,
+            'items' => $order->items,
+            'customer' => $order->customer,
+            'shippings' => $order->shippings,
+            'additionalCustomerInformation' => $this->extractAdditionalInformation($order->customer),
+        ]);
     }
 
     /**
