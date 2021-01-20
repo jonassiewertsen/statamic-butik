@@ -84,6 +84,38 @@
         </table>
     </div>
 
+    @if ($shippings)
+        <h2 class="mt-4 mb-2 font-bold text-xl">{{ __('butik::cp.shipping_plural') }}</h2>
+
+        @foreach ($shippings as $shipping)
+            <h2 class="mt-4 font-bold text-xl">{{ $shipping->profileTitle }}</h2>
+            <div class="card p-0">
+                <table class="data-table">
+                    <tr>
+                        <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.shipping_profile_slug') }}</th>
+                        <td>{{ $shipping->profileSlug }}</td>
+                    </tr>
+                    <tr>
+                        <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.shipping_rate_title') }}</th>
+                        <td>{{ $shipping->rateTitle }}</td>
+                    </tr>
+                    <tr>
+                        <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.tax_rate') }}</th>
+                        <td>{{ $shipping->taxRate }} %</td>
+                    </tr>
+                    <tr>
+                        <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.tax_amount') }}</th>
+                        <td>{{ currency() }}  {{ $shipping->taxAmount }}</td>
+                    </tr>
+                    <tr>
+                        <th class="pl-2 py-1 w-1/4">{{ __('butik::cp.total_amount') }}</th>
+                        <td><strong>{{ currency() }} {{ $shipping->total }}</strong></td>
+                    </tr>
+                </table>
+            </div>
+        @endforeach
+    @endif
+
     <h1 class="mt-3">{{ __('butik::cp.product_plural') }}</h1>
 
     @foreach ($items as $item)
