@@ -50,6 +50,18 @@ return [
     'currency_delimiter' => ',',
 
     /**
+     * Oders settings.
+     *
+     * You can define how orders can be deleted. Can they at all, only in production or via the UI
+     * if the user has gotten permission to do so.
+     *
+     * never: Safety first. Orders can never be delete.
+     * development: As long as not in production, you can delete orders.
+     * users: Orders can be deleted in production as well, if permission has been given.
+     */
+    'orders_deletable'  => env('BUTIK_ORDERS_DELETABLE', 'development'),
+
+    /**
      * WIDGETS.
      *
      * Settings for your dashboard widgets

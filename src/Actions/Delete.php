@@ -2,6 +2,7 @@
 
 namespace Jonassiewertsen\StatamicButik\Actions;
 
+use Jonassiewertsen\StatamicButik\Exceptions\ButikConfigException;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Statamic\Actions\Action;
 
@@ -16,12 +17,24 @@ class Delete extends Action
 
     public function visibleTo($item)
     {
-        return$item instanceof Order;
+        return $item instanceof Order;
     }
 
-    public function authorize($user, $item)
+    public function authorize($user, $item): bool
     {
-        return $user->can('delete', $item);
+        if (config('butik.orders_deletable') === 'users') {
+            return $user->can('delete', $item);
+        }
+
+        if (config('butik.orders_deletable') === 'never') {
+            return false;
+        }
+
+        if (config('butik.orders_deletable') === 'development') {
+            return config('app.env') !== 'production';
+        }
+
+        throw new ButikConfigException('Make sure to set your butik orders_deletable config to \'never\', \'development\' or \'user\'. Yours is: '.config('butik.orders_deletable'));
     }
 
     public function buttonText()
