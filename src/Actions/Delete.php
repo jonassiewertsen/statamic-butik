@@ -4,7 +4,6 @@ namespace Jonassiewertsen\StatamicButik\Actions;
 
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Statamic\Actions\Action;
-use Statamic\Contracts\Auth\User as UserContract;
 
 class Delete extends Action
 {
@@ -22,12 +21,6 @@ class Delete extends Action
 
     public function authorize($user, $item)
     {
-        return true; // TODO: Authorize the delete action
-
-        if ($item instanceof UserContract && $user->id() === $item->id()) {
-            return false;
-        }
-
         return $user->can('delete', $item);
     }
 

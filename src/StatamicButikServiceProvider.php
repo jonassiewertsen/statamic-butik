@@ -224,6 +224,9 @@ class StatamicButikServiceProvider extends AddonServiceProvider
                             Permission::make('update orders')
                                 ->label(__('butik::cp.permission_update_orders'))
                                 ->description(__('butik::cp.permission_update_orders_description')),
+                            Permission::make('delete orders')
+                                ->label(__('butik::cp.permission_delete_orders'))
+                                ->description(__('butik::cp.permission_delete_orders_description')),
                         ]);
                 });
                 Permission::register('view shippings', function ($permission) {

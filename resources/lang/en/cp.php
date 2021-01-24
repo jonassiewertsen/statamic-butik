@@ -48,6 +48,8 @@ return [
     'permission_show_orders_description'      => 'Grants access to see the order details',
     'permission_update_orders'                => 'Update Orders',
     'permission_update_orders_description'    => 'Grants access to edit existing orders',
+    'permission_delete_orders'                => 'Delete Orders',
+    'permission_delete_orders_description'    => 'Grants access to delete orders',
     'permission_view_products'                => 'View Products',
     'permission_view_products_description'    => 'Grants access to view all existing products',
     'permission_edit_products'                => 'Edit Products',
