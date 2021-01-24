@@ -1,13 +1,10 @@
 <?php
 /**
- * GLOBAL HELPER for Statamic Butik
+ * GLOBAL HELPER for Statamic Butik.
  */
 
-use Jonassiewertsen\StatamicButik\Http\Models\Settings;
-
-
 /**
- * Will return the currency symbol
+ * Will return the currency symbol.
  */
 if (!function_exists('currency')) {
     function currency()

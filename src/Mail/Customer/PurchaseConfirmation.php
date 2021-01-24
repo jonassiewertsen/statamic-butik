@@ -30,6 +30,5 @@ class PurchaseConfirmation extends Mailable implements ShouldQueue
                 'paid_at'      => $this->order->paid_at,
                 'items'        => $this->order->items,
             ]);
-
     }
 }

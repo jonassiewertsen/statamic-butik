@@ -5,7 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Tags;
 class Butik extends \Statamic\Tags\Tags
 {
     /**
-     * {{ butik:shop }}
+     * {{ butik:shop }}.
      *
      * Will return the shop overview route
      */
@@ -15,7 +15,7 @@ class Butik extends \Statamic\Tags\Tags
     }
 
     /**
-     * {{ butik:bag }}
+     * {{ butik:bag }}.
      *
      * Will return the shop overview route
      */

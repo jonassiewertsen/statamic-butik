@@ -7,7 +7,8 @@ use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class TaxUpdateTest extends TestCase
 {
-    public function setUp(): void {
+    public function setUp(): void
+    {
         parent::setUp();
 
         $this->signInAdmin();
@@ -38,7 +39,8 @@ class TaxUpdateTest extends TestCase
         $this->assertEquals(Tax::first()->percentage, 99);
     }
 
-    private function updateTax($tax) {
+    private function updateTax($tax)
+    {
         return $this->patch(route('statamic.cp.butik.taxes.update', $tax), $tax->toArray());
     }
 }

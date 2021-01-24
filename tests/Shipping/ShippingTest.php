@@ -5,11 +5,11 @@ namespace Jonassiewertsen\StatamicButik\Tests\Shipping;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
-use Jonassiewertsen\StatamicButik\Shipping\Country;
-use Jonassiewertsen\StatamicButik\Shipping\Shipping;
 use Jonassiewertsen\StatamicButik\Exceptions\ButikConfigException;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
+use Jonassiewertsen\StatamicButik\Shipping\Country;
+use Jonassiewertsen\StatamicButik\Shipping\Shipping;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class ShippingTest extends TestCase
@@ -22,7 +22,7 @@ class ShippingTest extends TestCase
 
         $this->product = $this->makeProduct();
         $country = Country::get();
-        create(ShippingZone::class, [ 'countries' => [$country] ])->first();
+        create(ShippingZone::class, ['countries' => [$country]])->first();
 
         Config::set('butik.country', $country);
 
@@ -47,7 +47,7 @@ class ShippingTest extends TestCase
         $shipping = new Shipping(Cart::get());
         $shipping->handle();
 
-        $this->assertEquals($shipping->country,  $country);
+        $this->assertEquals($shipping->country, $country);
     }
 
     /** @test */

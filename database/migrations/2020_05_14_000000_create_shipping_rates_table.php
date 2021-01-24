@@ -8,7 +8,7 @@ class CreateShippingRatesTable extends Migration
 {
     public function up()
     {
-        if (! Schema::hasTable('butik_shipping_rates')) {
+        if (!Schema::hasTable('butik_shipping_rates')) {
             Schema::create('butik_shipping_rates', function (Blueprint $table) {
                 $table->bigIncrements('id');
                 $table->unsignedBigInteger('shipping_zone_id')->index();

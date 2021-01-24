@@ -14,6 +14,7 @@ class ItemCollection
 
         if ($fromDatabase) {
             $this->items = $items;
+
             return $this;
         }
 

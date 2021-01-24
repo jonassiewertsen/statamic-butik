@@ -40,16 +40,16 @@ class ProductShowTest extends TestCase
     public function a_variant_with_a_not_existing_url_will_be_redirect_to_an_existing_one()
     {
         $variant = create(Variant::class, ['product_slug' => $this->product->slug])->first();
-        $this->get($this->product->show_url . '/not-exsisting-variant')->assertRedirect($variant->show_url);
+        $this->get($this->product->show_url.'/not-exsisting-variant')->assertRedirect($variant->show_url);
     }
 
     /** @test */
     public function a_product_without_a_variant_will_be_redirect_to_its_base_url()
     {
-        $this->get($this->product->show_url . '/not-exsisting-variant')->assertRedirect($this->product->show_url);
+        $this->get($this->product->show_url.'/not-exsisting-variant')->assertRedirect($this->product->show_url);
     }
 
-// Not testable with livewire
+    // Not testable with livewire
 //    /** @test */
 //    public function product_information_will_be_shown()
 //    {
@@ -72,7 +72,7 @@ class ProductShowTest extends TestCase
             ->assertRedirect(route('butik.shop'));
     }
 
-// Not testable with livewire
+    // Not testable with livewire
 //    /** @test */
 //    public function a_product_out_of_stock_will_be_shown_as_sold_out()
 //    {

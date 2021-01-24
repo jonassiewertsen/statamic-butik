@@ -11,7 +11,7 @@ class Categories extends Fieldtype
     use FieldsetHelper;
 
     protected $categories = ['butik'];
-    protected $icon       = 'tags';
+    protected $icon = 'tags';
 
     public function preload()
     {
@@ -21,7 +21,7 @@ class Categories extends Fieldtype
 
         $product = $this->field()->parent();
         $categoryBlueprint = new CategoryBlueprint();
-        $categoryFields    = $categoryBlueprint()->fields()->addValues([])->preProcess();
+        $categoryFields = $categoryBlueprint()->fields()->addValues([])->preProcess();
 
         return [
             'categoryIndexRoute'  => cp_route('butik.categories.from-product', ['product' => $product->slug()]),

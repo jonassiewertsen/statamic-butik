@@ -79,7 +79,7 @@ abstract class PaymentGateway extends WebController
     {
         $order->update([
             'status'        => 'canceled',
-            'canceled_at' => $canceledAt ?? now(),
+            'canceled_at'   => $canceledAt ?? now(),
         ]);
 
         event(new OrderCanceled($order));
@@ -114,10 +114,10 @@ abstract class PaymentGateway extends WebController
     }
 
     /**
-     * Create an order number
+     * Create an order number.
      */
     protected function createOrderNumber(): string
     {
-        return now()->format('Ymd_') . str_random(30);
+        return now()->format('Ymd_').str_random(30);
     }
 }

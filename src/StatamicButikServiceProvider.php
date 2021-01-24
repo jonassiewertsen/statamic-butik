@@ -32,8 +32,8 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     ];
 
     protected $routes = [
-        'cp'  => __DIR__ . '/../routes/cp.php',
-        'web' => __DIR__ . '/../routes/web.php',
+        'cp'  => __DIR__.'/../routes/cp.php',
+        'web' => __DIR__.'/../routes/web.php',
     ];
 
     protected $widgets = [
@@ -75,7 +75,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         \Jonassiewertsen\StatamicButik\Events\OrderCompleted::class  => [],
         \Jonassiewertsen\StatamicButik\Events\OrderExpired::class    => [],
         \Jonassiewertsen\StatamicButik\Events\OrderCanceled::class   => [],
-        \Statamic\Events\EntrySaving::class => [
+        \Statamic\Events\EntrySaving::class                          => [
             \Jonassiewertsen\StatamicButik\Listeners\CacheOldProductSlug::class,
         ],
         \Statamic\Events\EntrySaved::class => [
@@ -99,7 +99,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     ];
 
     protected $scripts = [
-        __DIR__ . '/../public/js/statamic-butik.js',
+        __DIR__.'/../public/js/statamic-butik.js',
     ];
 
     protected $policies = [
@@ -117,9 +117,9 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
         $this->enableForeignKeyConstraints();
 
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'butik');
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'butik');
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'butik');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'butik');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         $this->bootPermissions();
         $this->createNavigation();
@@ -129,44 +129,44 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         if ($this->app->runningInConsole()) {
             // Config
             $this->publishes([
-                __DIR__ . '/../config/config.php' => config_path('butik.php'),
+                __DIR__.'/../config/config.php' => config_path('butik.php'),
             ], 'butik-config');
 
             // Blueprints & collections
             $this->publishes([
-                __DIR__ . '/../resources/blueprints' => resource_path('blueprints'),
+                __DIR__.'/../resources/blueprints' => resource_path('blueprints'),
             ], 'butik-blueprints');
             $this->publishes([
-                __DIR__ . '/../resources/collections' => base_path('content/collections'),
+                __DIR__.'/../resources/collections' => base_path('content/collections'),
             ], 'butik-collections');
 
             // Views
             $this->publishes([
-                __DIR__ . '/../resources/views/email' => resource_path('views/vendor/butik/emails'),
+                __DIR__.'/../resources/views/email' => resource_path('views/vendor/butik/emails'),
             ], 'butik-views');
             $this->publishes([
-                __DIR__ . '/../resources/views/web' => resource_path('views/vendor/butik/web'),
+                __DIR__.'/../resources/views/web' => resource_path('views/vendor/butik/web'),
             ], 'butik-views');
             $this->publishes([
-                __DIR__ . '/../resources/views/widgets' => resource_path('views/vendor/butik/widgets'),
+                __DIR__.'/../resources/views/widgets' => resource_path('views/vendor/butik/widgets'),
             ], 'butik-views');
 
             // Images
             $this->publishes([
-                __DIR__ . '/../public/images' => public_path('vendor/butik/images'),
+                __DIR__.'/../public/images' => public_path('vendor/butik/images'),
             ], 'butik-images');
 
             // Resources
             $this->publishes([
-                __DIR__ . '/../public/css' => public_path('vendor/butik/css'),
+                __DIR__.'/../public/css' => public_path('vendor/butik/css'),
             ], 'butik-resources');
             $this->publishes([
-                __DIR__ . '/../public/js' => public_path('vendor/statamic-butik/js'),
+                __DIR__.'/../public/js' => public_path('vendor/statamic-butik/js'),
             ], 'butik-resources');
 
             // Lang
             $this->publishes([
-                __DIR__ . '/../resources/lang' => resource_path('lang/vendor/butik'),
+                __DIR__.'/../resources/lang' => resource_path('lang/vendor/butik'),
             ], 'butik-lang');
         }
     }
@@ -177,11 +177,11 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     public function register(): void
     {
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'butik');
+        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'butik');
 
         // Register the main class to use with the facade
         $this->app->singleton('statamic-butik', function () {
-            return new StatamicButik;
+            return new StatamicButik();
         });
 
         // Registering the service provider
@@ -244,7 +244,6 @@ class StatamicButikServiceProvider extends AddonServiceProvider
             });
         });
     }
-
 
     protected function bootLivewireComponents(): void
     {

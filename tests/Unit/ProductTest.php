@@ -21,7 +21,7 @@ class ProductTest extends TestCase
     /** @test */
     public function it_has_a_tax()
     {
-        $tax                   = create(Tax::class)->first();
+        $tax = create(Tax::class)->first();
         $this->product->tax_id = $tax->slug;
 
         $this->assertInstanceOf(Tax::class, $this->product->tax);
@@ -30,14 +30,14 @@ class ProductTest extends TestCase
     /** @test */
     public function it_has_tax_amount()
     {
-        $tax                   = create(Tax::class)->first();
+        $tax = create(Tax::class)->first();
         $this->product->tax_id = $tax->slug;
 
         $divisor = $this->product->tax->percentage / 100 + 1;
-        $price   = $this->product->price = '10.00';
+        $price = $this->product->price = '10.00';
 
         $priceWithoutTax = round($price / $divisor, 2);
-        $expectedAmount  = number_format($price - $priceWithoutTax, 2, ',', '');
+        $expectedAmount = number_format($price - $priceWithoutTax, 2, ',', '');
 
         $this->assertEquals($expectedAmount, $this->product->tax_amount);
     }
@@ -45,7 +45,7 @@ class ProductTest extends TestCase
     /** @test */
     public function it_has_a_tax_percentage()
     {
-        $tax                   = create(Tax::class)->first();
+        $tax = create(Tax::class)->first();
         $this->product->tax_id = $tax->slug;
 
         $this->assertEquals($tax->percentage, $this->product->tax_percentage);
@@ -64,7 +64,7 @@ class ProductTest extends TestCase
     public function it_is_sold_out_if_the_stock_is_null()
     {
         $this->product->stock_unlimited = false;
-        $this->product->stock           = 0;
+        $this->product->stock = 0;
 
         $this->assertTrue($this->product->sold_out);
     }
@@ -73,7 +73,7 @@ class ProductTest extends TestCase
     public function it_is_not_sold_out_if_the_product_is_unlimited()
     {
         $this->product->stock_unlimited = true;
-        $this->product->stock           = 0;
+        $this->product->stock = 0;
 
         $this->assertFalse($this->product->sold_out);
     }
@@ -87,7 +87,7 @@ class ProductTest extends TestCase
     /** @test */
     public function it_belongs_to_a_shipping_profile()
     {
-        $profile                              = create(ShippingProfile::class)->first();
+        $profile = create(ShippingProfile::class)->first();
         $this->product->shipping_profile_slug = $profile->slug;
 
         $this->assertInstanceOf(ShippingProfile::class, $this->product->shipping_profile);

@@ -11,16 +11,16 @@ class ValidateCheckoutRoute
     {
         $customer = session()->get('butik.customer');
 
-        if (! $this->customerDataComplete($customer)) {
+        if (!$this->customerDataComplete($customer)) {
             return redirect(route('butik.checkout.delivery'));
         }
 
         return $next($request);
     }
 
-    private function customerDataComplete(?Customer $customer): bool {
-        if ($customer === null)
-        {
+    private function customerDataComplete(?Customer $customer): bool
+    {
+        if ($customer === null) {
             return false;
         }
 

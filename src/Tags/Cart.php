@@ -13,7 +13,7 @@ class Cart extends \Statamic\Tags\Tags
     protected static $aliases = ['bag'];
 
     /**
-     * {{ cart }}
+     * {{ cart }}.
      *
      * Will return all items from the bag / shopping cart
      * Equivalent to {{ cart:items }}
@@ -24,7 +24,7 @@ class Cart extends \Statamic\Tags\Tags
     }
 
     /**
-     * {{ cart:items }}
+     * {{ cart:items }}.
      *
      * Will return all items from the cart / shopping cart
      * Equivalent to {{ cart }}
@@ -39,22 +39,22 @@ class Cart extends \Statamic\Tags\Tags
          */
         return ShoppingCart::get()->map(function ($item) {
             return [
-                'available'      => $item->available,
-                'sellable'       => $item->sellable,
+                'available'       => $item->available,
+                'sellable'        => $item->sellable,
                 'available_stock' => $item->availableStock,
-                'slug'           => $item->slug,
-                'images'         => $item->images,
-                'name'           => $item->name,
-                'description'    => $item->description,
-                'single_price'   => $item->singlePrice(),
-                'total_price'    => $item->totalPrice(),
-                'quantity'       => $item->getQuantity(),
+                'slug'            => $item->slug,
+                'images'          => $item->images,
+                'name'            => $item->name,
+                'description'     => $item->description,
+                'single_price'    => $item->singlePrice(),
+                'total_price'     => $item->totalPrice(),
+                'quantity'        => $item->getQuantity(),
             ];
         });
     }
 
     /**
-     * {{ cart:total_items }}
+     * {{ cart:total_items }}.
      *
      * Will return the total count of the items in your cart
      */
@@ -64,7 +64,7 @@ class Cart extends \Statamic\Tags\Tags
     }
 
     /**
-     * {{ cart:total_shipping }}
+     * {{ cart:total_shipping }}.
      *
      * Will return the total shipping costs
      */
@@ -74,7 +74,7 @@ class Cart extends \Statamic\Tags\Tags
     }
 
     /**
-     * {{ cart:total_price }}
+     * {{ cart:total_price }}.
      *
      * Will return the total price for the complete shopping cart
      */
@@ -84,7 +84,7 @@ class Cart extends \Statamic\Tags\Tags
     }
 
     /**
-     * {{ cart:total_taxes }}
+     * {{ cart:total_taxes }}.
      *
      * Will return the total price for the complete shopping cart
      */

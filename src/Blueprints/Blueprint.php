@@ -1,19 +1,17 @@
 <?php
 
-
 namespace Jonassiewertsen\StatamicButik\Blueprints;
-
 
 use Illuminate\Validation\Rule;
 
 abstract class Blueprint
 {
     /**
-     * Check if the actual route is equal to the given route
+     * Check if the actual route is equal to the given route.
      */
     protected function isRoute($route): bool
     {
-        if (! isset(request()->route()->action['as'])) {
+        if (!isset(request()->route()->action['as'])) {
             return false;
         }
 
@@ -23,6 +21,7 @@ abstract class Blueprint
     /**
      * Will check if the given item is unique, but will ignore the rule on the given route.
      * This is usefull, if you need to update an existing entry.
+     *
      * @param string $table
      * @param string $item
      * @param string $route

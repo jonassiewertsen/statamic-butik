@@ -2,15 +2,14 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Models;
 
-use Illuminate\Support\Facades\DB;
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class Category extends ButikModel
 {
-    protected $table      = 'butik_categories';
+    protected $table = 'butik_categories';
     protected $primaryKey = 'slug';
-    protected $keyType    = 'string';
+    protected $keyType = 'string';
 
     protected $guarded = [];
 
@@ -24,7 +23,7 @@ class Category extends ButikModel
     }
 
     /**
-     * Will fetch all related products
+     * Will fetch all related products.
      */
     public function getProductsAttribute()
     {
@@ -34,7 +33,7 @@ class Category extends ButikModel
             ->where(['category_slug' => $this->slug])
             ->get();
 
-        $results->each(function($result) use ($products) {
+        $results->each(function ($result) use ($products) {
             $products->push(Product::find($result->product_slug));
         });
 
@@ -42,26 +41,26 @@ class Category extends ButikModel
     }
 
     /**
-     * Add a product to this category
+     * Add a product to this category.
      */
     public function addProduct(string $slug): void
     {
         DB::table('butik_category_product')
             ->insert([
                 'category_slug' => $this->slug,
-                'product_slug' => $slug,
+                'product_slug'  => $slug,
             ]);
     }
 
     /**
-     * Add a product to this category
+     * Add a product to this category.
      */
     public function removeProduct(string $product): void
     {
         DB::table('butik_category_product')
             ->where([
                 'category_slug' => $this->slug,
-                'product_slug' => $product,
+                'product_slug'  => $product,
             ])->delete();
     }
 
@@ -77,7 +76,7 @@ class Category extends ButikModel
     }
 
     /**
-     * The url of the specific category
+     * The url of the specific category.
      */
     public function getUrlAttribute()
     {

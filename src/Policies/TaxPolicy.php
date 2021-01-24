@@ -3,8 +3,8 @@
 namespace Jonassiewertsen\StatamicButik\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Statamic\Auth\User;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
+use Statamic\Auth\User;
 
 class TaxPolicy
 {
@@ -39,5 +39,4 @@ class TaxPolicy
     {
         return $user->hasPermission('delete taxes');
     }
-
 }

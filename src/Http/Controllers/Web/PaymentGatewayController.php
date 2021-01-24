@@ -20,7 +20,7 @@ class PaymentGatewayController extends WebController
     {
         $paymentGateway = config('butik.payment_gateway');
 
-        if (! class_exists($paymentGateway)) {
+        if (!class_exists($paymentGateway)) {
             throw new ButikConfigException('Your payment gateway class as defined in you config file could not be found');
         }
 
@@ -29,15 +29,16 @@ class PaymentGatewayController extends WebController
 
     public function processPayment()
     {
-        $customer   = Session::get('butik.customer');
-        $items      = Session::get('butik.cart');
-        $shippings  = Cart::shipping();
+        $customer = Session::get('butik.customer');
+        $items = Session::get('butik.cart');
+        $shippings = Cart::shipping();
         $totalPrice = $this->humanPriceWithDot(Cart::totalPrice());
 
         return $this->gateway->handle($customer, $items, $totalPrice, $shippings);
     }
 
-    public function webhook(Request $request): void {
+    public function webhook(Request $request): void
+    {
         $this->gateway->webhook($request);
     }
 }

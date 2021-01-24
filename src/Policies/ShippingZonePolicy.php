@@ -3,8 +3,8 @@
 namespace Jonassiewertsen\StatamicButik\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Statamic\Auth\User;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
+use Statamic\Auth\User;
 
 class ShippingZonePolicy
 {
@@ -39,5 +39,4 @@ class ShippingZonePolicy
     {
         return $user->hasPermission('delete shippings');
     }
-
 }

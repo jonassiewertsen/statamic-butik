@@ -19,11 +19,11 @@ class ShippingRate extends ButikModel
 
     protected $hidden = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     /**
-     * Will return the base price for this item
+     * Will return the base price for this item.
      */
     public function getPriceAttribute($value)
     {
@@ -31,7 +31,7 @@ class ShippingRate extends ButikModel
     }
 
     /**
-     * Mutating from a the correct amount into a integer without commas
+     * Mutating from a the correct amount into a integer without commas.
      */
     public function setPriceAttribute($value)
     {

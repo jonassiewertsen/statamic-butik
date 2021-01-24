@@ -16,12 +16,12 @@ class CurrencyTagTest extends TestCase
         $this->currency = new Currency();
     }
 
-   /** @test */
-   public function it_will_return_the_currency_symbol_as_default()
-   {
-       Config::set('butik.currency_symbol', '€');
-       $this->assertEquals('€', $this->currency->index());
-   }
+    /** @test */
+    public function it_will_return_the_currency_symbol_as_default()
+    {
+        Config::set('butik.currency_symbol', '€');
+        $this->assertEquals('€', $this->currency->index());
+    }
 
     /** @test */
     public function it_will_return_the_currency_symbol()

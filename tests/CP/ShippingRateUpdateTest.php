@@ -7,7 +7,8 @@ use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class ShippingRateUpdateTest extends TestCase
 {
-    public function setUp(): void {
+    public function setUp(): void
+    {
         parent::setUp();
 
         $this->signInAdmin();
@@ -41,7 +42,8 @@ class ShippingRateUpdateTest extends TestCase
         $this->assertDatabaseHas('butik_shipping_rates', ['minimum' => '99999']);
     }
 
-    private function updateShippingRate($shippingRate) {
+    private function updateShippingRate($shippingRate)
+    {
         return $this->patch(route('statamic.cp.butik.shipping-rates.update', $shippingRate), $shippingRate->toArray());
     }
 }

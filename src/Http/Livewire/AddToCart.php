@@ -12,7 +12,7 @@ class AddToCart extends Component
 
     public function mount($slug, $redirect = null)
     {
-        $this->slug     = $slug;
+        $this->slug = $slug;
         $this->redirect = $redirect;
     }
 

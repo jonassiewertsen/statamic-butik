@@ -14,14 +14,14 @@ class Cart
 {
     use MoneyTrait;
 
-    public static  $cart;
+    public static $cart;
     private static $totalPrice;
     private static $totalShipping;
     private static $totalTaxes;
     private static $totalItems;
 
     /**
-     * A product can be added to the cart
+     * A product can be added to the cart.
      */
     public static function add(string $slug): void
     {
@@ -38,7 +38,7 @@ class Cart
     }
 
     /**
-     * Fetch the cart from the session
+     * Fetch the cart from the session.
      */
     public static function get(): Collection
     {
@@ -48,7 +48,7 @@ class Cart
     }
 
     /**
-     * Clear the complete cart
+     * Clear the complete cart.
      */
     public static function clear(): void
     {
@@ -56,7 +56,7 @@ class Cart
     }
 
     /**
-     * An item can be reduced or removed from the cart
+     * An item can be reduced or removed from the cart.
      */
     public static function reduce($slug): void
     {
@@ -71,6 +71,7 @@ class Cart
             // If the quantity is bigger than one, it will only decrease
             if ($item->slug === $slug && $item->getQuantity() > 1) {
                 $item->decrease();
+
                 return true;
             }
 
@@ -83,7 +84,7 @@ class Cart
     }
 
     /**
-     * An item can be completly removed from the cart
+     * An item can be completly removed from the cart.
      */
     public static function remove($slug): void
     {
@@ -97,7 +98,7 @@ class Cart
     }
 
     /**
-     * The total count of items
+     * The total count of items.
      */
     public static function totalItems()
     {
@@ -117,7 +118,7 @@ class Cart
         static::resetTotalPrice();
 
         static::$cart->each(function ($item) {
-            if (! $item->sellable) {
+            if (!$item->sellable) {
                 // We won't charge for non sellable items
                 return;
             }
@@ -134,20 +135,20 @@ class Cart
     public static function totalTaxes(): Collection
     {
         static::$totalShipping = collect();
-        $taxRates              = [];
+        $taxRates = [];
 
         /**
          * Return an empty collection in case the cart is empty.
          */
-        if (! static::$cart) {
+        if (!static::$cart) {
             return collect();
         }
 
         /**
-         * Let's collect all tax rates first
+         * Let's collect all tax rates first.
          */
         foreach (static::$cart as $item) {
-            if (! in_array($item->taxRate, $taxRates)) {
+            if (!in_array($item->taxRate, $taxRates)) {
                 $taxRates[] = $item->taxRate;
             }
         }
@@ -201,7 +202,7 @@ class Cart
     }
 
     /**
-     * Update the shopping cart
+     * Update the shopping cart.
      */
     public static function update()
     {
@@ -215,7 +216,7 @@ class Cart
     }
 
     /**
-     * Getting the actual choosen country
+     * Getting the actual choosen country.
      */
     public static function country()
     {
@@ -243,7 +244,7 @@ class Cart
     }
 
     /**
-     * An empty cart
+     * An empty cart.
      *
      * @return Collection
      */
@@ -256,6 +257,7 @@ class Cart
      * Is this product already saved in the cart?
      *
      * @param Product $product
+     *
      * @return bool
      */
     private static function contains(string $slug): bool
@@ -264,7 +266,7 @@ class Cart
     }
 
     /**
-     * Set the cart to the session
+     * Set the cart to the session.
      */
     private static function set(Collection $cart): void
     {

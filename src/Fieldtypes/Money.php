@@ -8,7 +8,7 @@ class Money extends Fieldtype
 {
     protected $categories = ['butik'];
     protected $selectable = false;
-    protected $icon       = 'tags';
+    protected $icon = 'tags';
 
     public function preload()
     {

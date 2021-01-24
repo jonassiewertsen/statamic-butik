@@ -14,7 +14,8 @@ use Mollie\Api\Resources\ResourceFactory;
 use Mollie\Api\Types\PaymentStatus;
 use Mollie\Api\Types\SequenceType;
 
-abstract class MollieResponse {
+abstract class MollieResponse
+{
     public $profileId;
     public $sequenceType;
     public $redirectUrl;
@@ -23,7 +24,7 @@ abstract class MollieResponse {
     public $subscriptionId;
     public $orderId;
     public $settlementId;
-    public $locale = "en_US";
+    public $locale = 'en_US';
     public $metadata;
     public $details;
     public $_links;
@@ -107,7 +108,7 @@ abstract class MollieResponse {
     public function getAmountRefunded()
     {
         if ($this->amountRefunded) {
-            return (float)$this->amountRefunded->value;
+            return (float) $this->amountRefunded->value;
         }
 
         return 0.0;
@@ -116,7 +117,7 @@ abstract class MollieResponse {
     public function getAmountRemaining()
     {
         if ($this->amountRemaining) {
-            return (float)$this->amountRemaining->value;
+            return (float) $this->amountRemaining->value;
         }
 
         return 0.0;
@@ -204,7 +205,7 @@ abstract class MollieResponse {
 
     public function refund($data = [])
     {
-        $resource = "payments/" . urlencode($this->id) . "/refunds";
+        $resource = 'payments/'.urlencode($this->id).'/refunds';
 
         $body = null;
         if (count($data) > 0) {
@@ -230,10 +231,10 @@ abstract class MollieResponse {
         }
 
         $body = json_encode([
-            "description" => $this->description,
-            "redirectUrl" => $this->redirectUrl,
-            "webhookUrl" => $this->webhookUrl,
-            "metadata" => $this->metadata,
+            'description' => $this->description,
+            'redirectUrl' => $this->redirectUrl,
+            'webhookUrl'  => $this->webhookUrl,
+            'metadata'    => $this->metadata,
         ]);
 
         $result = $this->client->performHttpCallToFullUrl(

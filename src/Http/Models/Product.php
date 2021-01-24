@@ -2,10 +2,10 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Models;
 
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product as ProductFacade;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product as ProductFacade;
 use Statamic\Entries\EntryCollection;
 use Statamic\Facades\Entry;
 use Statamic\Stache\Query\EntryQueryBuilder;
@@ -59,14 +59,14 @@ class Product
             }
         }
 
-        $product->price           = str_replace('.', config('butik.currency_delimiter'), $product->price);
-        $product->slug            = $entry->slug();
-        $product->id              = $entry->id();
-        $product->title           = $entry->get('title');
-        $product->stock           = (int)$entry->get('stock');
-        $product->stock_unlimited = (bool)$entry->get('stock_unlimited');
-        $product->available       = $entry->published();
-        $product->show_url        = $product->showUrl($product->slug);
+        $product->price = str_replace('.', config('butik.currency_delimiter'), $product->price);
+        $product->slug = $entry->slug();
+        $product->id = $entry->id();
+        $product->title = $entry->get('title');
+        $product->stock = (int) $entry->get('stock');
+        $product->stock_unlimited = (bool) $entry->get('stock_unlimited');
+        $product->available = $entry->published();
+        $product->show_url = $product->showUrl($product->slug);
 
         return $product;
     }
@@ -100,7 +100,7 @@ class Product
     }
 
     /**
-     * A Product has taxes
+     * A Product has taxes.
      */
     public function tax()
     {
@@ -108,7 +108,7 @@ class Product
     }
 
     /**
-     * A Product has categories
+     * A Product has categories.
      */
     public function categories()
     {
@@ -119,7 +119,7 @@ class Product
     }
 
     /**
-     * A Product has a shipping relation
+     * A Product has a shipping relation.
      */
     public function shippingProfile()
     {
@@ -127,7 +127,7 @@ class Product
     }
 
     /**
-     * A Product has variants
+     * A Product has variants.
      */
     public function variants()
     {
@@ -136,7 +136,7 @@ class Product
 
     /**
      * The product will return the belonging variant. Null will be returned,
-     * in case a variant can't be connected to the given slug
+     * in case a variant can't be connected to the given slug.
      */
     public function getVariant(string $variantTitle)
     {
@@ -161,7 +161,7 @@ class Product
     }
 
     /**
-     * Will return the shipping price
+     * Will return the shipping price.
      */
     public function taxPercentage()
     {
@@ -170,8 +170,8 @@ class Product
 
     public function taxAmount()
     {
-        $tax   = str_replace(',', '.', $this->tax->percentage);
-        $price = (float)$this->price;
+        $tax = str_replace(',', '.', $this->tax->percentage);
+        $price = (float) $this->price;
         $total = $price * ($tax / (100 + $tax));
 
         return $this->humanPrice($total);
@@ -185,11 +185,12 @@ class Product
         if ($this->stock_unlimited) {
             return false;
         }
+
         return $this->stock == 0;
     }
 
     /**
-     * Return the price with currency appended
+     * Return the price with currency appended.
      */
     public function currency()
     {
@@ -198,8 +199,9 @@ class Product
 
     public function showUrl($slug): string
     {
-        $route = config('butik.route_shop-prefix') . '/' . $slug;
-        return (string)Str::of($route)->start('/');
+        $route = config('butik.route_shop-prefix').'/'.$slug;
+
+        return (string) Str::of($route)->start('/');
     }
 
     public function __get(string $property)
@@ -214,12 +216,10 @@ class Product
         if (method_exists($this, Str::camel($property))) {
             return call_user_func([$this, Str::camel($property)]);
         }
-
-        return;
     }
 
     /**
-     * Adding some product information dynamically
+     * Adding some product information dynamically.
      */
     public function extend(EntryCollection $entry): Collection
     {
@@ -227,6 +227,7 @@ class Product
             $entry->fluentlyGetOrSet('show_url')->args([$this->showUrl($entry->slug())]);
             $entry->fluentlyGetOrSet('slug')->args([$entry->slug()]);
             $entry->fluentlyGetOrSet('price')->args([str_replace('.', config('butik.currency_delimiter'), $entry->get('price'))]);
+
             return $entry;
         });
     }

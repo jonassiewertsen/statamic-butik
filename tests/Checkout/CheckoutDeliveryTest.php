@@ -3,12 +3,11 @@
 namespace Jonassiewertsen\StatamicButik\Tests\Checkout;
 
 use Illuminate\Support\Facades\Session;
-use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
+use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
-use Jonassiewertsen\StatamicButik\Shipping\Country;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class CheckoutDeliveryTest extends TestCase
@@ -23,7 +22,7 @@ class CheckoutDeliveryTest extends TestCase
         Cart::add($this->product->slug);
     }
 
-// Failing in GitHub actions. Why?
+    // Failing in GitHub actions. Why?
 //    /** @test */
 //    public function the_user_will_be_redirected_without_any_products()
 //    {
@@ -43,7 +42,7 @@ class CheckoutDeliveryTest extends TestCase
     /** @test */
     public function user_data_will_be_saved_inside_the_session()
     {
-        $this->post(route('butik.checkout.delivery.store'), (array)$this->createUserData())
+        $this->post(route('butik.checkout.delivery.store'), (array) $this->createUserData())
             ->assertSessionHas('butik.customer');
     }
 
@@ -51,7 +50,7 @@ class CheckoutDeliveryTest extends TestCase
     public function a_firstname_is_required()
     {
         $data = $this->createUserData('firstname', '');
-        $this->post(route('butik.checkout.delivery.store'), (array)$data)
+        $this->post(route('butik.checkout.delivery.store'), (array) $data)
             ->assertSessionHasErrors('firstname');
     }
 
@@ -59,7 +58,7 @@ class CheckoutDeliveryTest extends TestCase
     public function a_firstname_can_be_to_short()
     {
         $data = $this->createUserData('firstname', str_repeat('a', 1));
-        $this->post(route('butik.checkout.delivery.store'), (array)$data)
+        $this->post(route('butik.checkout.delivery.store'), (array) $data)
             ->assertSessionHasErrors('firstname');
     }
 
@@ -67,7 +66,7 @@ class CheckoutDeliveryTest extends TestCase
     public function a_firstname_can_be_to_long()
     {
         $data = $this->createUserData('firstname', str_repeat('a', 51));
-        $this->post(route('butik.checkout.delivery.store', $this->product->slug), (array)$data)
+        $this->post(route('butik.checkout.delivery.store', $this->product->slug), (array) $data)
             ->assertSessionHasErrors('firstname');
     }
 
@@ -75,7 +74,7 @@ class CheckoutDeliveryTest extends TestCase
     public function a_surname_is_required()
     {
         $data = $this->createUserData('surname', '');
-        $this->post(route('butik.checkout.delivery.store'), (array)$data)
+        $this->post(route('butik.checkout.delivery.store'), (array) $data)
             ->assertSessionHasErrors('surname');
     }
 
@@ -83,7 +82,7 @@ class CheckoutDeliveryTest extends TestCase
     public function a_surname_can_be_to_short()
     {
         $data = $this->createUserData('surname', str_repeat('a', 1));
-        $this->post(route('butik.checkout.delivery.store'), (array)$data)
+        $this->post(route('butik.checkout.delivery.store'), (array) $data)
             ->assertSessionHasErrors('surname');
     }
 
@@ -91,7 +90,7 @@ class CheckoutDeliveryTest extends TestCase
     public function a_surname_can_be_to_long()
     {
         $data = $this->createUserData('surname', str_repeat('a', 51));
-        $this->post(route('butik.checkout.delivery.store', $this->product->slug), (array)$data)
+        $this->post(route('butik.checkout.delivery.store', $this->product->slug), (array) $data)
             ->assertSessionHasErrors('surname');
     }
 
@@ -99,7 +98,7 @@ class CheckoutDeliveryTest extends TestCase
     public function a_mail_address_is_required()
     {
         $data = $this->createUserData('mail', '');
-        $this->post(route('butik.checkout.delivery.store'), (array)$data)
+        $this->post(route('butik.checkout.delivery.store'), (array) $data)
             ->assertSessionHasErrors('mail');
     }
 
@@ -107,7 +106,7 @@ class CheckoutDeliveryTest extends TestCase
     public function a_mail_address_bust_be_a_mail_address()
     {
         $data = $this->createUserData('mail', 'jonas');
-        $this->post(route('butik.checkout.delivery.store'), (array)$data)
+        $this->post(route('butik.checkout.delivery.store'), (array) $data)
             ->assertSessionHasErrors('mail');
     }
 
@@ -115,7 +114,7 @@ class CheckoutDeliveryTest extends TestCase
     public function address_line_1_is_required()
     {
         $data = $this->createUserData('address1', '');
-        $this->post(route('butik.checkout.delivery.store'), (array)$data)
+        $this->post(route('butik.checkout.delivery.store'), (array) $data)
             ->assertSessionHasErrors('address1');
     }
 
@@ -123,7 +122,7 @@ class CheckoutDeliveryTest extends TestCase
     public function address_line_1_cant_be_to_long()
     {
         $data = $this->createUserData('address1', str_repeat('a', 81));
-        $this->post(route('butik.checkout.delivery.store'), (array)$data)
+        $this->post(route('butik.checkout.delivery.store'), (array) $data)
             ->assertSessionHasErrors('address1');
     }
 
@@ -131,7 +130,7 @@ class CheckoutDeliveryTest extends TestCase
     public function address_line_2_is_optional()
     {
         $data = $this->createUserData('address2', '');
-        $this->post(route('butik.checkout.delivery.store'), (array)$data)
+        $this->post(route('butik.checkout.delivery.store'), (array) $data)
             ->assertSessionHasNoErrors();
     }
 
@@ -139,7 +138,7 @@ class CheckoutDeliveryTest extends TestCase
     public function address_line_2_cant_be_to_long()
     {
         $data = $this->createUserData('address2', str_repeat('a', 81));
-        $this->post(route('butik.checkout.delivery.store'), (array)$data)
+        $this->post(route('butik.checkout.delivery.store'), (array) $data)
             ->assertSessionHasErrors('address2');
     }
 
@@ -147,7 +146,7 @@ class CheckoutDeliveryTest extends TestCase
     public function city_is_required()
     {
         $data = $this->createUserData('city', '');
-        $this->post(route('butik.checkout.delivery.store'), (array)$data)
+        $this->post(route('butik.checkout.delivery.store'), (array) $data)
             ->assertSessionHasErrors('city');
     }
 
@@ -155,7 +154,7 @@ class CheckoutDeliveryTest extends TestCase
     public function city_2_cant_be_to_long()
     {
         $data = $this->createUserData('city', str_repeat('a', 81));
-        $this->post(route('butik.checkout.delivery.store'), (array)$data)
+        $this->post(route('butik.checkout.delivery.store'), (array) $data)
             ->assertSessionHasErrors('city');
     }
 
@@ -163,7 +162,7 @@ class CheckoutDeliveryTest extends TestCase
     public function state_region_is_optional()
     {
         $data = $this->createUserData('stage_region', '');
-        $this->post(route('butik.checkout.delivery.store'), (array)$data)
+        $this->post(route('butik.checkout.delivery.store'), (array) $data)
             ->assertSessionHasNoErrors();
     }
 
@@ -171,7 +170,7 @@ class CheckoutDeliveryTest extends TestCase
     public function state_region_cant_be_to_long()
     {
         $data = $this->createUserData('state_region', str_repeat('a', 81));
-        $this->post(route('butik.checkout.delivery.store'), (array)$data)
+        $this->post(route('butik.checkout.delivery.store'), (array) $data)
             ->assertSessionHasErrors('state_region');
     }
 
@@ -179,7 +178,7 @@ class CheckoutDeliveryTest extends TestCase
     public function zip_is_required()
     {
         $data = $this->createUserData('zip', '');
-        $this->post(route('butik.checkout.delivery.store'), (array)$data)
+        $this->post(route('butik.checkout.delivery.store'), (array) $data)
             ->assertSessionHasErrors('zip');
     }
 
@@ -187,7 +186,7 @@ class CheckoutDeliveryTest extends TestCase
     public function zip_cant_be_to_long()
     {
         $data = $this->createUserData('zip', str_repeat('a', 21));
-        $this->post(route('butik.checkout.delivery.store'), (array)$data)
+        $this->post(route('butik.checkout.delivery.store'), (array) $data)
             ->assertSessionHasErrors('zip');
     }
 
@@ -195,7 +194,7 @@ class CheckoutDeliveryTest extends TestCase
     public function phone_is_optional()
     {
         $data = $this->createUserData('phone', '');
-        $this->post(route('butik.checkout.delivery.store'), (array)$data)
+        $this->post(route('butik.checkout.delivery.store'), (array) $data)
             ->assertSessionHasNoErrors();
     }
 
@@ -203,7 +202,7 @@ class CheckoutDeliveryTest extends TestCase
     public function phone_cant_be_to_long()
     {
         $data = $this->createUserData('phone', str_repeat('a', 51));
-        $this->post(route('butik.checkout.delivery.store'), (array)$data)
+        $this->post(route('butik.checkout.delivery.store'), (array) $data)
             ->assertSessionHasErrors('phone');
     }
 
@@ -211,7 +210,7 @@ class CheckoutDeliveryTest extends TestCase
     public function a_country_is_required()
     {
         $data = $this->createUserData('country', '');
-        $this->post(route('butik.checkout.delivery.store'), (array)$data)
+        $this->post(route('butik.checkout.delivery.store'), (array) $data)
             ->assertSessionHasErrors('country');
     }
 
@@ -219,7 +218,7 @@ class CheckoutDeliveryTest extends TestCase
     public function a_country_must_exist()
     {
         $data = $this->createUserData('country', 'not-existing-country');
-        $this->post(route('butik.checkout.delivery.store'), (array)$data)
+        $this->post(route('butik.checkout.delivery.store'), (array) $data)
             ->assertSessionHasErrors('country');
     }
 
@@ -234,7 +233,7 @@ class CheckoutDeliveryTest extends TestCase
         $this->get($deliveryRoute);
 
         // submit the form
-        $this->post($deliveryRoute, (array)$this->createUserData('country', $country_code))
+        $this->post($deliveryRoute, (array) $this->createUserData('country', $country_code))
             ->assertRedirect($deliveryRoute);
     }
 
@@ -244,15 +243,15 @@ class CheckoutDeliveryTest extends TestCase
         $country_code = 'ES';
 
         create(ShippingZone::class, [
-            'countries' => [$country_code]
+            'countries' => [$country_code],
         ]);
 
         create(ShippingRate::class, [
-            'shipping_zone_id' => ShippingZone::first()
+            'shipping_zone_id' => ShippingZone::first(),
         ]);
 
         // submit the form
-        $this->post(route('butik.checkout.delivery.store'), (array)$this->createUserData('country', $country_code))
+        $this->post(route('butik.checkout.delivery.store'), (array) $this->createUserData('country', $country_code))
             ->assertRedirect();
 
         $this->assertEquals($country_code, Cart::country());
@@ -262,7 +261,7 @@ class CheckoutDeliveryTest extends TestCase
     public function existing_data_from_the_session_will_be_passed_to_the_delivery_view()
     {
         Session::put('butik.customer', new Customer($this->createUserData()));
-        $page     = $this->get(route('butik.checkout.delivery', $this->product->slug))->content();
+        $page = $this->get(route('butik.checkout.delivery', $this->product->slug))->content();
         $customer = session('butik.customer');
 
         $this->assertStringContainsString($customer->firstname, $page);
@@ -277,7 +276,7 @@ class CheckoutDeliveryTest extends TestCase
     /** @test */
     public function after_a_valid_form_the_user_will_be_redirected_to_the_payment_page()
     {
-        $this->post(route('butik.checkout.delivery.store'), (array)$this->createUserData())
+        $this->post(route('butik.checkout.delivery.store'), (array) $this->createUserData())
             ->assertRedirect(route('butik.checkout.payment'));
     }
 

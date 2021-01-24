@@ -2,10 +2,9 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
 use Jonassiewertsen\StatamicButik\Http\Models\Category;
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
-use Statamic\Support\Str;
 use Statamic\View\View as StatamicView;
 
 class ShopController extends WebController
@@ -39,7 +38,7 @@ class ShopController extends WebController
          * If it does not exist, we will redirect to an existing variant
          * or redirect to the pare nt product.
          */
-        if ($variant !== null && ! $product->variantExists($variant)) {
+        if ($variant !== null && !$product->variantExists($variant)) {
             return $product->hasVariants() ?
                 $this->redirectToVariant($product) :
                 redirect($product->show_url);
@@ -53,16 +52,16 @@ class ShopController extends WebController
         }
 
         /**
-         * We won't show unavailable products
+         * We won't show unavailable products.
          */
-        if (! $product->available) {
+        if (!$product->available) {
             return $this->redirectToShop();
         }
 
         if ($product->hasVariants()) {
             $variants = $product->variants;
             $variant = $variants->firstWhere('original_title', $variant)->toArray();
-            $product = array_merge((array) $product, $variant, ['variants' => $variants->toArray() ]);
+            $product = array_merge((array) $product, $variant, ['variants' => $variants->toArray()]);
         } else {
             $product = (array) $product;
         }
@@ -76,6 +75,7 @@ class ShopController extends WebController
     private function redirectToVariant($product)
     {
         $variant = $product->variants->first();
+
         return redirect($variant->show_url);
     }
 
@@ -87,9 +87,9 @@ class ShopController extends WebController
     private function fetchProducts()
     {
         $display = config('butik.overview_type', 'newest');
-        $limit   = config ('butik.overview_limit', '6');
+        $limit = config('butik.overview_limit', '6');
 
-        switch($display) {
+        switch ($display) {
             case 'all':
                 return Product::all();
                 break;

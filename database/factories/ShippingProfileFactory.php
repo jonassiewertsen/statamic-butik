@@ -9,6 +9,6 @@ $factory->define(ShippingProfile::class, function (Faker $faker) {
 
     return [
         'title' => $title,
-        'slug' => Str::slug($title),
+        'slug'  => Str::slug($title),
     ];
 });

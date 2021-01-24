@@ -25,7 +25,7 @@ class ShippingByPrice extends ShippingType
     {
         $this->calculateSummedItemValue();
         $this->detectShippingRate($this->zone);
-        
+
         return new ShippingAmount(
             $this->shippingCosts(),
             $this->zone->profile,
@@ -74,7 +74,7 @@ class ShippingByPrice extends ShippingType
     }
 
     /**
-     * Converts a value into cents
+     * Converts a value into cents.
      */
     private function convertIntoCents($value): int
     {
