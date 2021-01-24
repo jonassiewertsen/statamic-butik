@@ -45,7 +45,6 @@ class Delete extends Action
 
     public function run($items, $values)
     {
-        // TODO: Add a delete methods
-        // $items->each->delete();
+         $items->each->delete();
     }
 }
