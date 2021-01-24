@@ -63,6 +63,12 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\CP')
             ]);
         });
 
+        // Actions for individual listings as used by fx orders.
+        Route::name('actions.')->prefix('actions')->group(function () {
+            Route::post('orders', 'OrderActionController@run')->name('orders.run');
+            Route::get('orders', 'OrderActionController@bulkActions')->name('orders.bulk');
+        });
+
         // API Resource Controller
         Route::prefix('api')->name('api.')->group(function () {
             Route::get('orders/get', 'Api\OrdersController@index')->name('orders.index');

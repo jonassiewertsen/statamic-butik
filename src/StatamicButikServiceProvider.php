@@ -28,6 +28,10 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 {
     protected $publishAfterInstall = false;
 
+    protected $actions = [
+        \Jonassiewertsen\StatamicButik\Actions\Delete::class,
+    ];
+
     protected $commands = [
         \Jonassiewertsen\StatamicButik\Commands\SetUpButik::class,
         \Jonassiewertsen\StatamicButik\Commands\MakeShipping::class,

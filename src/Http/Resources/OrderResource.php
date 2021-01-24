@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Carbon;
 use Jonassiewertsen\StatamicButik\Blueprints\OrderBlueprint;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
+use Statamic\Facades\Action;
 use Statamic\Facades\User;
 use Statamic\Http\Resources\CP\Concerns\HasRequestedColumns;
 
@@ -58,6 +59,7 @@ class OrderResource extends ResourceCollection
 
                     'viewable' => User::current()->can('view orders', $order),
                     'editable' => User::current()->can('update orders', $order),
+                    'actions'  => Action::for($order),
                 ];
             }),
 
