@@ -7,7 +7,8 @@ use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class TaxCreateTest extends TestCase
 {
-    public function setUp(): void {
+    public function setUp(): void
+    {
         parent::setUp();
 
         $this->signInAdmin();
@@ -51,12 +52,12 @@ class TaxCreateTest extends TestCase
         $slug = 'not-unique';
 
         // First tax
-        $product = raw(Tax::class, ['slug' => $slug ]);
+        $product = raw(Tax::class, ['slug' => $slug]);
         $this->post(route('statamic.cp.butik.taxes.store'), $product)
             ->assertSessionHasNoErrors();
 
         // Another tax with the same slug
-        $product = raw(Tax::class, ['slug' => $slug ]);
+        $product = raw(Tax::class, ['slug' => $slug]);
         $this->post(route('statamic.cp.butik.taxes.store'), $product)
             ->assertSessionHasErrors('slug');
     }
@@ -72,7 +73,7 @@ class TaxCreateTest extends TestCase
     /** @test */
     public function percentage_cant_be_less_then_zero()
     {
-        $tax = raw(Tax::class, ['percentage' => -1 ]);
+        $tax = raw(Tax::class, ['percentage' => -1]);
         $this->post(route('statamic.cp.butik.taxes.store'), $tax)
             ->assertSessionHasErrors('percentage');
     }
@@ -80,7 +81,7 @@ class TaxCreateTest extends TestCase
     /** @test */
     public function percentage_cant_be_higher_then_100()
     {
-        $tax = raw(Tax::class, ['percentage' => 101 ]);
+        $tax = raw(Tax::class, ['percentage' => 101]);
         $this->post(route('statamic.cp.butik.taxes.store'), $tax)
             ->assertSessionHasErrors('percentage');
     }

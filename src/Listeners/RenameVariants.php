@@ -17,11 +17,11 @@ class RenameVariants
         /**
          * The entry is not a product? Let's do anything then.
          */
-        if (! $event->entry->collection()->handle() === 'products') {
+        if (!$event->entry->collection()->handle() === 'products') {
             return;
         }
 
-        if (! request()->route() || ! request()->route()->getName() === 'statamic.cp.collections.entries.update') {
+        if (!request()->route() || !request()->route()->getName() === 'statamic.cp.collections.entries.update') {
             return;
         }
 

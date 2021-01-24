@@ -17,7 +17,8 @@ class CartTest extends TestCase
     protected Product $product;
     protected Variant $variant;
 
-    public function setUp(): void {
+    public function setUp(): void
+    {
         parent::setUp();
 
         $this->product = $this->makeProduct();

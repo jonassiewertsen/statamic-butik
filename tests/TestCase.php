@@ -43,7 +43,7 @@ class TestCase extends OrchestraTestCase
             $this->addToAssertionCount(-1); // Dont want to assert this
         }
 
-        $this->withFactories(__DIR__ . '/../database/factories');
+        $this->withFactories(__DIR__.'/../database/factories');
 
         $this->setCountry();
     }
@@ -57,6 +57,7 @@ class TestCase extends OrchestraTestCase
 
     /**
      * Setup up the Faker instance.
+     *
      * @return void
      */
     protected function setUpFaker()
@@ -65,8 +66,10 @@ class TestCase extends OrchestraTestCase
     }
 
     /**
-     * Sign in a Statamic user
+     * Sign in a Statamic user.
+     *
      * @param array $permissions
+     *
      * @return mixed
      */
     protected function signInUser($permissions = [])
@@ -76,11 +79,13 @@ class TestCase extends OrchestraTestCase
         $user = \Statamic\Facades\User::make();
         $user->id(1)->email('test@mail.de')->assignRole($role);
         $this->be($user);
+
         return $user;
     }
 
     /**
-     * Sign in a Statamic user as admin
+     * Sign in a Statamic user as admin.
+     *
      * @return mixed
      */
     protected function signInAdmin()
@@ -88,6 +93,7 @@ class TestCase extends OrchestraTestCase
         $user = \Statamic\Facades\User::make();
         $user->id(1)->email('test@mail.de')->makeSuper();
         $this->be($user);
+
         return $user;
     }
 
@@ -131,8 +137,10 @@ class TestCase extends OrchestraTestCase
     }
 
     /**
-     * Load package service provider
+     * Load package service provider.
+     *
      * @param \Illuminate\Foundation\Application $app
+     *
      * @return array
      */
     protected function getPackageProviders($app)
@@ -145,8 +153,10 @@ class TestCase extends OrchestraTestCase
     }
 
     /**
-     * Load package alias
+     * Load package alias.
+     *
      * @param \Illuminate\Foundation\Application $app
+     *
      * @return array
      */
     protected function getPackageAliases($app)
@@ -157,7 +167,8 @@ class TestCase extends OrchestraTestCase
     }
 
     /**
-     * Load Environment
+     * Load Environment.
+     *
      * @param \Illuminate\Foundation\Application $app
      */
     protected function getEnvironmentSetUp($app)
@@ -173,14 +184,15 @@ class TestCase extends OrchestraTestCase
     }
 
     /**
-     * Resolve the Application Configuration and set the Statamic configuration
+     * Resolve the Application Configuration and set the Statamic configuration.
+     *
      * @param \Illuminate\Foundation\Application $app
      */
     protected function resolveApplicationConfiguration($app)
     {
         parent::resolveApplicationConfiguration($app);
 
-        Blueprint::setDirectory(__DIR__ . '/../resources/blueprints');
+        Blueprint::setDirectory(__DIR__.'/../resources/blueprints');
 
         $configs = [
             'assets', 'cp', 'forms', 'routes', 'static_caching',
@@ -188,14 +200,14 @@ class TestCase extends OrchestraTestCase
         ];
 
         foreach ($configs as $config) {
-            $app['config']->set("statamic.$config", require(__DIR__ . "/../vendor/statamic/cms/config/{$config}.php"));
+            $app['config']->set("statamic.$config", require(__DIR__."/../vendor/statamic/cms/config/{$config}.php"));
         }
 
         // Setting the user repository to the default flat file system
         $app['config']->set('statamic.users.repository', 'file');
         $app['config']->set('statamic.stache.stores.users', [
             'class'     => UsersStore::class,
-            'directory' => __DIR__ . '/__fixtures/users',
+            'directory' => __DIR__.'/__fixtures/users',
         ]);
 
         // Set the path for our entries
@@ -211,15 +223,15 @@ class TestCase extends OrchestraTestCase
         $app['config']->set('statamic.editions.pro', true);
 
         Statamic::pushCpRoutes(function () {
-            return require_once realpath(__DIR__ . '/../routes/cp.php');
+            return require_once realpath(__DIR__.'/../routes/cp.php');
         });
 
         Statamic::pushWebRoutes(function () {
-            return require_once realpath(__DIR__ . '/../routes/web.php');
+            return require_once realpath(__DIR__.'/../routes/web.php');
         });
 
         // Define butik config settings for all of our tests
-        $app['config']->set("butik", require(__DIR__ . "/../config/config.php"));
+        $app['config']->set('butik', require(__DIR__.'/../config/config.php'));
 
         // Set all layouts to null to prevent an error thrown from a layout which could not be found.
         $layouts = [
@@ -234,7 +246,7 @@ class TestCase extends OrchestraTestCase
         ];
 
         foreach ($layouts as $layout) {
-            $app['config']->set('butik.' . $layout, null);
+            $app['config']->set('butik.'.$layout, null);
         }
     }
 }

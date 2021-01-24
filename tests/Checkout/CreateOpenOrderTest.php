@@ -5,14 +5,13 @@ namespace Jonassiewertsen\StatamicButik\Tests\Checkout;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Events\OrderCreated;
 use Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\MolliePaymentGateway;
-use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Order\ItemCollection;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
@@ -33,7 +32,7 @@ class CreateOpenOrderTest extends TestCase
         parent::setUp();
 
         $this->customer = (new Customer($this->createUserData()));
-        $this->items    = collect();
+        $this->items = collect();
         $this->items->push(new Item($this->makeProduct()->slug));
         $this->totalPrice = $this->items->first()->totalPrice();
 
@@ -61,7 +60,7 @@ class CreateOpenOrderTest extends TestCase
     public function the_order_transaction_id_will_be_identical_with_the_payment_id()
     {
         $this->checkout();
-        $payment = new MolliePaymentSuccessful;
+        $payment = new MolliePaymentSuccessful();
         $this->assertDatabaseHas('butik_orders', ['id' => $payment->id]);
     }
 

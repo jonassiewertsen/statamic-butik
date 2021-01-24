@@ -16,9 +16,9 @@ class ProductsTagTest extends TestCase
         $this->products = new Products();
     }
 
-   /** @test */
-   public function it_will_return_all_products()
-   {
-       $this->assertEquals(Product::all()->toArray(), $this->products->index());
-   }
+    /** @test */
+    public function it_will_return_all_products()
+    {
+        $this->assertEquals(Product::all()->toArray(), $this->products->index());
+    }
 }

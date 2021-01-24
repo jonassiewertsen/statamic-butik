@@ -27,8 +27,8 @@ class Country
     {
         $countryCode = strtoupper($countryCode);
 
-        if (! self::exists($countryCode)) {
-           return null;
+        if (!self::exists($countryCode)) {
+            return null;
         }
 
         return Countries::getName($countryCode, app()->getLocale());
@@ -53,7 +53,7 @@ class Country
             ->unique()
             ->flatMap(fn ($shippingZone) => $shippingZone->countries)
             ->sort()
-            ->mapWithKeys(fn ($countryCode) => [ $countryCode => self::getName($countryCode) ]);
+            ->mapWithKeys(fn ($countryCode) => [$countryCode => self::getName($countryCode)]);
     }
 
     /**
@@ -63,7 +63,7 @@ class Country
     {
         $country = config('butik.country');
 
-        if (! self::exists($country)) {
+        if (!self::exists($country)) {
             throw new ButikConfigException("Country with ISO code \"$country\" doesn't exist");
         }
 

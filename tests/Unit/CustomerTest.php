@@ -32,7 +32,7 @@ class CustomerTest extends TestCase
     {
         $customer = new Customer($this->jonDoe);
 
-        $this->assertEquals($this->jonDoe, (array)$customer);
+        $this->assertEquals($this->jonDoe, (array) $customer);
     }
 
     /** @test */
@@ -70,7 +70,7 @@ class CustomerTest extends TestCase
 
         $this->assertEquals(
             $customer->name(),
-            $customer->firstname . ' ' . $customer->surname
+            $customer->firstname.' '.$customer->surname
         );
     }
 }

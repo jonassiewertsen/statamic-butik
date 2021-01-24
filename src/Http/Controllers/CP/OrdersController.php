@@ -17,7 +17,7 @@ class OrdersController extends CpController
             ->map(function ($order) {
                 return [
                     'id'           => $order->id,
-                    'customer'     => $order->customer->firstname . ' ' . $order->customer->surname,
+                    'customer'     => $order->customer->firstname.' '.$order->customer->surname,
                     'mail'         => $order->customer->mail,
                     'status'       => $order->status,
                     'method'       => $order->method,
@@ -47,7 +47,7 @@ class OrdersController extends CpController
         $this->authorize('show', $order);
 
         $customer = $order->customer;
-        $items    = $order->items;
+        $items = $order->items;
 
         return view('butik::cp.orders.show', compact('order', 'customer', 'items'));
     }

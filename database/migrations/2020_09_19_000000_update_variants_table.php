@@ -10,7 +10,7 @@ class UpdateVariantsTable extends Migration
 {
     /**
      * SQLite only supports foreign keys upon creation of the table and not when tables are altered.
-     * https://laravel.com/docs/7.x/migrations#foreign-key-constraints
+     * https://laravel.com/docs/7.x/migrations#foreign-key-constraints.
      *
      * To be safe, we will create a temporary table, copy all variants into that table
      * and replace the temporary table with the butik_variants table.

@@ -1,7 +1,6 @@
 <?php
 
 use Faker\Generator as Faker;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 
 $factory->define(Variant::class, function (Faker $faker) {

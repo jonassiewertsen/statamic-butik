@@ -5,29 +5,27 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
 use Illuminate\Http\Request;
 use Jonassiewertsen\StatamicButik\Blueprints\TaxBlueprint;
 use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
 use Statamic\CP\Column;
 
 class TaxesController extends CpController
 {
-
     public function index()
     {
         $this->authorize('index', Tax::class);
 
         $taxes = Tax::all()->map(function ($tax) {
             return [
-                'title'      => $tax->title,
-                'percentage' => $tax->percentage,
-                'edit_url'   => $tax->editUrl(),
+                'title'        => $tax->title,
+                'percentage'   => $tax->percentage,
+                'edit_url'     => $tax->editUrl(),
                 'slug'         => $tax->slug,
-                'deleteable' => auth()->user()->can('delete', $tax),
+                'deleteable'   => auth()->user()->can('delete', $tax),
             ];
         })->values();
 
         return view('butik::cp.taxes.index', [
-            'taxes' => $taxes,
+            'taxes'   => $taxes,
             'columns' => [
                 Column::make('title')->label(__('butik::cp.tax_singular')),
                 Column::make('percentage')->label(__('butik::cp.percentage')),
@@ -69,10 +67,10 @@ class TaxesController extends CpController
         $fields = $blueprint()->fields()->addValues($values)->preProcess();
 
         return view('butik::cp.taxes.edit', [
-            'blueprint' => $blueprint()->toPublishArray(),
-            'values'    => $fields->values(),
+            'blueprint'   => $blueprint()->toPublishArray(),
+            'values'      => $fields->values(),
             'slug'        => $tax->slug,
-            'meta'      => $fields->meta(),
+            'meta'        => $fields->meta(),
         ]);
     }
 
@@ -98,7 +96,8 @@ class TaxesController extends CpController
         $tax->delete();
     }
 
-    private function usedByProducts($tax) {
+    private function usedByProducts($tax)
+    {
         return $tax->products->count() !== 0;
     }
 }

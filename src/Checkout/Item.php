@@ -1,11 +1,10 @@
 <?php
 
-
 namespace Jonassiewertsen\StatamicButik\Checkout;
 
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Product as ProductModel;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
@@ -16,7 +15,7 @@ class Item
     use MoneyTrait;
 
     /**
-     * Is this item available
+     * Is this item available.
      */
     public bool $available;
 
@@ -31,57 +30,57 @@ class Item
     public int $availableStock;
 
     /**
-     * The id of the item, which does contain the product slug
+     * The id of the item, which does contain the product slug.
      */
     public string $slug;
 
     /**
-     * The images of the item
+     * The images of the item.
      */
     public ?Value $images;
 
     /**
-     * The item name
+     * The item name.
      */
     public string $name;
 
     /**
-     * The description, shortened to 100 characters
+     * The description, shortened to 100 characters.
      */
     public ?string $description;
 
     /**
-     * The product the item does base on
+     * The product the item does base on.
      */
     public ProductModel $product;
 
     /**
-     * The variant we do use. Null if not defined
+     * The variant we do use. Null if not defined.
      */
     public Variant $variant;
 
     /**
-     * The tax amount of the product
+     * The tax amount of the product.
      */
     public string $taxAmount;
 
     /**
-     * The taxrate of the product
+     * The taxrate of the product.
      */
     public int $taxRate;
 
     /**
-     * The quanitity of this item in the shopping cart
+     * The quanitity of this item in the shopping cart.
      */
     private int $quantity;
 
     /**
-     * Will return the price of the item
+     * Will return the price of the item.
      */
     private string $singlePrice;
 
     /**
-     * Will return the cumulated price. The itemquantity multiplied with the single Price
+     * Will return the cumulated price. The itemquantity multiplied with the single Price.
      */
     private string $totalPrice;
 
@@ -91,24 +90,25 @@ class Item
 
         $item = $this->defineItemData();
 
-        $this->available       = $item->available;
-        $this->sellable        = true;
-        $this->quantity        = 1;
-        $this->singlePrice     = $item->price;
-        $this->availableStock  = $item->stock;
-        $this->name            = $item->title;
-        $this->images          = $this->convertImage($this->product->images);
-        $this->description     = $this->limitedDescription();
-        $this->taxRate         = $item->tax->percentage;
-        $this->taxAmount       = $this->totalTaxAmount();
-        $this->totalPrice      = $this->totalPrice();
+        $this->available = $item->available;
+        $this->sellable = true;
+        $this->quantity = 1;
+        $this->singlePrice = $item->price;
+        $this->availableStock = $item->stock;
+        $this->name = $item->title;
+        $this->images = $this->convertImage($this->product->images);
+        $this->description = $this->limitedDescription();
+        $this->taxRate = $item->tax->percentage;
+        $this->taxAmount = $this->totalTaxAmount();
+        $this->totalPrice = $this->totalPrice();
         $this->shippingProfile = $item->shipping_profile;
     }
 
     public function increase()
     {
-        if (! $this->isIncreasable()) {
+        if (!$this->isIncreasable()) {
             $this->setQuantityToStock();
+
             return;
         }
 
@@ -137,6 +137,7 @@ class Item
 
         if ($this->getQuantity() > $this->item()->stock) {
             $this->setQuantityToStock();
+
             return;
         }
 
@@ -163,6 +164,7 @@ class Item
     public function totalPrice()
     {
         $price = $this->makeAmountSaveable($this->singlePrice);
+
         return $this->makeAmountHuman($price * $this->quantity);
     }
 
@@ -181,26 +183,26 @@ class Item
         /**
          * We won't update the cart, if the product does not exist anymore.
          */
-        if (! Product::exists($this->productSlug())) {
+        if (!Product::exists($this->productSlug())) {
             return false;
         }
 
         $this->defineItemData();
 
-        if (! $this->StockAvailable() && ! $this->isIncreasable()) {
+        if (!$this->StockAvailable() && !$this->isIncreasable()) {
             $this->setQuantityToStock();
         }
 
-        if (! $this->item()->available) {
+        if (!$this->item()->available) {
             $this->quantity = 0;
         }
 
-        $this->available      = $this->item()->available;
+        $this->available = $this->item()->available;
         $this->availableStock = $this->item()->stock;
-        $this->singlePrice    = $this->item()->price;
-        $this->description    = $this->limitedDescription();
-        $this->totalPrice     = $this->totalPrice();
-        $this->taxAmount      = $this->totalTaxAmount();
+        $this->singlePrice = $this->item()->price;
+        $this->description = $this->limitedDescription();
+        $this->totalPrice = $this->totalPrice();
+        $this->taxAmount = $this->totalTaxAmount();
 
         return true;
     }
@@ -228,6 +230,7 @@ class Item
     {
         $totalPrice = $this->makeAmountSaveable($this->totalPrice());
         $tax = $totalPrice * ($this->taxRate / (100 + $this->taxRate));
+
         return $this->makeAmountHuman($tax);
     }
 
@@ -245,6 +248,7 @@ class Item
     {
         if ($this->isVariant()) {
             $this->product = $this->product();
+
             return $this->variant = Variant::find($this->variantSlug());
         } else {
             return $this->product = $this->product();
@@ -278,7 +282,7 @@ class Item
 
     private function convertImage($images)
     {
-        if (! $images) {
+        if (!$images) {
             return null;
         }
 

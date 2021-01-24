@@ -12,8 +12,8 @@ abstract class Checkout extends WebController
     {
         return [
             'country'      => ['required', function ($attribute, $value, $fail) {
-                if (! Countries::exists($value)) {
-                    $fail('Invalid country code: ' . $value);
+                if (!Countries::exists($value)) {
+                    $fail('Invalid country code: '.$value);
                 }
             }],
             'firstname'    => 'required|min:2|max:50',

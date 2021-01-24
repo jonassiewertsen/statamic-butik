@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Http\Traits\MollyLocale;
@@ -53,7 +52,7 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
      */
     public function webhook(Request $request): void
     {
-        if (! $request->has('id')) {
+        if (!$request->has('id')) {
             return;
         }
 
@@ -81,7 +80,7 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
     }
 
     /**
-     * Preparing the payment informations, as described in the Mollie documentation:
+     * Preparing the payment informations, as described in the Mollie documentation:.
      *
      * https://docs.mollie.com/reference/v2/orders-api/create-order#example
      */
@@ -95,7 +94,7 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
             'billingAddress' => [
                 'givenName'       => $customer->firstname,
                 'familyName'      => $customer->surname,
-                'streetAndNumber' => $customer->address1 . ', ' . $customer->address2,
+                'streetAndNumber' => $customer->address1.', '.$customer->address2,
                 'city'            => $customer->city,
                 'postalCode'      => $customer->zip,
                 'country'         => $customer->country,
@@ -103,19 +102,19 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
             ],
             'orderNumber'    => $orderNumber,
             'locale'         => $this->getLocale(),
-            'webhookUrl'     => env('MOLLIE_NGROK_REDIRECT') . route('butik.payment.webhook.mollie', [], false),
+            'webhookUrl'     => env('MOLLIE_NGROK_REDIRECT').route('butik.payment.webhook.mollie', [], false),
             'redirectUrl'    => URL::temporarySignedRoute('butik.payment.receipt', now()->addMinutes(5), ['order' => $orderNumber]),
             'lines'          => $this->mapItems($items, $shippings),
         ];
 
-        if (! App::environment(['local'])) {
+        if (!App::environment(['local'])) {
             // Only adding the mollie webhook, when not in local environment
             $orderData = array_merge($orderData, [
                 'webhookUrl' => route('butik.payment.webhook.mollie'),
             ]);
         } elseif (App::environment(['local']) && $this->ngrokSet()) {
             // When local env and the the NGROK has been set, it will add the ngrok url
-            $route = env('MOLLIE_NGROK_REDIRECT') . route('butik.payment.webhook.mollie', [], false);
+            $route = env('MOLLIE_NGROK_REDIRECT').route('butik.payment.webhook.mollie', [], false);
 
             $orderData = array_merge($orderData, [
                 'webhookUrl' => $route,
@@ -139,7 +138,7 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
                 'name'        => $item->name,
                 'imageUrl'    => $this->images[0] ?? null,
                 'quantity'    => $item->getQuantity(),
-                'vatRate'     => (string)number_format($item->taxRate, 2),
+                'vatRate'     => (string) number_format($item->taxRate, 2),
                 'unitPrice'   => [
                     'currency' => config('butik.currency_isoCode'),
                     'value'    => $this->humanPriceWithDot($item->singlePrice()),
@@ -163,7 +162,7 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
         $shippings = $shippings->map(function ($shipping) {
             return [
                 'type'        => 'shipping_fee',
-                'name'        => 'SHIPPING ' . $shipping->profileTitle . ' / ' . $shipping->rateTitle,
+                'name'        => 'SHIPPING '.$shipping->profileTitle.' / '.$shipping->rateTitle,
                 'quantity'    => 1,
                 'vatRate'     => $shipping->taxRate,
                 'unitPrice'   => [

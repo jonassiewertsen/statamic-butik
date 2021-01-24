@@ -24,8 +24,8 @@ class TaxBlueprint extends Blueprint
                         [
                             'handle' => 'percentage',
                             'field'  => [
-                                'type'         => 'number',
-                                'display'      => __('butik::cp.percentage'),
+                                'type'          => 'number',
+                                'display'       => __('butik::cp.percentage'),
                                 'width'         => '33',
                                 'validate'      => 'required|numeric|min:0|max:100',
                             ],
@@ -37,22 +37,23 @@ class TaxBlueprint extends Blueprint
                         [
                             'handle' => 'slug',
                             'field'  => [
-                                'type'     => 'slug',
-                                'display'  => __('butik::cp.slug'),
-                                'validate' => ['required', $this->taxesUniqueRule()],
+                                'type'      => 'slug',
+                                'display'   => __('butik::cp.slug'),
+                                'validate'  => ['required', $this->taxesUniqueRule()],
                                 'read_only' => $this->slugReadOnly(),
                             ],
                         ],
-                    ]
-                ]
+                    ],
+                ],
             ],
         ]);
     }
 
     /**
-     * In case the Product will be edited, the slug will be read only
+     * In case the Product will be edited, the slug will be read only.
      */
-    private function slugReadOnly() {
+    private function slugReadOnly()
+    {
         return $this->isRoute('statamic.cp.butik.taxes.edit');
     }
 

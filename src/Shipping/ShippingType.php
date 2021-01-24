@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Jonassiewertsen\StatamicButik\Shipping;
-
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -38,7 +36,7 @@ abstract class ShippingType implements ShippingTypeInterface
     public function set(Collection $items, ShippingZone $zone): void
     {
         $this->items = $items;
-        $this->zone  = $zone;
+        $this->zone = $zone;
     }
 
     /**
@@ -49,7 +47,8 @@ abstract class ShippingType implements ShippingTypeInterface
     protected function name(): string
     {
         $className = Str::snake(class_basename($this));
-        $key       = 'butik::cp.' . $className;
+        $key = 'butik::cp.'.$className;
+
         return __($key);
     }
 }

@@ -3,8 +3,8 @@
 namespace Jonassiewertsen\StatamicButik\Tests\Checkout;
 
 use Illuminate\Support\Facades\Session;
-use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
+use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Shipping\Country;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
@@ -19,7 +19,7 @@ class CheckoutPaymentTest extends TestCase
         parent::setUp();
 
         $this->customer = new Customer($this->createUserData());
-        $this->product  = $this->makeProduct();
+        $this->product = $this->makeProduct();
 
         Cart::add($this->product->slug);
     }
@@ -171,7 +171,7 @@ class CheckoutPaymentTest extends TestCase
     public function customer_data_will_be_displayed_inside_the_view()
     {
         Session::put('butik.customer', $this->customer);
-        $customer = (array)$this->customer;
+        $customer = (array) $this->customer;
 
         $this->get(route('butik.checkout.payment'))
             ->assertSee($customer['firstname'])

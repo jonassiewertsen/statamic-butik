@@ -9,7 +9,8 @@ class MoneyTraitTest extends TestCase
 {
     use MoneyTrait;
 
-    public function setUp(): void {
+    public function setUp(): void
+    {
         parent::setUp();
     }
 

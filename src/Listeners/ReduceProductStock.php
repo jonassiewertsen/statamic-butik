@@ -2,9 +2,9 @@
 
 namespace Jonassiewertsen\StatamicButik\Listeners;
 
+use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Cache;
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
 use Statamic\Facades\Entry;
 use Statamic\Support\Str;
@@ -34,7 +34,7 @@ class ReduceProductStock implements ShouldQueue
              * only be reduced, if it's a variant and the stock is not inherited.
              * In all other cases, the parent stock will be reduced.
              */
-            if ($this->isVariant($item) && ! $product->inherit_stock)  {
+            if ($this->isVariant($item) && !$product->inherit_stock) {
                 $this->reduceVariant($item);
             } else {
                 $this->reduceParent($item);
@@ -87,10 +87,11 @@ class ReduceProductStock implements ShouldQueue
     /**
      * Reducing the variant.
      */
-    private function reduceVariant($item) {
-       $variant = $this->getVariant($item);
-       $variant->stock -= $item->quantity;
-       $variant->save();
+    private function reduceVariant($item)
+    {
+        $variant = $this->getVariant($item);
+        $variant->stock -= $item->quantity;
+        $variant->save();
     }
 
     /**

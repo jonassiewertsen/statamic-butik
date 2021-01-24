@@ -7,7 +7,8 @@ use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class CategoryCreateTest extends TestCase
 {
-    public function setUp(): void {
+    public function setUp(): void
+    {
         parent::setUp();
 
         $this->signInAdmin();
@@ -43,12 +44,12 @@ class CategoryCreateTest extends TestCase
         $slug = 'not-unique';
 
         // First category
-        $category = raw(Category::class, ['slug' => $slug ]);
+        $category = raw(Category::class, ['slug' => $slug]);
         $this->post(cp_route('butik.categories.store'), $category)
             ->assertSessionHasNoErrors();
 
         // Another category with the same slug
-        $category = raw(Category::class, ['slug' => $slug ]);
+        $category = raw(Category::class, ['slug' => $slug]);
         $this->post(cp_route('butik.categories.store'), $category)
             ->assertSessionHasErrors('slug');
     }

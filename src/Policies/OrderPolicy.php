@@ -3,7 +3,6 @@
 namespace Jonassiewertsen\StatamicButik\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Statamic\Auth\User;
 
 class OrderPolicy

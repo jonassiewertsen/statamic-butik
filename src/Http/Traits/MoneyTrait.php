@@ -3,25 +3,26 @@
 namespace Jonassiewertsen\StatamicButik\Http\Traits;
 
 /**
- * TODO: Should be refactored into it's own class
+ * TODO: Should be refactored into it's own class.
  */
 trait MoneyTrait
 {
     /**
      * The amount will be made readable. An
-     * int of fx 532 will be converted to 5,32
+     * int of fx 532 will be converted to 5,32.
      */
     public static function makeAmountHumanStatic($value)
     {
         $value = floatval($value) / 100;
 
         $delimiter = config('butik.currency_delimiter');
+
         return number_format($value, 2, $delimiter, '');
     }
 
     /**
      * To calculate with values, amounts like
-     * fx 5,32 will get converted into integers of 532
+     * fx 5,32 will get converted into integers of 532.
      */
     public static function makeAmountSaveableStatic($value): int
     {
@@ -44,11 +45,12 @@ trait MoneyTrait
         $value = str_replace(',', '.', $value);
 
         $delimiter = config('butik.currency_delimiter');
+
         return number_format($value, 2, $delimiter, '.');
     }
 
     /**
-     * As well callable as non static function
+     * As well callable as non static function.
      */
     public function makeAmountHuman($value)
     {
@@ -56,7 +58,7 @@ trait MoneyTrait
     }
 
     /**
-     * As well callable as non static function
+     * As well callable as non static function.
      */
     public function makeAmountSaveable($value)
     {
