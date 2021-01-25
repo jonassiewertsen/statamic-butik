@@ -6,7 +6,7 @@ description: In case you want to implement your own Payment Gateway.
 
 ## Create a new gateway
 
-Use our command to create a gateway boilerplate.  
+Use our command to create a gateway boilerplate.
 
 ```bash
 php please butik:gateway
@@ -67,18 +67,17 @@ class DummyClass extends PaymentGateway implements PaymentGatewayInterface
         // Do nothing.
     }
 }
-
 ```
 
 ## Use your own payment gateway
 
-Swap the payment gateway class in your config file to use your own gateway. 
+Swap the payment gateway class in your config file to use your own gateway.
 
 {% page-ref page="../configuration/configuration.md" %}
 
 ## Webhooks
 
-You can use webhooks if you want. 
+You can use webhooks if you want.
 
 With our Mollie integration, our webhook does look like this. Maybe you'll find some inspiration:
 

@@ -8,7 +8,7 @@ description: Those are the basic and most important settings to make.
 
 Those information will mostly be used for view or email templates.
 
-```text
+```php
 'name'     => 'Statamic Butik',
 'address1' => '132 Main Street',
 'address2' => 'Sea view, Fahrensodde', 
@@ -27,7 +27,7 @@ The defined country will be set as your default country. As long as a user does 
 
 ## Shop overview
 
-```text
+```php
 'overview_type'    => 'newest',
 'overview_limit'   => '6',
 ```
@@ -49,7 +49,7 @@ The overview limit does only limit the number of products shown on the shop over
 
 ## Mail
 
-```text
+```php
 'order-confirmations' => 'your_mail@butik.com',
 ```
 
@@ -63,7 +63,7 @@ See the [Statamic documentation](https://statamic.dev/email) for more informatio
 
 ## Currency
 
-```text
+```php
 'currency_name'      => 'Euro',
 'currency_isoCode'   => 'EUR',
 'currency_symbol'    => '€',
@@ -73,12 +73,27 @@ See the [Statamic documentation](https://statamic.dev/email) for more informatio
 Choose the currency of your default country. 
 
 Please keep the currency\_isoCode strict to the ISO 4217 standard. That's just a fancy name for the know currency syntax:  
-[https://en.wikipedia.org/wiki/ISO\_4217](https://en.wikipedia.org/wiki/ISO_4217)  
+[https://en.wikipedia.org/wiki/ISO\_4217](https://en.wikipedia.org/wiki/ISO_4217)
 
+## Orders
+
+```php
+'orders_deletable'  => env('BUTIK_ORDERS_DELETABLE', 'development'),
+```
+
+For security reasons, you can define if orders can be deleted and if they can, from whom.
+
+| options | Description |
+| :--- | :--- |
+| **never** | Orders can't be deleted at all. |
+| **development** | Orders can be deleted in development mode only. |
+| **permissions** | Orders can be deleted on |
+
+Check out the [orders documentation](orders.md) for more information.
 
 ## Widgets
 
-```text
+```php
 'widget_orders-limit' => 10,
 ```
 
@@ -86,7 +101,7 @@ The default is set to 10 entries. If you do use the _Orders_ widget and want to 
 
 ## Routing
 
-```text
+```php
 'shop_route_active'     => true,
 'product_route_active'  => true, 
 'category_route_active' => true,
@@ -106,7 +121,7 @@ There may be cases where you don't want to use our default routes to view the sh
 
 ## Layouts
 
-```text
+```php
 'layout_product-index'            => 'layout',
 'layout_product-category'         => 'layout',
 'layout_product-show'             => 'layout',
@@ -121,7 +136,7 @@ We will default to the standard layout in your `resources/views/` folder. Move a
 
 ## Template
 
-```text
+```php
 'template_product-index'            => 'butik::web.shop.index',
 'template_product-category'         => 'butik::web.shop.category',
 'template_product-show'             => 'butik::web.shop.show',
@@ -143,7 +158,7 @@ If you want to link to a file named cart inside your `resources/views/shop/cart.
 
 ## Shipping
 
-```text
+```php
 'shipping' => [
     'price' => \Jonassiewertsen\StatamicButik\Shipping\ShippingByPrice::class,
 ],
@@ -155,7 +170,7 @@ If you want, you can implement your own shipping methods or disable those, you d
 
 ## Payment Gateway
 
-```text
+```php
 'payment_gateway' => Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\MolliePaymentGateway::class,
 ```
 

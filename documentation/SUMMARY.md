@@ -15,6 +15,7 @@
 * [Config File](configuration/configuration.md)
 * [Products](configuration/products.md)
 * [Taxes](configuration/taxes.md)
+* [Orders](configuration/orders.md)
 * [Shipping](configuration/shipping.md)
 * [Permissions](configuration/permissions.md)
 * [Widgets](configuration/coupons.md)
