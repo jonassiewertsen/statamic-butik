@@ -11,6 +11,8 @@
     <butik-order-list
         show-route="{{ cp_route('butik.orders.show', 'XXX') }}"
         orders-request-url="{{ cp_route('butik.api.orders.index') }}"
+        run-action-url="{{ cp_route('butik.actions.orders.run') }}"
+        bulk-actions-url="{{ cp_route('butik.actions.orders.bulk') }}"
         :filters="{{ json_encode($filters) }}"
         v-cloak
     >

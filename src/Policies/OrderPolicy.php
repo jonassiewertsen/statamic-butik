@@ -16,6 +16,11 @@ class OrderPolicy extends Policies
 
     public function update($user, $order)
     {
-        return $this->hasPermission($user, 'update products');
+        return $this->hasPermission($user, 'update orders');
+    }
+
+    public function delete($user, $order)
+    {
+        return $this->hasPermission($user, 'delete orders');
     }
 }

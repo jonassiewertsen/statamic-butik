@@ -48,6 +48,8 @@ return [
     'permission_show_orders_description'      => 'Die Berechtigung geben, um die Details aller vorhandenen Bestellungen einzusehen.',
     'permission_update_orders'                => 'Bestellungen aktualisieren',
     'permission_update_orders_description'    => 'Die Berechtigung geben, um Bestellungen zu bearbeiten.',
+    'permission_delete_orders'                => 'Bestellungen löschen',
+    'permission_delete_orders_description'    => 'Die Berechtigung geben, um Bestellungen zu löschen.',
     'permission_view_products'                => 'Produkte anzeigen',
     'permission_view_products_description'    => 'Die Berechtigung geben, um alle Produkte anzuzeigen.',
     'permission_edit_products'                => 'Produkte bearbeiten',

@@ -44,8 +44,8 @@
 
                     <data-list-table
                         v-if="items.length"
-                        :allow-bulk-actions="true"
                         :loading="loading"
+                        :allow-bulk-actions="true"
                         :allow-column-picker="true"
                         :column-preferences-key="preferencesKey('columns')"
                         @sorted="sorted"
