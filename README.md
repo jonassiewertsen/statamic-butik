@@ -10,7 +10,7 @@ You can use the light and simple design as shipped or customize it after your ne
 ## Links
 [Official butik documentation](https://www.butik.dev)
 
-[Official butik starterkit](https://www.butik.dev/installation/installation/starter-kit)
+[Official butik starter kit](https://www.butik.dev/installation/installation/starter-kit)
 
 [Discord help forum](https://discord.gg/9fbsBJv)
 
