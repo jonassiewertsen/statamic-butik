@@ -34,6 +34,7 @@
 * [Antlers Tags](frontend/antlers-tags.md)
 * [Localization](frontend/localization.md)
 * [Mailables](frontend/mailables.md)
+* [Search](frontend/search.md)
 
 ## Extending
 
