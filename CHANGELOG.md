@@ -1,7 +1,16 @@
 # Release Notes
 
-## Upcoming Release
-- Shippings will be saved in the order. (#149)
+## 3.4.2 (25. Jan 2021)
+- A hot fix for an issue with the products tag.
+
+## 3.4.1 (25. Jan 2021)
+- Shipping information will get saved with the order
+- Orders can deleted (#143)
+- It's configurable if orders can be deleted and by whom.
+- Include shipping taxes in total taxes as calculated by the cart (#183)
+
+See the docs for more information:
+https://www.butik.dev/configuration/orders
 
 ## 3.4.1 (16. Jan 2021)
 - Respect saved listing preferences on the orders overview. (#181)
