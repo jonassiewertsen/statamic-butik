@@ -1,9 +1,9 @@
 # Release Notes
 
-## 3.4.2 (25. Jan 2021)
+## 3.5.1 (25. Jan 2021)
 - A hot fix for an issue with the products tag.
 
-## 3.4.1 (25. Jan 2021)
+## 3.5.0 (25. Jan 2021)
 - Shipping information will get saved with the order
 - Orders can deleted (#143)
 - It's configurable if orders can be deleted and by whom.
