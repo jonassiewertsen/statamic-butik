@@ -30,4 +30,12 @@ class Money extends Fieldtype
 
         return number_format(floatval($data), 2, '.', '');
     }
+
+    public function augment($value)
+    {
+        return [
+          'total' => $value, // {{ price:total }}
+          'net' => $value,   // {{ price:net }} // TODO: Calculate the net price
+        ];
+    }
 }
