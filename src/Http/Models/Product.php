@@ -280,7 +280,7 @@ class Product
         $product->stock = (int) $entry->value('stock');
         $product->stock_unlimited = (bool) $entry->value('stock_unlimited');
         $product->available = (bool) $entry->published();
-        $product->show_url = $product->showUrl($product->slug);
+        $product->show_url = config('butik.product_route_active') ? $product->showUrl($product->slug) : '';
 
         return $product;
     }
