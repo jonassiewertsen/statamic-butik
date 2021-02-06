@@ -16,21 +16,23 @@ class CategoryBlueprint extends Blueprint
                             'handle' => 'name',
                             'field'  => [
                                 'type'     => 'text',
-                                'width'    => '66',
+                                'width'    => 100,
                                 'display'  => __('butik::cp.name'),
                                 'validate' => 'required',
                             ],
                         ],
-                        [
-                            'handle' => 'is_visible',
-                            'field'  => [
-                                'type'     => 'toggle',
-                                'display'  => __('butik::cp.is_visible'),
-                                'width'    => '33',
-                                'default'  => true,
-                                'validate' => 'sometimes',
-                            ],
-                        ],
+                        // TODO: Is visible is not doing anything right now, so we will hide it in the Blue
+                        // Categories will work different with butik version 4, so this will stay as it is right now.
+                        // [
+                        //     'handle' => 'is_visible',
+                        //     'field'  => [
+                        //         'type'     => 'toggle',
+                        //         'display'  => __('butik::cp.is_visible'),
+                        //         'width'    => 33,
+                        //         'default'  => true,
+                        //         'validate' => 'sometimes',
+                        //     ],
+                        // ],
                     ],
                 ],
                 'sidebar' => [
