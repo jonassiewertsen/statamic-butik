@@ -235,9 +235,9 @@ class Product
 
     public function showUrl($slug): string
     {
-        if(! config('butik.product_route_active')) {
+        if (! config('butik.product_route_active')) {
             return '';
-         }
+        }
 
         return route('butik.shop.product', ['product' => $slug], false);
     }
