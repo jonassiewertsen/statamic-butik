@@ -28,7 +28,7 @@ Those are the states you can define:
 | :--- | :--- |
 | **never** | Orders can't be deleted at all. |
 | **development** | Orders can be deleted in development mode only. |
-| **permissions** | Orders can be deleted on |
+| **users** | Orders can be deleted by all users, if they got the correct Statamic permissions. |
 
 ### Never
 
