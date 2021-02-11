@@ -1,7 +1,7 @@
 # Table of contents
 
 * [Getting Started](README.md)
-* [Build with butik](build-with-butik.md)
+* [Built with butik](built-with-butik.md)
 
 ## Installation
 

@@ -1,8 +1,8 @@
 ---
-description: Here are some example of pages build with Statamic and butik
+description: Here are some example of pages built with Statamic and butik
 ---
 
-# Build with butik
+# Built with butik
 
 ## SA3 COSMETIC
 
