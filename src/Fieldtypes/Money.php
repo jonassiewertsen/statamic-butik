@@ -34,8 +34,9 @@ class Money extends Fieldtype
     public function augment($value)
     {
         return [
-          'total' => $value, // {{ price:total }}
-          'net' => $value,   // {{ price:net }} // TODO: Calculate the net price
+            'total' => $value, // {{ price:total }} net or gross depending on setting
+            'net' => $value,   // {{ price:net }} // TODO: Calculate the net price
+            'gross' => $value,   // {{ price:gross }} // TODO: Calculate the net price
         ];
     }
 }
