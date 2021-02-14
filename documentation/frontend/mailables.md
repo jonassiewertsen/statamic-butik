@@ -9,7 +9,7 @@ You can adjust our sent mails just as you like them.
 ## Adjust your template
 
 {% hint style="danger" %}
-Unfornatitly there is an issue if using markdown at the moment. You can easily adjust it though. I will explain how.
+Unfortunately there is an issue if using markdown at the moment. You can easily adjust it though. I will explain how.
 {% endhint %}
 
 See the issue: [https://github.com/statamic/cms/issues/2747](https://github.com/statamic/cms/issues/2747)
