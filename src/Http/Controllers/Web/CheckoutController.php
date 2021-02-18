@@ -45,7 +45,7 @@ class CheckoutController extends Checkout
         $customer = new Customer($validatedData);
         Session::put('butik.customer', $customer);
 
-        event (new CustomerDataValidated($customer, auth()->user()));
+        event(new CustomerDataValidated($customer, auth()->user()));
 
         if ($validatedData['country'] !== Cart::country()) {
             Cart::setCountry($validatedData['country']);
