@@ -47,6 +47,14 @@ class CartTest extends TestCase
     }
 
     /** @test */
+    public function multiple_items_can_be_added_to_the_cart()
+    {
+        Cart::add($this->product->slug, null, 2);
+
+        $this->assertEquals(2, Cart::get()->first()->getQuantity());
+    }
+
+    /** @test */
     public function the_quanitity_will_be_increased_if_the_product_already_has_been_added()
     {
         Cart::add($this->product->slug);

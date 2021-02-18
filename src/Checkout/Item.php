@@ -90,7 +90,7 @@ class Item
      */
     private string $totalPrice;
 
-    public function __construct(string $slug, ?string $locale = null)
+    public function __construct(string $slug, ?string $locale = null, int $quantity = 1)
     {
         $this->slug = $slug;
         $this->locale = $locale;
@@ -100,7 +100,7 @@ class Item
 
         $this->available = $item->available;
         $this->sellable = true;
-        $this->quantity = 1;
+        $this->quantity = $quantity;
         $this->availableStock = (int) $item->stock;
         $this->unlimited = (bool) $item->stock_unlimited;
         $this->singlePrice = (string) $item->price;
@@ -113,9 +113,9 @@ class Item
         $this->shippingProfile = $item->shipping_profile;
     }
 
-    public function increase()
+    public function increase(int $quantity = 1)
     {
-        if (! $this->isIncreasable()) {
+        if (! $this->isIncreasable($quantity)) {
             $this->setQuantityToStock();
 
             return;
@@ -222,7 +222,7 @@ class Item
             return true;
         }
 
-        if ($this->getQuantity() < $this->item()->stock) {
+        if ($this->getQuantity() <= $this->item()->stock) {
             return true;
         }
 

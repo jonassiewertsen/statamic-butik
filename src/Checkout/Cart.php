@@ -22,7 +22,7 @@ class Cart
     /**
      * A product can be added to the cart.
      */
-    public static function add(string $slug, ?string $locale = null): void
+    public static function add(string $slug, ?string $locale = null, int $quantity = 1): void
     {
         static::$cart = static::get();
 
@@ -31,7 +31,7 @@ class Cart
             static::$cart->firstWhere('slug', $slug)->increase();
         } else {
             // Add new Item
-            static::$cart->push(new Item($slug, $locale ?? locale()));
+            static::$cart->push(new Item($slug, $locale ?? locale(), $quantity));
         }
         static::set(static::$cart);
     }
