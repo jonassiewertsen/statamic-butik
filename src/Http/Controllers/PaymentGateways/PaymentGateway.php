@@ -101,7 +101,7 @@ abstract class PaymentGateway extends WebController
             'shippings'    => $shippings ? json_encode($shippings->toArray()) : collect(), // TODO: Require shippings with the next major release.
         ]);
 
-        event(new OrderCreated($order));
+        event(new OrderCreated($order, auth()->user()));
 
         return $order;
     }

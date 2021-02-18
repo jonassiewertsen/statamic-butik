@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
+use Jonassiewertsen\StatamicButik\Events\CustomerDataValidated;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Traits\MapCartItems;
 use Jonassiewertsen\StatamicButik\Shipping\Country;
@@ -35,7 +36,7 @@ class CheckoutController extends Checkout
     public function storeCustomerData(array $validatedData)
     {
         /**
-         * We will call this controller from the CheckoutFormValidted event
+         * We will call this controller from the CheckoutFormValiated event
          * to handle the logic. The form validation will be taken care
          * of from Statamic.
          *
@@ -43,6 +44,8 @@ class CheckoutController extends Checkout
          */
         $customer = new Customer($validatedData);
         Session::put('butik.customer', $customer);
+
+        event (new CustomerDataValidated($customer, auth()->user()));
 
         if ($validatedData['country'] !== Cart::country()) {
             Cart::setCountry($validatedData['country']);
