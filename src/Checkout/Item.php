@@ -113,9 +113,9 @@ class Item
         $this->shippingProfile = $item->shipping_profile;
     }
 
-    public function increase(int $quantity = 1)
+    public function increase()
     {
-        if (! $this->isIncreasable($quantity)) {
+        if (! $this->isIncreasable()) {
             $this->setQuantityToStock();
 
             return;
