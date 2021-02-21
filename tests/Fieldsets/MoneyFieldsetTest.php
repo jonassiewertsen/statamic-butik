@@ -10,16 +10,16 @@ class MoneyFieldsetTest extends TestCase
 {
     // TODO: Calculate prices depending on taxes
 
+    // TODO: Rename the money fieldset to a price fieldset
+
     /** @test */
     public function it_has_a_total_value_as_gross_price()
     {
         config()->set('butik.price', 'gross');
 
-        $value = (new Money())
-            ->setField(new Field('test', []))
-            ->augment('10.00');
+        $price = $this->priceFieldset();
 
-        $this->assertEquals($value['total'], '10.00');
+        $this->assertEquals($price['total'], '10.00');
     }
 
     /** @test */
@@ -27,30 +27,31 @@ class MoneyFieldsetTest extends TestCase
     {
         config()->set('butik.price', 'net');
 
-        $value = (new Money())
-            ->setField(new Field('test', []))
-            ->augment('10.00');
+        $price = $this->priceFieldset();
 
-        $this->assertEquals($value['net'], '10.00');
+        $this->assertEquals($price['net'], '10.00');
     }
 
     /** @test */
     public function it_has_a_gross_price()
     {
-        $value = (new Money())
-            ->setField(new Field('test', []))
-            ->augment('10.00');
+        $price = $this->priceFieldset();
 
-        $this->assertEquals($value['gross'], '10.00');
+        $this->assertEquals($price['gross'], '10.00');
     }
 
     /** @test */
     public function it_has_a_net_price()
     {
-        $value = (new Money())
-            ->setField(new Field('test', []))
-            ->augment('10.00');
+        $price = $this->priceFieldset();
 
-        $this->assertEquals($value['net'], '10.00');
+        $this->assertEquals($price['net'], '10.00');
+    }
+
+    private function priceFieldset($value = '10.00'): array
+    {
+        return (new Money())
+            ->setField(new Field('test', []))
+            ->augment($value);
     }
 }
