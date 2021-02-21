@@ -4,7 +4,6 @@ namespace Jonassiewertsen\StatamicButik\Http\Models;
 
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product as ProductFacade;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Statamic\Entries\Entry as StatamicEntry;
 use Statamic\Entries\EntryCollection;
@@ -141,17 +140,6 @@ class Product
     public function tax()
     {
         return Tax::firstWhere('slug', $this->tax_id);
-    }
-
-    /**
-     * A Product has categories.
-     */
-    public function categories()
-    {
-        return DB::table('butik_category_product')
-            ->where(['product_slug' => $this->slug])
-            ->join('butik_categories', 'butik_category_product.category_slug', '=', 'butik_categories.slug')
-            ->get();
     }
 
     /**

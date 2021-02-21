@@ -83,12 +83,6 @@ sections:
           type: variants
           listable: hidden
           display: Variants
-      -
-        handle: categories
-        field:
-          type: categories
-          listable: hidden
-          display: Categories
   sidebar:
     display: Sidebar
     fields:

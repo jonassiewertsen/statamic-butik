@@ -59,14 +59,12 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
     protected $tags = [
         \Jonassiewertsen\StatamicButik\Tags\Cart::class,
-        \Jonassiewertsen\StatamicButik\Tags\Categories::class,
         \Jonassiewertsen\StatamicButik\Tags\Butik::class,
         \Jonassiewertsen\StatamicButik\Tags\Currency::class,
         \Jonassiewertsen\StatamicButik\Tags\Products::class,
     ];
 
     protected $fieldtypes = [
-        \Jonassiewertsen\StatamicButik\Fieldtypes\Categories::class,
         \Jonassiewertsen\StatamicButik\Fieldtypes\Countries::class,
         \Jonassiewertsen\StatamicButik\Fieldtypes\Money::class,
         \Jonassiewertsen\StatamicButik\Fieldtypes\Number::class,

@@ -36,7 +36,6 @@ return [
     'name'                     => 'Name',
     'new_purchase'             => 'Neue Bestellung',
     'no_products_available'    => 'Aktuell sind keine Produkte verfügbar.',
-    'no_products_available_in_this_category' => 'In dieser Kategorie sind aktuell keine Produkte verfügbar.',
     'not_available_in_country' => 'Nicht in deinem Land verfügbar! Wir werden den Checkout fortsetzen und nicht verfügbare Produkte automatisch aus dem Warenkorb entfernen.',
     'paid_at'                  => 'Bezahlt am',
     'pay_now'                  => 'Jetzt verbindlich bezahlen',

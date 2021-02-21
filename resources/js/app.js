@@ -5,7 +5,6 @@ import ShippingOverview from "./components/shipping/Overview";
 
 import ProductVariants from "./components/variants/ManageProductVariants";
 
-import CategoriesFieldtype from './fieldtypes/categoriesFieldtype';
 import CountriesFieldtype from './fieldtypes/countriesFieldtype';
 import MoneyFieldtype from './fieldtypes/moneyFieldtype';
 import NumberFieldtype from './fieldtypes/numberFieldtype';

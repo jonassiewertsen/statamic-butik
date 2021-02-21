@@ -5,7 +5,6 @@ namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Illuminate\Support\Collection;
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
-use Jonassiewertsen\StatamicButik\Http\Models\Category;
 use Statamic\View\View as StatamicView;
 
 class ShopController extends WebController
@@ -17,18 +16,6 @@ class ShopController extends WebController
             ->layout(config('butik.layout_product-index'))
             ->with([
                 'products' => $this->convertToArray($this->fetchProducts()),
-            ]);
-    }
-
-    public function category(Category $category)
-    {
-        $products = $this->convertToArray(Product::fromCategory($category));
-
-        return (new StatamicView())
-            ->template(config('butik.template_product-category'))
-            ->layout(config('butik.layout_product-category'))
-            ->with([
-                'products' => $products,
             ]);
     }
 

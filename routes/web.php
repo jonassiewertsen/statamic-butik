@@ -55,11 +55,6 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\Web')
                 ->name('shop');
         }
 
-        if (config('butik.category_route_active')) {
-            Route::get(config('butik.route_category'), 'ShopController@category')
-                ->name('shop.category');
-        }
-
         if (config('butik.product_route_active')) {
             Route::get(config('butik.route_product'), 'ShopController@show')
                 ->name('shop.product');
