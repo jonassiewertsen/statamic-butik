@@ -24,6 +24,8 @@ class Money extends Fieldtype
 
     public function preProcess($data)
     {
+        // TODO: Use our Money class for calculations
+
         // In case we will use another number seperator then '.', like in europe,
         // we will make sure replace to avoid problems calculating with it.
         $data = str_replace(',', '.', $data);
@@ -34,7 +36,7 @@ class Money extends Fieldtype
     public function augment($value)
     {
         return [
-            'total' => $value, // {{ price:total }} net or gross depending on setting
+            'total' => $value, // {{ price:total }} net or gross. Depends on your config.
             'net' => $value,   // {{ price:net }} // TODO: Calculate the net price
             'gross' => $value,   // {{ price:gross }} // TODO: Calculate the net price
         ];

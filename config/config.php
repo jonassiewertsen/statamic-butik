@@ -50,6 +50,14 @@ return [
     'currency_delimiter' => ',',
 
     /**
+     * PRICE.
+     *
+     * Should your price get displayed by default with or without taxes.
+     * Available: gross, net
+     */
+    'price' => 'gross',
+
+    /**
      * Oders settings.
      *
      * You can define how orders can be deleted. Can they at all, only in production or via the UI
