@@ -33,7 +33,7 @@ class Money extends Fieldtype
         return number_format(floatval($data), 2, '.', '');
     }
 
-    public function augment($value)
+    public function augment($value): array
     {
         return [
             'total' => $value, // {{ price:total }} net or gross. Depends on your config.

@@ -28,6 +28,18 @@ class Tax extends Fieldtype
         return $data;
     }
 
+    public function augment($value): array
+    {
+        $tax = TaxModel::findOrFail($value);
+
+        return [
+            'name' => $tax->title,              // {{ tax:name }}
+            'slug' => $value,                   // {{ tax:slug }}
+            'amount' => 0,                      // TODO: Calculate the the tax amount
+            'percentage' => $tax->percentage,   // {{ tax:percentage }}
+        ];
+    }
+
     private function fetchTaxOptions(): array
     {
         return TaxModel::pluck('title', 'slug')->map(function ($key, $value) {

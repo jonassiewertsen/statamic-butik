@@ -273,7 +273,7 @@ class Product
             }
         }
 
-        $product->price = str_replace('.', config('butik.currency_delimiter'), $product->price);
+        $product->price = str_replace('.', config('butik.currency_delimiter'), $product->price->raw());
         $product->slug = $entry->slug();
         $product->id = $entry->id();
         $product->title = $entry->value('title');
