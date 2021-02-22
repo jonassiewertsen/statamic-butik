@@ -1,5 +1,5 @@
 @component('mail::message')
-# {{ __('butik::web.new_purchase') }}
+# {{ __('butik::web.order_confirmation') }}
 
 @component('mail::table')
 | Product        | Quantity       | Total    |
