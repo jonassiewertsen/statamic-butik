@@ -86,7 +86,7 @@ class Shipping
     protected function detectUsedShippingProfiles(): void
     {
         $this->items->each(function ($item) {
-            if (! $this->profiles->contains($item->shippingProfile)) {
+            if (! $this->profiles->contains('slug', $item->shippingProfile->slug)) {
                 $this->profiles->push($item->shippingProfile);
             }
         });

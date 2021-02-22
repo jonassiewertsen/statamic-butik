@@ -54,10 +54,47 @@ class ShippingProfileTest extends TestCase
     {
         $this->signInAdmin();
 
-        $shippingProfile = create(ShippingProfile::class)->first();
-        $this->makeProduct(['shipping_profile_slug' => $shippingProfile->slug]);
-        $this->delete(cp_route('butik.shipping-profiles.destroy', $shippingProfile));
+        $shippingZone = create(ShippingZone::class)->first();
+        $this->makeProduct([], $shippingZone);
+        $this->delete(cp_route('butik.shipping-profiles.destroy', $shippingZone->profile));
 
-        $this->assertDatabaseHas('butik_shipping_profiles', $shippingProfile->toArray());
+        $this->assertDatabaseHas('butik_shipping_profiles', $shippingZone->profile->toArray());
+    }
+
+    /** @test */
+    public function a_shipping_profile_has_multiple_countries()
+    {
+        $this->signInAdmin();
+
+        $shippingProfile = $this->createZones();
+
+        $this->assertEquals(
+            ['DE', 'DK', 'EN'], // Make sure that GB is not included
+            $shippingProfile->countries,
+        );
+    }
+
+    private function createZones(): ShippingProfile
+    {
+        $shippingProfile = create(ShippingProfile::class)->first();
+
+        // Belonging to shipping profile 1
+        create(ShippingZone::class, [
+            'shipping_profile_slug' => $shippingProfile->slug,
+            'countries' => ['DE'],
+        ]);
+
+        // Belonging to shipping profile 1
+        create(ShippingZone::class, [
+            'shipping_profile_slug' => $shippingProfile->slug,
+            'countries' => ['DK', 'EN'],
+        ]);
+
+        // Belonging to another shipping profile
+        create(ShippingZone::class, [
+            'countries' => ['GB'],
+        ]);
+
+        return $shippingProfile;
     }
 }

@@ -4,6 +4,7 @@ namespace Jonassiewertsen\StatamicButik;
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
+use Jonassiewertsen\StatamicButik\Filters\OrderStatus;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
@@ -27,6 +28,10 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 {
     protected $publishAfterInstall = false;
 
+    protected $actions = [
+        \Jonassiewertsen\StatamicButik\Actions\Delete::class,
+    ];
+
     protected $commands = [
         \Jonassiewertsen\StatamicButik\Commands\SetUpButik::class,
         \Jonassiewertsen\StatamicButik\Commands\MakeShipping::class,
@@ -40,6 +45,10 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
     protected $widgets = [
         \Jonassiewertsen\StatamicButik\Widgets\Orders::class,
+    ];
+
+    protected $scopes = [
+        OrderStatus::class,
     ];
 
     protected $modifiers = [
@@ -154,7 +163,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
             // Views
             $this->publishes([
-                __DIR__.'/../resources/views/email' => resource_path('views/vendor/butik/emails'),
+                __DIR__.'/../resources/views/email' => resource_path('views/vendor/butik/email'),
             ], 'butik-views');
             $this->publishes([
                 __DIR__.'/../resources/views/web' => resource_path('views/vendor/butik/web'),
@@ -215,6 +224,9 @@ class StatamicButikServiceProvider extends AddonServiceProvider
                             Permission::make('update orders')
                                 ->label(__('butik::cp.permission_update_orders'))
                                 ->description(__('butik::cp.permission_update_orders_description')),
+                            Permission::make('delete orders')
+                                ->label(__('butik::cp.permission_delete_orders'))
+                                ->description(__('butik::cp.permission_delete_orders_description')),
                         ]);
                 });
                 Permission::register('view shippings', function ($permission) {
@@ -278,7 +290,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
             // Products
             $nav->create(ucfirst(__('butik::cp.product_plural')))
                 ->section('Butik')
-                ->can(auth()->user()->can('view products'))
+                ->can(auth()->user()->can('view products entries'))
                 ->route('collections.show', 'products')
                 ->icon('tags');
 

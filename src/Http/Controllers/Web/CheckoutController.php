@@ -39,7 +39,7 @@ class CheckoutController extends Checkout
          * to handle the logic. The form validation will be taken care
          * of from Statamic.
          *
-         * Event: InforJonassiewertsen\StatamicButik\Listeners\CheckoutFormValidated;
+         * Event: Jonassiewertsen\StatamicButik\Listeners\CheckoutFormValidated;
          */
         $customer = new Customer($validatedData);
         Session::put('butik.customer', $customer);

@@ -13,7 +13,7 @@ class CacheOldProductSlug
     public function handle(EntrySaving $entry)
     {
         /**
-         * The entry is not a product? Let's do anything then.
+         * The entry is not a product? Let's do nothing in that case.
          */
         if (! $entry->entry->collection()->handle() === 'products') {
             return;

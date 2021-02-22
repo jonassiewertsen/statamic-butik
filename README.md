@@ -7,15 +7,17 @@ The *Statamic Butik*  e-commerce solution will integrate nicely with your person
 
 You can use the light and simple design as shipped or customize it after your needs, to integrate it perfectly into your existing design.
 
-## Link
+## Links
 [Official butik documentation](https://www.butik.dev)
+
+[Official butik starter kit](https://www.butik.dev/installation/installation/starter-kit)
 
 [Discord help forum](https://discord.gg/9fbsBJv)
 
 [Github issue tracking](https://github.com/jonassiewertsen/statamic-butik)
 
 ## Missing something?
-[Share your ideas & wishes with me](https://feedback.userreport.com/81c07a00-5ad7-4f63-b28d-503c3a76bfdc/)
+[Share your ideas & wishes with me](https://github.com/jonassiewertsen/statamic-butik/discussions)
 
 # License 
 

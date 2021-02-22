@@ -13,6 +13,8 @@ class Products extends \Statamic\Tags\Tags
      */
     public function index()
     {
-        return Product::all()->toArray();
+        return Product::all()->map(function ($product) {
+            return (array) $product;
+        });
     }
 }

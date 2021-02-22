@@ -25,6 +25,7 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
      */
     public function handle(Customer $customer, Collection $items, string $totalPrice, Collection $shippings)
     {
+        $totalPrice = $this->mollieAmount($totalPrice);
         $orderNumber = $this->createOrderNumber();
 
         $payment = Mollie::api()->orders()->create(
@@ -37,7 +38,8 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
             $orderNumber,
             $customer,
             $totalPrice,
-            $payment->method
+            $payment->method,
+            $shippings,
         );
 
         // redirect customer to Mollie checkout page
@@ -138,18 +140,18 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
                 'name'        => $item->name,
                 'imageUrl'    => $this->images[0] ?? null,
                 'quantity'    => $item->getQuantity(),
-                'vatRate'     => (string) number_format($item->taxRate, 2),
+                'vatRate'     => $this->mollieAmount($item->taxRate),
                 'unitPrice'   => [
                     'currency' => config('butik.currency_isoCode'),
-                    'value'    => $this->humanPriceWithDot($item->singlePrice()),
+                    'value'    => $this->mollieAmount($item->singlePrice()),
                 ],
                 'totalAmount' => [
                     'currency' => config('butik.currency_isoCode'),
-                    'value'    => $this->humanPriceWithDot($item->totalPrice()),
+                    'value'    => $this->mollieAmount($item->totalPrice()),
                 ],
                 'vatAmount'   => [
                     'currency' => config('butik.currency_isoCode'),
-                    'value'    => $this->humanPriceWithDot($item->taxAmount),
+                    'value'    => $this->mollieAmount($item->taxAmount),
                 ],
             ];
         })->toArray();
@@ -167,15 +169,15 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
                 'vatRate'     => $shipping->taxRate,
                 'unitPrice'   => [
                     'currency' => config('butik.currency_isoCode'),
-                    'value'    => $this->humanPriceWithDot($shipping->total),
+                    'value'    => $this->mollieAmount($shipping->total),
                 ],
                 'totalAmount' => [
                     'currency' => config('butik.currency_isoCode'),
-                    'value'    => $this->humanPriceWithDot($shipping->total),
+                    'value'    => $this->mollieAmount($shipping->total),
                 ],
                 'vatAmount'   => [
                     'currency' => config('butik.currency_isoCode'),
-                    'value'    => $this->humanPriceWithDot($shipping->taxAmount),
+                    'value'    => $this->mollieAmount($shipping->taxAmount),
                 ],
             ];
         })->toArray();
@@ -189,5 +191,12 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
     private function ngrokSet(): bool
     {
         return env('MOLLIE_NGROK_REDIRECT', false) == true;
+    }
+
+    private function mollieAmount(string $value): string
+    {
+        $value = str_replace(',', '.', $value);
+
+        return number_format($value, 2, '.', '');
     }
 }
