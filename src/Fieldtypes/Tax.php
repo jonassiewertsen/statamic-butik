@@ -33,11 +33,24 @@ class Tax extends Fieldtype
         $tax = TaxModel::findOrFail($value);
 
         return [
-            'name' => $tax->title,              // {{ tax:name }}
-            'slug' => $value,                   // {{ tax:slug }}
-            'amount' => 0,                      // TODO: Calculate the the tax amount
-            'percentage' => $tax->percentage,   // {{ tax:percentage }}
+            'name' => $tax->title,                // {{ tax:name }}
+            'slug' => $value,                     // {{ tax:slug }}
+            'amount' => $this->calculateAmount($tax->percentage), // {{ tax:amount }}
+            'percentage' => $tax->percentage,     // {{ tax:percentage }}
         ];
+    }
+
+    private function calculateAmount(int $percentage): string
+    {
+        $product = $this->field->parent();
+
+        if (is_null($product)) {
+            return 0;
+        }
+
+        $calculatedTaxAmount = (float) $product->price * ($percentage / 100);
+
+        return number_format($calculatedTaxAmount, '2', config('butik.currency_delimiter'), '.');
     }
 
     private function fetchTaxOptions(): array

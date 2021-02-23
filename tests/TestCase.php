@@ -65,14 +65,14 @@ class TestCase extends OrchestraTestCase
 
         Entry::make()
             ->collection('products')
-            ->blueprint('products')
+            ->blueprint('product')
             ->slug($slug = Str::random('6'))
             ->date(now())
             ->data($entryData)
-            ->id(Str::random('30'))
+            ->id($id = Str::random('30'))
             ->save();
 
-        return Product::find($slug);
+        return Entry::find($id);
     }
 
     /**

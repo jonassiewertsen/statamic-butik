@@ -19,6 +19,18 @@ class TaxFieldsetTest extends TestCase
     }
 
     /** @test */
+    public function it_has_a_calculated_tax_amount()
+    {
+        $product = $this->makeProduct();
+        $tax = $product->augmentedValue('tax_id')->value();
+
+        $calculatedTaxAmount = (float) $product->price * ($tax['percentage'] / 100);
+        $calculatedTaxAmount = number_format((float) $calculatedTaxAmount, '2', ',', '.');
+
+        $this->assertEquals($tax['amount'], $calculatedTaxAmount);
+    }
+
+    /** @test */
     public function it_has_a_name()
     {
         $taxModel = create(Tax::class)->first();
