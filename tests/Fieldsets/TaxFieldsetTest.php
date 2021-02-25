@@ -24,6 +24,7 @@ class TaxFieldsetTest extends TestCase
         $product = $this->makeProduct();
         $tax = $product->augmentedValue('tax_id')->value();
 
+        // TODO: Replace with Price facade as soon as it's done
         $calculatedTaxAmount = (float) $product->price * ($tax['percentage'] / 100);
         $calculatedTaxAmount = number_format((float) $calculatedTaxAmount, '2', ',', '.');
 
