@@ -57,4 +57,20 @@ class PriceTest extends TestCase
 
         $this->assertEquals('20@00', $amount);
     }
+
+    /** @test */
+    public function a_price_can_be_added()
+    {
+        $amount = Price::of(1234)->add(4321)->getCents();
+
+        $this->assertEquals(5555, $amount);
+    }
+
+    /** @test */
+    public function a_price_can_be_substraccted()
+    {
+        $amount = Price::of(2345)->subtract(123)->getCents();
+
+        $this->assertEquals(2222, $amount);
+    }
 }

@@ -18,14 +18,21 @@ class Price implements PriceRepository
 
     public function of($amount): self
     {
-        switch (gettype($amount)) {
-            case 'integer':
-                $this->amount = $amount;
-                break;
-            case 'string':
-                $this->amount = $this->fromStringToInt($amount);
-                break;
-        }
+        $this->amount = $this->convertToInt($amount);
+
+        return $this;
+    }
+
+    public function add($amount): self
+    {
+       $this->amount += $this->convertToInt($amount);
+
+       return $this;
+    }
+
+    public function subtract($amount): self
+    {
+        $this->amount -= $this->convertToInt($amount);
 
         return $this;
     }
@@ -42,7 +49,7 @@ class Price implements PriceRepository
         return $this->amount;
     }
 
-    protected function fromStringToInt(string $amount): int
+    protected function convertFromStringToInt(string $amount): int
     {
         // Any string will change the delimiter to a dot as delimiter.
         $amount = str_replace($this->delimiter, '.', $amount);
@@ -51,5 +58,15 @@ class Price implements PriceRepository
         $amount = (float) $amount * 100;
 
         return (int) $amount;
+    }
+
+    protected function convertToInt($amount): int
+    {
+        switch (gettype($amount)) {
+            case 'integer':
+                return $amount;
+            case 'string':
+                return $this->convertFromStringToInt($amount);
+        }
     }
 }
