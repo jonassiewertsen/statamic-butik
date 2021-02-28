@@ -14,6 +14,7 @@ class Money extends Fieldtype
     {
         return [
             'currencySymbol' => currency(),
+            'priceDefault' => config('butik.price', 'gross'),
         ];
     }
 
@@ -24,7 +25,7 @@ class Money extends Fieldtype
 
     public function preProcess($data)
     {
-        // TODO: Use our Money class for calculations
+        // TODO: Use our Price Facade for calculations
 
         // In case we will use another number seperator then '.', like in europe,
         // we will make sure replace to avoid problems calculating with it.
@@ -36,9 +37,27 @@ class Money extends Fieldtype
     public function augment($value): array
     {
         return [
-            'total' => $value, // {{ price:total }} net or gross. Depends on your config.
-            'net' => $value,   // {{ price:net }} // TODO: Calculate the net price
-            'gross' => $value,   // {{ price:gross }} // TODO: Calculate the net price
+            'gross' => $this->calculateGross($value), // {{ price:gross }}
+            'net' => $this->calculateNet($value),     // {{ price:net }}
+            'total' => $value,                        // {{ price:total }}
         ];
+    }
+
+    private function calculateNet($value)
+    {
+        if ($this->preload()['priceDefault'] === 'net') {
+            return $value;
+        }
+
+        return $value;
+    }
+
+    private function calculateGross($value)
+    {
+        if ($this->preload()['priceDefault'] === 'gross') {
+            return $value;
+        }
+
+        return $value;
     }
 }

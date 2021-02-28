@@ -2,12 +2,30 @@
 
 namespace Jonassiewertsen\StatamicButik\Tests\Fieldsets;
 
+use Statamic\Entries\Entry;
 use Statamic\Fields\Field;
 use Jonassiewertsen\StatamicButik\Fieldtypes\Money;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class MoneyFieldsetTest extends TestCase
 {
+    public Entry $product;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->product = $this->makeProduct();
+    }
+
+    /** @test */
+    public function the_total_value_is_the_default_and_raw_value_from_the_product_entry()
+    {
+        $price = $this->product->augmentedValue('price');
+
+        $this->assertEquals($price->raw(), $price->value()['total']);
+    }
+
     // TODO: Calculate prices depending on taxes
 
     // TODO: Rename the money fieldset to a price fieldset
@@ -25,11 +43,12 @@ class MoneyFieldsetTest extends TestCase
     /** @test */
     public function it_has_a_total_value_as_net_price()
     {
-        config()->set('butik.price', 'net');
+        $price = $this->product->augmentedValue('price');
+        $tax = $this->product->augmentedValue('tax_id');
 
-        $price = $this->priceFieldset();
+        // TODO: Calculate prices depending on taxes
 
-        $this->assertEquals($price['net'], '10.00');
+        $this->assertEquals($price['net'], '1.00');
     }
 
     /** @test */
