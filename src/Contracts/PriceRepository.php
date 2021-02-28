@@ -19,5 +19,4 @@ interface PriceRepository
     public function get(): string;
 
     public function cents(): int;
-
 }

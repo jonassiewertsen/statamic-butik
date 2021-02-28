@@ -25,9 +25,9 @@ class Price implements PriceRepository
 
     public function add($amount): self
     {
-       $this->amount += $this->convertToInt($amount);
+        $this->amount += $this->convertToInt($amount);
 
-       return $this;
+        return $this;
     }
 
     public function subtract($amount): self
@@ -53,8 +53,7 @@ class Price implements PriceRepository
 
     public function get(): string
     {
-        $amount = floatval
-            ($this->amount) / 100;
+        $amount = floatval($this->amount) / 100;
 
         return number_format($amount, 2, $this->delimiter, $this->thousands);
     }
