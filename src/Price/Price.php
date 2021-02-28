@@ -82,6 +82,8 @@ class Price implements PriceRepository
                 return $amount;
             case 'string':
                 return $this->convertFromStringToInt($amount);
+            case 'NULL':
+                return 0;
         }
     }
 }

@@ -41,6 +41,14 @@ class PriceTest extends TestCase
     }
 
     /** @test */
+    public function it_can_be_initiated_with_null()
+    {
+        $cents = Price::of(null)->cents();
+
+        $this->assertEquals(0, $cents);
+    }
+
+    /** @test */
     public function it_can_return_a_human_value()
     {
         $amount = Price::of(2000)->get();
