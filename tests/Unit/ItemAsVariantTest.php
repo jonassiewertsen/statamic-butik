@@ -5,16 +5,14 @@ namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
+use Jonassiewertsen\StatamicButik\Facades\Price;
 use Jonassiewertsen\StatamicButik\Http\Models\Product as ProductModel;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
-use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class ItemAsVariantTest extends TestCase
 {
-    use MoneyTrait;
-
     protected ProductModel $product;
 
     public function setUp(): void
@@ -150,10 +148,9 @@ class ItemAsVariantTest extends TestCase
         $item = new Item($this->variant->slug);
         $item->setQuantity(3);
 
-        $productPrice = $this->makeAmountSaveable($this->variant->price);
-        $total = $this->makeAmountHuman($productPrice * 3);
+        $total = Price::of($this->variant->price)->cents() * 3;
 
-        $this->assertEquals($total, $item->totalPrice());
+        $this->assertEquals(Price::of($total->get()), $item->totalPrice());
     }
 
     /** @test */

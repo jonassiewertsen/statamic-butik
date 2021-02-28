@@ -7,12 +7,9 @@ use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Exceptions\ButikConfigException;
 use Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\PaymentGatewayInterface;
 use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
-use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 
 class PaymentGatewayController extends WebController
 {
-    use MoneyTrait;
-
     protected PaymentGatewayInterface $gateway;
 
     public function __construct()

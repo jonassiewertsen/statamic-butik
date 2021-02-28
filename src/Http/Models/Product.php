@@ -5,7 +5,7 @@ namespace Jonassiewertsen\StatamicButik\Http\Models;
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product as ProductFacade;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
+use Jonassiewertsen\StatamicButik\Facades\Price;
 use Statamic\Entries\Entry as StatamicEntry;
 use Statamic\Entries\EntryCollection;
 use Statamic\Facades\Entry;
@@ -14,8 +14,6 @@ use Statamic\Support\Str;
 
 class Product
 {
-    use MoneyTrait;
-
     protected const COLLECTION_NAME = 'products';
     public string            $slug;
     public bool              $available;
@@ -210,7 +208,7 @@ class Product
         $price = (float) $this->price;
         $total = $price * ($tax / (100 + $tax));
 
-        return $this->humanPrice($total);
+        return Price::of($total)->get();
     }
 
     /**

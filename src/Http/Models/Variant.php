@@ -3,12 +3,10 @@
 namespace Jonassiewertsen\StatamicButik\Http\Models;
 
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
-use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
+use Jonassiewertsen\StatamicButik\Facades\Price;
 
 class Variant extends ButikModel
 {
-    use MoneyTrait;
-
     protected $table = 'butik_variants';
 
     protected $casts = [
@@ -61,7 +59,7 @@ class Variant extends ButikModel
      */
     public function getOriginalPriceAttribute($value)
     {
-        return $this->makeAmountHuman($this->getRawOriginal('price'));
+        return Price::of($this->getRawOriginal('price'))->get();
     }
 
     /**
@@ -73,7 +71,7 @@ class Variant extends ButikModel
             return $this->product->price;
         }
 
-        return $this->makeAmountHuman($this->getRawOriginal('price'));
+        return Price::of($this->getRawOriginal('price'))->get();
     }
 
     /**
@@ -81,7 +79,7 @@ class Variant extends ButikModel
      */
     public function setPriceAttribute($value)
     {
-        $this->attributes['price'] = $this->makeAmountSaveable($value);
+        $this->attributes['price'] = Price::of($value)->cents();
     }
 
     /**

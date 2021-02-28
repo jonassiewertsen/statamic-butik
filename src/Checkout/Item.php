@@ -7,14 +7,11 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Jonassiewertsen\StatamicButik\Http\Models\Product as ProductModel;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
-use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Statamic\Facades\Site;
 use Statamic\Fields\Value;
 
 class Item
 {
-    use MoneyTrait;
-
     /**
      * Is this item available.
      */

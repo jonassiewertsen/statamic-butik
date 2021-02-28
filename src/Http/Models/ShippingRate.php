@@ -2,12 +2,10 @@
 
 namespace Jonassiewertsen\StatamicButik\Http\Models;
 
-use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
+use Jonassiewertsen\StatamicButik\Facades\Price;
 
 class ShippingRate extends ButikModel
 {
-    use MoneyTrait;
-
     protected $table = 'butik_shipping_rates';
 
     protected $casts = [
@@ -27,7 +25,7 @@ class ShippingRate extends ButikModel
      */
     public function getPriceAttribute($value)
     {
-        return $this->makeAmountHuman($value);
+        return Price::of($value)->get();
     }
 
     /**
@@ -35,6 +33,6 @@ class ShippingRate extends ButikModel
      */
     public function setPriceAttribute($value)
     {
-        $this->attributes['price'] = $this->makeAmountSaveable($value);
+        $this->attributes['price'] = Price::of($value)->cents();
     }
 }

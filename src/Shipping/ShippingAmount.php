@@ -2,15 +2,13 @@
 
 namespace Jonassiewertsen\StatamicButik\Shipping;
 
+use Jonassiewertsen\StatamicButik\Facades\Price;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
 use Jonassiewertsen\StatamicButik\Http\Models\Tax;
-use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 
 class ShippingAmount
 {
-    use MoneyTrait;
-
     /**
      * The Shipping profile title of this shipping amount.
      */
@@ -52,12 +50,12 @@ class ShippingAmount
         $taxRate = $this->taxPercentage($tax);
 
         // Format values
-        $amount = str_replace(',', '.', $amount);
+        $amount = Price::of($amount)->cents();
         $taxRate = str_replace(',', '.', $taxRate);
         // Calculate tax amount
         $taxAmount = $amount * ($taxRate / (100 + $taxRate));
 
-        return $this->humanPriceWithDot(round($taxAmount, 2));
+        return Price::of(round($taxAmount, 2))->delimiter('.')->get();
     }
 
     private function taxRate(?Tax $tax): string
