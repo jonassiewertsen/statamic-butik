@@ -151,7 +151,7 @@ class CartTest extends TestCase
         $item1 = Cart::get()->first();
         $item2 = Cart::get()->last();
 
-        $calculatedPrice = Price::of($item1->totalPrice())->add($item2->totalPrice())->getAmount();
+        $calculatedPrice = Price::of($item1->totalPrice())->add($item2->totalPrice())->get();
 
         $this->assertEquals($calculatedPrice, Cart::totalPrice());
     }
@@ -239,7 +239,7 @@ class CartTest extends TestCase
         $totalTaxAmount = Price::of($item->taxAmount)->add(Cart::shipping()->first()->taxAmount);
 
         $this->assertEquals(
-            $totalTaxAmount->getAmount(),
+            $totalTaxAmount->get(),
             Cart::totalTaxes()->first()['amount']
         );
     }
@@ -257,7 +257,7 @@ class CartTest extends TestCase
         $item1 = new Item($product1->slug);
         $item2 = new Item($product2->slug);
 
-        $totalTaxAmount = Price::of($item1->taxAmount)->add($item2->taxAmount)->getAmount();
+        $totalTaxAmount = Price::of($item1->taxAmount)->add($item2->taxAmount)->get();
 
         $this->assertEquals(
             $totalTaxAmount,

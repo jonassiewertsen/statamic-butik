@@ -133,13 +133,13 @@ class Cart
                 return;
             }
 
-            static::$totalPrice += Price::of($item->totalPrice())->getCents();
+            static::$totalPrice += Price::of($item->totalPrice())->cents();
         });
 
         // Adding the shipping costs to the total price
-        $total = static::$totalPrice + Price::of(static::totalShipping())->getCents();
+        $total = static::$totalPrice + Price::of(static::totalShipping())->cents();
 
-        return Price::of($total)->getAmount();
+        return Price::of($total)->get();
     }
 
     /**
@@ -181,15 +181,15 @@ class Cart
         foreach ($taxRates as $taxRate) {
             $totalTaxAmount = static::$cart
                 ->where('taxRate', $taxRate)->map(function ($item) {
-                    return Price::of($item->taxAmount)->getCents();
+                    return Price::of($item->taxAmount)->cents();
                 })->sum();
 
             // On top of that we need to add the tax amounts from our shipping rates
             if ($shipping = static::shipping()->firstWhere('taxRate', $taxRate)) {
-                $totalTaxAmount += Price::of($shipping->taxAmount)->getCents();
+                $totalTaxAmount += Price::of($shipping->taxAmount)->cents();
             }
 
-            $totalTaxAmount = Price::of($totalTaxAmount)->getAmount();
+            $totalTaxAmount = Price::of($totalTaxAmount)->get();
 
             // In case there is a product or shipping with an tax rate, but with an amount of zero, we will
             // return early to not push the to the total taxes collection.
@@ -228,10 +228,10 @@ class Cart
         static::resetTotalShipping();
 
         static::shipping()->each(function ($shipping) {
-            static::$totalShipping += Price::of($shipping->total)->getCents();
+            static::$totalShipping += Price::of($shipping->total)->cents();
         });
 
-        return Price::of(static::$totalShipping)->getAmount();
+        return Price::of(static::$totalShipping)->get();
     }
 
     /**

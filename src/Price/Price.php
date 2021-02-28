@@ -37,14 +37,15 @@ class Price implements PriceRepository
         return $this;
     }
 
-    public function getAmount(): string
+    public function get(): string
     {
-        $amount = floatval($this->amount) / 100;
+        $amount = floatval
+            ($this->amount) / 100;
 
         return number_format($amount, 2, $this->delimiter, $this->thousands_separator);
     }
 
-    public function getCents(): int
+    public function cents(): int
     {
         return $this->amount;
     }

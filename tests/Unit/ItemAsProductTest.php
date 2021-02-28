@@ -171,9 +171,9 @@ class ItemAsProductTest extends TestCase
         $item = new Item($this->product->slug);
         $item->setQuantity(3);
 
-        $total = Price::of($this->product->price)->getCents() * 3;
+        $total = Price::of($this->product->price)->cents() * 3;
 
-        $this->assertEquals(Price::of($total)->getAmount(), $item->totalPrice());
+        $this->assertEquals(Price::of($total)->get(), $item->totalPrice());
     }
 
     /** @test */
