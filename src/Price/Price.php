@@ -10,7 +10,8 @@ class Price implements PriceRepository
     public string $thousands_separator;
     public int $amount = 0;
 
-    public function __construct(string $delimiter, string $thousands_separator) {
+    public function __construct(string $delimiter, string $thousands_separator)
+    {
         $this->delimiter = $delimiter;
         $this->thousands_separator = $thousands_separator;
     }
@@ -26,7 +27,7 @@ class Price implements PriceRepository
                 break;
         }
 
-         return $this;
+        return $this;
     }
 
     public function getAmount(): string

@@ -143,7 +143,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         // Registering the service provider
         $this->app->register(MollieServiceProvider::class);
 
-        $this->app->bind(PriceRepository::class, function() {
+        $this->app->bind(PriceRepository::class, function () {
             return new Price(
                 config('butik.currency_delimiter', '.'),
                 config('butik.currency_thousands_separator', '.'),
