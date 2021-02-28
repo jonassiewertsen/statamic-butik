@@ -67,6 +67,14 @@ class PriceTest extends TestCase
     }
 
     /** @test */
+    public function a_thousands_separator_can_be_set()
+    {
+        $amount = Price::of(2334455)->thousands('!')->get();
+
+        $this->assertEquals('23!344,55', $amount);
+    }
+
+    /** @test */
     public function a_price_can_be_added()
     {
         $amount = Price::of(1234)->add(4321)->cents();

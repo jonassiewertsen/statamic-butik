@@ -14,6 +14,8 @@ interface PriceRepository
 
     public function delimiter(string $delimiter): self;
 
+    public function thousands(string $thousands): self;
+
     public function get(): string;
 
     public function cents(): int;

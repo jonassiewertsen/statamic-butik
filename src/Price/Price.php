@@ -7,13 +7,13 @@ use Jonassiewertsen\StatamicButik\Contracts\PriceRepository;
 class Price implements PriceRepository
 {
     public string $delimiter;
-    public string $thousands_separator;
+    public string $thousands;
     public int $amount = 0;
 
     public function __construct(string $delimiter, string $thousands_separator)
     {
         $this->delimiter = $delimiter;
-        $this->thousands_separator = $thousands_separator;
+        $this->thousands = $thousands_separator;
     }
 
     public function of($amount): self
@@ -44,12 +44,19 @@ class Price implements PriceRepository
         return $this;
     }
 
+    public function thousands(string $thousands): self
+    {
+        $this->thousands = $thousands;
+
+        return $this;
+    }
+
     public function get(): string
     {
         $amount = floatval
             ($this->amount) / 100;
 
-        return number_format($amount, 2, $this->delimiter, $this->thousands_separator);
+        return number_format($amount, 2, $this->delimiter, $this->thousands);
     }
 
     public function cents(): int
