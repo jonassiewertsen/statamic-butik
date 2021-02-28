@@ -4,6 +4,7 @@ namespace Jonassiewertsen\StatamicButik;
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
+use Jonassiewertsen\StatamicButik\Contracts\PriceRepository;
 use Jonassiewertsen\StatamicButik\Filters\OrderStatus;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
@@ -17,6 +18,7 @@ use Jonassiewertsen\StatamicButik\Policies\ShippingRatePolicy;
 use Jonassiewertsen\StatamicButik\Policies\ShippingZonePolicy;
 use Jonassiewertsen\StatamicButik\Policies\TaxPolicy;
 use Jonassiewertsen\StatamicButik\Policies\VariantPolicy;
+use Jonassiewertsen\StatamicButik\Price\Price;
 use Livewire\Livewire;
 use Mollie\Laravel\MollieServiceProvider;
 use Statamic\Facades\CP\Nav;
@@ -125,6 +127,30 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         Variant::class         => VariantPolicy::class,
     ];
 
+    /**
+     * Register the application services.
+     */
+    public function register(): void
+    {
+        // Automatically apply the package configuration
+        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'butik');
+
+        // Register the main class to use with the facade
+        $this->app->singleton('statamic-butik', function () {
+            return new StatamicButik;
+        });
+
+        // Registering the service provider
+        $this->app->register(MollieServiceProvider::class);
+
+        $this->app->bind(PriceRepository::class, function() {
+            return new Price(
+                config('butik.currency_delimiter', '.'),
+                config('butik.currency_thousands_separator', '.'),
+            );
+        });
+    }
+
     public function boot(): void
     {
         parent::boot();
@@ -190,23 +216,6 @@ class StatamicButikServiceProvider extends AddonServiceProvider
                 __DIR__.'/../resources/lang' => resource_path('lang/vendor/butik'),
             ], 'butik-lang');
         }
-    }
-
-    /**
-     * Register the application services.
-     */
-    public function register(): void
-    {
-        // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'butik');
-
-        // Register the main class to use with the facade
-        $this->app->singleton('statamic-butik', function () {
-            return new StatamicButik;
-        });
-
-        // Registering the service provider
-        $this->app->register(MollieServiceProvider::class);
     }
 
     protected function bootPermissions(): void
