@@ -59,6 +59,14 @@ class PriceTest extends TestCase
     }
 
     /** @test */
+    public function a_delimiter_can_be_set()
+    {
+        $amount = Price::of(2245)->delimiter('!')->get();
+
+        $this->assertEquals('22!45', $amount);
+    }
+
+    /** @test */
     public function a_price_can_be_added()
     {
         $amount = Price::of(1234)->add(4321)->cents();

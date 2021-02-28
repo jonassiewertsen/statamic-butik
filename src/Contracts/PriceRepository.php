@@ -12,6 +12,8 @@ interface PriceRepository
 
     public function subtract($amount): self;
 
+    public function delimiter(string $delimiter): self;
+
     public function get(): string;
 
     public function cents(): int;

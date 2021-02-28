@@ -37,6 +37,13 @@ class Price implements PriceRepository
         return $this;
     }
 
+    public function delimiter(string $delimiter): self
+    {
+        $this->delimiter = $delimiter;
+
+        return $this;
+    }
+
     public function get(): string
     {
         $amount = floatval
