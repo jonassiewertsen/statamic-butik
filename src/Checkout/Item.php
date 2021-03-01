@@ -5,7 +5,6 @@ namespace Jonassiewertsen\StatamicButik\Checkout;
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
-use Jonassiewertsen\StatamicButik\Facades\Number;
 use Jonassiewertsen\StatamicButik\Facades\Price;
 use Jonassiewertsen\StatamicButik\Http\Models\Product as ProductModel;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;

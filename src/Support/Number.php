@@ -73,6 +73,6 @@ class Number implements NumberRepository
     {
         $number = str_replace(',', '.', $number);
 
-        return (int) $this->multiplicator * (double) $number;
+        return (int) $this->multiplicator * (float) $number;
     }
 }
