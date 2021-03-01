@@ -97,4 +97,12 @@ class PriceTest extends TestCase
 
         $this->assertEquals(2222, $amount);
     }
+
+    /** @test */
+    public function a_price_can_be_multiplied()
+    {
+        $amount = Price::of(1111)->multiply(3)->cents();
+
+        $this->assertEquals(3333, $amount);
+    }
 }

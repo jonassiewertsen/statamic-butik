@@ -12,6 +12,8 @@ interface PriceRepository
 
     public function subtract($amount): self;
 
+    public function multiply(int $by): self;
+
     public function delimiter(string $delimiter): self;
 
     public function thousands(string $thousands): self;
