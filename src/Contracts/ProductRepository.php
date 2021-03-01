@@ -8,9 +8,9 @@ interface ProductRepository
 {
     public function all(): Collection;
 
-    public function find($id): self;
+    public function find(string $id): ?\Statamic\Entries\Entry;
 
-    public function findBySlug(string $slug): self;
+    public function findBySlug(string $slug): ?\Statamic\Entries\Entry;
 
     public function toArray(): array;
 
