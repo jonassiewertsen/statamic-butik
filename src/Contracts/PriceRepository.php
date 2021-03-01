@@ -12,7 +12,7 @@ interface PriceRepository
 
     public function subtract($amount): self;
 
-    public function multiply(int $by): self;
+    public function multiply($by): self;
 
     public function delimiter(string $delimiter): self;
 

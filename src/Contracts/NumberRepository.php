@@ -10,6 +10,8 @@ interface NumberRepository
 
     public function subtract($number): self;
 
+    public function multiply($by): self;
+
     public function decimal(): float;
 
     public function int(): int;

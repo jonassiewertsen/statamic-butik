@@ -37,9 +37,9 @@ class Price implements PriceRepository
         return $this;
     }
 
-    public function multiply(int $by): self
+    public function multiply($by): self
     {
-        $this->amount *= 3;
+        $this->amount *= $by;
 
         return $this;
     }
@@ -86,6 +86,8 @@ class Price implements PriceRepository
         switch (gettype($amount)) {
             case 'integer':
                 return $amount;
+            case 'double':
+                return (int) (floatval($amount) * 100);
             case 'string':
                 return $this->convertFromStringToInt($amount);
             case 'NULL':

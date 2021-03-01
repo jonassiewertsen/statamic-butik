@@ -64,4 +64,12 @@ class NumberTest extends TestCase
 
         $this->assertEquals(13.12, $number);
     }
+
+    /** @test */
+    public function a_number_can_be_multiplied()
+    {
+        $number = Number::of('11,11')->multiply(3)->decimal();
+
+        $this->assertEquals(33.33, $number);
+    }
 }
