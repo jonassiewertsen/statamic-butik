@@ -236,10 +236,13 @@ class CartTest extends TestCase
         Cart::update();
 
         $item = new Item($product->slug);
-        $totalTaxAmount = Price::of($item->taxAmount)->add(Cart::shipping()->first()->taxAmount);
+
+        $totalTaxAmount = Price::of($item->taxAmount)
+                            ->add(Cart::shipping()->first()->taxAmount)
+                            ->get();
 
         $this->assertEquals(
-            $totalTaxAmount->get(),
+            $totalTaxAmount,
             Cart::totalTaxes()->first()['amount']
         );
     }

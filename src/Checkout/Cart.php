@@ -139,7 +139,7 @@ class Cart
         // Adding the shipping costs to the total price
         $total = static::$totalPrice + Price::of(static::totalShipping())->cents();
 
-        return Price::of($total)->get();
+        return Price::of($total)->delimiter(config('butik.currency_delimiter', ','))->get();
     }
 
     /**
@@ -189,7 +189,7 @@ class Cart
                 $totalTaxAmount += Price::of($shipping->taxAmount)->cents();
             }
 
-            $totalTaxAmount = Price::of($totalTaxAmount)->get();
+            $totalTaxAmount = Price::of($totalTaxAmount)->delimiter(config('butik.currecny_delimiter', ','))->get();
 
             // In case there is a product or shipping with an tax rate, but with an amount of zero, we will
             // return early to not push the to the total taxes collection.

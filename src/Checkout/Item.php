@@ -206,7 +206,7 @@ class Item
     public function totalTaxAmount()
     {
         return Price::of($this->totalPrice())
-                ->multiply($this->taxRate / (100 + $this->taxRate))
+                ->multiply($this->taxRate / 100)
                 ->get();
     }
 

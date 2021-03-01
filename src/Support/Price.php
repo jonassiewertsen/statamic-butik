@@ -62,7 +62,7 @@ class Price implements PriceRepository
     {
         $amount = floatval($this->amount) / 100;
 
-        return number_format($amount, 2, $this->delimiter, $this->thousands);
+        return (string) number_format($amount, 2, $this->delimiter, $this->thousands);
     }
 
     public function cents(): int
@@ -73,6 +73,7 @@ class Price implements PriceRepository
     protected function convertFromStringToInt(string $amount): int
     {
         // Any string will change the delimiter to a dot as delimiter.
+        $amount = str_replace(',', '.', $amount);
         $amount = str_replace($this->delimiter, '.', $amount);
 
         // As any string uses a dot, we can convert it into a float.
@@ -86,10 +87,10 @@ class Price implements PriceRepository
         switch (gettype($amount)) {
             case 'integer':
                 return $amount;
-            case 'double':
-                return (int) (floatval($amount) * 100);
             case 'string':
                 return $this->convertFromStringToInt($amount);
+            case 'double':
+                return (int) (floatval($amount) * 100);
             case 'NULL':
                 return 0;
         }
