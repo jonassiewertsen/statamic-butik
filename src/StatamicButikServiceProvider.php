@@ -4,6 +4,7 @@ namespace Jonassiewertsen\StatamicButik;
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
+use Jonassiewertsen\StatamicButik\Contracts\NumberRepository;
 use Jonassiewertsen\StatamicButik\Contracts\PriceRepository;
 use Jonassiewertsen\StatamicButik\Filters\OrderStatus;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
@@ -18,6 +19,7 @@ use Jonassiewertsen\StatamicButik\Policies\ShippingRatePolicy;
 use Jonassiewertsen\StatamicButik\Policies\ShippingZonePolicy;
 use Jonassiewertsen\StatamicButik\Policies\TaxPolicy;
 use Jonassiewertsen\StatamicButik\Policies\VariantPolicy;
+use Jonassiewertsen\StatamicButik\Support\Number;
 use Jonassiewertsen\StatamicButik\Support\Price;
 use Livewire\Livewire;
 use Mollie\Laravel\MollieServiceProvider;
@@ -135,11 +137,6 @@ class StatamicButikServiceProvider extends AddonServiceProvider
         // Automatically apply the package configuration
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'butik');
 
-        // Register the main class to use with the facade
-        $this->app->singleton('statamic-butik', function () {
-            return new StatamicButik;
-        });
-
         // Registering the service provider
         $this->app->register(MollieServiceProvider::class);
 
@@ -148,6 +145,10 @@ class StatamicButikServiceProvider extends AddonServiceProvider
                 config('butik.currency_delimiter', '.'),
                 config('butik.currency_thousands_separator', '.'),
             );
+        });
+
+        $this->app->bind(NumberRepository::class, function () {
+            return new Number();
         });
     }
 
