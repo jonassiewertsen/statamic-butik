@@ -3,6 +3,7 @@
 namespace Jonassiewertsen\StatamicButik\Http\Models;
 
 use Jonassiewertsen\StatamicButik\Blueprints\OrderBlueprint;
+use Jonassiewertsen\StatamicButik\Facades\Price;
 use Statamic\Fields\Blueprint;
 
 class Order extends ButikModel
@@ -40,7 +41,7 @@ class Order extends ButikModel
      */
     public function getTotalAmountAttribute($value)
     {
-        return $this->makeAmountHuman($value);
+        return Price::of($value)->amount();
     }
 
     /**
@@ -48,7 +49,7 @@ class Order extends ButikModel
      */
     public function setTotalAmountAttribute($value)
     {
-        $this->attributes['total_amount'] = $this->makeAmountSaveable($value);
+        $this->attributes['total_amount'] = Price::of($value)->cents();
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace Jonassiewertsen\StatamicButik\Shipping;
 
+use Jonassiewertsen\StatamicButik\Facades\Price;
+
 class ShippingPerItem extends ShippingType
 {
     /**
@@ -10,8 +12,8 @@ class ShippingPerItem extends ShippingType
      */
     public function shippingCosts(): string
     {
-        $price = $this->makeAmountSaveable($this->rate->price);
-
-        return $this->makeAmountHuman($price * $this->itemCount);
+        return Price::of($this->rate->price)
+                ->multiply($this->itemCount)
+                ->amount();
     }
 }

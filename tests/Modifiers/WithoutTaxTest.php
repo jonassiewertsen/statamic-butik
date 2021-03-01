@@ -3,14 +3,12 @@
 namespace Jonassiewertsen\StatamicButik\Tests\Modifiers;
 
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
-use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
+use Jonassiewertsen\StatamicButik\Facades\Price;
 use Jonassiewertsen\StatamicButik\Modifiers\WithoutTax;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class WithoutTaxTest extends TestCase
 {
-    use MoneyTrait;
-
     public function setUp(): void
     {
         parent::setUp();
@@ -24,11 +22,8 @@ class WithoutTaxTest extends TestCase
         $slug = $this->makeProduct()->slug;
         $product = Product::find($slug);
 
-        $price = $this->makeAmountSaveable($product->price);
-        $tax = $this->makeAmountSaveable($product->tax_amount);
-
         $this->assertEquals(
-            $this->makeAmountHuman($price - $tax),
+            Price::of($product->price)->substract($product->tax_amount)->get(),
             $this->modifier->index($product->price, null, (array) $product)
         );
     }

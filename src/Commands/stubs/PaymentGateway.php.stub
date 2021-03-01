@@ -7,12 +7,9 @@ use Illuminate\Support\Collection;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\PaymentGateway;
 use Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\PaymentGatewayInterface;
-use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 
 class DummyClass extends PaymentGateway implements PaymentGatewayInterface
 {
-    use MoneyTrait;
-
     /**
      * We want to handle the payment process.
      *

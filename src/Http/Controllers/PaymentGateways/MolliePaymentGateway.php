@@ -8,14 +8,13 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
+use Jonassiewertsen\StatamicButik\Facades\Price;
 use Jonassiewertsen\StatamicButik\Http\Traits\MollyLocale;
-use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Mollie\Laravel\Facades\Mollie;
 
 class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInterface
 {
     use MollyLocale;
-    use MoneyTrait;
 
     /**
      * We want to handle the payment process.
@@ -195,8 +194,6 @@ class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInter
 
     private function mollieAmount(string $value): string
     {
-        $value = str_replace(',', '.', $value);
-
-        return number_format($value, 2, '.', '');
+        return Price::of($value)->delimiter('.')->thousands('')->get();
     }
 }

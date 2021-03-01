@@ -44,10 +44,11 @@ return [
      *
      * Define your shops currency
      */
-    'currency_name'      => 'Euro',
-    'currency_isoCode'   => 'EUR', // Make sure to use ISO_4217 https://en.wikipedia.org/wiki/ISO_4217
-    'currency_symbol'    => '€',
-    'currency_delimiter' => ',',
+    'currency_name'                => 'Euro',
+    'currency_isoCode'             => 'EUR', // Make sure to use ISO_4217 https://en.wikipedia.org/wiki/ISO_4217
+    'currency_symbol'              => '€',
+    'currency_delimiter'           => ',',
+    'currency_thousands_separator' => '.',
 
     /**
      * PRICE.

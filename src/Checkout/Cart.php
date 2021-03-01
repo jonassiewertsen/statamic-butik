@@ -5,14 +5,12 @@ namespace Jonassiewertsen\StatamicButik\Checkout;
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
-use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
+use Jonassiewertsen\StatamicButik\Facades\Price;
 use Jonassiewertsen\StatamicButik\Shipping\Country;
 use Jonassiewertsen\StatamicButik\Shipping\Shipping;
 
 class Cart
 {
-    use MoneyTrait;
-
     public static $cart;
     private static $totalPrice;
     private static $totalShipping;
@@ -135,13 +133,13 @@ class Cart
                 return;
             }
 
-            static::$totalPrice += static::makeAmountSaveableStatic($item->totalPrice());
+            static::$totalPrice += Price::of($item->totalPrice())->cents();
         });
 
         // Adding the shipping costs to the total price
-        $total = static::$totalPrice + static::makeAmountSaveableStatic(static::totalShipping());
+        $total = static::$totalPrice + Price::of(static::totalShipping())->cents();
 
-        return static::makeAmountHumanStatic($total);
+        return Price::of($total)->delimiter(config('butik.currency_delimiter', ','))->get();
     }
 
     /**
@@ -183,15 +181,15 @@ class Cart
         foreach ($taxRates as $taxRate) {
             $totalTaxAmount = static::$cart
                 ->where('taxRate', $taxRate)->map(function ($item) {
-                    return static::makeAmountSaveableStatic($item->taxAmount);
+                    return Price::of($item->taxAmount)->cents();
                 })->sum();
 
             // On top of that we need to add the tax amounts from our shipping rates
             if ($shipping = static::shipping()->firstWhere('taxRate', $taxRate)) {
-                $totalTaxAmount += static::makeAmountSaveableStatic($shipping->taxAmount);
+                $totalTaxAmount += Price::of($shipping->taxAmount)->cents();
             }
 
-            $totalTaxAmount = static::makeAmountHumanStatic($totalTaxAmount);
+            $totalTaxAmount = Price::of($totalTaxAmount)->delimiter(config('butik.currecny_delimiter', ','))->get();
 
             // In case there is a product or shipping with an tax rate, but with an amount of zero, we will
             // return early to not push the to the total taxes collection.
@@ -230,10 +228,10 @@ class Cart
         static::resetTotalShipping();
 
         static::shipping()->each(function ($shipping) {
-            static::$totalShipping += static::makeAmountSaveableStatic($shipping->total);
+            static::$totalShipping += Price::of($shipping->total)->cents();
         });
 
-        return static::makeAmountHumanStatic(static::$totalShipping);
+        return Price::of(static::$totalShipping)->get();
     }
 
     /**

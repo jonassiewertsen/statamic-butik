@@ -4,14 +4,13 @@ namespace Jonassiewertsen\StatamicButik\Shipping;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Jonassiewertsen\StatamicButik\Contracts\PriceRepository;
+use Jonassiewertsen\StatamicButik\Facades\Price;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
-use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 
 abstract class ShippingType implements ShippingTypeInterface
 {
-    use MoneyTrait;
-
     /**
      * The name of this shipping type, how we want to call it in the cp.
      */
@@ -41,7 +40,7 @@ abstract class ShippingType implements ShippingTypeInterface
      * The combined value for all shipping items, which will
      * be used to calculate the shipping rate.
      */
-    public int $summedItemValue;
+    public PriceRepository $summedItemValue;
 
     /**
      * The total amount we did calculate for this shipping type.
@@ -82,10 +81,10 @@ abstract class ShippingType implements ShippingTypeInterface
      */
     protected function calculateSummedItemValue(): void
     {
-        $this->summedItemValue = 0;
+        $this->summedItemValue = Price::of(0);
 
         $this->items->each(function ($item) {
-            $this->summedItemValue += $this->makeAmountSaveable($item->totalPrice());
+            $this->summedItemValue = $this->summedItemValue->add($item->totalPrice());
         });
     }
 
@@ -108,7 +107,7 @@ abstract class ShippingType implements ShippingTypeInterface
         // the total item value is bigger or equal
         // as the minimum value of the shipping rate.
         $rates = $zone->rates->filter(function ($zone) {
-            return $this->summedItemValue >= $this->convertIntoCents($zone->minimum);
+            return $this->summedItemValue->cents() >= $this->convertIntoCents($zone->minimum);
         });
 
         // Making sure to select the correct rate, we

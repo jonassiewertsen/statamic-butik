@@ -7,12 +7,9 @@ use Jonassiewertsen\StatamicButik\Exceptions\ButikConfigException;
 use Jonassiewertsen\StatamicButik\Exceptions\ButikShippingException;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
-use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 
 class Shipping
 {
-    use MoneyTrait;
-
     /**
      * Will save the total shipping amounts.
      */

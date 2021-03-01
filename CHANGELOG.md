@@ -1,5 +1,14 @@
 # Release Notes
 
+## 3.5.3 (22. Feb 2021)
+- Cast all order dates correctly
+- Language tweaks (#195 thanks @philipboomy)
+- Update a doc block typo
+
+## 3.5.2 (06. Feb 2021)
+- Only create a show url if the product route config is set to true (#192)
+- Hiding the is_visible functionality. (#188)
+
 ## 3.5.1 (25. Jan 2021)
 - A hot fix for an issue with the products tag.
 

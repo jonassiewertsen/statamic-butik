@@ -7,14 +7,11 @@ use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
-use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Shipping\ShippingPerItem;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class ShippingPerItemTest extends TestCase
 {
-    use MoneyTrait;
-
     public Product $product1;
     public Product $product2;
     public Product $product3;
