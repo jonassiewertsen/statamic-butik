@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Price;
+namespace Jonassiewertsen\StatamicButik\Support;
 
 use Jonassiewertsen\StatamicButik\Contracts\PriceRepository;
 

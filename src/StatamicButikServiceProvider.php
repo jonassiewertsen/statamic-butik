@@ -18,7 +18,7 @@ use Jonassiewertsen\StatamicButik\Policies\ShippingRatePolicy;
 use Jonassiewertsen\StatamicButik\Policies\ShippingZonePolicy;
 use Jonassiewertsen\StatamicButik\Policies\TaxPolicy;
 use Jonassiewertsen\StatamicButik\Policies\VariantPolicy;
-use Jonassiewertsen\StatamicButik\Price\Price;
+use Jonassiewertsen\StatamicButik\Support\Price;
 use Livewire\Livewire;
 use Mollie\Laravel\MollieServiceProvider;
 use Statamic\Facades\CP\Nav;

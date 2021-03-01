@@ -73,10 +73,7 @@
         "laravel": {
             "providers": [
                 "Jonassiewertsen\\StatamicButik\\StatamicButikServiceProvider"
-            ],
-            "aliases": {
-                "StatamicButik": "Jonassiewertsen\\StatamicButik\\StatamicButikFacade"
-            }
+            ]
         }
     }
 }
