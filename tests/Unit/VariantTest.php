@@ -4,13 +4,10 @@ namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
 use Jonassiewertsen\StatamicButik\Http\Models\Product as ProductModel;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
-use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class VariantTest extends TestCase
 {
-    use MoneyTrait;
-
     public Variant $variant;
     public ProductModel $product;
 
@@ -110,13 +107,6 @@ class VariantTest extends TestCase
             '33,00',
             $this->variant->price,
         );
-    }
-
-    /** @test */
-    public function the_price_will_be_converted_correctly()
-    {
-        $product = create(Variant::class, ['price' => 2, 'inherit_price' => false]);
-        $this->assertEquals('2,00', $product->first()->price);
     }
 
     /** @test */

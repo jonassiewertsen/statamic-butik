@@ -43,7 +43,7 @@
     },
     "autoload": {
         "files": [
-            "src/Helper/functions.php"
+            "src/Support/globalHelper.php"
         ],
         "psr-4": {
             "Jonassiewertsen\\StatamicButik\\": "src"
@@ -73,10 +73,7 @@
         "laravel": {
             "providers": [
                 "Jonassiewertsen\\StatamicButik\\StatamicButikServiceProvider"
-            ],
-            "aliases": {
-                "StatamicButik": "Jonassiewertsen\\StatamicButik\\StatamicButikFacade"
-            }
+            ]
         }
     }
 }

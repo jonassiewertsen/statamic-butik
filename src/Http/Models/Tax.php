@@ -4,6 +4,7 @@ namespace Jonassiewertsen\StatamicButik\Http\Models;
 
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Illuminate\Support\Collection;
+use Jonassiewertsen\StatamicButik\Facades\Number;
 
 class Tax extends ButikModel
 {
@@ -34,16 +35,11 @@ class Tax extends ButikModel
 
     public function getPercentageAttribute($value)
     {
-        // A Tax value without decimals, will be returned as integer
-        if ($value % 100 === 0) {
-            return $value / 100;
-        }
-
-        return $this->makeAmountHuman($value);
+        return Number::of($value)->decimal();
     }
 
     public function setPercentageAttribute($value)
     {
-        $this->attributes['percentage'] = $this->makeAmountSaveable($value);
+        $this->attributes['percentage'] = Number::of($value)->decimal();
     }
 }

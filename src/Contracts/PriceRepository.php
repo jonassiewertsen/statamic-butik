@@ -8,7 +8,17 @@ interface PriceRepository
 
     public function of($amount): self;
 
-    public function getAmount(): string;
+    public function add($amount): self;
 
-    public function getCents(): int;
+    public function subtract($amount): self;
+
+    public function multiply($by): self;
+
+    public function delimiter(string $delimiter): self;
+
+    public function thousands(string $thousands): self;
+
+    public function get(): string;
+
+    public function cents(): int;
 }

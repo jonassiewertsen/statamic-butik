@@ -3,19 +3,17 @@
 namespace Jonassiewertsen\StatamicButik\Tests\Shipping;
 
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
+use Jonassiewertsen\StatamicButik\Facades\Price;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
-use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Shipping\ShippingByPrice;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 use Statamic\Facades\Entry;
 
 class ShippingByPriceTest extends TestCase
 {
-    use MoneyTrait;
-
     public Product $productWithFreeShipping1;
     public Product $productWithShippingCots;
     public Product $productWithFreeShipping2;
@@ -56,8 +54,9 @@ class ShippingByPriceTest extends TestCase
         $shipping->set(Cart::get(), ShippingZone::first());
         $shipping->calculate();
 
-        $total = $this->makeAmountSaveable($this->productWithFreeShipping1->price);
-        $total += $this->makeAmountSaveable($this->productWithShippingCots->price);
+        $total = Price::of($this->productWithFreeShipping1->price)
+                        ->add($this->productWithShippingCots->price)
+                        ->cents();
 
         $this->assertEquals($total, $shipping->summedItemValue);
     }

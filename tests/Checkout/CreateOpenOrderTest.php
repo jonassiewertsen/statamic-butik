@@ -10,9 +10,9 @@ use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Events\OrderCreated;
+use Jonassiewertsen\StatamicButik\Facades\Price;
 use Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\MolliePaymentGateway;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
-use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Order\ItemCollection;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 use Jonassiewertsen\StatamicButik\Tests\Utilities\MolliePaymentOpen;
@@ -21,8 +21,6 @@ use Mollie\Laravel\Facades\Mollie;
 
 class CreateOpenOrderTest extends TestCase
 {
-    use MoneyTrait;
-
     protected Customer $customer;
     protected string $totalPrice;
     protected ?Collection $items;
@@ -83,7 +81,7 @@ class CreateOpenOrderTest extends TestCase
     public function the_order_will_have_an_total_amount()
     {
         $this->checkout();
-        $totalPrice = $this->makeAmountSaveable($this->totalPrice);
+        $totalPrice = Price::of($this->totalPrice)->cents();
         $this->assertDatabaseHas('butik_orders', ['total_amount' => $totalPrice]);
     }
 

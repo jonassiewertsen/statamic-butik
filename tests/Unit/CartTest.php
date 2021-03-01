@@ -5,17 +5,15 @@ namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Cart;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
+use Jonassiewertsen\StatamicButik\Facades\Price;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
-use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class CartTest extends TestCase
 {
-    use MoneyTrait;
-
     protected Product $product;
     protected Variant $variant;
 
@@ -153,8 +151,7 @@ class CartTest extends TestCase
         $item1 = Cart::get()->first();
         $item2 = Cart::get()->last();
 
-        $calculatedPrice = $this->makeAmountSaveable($item1->totalPrice()) + $this->makeAmountSaveable($item2->totalPrice());
-        $calculatedPrice = $this->makeAmountHuman($calculatedPrice);
+        $calculatedPrice = Price::of($item1->totalPrice())->add($item2->totalPrice())->get();
 
         $this->assertEquals($calculatedPrice, Cart::totalPrice());
     }
@@ -239,11 +236,13 @@ class CartTest extends TestCase
         Cart::update();
 
         $item = new Item($product->slug);
-        $totalTaxAmount = $this->makeAmountSaveable($item->taxAmount);
-        $totalTaxAmount += $this->makeAmountSaveable(Cart::shipping()->first()->taxAmount);
+
+        $totalTaxAmount = Price::of($item->taxAmount)
+                            ->add(Cart::shipping()->first()->taxAmount)
+                            ->get();
 
         $this->assertEquals(
-            $this->makeAmountHuman($totalTaxAmount),
+            $totalTaxAmount,
             Cart::totalTaxes()->first()['amount']
         );
     }
@@ -261,11 +260,10 @@ class CartTest extends TestCase
         $item1 = new Item($product1->slug);
         $item2 = new Item($product2->slug);
 
-        $totalTaxAmount = $this->makeAmountSaveable($item1->taxAmount);
-        $totalTaxAmount += $this->makeAmountSaveable($item2->taxAmount);
+        $totalTaxAmount = Price::of($item1->taxAmount)->add($item2->taxAmount)->get();
 
         $this->assertEquals(
-            $this->makeAmountHuman($totalTaxAmount),
+            $totalTaxAmount,
             Cart::totalTaxes()->first()['amount']
         );
     }

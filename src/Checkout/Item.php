@@ -5,16 +5,14 @@ namespace Jonassiewertsen\StatamicButik\Checkout;
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use Jonassiewertsen\StatamicButik\Facades\Price;
 use Jonassiewertsen\StatamicButik\Http\Models\Product as ProductModel;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
-use Jonassiewertsen\StatamicButik\Http\Traits\MoneyTrait;
 use Statamic\Facades\Site;
 use Statamic\Fields\Value;
 
 class Item
 {
-    use MoneyTrait;
-
     /**
      * Is this item available.
      */
@@ -107,7 +105,8 @@ class Item
         $this->name = (string) $item->title;
         $this->images = $this->convertImage($this->product->images);
         $this->description = $this->limitedDescription();
-        $this->taxRate = number_format($item->tax->percentage, 2);
+        $this->taxRate = $item->tax->percentage;
+        $this->taxRate = $item->tax->percentage;
         $this->taxAmount = $this->totalTaxAmount();
         $this->totalPrice = $this->totalPrice();
         $this->shippingProfile = $item->shipping_profile;
@@ -159,9 +158,9 @@ class Item
 
     public function totalPrice()
     {
-        $price = $this->makeAmountSaveable($this->singlePrice);
-
-        return $this->makeAmountHuman($price * $this->quantity);
+        return Price::of($this->singlePrice)
+                ->multiply($this->quantity)
+                ->get();
     }
 
     public function sellable(): void
@@ -205,10 +204,9 @@ class Item
 
     public function totalTaxAmount()
     {
-        $totalPrice = $this->makeAmountSaveable($this->totalPrice());
-        $tax = $totalPrice * ($this->taxRate / (100 + $this->taxRate));
-
-        return $this->makeAmountHuman($tax);
+        return Price::of($this->totalPrice())
+                ->multiply($this->taxRate / 100)
+                ->get();
     }
 
     protected function isVariant()
