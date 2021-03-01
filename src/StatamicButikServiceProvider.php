@@ -19,6 +19,7 @@ use Jonassiewertsen\StatamicButik\Policies\ShippingRatePolicy;
 use Jonassiewertsen\StatamicButik\Policies\ShippingZonePolicy;
 use Jonassiewertsen\StatamicButik\Policies\TaxPolicy;
 use Jonassiewertsen\StatamicButik\Policies\VariantPolicy;
+use Jonassiewertsen\StatamicButik\Contracts\ProductRepository;
 use Jonassiewertsen\StatamicButik\Support\Number;
 use Jonassiewertsen\StatamicButik\Support\Price;
 use Livewire\Livewire;
@@ -143,6 +144,10 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
         $this->app->bind(NumberRepository::class, function () {
             return new Number();
+        });
+
+        $this->app->singleton(ProductRepository::class, function () {
+            return new \Jonassiewertsen\StatamicButik\Repositories\ProductRepository();
         });
     }
 
