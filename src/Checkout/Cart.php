@@ -5,71 +5,52 @@ namespace Jonassiewertsen\StatamicButik\Checkout;
 use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
+use Jonassiewertsen\StatamicButik\Contracts\CartRepository;
 use Jonassiewertsen\StatamicButik\Facades\Price;
 use Jonassiewertsen\StatamicButik\Shipping\Country;
 use Jonassiewertsen\StatamicButik\Shipping\Shipping;
 
-class Cart
+class Cart implements CartRepository
 {
-    public static $cart;
-    private static $totalPrice;
-    private static $totalShipping;
-    private static $totalTaxes;
-    private static $totalItems;
+    public $cart;
+    private $totalShipping;
+    private $totalTaxes;
+
+    public function __construct()
+    {
+        $this->cart = Session::get('butik.cart') ?? collect();
+    }
+
+    public function __desctruct()
+    {
+        $this->save();
+    }
+
+    public function get(): Collection
+    {
+        return $this->cart;
+    }
 
     /**
      * A product can be added to the cart.
      */
-    public static function add(string $slug, ?string $locale = null): void
+    public function add(string $slug, int $quantity = 1, ?string $locale = null): void
     {
-        static::$cart = static::get();
-
-        if (self::contains($slug)) {
+        if ($this->contains($slug)) {
             // increase the quantity
-            static::$cart->firstWhere('slug', $slug)->increase();
+            $this->cart->firstWhere('slug', $slug)->increase();
         } else {
             // Add new Item
-            static::$cart->push(new Item($slug, $locale ?? locale()));
+            $this->cart->push(new Item($slug, $locale ?? locale()));
         }
-        static::set(static::$cart);
-    }
-
-    /**
-     * Fetch the cart from the session.
-     */
-    public static function get(): Collection
-    {
-        return Session::get('butik.cart') !== null ?
-            Session::get('butik.cart') :
-            static::empty();
-    }
-
-    /**
-     * Fetch the customer from the session.
-     */
-    public static function customer(): ?Customer
-    {
-        return Session::get('butik.customer') !== null ?
-            Session::get('butik.customer') :
-            null;
-    }
-
-    /**
-     * Clear the complete cart.
-     */
-    public static function clear(): void
-    {
-        static::set(static::empty());
     }
 
     /**
      * An item can be reduced or removed from the cart.
      */
-    public static function reduce($slug): void
+    public function reduce($slug): void
     {
-        static::$cart = static::get();
-
-        static::$cart = static::$cart->filter(function ($item) use ($slug) {
+        $this->cart = $this->cart->filter(function ($item) use ($slug) {
             // If the quantity is <= 1 the item will be deleted from the cart
             if ($item->slug === $slug && $item->getQuantity() <= 1) {
                 return false;
@@ -86,237 +67,217 @@ class Cart
             // keep the item in our cart
             return true;
         });
-
-        static::set(static::$cart);
     }
 
     /**
      * An item can be completly removed from the cart.
      */
-    public static function remove($slug): void
+    public function remove($slug): void
     {
-        static::$cart = static::get();
-
-        static::$cart = static::$cart->filter(function ($item) use ($slug) {
+        $this->cart = $this->cart->filter(function ($item) use ($slug) {
             return $item->slug !== $slug;
         });
-
-        static::set(static::$cart);
     }
+
+    /**
+     * Clear the complete cart.
+     */
+    public function clear(): void
+    {
+        $this->cart = collect();
+    }
+
+    /**
+     * Fetch the customer from the session.
+     */
+//    public static function customer(): ?Customer
+//    {
+//        return Session::get('butik.customer') !== null ?
+//            Session::get('butik.customer') :
+//            null;
+//    }
 
     /**
      * The total count of items.
      */
-    public static function totalItems()
+    public function count()
     {
-        static::$cart = static::get();
-        static::resetTotalItems();
-
-        static::$cart->each(function ($item) {
-            static::$totalItems += $item->getQuantity();
-        });
-
-        return static::$totalItems;
+        return $this->cart->map(function ($item) {
+            return $item->getQuantity();
+        })->sum();
     }
 
-    /**
-     * The total price of the complete cart.
-     */
-    public static function totalPrice()
-    {
-        static::$cart = static::get();
-        static::resetTotalPrice();
 
-        static::$cart->each(function ($item) {
+    public function totalPrice()
+    {
+        $amount = Price::of(0);
+
+        $this->cart->each(function ($item) use ($amount) {
             if (! $item->sellable) {
-                // We won't charge for non sellable items
-                return;
+                return; // We won't charge for non sellable items
             }
 
-            static::$totalPrice += Price::of($item->totalPrice())->cents();
+            $amount->add($item->totalPrice());
         });
 
-        // Adding the shipping costs to the total price
-        $total = static::$totalPrice + Price::of(static::totalShipping())->cents();
-
-        return Price::of($total)->delimiter(config('butik.currency_delimiter', ','))->get();
+//        return $amount->add(static::totalShipping())->get();
+        return $amount->add(0)->get();
     }
 
-    /**
-     * All taxes from products and shipping.
-     */
-    public static function totalTaxes(): Collection
+//
+//    /**
+//     * All taxes from products and shipping.
+//     */
+//    public static function totalTaxes(): Collection
+//    {
+//        static::$totalTaxes = collect();
+//        $taxRates = [];
+//
+//        /**
+//         * Return an empty collection in case the cart is empty.
+//         */
+//        if (! static::$cart) {
+//            return collect();
+//        }
+//
+//        /**
+//         * Collecting all item tax rates.
+//         */
+//        foreach (static::$cart as $item) {
+//            if (! in_array($item->taxRate, $taxRates)) {
+//                $taxRates[] = $item->taxRate;
+//            }
+//        }
+//
+//        /**
+//         * Add all tax rates on top from our shippings.
+//         */
+//        foreach (static::shipping() as $shipping) {
+//            if (! in_array($shipping->taxRate, $taxRates)) {
+//                $taxRates[] = $shipping->taxRate;
+//            }
+//        }
+//
+//        /**
+//         * We will loop through all tax rates and sum the amounts.
+//         */
+//        foreach ($taxRates as $taxRate) {
+//            $totalTaxAmount = static::$cart
+//                ->where('taxRate', $taxRate)->map(function ($item) {
+//                    return Price::of($item->taxAmount)->cents();
+//                })->sum();
+//
+//            // On top of that we need to add the tax amounts from our shipping rates
+//            if ($shipping = static::shipping()->firstWhere('taxRate', $taxRate)) {
+//                $totalTaxAmount += Price::of($shipping->taxAmount)->cents();
+//            }
+//
+//            $totalTaxAmount = Price::of($totalTaxAmount)->delimiter(config('butik.currecny_delimiter', ','))->get();
+//
+//            // In case there is a product or shipping with an tax rate, but with an amount of zero, we will
+//            // return early to not push the to the total taxes collection.
+//            if ($totalTaxAmount === '0,00') {
+//                continue;
+//            }
+//
+//            // For better access in antlers views, the amount and rate will get added as an array.
+//            static::$totalTaxes->push([
+//                'amount' => $totalTaxAmount,
+//                'rate'   => $taxRate,
+//            ]);
+//        }
+//
+//        return static::$totalTaxes;
+//    }
+//
+//    /**
+//     * All shipping costs are seperated into the original
+//     * shipping profiles, where they came from.
+//     */
+//    public static function shipping(): Collection
+//    {
+//        $shipping = new Shipping(static::get());
+//        $shipping->handle();
+//
+//        return $shipping->amounts;
+//    }
+//
+//    /**
+//     * All shipping costs, from all shipping profiles, summed
+//     * up to determine the total shipping costs.
+//     */
+//    public static function totalShipping(): string
+//    {
+//        static::resetTotalShipping();
+//
+//        static::shipping()->each(function ($shipping) {
+//            static::$totalShipping += Price::of($shipping->total)->cents();
+//        });
+//
+//        return Price::of(static::$totalShipping)->get();
+//    }
+//
+//    /**
+//     * Update the shopping cart.
+//     */
+//    public static function update()
+//    {
+//        static::$cart = static::get();
+//
+//        $items = static::$cart->filter(function ($item) {
+//            return Product::exists($item->slug) && $item->update();
+//        });
+//
+//        static::set($items);
+//    }
+//
+//    /**
+//     * Getting the actual choosen country.
+//     */
+//    public static function country()
+//    {
+//        return Country::get();
+//    }
+//
+//    /**
+//     * Set a different country to checkout to.
+//     */
+//    public static function setCountry(string $code): void
+//    {
+//        Country::set($code);
+//        static::totalPrice();
+//    }
+
+    public function removeNonSellableItems(): void
     {
-        static::$totalTaxes = collect();
-        $taxRates = [];
-
-        /**
-         * Return an empty collection in case the cart is empty.
-         */
-        if (! static::$cart) {
-            return collect();
-        }
-
-        /**
-         * Collecting all item tax rates.
-         */
-        foreach (static::$cart as $item) {
-            if (! in_array($item->taxRate, $taxRates)) {
-                $taxRates[] = $item->taxRate;
-            }
-        }
-
-        /**
-         * Add all tax rates on top from our shippings.
-         */
-        foreach (static::shipping() as $shipping) {
-            if (! in_array($shipping->taxRate, $taxRates)) {
-                $taxRates[] = $shipping->taxRate;
-            }
-        }
-
-        /**
-         * We will loop through all tax rates and sum the amounts.
-         */
-        foreach ($taxRates as $taxRate) {
-            $totalTaxAmount = static::$cart
-                ->where('taxRate', $taxRate)->map(function ($item) {
-                    return Price::of($item->taxAmount)->cents();
-                })->sum();
-
-            // On top of that we need to add the tax amounts from our shipping rates
-            if ($shipping = static::shipping()->firstWhere('taxRate', $taxRate)) {
-                $totalTaxAmount += Price::of($shipping->taxAmount)->cents();
-            }
-
-            $totalTaxAmount = Price::of($totalTaxAmount)->delimiter(config('butik.currecny_delimiter', ','))->get();
-
-            // In case there is a product or shipping with an tax rate, but with an amount of zero, we will
-            // return early to not push the to the total taxes collection.
-            if ($totalTaxAmount === '0,00') {
-                continue;
-            }
-
-            // For better access in antlers views, the amount and rate will get added as an array.
-            static::$totalTaxes->push([
-                'amount' => $totalTaxAmount,
-                'rate'   => $taxRate,
-            ]);
-        }
-
-        return static::$totalTaxes;
-    }
-
-    /**
-     * All shipping costs are seperated into the original
-     * shipping profiles, where they came from.
-     */
-    public static function shipping(): Collection
-    {
-        $shipping = new Shipping(static::get());
-        $shipping->handle();
-
-        return $shipping->amounts;
-    }
-
-    /**
-     * All shipping costs, from all shipping profiles, summed
-     * up to determine the total shipping costs.
-     */
-    public static function totalShipping(): string
-    {
-        static::resetTotalShipping();
-
-        static::shipping()->each(function ($shipping) {
-            static::$totalShipping += Price::of($shipping->total)->cents();
-        });
-
-        return Price::of(static::$totalShipping)->get();
-    }
-
-    /**
-     * Update the shopping cart.
-     */
-    public static function update()
-    {
-        static::$cart = static::get();
-
-        $items = static::$cart->filter(function ($item) {
-            return Product::exists($item->slug) && $item->update();
-        });
-
-        static::set($items);
-    }
-
-    /**
-     * Getting the actual choosen country.
-     */
-    public static function country()
-    {
-        return Country::get();
-    }
-
-    /**
-     * Set a different country to checkout to.
-     */
-    public static function setCountry(string $code): void
-    {
-        Country::set($code);
-        static::totalPrice();
-    }
-
-    public static function removeNonSellableItems(): void
-    {
-        static::$cart = static::get();
-
-        static::$cart = static::$cart->filter(function ($item) {
+        $this->cart = $this->cart->filter(function ($item) {
             return $item->sellable;
         });
-
-        static::set(static::$cart);
     }
 
-    /**
-     * An empty cart.
-     *
-     * @return Collection
-     */
-    private static function empty(): Collection
-    {
-        return collect();
-    }
+//    /**
+//     * An empty cart.
+//     *
+//     * @return Collection
+//     */
+//    private static function empty(): Collection
+//    {
+//        return collect();
+//    }
 
     /**
-     * Is this product already saved in the cart?
-     *
-     * @param Product $product
-     * @return bool
+     * Is the product already saved in the cart?
      */
-    private static function contains(string $slug): bool
+    private function contains(string $slug): bool
     {
-        return static::$cart->contains('slug', $slug);
+        return $this->cart->contains('slug', $slug);
     }
 
     /**
      * Set the cart to the session.
      */
-    private static function set(Collection $cart): void
+    private function save(): void
     {
-        Session::put('butik.cart', $cart);
-    }
-
-    private static function resetTotalItems(): void
-    {
-        static::$totalItems = 0;
-    }
-
-    private static function resetTotalPrice(): void
-    {
-        static::$totalPrice = 0;
-    }
-
-    private static function resetTotalShipping(): void
-    {
-        static::$totalShipping = 0;
+        Session::put('butik.cart', $this->cart);
     }
 }
