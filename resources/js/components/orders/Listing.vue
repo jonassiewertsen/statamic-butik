@@ -82,9 +82,9 @@
 </template>
 
 <script>
-import DeletesListingRow from '../DeletesListingRow.js'
+
 export default {
-    mixins: [DeletesListingRow, Listing],
+    mixins: [Listing],
 
     props: {
         ordersRequestUrl: '',
