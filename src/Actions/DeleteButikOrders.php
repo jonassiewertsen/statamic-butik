@@ -6,7 +6,7 @@ use Jonassiewertsen\StatamicButik\Exceptions\ButikConfigException;
 use Jonassiewertsen\StatamicButik\Http\Models\Order;
 use Statamic\Actions\Action;
 
-class Delete extends Action
+class DeleteButikOrders extends Action
 {
     protected $dangerous = true;
 

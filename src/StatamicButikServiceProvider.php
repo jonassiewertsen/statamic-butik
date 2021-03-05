@@ -29,7 +29,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     protected $publishAfterInstall = false;
 
     protected $actions = [
-        \Jonassiewertsen\StatamicButik\Actions\Delete::class,
+        \Jonassiewertsen\StatamicButik\Actions\DeleteButikOrders::class,
     ];
 
     protected $commands = [
