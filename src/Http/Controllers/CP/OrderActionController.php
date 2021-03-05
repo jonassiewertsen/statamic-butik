@@ -10,6 +10,6 @@ class OrderActionController extends ActionController
 {
     protected function getSelectedItems($items, $context)
     {
-        return (new OrderResource(Order::find($items)));
+        return Order::find($items);
     }
 }
