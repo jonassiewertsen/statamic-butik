@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="vendor/autoload.php"
-         backupGlobals="false"
-         backupStaticAttributes="false"
-         cacheResult="true"
-         colors="true"
-         verbose="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
          processIsolation="true"
-         stopOnFailure="false">
+         colors="true"
+>
     <testsuites>
         <testsuite name="Checkout">
             <directory suffix="Test.php">tests/Checkout/</directory>
@@ -36,6 +31,11 @@
             <directory suffix="Test.php">tests/Unit/</directory>
         </testsuite>
     </testsuites>
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">./src</directory>
+        </include>
+    </coverage>
     <php>
         <env name="APP_ENV" value="testing"/>
         <env name="APP_KEY" value="base64:mIRM5Fpb6DtuRIejBwkqpt3c/ovlFZsSpo66efwo3g0="/>
