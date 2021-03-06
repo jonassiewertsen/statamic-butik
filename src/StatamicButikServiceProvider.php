@@ -4,6 +4,8 @@ namespace Jonassiewertsen\StatamicButik;
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
+use Jonassiewertsen\StatamicButik\Checkout\Cart;
+use Jonassiewertsen\StatamicButik\Contracts\CartRepository;
 use Jonassiewertsen\StatamicButik\Contracts\NumberRepository;
 use Jonassiewertsen\StatamicButik\Contracts\PriceRepository;
 use Jonassiewertsen\StatamicButik\Filters\OrderStatus;
@@ -149,6 +151,10 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
         $this->app->bind(NumberRepository::class, function () {
             return new Number();
+        });
+
+        $this->app->singleton(CartRepository::class, function () {
+            return new Cart();
         });
     }
 
