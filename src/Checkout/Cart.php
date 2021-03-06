@@ -110,98 +110,90 @@ class Cart implements CartRepository
 
     public function totalPrice()
     {
-        $amount = Price::of(0);
-
-        $this->cart->each(function ($item) use ($amount) {
-            if (! $item->sellable) {
-                return; // We won't charge for non sellable items
-            }
-
-            $amount->add($item->totalPrice());
+        $productAmount = $this->cart->filter(function ($item) {
+            return $item->sellable;
+        })->sum(function ($item) {
+            return Price::of($item->totalPrice())->cents();
         });
 
-//        return $amount->add(static::totalShipping())->get();
-        return $amount->add(0)->get();
+        return Price::of($productAmount)
+                    ->add(0) // TODO Add the total Shipping amount
+                    ->get();
     }
 
-//
-//    /**
-//     * All taxes from products and shipping.
-//     */
-//    public static function totalTaxes(): Collection
-//    {
-//        static::$totalTaxes = collect();
-//        $taxRates = [];
-//
-//        /**
-//         * Return an empty collection in case the cart is empty.
-//         */
+
+    /**
+     * All taxes from products and shipping.
+     */
+    public function totalTaxes(): Collection
+    {
+        $this->totalTaxes = collect();
+        $taxRates = [];
+
+        /**
+         * Return an empty collection in case the cart is empty.
+         */
 //        if (! static::$cart) {
 //            return collect();
 //        }
-//
-//        /**
-//         * Collecting all item tax rates.
-//         */
-//        foreach (static::$cart as $item) {
-//            if (! in_array($item->taxRate, $taxRates)) {
-//                $taxRates[] = $item->taxRate;
-//            }
-//        }
-//
-//        /**
-//         * Add all tax rates on top from our shippings.
-//         */
-//        foreach (static::shipping() as $shipping) {
-//            if (! in_array($shipping->taxRate, $taxRates)) {
-//                $taxRates[] = $shipping->taxRate;
-//            }
-//        }
-//
-//        /**
-//         * We will loop through all tax rates and sum the amounts.
-//         */
-//        foreach ($taxRates as $taxRate) {
-//            $totalTaxAmount = static::$cart
-//                ->where('taxRate', $taxRate)->map(function ($item) {
-//                    return Price::of($item->taxAmount)->cents();
-//                })->sum();
-//
-//            // On top of that we need to add the tax amounts from our shipping rates
-//            if ($shipping = static::shipping()->firstWhere('taxRate', $taxRate)) {
-//                $totalTaxAmount += Price::of($shipping->taxAmount)->cents();
-//            }
-//
-//            $totalTaxAmount = Price::of($totalTaxAmount)->delimiter(config('butik.currecny_delimiter', ','))->get();
-//
-//            // In case there is a product or shipping with an tax rate, but with an amount of zero, we will
-//            // return early to not push the to the total taxes collection.
-//            if ($totalTaxAmount === '0,00') {
-//                continue;
-//            }
-//
-//            // For better access in antlers views, the amount and rate will get added as an array.
-//            static::$totalTaxes->push([
-//                'amount' => $totalTaxAmount,
-//                'rate'   => $taxRate,
-//            ]);
-//        }
-//
-//        return static::$totalTaxes;
-//    }
-//
-//    /**
-//     * All shipping costs are seperated into the original
-//     * shipping profiles, where they came from.
-//     */
-//    public static function shipping(): Collection
-//    {
-//        $shipping = new Shipping(static::get());
-//        $shipping->handle();
-//
-//        return $shipping->amounts;
-//    }
-//
+
+        /**
+         * Collect all item tax rates.
+         */
+        foreach ($this->cart as $item) {
+            if (! in_array($item->taxRate, $taxRates)) {
+                $taxRates[] = $item->taxRate;
+            }
+        }
+
+        /**
+         * Collect all shipping tax rates.
+         */
+        foreach ($this->shipping() as $shipping) {
+            if (! in_array($shipping->taxRate, $taxRates)) {
+                $taxRates[] = $shipping->taxRate;
+            }
+        }
+
+        /**
+         * We will loop through all tax rates and sum the amounts.
+         */
+        foreach ($taxRates as $taxRate) {
+            $itemAmount = $this->cart
+                ->where('taxRate', $taxRate)
+                ->sum(function ($item) {
+                    return Price::of($item->taxAmount)->cents();
+                });
+
+            // On top of that we need to add the tax amounts from our shipping rates
+            if ($shipping = $this->shipping()->firstWhere('taxRate', $taxRate)) {
+                $shippingAmount = Price::of($shipping->taxAmount)->cents();
+            }
+
+            $totalAmount = Price::of($itemAmount)->add($shippingAmount ?? 0)->get();
+
+            // For better access in antlers views, the amount and rate will get converted to an array.
+            $this->totalTaxes->push([
+                'amount' => $totalAmount,
+                'rate'   => $taxRate,
+            ]);
+        }
+
+        return $this->totalTaxes;
+    }
+
+    /**
+     * All shipping costs are seperated into the original
+     * shipping profiles, where they came from.
+     */
+    public function shipping(): Collection
+    {
+        $shipping = new Shipping($this->cart);
+        $shipping->handle();
+
+        return $shipping->amounts;
+    }
+
 //    /**
 //     * All shipping costs, from all shipping profiles, summed
 //     * up to determine the total shipping costs.
@@ -215,20 +207,6 @@ class Cart implements CartRepository
 //        });
 //
 //        return Price::of(static::$totalShipping)->get();
-//    }
-//
-//    /**
-//     * Update the shopping cart.
-//     */
-//    public static function update()
-//    {
-//        static::$cart = static::get();
-//
-//        $items = static::$cart->filter(function ($item) {
-//            return Product::exists($item->slug) && $item->update();
-//        });
-//
-//        static::set($items);
 //    }
 //
 //    /**
@@ -254,16 +232,6 @@ class Cart implements CartRepository
             return $item->sellable;
         });
     }
-
-//    /**
-//     * An empty cart.
-//     *
-//     * @return Collection
-//     */
-//    private static function empty(): Collection
-//    {
-//        return collect();
-//    }
 
     /**
      * Is the product already saved in the cart?

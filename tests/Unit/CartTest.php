@@ -2,6 +2,9 @@
 
 namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Facades\Cart;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
@@ -161,16 +164,14 @@ class CartTest extends TestCase
     /** @test */
     public function non_sellable_items_will_not_be_counted()
     {
-        $this->withoutExceptionHandling();
 
         $product1 = $this->makeProduct();
         $product2 = $this->makeProduct();
 
         Cart::add($product1->slug);
         Cart::add($product2->slug);
+        Cart::get()->first()->nonSellable();
 
-        $item1 = Cart::get()->first();
-        $item1->nonSellable();
         $item2 = Cart::get()->last();
 
         $this->assertEquals($item2->totalPrice(), Cart::totalPrice());
@@ -184,10 +185,7 @@ class CartTest extends TestCase
 
         Cart::add($product1->slug);
         Cart::add($product2->slug);
-
-        $item1 = Cart::get()->first();
-        $item1->nonSellable();
-        $item2 = Cart::get()->last();
+        Cart::get()->first()->nonSellable();
 
         Cart::removeNonSellableItems();
 
@@ -213,10 +211,9 @@ class CartTest extends TestCase
         $product = $this->makeProduct();
 
         Cart::add($product->slug);
-        $item = new Item($product->slug);
 
         $this->assertEquals(
-            $item->taxAmount,
+            (new Item($product->slug))->taxAmount,
             Cart::totalTaxes()->first()['amount']
         );
     }
@@ -237,16 +234,12 @@ class CartTest extends TestCase
         ], $shippingZone);
 
         Cart::add($product->slug);
-        Cart::update();
 
-        $item = new Item($product->slug);
-
-        $totalTaxAmount = Price::of($item->taxAmount)
-                            ->add(Cart::shipping()->first()->taxAmount)
-                            ->get();
+        $itemTaxAmount = (new Item($product->slug))->taxAmount;
+        $shippingTaxAmount = Cart::shipping()->first()->taxAmount;
 
         $this->assertEquals(
-            $totalTaxAmount,
+            Price::of($itemTaxAmount)->add($shippingTaxAmount)->get(),
             Cart::totalTaxes()->first()['amount']
         );
     }
@@ -259,15 +252,12 @@ class CartTest extends TestCase
 
         Cart::add($product1->slug);
         Cart::add($product2->slug);
-        Cart::update();
 
         $item1 = new Item($product1->slug);
         $item2 = new Item($product2->slug);
 
-        $totalTaxAmount = Price::of($item1->taxAmount)->add($item2->taxAmount)->get();
-
         $this->assertEquals(
-            $totalTaxAmount,
+            Price::of($item1->taxAmount)->add($item2->taxAmount)->get(),
             Cart::totalTaxes()->first()['amount']
         );
     }
@@ -275,8 +265,6 @@ class CartTest extends TestCase
     /** @test */
     public function the_cart_returns_zero_without_any_items()
     {
-        Cart::clear();
-
-        $this->assertNotNull(Cart::totalItems());
+        $this->assertNotNull(Cart::count());
     }
 }
