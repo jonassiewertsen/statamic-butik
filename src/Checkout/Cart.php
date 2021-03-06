@@ -87,7 +87,7 @@ class Cart implements CartRepository
     /**
      * Fetch the customer from the session.
      */
-    public static function customer(): ?Customer
+    public function customer(): ?Customer
     {
         // TODO: Does this part belong here?
 

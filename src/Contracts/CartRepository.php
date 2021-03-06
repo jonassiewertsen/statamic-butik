@@ -17,7 +17,7 @@ interface CartRepository
 
     public function clear(): void;
 
-    public static function customer(): ?Customer;
+    public function customer(): ?Customer;
 
     public function count(): int;
 
