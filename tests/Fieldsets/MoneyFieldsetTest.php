@@ -1,11 +1,11 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tests\Fieldsets;
+namespace Jonassiewertsen\Butik\Tests\Fieldsets;
 
+use Jonassiewertsen\Butik\Fieldtypes\Money;
+use Jonassiewertsen\Butik\Tests\TestCase;
 use Statamic\Entries\Entry;
 use Statamic\Fields\Field;
-use Jonassiewertsen\StatamicButik\Fieldtypes\Money;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class MoneyFieldsetTest extends TestCase
 {
