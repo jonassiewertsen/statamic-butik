@@ -41,7 +41,7 @@ class Order extends ButikModel
      */
     public function getTotalAmountAttribute($value)
     {
-        return Price::of($value)->amount();
+        return Price::of($value)->get();
     }
 
     /**
