@@ -1,13 +1,13 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Checkout;
+namespace Jonassiewertsen\Butik\Checkout;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
-use Jonassiewertsen\StatamicButik\Contracts\CartRepository;
-use Jonassiewertsen\StatamicButik\Facades\Price;
-use Jonassiewertsen\StatamicButik\Shipping\Country;
-use Jonassiewertsen\StatamicButik\Shipping\Shipping;
+use Jonassiewertsen\Butik\Contracts\CartRepository;
+use Jonassiewertsen\Butik\Facades\Price;
+use Jonassiewertsen\Butik\Shipping\Country;
+use Jonassiewertsen\Butik\Shipping\Shipping;
 
 class Cart implements CartRepository
 {

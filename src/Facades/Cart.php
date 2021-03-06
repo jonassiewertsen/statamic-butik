@@ -1,9 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Facades;
+namespace Jonassiewertsen\Butik\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Jonassiewertsen\StatamicButik\Contracts\CartRepository;
+use Jonassiewertsen\Butik\Contracts\CartRepository;
 
 class Cart extends Facade
 {

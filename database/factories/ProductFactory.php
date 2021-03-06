@@ -1,9 +1,9 @@
 <?php
 
 use Faker\Generator as Faker;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
-use Jonassiewertsen\StatamicButik\Http\Models\Tax;
+use Jonassiewertsen\Butik\Http\Models\Product;
+use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
+use Jonassiewertsen\Butik\Http\Models\Tax;
 
 $factory->define(Product::class, function (Faker $faker) {
     return [

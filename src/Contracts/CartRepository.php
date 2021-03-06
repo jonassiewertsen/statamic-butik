@@ -1,9 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Contracts;
+namespace Jonassiewertsen\Butik\Contracts;
 
 use Illuminate\Support\Collection;
-use Jonassiewertsen\StatamicButik\Checkout\Customer;
+use Jonassiewertsen\Butik\Checkout\Customer;
 
 interface CartRepository
 {

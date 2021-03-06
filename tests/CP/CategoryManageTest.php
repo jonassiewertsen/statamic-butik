@@ -1,10 +1,10 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tests\CP;
+namespace Jonassiewertsen\Butik\Tests\CP;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Category;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\Butik\Http\Models\Category;
+use Jonassiewertsen\Butik\Http\Models\Product;
+use Jonassiewertsen\Butik\Tests\TestCase;
 
 class CategoryManageTest extends TestCase
 {

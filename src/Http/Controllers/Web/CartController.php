@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
+namespace Jonassiewertsen\Butik\Http\Controllers\Web;
 
-use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
+use Jonassiewertsen\Butik\Http\Controllers\WebController;
 use Statamic\View\View as StatamicView;
 
 class CartController extends WebController

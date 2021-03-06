@@ -1,12 +1,12 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Mail\Seller;
+namespace Jonassiewertsen\Butik\Mail\Seller;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Jonassiewertsen\StatamicButik\Http\Models\Order;
+use Jonassiewertsen\Butik\Http\Models\Order;
 
 class OrderConfirmation extends Mailable implements ShouldQueue
 {

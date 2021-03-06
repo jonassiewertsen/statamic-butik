@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Listeners;
+namespace Jonassiewertsen\Butik\Listeners;
 
 use Illuminate\Support\Facades\Cache;
 use Statamic\Events\EntrySaving;

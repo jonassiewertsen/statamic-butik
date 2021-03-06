@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Policies;
+namespace Jonassiewertsen\Butik\Policies;
 
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
+use Jonassiewertsen\Butik\Http\Models\ShippingZone;
 
 class ShippingZonePolicy extends Policies
 {

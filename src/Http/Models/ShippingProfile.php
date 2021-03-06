@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Models;
+namespace Jonassiewertsen\Butik\Http\Models;
 
 class ShippingProfile extends ButikModel
 {

@@ -46,12 +46,12 @@
             "src/Support/globalHelper.php"
         ],
         "psr-4": {
-            "Jonassiewertsen\\StatamicButik\\": "src"
+            "Jonassiewertsen\\Butik\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Jonassiewertsen\\StatamicButik\\Tests\\": "tests"
+            "Jonassiewertsen\\Butik\\Tests\\": "tests"
         },
         "files": [
             "tests/Utilities/functions.php"
@@ -67,12 +67,12 @@
     },
     "extra": {
         "statamic": {
-            "name": "Statamic Butik",
-            "description": "Description for the Statamic Butik"
+            "name": "Butik",
+            "description": "The Statamic Butik e-commerce solution will integrate nicely with your personal Statamic site and help to grow your online business."
         },
         "laravel": {
             "providers": [
-                "Jonassiewertsen\\StatamicButik\\StatamicButikServiceProvider"
+                "Jonassiewertsen\\Butik\\ServiceProvider"
             ]
         }
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Controllers;
+namespace Jonassiewertsen\Butik\Http\Controllers;
 
 use Illuminate\Routing\Controller as LaravelController;
 

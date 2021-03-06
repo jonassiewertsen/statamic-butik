@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Models;
+namespace Jonassiewertsen\Butik\Http\Models;
 
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\Butik\Http\Models\Product;
 use Illuminate\Support\Facades\DB;
 
 class Category extends ButikModel

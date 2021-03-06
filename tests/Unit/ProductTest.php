@@ -1,12 +1,12 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tests\Unit;
+namespace Jonassiewertsen\Butik\Tests\Unit;
 
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
-use Jonassiewertsen\StatamicButik\Http\Models\Tax;
-use Jonassiewertsen\StatamicButik\Http\Models\Variant;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Facades\Jonassiewertsen\Butik\Http\Models\Product;
+use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
+use Jonassiewertsen\Butik\Http\Models\Tax;
+use Jonassiewertsen\Butik\Http\Models\Variant;
+use Jonassiewertsen\Butik\Tests\TestCase;
 
 class ProductTest extends TestCase
 {

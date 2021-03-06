@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
+namespace Jonassiewertsen\Butik\Http\Controllers\CP;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Order;
+use Jonassiewertsen\Butik\Http\Models\Order;
 use Statamic\Http\Controllers\CP\ActionController;
 
 class OrderActionController extends ActionController

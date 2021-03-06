@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Policies;
+namespace Jonassiewertsen\Butik\Policies;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Tax;
+use Jonassiewertsen\Butik\Http\Models\Tax;
 
 class TaxPolicy extends Policies
 {

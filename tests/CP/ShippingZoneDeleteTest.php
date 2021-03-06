@@ -1,9 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tests\CP;
+namespace Jonassiewertsen\Butik\Tests\CP;
 
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\Butik\Http\Models\ShippingZone;
+use Jonassiewertsen\Butik\Tests\TestCase;
 
 class ShippingZoneDeleteTest extends TestCase
 {

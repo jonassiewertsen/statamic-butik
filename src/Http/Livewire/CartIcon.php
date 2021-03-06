@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Livewire;
+namespace Jonassiewertsen\Butik\Http\Livewire;
 
-use Jonassiewertsen\StatamicButik\Checkout\Cart as ShoppingCart;
+use Jonassiewertsen\Butik\Checkout\Cart as ShoppingCart;
 use Livewire\Component;
 
 class CartIcon extends Component

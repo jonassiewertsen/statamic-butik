@@ -1,9 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Modifiers;
+namespace Jonassiewertsen\Butik\Modifiers;
 
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
-use Jonassiewertsen\StatamicButik\Facades\Price;
+use Facades\Jonassiewertsen\Butik\Http\Models\Product;
+use Jonassiewertsen\Butik\Facades\Price;
 use Statamic\Modifiers\Modifier;
 
 class WithoutTax extends Modifier

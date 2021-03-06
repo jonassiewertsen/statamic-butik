@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Exceptions;
+namespace Jonassiewertsen\Butik\Exceptions;
 
 use Exception;
 

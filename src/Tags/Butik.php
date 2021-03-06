@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tags;
+namespace Jonassiewertsen\Butik\Tags;
 
 class Butik extends \Statamic\Tags\Tags
 {

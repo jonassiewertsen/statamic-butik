@@ -1,9 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tests\CP;
+namespace Jonassiewertsen\Butik\Tests\CP;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Variant;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\Butik\Http\Models\Variant;
+use Jonassiewertsen\Butik\Tests\TestCase;
 
 class VariantCreateTest extends TestCase
 {
@@ -54,7 +54,7 @@ class VariantCreateTest extends TestCase
             ->assertSessionHasNoErrors();
     }
 
-    // TODO: Not possible at the moment. See Jonassiewertsen\StatamicButik\Http\Controllers\CP\VariantsController
+    // TODO: Not possible at the moment. See Jonassiewertsen\Butik\Http\Controllers\CP\VariantsController
 //    /** @test */
 //    public function a_price_is_required_if_not_inherited()
 //    {

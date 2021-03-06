@@ -1,10 +1,10 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tests\Unit;
+namespace Jonassiewertsen\Butik\Tests\Unit;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Product as ProductModel;
-use Jonassiewertsen\StatamicButik\Http\Models\Variant;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\Butik\Http\Models\Product as ProductModel;
+use Jonassiewertsen\Butik\Http\Models\Variant;
+use Jonassiewertsen\Butik\Tests\TestCase;
 
 class VariantTest extends TestCase
 {

@@ -23,10 +23,10 @@ In your own implementation, you need to extend or `PaymentGateway` and implement
 
 namespace SomeNamespace;
 
-use Jonassiewertsen\StatamicButik\Checkout\Customer;
-use Jonassiewertsen\StatamicButik\Checkout\Transaction;
-use Jonassiewertsen\StatamicButik\Events\PaymentSubmitted;
-use Jonassiewertsen\StatamicButik\Events\PaymentSuccessful;
+use Jonassiewertsen\Butik\Checkout\Customer;
+use Jonassiewertsen\Butik\Checkout\Transaction;
+use Jonassiewertsen\Butik\Events\PaymentSubmitted;
+use Jonassiewertsen\Butik\Events\PaymentSuccessful;
 
 class YourPaymentGateway extends PaymentGateway implements PaymentGatewayInterface
 {

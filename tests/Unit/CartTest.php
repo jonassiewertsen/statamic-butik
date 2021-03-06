@@ -1,18 +1,18 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tests\Unit;
+namespace Jonassiewertsen\Butik\Tests\Unit;
 
 use Illuminate\Support\Facades\Session;
-use Jonassiewertsen\StatamicButik\Checkout\Customer;
-use Jonassiewertsen\StatamicButik\Checkout\Item;
-use Jonassiewertsen\StatamicButik\Facades\Cart;
-use Jonassiewertsen\StatamicButik\Facades\Price;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
-use Jonassiewertsen\StatamicButik\Http\Models\Variant;
-use Jonassiewertsen\StatamicButik\Shipping\Country;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\Butik\Checkout\Customer;
+use Jonassiewertsen\Butik\Checkout\Item;
+use Jonassiewertsen\Butik\Facades\Cart;
+use Jonassiewertsen\Butik\Facades\Price;
+use Jonassiewertsen\Butik\Http\Models\Product;
+use Jonassiewertsen\Butik\Http\Models\ShippingRate;
+use Jonassiewertsen\Butik\Http\Models\ShippingZone;
+use Jonassiewertsen\Butik\Http\Models\Variant;
+use Jonassiewertsen\Butik\Shipping\Country;
+use Jonassiewertsen\Butik\Tests\TestCase;
 
 class CartTest extends TestCase
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Listeners;
+namespace Jonassiewertsen\Butik\Listeners;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Variant;
+use Jonassiewertsen\Butik\Http\Models\Variant;
 use Statamic\Events\EntryDeleted;
 
 class ProductDeleted

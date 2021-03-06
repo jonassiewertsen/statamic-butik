@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Shipping;
+namespace Jonassiewertsen\Butik\Shipping;
 
 class ShippingByPrice extends ShippingType
 {

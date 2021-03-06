@@ -1,9 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tests\Unit;
+namespace Jonassiewertsen\Butik\Tests\Unit;
 
-use Jonassiewertsen\StatamicButik\Http\Tags\Butik;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\Butik\Http\Tags\Butik;
+use Jonassiewertsen\Butik\Tests\TestCase;
 
 class ProductPermissionsTest extends TestCase
 {

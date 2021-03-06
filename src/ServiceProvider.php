@@ -1,28 +1,28 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik;
+namespace Jonassiewertsen\Butik;
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
-use Jonassiewertsen\StatamicButik\Checkout\Cart;
-use Jonassiewertsen\StatamicButik\Contracts\CartRepository;
-use Jonassiewertsen\StatamicButik\Contracts\NumberRepository;
-use Jonassiewertsen\StatamicButik\Contracts\PriceRepository;
-use Jonassiewertsen\StatamicButik\Filters\OrderStatus;
-use Jonassiewertsen\StatamicButik\Http\Models\Order;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
-use Jonassiewertsen\StatamicButik\Http\Models\Tax;
-use Jonassiewertsen\StatamicButik\Http\Models\Variant;
-use Jonassiewertsen\StatamicButik\Policies\OrderPolicy;
-use Jonassiewertsen\StatamicButik\Policies\ShippingProfilePolicy;
-use Jonassiewertsen\StatamicButik\Policies\ShippingRatePolicy;
-use Jonassiewertsen\StatamicButik\Policies\ShippingZonePolicy;
-use Jonassiewertsen\StatamicButik\Policies\TaxPolicy;
-use Jonassiewertsen\StatamicButik\Policies\VariantPolicy;
-use Jonassiewertsen\StatamicButik\Support\Number;
-use Jonassiewertsen\StatamicButik\Support\Price;
+use Jonassiewertsen\Butik\Checkout\Cart;
+use Jonassiewertsen\Butik\Contracts\CartRepository;
+use Jonassiewertsen\Butik\Contracts\NumberRepository;
+use Jonassiewertsen\Butik\Contracts\PriceRepository;
+use Jonassiewertsen\Butik\Filters\OrderStatus;
+use Jonassiewertsen\Butik\Http\Models\Order;
+use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
+use Jonassiewertsen\Butik\Http\Models\ShippingRate;
+use Jonassiewertsen\Butik\Http\Models\ShippingZone;
+use Jonassiewertsen\Butik\Http\Models\Tax;
+use Jonassiewertsen\Butik\Http\Models\Variant;
+use Jonassiewertsen\Butik\Policies\OrderPolicy;
+use Jonassiewertsen\Butik\Policies\ShippingProfilePolicy;
+use Jonassiewertsen\Butik\Policies\ShippingRatePolicy;
+use Jonassiewertsen\Butik\Policies\ShippingZonePolicy;
+use Jonassiewertsen\Butik\Policies\TaxPolicy;
+use Jonassiewertsen\Butik\Policies\VariantPolicy;
+use Jonassiewertsen\Butik\Support\Number;
+use Jonassiewertsen\Butik\Support\Price;
 use Livewire\Livewire;
 use Mollie\Laravel\MollieServiceProvider;
 use Statamic\Facades\CP\Nav;
@@ -30,18 +30,18 @@ use Statamic\Facades\Permission;
 use Statamic\Providers\AddonServiceProvider;
 use Statamic\Statamic;
 
-class StatamicButikServiceProvider extends AddonServiceProvider
+class ServiceProvider extends AddonServiceProvider
 {
     protected $publishAfterInstall = false;
 
     protected $actions = [
-        \Jonassiewertsen\StatamicButik\Actions\Delete::class,
+        \Jonassiewertsen\Butik\Actions\Delete::class,
     ];
 
     protected $commands = [
-        \Jonassiewertsen\StatamicButik\Commands\SetUpButik::class,
-        \Jonassiewertsen\StatamicButik\Commands\MakeShipping::class,
-        \Jonassiewertsen\StatamicButik\Commands\MakeGateway::class,
+        \Jonassiewertsen\Butik\Commands\SetUpButik::class,
+        \Jonassiewertsen\Butik\Commands\MakeShipping::class,
+        \Jonassiewertsen\Butik\Commands\MakeGateway::class,
     ];
 
     protected $routes = [
@@ -50,7 +50,7 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     ];
 
     protected $widgets = [
-        \Jonassiewertsen\StatamicButik\Widgets\Orders::class,
+        \Jonassiewertsen\Butik\Widgets\Orders::class,
     ];
 
     protected $scopes = [
@@ -58,61 +58,61 @@ class StatamicButikServiceProvider extends AddonServiceProvider
     ];
 
     protected $modifiers = [
-        \Jonassiewertsen\StatamicButik\Modifiers\CountryName::class,
-        \Jonassiewertsen\StatamicButik\Modifiers\Sellable::class,
-        \Jonassiewertsen\StatamicButik\Modifiers\WithoutTax::class,
+        \Jonassiewertsen\Butik\Modifiers\CountryName::class,
+        \Jonassiewertsen\Butik\Modifiers\Sellable::class,
+        \Jonassiewertsen\Butik\Modifiers\WithoutTax::class,
     ];
 
     protected $tags = [
-        \Jonassiewertsen\StatamicButik\Tags\Cart::class,
-        \Jonassiewertsen\StatamicButik\Tags\Butik::class,
-        \Jonassiewertsen\StatamicButik\Tags\Currency::class,
-        \Jonassiewertsen\StatamicButik\Tags\Products::class,
+        \Jonassiewertsen\Butik\Tags\Cart::class,
+        \Jonassiewertsen\Butik\Tags\Butik::class,
+        \Jonassiewertsen\Butik\Tags\Currency::class,
+        \Jonassiewertsen\Butik\Tags\Products::class,
     ];
 
     protected $fieldtypes = [
-        \Jonassiewertsen\StatamicButik\Fieldtypes\Countries::class,
-        \Jonassiewertsen\StatamicButik\Fieldtypes\Money::class,
-        \Jonassiewertsen\StatamicButik\Fieldtypes\Number::class,
-        \Jonassiewertsen\StatamicButik\Fieldtypes\Shipping::class,
-        \Jonassiewertsen\StatamicButik\Fieldtypes\Tax::class,
-        \Jonassiewertsen\StatamicButik\Fieldtypes\Variants::class,
+        \Jonassiewertsen\Butik\Fieldtypes\Countries::class,
+        \Jonassiewertsen\Butik\Fieldtypes\Money::class,
+        \Jonassiewertsen\Butik\Fieldtypes\Number::class,
+        \Jonassiewertsen\Butik\Fieldtypes\Shipping::class,
+        \Jonassiewertsen\Butik\Fieldtypes\Tax::class,
+        \Jonassiewertsen\Butik\Fieldtypes\Variants::class,
     ];
 
     protected $listen = [
-        \Jonassiewertsen\StatamicButik\Events\OrderCreated::class    => [],
-        \Jonassiewertsen\StatamicButik\Events\OrderPaid::class       => [
-            \Jonassiewertsen\StatamicButik\Listeners\SendPurchaseConfirmationToCustomer::class,
-            \Jonassiewertsen\StatamicButik\Listeners\SendPurchaseConfirmationToSeller::class,
-            \Jonassiewertsen\StatamicButik\Listeners\ReduceProductStock::class,
+        \Jonassiewertsen\Butik\Events\OrderCreated::class    => [],
+        \Jonassiewertsen\Butik\Events\OrderPaid::class       => [
+            \Jonassiewertsen\Butik\Listeners\SendPurchaseConfirmationToCustomer::class,
+            \Jonassiewertsen\Butik\Listeners\SendPurchaseConfirmationToSeller::class,
+            \Jonassiewertsen\Butik\Listeners\ReduceProductStock::class,
         ],
-        \Jonassiewertsen\StatamicButik\Events\OrderAuthorized::class => [],
-        \Jonassiewertsen\StatamicButik\Events\OrderCompleted::class  => [],
-        \Jonassiewertsen\StatamicButik\Events\OrderExpired::class    => [],
-        \Jonassiewertsen\StatamicButik\Events\OrderCanceled::class   => [],
+        \Jonassiewertsen\Butik\Events\OrderAuthorized::class => [],
+        \Jonassiewertsen\Butik\Events\OrderCompleted::class  => [],
+        \Jonassiewertsen\Butik\Events\OrderExpired::class    => [],
+        \Jonassiewertsen\Butik\Events\OrderCanceled::class   => [],
         \Statamic\Events\EntrySaving::class => [
-            \Jonassiewertsen\StatamicButik\Listeners\CacheOldProductSlug::class,
+            \Jonassiewertsen\Butik\Listeners\CacheOldProductSlug::class,
         ],
         \Statamic\Events\EntrySaved::class => [
-            \Jonassiewertsen\StatamicButik\Listeners\RenameVariants::class,
+            \Jonassiewertsen\Butik\Listeners\RenameVariants::class,
         ],
         \Statamic\Events\EntryDeleted::class => [
-            \Jonassiewertsen\StatamicButik\Listeners\ProductDeleted::class,
+            \Jonassiewertsen\Butik\Listeners\ProductDeleted::class,
         ],
         \Statamic\Events\FormSubmitted::class => [
-            \Jonassiewertsen\StatamicButik\Listeners\CheckoutFormValidated::class,
+            \Jonassiewertsen\Butik\Listeners\CheckoutFormValidated::class,
         ],
     ];
 
     protected $middlewareGroups = [
         'validateCheckoutRoute' => [
-            \Jonassiewertsen\StatamicButik\Http\Middleware\ValidateCheckoutRoute::class,
+            \Jonassiewertsen\Butik\Http\Middleware\ValidateCheckoutRoute::class,
         ],
         'cartNotEmpty'          => [
-            \Jonassiewertsen\StatamicButik\Http\Middleware\CartNotEmpty::class,
+            \Jonassiewertsen\Butik\Http\Middleware\CartNotEmpty::class,
         ],
         'butikRoutes'           => [
-            \Jonassiewertsen\StatamicButik\Http\Middleware\UpdateCart::class,
+            \Jonassiewertsen\Butik\Http\Middleware\UpdateCart::class,
         ],
     ];
 
@@ -285,9 +285,9 @@ class StatamicButikServiceProvider extends AddonServiceProvider
 
     protected function bootLivewireComponents(): void
     {
-        Livewire::component('butik.add-to-cart', \Jonassiewertsen\StatamicButik\Http\Livewire\AddToCart::class);
-        Livewire::component('butik.cart-list', \Jonassiewertsen\StatamicButik\Http\Livewire\CartList::class);
-        Livewire::component('butik.cart-icon', \Jonassiewertsen\StatamicButik\Http\Livewire\CartIcon::class);
+        Livewire::component('butik.add-to-cart', \Jonassiewertsen\Butik\Http\Livewire\AddToCart::class);
+        Livewire::component('butik.cart-list', \Jonassiewertsen\Butik\Http\Livewire\CartList::class);
+        Livewire::component('butik.cart-icon', \Jonassiewertsen\Butik\Http\Livewire\CartIcon::class);
     }
 
     private function createNavigation(): void

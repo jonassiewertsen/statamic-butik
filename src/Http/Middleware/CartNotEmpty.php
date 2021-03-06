@@ -1,9 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Middleware;
+namespace Jonassiewertsen\Butik\Http\Middleware;
 
 use Closure;
-use Jonassiewertsen\StatamicButik\Checkout\Cart;
+use Jonassiewertsen\Butik\Checkout\Cart;
 
 class CartNotEmpty
 {

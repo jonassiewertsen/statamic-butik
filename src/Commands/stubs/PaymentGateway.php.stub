@@ -4,9 +4,9 @@ namespace DummyNamespace;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Jonassiewertsen\StatamicButik\Checkout\Customer;
-use Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\PaymentGateway;
-use Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\PaymentGatewayInterface;
+use Jonassiewertsen\Butik\Checkout\Customer;
+use Jonassiewertsen\Butik\Http\Controllers\PaymentGateways\PaymentGateway;
+use Jonassiewertsen\Butik\Http\Controllers\PaymentGateways\PaymentGatewayInterface;
 
 class DummyClass extends PaymentGateway implements PaymentGatewayInterface
 {
@@ -14,7 +14,7 @@ class DummyClass extends PaymentGateway implements PaymentGatewayInterface
      * We want to handle the payment process.
      *
      * This one way of doing it:
-     * Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\MolliePaymentGateway.php line 26
+     * Jonassiewertsen\Butik\Http\Controllers\PaymentGateways\MolliePaymentGateway.php line 26
      */
     public function handle(Customer $customer, Collection $items, string $totalPrice, Collection $shippings)
     {
@@ -40,7 +40,7 @@ class DummyClass extends PaymentGateway implements PaymentGatewayInterface
      * If you want, you can use webhooks. This is optional and can be left empty.
      *
      * This one way of doing it:
-     * Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\MolliePaymentGateway.php line 53
+     * Jonassiewertsen\Butik\Http\Controllers\PaymentGateways\MolliePaymentGateway.php line 53
      */
     public function webhook(Request $request): void
     {

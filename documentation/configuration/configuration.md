@@ -142,7 +142,7 @@ If you want to link to a file named cart inside your `resources/views/shop/cart.
 
 ```text
 'shipping' => [
-    'price' => \Jonassiewertsen\StatamicButik\Shipping\ShippingByPrice::class,
+    'price' => \Jonassiewertsen\Butik\Shipping\ShippingByPrice::class,
 ],
 ```
 
@@ -153,7 +153,7 @@ If you want, you can implement your own shipping methods or disable those, you d
 ## Payment Gateway
 
 ```text
-'payment_gateway' => Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\MolliePaymentGateway::class,
+'payment_gateway' => Jonassiewertsen\Butik\Http\Controllers\PaymentGateways\MolliePaymentGateway::class,
 ```
 
 Out of the box, _butik_ does implement [Mollie](www.mollie.com/en) as our payment provider of choice, which is ready to use. 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Traits;
+namespace Jonassiewertsen\Butik\Http\Traits;
 
 use Statamic\Support\Str;
 

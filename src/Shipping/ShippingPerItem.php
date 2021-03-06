@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Shipping;
+namespace Jonassiewertsen\Butik\Shipping;
 
-use Jonassiewertsen\StatamicButik\Facades\Price;
+use Jonassiewertsen\Butik\Facades\Price;
 
 class ShippingPerItem extends ShippingType
 {

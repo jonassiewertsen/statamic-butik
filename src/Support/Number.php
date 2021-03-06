@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Support;
+namespace Jonassiewertsen\Butik\Support;
 
-use Jonassiewertsen\StatamicButik\Contracts\NumberRepository;
+use Jonassiewertsen\Butik\Contracts\NumberRepository;
 
 class Number implements NumberRepository
 {

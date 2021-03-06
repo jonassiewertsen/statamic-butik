@@ -1,9 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Listeners;
+namespace Jonassiewertsen\Butik\Listeners;
 
 use Illuminate\Support\Facades\Cache;
-use Jonassiewertsen\StatamicButik\Http\Models\Variant;
+use Jonassiewertsen\Butik\Http\Models\Variant;
 use Statamic\Events\EntrySaved;
 
 class RenameVariants

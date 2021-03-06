@@ -1,12 +1,12 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Shipping;
+namespace Jonassiewertsen\Butik\Shipping;
 
-use Jonassiewertsen\StatamicButik\Facades\Number;
-use Jonassiewertsen\StatamicButik\Facades\Price;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
-use Jonassiewertsen\StatamicButik\Http\Models\Tax;
+use Jonassiewertsen\Butik\Facades\Number;
+use Jonassiewertsen\Butik\Facades\Price;
+use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
+use Jonassiewertsen\Butik\Http\Models\ShippingRate;
+use Jonassiewertsen\Butik\Http\Models\Tax;
 
 class ShippingAmount
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Commands;
+namespace Jonassiewertsen\Butik\Commands;
 
 use Statamic\Console\Commands\GeneratorCommand as StatamicGeneratorCommand;
 

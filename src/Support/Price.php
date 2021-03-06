@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Support;
+namespace Jonassiewertsen\Butik\Support;
 
-use Jonassiewertsen\StatamicButik\Contracts\PriceRepository;
+use Jonassiewertsen\Butik\Contracts\PriceRepository;
 
 class Price implements PriceRepository
 {

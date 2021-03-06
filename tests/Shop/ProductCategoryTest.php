@@ -1,9 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tests\Shop;
+namespace Jonassiewertsen\Butik\Tests\Shop;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Category;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\Butik\Http\Models\Category;
+use Jonassiewertsen\Butik\Tests\TestCase;
 
 class ProductCategoryTest extends TestCase
 {

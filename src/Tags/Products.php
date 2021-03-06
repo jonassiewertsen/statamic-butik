@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tags;
+namespace Jonassiewertsen\Butik\Tags;
 
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\Butik\Http\Models\Product;
 
 class Products extends \Statamic\Tags\Tags
 {

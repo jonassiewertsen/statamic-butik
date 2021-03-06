@@ -1,11 +1,11 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Rules;
+namespace Jonassiewertsen\Butik\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
-use Jonassiewertsen\StatamicButik\Shipping\Country;
+use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
+use Jonassiewertsen\Butik\Http\Models\ShippingZone;
+use Jonassiewertsen\Butik\Shipping\Country;
 
 class CountryUniqueInProfile implements Rule
 {

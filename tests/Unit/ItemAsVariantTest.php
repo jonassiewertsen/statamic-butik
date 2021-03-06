@@ -1,15 +1,15 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tests\Unit;
+namespace Jonassiewertsen\Butik\Tests\Unit;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
-use Jonassiewertsen\StatamicButik\Checkout\Item;
-use Jonassiewertsen\StatamicButik\Facades\Price;
-use Jonassiewertsen\StatamicButik\Http\Models\Product as ProductModel;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
-use Jonassiewertsen\StatamicButik\Http\Models\Variant;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\Butik\Checkout\Item;
+use Jonassiewertsen\Butik\Facades\Price;
+use Jonassiewertsen\Butik\Http\Models\Product as ProductModel;
+use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
+use Jonassiewertsen\Butik\Http\Models\Variant;
+use Jonassiewertsen\Butik\Tests\TestCase;
 
 class ItemAsVariantTest extends TestCase
 {

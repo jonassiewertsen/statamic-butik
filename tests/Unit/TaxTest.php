@@ -1,9 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tests\Unit;
+namespace Jonassiewertsen\Butik\Tests\Unit;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Tax;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\Butik\Http\Models\Tax;
+use Jonassiewertsen\Butik\Tests\TestCase;
 
 class TaxTest extends TestCase
 {

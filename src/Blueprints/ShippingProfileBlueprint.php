@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Blueprints;
+namespace Jonassiewertsen\Butik\Blueprints;
 
 use Statamic\Facades\Blueprint as StatamicBlueprint;
 

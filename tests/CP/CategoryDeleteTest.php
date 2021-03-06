@@ -1,9 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tests\CP;
+namespace Jonassiewertsen\Butik\Tests\CP;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Category;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\Butik\Http\Models\Category;
+use Jonassiewertsen\Butik\Tests\TestCase;
 
 class CategoryDeleteTest extends TestCase
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Shipping;
+namespace Jonassiewertsen\Butik\Shipping;
 
 use Illuminate\Support\Facades\Session;
-use Jonassiewertsen\StatamicButik\Exceptions\ButikConfigException;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
+use Jonassiewertsen\Butik\Exceptions\ButikConfigException;
+use Jonassiewertsen\Butik\Http\Models\ShippingZone;
 use Symfony\Component\Intl\Countries;
 
 class Country

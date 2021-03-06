@@ -1,11 +1,11 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Listeners;
+namespace Jonassiewertsen\Butik\Listeners;
 
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\Butik\Http\Models\Product;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Cache;
-use Jonassiewertsen\StatamicButik\Http\Models\Variant;
+use Jonassiewertsen\Butik\Http\Models\Variant;
 use Statamic\Facades\Entry;
 use Statamic\Support\Str;
 

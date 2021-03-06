@@ -2,9 +2,9 @@
 
 namespace Tests\Tags;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Category;
-use Jonassiewertsen\StatamicButik\Tags\Categories;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\Butik\Http\Models\Category;
+use Jonassiewertsen\Butik\Tags\Categories;
+use Jonassiewertsen\Butik\Tests\TestCase;
 
 class CategoriesTagTest extends TestCase
 {

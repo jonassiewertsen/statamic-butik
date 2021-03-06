@@ -1,13 +1,13 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Checkout;
+namespace Jonassiewertsen\Butik\Checkout;
 
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\Butik\Http\Models\Product;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
-use Jonassiewertsen\StatamicButik\Facades\Price;
-use Jonassiewertsen\StatamicButik\Http\Models\Product as ProductModel;
-use Jonassiewertsen\StatamicButik\Http\Models\Variant;
+use Jonassiewertsen\Butik\Facades\Price;
+use Jonassiewertsen\Butik\Http\Models\Product as ProductModel;
+use Jonassiewertsen\Butik\Http\Models\Variant;
 use Statamic\Facades\Site;
 use Statamic\Fields\Value;
 

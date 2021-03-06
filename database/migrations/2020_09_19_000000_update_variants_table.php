@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Jonassiewertsen\StatamicButik\Http\Models\Variant;
+use Jonassiewertsen\Butik\Http\Models\Variant;
 
 class UpdateVariantsTable extends Migration
 {

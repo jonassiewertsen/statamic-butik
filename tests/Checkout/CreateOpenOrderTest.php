@@ -1,22 +1,22 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tests\Checkout;
+namespace Jonassiewertsen\Butik\Tests\Checkout;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
-use Jonassiewertsen\StatamicButik\Checkout\Cart;
-use Jonassiewertsen\StatamicButik\Checkout\Customer;
-use Jonassiewertsen\StatamicButik\Checkout\Item;
-use Jonassiewertsen\StatamicButik\Events\OrderCreated;
-use Jonassiewertsen\StatamicButik\Facades\Price;
-use Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\MolliePaymentGateway;
-use Jonassiewertsen\StatamicButik\Http\Models\Order;
-use Jonassiewertsen\StatamicButik\Order\ItemCollection;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
-use Jonassiewertsen\StatamicButik\Tests\Utilities\MolliePaymentOpen;
-use Jonassiewertsen\StatamicButik\Tests\Utilities\MolliePaymentSuccessful;
+use Jonassiewertsen\Butik\Checkout\Cart;
+use Jonassiewertsen\Butik\Checkout\Customer;
+use Jonassiewertsen\Butik\Checkout\Item;
+use Jonassiewertsen\Butik\Events\OrderCreated;
+use Jonassiewertsen\Butik\Facades\Price;
+use Jonassiewertsen\Butik\Http\Controllers\PaymentGateways\MolliePaymentGateway;
+use Jonassiewertsen\Butik\Http\Models\Order;
+use Jonassiewertsen\Butik\Order\ItemCollection;
+use Jonassiewertsen\Butik\Tests\TestCase;
+use Jonassiewertsen\Butik\Tests\Utilities\MolliePaymentOpen;
+use Jonassiewertsen\Butik\Tests\Utilities\MolliePaymentSuccessful;
 use Mollie\Laravel\Facades\Mollie;
 
 class CreateOpenOrderTest extends TestCase

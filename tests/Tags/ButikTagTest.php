@@ -2,8 +2,8 @@
 
 namespace Tests\Tags;
 
-use Jonassiewertsen\StatamicButik\Tags\Butik;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\Butik\Tags\Butik;
+use Jonassiewertsen\Butik\Tests\TestCase;
 
 class ButikTagTest extends TestCase
 {

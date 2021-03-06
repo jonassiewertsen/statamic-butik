@@ -1,11 +1,11 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tests\Shipping;
+namespace Jonassiewertsen\Butik\Tests\Shipping;
 
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
+use Jonassiewertsen\Butik\Http\Models\ShippingRate;
+use Jonassiewertsen\Butik\Http\Models\ShippingZone;
+use Jonassiewertsen\Butik\Tests\TestCase;
 
 class ShippingProfileTest extends TestCase
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Listeners;
+namespace Jonassiewertsen\Butik\Listeners;
 
-use Jonassiewertsen\StatamicButik\Http\Controllers\Web\CheckoutController;
+use Jonassiewertsen\Butik\Http\Controllers\Web\CheckoutController;
 use Statamic\Events\FormSubmitted;
 
 class CheckoutFormValidated

@@ -1,8 +1,8 @@
 <?php
 
 use Faker\Generator as Faker;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
+use Jonassiewertsen\Butik\Http\Models\ShippingRate;
+use Jonassiewertsen\Butik\Http\Models\ShippingZone;
 
 $factory->define(ShippingRate::class, function (Faker $faker) {
     return [

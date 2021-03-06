@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Checkout;
+namespace Jonassiewertsen\Butik\Checkout;
 
 class Customer
 {

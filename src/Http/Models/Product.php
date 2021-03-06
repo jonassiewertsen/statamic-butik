@@ -1,11 +1,11 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Models;
+namespace Jonassiewertsen\Butik\Http\Models;
 
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product as ProductFacade;
+use Facades\Jonassiewertsen\Butik\Http\Models\Product as ProductFacade;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Jonassiewertsen\StatamicButik\Facades\Price;
+use Jonassiewertsen\Butik\Facades\Price;
 use Statamic\Entries\Entry as StatamicEntry;
 use Statamic\Entries\EntryCollection;
 use Statamic\Facades\Entry;

@@ -1,11 +1,11 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
+namespace Jonassiewertsen\Butik\Http\Controllers\Web;
 
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\Butik\Http\Models\Product;
 use Illuminate\Support\Collection;
-use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
-use Jonassiewertsen\StatamicButik\Http\Models\Category;
+use Jonassiewertsen\Butik\Http\Controllers\WebController;
+use Jonassiewertsen\Butik\Http\Models\Category;
 use Statamic\View\View as StatamicView;
 
 class ShopController extends WebController

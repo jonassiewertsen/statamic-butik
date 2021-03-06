@@ -1,9 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways;
+namespace Jonassiewertsen\Butik\Http\Controllers\PaymentGateways;
 
 use Illuminate\Support\Collection;
-use Jonassiewertsen\StatamicButik\Checkout\Customer;
+use Jonassiewertsen\Butik\Checkout\Customer;
 
 interface PaymentGatewayInterface
 {

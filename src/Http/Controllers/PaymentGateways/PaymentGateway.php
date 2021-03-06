@@ -1,19 +1,19 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways;
+namespace Jonassiewertsen\Butik\Http\Controllers\PaymentGateways;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
-use Jonassiewertsen\StatamicButik\Checkout\Customer;
-use Jonassiewertsen\StatamicButik\Events\OrderAuthorized;
-use Jonassiewertsen\StatamicButik\Events\OrderCanceled;
-use Jonassiewertsen\StatamicButik\Events\OrderCompleted;
-use Jonassiewertsen\StatamicButik\Events\OrderCreated;
-use Jonassiewertsen\StatamicButik\Events\OrderExpired;
-use Jonassiewertsen\StatamicButik\Events\OrderPaid;
-use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
-use Jonassiewertsen\StatamicButik\Http\Models\Order;
-use Jonassiewertsen\StatamicButik\Order\ItemCollection;
+use Jonassiewertsen\Butik\Checkout\Customer;
+use Jonassiewertsen\Butik\Events\OrderAuthorized;
+use Jonassiewertsen\Butik\Events\OrderCanceled;
+use Jonassiewertsen\Butik\Events\OrderCompleted;
+use Jonassiewertsen\Butik\Events\OrderCreated;
+use Jonassiewertsen\Butik\Events\OrderExpired;
+use Jonassiewertsen\Butik\Events\OrderPaid;
+use Jonassiewertsen\Butik\Http\Controllers\WebController;
+use Jonassiewertsen\Butik\Http\Models\Order;
+use Jonassiewertsen\Butik\Order\ItemCollection;
 
 abstract class PaymentGateway extends WebController
 {

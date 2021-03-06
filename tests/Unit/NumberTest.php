@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
-use Jonassiewertsen\StatamicButik\Facades\Number;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\Butik\Facades\Number;
+use Jonassiewertsen\Butik\Tests\TestCase;
 
 class NumberTest extends TestCase
 {

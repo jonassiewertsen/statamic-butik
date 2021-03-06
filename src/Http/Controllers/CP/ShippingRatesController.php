@@ -1,11 +1,11 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
+namespace Jonassiewertsen\Butik\Http\Controllers\CP;
 
 use Illuminate\Http\Request;
-use Jonassiewertsen\StatamicButik\Blueprints\ShippingRateBlueprint;
-use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
+use Jonassiewertsen\Butik\Blueprints\ShippingRateBlueprint;
+use Jonassiewertsen\Butik\Http\Controllers\CpController;
+use Jonassiewertsen\Butik\Http\Models\ShippingRate;
 
 class ShippingRatesController extends CpController
 {

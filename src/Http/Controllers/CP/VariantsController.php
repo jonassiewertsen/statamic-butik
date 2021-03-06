@@ -1,11 +1,11 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
+namespace Jonassiewertsen\Butik\Http\Controllers\CP;
 
 use Illuminate\Http\Request;
-use Jonassiewertsen\StatamicButik\Blueprints\VariantBlueprint;
-use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
-use Jonassiewertsen\StatamicButik\Http\Models\Variant;
+use Jonassiewertsen\Butik\Blueprints\VariantBlueprint;
+use Jonassiewertsen\Butik\Http\Controllers\CpController;
+use Jonassiewertsen\Butik\Http\Models\Variant;
 
 class VariantsController extends CpController
 {

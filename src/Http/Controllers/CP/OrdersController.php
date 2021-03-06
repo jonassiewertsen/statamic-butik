@@ -1,9 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
+namespace Jonassiewertsen\Butik\Http\Controllers\CP;
 
-use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
-use Jonassiewertsen\StatamicButik\Http\Models\Order;
+use Jonassiewertsen\Butik\Http\Controllers\CpController;
+use Jonassiewertsen\Butik\Http\Models\Order;
 use Statamic\Facades\Scope;
 use Statamic\Support\Str;
 

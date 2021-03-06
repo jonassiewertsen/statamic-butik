@@ -2,10 +2,10 @@
 
 namespace Tests\Rules;
 
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
-use Jonassiewertsen\StatamicButik\Rules\CountryUniqueInProfile;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
+use Jonassiewertsen\Butik\Http\Models\ShippingZone;
+use Jonassiewertsen\Butik\Rules\CountryUniqueInProfile;
+use Jonassiewertsen\Butik\Tests\TestCase;
 
 class CountryUniqueInProfileTest extends TestCase
 {

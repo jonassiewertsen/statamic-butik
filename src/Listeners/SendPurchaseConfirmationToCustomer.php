@@ -1,11 +1,11 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Listeners;
+namespace Jonassiewertsen\Butik\Listeners;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
-use Jonassiewertsen\StatamicButik\Mail\Customer\PurchaseConfirmation;
+use Jonassiewertsen\Butik\Mail\Customer\PurchaseConfirmation;
 
 class SendPurchaseConfirmationToCustomer implements ShouldQueue
 {

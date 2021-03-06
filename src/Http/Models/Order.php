@@ -1,9 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Models;
+namespace Jonassiewertsen\Butik\Http\Models;
 
-use Jonassiewertsen\StatamicButik\Blueprints\OrderBlueprint;
-use Jonassiewertsen\StatamicButik\Facades\Price;
+use Jonassiewertsen\Butik\Blueprints\OrderBlueprint;
+use Jonassiewertsen\Butik\Facades\Price;
 use Statamic\Fields\Blueprint;
 
 class Order extends ButikModel

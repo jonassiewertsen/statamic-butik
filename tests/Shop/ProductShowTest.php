@@ -1,9 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tests\Shop;
+namespace Jonassiewertsen\Butik\Tests\Shop;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Variant;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\Butik\Http\Models\Variant;
+use Jonassiewertsen\Butik\Tests\TestCase;
 use Statamic\Facades\Entry;
 
 class ProductShowTest extends TestCase

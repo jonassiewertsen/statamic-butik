@@ -1,9 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Facades;
+namespace Jonassiewertsen\Butik\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Jonassiewertsen\StatamicButik\Contracts\PriceRepository;
+use Jonassiewertsen\Butik\Contracts\PriceRepository;
 
 class Price extends Facade
 {

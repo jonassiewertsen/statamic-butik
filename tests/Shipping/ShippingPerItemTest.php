@@ -1,14 +1,14 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tests\Shipping;
+namespace Jonassiewertsen\Butik\Tests\Shipping;
 
-use Jonassiewertsen\StatamicButik\Checkout\Cart;
-use Jonassiewertsen\StatamicButik\Http\Models\Product;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
-use Jonassiewertsen\StatamicButik\Shipping\ShippingPerItem;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\Butik\Checkout\Cart;
+use Jonassiewertsen\Butik\Http\Models\Product;
+use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
+use Jonassiewertsen\Butik\Http\Models\ShippingRate;
+use Jonassiewertsen\Butik\Http\Models\ShippingZone;
+use Jonassiewertsen\Butik\Shipping\ShippingPerItem;
+use Jonassiewertsen\Butik\Tests\TestCase;
 
 class ShippingPerItemTest extends TestCase
 {

@@ -1,15 +1,15 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways;
+namespace Jonassiewertsen\Butik\Http\Controllers\PaymentGateways;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
-use Jonassiewertsen\StatamicButik\Checkout\Customer;
-use Jonassiewertsen\StatamicButik\Facades\Price;
-use Jonassiewertsen\StatamicButik\Http\Traits\MollyLocale;
+use Jonassiewertsen\Butik\Checkout\Customer;
+use Jonassiewertsen\Butik\Facades\Price;
+use Jonassiewertsen\Butik\Http\Traits\MollyLocale;
 use Mollie\Laravel\Facades\Mollie;
 
 class MolliePaymentGateway extends PaymentGateway implements PaymentGatewayInterface

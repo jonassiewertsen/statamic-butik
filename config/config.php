@@ -120,8 +120,8 @@ return [
      * https://butik.dev/configuration/shipping
      */
     'shipping' => [
-        'price' => \Jonassiewertsen\StatamicButik\Shipping\ShippingByPrice::class,
-        'per-item' => \Jonassiewertsen\StatamicButik\Shipping\ShippingPerItem::class,
+        'price' => \Jonassiewertsen\Butik\Shipping\ShippingByPrice::class,
+        'per-item' => \Jonassiewertsen\Butik\Shipping\ShippingPerItem::class,
     ],
 
     /**
@@ -130,5 +130,5 @@ return [
      * If you want, you can swap our payment gateway with your own integration.
      * https://butik.dev/extending/payment-gateway
      */
-    'payment_gateway' => Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\MolliePaymentGateway::class,
+    'payment_gateway' => Jonassiewertsen\Butik\Http\Controllers\PaymentGateways\MolliePaymentGateway::class,
 ];

@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Fieldtypes;
+namespace Jonassiewertsen\Butik\Fieldtypes;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Tax as TaxModel;
+use Jonassiewertsen\Butik\Http\Models\Tax as TaxModel;
 use Statamic\Fields\Fieldtype;
 
 class Tax extends Fieldtype
