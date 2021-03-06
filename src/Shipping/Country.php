@@ -9,6 +9,7 @@ use Symfony\Component\Intl\Countries;
 
 class Country
 {
+    // TODO: Extrat into it's own Facade
     private const SESSION = 'butik.country';
 
     /**

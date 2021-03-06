@@ -2,10 +2,8 @@
 
 namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Jonassiewertsen\StatamicButik\Checkout\Customer;
 use Jonassiewertsen\StatamicButik\Facades\Cart;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
 use Jonassiewertsen\StatamicButik\Facades\Price;
@@ -13,6 +11,7 @@ use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
 use Jonassiewertsen\StatamicButik\Http\Models\Variant;
+use Jonassiewertsen\StatamicButik\Shipping\Country;
 use Jonassiewertsen\StatamicButik\Tests\TestCase;
 
 class CartTest extends TestCase
@@ -162,9 +161,31 @@ class CartTest extends TestCase
     }
 
     /** @test */
+    public function the_cart_calculates_the_total_price_including_shipping_amount()
+    {
+        // Create a new shipping zone to use a zone with taxes.
+        $shippingZone = create(ShippingZone::class)->first();
+
+        create(ShippingRate::class, [
+            'shipping_zone_id' => $shippingZone->id,
+            'minimum' => 1,
+        ])->first();
+
+        $product = $this->makeProduct([
+            'tax_id' => $shippingZone->tax_slug,
+        ], $shippingZone);
+
+        Cart::add($product->slug);
+        $shipping = Cart::shipping()->first()->total;
+
+        $totalAmount = Price::of($shipping)->add($product->price)->get();
+
+        $this->assertEquals($totalAmount, Cart::totalPrice());
+    }
+
+    /** @test */
     public function non_sellable_items_will_not_be_counted()
     {
-
         $product1 = $this->makeProduct();
         $product2 = $this->makeProduct();
 
@@ -219,6 +240,28 @@ class CartTest extends TestCase
     }
 
     /** @test */
+    public function the_cart_does_contain_the_total_shipping_amount()
+    {
+        // Create a new shipping zone to use a zone with taxes.
+        $shippingZone = create(ShippingZone::class)->first();
+
+        create(ShippingRate::class, [
+            'shipping_zone_id' => $shippingZone->id,
+            'minimum' => 1,
+        ])->first();
+
+        $product = $this->makeProduct([
+            'tax_id' => $shippingZone->tax_slug,
+        ], $shippingZone);
+
+        Cart::add($product->slug);
+
+        $shippingAmount = Cart::shipping()->first()->total;
+
+        $this->assertEquals($shippingAmount, Cart::totalShipping());
+    }
+
+    /** @test */
     public function the_cart_does_include_shipping_taxes()
     {
         // Create a new shipping zone to use a zone with taxes.
@@ -266,5 +309,28 @@ class CartTest extends TestCase
     public function the_cart_returns_zero_without_any_items()
     {
         $this->assertNotNull(Cart::count());
+    }
+
+    /** @test */
+    public function the_cart_can_return_the_actual_set_country()
+    {
+        $this->assertEquals(Country::get(), Cart::country());
+    }
+
+    /** @test */
+    public function a_new_country_can_be_set()
+    {
+        // TODO: Rewrite test the Country is it's own Facade to mock the output.
+
+//        $this->assertEquals(Country::get(), 'dk');
+        $this->assertTrue(true);
+    }
+
+    /** @test */
+    public function a_customer_can_be_fetched_from_the_cart()
+    {
+        Session::put('butik.customer', new Customer());
+
+        $this->assertInstanceOf(Customer::class, Cart::customer());
     }
 }

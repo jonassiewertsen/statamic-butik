@@ -2,7 +2,6 @@
 
 namespace Jonassiewertsen\StatamicButik\Checkout;
 
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Contracts\CartRepository;
@@ -12,9 +11,7 @@ use Jonassiewertsen\StatamicButik\Shipping\Shipping;
 
 class Cart implements CartRepository
 {
-    public $cart;
-    private $totalShipping;
-    private $totalTaxes;
+    protected $cart;
 
     public function __construct()
     {
@@ -90,12 +87,14 @@ class Cart implements CartRepository
     /**
      * Fetch the customer from the session.
      */
-//    public static function customer(): ?Customer
-//    {
-//        return Session::get('butik.customer') !== null ?
-//            Session::get('butik.customer') :
-//            null;
-//    }
+    public static function customer(): ?Customer
+    {
+        // TODO: Does this part belong here?
+
+        return Session::get('butik.customer') !== null ?
+            Session::get('butik.customer') :
+            null;
+    }
 
     /**
      * The total count of items.
@@ -107,7 +106,6 @@ class Cart implements CartRepository
         })->sum();
     }
 
-
     public function totalPrice()
     {
         $productAmount = $this->cart->filter(function ($item) {
@@ -116,9 +114,9 @@ class Cart implements CartRepository
             return Price::of($item->totalPrice())->cents();
         });
 
-        return Price::of($productAmount)
-                    ->add(0) // TODO Add the total Shipping amount
-                    ->get();
+        $shippingAmount = $this->totalShipping();
+
+        return Price::of($productAmount)->add($shippingAmount)->get();
     }
 
 
@@ -129,13 +127,6 @@ class Cart implements CartRepository
     {
         $this->totalTaxes = collect();
         $taxRates = [];
-
-        /**
-         * Return an empty collection in case the cart is empty.
-         */
-//        if (! static::$cart) {
-//            return collect();
-//        }
 
         /**
          * Collect all item tax rates.
@@ -194,37 +185,36 @@ class Cart implements CartRepository
         return $shipping->amounts;
     }
 
-//    /**
-//     * All shipping costs, from all shipping profiles, summed
-//     * up to determine the total shipping costs.
-//     */
-//    public static function totalShipping(): string
-//    {
-//        static::resetTotalShipping();
-//
-//        static::shipping()->each(function ($shipping) {
-//            static::$totalShipping += Price::of($shipping->total)->cents();
-//        });
-//
-//        return Price::of(static::$totalShipping)->get();
-//    }
-//
-//    /**
-//     * Getting the actual choosen country.
-//     */
-//    public static function country()
-//    {
-//        return Country::get();
-//    }
-//
-//    /**
-//     * Set a different country to checkout to.
-//     */
-//    public static function setCountry(string $code): void
-//    {
-//        Country::set($code);
-//        static::totalPrice();
-//    }
+    /**
+     * All shipping costs, from all shipping profiles, summed
+     * up to determine the total shipping costs.
+     */
+    public function totalShipping(): string
+    {
+        $shippingAmount = $this->shipping()->sum(function ($shipping) {
+            return Price::of($shipping->total)->cents();
+        });
+
+        return Price::of($shippingAmount)->get();
+    }
+
+    /**
+     * Getting the actual choosen country.
+     */
+    public function country()
+    {
+        // TODO: Should the country move to the Country Facade?
+        return Country::get();
+    }
+
+    /**
+     * Set a different country to checkout to.
+     */
+    public function setCountry(string $code): void
+    {
+        // TODO: Should the country move to the Country Facade?
+        Country::set($code);
+    }
 
     public function removeNonSellableItems(): void
     {
