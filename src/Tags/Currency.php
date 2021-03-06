@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tags;
+namespace Jonassiewertsen\Butik\Tags;
 
 class Currency extends \Statamic\Tags\Tags
 {

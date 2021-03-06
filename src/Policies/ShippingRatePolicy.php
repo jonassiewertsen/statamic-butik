@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Policies;
+namespace Jonassiewertsen\Butik\Policies;
 
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
+use Jonassiewertsen\Butik\Http\Models\ShippingRate;
 
 class ShippingRatePolicy extends Policies
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Filters;
+namespace Jonassiewertsen\Butik\Filters;
 
 use Statamic\Query\Scopes\Filter;
 

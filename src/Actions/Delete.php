@@ -1,9 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Actions;
+namespace Jonassiewertsen\Butik\Actions;
 
-use Jonassiewertsen\StatamicButik\Exceptions\ButikConfigException;
-use Jonassiewertsen\StatamicButik\Http\Models\Order;
+use Jonassiewertsen\Butik\Exceptions\ButikConfigException;
+use Jonassiewertsen\Butik\Http\Models\Order;
 use Statamic\Actions\Action;
 
 class Delete extends Action

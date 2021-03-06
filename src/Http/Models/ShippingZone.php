@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Models;
+namespace Jonassiewertsen\Butik\Http\Models;
 
-use Jonassiewertsen\StatamicButik\Shipping\Country;
+use Jonassiewertsen\Butik\Shipping\Country;
 
 class ShippingZone extends ButikModel
 {

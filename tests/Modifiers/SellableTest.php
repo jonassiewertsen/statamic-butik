@@ -1,10 +1,10 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tests\Modifiers;
+namespace Jonassiewertsen\Butik\Tests\Modifiers;
 
-use Jonassiewertsen\StatamicButik\Checkout\Item;
-use Jonassiewertsen\StatamicButik\Modifiers\Sellable;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\Butik\Checkout\Item;
+use Jonassiewertsen\Butik\Modifiers\Sellable;
+use Jonassiewertsen\Butik\Tests\TestCase;
 use Statamic\Modifiers\Modifier;
 
 class SellableTest extends TestCase

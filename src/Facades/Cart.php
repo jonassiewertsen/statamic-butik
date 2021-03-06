@@ -3,12 +3,12 @@
 namespace Jonassiewertsen\Butik\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Jonassiewertsen\Butik\Contracts\NumberRepository;
+use Jonassiewertsen\Butik\Contracts\CartRepository;
 
-class Number extends Facade
+class Cart extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return NumberRepository::class;
+        return CartRepository::class;
     }
 }

@@ -83,6 +83,11 @@ return [
      * Customize our custom routes as you need them. You can deactive some routes at all, if you want to
      * use your custom implementation or just rename our routes at all.
      */
+    'shop_route_active'     => true, // default: true. Set to false to deactive this route.
+    'product_route_active'  => true, // default: true. Set to false to deactive this route.
+
+    'route_shop-prefix'       => 'shop',                       // yourshop.com/shop/
+    'route_product'           => '{product}/{variant?}',       // yourshop.com/shop/xxxxx
     'route_cart'              => 'cart',                       // yourshop.com/shop/cart
     'route_checkout-delivery' => 'checkout/delivery',           // yourshop.com/shop/checkout/delivery
     'route_checkout-payment'  => 'checkout/payment',            // yourshop.com/shop/checkout/payment
@@ -94,6 +99,8 @@ return [
      * Define your own templates for the frontend if you want. You can as well edit the
      * given layouts to fit your needs.
      */
+    'template_product-index'            => 'butik::web.shop.index',
+    'template_product-show'             => 'butik::web.shop.show',
     'template_cart'                     => 'butik::web.cart.index',
     'template_checkout-delivery'        => 'butik::web.checkout.delivery',
     'template_checkout-payment'         => 'butik::web.checkout.payment',
@@ -119,8 +126,8 @@ return [
      * https://butik.dev/configuration/shipping
      */
     'shipping' => [
-        'price' => \Jonassiewertsen\StatamicButik\Shipping\ShippingByPrice::class,
-        'per-item' => \Jonassiewertsen\StatamicButik\Shipping\ShippingPerItem::class,
+        'price' => \Jonassiewertsen\Butik\Shipping\ShippingByPrice::class,
+        'per-item' => \Jonassiewertsen\Butik\Shipping\ShippingPerItem::class,
     ],
 
     /**
@@ -129,5 +136,5 @@ return [
      * If you want, you can swap our payment gateway with your own integration.
      * https://butik.dev/extending/payment-gateway
      */
-    'payment_gateway' => Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\MolliePaymentGateway::class,
+    'payment_gateway' => Jonassiewertsen\Butik\Http\Controllers\PaymentGateways\MolliePaymentGateway::class,
 ];

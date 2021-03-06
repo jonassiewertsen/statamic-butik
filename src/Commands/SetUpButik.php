@@ -1,14 +1,14 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Commands;
+namespace Jonassiewertsen\Butik\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
-use Jonassiewertsen\StatamicButik\Http\Models\Tax;
+use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
+use Jonassiewertsen\Butik\Http\Models\ShippingRate;
+use Jonassiewertsen\Butik\Http\Models\ShippingZone;
+use Jonassiewertsen\Butik\Http\Models\Tax;
 use Statamic\Console\RunsInPlease;
 
 class SetUpButik extends Command
@@ -145,7 +145,7 @@ class SetUpButik extends Command
         $this->confirm('Let me publish the Statamic Butik vendor files for you. Please confirm.');
 
         Artisan::call('vendor:publish', [
-            '--provider' => 'Jonassiewertsen\StatamicButik\StatamicButikServiceProvider',
+            '--provider' => 'Jonassiewertsen\Butik\ButikServiceProvider',
             '--force'    => true,
         ]);
 

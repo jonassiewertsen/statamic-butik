@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Contracts;
+namespace Jonassiewertsen\Butik\Contracts;
 
 interface NumberRepository
 {

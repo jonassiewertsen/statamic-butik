@@ -1,16 +1,16 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tests\Shipping;
+namespace Jonassiewertsen\Butik\Tests\Shipping;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
-use Jonassiewertsen\StatamicButik\Checkout\Cart;
-use Jonassiewertsen\StatamicButik\Exceptions\ButikConfigException;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
-use Jonassiewertsen\StatamicButik\Shipping\Country;
-use Jonassiewertsen\StatamicButik\Shipping\Shipping;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\Butik\Checkout\Cart;
+use Jonassiewertsen\Butik\Exceptions\ButikConfigException;
+use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
+use Jonassiewertsen\Butik\Http\Models\ShippingZone;
+use Jonassiewertsen\Butik\Shipping\Country;
+use Jonassiewertsen\Butik\Shipping\Shipping;
+use Jonassiewertsen\Butik\Tests\TestCase;
 
 class ShippingTest extends TestCase
 {

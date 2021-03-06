@@ -1,14 +1,14 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tests;
+namespace Jonassiewertsen\Butik\Tests;
 
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\Butik\Http\Models\Product;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Config;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
-use Jonassiewertsen\StatamicButik\Http\Models\Tax;
+use Jonassiewertsen\Butik\Http\Models\ShippingRate;
+use Jonassiewertsen\Butik\Http\Models\ShippingZone;
+use Jonassiewertsen\Butik\Http\Models\Tax;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Statamic\Extend\Manifest;
 use Statamic\Facades\Blueprint;
@@ -151,7 +151,7 @@ class TestCase extends OrchestraTestCase
     {
         return [
             \Statamic\Providers\StatamicServiceProvider::class,
-            \Jonassiewertsen\StatamicButik\StatamicButikServiceProvider::class,
+            \Jonassiewertsen\Butik\ServiceProvider::class,
             \Livewire\LivewireServiceProvider::class,
         ];
     }
@@ -179,7 +179,7 @@ class TestCase extends OrchestraTestCase
         $app->make(Manifest::class)->manifest = [
             'jonassiewertsen/statamic-butik' => [
                 'id'        => 'jonassiewertsen/statamic-butik',
-                'namespace' => 'Jonassiewertsen\\StatamicButik\\',
+                'namespace' => 'Jonassiewertsen\\Butik\\',
             ],
         ];
     }
@@ -244,7 +244,6 @@ class TestCase extends OrchestraTestCase
         // Set all layouts to null to prevent an error thrown from a layout which could not be found.
         $layouts = [
             'layout_product-index',
-            'layout_product-category',
             'layout_product-show',
             'layout_cart',
             'layout_checkout-delivery',

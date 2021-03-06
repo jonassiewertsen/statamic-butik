@@ -1,12 +1,12 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
+namespace Jonassiewertsen\Butik\Http\Controllers\CP;
 
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\Butik\Http\Models\Product;
 use Illuminate\Http\Request;
-use Jonassiewertsen\StatamicButik\Blueprints\ShippingProfileBlueprint;
-use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
+use Jonassiewertsen\Butik\Blueprints\ShippingProfileBlueprint;
+use Jonassiewertsen\Butik\Http\Controllers\CpController;
+use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
 
 class ShippingProfilesController extends CpController
 {

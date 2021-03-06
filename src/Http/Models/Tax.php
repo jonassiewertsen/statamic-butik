@@ -1,10 +1,10 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Models;
+namespace Jonassiewertsen\Butik\Http\Models;
 
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\Butik\Http\Models\Product;
 use Illuminate\Support\Collection;
-use Jonassiewertsen\StatamicButik\Facades\Number;
+use Jonassiewertsen\Butik\Facades\Number;
 
 class Tax extends ButikModel
 {

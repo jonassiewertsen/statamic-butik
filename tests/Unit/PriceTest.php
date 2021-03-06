@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
-use Jonassiewertsen\StatamicButik\Facades\Price;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\Butik\Facades\Price;
+use Jonassiewertsen\Butik\Tests\TestCase;
 
 class PriceTest extends TestCase
 {

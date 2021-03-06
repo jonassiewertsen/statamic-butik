@@ -2,8 +2,8 @@
 
 namespace Tests\Rules;
 
-use Jonassiewertsen\StatamicButik\Rules\CountryExists;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\Butik\Rules\CountryExists;
+use Jonassiewertsen\Butik\Tests\TestCase;
 
 class CountryExistsTest extends TestCase
 {

@@ -2,8 +2,8 @@
 
 namespace Tests\Tags;
 
-use Jonassiewertsen\StatamicButik\Tags\Currency;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\Butik\Tags\Currency;
+use Jonassiewertsen\Butik\Tests\TestCase;
 use Statamic\Facades\Config;
 
 class CurrencyTagTest extends TestCase

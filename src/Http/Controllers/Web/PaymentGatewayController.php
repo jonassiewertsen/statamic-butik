@@ -1,12 +1,12 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
+namespace Jonassiewertsen\Butik\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
-use Jonassiewertsen\StatamicButik\Checkout\Cart;
-use Jonassiewertsen\StatamicButik\Exceptions\ButikConfigException;
-use Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\PaymentGatewayInterface;
-use Jonassiewertsen\StatamicButik\Http\Controllers\WebController;
+use Jonassiewertsen\Butik\Checkout\Cart;
+use Jonassiewertsen\Butik\Exceptions\ButikConfigException;
+use Jonassiewertsen\Butik\Http\Controllers\PaymentGateways\PaymentGatewayInterface;
+use Jonassiewertsen\Butik\Http\Controllers\WebController;
 
 class PaymentGatewayController extends WebController
 {

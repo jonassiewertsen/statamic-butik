@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Fieldtypes;
+namespace Jonassiewertsen\Butik\Fieldtypes;
 
 use Statamic\Fields\Fieldtype;
 

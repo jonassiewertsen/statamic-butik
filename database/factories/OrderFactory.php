@@ -1,11 +1,11 @@
 <?php
 
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\Butik\Http\Models\Product;
 use Faker\Generator as Faker;
-use Jonassiewertsen\StatamicButik\Checkout\Item;
-use Jonassiewertsen\StatamicButik\Http\Models\Order;
-use Jonassiewertsen\StatamicButik\Http\Models\Tax;
-use Jonassiewertsen\StatamicButik\Order\ItemCollection;
+use Jonassiewertsen\Butik\Checkout\Item;
+use Jonassiewertsen\Butik\Http\Models\Order;
+use Jonassiewertsen\Butik\Http\Models\Tax;
+use Jonassiewertsen\Butik\Order\ItemCollection;
 use Statamic\Facades\Collection;
 use Statamic\Facades\Entry;
 

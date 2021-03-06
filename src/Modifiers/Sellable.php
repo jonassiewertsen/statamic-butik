@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Modifiers;
+namespace Jonassiewertsen\Butik\Modifiers;
 
 use Statamic\Modifiers\Modifier;
 

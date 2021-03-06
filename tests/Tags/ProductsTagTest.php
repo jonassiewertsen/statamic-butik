@@ -2,9 +2,9 @@
 
 namespace Tests\Tags;
 
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
-use Jonassiewertsen\StatamicButik\Tags\Products;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Facades\Jonassiewertsen\Butik\Http\Models\Product;
+use Jonassiewertsen\Butik\Tags\Products;
+use Jonassiewertsen\Butik\Tests\TestCase;
 
 class ProductsTagTest extends TestCase
 {

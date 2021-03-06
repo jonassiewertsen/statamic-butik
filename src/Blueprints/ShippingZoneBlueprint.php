@@ -1,11 +1,11 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Blueprints;
+namespace Jonassiewertsen\Butik\Blueprints;
 
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
-use Jonassiewertsen\StatamicButik\Http\Models\Tax;
-use Jonassiewertsen\StatamicButik\Rules\CountryExists;
-use Jonassiewertsen\StatamicButik\Rules\CountryUniqueInProfile;
+use Jonassiewertsen\Butik\Http\Models\ShippingZone;
+use Jonassiewertsen\Butik\Http\Models\Tax;
+use Jonassiewertsen\Butik\Rules\CountryExists;
+use Jonassiewertsen\Butik\Rules\CountryUniqueInProfile;
 use Statamic\Facades\Blueprint as StatamicBlueprint;
 use Symfony\Component\Intl\Countries;
 

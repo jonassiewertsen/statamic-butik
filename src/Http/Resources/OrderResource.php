@@ -1,11 +1,11 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Resources;
+namespace Jonassiewertsen\Butik\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Carbon;
-use Jonassiewertsen\StatamicButik\Blueprints\OrderBlueprint;
-use Jonassiewertsen\StatamicButik\Http\Models\Order;
+use Jonassiewertsen\Butik\Blueprints\OrderBlueprint;
+use Jonassiewertsen\Butik\Http\Models\Order;
 use Statamic\Facades\Action;
 use Statamic\Facades\User;
 use Statamic\Http\Resources\CP\Concerns\HasRequestedColumns;

@@ -1,14 +1,14 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Controllers\Web;
+namespace Jonassiewertsen\Butik\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use Jonassiewertsen\StatamicButik\Checkout\Cart;
-use Jonassiewertsen\StatamicButik\Checkout\Customer;
-use Jonassiewertsen\StatamicButik\Http\Models\Order;
-use Jonassiewertsen\StatamicButik\Http\Traits\MapCartItems;
-use Jonassiewertsen\StatamicButik\Shipping\Country;
+use Jonassiewertsen\Butik\Checkout\Cart;
+use Jonassiewertsen\Butik\Checkout\Customer;
+use Jonassiewertsen\Butik\Http\Models\Order;
+use Jonassiewertsen\Butik\Http\Traits\MapCartItems;
+use Jonassiewertsen\Butik\Shipping\Country;
 use Statamic\View\View as StatamicView;
 
 class CheckoutController extends Checkout
@@ -39,7 +39,7 @@ class CheckoutController extends Checkout
          * to handle the logic. The form validation will be taken care
          * of from Statamic.
          *
-         * Event: Jonassiewertsen\StatamicButik\Listeners\CheckoutFormValidated;
+         * Event: Jonassiewertsen\Butik\Listeners\CheckoutFormValidated;
          */
         $customer = new Customer($validatedData);
         Session::put('butik.customer', $customer);

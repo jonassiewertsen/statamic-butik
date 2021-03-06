@@ -1,13 +1,13 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Shipping;
+namespace Jonassiewertsen\Butik\Shipping;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Jonassiewertsen\StatamicButik\Contracts\PriceRepository;
-use Jonassiewertsen\StatamicButik\Facades\Price;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
+use Jonassiewertsen\Butik\Contracts\PriceRepository;
+use Jonassiewertsen\Butik\Facades\Price;
+use Jonassiewertsen\Butik\Http\Models\ShippingRate;
+use Jonassiewertsen\Butik\Http\Models\ShippingZone;
 
 abstract class ShippingType implements ShippingTypeInterface
 {

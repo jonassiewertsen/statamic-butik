@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Rules;
+namespace Jonassiewertsen\Butik\Rules;
 
-use Facades\Jonassiewertsen\StatamicButik\Http\Models\Product;
+use Facades\Jonassiewertsen\Butik\Http\Models\Product;
 use Illuminate\Contracts\Validation\Rule;
 
 class ProductSlugExists implements Rule

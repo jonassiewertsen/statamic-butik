@@ -1,10 +1,10 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Livewire;
+namespace Jonassiewertsen\Butik\Http\Livewire;
 
-use Jonassiewertsen\StatamicButik\Checkout\Cart as ShoppingCart;
-use Jonassiewertsen\StatamicButik\Http\Traits\MapCartItems;
-use Jonassiewertsen\StatamicButik\Shipping\Country;
+use Jonassiewertsen\Butik\Checkout\Cart as ShoppingCart;
+use Jonassiewertsen\Butik\Http\Traits\MapCartItems;
+use Jonassiewertsen\Butik\Shipping\Country;
 use Livewire\Component;
 
 class CartList extends Component

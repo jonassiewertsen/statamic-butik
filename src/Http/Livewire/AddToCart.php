@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Livewire;
+namespace Jonassiewertsen\Butik\Http\Livewire;
 
-use Jonassiewertsen\StatamicButik\Checkout\Cart;
+use Jonassiewertsen\Butik\Checkout\Cart;
 use Livewire\Component;
 
 class AddToCart extends Component

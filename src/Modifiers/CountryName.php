@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Modifiers;
+namespace Jonassiewertsen\Butik\Modifiers;
 
-use Jonassiewertsen\StatamicButik\Shipping\Country;
+use Jonassiewertsen\Butik\Shipping\Country;
 use Statamic\Modifiers\Modifier;
 
 class CountryName extends Modifier

@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
+namespace Jonassiewertsen\Butik\Http\Controllers\CP;
 
-use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
+use Jonassiewertsen\Butik\Http\Controllers\CpController;
 
 class SettingsController extends CpController
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Models;
+namespace Jonassiewertsen\Butik\Http\Models;
 
-use Jonassiewertsen\StatamicButik\Facades\Price;
+use Jonassiewertsen\Butik\Facades\Price;
 
 class ShippingRate extends ButikModel
 {

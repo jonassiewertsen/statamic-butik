@@ -6,7 +6,7 @@
 |--------------------------------------------------------------------------
 */
 
-Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\CP')
+Route::namespace('\Jonassiewertsen\Butik\Http\Controllers\CP')
     ->prefix('butik/')
     ->name('butik.')
     ->group(function () {

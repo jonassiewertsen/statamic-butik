@@ -61,7 +61,7 @@ Will be published to `/resources/lang/`
 ## All assets
 
 ```text
-php artisan vendor:publish --provider="Jonassiewertsen\StatamicButik\StatamicButikServiceProvider"
+php artisan vendor:publish --provider="Jonassiewertsen\Butik\ButikServiceProvider"
 ```
 
 This command will publish all available assets

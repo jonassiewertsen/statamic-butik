@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Policies;
+namespace Jonassiewertsen\Butik\Policies;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Variant;
+use Jonassiewertsen\Butik\Http\Models\Variant;
 
 class VariantPolicy extends Policies
 {

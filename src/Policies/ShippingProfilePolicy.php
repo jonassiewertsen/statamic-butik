@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Policies;
+namespace Jonassiewertsen\Butik\Policies;
 
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
+use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
 
 class ShippingProfilePolicy extends Policies
 {

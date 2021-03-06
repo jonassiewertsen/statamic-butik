@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tests;
+namespace Jonassiewertsen\Butik\Tests;
 
 use Statamic\Facades\Path;
 use Statamic\Facades\Stache;

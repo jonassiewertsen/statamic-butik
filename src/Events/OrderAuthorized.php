@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Events;
+namespace Jonassiewertsen\Butik\Events;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Order;
+use Jonassiewertsen\Butik\Http\Models\Order;
 
 class OrderAuthorized
 {

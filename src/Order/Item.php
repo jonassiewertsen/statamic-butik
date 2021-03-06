@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Order;
+namespace Jonassiewertsen\Butik\Order;
 
 class Item
 {

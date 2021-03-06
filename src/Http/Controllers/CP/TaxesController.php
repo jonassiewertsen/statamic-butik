@@ -1,11 +1,11 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Controllers\CP;
+namespace Jonassiewertsen\Butik\Http\Controllers\CP;
 
 use Illuminate\Http\Request;
-use Jonassiewertsen\StatamicButik\Blueprints\TaxBlueprint;
-use Jonassiewertsen\StatamicButik\Http\Controllers\CpController;
-use Jonassiewertsen\StatamicButik\Http\Models\Tax;
+use Jonassiewertsen\Butik\Blueprints\TaxBlueprint;
+use Jonassiewertsen\Butik\Http\Controllers\CpController;
+use Jonassiewertsen\Butik\Http\Models\Tax;
 use Statamic\CP\Column;
 
 class TaxesController extends CpController

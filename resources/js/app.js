@@ -23,7 +23,6 @@ Statamic.booting(() => {
     Statamic.$components.register('butik-manage-product-variants', ProductVariants);
 
     // Fieldtypes
-    Statamic.$components.register('categories-fieldtype', CategoriesFieldtype);
     Statamic.$components.register('countries-fieldtype', CountriesFieldtype);
     Statamic.$components.register('money-fieldtype', MoneyFieldtype);
     Statamic.$components.register('number-fieldtype', NumberFieldtype);

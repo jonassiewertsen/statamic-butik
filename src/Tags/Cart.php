@@ -1,9 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tags;
+namespace Jonassiewertsen\Butik\Tags;
 
-use Jonassiewertsen\StatamicButik\Checkout\Cart as ShoppingCart;
-use Jonassiewertsen\StatamicButik\Http\Traits\MapCartItems;
+use Jonassiewertsen\Butik\Checkout\Cart as ShoppingCart;
+use Jonassiewertsen\Butik\Http\Traits\MapCartItems;
 
 class Cart extends \Statamic\Tags\Tags
 {

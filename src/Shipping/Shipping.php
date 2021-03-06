@@ -1,12 +1,12 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Shipping;
+namespace Jonassiewertsen\Butik\Shipping;
 
 use Illuminate\Support\Collection;
-use Jonassiewertsen\StatamicButik\Exceptions\ButikConfigException;
-use Jonassiewertsen\StatamicButik\Exceptions\ButikShippingException;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingZone;
+use Jonassiewertsen\Butik\Exceptions\ButikConfigException;
+use Jonassiewertsen\Butik\Exceptions\ButikShippingException;
+use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
+use Jonassiewertsen\Butik\Http\Models\ShippingZone;
 
 class Shipping
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Fieldtypes;
+namespace Jonassiewertsen\Butik\Fieldtypes;
 
-use Jonassiewertsen\StatamicButik\Blueprints\VariantBlueprint;
-use Jonassiewertsen\StatamicButik\Http\Traits\FieldsetHelper;
+use Jonassiewertsen\Butik\Blueprints\VariantBlueprint;
+use Jonassiewertsen\Butik\Http\Traits\FieldsetHelper;
 use Statamic\Fields\Fieldtype;
 
 class Variants extends Fieldtype

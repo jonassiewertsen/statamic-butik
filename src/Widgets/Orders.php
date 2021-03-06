@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Widgets;
+namespace Jonassiewertsen\Butik\Widgets;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Order;
+use Jonassiewertsen\Butik\Http\Models\Order;
 use Statamic\Facades\User;
 use Statamic\Widgets\Widget;
 

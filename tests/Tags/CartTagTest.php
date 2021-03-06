@@ -2,9 +2,9 @@
 
 namespace Tests\Tags;
 
-use Jonassiewertsen\StatamicButik\Checkout\Cart as ShoppingCart;
-use Jonassiewertsen\StatamicButik\Tags\Cart;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\Butik\Checkout\Cart as ShoppingCart;
+use Jonassiewertsen\Butik\Tags\Cart;
+use Jonassiewertsen\Butik\Tests\TestCase;
 
 class CartTagTest extends TestCase
 {

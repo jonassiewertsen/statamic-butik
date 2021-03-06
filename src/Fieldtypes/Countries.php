@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Fieldtypes;
+namespace Jonassiewertsen\Butik\Fieldtypes;
 
-use Jonassiewertsen\StatamicButik\Shipping\Country;
+use Jonassiewertsen\Butik\Shipping\Country;
 use Statamic\Fields\Fieldtype;
 
 class Countries extends Fieldtype

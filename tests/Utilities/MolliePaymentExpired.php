@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tests\Utilities;
+namespace Jonassiewertsen\Butik\Tests\Utilities;
 
 class MolliePaymentExpired extends MollieResponse
 {

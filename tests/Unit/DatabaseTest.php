@@ -1,20 +1,19 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Tests\Unit;
+namespace Jonassiewertsen\Butik\Tests\Unit;
 
-use Jonassiewertsen\StatamicButik\Http\Models\Category;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\Butik\Http\Models\Order;
+use Jonassiewertsen\Butik\Tests\TestCase;
 
 class DatabaseTest extends TestCase
 {
     /** @test */
-    public function testing_the_database_with_the_product_table()
+    public function database_test_with_orders()
     {
-        $this->assertEquals(0, Category::count());
+        $this->assertEquals(0, Order::count());
 
-        $category = raw(Category::class);
-        Category::create($category);
+        create(Order::class);
 
-        $this->assertEquals(1, Category::count());
+        $this->assertEquals(1, Order::count());
     }
 }

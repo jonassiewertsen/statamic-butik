@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Http\Traits;
+namespace Jonassiewertsen\Butik\Http\Traits;
 
-use Jonassiewertsen\StatamicButik\Checkout\Cart;
+use Jonassiewertsen\Butik\Checkout\Cart;
 
 trait MapCartItems
 {

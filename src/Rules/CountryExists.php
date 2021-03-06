@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Rules;
+namespace Jonassiewertsen\Butik\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Symfony\Component\Intl\Countries;

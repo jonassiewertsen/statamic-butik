@@ -2,7 +2,7 @@
 
 use App\Http\Middleware\VerifyCsrfToken;
 
-Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\Web')
+Route::namespace('\Jonassiewertsen\Butik\Http\Controllers\Web')
     ->prefix(locale_url().'/'.config('butik.route_shop-prefix'))
     ->middleware(['web', 'butikRoutes'])
     ->name('butik.')
@@ -44,6 +44,21 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\Web')
         Route::get('process/payment', 'PaymentGatewayController@processPayment')
             ->name('payment.process')
             ->middleware(['cartNotEmpty', 'validateCheckoutRoute']);
+
+        /**
+         * #################################################################################################################
+         *   Shop pages
+         * #################################################################################################################.
+         */
+        if (config('butik.shop_route_active')) {
+            Route::get('/', 'ShopController@index')
+                ->name('shop');
+        }
+
+        if (config('butik.product_route_active')) {
+            Route::get(config('butik.route_product'), 'ShopController@show')
+                ->name('shop.product');
+        }
     });
 
 /**
@@ -51,6 +66,6 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\Web')
  *   Mollie webhook
  * #################################################################################################################.
  */
-Route::post('butik/webhook/mollie', '\\Jonassiewertsen\\StatamicButik\\Http\\Controllers\\Web\\PaymentGatewayController@webhook')
+Route::post('butik/webhook/mollie', '\\Jonassiewertsen\\Butik\\Http\\Controllers\\Web\\PaymentGatewayController@webhook')
     ->name('butik.payment.webhook.mollie')
     ->withoutMiddleware([VerifyCsrfToken::class]);

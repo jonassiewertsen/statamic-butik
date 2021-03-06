@@ -2,8 +2,8 @@
 
 namespace Tests\Rules;
 
-use Jonassiewertsen\StatamicButik\Rules\ProductSlugExists;
-use Jonassiewertsen\StatamicButik\Tests\TestCase;
+use Jonassiewertsen\Butik\Rules\ProductSlugExists;
+use Jonassiewertsen\Butik\Tests\TestCase;
 
 class ProductSlugExistsTest extends TestCase
 {

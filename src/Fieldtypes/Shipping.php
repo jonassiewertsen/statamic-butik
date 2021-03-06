@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Fieldtypes;
+namespace Jonassiewertsen\Butik\Fieldtypes;
 
-use Jonassiewertsen\StatamicButik\Http\Models\ShippingProfile;
+use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
 use Statamic\Fields\Fieldtype;
 
 class Shipping extends Fieldtype
