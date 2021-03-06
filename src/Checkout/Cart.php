@@ -20,7 +20,7 @@ class Cart implements CartRepository
 
     public function __desctruct()
     {
-        $this->save();
+        Session::put('butik.cart', $this->cart);
     }
 
     public function get(): Collection
@@ -99,14 +99,14 @@ class Cart implements CartRepository
     /**
      * The total count of items.
      */
-    public function count()
+    public function count(): int
     {
         return $this->cart->map(function ($item) {
             return $item->getQuantity();
         })->sum();
     }
 
-    public function totalPrice()
+    public function totalPrice(): string
     {
         $productAmount = $this->cart->filter(function ($item) {
             return $item->sellable;
@@ -117,6 +117,19 @@ class Cart implements CartRepository
         $shippingAmount = $this->totalShipping();
 
         return Price::of($productAmount)->add($shippingAmount)->get();
+    }
+
+    /**
+     * All shipping costs, from all shipping profiles, summed
+     * up to determine the total shipping costs.
+     */
+    public function totalShipping(): string
+    {
+        $shippingAmount = $this->shipping()->sum(function ($shipping) {
+            return Price::of($shipping->total)->cents();
+        });
+
+        return Price::of($shippingAmount)->get();
     }
 
     /**
@@ -185,22 +198,9 @@ class Cart implements CartRepository
     }
 
     /**
-     * All shipping costs, from all shipping profiles, summed
-     * up to determine the total shipping costs.
-     */
-    public function totalShipping(): string
-    {
-        $shippingAmount = $this->shipping()->sum(function ($shipping) {
-            return Price::of($shipping->total)->cents();
-        });
-
-        return Price::of($shippingAmount)->get();
-    }
-
-    /**
      * Getting the actual choosen country.
      */
-    public function country()
+    public function country(): string
     {
         // TODO: Should the country move to the Country Facade?
         return Country::get();
@@ -225,16 +225,8 @@ class Cart implements CartRepository
     /**
      * Is the product already saved in the cart?
      */
-    private function contains(string $slug): bool
+    public function contains(string $slug): bool
     {
         return $this->cart->contains('slug', $slug);
-    }
-
-    /**
-     * Set the cart to the session.
-     */
-    private function save(): void
-    {
-        Session::put('butik.cart', $this->cart);
     }
 }
