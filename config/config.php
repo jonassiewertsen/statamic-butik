@@ -77,12 +77,10 @@ return [
      */
     'shop_route_active'     => true, // default: true. Set to false to deactive this route.
     'product_route_active'  => true, // default: true. Set to false to deactive this route.
-    'category_route_active' => true, // default: true. Set to false to deactive this route.
 
     'route_shop-prefix'       => 'shop',                       // yourshop.com/shop/
     'route_product'           => '{product}/{variant?}',       // yourshop.com/shop/xxxxx
     'route_cart'              => 'cart',                       // yourshop.com/shop/cart
-    'route_category'          => 'category/{category}',         // yourshop.com/shop/category/xxxxx
     'route_checkout-delivery' => 'checkout/delivery',           // yourshop.com/shop/checkout/delivery
     'route_checkout-payment'  => 'checkout/payment',            // yourshop.com/shop/checkout/payment
     'route_payment-receipt'   => 'payment/{order}/receipt',     // yourshop.com/shop/payment/xxxxx/receipt
@@ -94,7 +92,6 @@ return [
      * given layouts to fit your needs.
      */
     'template_product-index'            => 'butik::web.shop.index',
-    'template_product-category'         => 'butik::web.shop.category',
     'template_product-show'             => 'butik::web.shop.show',
     'template_cart'                     => 'butik::web.cart.index',
     'template_checkout-delivery'        => 'butik::web.checkout.delivery',
@@ -109,7 +106,6 @@ return [
      * given layouts to fit your needs.
      */
     'layout_product-index'              => 'layout',
-    'layout_product-category'           => 'layout',
     'layout_product-show'               => 'layout',
     'layout_cart'                       => 'layout',
     'layout_checkout-delivery'          => 'layout',

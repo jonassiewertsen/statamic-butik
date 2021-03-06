@@ -33,19 +33,6 @@ Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\CP')
                 'index', 'create', 'store', 'edit', 'update', 'destroy',
             ]);
 
-            Route::get('categories/from/{product}', 'CategoriesController@from')
-            ->name('categories.from-product');
-
-            Route::resource('categories', 'CategoriesController')->only([
-                'store', 'update', 'destroy',
-            ]);
-
-            Route::post('category/{category}/attach/{product}', 'CategoriesController@attachProduct')
-            ->name('category.attach-product');
-
-            Route::delete('category/{category}/attach/{product}', 'CategoriesController@detachProduct')
-            ->name('category.detach-product');
-
             Route::resource('shipping', 'ShippingController')->only([
                 'index',
             ]);
