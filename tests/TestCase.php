@@ -2,7 +2,6 @@
 
 namespace Jonassiewertsen\Butik\Tests;
 
-use Facades\Jonassiewertsen\Butik\Http\Models\Product;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Config;

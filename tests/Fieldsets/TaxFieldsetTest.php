@@ -4,8 +4,8 @@ namespace Jonassiewertsen\Butik\Tests\Fieldsets;
 
 use Jonassiewertsen\Butik\Fieldtypes\Tax as TaxFieldset;
 use Jonassiewertsen\Butik\Http\Models\Tax;
-use Statamic\Fields\Field;
 use Jonassiewertsen\Butik\Tests\TestCase;
+use Statamic\Fields\Field;
 
 class TaxFieldsetTest extends TestCase
 {
