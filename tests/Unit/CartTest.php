@@ -4,8 +4,8 @@ namespace Jonassiewertsen\StatamicButik\Tests\Unit;
 
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\StatamicButik\Checkout\Customer;
-use Jonassiewertsen\StatamicButik\Facades\Cart;
 use Jonassiewertsen\StatamicButik\Checkout\Item;
+use Jonassiewertsen\StatamicButik\Facades\Cart;
 use Jonassiewertsen\StatamicButik\Facades\Price;
 use Jonassiewertsen\StatamicButik\Http\Models\Product;
 use Jonassiewertsen\StatamicButik\Http\Models\ShippingRate;

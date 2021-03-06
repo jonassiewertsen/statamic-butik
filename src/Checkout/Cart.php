@@ -119,7 +119,6 @@ class Cart implements CartRepository
         return Price::of($productAmount)->add($shippingAmount)->get();
     }
 
-
     /**
      * All taxes from products and shipping.
      */
