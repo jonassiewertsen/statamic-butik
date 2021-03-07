@@ -1,9 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\StatamicButik\Repositories;
+namespace Jonassiewertsen\Butik\Repositories;
 
 use Illuminate\Support\Collection;
-use Jonassiewertsen\StatamicButik\Contracts\ProductRepository as ProductRepositoryContract;
+use Jonassiewertsen\Butik\Contracts\ProductRepository as ProductRepositoryContract;
 use Statamic\Facades\Entry;
 use Statamic\Facades\Site;
 
