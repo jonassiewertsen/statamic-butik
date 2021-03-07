@@ -87,7 +87,7 @@ For security reasons, you can define if orders can be deleted and if they can, f
 | :--- | :--- |
 | **never** | Orders can't be deleted at all. |
 | **development** | Orders can be deleted in development mode only. |
-| **permissions** | Orders can be deleted on |
+| **users** | Orders can be deleted by all users, if they got the correct Statamic permissions. |
 
 Check out the [orders documentation](orders.md) for more information.
 
