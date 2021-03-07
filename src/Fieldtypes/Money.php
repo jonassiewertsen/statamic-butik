@@ -2,6 +2,7 @@
 
 namespace Jonassiewertsen\Butik\Fieldtypes;
 
+use Jonassiewertsen\Butik\Facades\Price;
 use Statamic\Fields\Fieldtype;
 
 class Money extends Fieldtype
@@ -25,13 +26,7 @@ class Money extends Fieldtype
 
     public function preProcess($data)
     {
-        // TODO: Use our Price Facade for calculations
-
-        // In case we will use another number seperator then '.', like in europe,
-        // we will make sure replace to avoid problems calculating with it.
-        $data = str_replace(',', '.', $data);
-
-        return number_format(floatval($data), 2, '.', '');
+        return Price::of($data)->delimiter('.')->thousands('')->get();
     }
 
     public function augment($value): array
@@ -39,25 +34,31 @@ class Money extends Fieldtype
         return [
             'gross' => $this->calculateGross($value), // {{ price:gross }}
             'net' => $this->calculateNet($value),     // {{ price:net }}
-            'total' => $value,                        // {{ price:total }}
+            'total' => Price::of($value)->get(),      // {{ price:total }}
         ];
     }
 
     private function calculateNet($value)
     {
-        if ($this->preload()['priceDefault'] === 'net') {
-            return $value;
-        }
+        return Price::of($value)->get();
 
-        return $value;
+//        TODO: Add net to price fieldset
+//        if ($this->preload()['priceDefault'] === 'net') {
+//            return $value;
+//        }
+//
+//        return $value;
     }
 
     private function calculateGross($value)
     {
-        if ($this->preload()['priceDefault'] === 'gross') {
-            return $value;
-        }
+        return Price::of($value)->get();
 
-        return $value;
+//        TODO: Add gross to price fieldset
+//        if ($this->preload()['priceDefault'] === 'gross') {
+//            return $value;
+//        }
+//
+//        return $value;
     }
 }

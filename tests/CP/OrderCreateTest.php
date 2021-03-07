@@ -1,9 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Tests\CP;
+namespace TestsCP;
 
 use Jonassiewertsen\Butik\Http\Models\Order;
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Tests\TestCase;
 
 class OrderCreateTest extends TestCase
 {

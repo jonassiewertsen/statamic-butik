@@ -1,11 +1,11 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Tests\Modifiers;
+namespace TestsModifiers;
 
 use Facades\Jonassiewertsen\Butik\Http\Models\Product;
 use Jonassiewertsen\Butik\Facades\Price;
 use Jonassiewertsen\Butik\Modifiers\WithoutTax;
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Tests\TestCase;
 
 class WithoutTaxTest extends TestCase
 {

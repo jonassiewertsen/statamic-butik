@@ -1,10 +1,10 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Tests\CP;
+namespace TestsCP;
 
 use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
 use Jonassiewertsen\Butik\Http\Models\ShippingZone;
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Tests\TestCase;
 
 class ShippingZoneUpdateTest extends TestCase
 {

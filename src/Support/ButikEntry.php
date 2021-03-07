@@ -4,7 +4,6 @@ namespace Jonassiewertsen\Butik\Support;
 
 use Illuminate\Support\Collection;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
-use Statamic\Contracts\Entries\Entry;
 
 abstract class ButikEntry implements ProductRepository
 {
@@ -13,6 +12,7 @@ abstract class ButikEntry implements ProductRepository
     public string $slug;
     public array $data;
     public bool $published;
+    public ?\Statamic\Contracts\Entries\Entry $entry;
 
     abstract public function all(): Collection;
 
@@ -30,12 +30,19 @@ abstract class ButikEntry implements ProductRepository
 
     abstract public function collection(): string;
 
-    protected function defineAttributes(Entry $product): void
+    public function __get($name)
     {
-        $this->id = $product->id();
-        $this->title = $product->get('title');
-        $this->slug = $product->slug();
-        $this->data = $product->data()->toArray();
-        $this->published = $product->published();
+        if (method_exists($this, $name)) {
+            return $this->$name();
+        }
+    }
+
+    protected function defineAttributes(): void
+    {
+        $this->id = $this->entry->id();
+        $this->title = $this->entry->get('title');
+        $this->slug = $this->entry->slug();
+        $this->data = $this->entry->data()->toAugmentedArray();
+        $this->published = $this->entry->published();
     }
 }

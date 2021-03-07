@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use Jonassiewertsen\Butik\Facades\Number;
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Tests\TestCase;
 
 class NumberTest extends TestCase
 {

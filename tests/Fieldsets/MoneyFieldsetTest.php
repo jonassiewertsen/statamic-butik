@@ -1,9 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Tests\Fieldsets;
+namespace TestsFieldsets;
 
 use Jonassiewertsen\Butik\Fieldtypes\Money;
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Tests\TestCase;
 use Statamic\Entries\Entry;
 use Statamic\Fields\Field;
 

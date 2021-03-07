@@ -12,6 +12,8 @@ interface ProductRepository
 
     public function findBySlug(string $slug): ?self;
 
+    public function exists(string $slug): bool;
+
     public function toArray(): array;
 
     public function query(); // Typehint ?
@@ -21,4 +23,12 @@ interface ProductRepository
     public function delete($entry);
 
     public function collection(): string;
+
+    public function stock(): int;
+
+    public function tax(): object;
+
+    public function price(): object;
+
+    public function stockUnlimited(): int;
 }

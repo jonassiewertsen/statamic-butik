@@ -1,10 +1,10 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Tests\Fieldsets;
+namespace TestsFieldsets;
 
 use Jonassiewertsen\Butik\Fieldtypes\Tax as TaxFieldset;
 use Jonassiewertsen\Butik\Http\Models\Tax;
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Tests\TestCase;
 use Statamic\Fields\Field;
 
 class TaxFieldsetTest extends TestCase

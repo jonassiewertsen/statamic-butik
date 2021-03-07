@@ -1,13 +1,13 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Tests\Checkout;
+namespace TestsCheckout;
 
 use Illuminate\Support\Facades\Mail;
 use Jonassiewertsen\Butik\Http\Models\Order;
 use Jonassiewertsen\Butik\Mail\Customer\PurchaseConfirmation;
 use Jonassiewertsen\Butik\Mail\Seller\OrderConfirmation;
-use Jonassiewertsen\Butik\Tests\TestCase;
-use Jonassiewertsen\Butik\Tests\Utilities\MolliePaymentSuccessful;
+use Tests\TestCase;
+use TestsUtilities\MolliePaymentSuccessful;
 use Mollie\Laravel\Facades\Mollie;
 
 class OrderConfirmationMailTest extends TestCase

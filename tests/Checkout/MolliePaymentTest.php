@@ -1,15 +1,15 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Tests\Checkout;
+namespace TestsCheckout;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Event;
 use Jonassiewertsen\Butik\Events\OrderPaid;
 use Jonassiewertsen\Butik\Http\Models\Order;
-use Jonassiewertsen\Butik\Tests\TestCase;
-use Jonassiewertsen\Butik\Tests\Utilities\MolliePaymentCanceled;
-use Jonassiewertsen\Butik\Tests\Utilities\MolliePaymentExpired;
-use Jonassiewertsen\Butik\Tests\Utilities\MolliePaymentSuccessful;
+use Tests\TestCase;
+use TestsUtilities\MolliePaymentCanceled;
+use TestsUtilities\MolliePaymentExpired;
+use TestsUtilities\MolliePaymentSuccessful;
 use Mollie\Laravel\Facades\Mollie;
 
 class MolliePaymentTest extends TestCase

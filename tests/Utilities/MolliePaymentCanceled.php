@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Tests\Utilities;
+namespace TestsUtilities;
 
 class MolliePaymentCanceled extends MollieResponse
 {

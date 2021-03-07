@@ -1,13 +1,13 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Tests\Checkout;
+namespace TestsCheckout;
 
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\Butik\Checkout\Cart;
 use Jonassiewertsen\Butik\Checkout\Customer;
 use Jonassiewertsen\Butik\Http\Models\ShippingRate;
 use Jonassiewertsen\Butik\Http\Models\ShippingZone;
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Tests\TestCase;
 
 class CheckoutDeliveryTest extends TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Tests\Checkout;
+namespace TestsCheckout;
 
 use Facades\Jonassiewertsen\Butik\Http\Models\Product;
 use Illuminate\Support\Facades\Mail;
@@ -8,8 +8,8 @@ use Jonassiewertsen\Butik\Checkout\Item;
 use Jonassiewertsen\Butik\Http\Models\Order;
 use Jonassiewertsen\Butik\Http\Models\Variant;
 use Jonassiewertsen\Butik\Order\ItemCollection;
-use Jonassiewertsen\Butik\Tests\TestCase;
-use Jonassiewertsen\Butik\Tests\Utilities\MolliePaymentSuccessful;
+use Tests\TestCase;
+use TestsUtilities\MolliePaymentSuccessful;
 use Mollie\Laravel\Facades\Mollie;
 use Statamic\Facades\Entry;
 

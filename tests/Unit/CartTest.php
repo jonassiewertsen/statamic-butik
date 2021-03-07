@@ -1,24 +1,25 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Tests\Unit;
+namespace Tests\Unit;
 
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\Butik\Checkout\Customer;
 use Jonassiewertsen\Butik\Checkout\Item;
+use Jonassiewertsen\Butik\Contracts\ProductRepository;
 use Jonassiewertsen\Butik\Facades\Cart;
 use Jonassiewertsen\Butik\Facades\Price;
 use Jonassiewertsen\Butik\Http\Models\ShippingRate;
 use Jonassiewertsen\Butik\Http\Models\ShippingZone;
 use Jonassiewertsen\Butik\Http\Models\Variant;
 use Jonassiewertsen\Butik\Shipping\Country;
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Tests\TestCase;
 use Statamic\Entries\Entry;
 
 class CartTest extends TestCase
 {
     // TODO: Add tests for variants
 
-    protected Entry $product;
+    protected ProductRepository $product;
 //    protected Variant $variant;
 
     public function setUp(): void
@@ -33,7 +34,7 @@ class CartTest extends TestCase
     /** @test */
     public function a_new_cart_item_has_the_quanitity_of_one()
     {
-        Cart::add($this->product->slug());
+        Cart::add($this->product->slug);
 
         $this->assertEquals(1, Cart::get()->first()->getQuantity());
     }

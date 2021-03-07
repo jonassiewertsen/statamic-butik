@@ -16,28 +16,33 @@ class Product extends ButikEntry
 
     public function find(string $id): ?self
     {
-        if (! $product = Entry::find($id)) {
+        if (! $this->entry = Entry::find($id)) {
             return null;
         }
 
-        $this->defineAttributes($product);
+        $this->defineAttributes();
 
         return $this;
     }
 
     public function findBySlug(string $slug): ?self
     {
-        $product = Entry::query()
+        $this->entry = Entry::query()
             ->where('site', Site::current()->handle())
             ->where('collection', $this->collection())
             ->where('slug', $slug)
             ->first();
 
-        if (! $product) {
+        if (! $this->entry) {
             return null;
         }
 
         return $this;
+    }
+
+    public function exists(string $slug): bool
+    {
+        return (bool) Entry::find($slug);
     }
 
     public function toArray(): array
@@ -63,5 +68,26 @@ class Product extends ButikEntry
     public function collection(): string
     {
         return 'products'; // TODO: Pull from config
+    }
+
+    public function stock(): int
+    {
+        return 0;
+    }
+
+    public function stockUnlimited(): int
+    {
+        return 0;
+    }
+
+    public function tax(): object
+    {
+        // Refactor to use tax instead of tax_id
+        return (object) $this->entry->augmentedValue('tax_id')->value();
+    }
+
+    public function price(): object
+    {
+        return (object) $this->entry->augmentedValue('price')->value();
     }
 }

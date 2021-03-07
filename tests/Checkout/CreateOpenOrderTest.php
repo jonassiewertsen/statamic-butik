@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Tests\Checkout;
+namespace TestsCheckout;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
@@ -14,9 +14,9 @@ use Jonassiewertsen\Butik\Facades\Price;
 use Jonassiewertsen\Butik\Http\Controllers\PaymentGateways\MolliePaymentGateway;
 use Jonassiewertsen\Butik\Http\Models\Order;
 use Jonassiewertsen\Butik\Order\ItemCollection;
-use Jonassiewertsen\Butik\Tests\TestCase;
-use Jonassiewertsen\Butik\Tests\Utilities\MolliePaymentOpen;
-use Jonassiewertsen\Butik\Tests\Utilities\MolliePaymentSuccessful;
+use Tests\TestCase;
+use TestsUtilities\MolliePaymentOpen;
+use TestsUtilities\MolliePaymentSuccessful;
 use Mollie\Laravel\Facades\Mollie;
 
 class CreateOpenOrderTest extends TestCase

@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Tests\Shipping;
+namespace TestsShipping;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
@@ -10,7 +10,7 @@ use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
 use Jonassiewertsen\Butik\Http\Models\ShippingZone;
 use Jonassiewertsen\Butik\Shipping\Country;
 use Jonassiewertsen\Butik\Shipping\Shipping;
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Tests\TestCase;
 
 class ShippingTest extends TestCase
 {

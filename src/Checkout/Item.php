@@ -56,7 +56,7 @@ class Item
     /**
      * The product the item does base on.
      */
-    public ProductModel $product;
+    public ProductRepository $product;
 
     /**
      * The variant we do use. Null if not defined.
@@ -64,14 +64,9 @@ class Item
     public Variant $variant;
 
     /**
-     * The tax amount of the product.
+     * All tax information
      */
-    public string $taxAmount;
-
-    /**
-     * The taxrate of the product.
-     */
-    public float $taxRate;
+    public object $tax;
 
     /**
      * The quanitity of this item in the shopping cart.
@@ -81,12 +76,12 @@ class Item
     /**
      * Will return the price of the item.
      */
-    private string $singlePrice;
+    private object $singlePrice;
 
     /**
      * Will return the cumulated price. The itemquantity multiplied with the single Price.
      */
-    private string $totalPrice;
+    private object $totalPrice;
 
     public function __construct(string $slug, ?string $locale = null)
     {
@@ -96,20 +91,18 @@ class Item
         $this->setCurrentLocale();
         $item = $this->defineItemData();
 
-        $this->available = $item->available;
+        $this->available = $item->published;
         $this->sellable = true;
         $this->quantity = 1;
-        $this->availableStock = (int) $item->stock;
-        $this->unlimited = (bool) $item->stock_unlimited;
-        $this->singlePrice = (string) $item->price;
-        $this->name = (string) $item->title;
-        $this->images = $this->convertImage($this->product->images);
+        $this->availableStock = $item->stock;
+//        $this->unlimited = $item->stockUnlimited();
+        $this->singlePrice = $item->price;
+        $this->title = $item->title;
+//        $this->images = $this->convertImage($this->product->images);
         $this->description = $this->limitedDescription();
-        $this->taxRate = $item->tax->percentage;
-        $this->taxRate = $item->tax->percentage;
-        $this->taxAmount = $this->totalTaxAmount();
-        $this->totalPrice = $this->totalPrice();
-        $this->shippingProfile = $item->shipping_profile;
+            $this->tax = $item->tax;
+//        $this->totalPrice = $this->totalPrice();
+//        $this->shippingProfile = $item->shipping_profile;
     }
 
     public function increase()
@@ -158,7 +151,7 @@ class Item
 
     public function totalPrice()
     {
-        return Price::of($this->singlePrice)
+        return Price::of($this->singlePrice->total)
                 ->multiply($this->quantity)
                 ->get();
     }
@@ -237,7 +230,7 @@ class Item
         $cacheName = "product:{$this->productSlug()}:{$this->locale}";
 
         return Cache::remember($cacheName, 20, function () {
-            return Product::find($this->productSlug());
+            return Product::findBySlug($this->productSlug());
         });
     }
 
