@@ -2,19 +2,18 @@
 
 namespace Jonassiewertsen\Butik\Tests\Unit;
 
-use Facades\Jonassiewertsen\Butik\Http\Models\Product;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Jonassiewertsen\Butik\Checkout\Item;
+use Jonassiewertsen\Butik\Contracts\ProductRepository;
 use Jonassiewertsen\Butik\Facades\Price;
-use Jonassiewertsen\Butik\Http\Models\Product as ProductModel;
 use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
 use Jonassiewertsen\Butik\Tests\TestCase;
 use Statamic\Facades\Entry;
 
 class ItemAsProductTest extends TestCase
 {
-    protected ProductModel $product;
+    protected ProductRepository $product;
 
     public function setUp(): void
     {

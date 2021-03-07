@@ -2,11 +2,11 @@
 
 namespace Jonassiewertsen\Butik\Checkout;
 
-use Facades\Jonassiewertsen\Butik\Http\Models\Product;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use Jonassiewertsen\Butik\Contracts\ProductRepository;
 use Jonassiewertsen\Butik\Facades\Price;
-use Jonassiewertsen\Butik\Http\Models\Product as ProductModel;
+use Jonassiewertsen\Butik\Facades\Product;
 use Jonassiewertsen\Butik\Http\Models\Variant;
 use Statamic\Facades\Site;
 use Statamic\Fields\Value;
@@ -232,7 +232,7 @@ class Item
         return Str::limit($this->product()->description, 100, '...');
     }
 
-    private function product(): ProductModel
+    private function product(): ProductRepository
     {
         $cacheName = "product:{$this->productSlug()}:{$this->locale}";
 

@@ -26,12 +26,12 @@ class ProductTest extends TestCase
     /** @test */
     public function a_product_can_be_found()
     {
-        $this->assertEquals($this->product, Product::find($this->product->id()));
+        $this->assertEquals($this->product, Product::find($this->product->id));
     }
 
     /** @test */
     public function a_product_can_be_found_by_its_slug()
     {
-        $this->assertEquals($this->product, Product::findBySlug($this->product->slug()));
+        $this->assertEquals($this->product, Product::findBySlug($this->product->slug));
     }
 }

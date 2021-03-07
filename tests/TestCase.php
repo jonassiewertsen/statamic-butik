@@ -5,6 +5,7 @@ namespace Jonassiewertsen\Butik\Tests;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Config;
+use Jonassiewertsen\Butik\Facades\Product;
 use Jonassiewertsen\Butik\Http\Models\ShippingRate;
 use Jonassiewertsen\Butik\Http\Models\ShippingZone;
 use Jonassiewertsen\Butik\Http\Models\Tax;
@@ -71,7 +72,7 @@ class TestCase extends OrchestraTestCase
             ->id($id = Str::random('30'))
             ->save();
 
-        return Entry::find($id);
+        return Product::find($id);
     }
 
     /**

@@ -1,31 +1,43 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Repositories;
+namespace Jonassiewertsen\Butik\Products;
 
 use Illuminate\Support\Collection;
-use Jonassiewertsen\Butik\Contracts\ProductRepository as ProductRepositoryContract;
+use Jonassiewertsen\Butik\Support\ButikEntry;
 use Statamic\Facades\Entry;
 use Statamic\Facades\Site;
 
-class ProductRepository implements ProductRepositoryContract
+class Product extends ButikEntry
 {
     public function all(): Collection
     {
         return collect($this->query()->all());
     }
 
-    public function find(string $id): ?\Statamic\Entries\Entry
+    public function find(string $id): ?self
     {
-        return Entry::find($id);
+        if (! $product = Entry::find($id)) {
+            return null;
+        }
+
+        $this->defineAttributes($product);
+
+        return $this;
     }
 
-    public function findBySlug(string $slug): ?\Statamic\Entries\Entry
+    public function findBySlug(string $slug): ?self
     {
-        return Entry::query()
+        $product = Entry::query()
             ->where('site', Site::current()->handle())
             ->where('collection', $this->collection())
             ->where('slug', $slug)
             ->first();
+
+        if (! $product) {
+            return null;
+        }
+
+        return $this;
     }
 
     public function toArray(): array
