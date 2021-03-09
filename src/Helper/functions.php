@@ -1,7 +1,6 @@
 <?php
 
 use Statamic\Facades\Site;
-use Statamic\Support\Str;
 
 /**
  * GLOBAL HELPER for Statamic Butik.
