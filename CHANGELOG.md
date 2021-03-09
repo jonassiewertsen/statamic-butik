@@ -1,8 +1,9 @@
 # Release Notes
 
-# Unlreased changes
+## 3.5.4 (09. Mar 2021)
 - Translate shop pages correctly (#201)
 - Don't gitignore the compsoer.lock file
+- Swap hardcoded text in product show view with translation tag. 
 
 ## 3.5.3 (22. Feb 2021)
 - Cast all order dates correctly
