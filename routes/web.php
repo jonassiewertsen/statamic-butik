@@ -4,7 +4,7 @@ use App\Http\Middleware\VerifyCsrfToken;
 
 Route::namespace('\Jonassiewertsen\StatamicButik\Http\Controllers\Web')
     ->prefix(locale_url().'/'.config('butik.route_shop-prefix'))
-    ->middleware(['web', 'butikRoutes'])
+    ->middleware(['web', 'statamic.web', 'butikRoutes'])
     ->name('butik.')
     ->group(function () {
 
