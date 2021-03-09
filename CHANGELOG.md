@@ -1,5 +1,9 @@
 # Release Notes
 
+# Unlreased changes
+- Translate shop pages correctly (#201)
+- Don't gitignore the compsoer.lock file
+
 ## 3.5.3 (22. Feb 2021)
 - Cast all order dates correctly
 - Language tweaks (#195 thanks @philipboomy)
