@@ -1,6 +1,6 @@
 # Release Notes
 
-## Unreleased
+## 3.5.5 (14. Mar 2021)
 - Rename delete action internally to avoid permission problems with the core delete action (#197)
 - Don't gitignore the composer.lock file
 - Update the php unit xml file to the standard > phpunit 9.3
