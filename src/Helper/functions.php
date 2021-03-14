@@ -1,7 +1,6 @@
 <?php
 
 use Statamic\Facades\Site;
-use Statamic\Support\Str;
 
 /**
  * GLOBAL HELPER for Statamic Butik.
@@ -23,7 +22,7 @@ if (! function_exists('currency')) {
 if (! function_exists('locale')) {
     function locale()
     {
-        return (string) Str::of(Site::current()->locale())->explode('_')->first();
+        return Site::current()->shortLocale();
     }
 }
 

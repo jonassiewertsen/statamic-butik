@@ -20,7 +20,7 @@
 
         <div class="text-dark text-3xl font-light mt-2">
             {{ currency }} {{ price }} {{ 'butik::web.total' | trans }}
-            <span class="text-sm">+ shipping</span>
+            <span class="text-sm">+ {{ 'butik::web.shipping' | trans }}</span>
         </div>
 
         {{ if variants }}
