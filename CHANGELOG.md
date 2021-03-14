@@ -1,5 +1,9 @@
 # Release Notes
 
+## Unreleased
+- Rename delete action internally to avoid permission problems with the core delete action (#197)
+- Don't gitignore the composer.lock file
+
 ## 3.5.3 (22. Feb 2021)
 - Cast all order dates correctly
 - Language tweaks (#195 thanks @philipboomy)
