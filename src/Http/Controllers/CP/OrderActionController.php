@@ -9,8 +9,6 @@ class OrderActionController extends ActionController
 {
     protected function getSelectedItems($items, $context)
     {
-        return $items->map(function ($item) {
-            return Order::find($item);
-        });
+        return Order::find($items);
     }
 }
