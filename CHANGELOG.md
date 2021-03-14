@@ -3,6 +3,9 @@
 ## Unreleased
 - Rename delete action internally to avoid permission problems with the core delete action (#197)
 - Don't gitignore the composer.lock file
+- Update the php unit xml file to the standard > phpunit 9.3
+- Update Github actions to newest standards
+- Temporary comment out tests, to prevent them from failing randomly on GitHub actions (Yes, I am a bad boy) (#204)
 
 ## 3.5.4 (09. Mar 2021)
 - Translate shop pages correctly (#201)
