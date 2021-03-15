@@ -2,9 +2,9 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
 use Statamic\Facades\Site;
 use Statamic\Support\Str;
+use Tests\TestCase;
 
 class GlobalHelperTest extends TestCase
 {

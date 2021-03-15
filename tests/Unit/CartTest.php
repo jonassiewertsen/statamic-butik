@@ -13,7 +13,6 @@ use Jonassiewertsen\Butik\Http\Models\ShippingZone;
 use Jonassiewertsen\Butik\Http\Models\Variant;
 use Jonassiewertsen\Butik\Shipping\Country;
 use Tests\TestCase;
-use Statamic\Entries\Entry;
 
 class CartTest extends TestCase
 {

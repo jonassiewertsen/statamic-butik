@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Mail;
 use Jonassiewertsen\Butik\Http\Models\Order;
 use Jonassiewertsen\Butik\Mail\Customer\PurchaseConfirmation;
 use Jonassiewertsen\Butik\Mail\Seller\OrderConfirmation;
+use Mollie\Laravel\Facades\Mollie;
 use Tests\TestCase;
 use TestsUtilities\MolliePaymentSuccessful;
-use Mollie\Laravel\Facades\Mollie;
 
 class OrderConfirmationMailTest extends TestCase
 {

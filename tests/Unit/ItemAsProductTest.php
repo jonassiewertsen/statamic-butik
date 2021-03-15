@@ -8,8 +8,8 @@ use Jonassiewertsen\Butik\Checkout\Item;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
 use Jonassiewertsen\Butik\Facades\Price;
 use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
-use Tests\TestCase;
 use Statamic\Facades\Entry;
+use Tests\TestCase;
 
 class ItemAsProductTest extends TestCase
 {
