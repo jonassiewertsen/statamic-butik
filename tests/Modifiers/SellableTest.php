@@ -4,8 +4,8 @@ namespace Tests\Modifiers;
 
 use Jonassiewertsen\Butik\Checkout\Item;
 use Jonassiewertsen\Butik\Modifiers\Sellable;
-use Tests\TestCase;
 use Statamic\Modifiers\Modifier;
+use Tests\TestCase;
 
 class SellableTest extends TestCase
 {

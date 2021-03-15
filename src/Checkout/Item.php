@@ -64,7 +64,7 @@ class Item
     public Variant $variant;
 
     /**
-     * All tax information
+     * All tax information.
      */
     public object $tax;
 
@@ -100,7 +100,7 @@ class Item
         $this->title = $item->title;
 //        $this->images = $this->convertImage($this->product->images);
         $this->description = $this->limitedDescription();
-            $this->tax = $item->tax;
+        $this->tax = $item->tax;
 //        $this->totalPrice = $this->totalPrice();
 //        $this->shippingProfile = $item->shipping_profile;
     }

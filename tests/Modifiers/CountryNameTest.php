@@ -5,8 +5,8 @@ namespace Tests\Modifiers;
 use Jonassiewertsen\Butik\Http\Models\ShippingZone;
 use Jonassiewertsen\Butik\Modifiers\CountryName;
 use Jonassiewertsen\Butik\Shipping\Country;
-use Tests\TestCase;
 use Statamic\Modifiers\Modifier;
+use Tests\TestCase;
 
 class CountryNameTest extends TestCase
 {

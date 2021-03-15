@@ -6,11 +6,11 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Event;
 use Jonassiewertsen\Butik\Events\OrderPaid;
 use Jonassiewertsen\Butik\Http\Models\Order;
+use Mollie\Laravel\Facades\Mollie;
 use Tests\TestCase;
 use TestsUtilities\MolliePaymentCanceled;
 use TestsUtilities\MolliePaymentExpired;
 use TestsUtilities\MolliePaymentSuccessful;
-use Mollie\Laravel\Facades\Mollie;
 
 class MolliePaymentTest extends TestCase
 {

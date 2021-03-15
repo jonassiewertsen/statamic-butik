@@ -3,9 +3,9 @@
 namespace Tests\Fieldsets;
 
 use Jonassiewertsen\Butik\Fieldtypes\Money;
-use Tests\TestCase;
 use Statamic\Entries\Entry;
 use Statamic\Fields\Field;
+use Tests\TestCase;
 
 class MoneyFieldsetTest extends TestCase
 {

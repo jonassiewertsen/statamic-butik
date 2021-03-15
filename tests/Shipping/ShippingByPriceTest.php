@@ -9,8 +9,8 @@ use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
 use Jonassiewertsen\Butik\Http\Models\ShippingRate;
 use Jonassiewertsen\Butik\Http\Models\ShippingZone;
 use Jonassiewertsen\Butik\Shipping\ShippingByPrice;
-use Tests\TestCase;
 use Statamic\Facades\Entry;
+use Tests\TestCase;
 
 class ShippingByPriceTest extends TestCase
 {

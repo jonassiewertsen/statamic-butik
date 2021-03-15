@@ -3,9 +3,9 @@
 namespace Tests\CP;
 
 use Jonassiewertsen\Butik\Http\Models\Variant;
-use Tests\TestCase;
 use Statamic\Events\EntryDeleted;
 use Statamic\Facades\Entry;
+use Tests\TestCase;
 
 class VariantDeleteTest extends TestCase
 {

@@ -3,8 +3,8 @@
 namespace Tests\Tags;
 
 use Jonassiewertsen\Butik\Tags\Currency;
-use Tests\TestCase;
 use Statamic\Facades\Config;
+use Tests\TestCase;
 
 class CurrencyTagTest extends TestCase
 {

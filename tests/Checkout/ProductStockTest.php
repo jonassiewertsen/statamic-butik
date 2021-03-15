@@ -8,10 +8,10 @@ use Jonassiewertsen\Butik\Checkout\Item;
 use Jonassiewertsen\Butik\Http\Models\Order;
 use Jonassiewertsen\Butik\Http\Models\Variant;
 use Jonassiewertsen\Butik\Order\ItemCollection;
-use Tests\TestCase;
-use TestsUtilities\MolliePaymentSuccessful;
 use Mollie\Laravel\Facades\Mollie;
 use Statamic\Facades\Entry;
+use Tests\TestCase;
+use TestsUtilities\MolliePaymentSuccessful;
 
 class ProductStockTest extends TestCase
 {
