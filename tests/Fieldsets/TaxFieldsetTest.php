@@ -1,6 +1,6 @@
 <?php
 
-namespace TestsFieldsets;
+namespace Tests\Fieldsets;
 
 use Jonassiewertsen\Butik\Fieldtypes\Tax as TaxFieldset;
 use Jonassiewertsen\Butik\Http\Models\Tax;

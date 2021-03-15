@@ -1,6 +1,6 @@
 <?php
 
-namespace TestsCP;
+namespace Tests\CP;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Jonassiewertsen\Butik\Http\Models\ShippingProfile;

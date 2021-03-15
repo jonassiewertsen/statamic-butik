@@ -1,6 +1,6 @@
 <?php
 
-namespace TestsCheckout;
+namespace Tests\Checkout;
 
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\Butik\Checkout\Cart;

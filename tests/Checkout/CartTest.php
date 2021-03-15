@@ -1,6 +1,6 @@
 <?php
 
-namespace TestsCheckout;
+namespace Tests\Checkout;
 
 use Jonassiewertsen\Butik\Http\Models\Product;
 use Tests\TestCase;

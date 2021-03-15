@@ -1,6 +1,6 @@
 <?php
 
-namespace TestsModifiers;
+namespace Tests\Modifiers;
 
 use Facades\Jonassiewertsen\Butik\Http\Models\Product;
 use Jonassiewertsen\Butik\Facades\Price;

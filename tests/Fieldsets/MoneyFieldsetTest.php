@@ -1,6 +1,6 @@
 <?php
 
-namespace TestsFieldsets;
+namespace Tests\Fieldsets;
 
 use Jonassiewertsen\Butik\Fieldtypes\Money;
 use Tests\TestCase;

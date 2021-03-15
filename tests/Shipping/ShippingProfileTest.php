@@ -1,6 +1,6 @@
 <?php
 
-namespace TestsShipping;
+namespace Tests\Shipping;
 
 use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
 use Jonassiewertsen\Butik\Http\Models\ShippingRate;

@@ -1,6 +1,6 @@
 <?php
 
-namespace TestsModifiers;
+namespace Tests\Modifiers;
 
 use Jonassiewertsen\Butik\Checkout\Item;
 use Jonassiewertsen\Butik\Modifiers\Sellable;

@@ -1,6 +1,6 @@
 <?php
 
-namespace TestsUtilities;
+namespace Tests\Utilities;
 
 class MolliePaymentExpired extends MollieResponse
 {

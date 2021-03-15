@@ -1,6 +1,6 @@
 <?php
 
-namespace TestsShipping;
+namespace Tests\Shipping;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;

@@ -1,6 +1,6 @@
 <?php
 
-namespace TestsCP;
+namespace Tests\CP;
 
 use Jonassiewertsen\Butik\Http\Models\Tax;
 use Tests\TestCase;

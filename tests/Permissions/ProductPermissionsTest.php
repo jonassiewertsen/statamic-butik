@@ -1,6 +1,6 @@
 <?php
 
-namespace TestsUnit;
+namespace Tests\Unit;
 
 use Jonassiewertsen\Butik\Http\Tags\Butik;
 use Tests\TestCase;

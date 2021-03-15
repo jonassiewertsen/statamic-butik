@@ -1,6 +1,6 @@
 <?php
 
-namespace TestsCheckout;
+namespace Tests\Checkout;
 
 use Illuminate\Support\Facades\Mail;
 use Jonassiewertsen\Butik\Http\Models\Order;

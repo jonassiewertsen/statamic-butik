@@ -1,6 +1,6 @@
 <?php
 
-namespace TestsModifiers;
+namespace Tests\Modifiers;
 
 use Jonassiewertsen\Butik\Http\Models\ShippingZone;
 use Jonassiewertsen\Butik\Modifiers\CountryName;

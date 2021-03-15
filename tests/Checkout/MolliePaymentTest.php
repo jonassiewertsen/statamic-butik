@@ -1,6 +1,6 @@
 <?php
 
-namespace TestsCheckout;
+namespace Tests\Checkout;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Event;
