@@ -56,6 +56,7 @@ class TestCase extends OrchestraTestCase
             'title'                 => $data['title'] ?? 'Test Item Product',
             'price'                 => $data['price'] ?? '20.00',
             'stock'                 => $data['stock'] ?? '5',
+            'stock_unlimited'       => $data['stock_unlimited'] ?? false,
             'tax_id'                => $data['tax_id'] ?? create(Tax::class)->first()->slug,
             'shipping_profile_slug' => $shippingZone->profile->slug,
             'images'                => null,

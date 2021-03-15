@@ -30,5 +30,5 @@ interface ProductRepository
 
     public function price(): object;
 
-    public function stockUnlimited(): int;
+    public function stockUnlimited(): bool;
 }

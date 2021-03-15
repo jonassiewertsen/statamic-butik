@@ -4,6 +4,7 @@ namespace Jonassiewertsen\Butik\Support;
 
 use Illuminate\Support\Collection;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
+use Statamic\Support\Str;
 
 abstract class ButikEntry implements ProductRepository
 {
@@ -34,6 +35,10 @@ abstract class ButikEntry implements ProductRepository
     {
         if (method_exists($this, $name)) {
             return $this->$name();
+        }
+
+        if (method_exists($this, $camel = Str::camel($name))) {
+            return $this->$camel();
         }
     }
 

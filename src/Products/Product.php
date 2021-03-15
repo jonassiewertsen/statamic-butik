@@ -45,11 +45,6 @@ class Product extends ButikEntry
         return (bool) Entry::find($slug);
     }
 
-    public function toArray(): array
-    {
-        //
-    }
-
     public function query()
     {
         return Entry::whereCollection($this->collection());
@@ -72,22 +67,27 @@ class Product extends ButikEntry
 
     public function stock(): int
     {
-        return 0;
+        return (int) $this->data['stock'];
     }
 
-    public function stockUnlimited(): int
+    public function stockUnlimited(): bool
     {
-        return 0;
+        return $this->data['stock_unlimited'];
     }
 
     public function tax(): object
     {
-        // Refactor to use tax instead of tax_id
+        // TODO: Refactor to use tax instead of tax_id
         return (object) $this->entry->augmentedValue('tax_id')->value();
     }
 
     public function price(): object
     {
         return (object) $this->entry->augmentedValue('price')->value();
+    }
+
+    public function toArray(): array
+    {
+        //
     }
 }

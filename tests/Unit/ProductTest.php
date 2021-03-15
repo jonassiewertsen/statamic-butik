@@ -34,4 +34,17 @@ class ProductTest extends TestCase
     {
         $this->assertEquals($this->product, Product::findBySlug($this->product->slug));
     }
+
+    /** @test */
+    public function a_product_has_a_stock()
+    {
+        $this->assertEquals((int) $this->product->data['stock'], $this->product->stock);
+    }
+
+    /** @test */
+    public function a_product_stock_can_be_unlimited()
+    {
+        $this->assertEquals($this->product->data['stock_unlimited'], $this->product->stockUnlimited);
+        $this->assertFalse($this->product->stock_unlimited);
+    }
 }
