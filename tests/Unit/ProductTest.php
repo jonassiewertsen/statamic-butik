@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use Jonassiewertsen\Butik\Exceptions\ButikProductException;
 use Jonassiewertsen\Butik\Facades\Product;
 use Tests\TestCase;
 
@@ -46,5 +47,36 @@ class ProductTest extends TestCase
     {
         $this->assertEquals($this->product->data['stock_unlimited'], $this->product->stockUnlimited);
         $this->assertFalse($this->product->stock_unlimited);
+    }
+
+    /** @test */
+    public function a_single_product_can_be_deleted()
+    {
+        $this->assertCount(1, Product::all());
+
+        $product = Product::all()->first();
+        $product->delete();
+
+        $this->assertCount(0, Product::all());
+    }
+
+    /** @test */
+    public function a_specific_product_can_be_deleted_from_the_collection()
+    {
+        $this->assertCount(1, Product::all());
+
+        Product::delete($this->product->id);
+
+        $this->assertCount(0, Product::all());
+    }
+
+    /** @test */
+    public function a_not_found_product_cant_be_deleted_and_will_throw_an_exception()
+    {
+        $this->expectException(ButikProductException::class);
+
+        Product::delete('not existing');
+
+        $this->assertCount(0, Product::all());
     }
 }

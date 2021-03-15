@@ -3,6 +3,7 @@
 namespace Jonassiewertsen\Butik\Products;
 
 use Illuminate\Support\Collection;
+use Jonassiewertsen\Butik\Exceptions\ButikProductException;
 use Jonassiewertsen\Butik\Support\ButikEntry;
 use Statamic\Facades\Entry;
 use Statamic\Facades\Site;
@@ -52,12 +53,16 @@ class Product extends ButikEntry
 
     public function save($entry)
     {
-        //
+        // TODO: Add the save func
     }
 
-    public function delete($entry)
+    public function delete(string $id): bool
     {
-        //
+        if (! $product = $this->find($id)) {
+            throw ButikProductException::cantDeleteNonExistingProduct($id);
+        }
+
+        return $this->find($id)->entry->delete();
     }
 
     public function collection(): string

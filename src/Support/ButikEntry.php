@@ -27,7 +27,7 @@ abstract class ButikEntry implements ProductRepository
 
     abstract public function save($entry);
 
-    abstract public function delete($entry);
+    abstract public function delete(string $id);
 
     abstract public function collection(): string;
 

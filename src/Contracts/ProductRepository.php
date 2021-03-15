@@ -20,7 +20,7 @@ interface ProductRepository
 
     public function save($entry);
 
-    public function delete($entry);
+    public function delete(string $id);
 
     public function collection(): string;
 
