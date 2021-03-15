@@ -1,12 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Tests\Unit;
+namespace Tests\Unit;
 
-use Facades\Jonassiewertsen\Butik\Http\Models\Product;
-use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
-use Jonassiewertsen\Butik\Http\Models\Tax;
-use Jonassiewertsen\Butik\Http\Models\Variant;
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Jonassiewertsen\Butik\Facades\Product;
+use Tests\TestCase;
 
 class ProductTest extends TestCase
 {
@@ -19,143 +16,22 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function all_products_can_be_fetched()
+    public function it_can_fetch_all_products()
     {
-        $this->assertCount(1, Product::all());
-        $this->assertInstanceOf('Illuminate\Support\Collection', Product::all());
+        $products = Product::all();
+
+        $this->assertCount(1, $products);
     }
 
     /** @test */
-    public function it_has_a_tax()
+    public function a_product_can_be_found()
     {
-        $tax = create(Tax::class)->first();
-        $this->product->tax_id = $tax->slug;
-
-        $this->assertInstanceOf(Tax::class, $this->product->tax);
+        $this->assertEquals($this->product, Product::find($this->product->id));
     }
 
     /** @test */
-    public function it_has_tax_amount()
+    public function a_product_can_be_found_by_its_slug()
     {
-        $tax = create(Tax::class)->first();
-        $this->product->tax_id = $tax->slug;
-
-        $divisor = $this->product->tax->percentage / 100 + 1;
-        $price = $this->product->price = '10.00';
-
-        $priceWithoutTax = round($price / $divisor, 2);
-        $expectedAmount = number_format($price - $priceWithoutTax, 2, ',', '');
-
-        $this->assertEquals($expectedAmount, $this->product->tax_amount);
-    }
-
-    /** @test */
-    public function it_has_a_tax_percentage()
-    {
-        $tax = create(Tax::class)->first();
-        $this->product->tax_id = $tax->slug;
-
-        $this->assertEquals($tax->percentage, $this->product->tax_percentage);
-    }
-
-    /** @test */
-    public function it_has_a_show_url()
-    {
-        $this->assertEquals(
-            "/shop/{$this->product->slug}",
-            $this->product->show_url
-        );
-    }
-
-    /** @test */
-    public function it_is_sold_out_if_the_stock_is_null()
-    {
-        $this->product->stock_unlimited = false;
-        $this->product->stock = 0;
-
-        $this->assertTrue($this->product->sold_out);
-    }
-
-    /** @test */
-    public function it_is_not_sold_out_if_the_product_is_unlimited()
-    {
-        $this->product->stock_unlimited = true;
-        $this->product->stock = 0;
-
-        $this->assertFalse($this->product->sold_out);
-    }
-
-    /** @test */
-    public function it_has_a_currency()
-    {
-        $this->assertEquals($this->product->currency, '€');
-    }
-
-    /** @test */
-    public function it_belongs_to_a_shipping_profile()
-    {
-        $profile = create(ShippingProfile::class)->first();
-        $this->product->shipping_profile_slug = $profile->slug;
-
-        $this->assertInstanceOf(ShippingProfile::class, $this->product->shipping_profile);
-    }
-
-    /** @test */
-    public function it_has_many_categories()
-    {
-        $this->assertInstanceOf('Illuminate\Support\Collection', $this->product->categories);
-    }
-
-    /** @test */
-    public function it_has_many_variants()
-    {
-        $this->assertInstanceOf('Illuminate\Support\Collection', $this->product->variants);
-    }
-
-    /** @test */
-    public function a_product_can_return_the_belonging_variant()
-    {
-        $variant = create(Variant::class, [
-            'product_slug' => $this->product->slug,
-        ])->first();
-
-        $this->assertEquals(
-            $variant->title,
-            $this->product->getVariant($variant->original_title)->title
-        );
-    }
-
-    /** @test */
-    public function a_product_will_return_null_if_the_belonging_variant_does_not_exist()
-    {
-        create(Variant::class, [
-            'product_slug' => $this->product->slug,
-        ])->first();
-
-        $this->assertEquals(null, $this->product->getVariant('not existing'));
-    }
-
-    /** @test */
-    public function a_product_can_check_if_variants_do_exist()
-    {
-        $this->assertFalse($this->product->hasVariants());
-
-        create(Variant::class, [
-            'product_slug' => $this->product->slug,
-        ])->first();
-
-        $this->assertTrue($this->product->hasVariants());
-    }
-
-    /** @test */
-    public function we_can_check_if_a_variant_does_exist()
-    {
-        $this->assertFalse($this->product->variantExists('not existing'));
-
-        $variant = create(Variant::class, [
-            'product_slug' => $this->product->slug,
-        ])->first();
-
-        $this->assertTrue($this->product->variantExists($variant->original_title));
+        $this->assertEquals($this->product, Product::findBySlug($this->product->slug));
     }
 }

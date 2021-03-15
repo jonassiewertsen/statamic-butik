@@ -3,7 +3,7 @@
 namespace Tests\Tags;
 
 use Jonassiewertsen\Butik\Tags\Butik;
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Tests\TestCase;
 
 class ButikTagTest extends TestCase
 {

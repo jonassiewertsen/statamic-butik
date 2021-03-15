@@ -3,7 +3,7 @@
 namespace Tests\Rules;
 
 use Jonassiewertsen\Butik\Rules\CountryExists;
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Tests\TestCase;
 
 class CountryExistsTest extends TestCase
 {

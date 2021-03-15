@@ -51,6 +51,14 @@ return [
     'currency_thousands_separator' => '.',
 
     /**
+     * PRICE.
+     *
+     * Should your price get displayed by default with or without taxes.
+     * Available: gross, net
+     */
+    'price' => 'gross',
+
+    /**
      * Oders settings.
      *
      * You can define how orders can be deleted. Can they at all, only in production or via the UI
@@ -105,8 +113,6 @@ return [
      * Define your own layouts for the frontend if you want. You can as well edit the
      * given layouts to fit your needs.
      */
-    'layout_product-index'              => 'layout',
-    'layout_product-show'               => 'layout',
     'layout_cart'                       => 'layout',
     'layout_checkout-delivery'          => 'layout',
     'layout_checkout-payment'           => 'layout',

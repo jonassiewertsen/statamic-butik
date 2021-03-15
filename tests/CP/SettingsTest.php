@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Tests\CP;
+namespace Tests\CP;
 
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Tests\TestCase;
 
 class SettingsTest extends TestCase
 {

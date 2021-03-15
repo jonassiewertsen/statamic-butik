@@ -1,10 +1,10 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Tests\CP;
+namespace Tests\CP;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Jonassiewertsen\Butik\Http\Models\ShippingZone;
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Tests\TestCase;
 
 class ShippingZoneCreateTest extends TestCase
 {

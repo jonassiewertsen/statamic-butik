@@ -51,7 +51,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Jonassiewertsen\\Butik\\Tests\\": "tests"
+            "Tests\\": "tests"
         },
         "files": [
             "tests/Utilities/functions.php"

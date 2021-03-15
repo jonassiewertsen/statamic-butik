@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Tests\Unit;
+namespace Tests\Unit;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
@@ -9,7 +9,7 @@ use Jonassiewertsen\Butik\Facades\Price;
 use Jonassiewertsen\Butik\Http\Models\Product as ProductModel;
 use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
 use Jonassiewertsen\Butik\Http\Models\Variant;
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Tests\TestCase;
 
 class ItemAsVariantTest extends TestCase
 {

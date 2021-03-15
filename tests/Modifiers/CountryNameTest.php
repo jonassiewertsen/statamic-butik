@@ -1,11 +1,11 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Tests\Modifiers;
+namespace Tests\Modifiers;
 
 use Jonassiewertsen\Butik\Http\Models\ShippingZone;
 use Jonassiewertsen\Butik\Modifiers\CountryName;
 use Jonassiewertsen\Butik\Shipping\Country;
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Tests\TestCase;
 use Statamic\Modifiers\Modifier;
 
 class CountryNameTest extends TestCase

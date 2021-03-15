@@ -4,7 +4,7 @@ namespace Tests\Tags;
 
 use Facades\Jonassiewertsen\Butik\Http\Models\Product;
 use Jonassiewertsen\Butik\Tags\Products;
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Tests\TestCase;
 
 class ProductsTagTest extends TestCase
 {

@@ -4,7 +4,7 @@ namespace Tests\Tags;
 
 use Jonassiewertsen\Butik\Checkout\Cart as ShoppingCart;
 use Jonassiewertsen\Butik\Tags\Cart;
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Tests\TestCase;
 
 class CartTagTest extends TestCase
 {

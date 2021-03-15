@@ -3,7 +3,7 @@
 namespace Tests\Rules;
 
 use Jonassiewertsen\Butik\Rules\ProductSlugExists;
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Tests\TestCase;
 
 class ProductSlugExistsTest extends TestCase
 {

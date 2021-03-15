@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Tests\Shipping;
+namespace Tests\Shipping;
 
 use Jonassiewertsen\Butik\Checkout\Cart;
 use Jonassiewertsen\Butik\Facades\Price;
@@ -9,7 +9,7 @@ use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
 use Jonassiewertsen\Butik\Http\Models\ShippingRate;
 use Jonassiewertsen\Butik\Http\Models\ShippingZone;
 use Jonassiewertsen\Butik\Shipping\ShippingByPrice;
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Tests\TestCase;
 use Statamic\Facades\Entry;
 
 class ShippingByPriceTest extends TestCase

@@ -1,9 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Tests\CP;
+namespace Tests\CP;
 
 use Jonassiewertsen\Butik\Http\Models\ShippingRate;
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Tests\TestCase;
 
 class ShippingRateCreateTestCreateTest extends TestCase
 {

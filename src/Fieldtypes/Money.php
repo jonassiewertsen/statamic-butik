@@ -2,6 +2,7 @@
 
 namespace Jonassiewertsen\Butik\Fieldtypes;
 
+use Jonassiewertsen\Butik\Facades\Price;
 use Statamic\Fields\Fieldtype;
 
 class Money extends Fieldtype
@@ -14,6 +15,7 @@ class Money extends Fieldtype
     {
         return [
             'currencySymbol' => currency(),
+            'priceDefault' => config('butik.price', 'gross'),
         ];
     }
 
@@ -24,10 +26,39 @@ class Money extends Fieldtype
 
     public function preProcess($data)
     {
-        // In case we will use another number seperator then '.', like in europe,
-        // we will make sure replace to avoid problems calculating with it.
-        $data = str_replace(',', '.', $data);
+        return Price::of($data)->delimiter('.')->thousands('')->get();
+    }
 
-        return number_format(floatval($data), 2, '.', '');
+    public function augment($value): array
+    {
+        return [
+            'gross' => $this->calculateGross($value), // {{ price:gross }}
+            'net' => $this->calculateNet($value),     // {{ price:net }}
+            'total' => Price::of($value)->get(),      // {{ price:total }}
+        ];
+    }
+
+    private function calculateNet($value)
+    {
+        return Price::of($value)->get();
+
+//        TODO: Add net to price fieldset
+//        if ($this->preload()['priceDefault'] === 'net') {
+//            return $value;
+//        }
+//
+//        return $value;
+    }
+
+    private function calculateGross($value)
+    {
+        return Price::of($value)->get();
+
+//        TODO: Add gross to price fieldset
+//        if ($this->preload()['priceDefault'] === 'gross') {
+//            return $value;
+//        }
+//
+//        return $value;
     }
 }

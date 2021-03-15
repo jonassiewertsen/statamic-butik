@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Tests\Utilities;
+namespace Tests\Utilities;
 
 use Mollie\Api\MollieApiClient;
 use Mollie\Api\Resources\Capture;

@@ -1,13 +1,13 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Tests\Checkout;
+namespace Tests\Checkout;
 
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\Butik\Checkout\Cart;
 use Jonassiewertsen\Butik\Checkout\Customer;
 use Jonassiewertsen\Butik\Http\Models\Product;
 use Jonassiewertsen\Butik\Shipping\Country;
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Tests\TestCase;
 
 class CheckoutPaymentTest extends TestCase
 {

@@ -1,20 +1,19 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Tests\Unit;
+namespace Tests\Unit;
 
-use Facades\Jonassiewertsen\Butik\Http\Models\Product;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Jonassiewertsen\Butik\Checkout\Item;
+use Jonassiewertsen\Butik\Contracts\ProductRepository;
 use Jonassiewertsen\Butik\Facades\Price;
-use Jonassiewertsen\Butik\Http\Models\Product as ProductModel;
 use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Tests\TestCase;
 use Statamic\Facades\Entry;
 
 class ItemAsProductTest extends TestCase
 {
-    protected ProductModel $product;
+    protected ProductRepository $product;
 
     public function setUp(): void
     {
@@ -36,7 +35,7 @@ class ItemAsProductTest extends TestCase
     {
         $item = new Item($this->product->slug);
 
-        $this->assertEquals($item->taxRate, $this->product->tax->percentage);
+        $this->assertEquals($item->tax->percentage, $this->product->tax->percentage);
     }
 
     /** @test */
@@ -44,7 +43,7 @@ class ItemAsProductTest extends TestCase
     {
         $item = new Item($this->product->slug);
 
-        $this->assertEquals($item->taxAmount, $this->product->tax_amount);
+        $this->assertEquals($item->tax->amount, $this->product->tax->amount);
     }
 
     /** @test */
@@ -52,17 +51,8 @@ class ItemAsProductTest extends TestCase
     {
         $item = new Item($this->product->slug);
 
-        $this->assertEquals($item->name, $this->product->title);
+        $this->assertEquals($item->title, $this->product->title);
     }
-
-    // TODO: Handle later
-//    /** @test */
-//    public function it_has_imagese_returned_as_assets()
-//    {
-//        $item = new Item($this->product->slug);
-//
-//        $this->assertEquals(Asset::find($item->images), $this->product->images);
-//    }
 
     /** @test */
     public function it_can_be_sellable()
@@ -104,6 +94,14 @@ class ItemAsProductTest extends TestCase
         $item = new Item($this->product->slug);
 
         $this->assertEquals($item->getQuantity(), 1);
+    }
+
+    /** @test */
+    public function an_item_has_a_stock()
+    {
+        $item = new Item($this->product->slug);
+
+        $this->assertEquals($this->product->stock, $item->availableStock);
     }
 
     /** @test */
@@ -162,7 +160,7 @@ class ItemAsProductTest extends TestCase
     {
         $item = new Item($this->product->slug);
 
-        $this->assertEquals($this->product->price, $item->totalPrice());
+        $this->assertEquals($this->product->price->total, $item->totalPrice());
     }
 
     /** @test */

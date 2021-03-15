@@ -1,9 +1,9 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Tests\Checkout;
+namespace Tests\Checkout;
 
 use Jonassiewertsen\Butik\Http\Models\Product;
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Tests\TestCase;
 
 class CartTest extends TestCase
 {

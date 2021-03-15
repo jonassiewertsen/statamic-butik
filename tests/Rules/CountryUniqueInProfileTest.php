@@ -5,7 +5,7 @@ namespace Tests\Rules;
 use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
 use Jonassiewertsen\Butik\Http\Models\ShippingZone;
 use Jonassiewertsen\Butik\Rules\CountryUniqueInProfile;
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Tests\TestCase;
 
 class CountryUniqueInProfileTest extends TestCase
 {

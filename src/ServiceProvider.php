@@ -21,6 +21,8 @@ use Jonassiewertsen\Butik\Policies\ShippingRatePolicy;
 use Jonassiewertsen\Butik\Policies\ShippingZonePolicy;
 use Jonassiewertsen\Butik\Policies\TaxPolicy;
 use Jonassiewertsen\Butik\Policies\VariantPolicy;
+use Jonassiewertsen\Butik\Contracts\ProductRepository;
+use Jonassiewertsen\Butik\Products\Product;
 use Jonassiewertsen\Butik\Support\Number;
 use Jonassiewertsen\Butik\Support\Price;
 use Livewire\Livewire;
@@ -67,7 +69,6 @@ class ServiceProvider extends AddonServiceProvider
         \Jonassiewertsen\Butik\Tags\Cart::class,
         \Jonassiewertsen\Butik\Tags\Butik::class,
         \Jonassiewertsen\Butik\Tags\Currency::class,
-        \Jonassiewertsen\Butik\Tags\Products::class,
     ];
 
     protected $fieldtypes = [
@@ -153,6 +154,10 @@ class ServiceProvider extends AddonServiceProvider
 
         $this->app->singleton(CartRepository::class, function () {
             return new Cart();
+        });
+
+        $this->app->singleton(ProductRepository::class, function () {
+            return new Product();
         });
     }
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Tests\Unit;
+namespace Tests\Unit;
 
-use Jonassiewertsen\Butik\Tests\TestCase;
+use Tests\TestCase;
 use Statamic\Facades\Site;
 use Statamic\Support\Str;
 
