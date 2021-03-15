@@ -50,6 +50,26 @@ class ProductTest extends TestCase
     }
 
     /** @test */
+    public function a_product_title_can_be_updated()
+    {
+        $this->product->update([
+            'title' => 'new title',
+        ]);
+
+        $this->assertEquals('new title', $this->product->fresh()->title);
+    }
+
+    /** @test */
+    public function a_product_price_can_be_updated()
+    {
+        $this->product->update([
+            'price' => '50,00',
+        ]);
+
+        $this->assertEquals('50,00', $this->product->fresh()->price->total);
+    }
+
+    /** @test */
     public function a_single_product_can_be_deleted()
     {
         $this->assertCount(1, Product::all());

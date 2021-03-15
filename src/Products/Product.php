@@ -51,9 +51,16 @@ class Product extends ButikEntry
         return Entry::whereCollection($this->collection());
     }
 
-    public function save($entry)
+    public function fresh(): self
     {
-        // TODO: Add the save func
+        return $this->find($this->id);
+    }
+
+    public function update(array $data)
+    {
+        $data = array_merge($this->data, $data);
+
+        $this->entry->data($data)->save();
     }
 
     public function delete(string $id): bool

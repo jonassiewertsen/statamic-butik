@@ -18,7 +18,7 @@ interface ProductRepository
 
     public function query(); // Typehint ?
 
-    public function save($entry);
+    public function update(array $data);
 
     public function delete(string $id);
 
