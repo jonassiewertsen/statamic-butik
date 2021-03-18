@@ -2,6 +2,8 @@
 
 namespace DummyNamespace;
 
+use Jonassiewertsen\StatamicButik\Shipping\ShippingType;
+
 class DummyClass extends ShippingType
 {
     /**
