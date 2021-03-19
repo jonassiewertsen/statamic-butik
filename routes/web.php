@@ -44,21 +44,6 @@ Route::namespace('\Jonassiewertsen\Butik\Http\Controllers\Web')
         Route::get('process/payment', 'PaymentGatewayController@processPayment')
             ->name('payment.process')
             ->middleware(['cartNotEmpty', 'validateCheckoutRoute']);
-
-        /**
-         * #################################################################################################################
-         *   Shop pages
-         * #################################################################################################################.
-         */
-        if (config('butik.shop_route_active')) {
-            Route::get('/', 'ShopController@index')
-                ->name('shop');
-        }
-
-        if (config('butik.product_route_active')) {
-            Route::get(config('butik.route_product'), 'ShopController@show')
-                ->name('shop.product');
-        }
     });
 
 /**
