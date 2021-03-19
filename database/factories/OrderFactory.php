@@ -2,7 +2,7 @@
 
 use Facades\Jonassiewertsen\Butik\Http\Models\Product;
 use Faker\Generator as Faker;
-use Jonassiewertsen\Butik\Checkout\Item;
+use Jonassiewertsen\Butik\Cart\Item;
 use Jonassiewertsen\Butik\Http\Models\Order;
 use Jonassiewertsen\Butik\Http\Models\Tax;
 use Jonassiewertsen\Butik\Order\ItemCollection;

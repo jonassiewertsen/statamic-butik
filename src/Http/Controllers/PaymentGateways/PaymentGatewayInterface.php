@@ -3,7 +3,7 @@
 namespace Jonassiewertsen\Butik\Http\Controllers\PaymentGateways;
 
 use Illuminate\Support\Collection;
-use Jonassiewertsen\Butik\Checkout\Customer;
+use Jonassiewertsen\Butik\Cart\Customer;
 
 interface PaymentGatewayInterface
 {

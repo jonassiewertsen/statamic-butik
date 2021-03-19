@@ -2,7 +2,7 @@
 
 namespace Tests\Modifiers;
 
-use Jonassiewertsen\Butik\Checkout\Item;
+use Jonassiewertsen\Butik\Cart\Item;
 use Jonassiewertsen\Butik\Modifiers\Sellable;
 use Statamic\Modifiers\Modifier;
 use Tests\TestCase;

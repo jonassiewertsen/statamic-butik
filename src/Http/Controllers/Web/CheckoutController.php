@@ -4,8 +4,8 @@ namespace Jonassiewertsen\Butik\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use Jonassiewertsen\Butik\Checkout\Cart;
-use Jonassiewertsen\Butik\Checkout\Customer;
+use Jonassiewertsen\Butik\Cart\Cart;
+use Jonassiewertsen\Butik\Cart\Customer;
 use Jonassiewertsen\Butik\Http\Models\Order;
 use Jonassiewertsen\Butik\Http\Traits\MapCartItems;
 use Jonassiewertsen\Butik\Shipping\Country;

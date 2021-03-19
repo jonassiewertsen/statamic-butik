@@ -4,7 +4,7 @@ namespace Tests\Unit;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
-use Jonassiewertsen\Butik\Checkout\Item;
+use Jonassiewertsen\Butik\Cart\Item;
 use Jonassiewertsen\Butik\Facades\Price;
 use Jonassiewertsen\Butik\Http\Models\Product as ProductModel;
 use Jonassiewertsen\Butik\Http\Models\ShippingProfile;

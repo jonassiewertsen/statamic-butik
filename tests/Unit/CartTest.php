@@ -3,8 +3,8 @@
 namespace Tests\Unit;
 
 use Illuminate\Support\Facades\Session;
-use Jonassiewertsen\Butik\Checkout\Customer;
-use Jonassiewertsen\Butik\Checkout\Item;
+use Jonassiewertsen\Butik\Cart\Customer;
+use Jonassiewertsen\Butik\Cart\Item;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
 use Jonassiewertsen\Butik\Facades\Cart;
 use Jonassiewertsen\Butik\Facades\Price;

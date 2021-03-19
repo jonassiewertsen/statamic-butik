@@ -2,7 +2,7 @@
 
 namespace Tests\Tags;
 
-use Jonassiewertsen\Butik\Checkout\Cart as ShoppingCart;
+use Jonassiewertsen\Butik\Cart\Cart as ShoppingCart;
 use Jonassiewertsen\Butik\Tags\Cart;
 use Tests\TestCase;
 

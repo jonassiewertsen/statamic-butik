@@ -4,7 +4,7 @@ namespace Jonassiewertsen\Butik\Http\Controllers\PaymentGateways;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
-use Jonassiewertsen\Butik\Checkout\Customer;
+use Jonassiewertsen\Butik\Cart\Customer;
 use Jonassiewertsen\Butik\Events\OrderAuthorized;
 use Jonassiewertsen\Butik\Events\OrderCanceled;
 use Jonassiewertsen\Butik\Events\OrderCompleted;

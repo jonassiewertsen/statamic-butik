@@ -4,7 +4,7 @@ namespace Tests\Unit;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
-use Jonassiewertsen\Butik\Checkout\Item;
+use Jonassiewertsen\Butik\Cart\Item;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
 use Jonassiewertsen\Butik\Facades\Price;
 use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
@@ -233,11 +233,6 @@ class ItemAsProductTest extends TestCase
     {
         $item = new Item($this->product->slug);
 
-        Entry::findBySlug($this->product->slug, 'products')->unpublish()->save();
-
-        Cache::flush();
-        $item->update();
-
-        $this->assertEquals(ShippingProfile::first(), $item->shippingProfile);
+        $this->assertEquals(ShippingProfile::first()->slug, $item->entry->augmentedValue('shipping_profile_slug')->raw());
     }
 }
