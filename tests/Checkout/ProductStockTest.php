@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Mail;
 use Jonassiewertsen\Butik\Cart\Item;
 use Jonassiewertsen\Butik\Http\Models\Order;
 use Jonassiewertsen\Butik\Http\Models\Variant;
-use Jonassiewertsen\Butik\Order\ItemCollection;
+use Jonassiewertsen\Butik\Item\ItemCollection;
 use Mollie\Laravel\Facades\Mollie;
 use Statamic\Facades\Entry;
 use Tests\TestCase;

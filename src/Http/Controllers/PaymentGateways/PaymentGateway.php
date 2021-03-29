@@ -13,7 +13,7 @@ use Jonassiewertsen\Butik\Events\OrderExpired;
 use Jonassiewertsen\Butik\Events\OrderPaid;
 use Jonassiewertsen\Butik\Http\Controllers\WebController;
 use Jonassiewertsen\Butik\Http\Models\Order;
-use Jonassiewertsen\Butik\Order\ItemCollection;
+use Jonassiewertsen\Butik\Item\ItemCollection;
 
 abstract class PaymentGateway extends WebController
 {

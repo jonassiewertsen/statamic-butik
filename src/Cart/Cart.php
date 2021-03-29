@@ -2,6 +2,7 @@
 
 namespace Jonassiewertsen\Butik\Cart;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\Butik\Contracts\CartRepository;
@@ -15,7 +16,7 @@ class Cart implements CartRepository
 
     public function __construct()
     {
-        $this->cart = Session::get('butik.cart') ?? collect();
+        $this->cart = Session::get('butik.cart') ?? [];
     }
 
     public function __desctruct()
@@ -23,7 +24,12 @@ class Cart implements CartRepository
         Session::put('butik.cart', $this->cart);
     }
 
-    public function get(): Collection
+    public function get(): array
+    {
+        return $this->cart;
+    }
+
+    public function raw(): array
     {
         return $this->cart;
     }
@@ -33,12 +39,11 @@ class Cart implements CartRepository
      */
     public function add(string $slug, int $quantity = 1, ?string $locale = null): void
     {
-        if ($this->contains($slug)) {
-            // increase the quantity
-            $this->cart->firstWhere('slug', $slug)->increase();
+        if (! $this->contains($slug)) {
+            $this->cart[$slug] = ['quantity' => $quantity];
         } else {
-            // Add new Item
-            $this->cart->push(new Item($slug, $locale ?? locale()));
+            $previousQuantity = $this->cart[$slug]['quantity'];
+            $this->cart[$slug] = ['quantity' => $quantity + $previousQuantity];
         }
     }
 
@@ -81,7 +86,7 @@ class Cart implements CartRepository
      */
     public function clear(): void
     {
-        $this->cart = collect();
+        $this->cart = [];
     }
 
     /**
@@ -227,6 +232,6 @@ class Cart implements CartRepository
      */
     public function contains(string $slug): bool
     {
-        return $this->cart->contains('slug', $slug);
+        return Arr::exists($this->cart, $slug);
     }
 }
