@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Order;
+namespace Jonassiewertsen\Butik\Item;
 
 use Illuminate\Support\Collection;
 

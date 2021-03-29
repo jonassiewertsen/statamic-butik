@@ -2,7 +2,7 @@
 
 namespace Jonassiewertsen\Butik\Http\Traits;
 
-use Jonassiewertsen\Butik\Checkout\Cart;
+use Jonassiewertsen\Butik\Cart\Cart;
 
 trait MapCartItems
 {

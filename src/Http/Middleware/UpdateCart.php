@@ -3,7 +3,7 @@
 namespace Jonassiewertsen\Butik\Http\Middleware;
 
 use Closure;
-use Jonassiewertsen\Butik\Checkout\Cart;
+use Jonassiewertsen\Butik\Cart\Cart;
 
 class UpdateCart
 {

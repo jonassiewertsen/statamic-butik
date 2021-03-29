@@ -3,7 +3,7 @@
 namespace Jonassiewertsen\Butik\Contracts;
 
 use Illuminate\Support\Collection;
-use Jonassiewertsen\Butik\Checkout\Customer;
+use Jonassiewertsen\Butik\Cart\Customer;
 
 interface CartRepository
 {

@@ -7,7 +7,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
-use Jonassiewertsen\Butik\Checkout\Customer;
+use Jonassiewertsen\Butik\Cart\Customer;
 use Jonassiewertsen\Butik\Facades\Price;
 use Jonassiewertsen\Butik\Http\Traits\MollyLocale;
 use Mollie\Laravel\Facades\Mollie;

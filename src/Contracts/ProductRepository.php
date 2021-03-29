@@ -14,15 +14,15 @@ interface ProductRepository
 
     public function exists(string $slug): bool;
 
-    public function toArray(): array;
+    public function query();
 
-    public function query(); // Typehint ?
-
-    public function save($entry);
+    public function update(array $data);
 
     public function delete(string $id);
 
     public function collection(): string;
+
+    public function toArray(): array;
 
     public function stock(): int;
 

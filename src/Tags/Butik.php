@@ -2,6 +2,8 @@
 
 namespace Jonassiewertsen\Butik\Tags;
 
+use Jonassiewertsen\Butik\Facades\Product;
+
 class Butik extends \Statamic\Tags\Tags
 {
     /**
@@ -9,10 +11,10 @@ class Butik extends \Statamic\Tags\Tags
      *
      * Will return the shop overview route
      */
-    public function shop()
-    {
-        return $this->route('butik.shop');
-    }
+//    public function shop()
+//    {
+//        return $this->route('butik.shop');
+//    }
 
     /**
      * {{ butik:shop }}.
@@ -42,6 +44,11 @@ class Butik extends \Statamic\Tags\Tags
     public function bag()
     {
         return $this->cart();
+    }
+    
+    public function products()
+    {
+        return Product::all();
     }
 
     private function route(string $routeName): string

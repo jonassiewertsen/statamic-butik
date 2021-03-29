@@ -36,10 +36,11 @@ class Tax extends Fieldtype
             'name' => $tax->title,                // {{ tax:name }}
             'slug' => $value,                     // {{ tax:slug }}
             'amount' => $this->calculateAmount($tax->percentage), // {{ tax:amount }}
-            'percentage' => $tax->percentage,     // {{ tax:percentage }}
+            'rate' => $tax->percentage,     // {{ tax:percentage }} // TODO: Renamte to rate
         ];
     }
 
+    // TODO: Refactor to use \Butik\Product\Tax
     private function calculateAmount(int $percentage): string
     {
         $product = $this->field->parent();

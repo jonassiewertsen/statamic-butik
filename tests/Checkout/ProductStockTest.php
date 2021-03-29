@@ -4,7 +4,7 @@ namespace Tests\Checkout;
 
 use Facades\Jonassiewertsen\Butik\Http\Models\Product;
 use Illuminate\Support\Facades\Mail;
-use Jonassiewertsen\Butik\Checkout\Item;
+use Jonassiewertsen\Butik\Cart\Item;
 use Jonassiewertsen\Butik\Http\Models\Order;
 use Jonassiewertsen\Butik\Http\Models\Variant;
 use Jonassiewertsen\Butik\Order\ItemCollection;

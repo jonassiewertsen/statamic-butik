@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Products;
+namespace Jonassiewertsen\Butik\Product;
 
 use Illuminate\Support\Collection;
 use Jonassiewertsen\Butik\Exceptions\ButikProductException;
@@ -38,6 +38,8 @@ class Product extends ButikEntry
             return null;
         }
 
+        $this->defineAttributes();
+
         return $this;
     }
 
@@ -51,9 +53,16 @@ class Product extends ButikEntry
         return Entry::whereCollection($this->collection());
     }
 
-    public function save($entry)
+    public function fresh(): self
     {
-        // TODO: Add the save func
+        return $this->find($this->id);
+    }
+
+    public function update(array $data): bool
+    {
+        $data = array_merge($this->data, $data);
+
+        return $this->entry->data($data)->save();
     }
 
     public function delete(string $id): bool

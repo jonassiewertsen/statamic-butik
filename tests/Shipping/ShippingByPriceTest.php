@@ -2,9 +2,8 @@
 
 namespace Tests\Shipping;
 
-use Jonassiewertsen\Butik\Checkout\Cart;
+use Jonassiewertsen\Butik\Cart\Cart;
 use Jonassiewertsen\Butik\Facades\Price;
-use Jonassiewertsen\Butik\Http\Models\Product;
 use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
 use Jonassiewertsen\Butik\Http\Models\ShippingRate;
 use Jonassiewertsen\Butik\Http\Models\ShippingZone;

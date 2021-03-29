@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Checkout;
+namespace Jonassiewertsen\Butik\Cart;
 
 class Customer
 {

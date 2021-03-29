@@ -2,7 +2,7 @@
 
 namespace Jonassiewertsen\Butik\Http\Livewire;
 
-use Jonassiewertsen\Butik\Checkout\Cart as ShoppingCart;
+use Jonassiewertsen\Butik\Cart\Cart as ShoppingCart;
 use Livewire\Component;
 
 class CartIcon extends Component

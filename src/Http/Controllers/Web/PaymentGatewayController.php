@@ -3,7 +3,7 @@
 namespace Jonassiewertsen\Butik\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
-use Jonassiewertsen\Butik\Checkout\Cart;
+use Jonassiewertsen\Butik\Cart\Cart;
 use Jonassiewertsen\Butik\Exceptions\ButikConfigException;
 use Jonassiewertsen\Butik\Http\Controllers\PaymentGateways\PaymentGatewayInterface;
 use Jonassiewertsen\Butik\Http\Controllers\WebController;

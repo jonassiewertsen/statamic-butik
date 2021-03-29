@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Cart;
 
-use Jonassiewertsen\Butik\Checkout\Customer;
+use Jonassiewertsen\Butik\Cart\Customer;
 use Tests\TestCase;
 
 class CustomerTest extends TestCase

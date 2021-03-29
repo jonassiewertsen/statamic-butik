@@ -4,7 +4,7 @@ namespace Tests\Shipping;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
-use Jonassiewertsen\Butik\Checkout\Cart;
+use Jonassiewertsen\Butik\Cart\Cart;
 use Jonassiewertsen\Butik\Exceptions\ButikConfigException;
 use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
 use Jonassiewertsen\Butik\Http\Models\ShippingZone;

@@ -2,7 +2,7 @@
 
 namespace Jonassiewertsen\Butik\Http\Livewire;
 
-use Jonassiewertsen\Butik\Checkout\Cart as ShoppingCart;
+use Jonassiewertsen\Butik\Cart\Cart as ShoppingCart;
 use Jonassiewertsen\Butik\Http\Traits\MapCartItems;
 use Jonassiewertsen\Butik\Shipping\Country;
 use Livewire\Component;

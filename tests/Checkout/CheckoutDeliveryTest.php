@@ -3,8 +3,8 @@
 namespace Tests\Checkout;
 
 use Illuminate\Support\Facades\Session;
-use Jonassiewertsen\Butik\Checkout\Cart;
-use Jonassiewertsen\Butik\Checkout\Customer;
+use Jonassiewertsen\Butik\Cart\Cart;
+use Jonassiewertsen\Butik\Cart\Customer;
 use Jonassiewertsen\Butik\Http\Models\ShippingRate;
 use Jonassiewertsen\Butik\Http\Models\ShippingZone;
 use Tests\TestCase;
