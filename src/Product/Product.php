@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Products;
+namespace Jonassiewertsen\Butik\Product;
 
 use Illuminate\Support\Collection;
 use Jonassiewertsen\Butik\Exceptions\ButikProductException;
@@ -37,6 +37,8 @@ class Product extends ButikEntry
         if (! $this->entry) {
             return null;
         }
+
+        $this->defineAttributes();
 
         return $this;
     }

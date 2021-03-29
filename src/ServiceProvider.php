@@ -22,7 +22,7 @@ use Jonassiewertsen\Butik\Policies\ShippingRatePolicy;
 use Jonassiewertsen\Butik\Policies\ShippingZonePolicy;
 use Jonassiewertsen\Butik\Policies\TaxPolicy;
 use Jonassiewertsen\Butik\Policies\VariantPolicy;
-use Jonassiewertsen\Butik\Products\Product;
+use Jonassiewertsen\Butik\Product\Product;
 use Jonassiewertsen\Butik\Support\Number;
 use Jonassiewertsen\Butik\Support\Price;
 use Livewire\Livewire;

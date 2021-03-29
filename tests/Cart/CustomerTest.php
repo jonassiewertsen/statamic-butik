@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Cart;
 
 use Jonassiewertsen\Butik\Cart\Customer;
 use Tests\TestCase;

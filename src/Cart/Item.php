@@ -26,7 +26,7 @@ class Item
     // - product id
     // - quantity
 
-    public function __construct(string $productId, ?string $locale = null)
+    public function __construct(string $slug, int )
     {
         $this->productId = $productId;
     }
