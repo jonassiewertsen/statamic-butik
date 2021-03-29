@@ -5,7 +5,7 @@ namespace Jonassiewertsen\Butik\Cart;
 class Customer
 {
     public ?string $firstname;
-    public ?string $surname;
+    public ?string $surname; // rename to lastname
     public ?string $email;
     public ?string $address1;
     public ?string $address2;

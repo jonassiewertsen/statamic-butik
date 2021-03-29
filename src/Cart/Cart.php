@@ -2,6 +2,7 @@
 
 namespace Jonassiewertsen\Butik\Cart;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\Butik\Contracts\CartRepository;
@@ -9,13 +10,15 @@ use Jonassiewertsen\Butik\Facades\Price;
 use Jonassiewertsen\Butik\Shipping\Country;
 use Jonassiewertsen\Butik\Shipping\Shipping;
 
-class Cart implements CartRepository
+//class Cart implements CartRepository
+class Cart
 {
-    protected $cart;
+    protected array $cart;
 
     public function __construct()
     {
-        $this->cart = Session::get('butik.cart') ?? collect();
+        // Todo: Make different cart drivers available
+        $this->cart = Session::get('butik.cart') ?? [];
     }
 
     public function __desctruct()
@@ -23,7 +26,13 @@ class Cart implements CartRepository
         Session::put('butik.cart', $this->cart);
     }
 
-    public function get(): Collection
+    public function get(): array
+    {
+        dd($this->cart);
+        return $this->cart;
+    }
+
+    public function raw(): array
     {
         return $this->cart;
     }
@@ -33,12 +42,11 @@ class Cart implements CartRepository
      */
     public function add(string $slug, int $quantity = 1, ?string $locale = null): void
     {
-        if ($this->contains($slug)) {
-            // increase the quantity
-            $this->cart->firstWhere('slug', $slug)->increase();
+        if (! $this->contains($slug)) {
+            $this->cart[$slug] = ['quantity' => $quantity];
         } else {
-            // Add new Item
-            $this->cart->push(new Item($slug, $locale ?? locale()));
+            $previousQuantity = $this->cart[$slug]['quantity'];
+            $this->cart[$slug] = ['quantity' => $quantity + $previousQuantity];
         }
     }
 
@@ -81,7 +89,7 @@ class Cart implements CartRepository
      */
     public function clear(): void
     {
-        $this->cart = collect();
+        $this->cart = [];
     }
 
     /**
@@ -227,6 +235,6 @@ class Cart implements CartRepository
      */
     public function contains(string $slug): bool
     {
-        return $this->cart->contains('slug', $slug);
+        return Arr::exists($this->cart, $slug);
     }
 }

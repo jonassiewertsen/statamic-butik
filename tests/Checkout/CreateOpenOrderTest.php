@@ -13,7 +13,7 @@ use Jonassiewertsen\Butik\Events\OrderCreated;
 use Jonassiewertsen\Butik\Facades\Price;
 use Jonassiewertsen\Butik\Http\Controllers\PaymentGateways\MolliePaymentGateway;
 use Jonassiewertsen\Butik\Http\Models\Order;
-use Jonassiewertsen\Butik\Order\ItemCollection;
+use Jonassiewertsen\Butik\Item\ItemCollection;
 use Mollie\Laravel\Facades\Mollie;
 use Tests\TestCase;
 use TestsUtilities\MolliePaymentOpen;

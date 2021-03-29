@@ -15,6 +15,12 @@
         <testsuite name="Permissions">
             <directory suffix="Test.php">tests/Permissions/</directory>
         </testsuite>
+        <testsuite name="Price">
+            <directory suffix="Test.php">tests/Price/</directory>
+        </testsuite>
+        <testsuite name="Product">
+            <directory suffix="Test.php">tests/Product/</directory>
+        </testsuite>
         <testsuite name="Rules">
             <directory suffix="Test.php">tests/Rules/</directory>
         </testsuite>
