@@ -10,14 +10,12 @@ use Jonassiewertsen\Butik\Facades\Price;
 use Jonassiewertsen\Butik\Shipping\Country;
 use Jonassiewertsen\Butik\Shipping\Shipping;
 
-//class Cart implements CartRepository
-class Cart
+class Cart implements CartRepository
 {
-    protected array $cart;
+    protected $cart;
 
     public function __construct()
     {
-        // Todo: Make different cart drivers available
         $this->cart = Session::get('butik.cart') ?? [];
     }
 
@@ -28,7 +26,6 @@ class Cart
 
     public function get(): array
     {
-        dd($this->cart);
         return $this->cart;
     }
 
