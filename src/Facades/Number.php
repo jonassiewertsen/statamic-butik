@@ -9,6 +9,8 @@ class Number extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
+        self::clearResolvedInstance(NumberRepository::class);
+
         return NumberRepository::class;
     }
 }

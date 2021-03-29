@@ -9,6 +9,8 @@ class Price extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
+        self::clearResolvedInstance(PriceRepository::class);
+
         return PriceRepository::class;
     }
 }
