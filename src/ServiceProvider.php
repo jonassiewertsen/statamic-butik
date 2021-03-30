@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 use Jonassiewertsen\Butik\Cart\Cart;
 use Jonassiewertsen\Butik\Contracts\CartRepository;
+use Jonassiewertsen\Butik\Contracts\CountryRepository;
 use Jonassiewertsen\Butik\Contracts\NumberRepository;
 use Jonassiewertsen\Butik\Contracts\PriceRepository;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
@@ -23,6 +24,7 @@ use Jonassiewertsen\Butik\Policies\ShippingZonePolicy;
 use Jonassiewertsen\Butik\Policies\TaxPolicy;
 use Jonassiewertsen\Butik\Policies\VariantPolicy;
 use Jonassiewertsen\Butik\Product\Product;
+use Jonassiewertsen\Butik\Support\Country;
 use Jonassiewertsen\Butik\Support\Number;
 use Jonassiewertsen\Butik\Support\Price;
 use Livewire\Livewire;
@@ -155,6 +157,10 @@ class ServiceProvider extends AddonServiceProvider
 
         $this->app->singleton(ProductRepository::class, function () {
             return new Product();
+        });
+
+        $this->app->singleton(CountryRepository::class, function () {
+            return new Country();
         });
     }
 
