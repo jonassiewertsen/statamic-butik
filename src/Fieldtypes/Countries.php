@@ -17,8 +17,8 @@ class Countries extends Fieldtype
 
         foreach ($countries as $value => $label) {
             $options[] = [
-              'label' => $label,
-              'value' => $value,
+                'label' => $label,
+                'value' => $value,
             ];
         }
 
@@ -31,7 +31,7 @@ class Countries extends Fieldtype
     {
         return collect($data)
                 ->sortBy('label')
-                ->flatMap(fn($country) => [$country['label']])
+                ->flatMap(fn ($country) => [$country['label']])
                 ->implode(', ');
     }
 

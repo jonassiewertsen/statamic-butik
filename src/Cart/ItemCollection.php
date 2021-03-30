@@ -8,6 +8,6 @@ class ItemCollection extends Collection
 {
     public function from(array $collection)
     {
-        $collection;
+        //
     }
 }

@@ -45,7 +45,7 @@ class Butik extends \Statamic\Tags\Tags
     {
         return $this->cart();
     }
-    
+
     public function products()
     {
         return Product::all();

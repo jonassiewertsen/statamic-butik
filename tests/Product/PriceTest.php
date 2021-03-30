@@ -3,8 +3,8 @@
 namespace Tests\Product;
 
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
-use Jonassiewertsen\Butik\Product\Price;
 use Jonassiewertsen\Butik\Facades\Price as PriceFacade;
+use Jonassiewertsen\Butik\Product\Price;
 use Tests\TestCase;
 
 class PriceTest extends TestCase
