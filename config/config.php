@@ -137,4 +137,15 @@ return [
      * https://butik.dev/extending/payment-gateway
      */
     'payment_gateway' => Jonassiewertsen\Butik\Http\Controllers\PaymentGateways\MolliePaymentGateway::class,
+
+    /**
+     * TAX TYPES
+     *
+     * Which tax types should be available for your products.
+     */
+    'tax_types' => [
+        'default' => 'Default',
+        'reduced' => 'Reduced',
+        'zero' => 'Zero',
+    ],
 ];

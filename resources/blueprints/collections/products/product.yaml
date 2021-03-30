@@ -23,12 +23,20 @@ sections:
           listable: true
           validate:
             - min:0
-          width: '25'
+          width: '50'
       -
         handle: tax_id
         field:
           display: Tax
           type: tax
+          required: true
+          listable: false
+          width: '25'
+      -
+        handle: tax_type
+        field:
+          display: Type
+          type: tax_type
           required: true
           listable: false
           width: '25'
