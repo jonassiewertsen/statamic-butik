@@ -1,11 +1,14 @@
 <template>
     <div>
-        <select-input
+        <v-select
             :handle="config.handle"
             :value="value"
             :options="countries"
+            :multiple="true"
+            :searchable="true"
+            :taggable="true"
             @input="update"
-        ></select-input>
+        ></v-select>
     </div>
 </template>
 
@@ -15,7 +18,7 @@
 
         data() {
             return {
-                countries: this.meta.countries,
+                countries: this.meta.countries
             }
         },
     };
