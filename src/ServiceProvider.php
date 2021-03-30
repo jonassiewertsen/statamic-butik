@@ -93,12 +93,12 @@ class ServiceProvider extends AddonServiceProvider
         \Jonassiewertsen\Butik\Events\OrderCompleted::class  => [],
         \Jonassiewertsen\Butik\Events\OrderExpired::class    => [],
         \Jonassiewertsen\Butik\Events\OrderCanceled::class   => [],
-//        \Statamic\Events\EntrySaving::class => [
-//            \Jonassiewertsen\Butik\Listeners\CacheOldProductSlug::class,
-//        ],
-//        \Statamic\Events\EntrySaved::class => [
-//            \Jonassiewertsen\Butik\Listeners\RenameVariants::class,
-//        ],
+        // \Statamic\Events\EntrySaving::class => [
+        //     \Jonassiewertsen\Butik\Listeners\CacheOldProductSlug::class,
+        // ],
+        // \Statamic\Events\EntrySaved::class => [
+        //     \Jonassiewertsen\Butik\Listeners\RenameVariants::class,
+        // ],
         \Statamic\Events\FormSubmitted::class => [
             \Jonassiewertsen\Butik\Listeners\CheckoutFormValidated::class,
         ],
