@@ -91,7 +91,6 @@ class Product extends ButikEntry
 
     public function tax(): object
     {
-        // TODO: Refactor to use tax instead of tax_id
         return (object) $this->entry->augmentedValue('tax_id')->value();
     }
 
