@@ -1,0 +1,48 @@
+title: Taxes
+sections:
+  main:
+    display: Main
+    fields:
+      -
+        handle: title
+        field:
+          type: text
+          required: true
+          validate:
+            - required
+          instructions: 'Your internal tax name'
+          listable: hidden
+          input_type: text
+          antlers: false
+      -
+        handle: countries
+        field:
+          display: Countries
+          type: countries
+          icon: tags
+          listable: hidden
+          validate:
+            - required
+      -
+        handle: rate
+        field:
+          display: Rate
+          type: float
+          icon: float
+          listable: hidden
+          validate:
+            - required
+  sidebar:
+    display: Sidebar
+    fields:
+      -
+        handle: slug
+        field:
+          type: slug
+          required: true
+          localizable: true
+          validate:
+            - required
+          instructions: 'will be used as an internal reference and has to be unique'
+          listable: hidden
+          generate: true
