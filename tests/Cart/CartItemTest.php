@@ -28,12 +28,11 @@ class CartItemTest extends TestCase
     public function it_has_a_slug()
     {
         Cart::add($this->product->slug);
-        dd(Cart::get());
 
-        $itemCollection (new ItemCollection())
-
-        $item = new Item($this->product->slug);
-
-        $this->assertEquals($item->slug, $this->product->slug);
+//        $itemCollection = (new ItemCollection());
+//
+//        $item = new Item($this->product->slug);
+//
+//        $this->assertEquals($item->slug, $this->product->slug);
     }
 }
