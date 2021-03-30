@@ -10,6 +10,7 @@ use Jonassiewertsen\Butik\Contracts\CountryRepository;
 use Jonassiewertsen\Butik\Contracts\NumberRepository;
 use Jonassiewertsen\Butik\Contracts\PriceRepository;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
+use Jonassiewertsen\Butik\Contracts\TaxRepository;
 use Jonassiewertsen\Butik\Filters\OrderStatus;
 use Jonassiewertsen\Butik\Http\Models\Order;
 use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
@@ -161,6 +162,12 @@ class ServiceProvider extends AddonServiceProvider
 
         $this->app->singleton(CountryRepository::class, function () {
             return new Country();
+        });
+
+        $this->app->singleton(TaxRepository::class, function () {
+            return new \Jonassiewertsen\Butik\Repositories\TaxRepository(
+                app(CountryRepository::class)
+            );
         });
     }
 
