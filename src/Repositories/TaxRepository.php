@@ -24,6 +24,6 @@ class TaxRepository extends ButikEntry implements TaxRepositoryContract
 
     public function toArray(): array
     {
-        return []; // TODO: Need implementing
+        return []; // TODO: Needs implementation
     }
 }
