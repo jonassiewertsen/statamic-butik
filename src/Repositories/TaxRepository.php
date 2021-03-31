@@ -25,9 +25,21 @@ class TaxRepository extends ButikEntry implements TaxRepositoryContract
 
     public function for(ProductRepository $product, ?string $locale = null): TaxRepositoryContract
     {
-        $id = $this->all()->first()->id();
+        $locale = $locale ?? $this->country->iso();
 
-        return $this->find($id);
+        $tax = $this->query()
+            ->get()
+            // Filter for entries matching the locale.
+            ->filter(function ($tax) use ($locale) {
+                return in_array($locale, $tax->get('countries'));
+            })
+            // FIlter for entries matching the tax type.
+            -> filter(function ($tax) use ($product) {
+                return $tax->type === $product->tax_type;
+            })
+            ->first();
+
+        return $this->find($tax->id());
     }
 
     public function collection(): string

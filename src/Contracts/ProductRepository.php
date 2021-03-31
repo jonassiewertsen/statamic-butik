@@ -8,6 +8,8 @@ interface ProductRepository
 
     public function tax(): object;
 
+    public function taxType(): string;
+
     public function price(): object;
 
     public function stockUnlimited(): bool;

@@ -72,10 +72,38 @@ class TaxTest extends TestCase
     }
 
     /** @test */
-    public function the_tax_for_method_returnes_a_tax_repository_instance()
+    public function the_for_method_returnes_a_tax_repository_instance()
     {
         $product = $this->makeProduct();
 
         $this->assertEquals($this->tax, Tax::for($product));
+    }
+
+    /** @test */
+    public function only_taxes_for_the_choosen_country_will_be_available()
+    {
+        $this->tax->update(['countries' => ['DK']]);
+        $germanTax = $this->makeTax(['countries' => ['DE']]);
+
+        $this->assertCount(2, Tax::all());
+
+        $this->assertEquals($germanTax->id, Tax::for($this->makeProduct())->id);
+    }
+
+    /** @test */
+    public function the_specific_locale_can_be_defined()
+    {
+        $dansihTax = $this->makeTax(['countries' => ['DK']]);
+
+        $this->assertEquals($dansihTax->id, Tax::for($this->makeProduct(), 'DK')->id);
+    }
+
+    /** @test */
+    public function the_tax_with_the_default_tax_type_will_be_returned()
+    {
+        $product = $this->makeProduct(['tax_type' => 'zero']);
+        $zeroTax = $this->makeTax(['type' => 'zero']);
+
+        $this->assertEquals($zeroTax->id, Tax::for($product)->id);
     }
 }

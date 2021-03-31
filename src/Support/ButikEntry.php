@@ -21,7 +21,7 @@ abstract class ButikEntry implements ButikEntryContract
 
     public function all(): Collection
     {
-        return collect($this->query()->all());
+        return collect($this->query()->get());
     }
 
     public function find(string $id): ?self
@@ -37,7 +37,7 @@ abstract class ButikEntry implements ButikEntryContract
 
     public function findBySlug(string $slug): ?self
     {
-        $this->entry = Entry::query()
+        $this->entry = $this->query()
             ->where('site', Site::current()->handle())
             ->where('collection', $this->collection())
             ->where('slug', $slug)
@@ -59,7 +59,7 @@ abstract class ButikEntry implements ButikEntryContract
 
     public function query()
     {
-        return Entry::whereCollection($this->collection());
+        return Entry::query()->where('collection', $this->collection());
     }
 
     public function fresh(): self

@@ -58,7 +58,7 @@ class TestCase extends OrchestraTestCase
             'price'                 => $data['price'] ?? '20.00',
             'stock'                 => $data['stock'] ?? '5',
             'stock_unlimited'       => $data['stock_unlimited'] ?? false,
-            'tax_id'                => $data['tax_id'] ?? create(Tax::class)->first()->slug,
+            'tax_type'              => $data['tax_type'] ?? 'default',
             'shipping_profile_slug' => $shippingZone->profile->slug,
             'images'                => null,
         ];
@@ -87,8 +87,8 @@ class TestCase extends OrchestraTestCase
             ->slug($slug = Str::random('6'))
             ->date(now())
             ->data([
-                'title' => $data['title'] ?? 'Test Item Product',
-                'rate' => $data['rate'] ?? '20.00',
+                'title' => $data['title'] ?? 'Test Tax',
+                'rate' => $data['rate'] ?? '19',
                 'type' => $data['type'] ?? 'default',
                 'countries' => $data['countries'] ?? ['DE'],
             ])
