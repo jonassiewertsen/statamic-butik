@@ -70,4 +70,12 @@ class TaxTest extends TestCase
 
         Tax::delete('not existing');
     }
+
+    /** @test */
+    public function the_tax_for_method_returnes_a_tax_repository_instance()
+    {
+        $product = $this->makeProduct();
+
+        $this->assertEquals($this->tax, Tax::for($product));
+    }
 }
