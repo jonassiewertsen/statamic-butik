@@ -33,11 +33,6 @@ class TaxRepository extends ButikEntry implements TaxRepositoryContract
         return 'butik_taxes';
     }
 
-    public function toArray(): array
-    {
-        return []; // TODO: Needs implementation
-    }
-
     private function filterDependingOnLocaleAndTaxType(ProductRepository $product, string|null $locale = null): self
     {
         $locale = $locale ?? $this->country->iso();
@@ -54,5 +49,10 @@ class TaxRepository extends ButikEntry implements TaxRepositoryContract
             });
 
         return $this->find($entries->first()->id());
+    }
+
+    public function toArray(): array
+    {
+        return []; // TODO: Needs implementation
     }
 }
