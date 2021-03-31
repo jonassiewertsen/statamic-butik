@@ -16,13 +16,11 @@ use Jonassiewertsen\Butik\Http\Models\Order;
 use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
 use Jonassiewertsen\Butik\Http\Models\ShippingRate;
 use Jonassiewertsen\Butik\Http\Models\ShippingZone;
-use Jonassiewertsen\Butik\Http\Models\Tax;
 use Jonassiewertsen\Butik\Http\Models\Variant;
 use Jonassiewertsen\Butik\Policies\OrderPolicy;
 use Jonassiewertsen\Butik\Policies\ShippingProfilePolicy;
 use Jonassiewertsen\Butik\Policies\ShippingRatePolicy;
 use Jonassiewertsen\Butik\Policies\ShippingZonePolicy;
-use Jonassiewertsen\Butik\Policies\TaxPolicy;
 use Jonassiewertsen\Butik\Policies\VariantPolicy;
 use Jonassiewertsen\Butik\Product\Product;
 use Jonassiewertsen\Butik\Support\Country;
@@ -65,7 +63,6 @@ class ServiceProvider extends AddonServiceProvider
     protected $modifiers = [
         \Jonassiewertsen\Butik\Modifiers\CountryName::class,
         \Jonassiewertsen\Butik\Modifiers\Sellable::class,
-        \Jonassiewertsen\Butik\Modifiers\WithoutTax::class,
     ];
 
     protected $tags = [
@@ -79,7 +76,6 @@ class ServiceProvider extends AddonServiceProvider
         \Jonassiewertsen\Butik\Fieldtypes\Money::class,
         \Jonassiewertsen\Butik\Fieldtypes\Number::class,
         \Jonassiewertsen\Butik\Fieldtypes\Shipping::class,
-        \Jonassiewertsen\Butik\Fieldtypes\Tax::class,
         \Jonassiewertsen\Butik\Fieldtypes\TaxType::class,
         \Jonassiewertsen\Butik\Fieldtypes\Variants::class,
     ];
@@ -127,7 +123,6 @@ class ServiceProvider extends AddonServiceProvider
         ShippingProfile::class => ShippingProfilePolicy::class,
         ShippingZone::class    => ShippingZonePolicy::class,
         ShippingRate::class    => ShippingRatePolicy::class,
-        Tax::class             => TaxPolicy::class,
         Variant::class         => VariantPolicy::class,
     ];
 
@@ -277,24 +272,6 @@ class ServiceProvider extends AddonServiceProvider
                                 ]),
                         ]);
                 });
-                Permission::register('view taxes', function ($permission) {
-                    $permission
-                        ->label(__('butik::cp.permission_view_taxes'))
-                        ->description(__('butik::cp.permission_view_taxes_description'))
-                        ->children([
-                            Permission::make('edit taxes')
-                                ->label(__('butik::cp.permission_edit_taxes'))
-                                ->description(__('butik::cp.permission_edit_taxes_description'))
-                                ->children([
-                                    Permission::make('create taxes')
-                                        ->label(__('butik::cp.permission_create_taxes'))
-                                        ->description(__('butik::cp.permission_create_taxes_description')),
-                                    Permission::make('delete taxes')
-                                        ->label(__('butik::cp.permission_delete_taxes'))
-                                        ->description(__('butik::cp.permission_delete_taxes_description')),
-                                ]),
-                        ]);
-                });
             });
         });
     }
@@ -327,12 +304,12 @@ class ServiceProvider extends AddonServiceProvider
             // Settings
             $nav->create(ucfirst(__('butik::cp.setting_plural')))
                 ->section('Butik')
-                ->can(auth()->user()->can('view shippings') || auth()->user()->can('view taxes'))
+                ->can(auth()->user()->can('view shippings'))
                 ->route('butik.settings.index')
                 ->icon('settings-slider')
                 ->children([
                     $nav->item(ucfirst(__('butik::cp.shipping_singular')))->route('butik.shipping.index')->can('view shippings'),
-                    $nav->item(ucfirst(__('butik::cp.tax_plural')))->route('butik.taxes.index')->can('view taxes'),
+//                    $nav->item(ucfirst(__('butik::cp.tax_plural')))->route('butik.taxes.index')->can('view taxes'),
                 ]);
         });
     }
