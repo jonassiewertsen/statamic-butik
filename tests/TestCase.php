@@ -89,6 +89,7 @@ class TestCase extends OrchestraTestCase
             ->data([
                 'title' => $data['title'] ?? 'Test Item Product',
                 'rate' => $data['rate'] ?? '20.00',
+                'type' => $data['type'] ?? 'default',
                 'countries' => $data['countries'] ?? ['DE'],
             ])
             ->id($id = (string) Str::uuid())

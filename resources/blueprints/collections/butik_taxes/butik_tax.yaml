@@ -34,7 +34,7 @@ sections:
           validate:
             - required
       -
-        handle: tax_type
+        handle: type
         field:
           display: Type
           type: tax_type
