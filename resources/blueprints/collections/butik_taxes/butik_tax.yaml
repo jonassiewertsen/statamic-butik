@@ -29,9 +29,18 @@ sections:
           display: Rate
           type: float
           icon: float
-          listable: hidden
+          listable: true
+          width: '50'
           validate:
             - required
+      -
+        handle: tax_type
+        field:
+          display: Type
+          type: tax_type
+          required: true
+          listable: true
+          width: '50'
   sidebar:
     display: Sidebar
     fields:

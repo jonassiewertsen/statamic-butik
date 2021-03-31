@@ -25,14 +25,6 @@ sections:
             - min:0
           width: '50'
       -
-        handle: tax_id
-        field:
-          display: Tax
-          type: tax
-          required: true
-          listable: false
-          width: '25'
-      -
         handle: tax_type
         field:
           display: Type
@@ -40,6 +32,8 @@ sections:
           required: true
           listable: false
           width: '25'
+          validate:
+              - required
       -
         handle: shipping_profile_slug
         field:
