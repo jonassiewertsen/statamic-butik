@@ -2,38 +2,72 @@
 
 namespace Tests\Unit;
 
-use Jonassiewertsen\Butik\Http\Models\Tax;
+use Jonassiewertsen\Butik\Exceptions\ButikProductException;
+use Jonassiewertsen\Butik\Facades\Tax;
 use Tests\TestCase;
 
 class TaxTest extends TestCase
 {
-    protected $tax;
+    public $tax;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->tax = create(Tax::class)->first();
+        $this->tax = $this->makeTax();
     }
 
     /** @test */
-    public function the_tax_will_be_saved_without_decimals()
+    public function it_can_fetch_all_taxes()
     {
-        $this->tax->update(['percentage' => '7.7']);
-        $this->assertEquals('770', Tax::first()->getRawOriginal('percentage'));
+        $taxes = Tax::all();
+
+        $this->assertCount(1, $taxes);
     }
 
     /** @test */
-    public function a_tax_has_products()
+    public function a_product_can_be_found()
     {
-        $this->assertInstanceOf('Illuminate\Support\Collection', $this->tax->products);
+        $this->assertEquals($this->tax, Tax::find($this->tax->id));
     }
 
     /** @test */
-    public function taxes_have_a_edit_url()
+    public function a_tax_can_be_found_by_its_slug()
     {
-        $this->assertStringContainsString(
-            $this->tax->editUrl(),
-            cp_route('butik.taxes.edit', $this->tax)
-        );
+        $this->assertEquals($this->tax, Tax::findBySlug($this->tax->slug));
+    }
+
+    /** @test */
+    public function a_tax_title_can_be_updated()
+    {
+        $this->tax->update(['title' => 'new title']);
+
+        $this->assertEquals('new title', $this->tax->fresh()->title);
+    }
+
+    /** @test */
+    public function a_tax_rate_can_be_updated()
+    {
+        $this->tax->update(['rate' => '33']);
+
+        $this->assertEquals('33', $this->tax->fresh()->rate);
+    }
+
+    /** @test */
+    public function a_tax_can_be_deleted()
+    {
+        $this->assertCount(1, Tax::all());
+
+        $tax = Tax::all()->first();
+        $tax->delete();
+
+        $this->assertCount(0, Tax::all());
+    }
+
+    /** @test */
+    public function a_not_found_tax_cant_be_deleted_and_will_throw_an_exception()
+    {
+        $this->expectException(ButikProductException::class); // TODO: should we throw a different exception?
+
+        Tax::delete('not existing');
     }
 }
