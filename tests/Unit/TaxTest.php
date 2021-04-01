@@ -101,7 +101,7 @@ class TaxTest extends TestCase
     /** @test */
     public function the_tax_with_the_default_tax_type_will_be_returned()
     {
-        $product = $this->makeProduct(['tax_type' => 'zero']);
+        $product = $this->makeProduct(['tax' => 'zero']);
         $zeroTax = $this->makeTax(['type' => 'zero']);
 
         $this->assertEquals($zeroTax->id, Tax::for($product)->id);

@@ -1208,7 +1208,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(15);
-module.exports = __webpack_require__(82);
+module.exports = __webpack_require__(79);
 
 
 /***/ }),
@@ -1235,15 +1235,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__fieldtypes_shippingFieldtype___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__fieldtypes_shippingFieldtype__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__fieldtypes_taxFieldtype__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__fieldtypes_taxFieldtype___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__fieldtypes_taxFieldtype__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__fieldtypes_taxTypeFieldtype__ = __webpack_require__(73);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__fieldtypes_taxTypeFieldtype___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__fieldtypes_taxTypeFieldtype__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__fieldtypes_variantsFieldtype__ = __webpack_require__(76);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__fieldtypes_variantsFieldtype___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__fieldtypes_variantsFieldtype__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__partials_CreateButton__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__partials_CreateButton___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__partials_CreateButton__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__partials_PublishFormRedirect__ = __webpack_require__(79);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__partials_PublishFormRedirect___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__partials_PublishFormRedirect__);
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__fieldtypes_variantsFieldtype__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__fieldtypes_variantsFieldtype___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__fieldtypes_variantsFieldtype__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__partials_CreateButton__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__partials_CreateButton___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__partials_CreateButton__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__partials_PublishFormRedirect__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__partials_PublishFormRedirect___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__partials_PublishFormRedirect__);
 
 
 
@@ -1274,12 +1271,11 @@ Statamic.booting(function () {
     Statamic.$components.register('number-fieldtype', __WEBPACK_IMPORTED_MODULE_6__fieldtypes_numberFieldtype___default.a);
     Statamic.$components.register('shipping-fieldtype', __WEBPACK_IMPORTED_MODULE_7__fieldtypes_shippingFieldtype___default.a);
     Statamic.$components.register('tax-fieldtype', __WEBPACK_IMPORTED_MODULE_8__fieldtypes_taxFieldtype___default.a);
-    Statamic.$components.register('tax_type-fieldtype', __WEBPACK_IMPORTED_MODULE_9__fieldtypes_taxTypeFieldtype___default.a);
-    Statamic.$components.register('variants-fieldtype', __WEBPACK_IMPORTED_MODULE_10__fieldtypes_variantsFieldtype___default.a);
+    Statamic.$components.register('variants-fieldtype', __WEBPACK_IMPORTED_MODULE_9__fieldtypes_variantsFieldtype___default.a);
 
     // Partials
-    Statamic.$components.register('create-button', __WEBPACK_IMPORTED_MODULE_11__partials_CreateButton___default.a);
-    Statamic.$components.register('publish-form-redirect', __WEBPACK_IMPORTED_MODULE_12__partials_PublishFormRedirect___default.a);
+    Statamic.$components.register('create-button', __WEBPACK_IMPORTED_MODULE_10__partials_CreateButton___default.a);
+    Statamic.$components.register('publish-form-redirect', __WEBPACK_IMPORTED_MODULE_11__partials_PublishFormRedirect___default.a);
 });
 
 /***/ }),
@@ -5574,7 +5570,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     data: function data() {
         return {
-            taxes: this.meta.taxes
+            types: this.meta.types
         };
     }
 });
@@ -5594,7 +5590,7 @@ var render = function() {
         attrs: {
           handle: _vm.config.handle,
           value: _vm.value,
-          options: _vm.taxes
+          options: _vm.types
         },
         on: { input: _vm.update }
       })
@@ -5638,114 +5634,6 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/js/fieldtypes/taxTypeFieldtype.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-627e54f1", Component.options)
-  } else {
-    hotAPI.reload("data-v-627e54f1", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 74 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    mixins: [Fieldtype],
-
-    data: function data() {
-        return {
-            types: this.meta.types
-        };
-    }
-});
-
-/***/ }),
-/* 75 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("select-input", {
-        attrs: {
-          handle: _vm.config.handle,
-          value: _vm.value,
-          options: _vm.types
-        },
-        on: { input: _vm.update }
-      })
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-627e54f1", module.exports)
-  }
-}
-
-/***/ }),
-/* 76 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(0)
-/* script */
-var __vue_script__ = __webpack_require__(77)
-/* template */
-var __vue_template__ = __webpack_require__(78)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
 Component.options.__file = "resources/js/fieldtypes/variantsFieldtype.vue"
 
 /* hot reload */
@@ -5768,7 +5656,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 77 */
+/* 74 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5939,7 +5827,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 78 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -6188,15 +6076,15 @@ if (false) {
 }
 
 /***/ }),
-/* 79 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(80)
+var __vue_script__ = __webpack_require__(77)
 /* template */
-var __vue_template__ = __webpack_require__(81)
+var __vue_template__ = __webpack_require__(78)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -6235,7 +6123,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 80 */
+/* 77 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6280,7 +6168,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 81 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -6309,7 +6197,7 @@ if (false) {
 }
 
 /***/ }),
-/* 82 */
+/* 79 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

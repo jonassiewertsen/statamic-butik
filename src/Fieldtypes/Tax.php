@@ -4,7 +4,7 @@ namespace Jonassiewertsen\Butik\Fieldtypes;
 
 use Statamic\Fields\Fieldtype;
 
-class TaxType extends Fieldtype
+class Tax extends Fieldtype
 {
     protected $icon       = 'tags';
     protected $categories = ['butik'];

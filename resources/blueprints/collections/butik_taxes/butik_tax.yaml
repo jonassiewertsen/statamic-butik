@@ -37,7 +37,7 @@ sections:
         handle: type
         field:
           display: Type
-          type: tax_type
+          type: tax
           required: true
           listable: true
           width: '50'

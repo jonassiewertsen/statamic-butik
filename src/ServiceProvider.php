@@ -76,7 +76,7 @@ class ServiceProvider extends AddonServiceProvider
         \Jonassiewertsen\Butik\Fieldtypes\Money::class,
         \Jonassiewertsen\Butik\Fieldtypes\Number::class,
         \Jonassiewertsen\Butik\Fieldtypes\Shipping::class,
-        \Jonassiewertsen\Butik\Fieldtypes\TaxType::class,
+        \Jonassiewertsen\Butik\Fieldtypes\Tax::class,
         \Jonassiewertsen\Butik\Fieldtypes\Variants::class,
     ];
 

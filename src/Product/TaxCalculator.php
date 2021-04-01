@@ -6,7 +6,7 @@ use Jonassiewertsen\Butik\Contracts\PriceRepository;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
 use Jonassiewertsen\Butik\Facades\Price as PriceFacade;
 
-class Tax
+class TaxCalculator
 {
     public function __construct(
         public ProductRepository $product,

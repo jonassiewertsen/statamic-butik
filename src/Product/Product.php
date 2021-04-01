@@ -24,12 +24,12 @@ class Product extends ButikEntry implements ProductRepository
 
     public function tax(): object
     {
-        return (object) $this->entry->augmentedValue('tax_id')->value();
+        return (object) $this->entry->augmentedValue('tax')->value();
     }
 
     public function taxType(): string
     {
-        return (string) $this->data['tax_type'];
+        return (string) $this->data['tax'];
     }
 
     public function price(): object

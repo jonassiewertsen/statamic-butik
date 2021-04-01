@@ -25,10 +25,10 @@ sections:
             - min:0
           width: '50'
       -
-        handle: tax_type
+        handle: tax
         field:
           display: Type
-          type: tax_type
+          type: tax
           required: true
           listable: false
           width: '25'
