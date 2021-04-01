@@ -35,7 +35,7 @@ class Tax extends Fieldtype
     private function types(): array
     {
         return collect(config('butik.tax_types', []))
-            ->map(fn ($label, $value) => compact('label', 'value'))
+            ->flatMap(fn ($label, $value) => [compact('label', 'value')])
             ->toArray();
     }
 }

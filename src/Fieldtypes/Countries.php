@@ -58,15 +58,8 @@ class Countries extends Fieldtype
 
     private function mappedCountries(): array
     {
-        $options = [];
-
-        foreach ($this->countries as $value => $label) {
-            $options[] = [
-                'label' => $label,
-                'value' => $value,
-            ];
-        }
-
-        return $options;
+        return collect($this->countries)
+            ->flatMap(fn ($label, $value) => [compact('label', 'value')])
+            ->toArray();
     }
 }
