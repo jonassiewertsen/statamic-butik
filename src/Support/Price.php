@@ -98,7 +98,10 @@ class Price implements PriceRepository
                 return $this->convertFromStringToInt($amount);
             case 'double':
                 return (int) (floatval($amount) * 100);
+            case 'object':
+                return $amount instanceof PriceRepository ? $amount->cents() : 0;
             case 'NULL':
+            default:
                 return 0;
         }
     }

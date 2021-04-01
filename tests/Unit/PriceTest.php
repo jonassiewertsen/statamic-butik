@@ -113,4 +113,13 @@ class PriceTest extends TestCase
 
         $this->assertEquals(10, $amount);
     }
+
+    /** @test */
+    public function a_price_calculate_with_priceobjects_itself()
+    {
+        $amount1 = Price::of(300);
+        $amount2 = Price::of(200);
+
+        $this->assertEquals(500, Price::of($amount1)->add($amount2)->cents());
+    }
 }
