@@ -64,16 +64,12 @@ class Number implements NumberRepository
 
     protected function convertToNumber($number): int
     {
-        switch (gettype($number)) {
-            case 'integer':
-                return $this->multiplicator * $number;
-            case 'double':
-                return (int) $this->multiplicator * $number;
-            case 'string':
-                return $this->fromStringToNumber($number);
-            case 'NULL':
-                return 0;
-        }
+        return match (gettype($number)) {
+            'integer' => $this->multiplicator * $number,
+            'double' =>  (int) $this->multiplicator * $number,
+            'string' =>  $this->fromStringToNumber($number),
+            'default' =>  0,
+        };
     }
 
     private function fromStringToNumber($number)
