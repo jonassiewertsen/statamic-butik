@@ -44,6 +44,13 @@ class Price implements PriceRepository
         return $this;
     }
 
+    public function divide($by): self
+    {
+        $this->amount /= $by;
+
+        return $this;
+    }
+
     public function delimiter(string $delimiter): self
     {
         $this->delimiter = $delimiter;

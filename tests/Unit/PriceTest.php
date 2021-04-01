@@ -105,4 +105,12 @@ class PriceTest extends TestCase
 
         $this->assertEquals(3333, $amount);
     }
+
+    /** @test */
+    public function a_price_can_be_divided()
+    {
+        $amount = Price::of(550)->divide(55)->cents();
+
+        $this->assertEquals(10, $amount);
+    }
 }
