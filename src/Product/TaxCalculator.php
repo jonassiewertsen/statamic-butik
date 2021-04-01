@@ -10,18 +10,19 @@ use Jonassiewertsen\Butik\Facades\Tax;
 
 class TaxCalculator
 {
-    public TaxRepository $tax;
+    public ProductRepository $product;
     public string|int $basePrice;
+    public TaxRepository $tax;
     public bool $grossPrices;
+    public int $quantity;
 
-    public function __construct(
-        public ProductRepository $product,
-        public int $quantity = 1,
-        string|null $locale = null,
-    ) {
-        $this->tax = Tax::for($this->product, $locale);
-        $this->basePrice = $this->product->entry->get('price');
+    public function __construct(ProductRepository $product, int $quantity = 1, string|null $locale = null) {
         $this->grossPrices = config('butik.price', 'gross') === 'gross';
+        $this->product = $product;
+
+        $this->basePrice = $this->product->entry->get('price');
+        $this->tax = Tax::for($this->product, $locale);
+        $this->quantity = $quantity;
     }
 
     public function total(): PriceRepository
@@ -45,11 +46,22 @@ class TaxCalculator
 
     protected function taxFromNetPrice(mixed $amount): PriceRepository
     {
+        /**
+         * We are doing a basic tax calculation
+         * amount * ( taxRate / 100 )
+         * fx 100 * 0,19
+         */
         return PriceFacade::of($amount)->multiply($this->tax->rate / 100)->multiply($this->quantity);
     }
 
     protected function taxFromGrossPrice(mixed $amount): PriceRepository
     {
+        /**
+         * To calcuate the tax amount from a gross price, we need to calculate
+         * the net price first to continue.
+         * amount / 1 + taxRate
+         * fx. 119 / 1,19
+         */
         $netPrice = PriceFacade::of($amount)->divide($this->tax->rate / 100 + 1);
 
         return PriceFacade::of($amount)
