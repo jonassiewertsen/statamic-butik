@@ -48,6 +48,7 @@ class TaxRepository extends ButikEntry implements TaxRepositoryContract
                 return $tax->type === $product->tax_type;
             });
 
+        // TODO: Handle the case that no existing tax does fit.
         return $this->find($entries->first()->id());
     }
 

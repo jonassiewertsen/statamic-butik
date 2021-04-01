@@ -46,7 +46,7 @@ class Price implements PriceRepository
 
     public function divide($by): self
     {
-        $this->amount /= $by;
+        $this->amount = (int) round($this->amount / $by);
 
         return $this;
     }

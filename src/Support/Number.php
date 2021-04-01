@@ -45,7 +45,7 @@ class Number implements NumberRepository
 
     public function divide($by): self
     {
-        $this->number /= $by;
+        $this->number = (int) round($this->number / $by);
 
         return $this;
     }

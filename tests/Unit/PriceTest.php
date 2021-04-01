@@ -115,6 +115,14 @@ class PriceTest extends TestCase
     }
 
     /** @test */
+    public function a_price_division_will_round_correctly()
+    {
+        $amount = Price::of(2000)->divide(1.19)->cents();
+
+        $this->assertEquals(1681, $amount);
+    }
+
+    /** @test */
     public function a_price_calculate_with_priceobjects_itself()
     {
         $amount1 = Price::of(300);
