@@ -12,6 +12,7 @@ class TaxCalculator
 {
     public TaxRepository $tax;
     public string|int $basePrice;
+    public bool $grossPrices;
 
     public function __construct(
         public ProductRepository $product,
@@ -20,16 +21,21 @@ class TaxCalculator
     ) {
         $this->tax = Tax::for($this->product, $locale);
         $this->basePrice = $this->product->entry->get('price');
+        $this->grossPrices = config('butik.price', 'gross') === 'gross';
     }
 
     public function total(): PriceRepository
     {
-        return $this->taxFromGrossPrice($this->basePrice);
+        return $this->grossPrices ?
+            $this->taxFromGrossPrice($this->basePrice) :
+            $this->taxFromNetPrice($this->basePrice);
     }
 
     public function single(): PriceRepository
     {
-        return $this->taxFromGrossPrice($this->basePrice);
+        return $this->grossPrices ?
+            $this->taxFromGrossPrice($this->basePrice) :
+            $this->taxFromNetPrice($this->basePrice);
     }
 
     public function rate(): int
@@ -37,9 +43,9 @@ class TaxCalculator
         return $this->tax->rate;
     }
 
-    protected function fromNetPrice($amount)
+    protected function taxFromNetPrice(mixed $amount): PriceRepository
     {
-        // TODO: Need implementing
+        return PriceFacade::of($amount)->multiply($this->tax->rate / 100)->multiply($this->quantity);
     }
 
     protected function taxFromGrossPrice(mixed $amount): PriceRepository
