@@ -72,4 +72,12 @@ class NumberTest extends TestCase
 
         $this->assertEquals(33.33, $number);
     }
+
+    /** @test */
+    public function a_number_can_be_divided()
+    {
+        $number = Number::of('110')->divide(11)->decimal();
+
+        $this->assertEquals(10, $number);
+    }
 }
