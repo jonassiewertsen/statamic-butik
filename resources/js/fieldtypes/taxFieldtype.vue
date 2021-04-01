@@ -1,11 +1,14 @@
 <template>
     <div>
-        <select-input
+        <v-select
             :handle="config.handle"
             :value="value"
             :options="types"
+            :multiple="false"
+            :searchable="false"
+            :taggable="false"
             @input="update"
-        ></select-input>
+        ></v-select>
     </div>
 </template>
 
