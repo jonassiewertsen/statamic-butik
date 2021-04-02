@@ -25,6 +25,11 @@ class TaxCalculator
         $this->quantity = $quantity;
     }
 
+    public function title(): string
+    {
+        return $this->tax->title;
+    }
+
     public function total(): PriceRepository
     {
         return $this->grossPrices ?

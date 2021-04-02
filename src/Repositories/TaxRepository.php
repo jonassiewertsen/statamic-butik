@@ -48,7 +48,7 @@ class TaxRepository extends ButikEntry implements TaxRepositoryContract
                 return $tax->type === $product->tax_type;
             });
 
-        // TODO: Handle the case that no existing tax does fit.
+        // TODO: Handle the case that non existing taxes will return a zero tax object or any similar.
         return $this->find($entries->first()->id());
     }
 

@@ -2,57 +2,52 @@
 
 namespace Tests\Fieldsets;
 
+use Jonassiewertsen\Butik\Contracts\TaxRepository;
 use Jonassiewertsen\Butik\Fieldtypes\Tax as TaxFieldset;
-use Jonassiewertsen\Butik\Http\Models\Tax;
+use Statamic\Contracts\Entries\Entry;
+use Statamic\Facades\Entry as EntryFacade;
 use Statamic\Fields\Field;
 use Tests\TestCase;
 
 class TaxFieldsetTest extends TestCase
 {
-    /** @test */
-    public function it_has_a_percentage_value()
-    {
-        $taxModel = create(Tax::class)->first();
-        $tax = $this->taxFieldset($taxModel->slug);
+    public Field $field;
+    public TaxRepository $tax;
+    public TaxFieldset $taxFieldset;
+    public Entry $product;
 
-        $this->assertEquals($tax['percentage'], $taxModel->percentage);
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tax = $this->makeTax();
+        $this->product = EntryFacade::find($this->makeProduct()->id);
+        $this->field = (new Field('tax', []))->setParent($this->product);
+
+        $this->taxFieldset = (new TaxFieldset())->setField($this->field);
     }
 
     /** @test */
-    public function it_has_a_calculated_tax_amount()
+    public function it_has_a_tax_rate()
     {
-        $product = $this->makeProduct();
-        $tax = $product->augmentedValue('tax_id')->value();
-
-        // TODO: Replace with Price facade as soon as it's done
-        $calculatedTaxAmount = (float) $product->price * ($tax['percentage'] / 100);
-        $calculatedTaxAmount = number_format((float) $calculatedTaxAmount, '2', ',', '.');
-
-        $this->assertEquals($tax['amount'], $calculatedTaxAmount);
+        $this->assertEquals(19, $this->taxFieldset->augment('default')['rate']);
     }
 
     /** @test */
-    public function it_has_a_name()
+    public function it_has_a_tax_amount()
     {
-        $taxModel = create(Tax::class)->first();
-        $tax = $this->taxFieldset($taxModel->slug);
-
-        $this->assertEquals($tax['name'], $taxModel->title);
+        $this->assertEquals('3,19', $this->taxFieldset->augment('default')['amount']);
     }
 
     /** @test */
-    public function it_has_a_slug()
+    public function it_has_a_title()
     {
-        $taxModel = create(Tax::class)->first();
-        $tax = $this->taxFieldset($taxModel->slug);
-
-        $this->assertEquals($tax['slug'], $taxModel->slug);
+        $this->assertEquals('Test Tax', $this->taxFieldset->augment('default')['title']);
     }
 
-    private function taxFieldset($value = 'default'): array
+    /** @test */
+    public function return_an_empty_a()
     {
-        return (new TaxFieldset())
-            ->setField(new Field('test', []))
-            ->augment($value);
+        $this->assertEquals('Test Tax', $this->taxFieldset->augment('default')['title']);
     }
 }

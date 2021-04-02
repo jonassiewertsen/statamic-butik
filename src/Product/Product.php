@@ -22,9 +22,9 @@ class Product extends ButikEntry implements ProductRepository
         return $this->data['stock_unlimited'];
     }
 
-    public function tax(): object
+    public function tax(): TaxCalculator
     {
-        return (object) $this->entry->augmentedValue('tax')->value();
+        return new TaxCalculator($this);
     }
 
     public function taxType(): string

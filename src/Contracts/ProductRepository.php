@@ -2,11 +2,13 @@
 
 namespace Jonassiewertsen\Butik\Contracts;
 
+use Jonassiewertsen\Butik\Product\TaxCalculator;
+
 interface ProductRepository
 {
     public function stock(): int;
 
-    public function tax(): object;
+    public function tax(): TaxCalculator; // TODO: Swap with Interface!
 
     public function taxType(): string;
 
