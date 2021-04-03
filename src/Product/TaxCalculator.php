@@ -5,15 +5,18 @@ namespace Jonassiewertsen\Butik\Product;
 use Jonassiewertsen\Butik\Contracts\PriceRepository;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
 use Jonassiewertsen\Butik\Contracts\TaxRepository;
+use Jonassiewertsen\Butik\Contracts\TaxCalculator as TaxCalculatorContract;
 use Jonassiewertsen\Butik\Facades\Price as PriceFacade;
 use Jonassiewertsen\Butik\Facades\Tax;
+use Jonassiewertsen\Butik\Http\Traits\isGrossPrice;
 
-class TaxCalculator
+class TaxCalculator implements TaxCalculatorContract
 {
+    use isGrossPrice;
+
     public ProductRepository $product;
     public string|int $basePrice;
     public TaxRepository $tax;
-    public bool $grossPrices;
     public int $quantity;
 
     public function __construct(ProductRepository $product, int $quantity = 1, string|null $locale = null) {
@@ -31,19 +34,19 @@ class TaxCalculator
 
     public function total(): PriceRepository
     {
-        return $this->grossPrices ?
+        return $this->isGrossPrice() ?
             $this->taxFromGrossPrice($this->basePrice) :
             $this->taxFromNetPrice($this->basePrice);
     }
 
     public function single(): PriceRepository
     {
-        return $this->grossPrices ?
+        return $this->isGrossPrice() ?
             $this->taxFromGrossPrice($this->basePrice) :
             $this->taxFromNetPrice($this->basePrice);
     }
 
-    public function rate(): int
+    public function rate(): int // TODO: What about comma taxes like in switzerland?
     {
         return $this->tax->rate;
     }
@@ -71,10 +74,5 @@ class TaxCalculator
         return PriceFacade::of($amount)
             ->subtract($netPrice)
             ->multiply($this->quantity);
-    }
-
-    private function isGrossPrice(): bool
-    {
-        return config('butik.price', 'gross') === 'gross';
     }
 }
