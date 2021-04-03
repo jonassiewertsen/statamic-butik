@@ -17,12 +17,11 @@ class TaxCalculator
     public int $quantity;
 
     public function __construct(ProductRepository $product, int $quantity = 1, string|null $locale = null) {
-        $this->grossPrices = config('butik.price', 'gross') === 'gross';
-        $this->product = $product;
-
-        $this->basePrice = $this->product->entry->get('price');
-        $this->tax = Tax::for($this->product, $locale);
+        $this->basePrice = $product->entry->get('price');
+        $this->grossPrices = $this->isGrossPrice();
+        $this->tax = Tax::for($product, $locale);
         $this->quantity = $quantity;
+        $this->product = $product;
     }
 
     public function title(): string
@@ -72,5 +71,10 @@ class TaxCalculator
         return PriceFacade::of($amount)
             ->subtract($netPrice)
             ->multiply($this->quantity);
+    }
+
+    private function isGrossPrice(): bool
+    {
+        return config('butik.price', 'gross') === 'gross';
     }
 }
