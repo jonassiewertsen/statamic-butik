@@ -11,6 +11,7 @@ use Jonassiewertsen\Butik\Contracts\NumberRepository;
 use Jonassiewertsen\Butik\Contracts\PriceRepository;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
 use Jonassiewertsen\Butik\Contracts\TaxRepository;
+use Jonassiewertsen\Butik\Contracts\VatCalculator;
 use Jonassiewertsen\Butik\Filters\OrderStatus;
 use Jonassiewertsen\Butik\Http\Models\Order;
 use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
@@ -26,6 +27,7 @@ use Jonassiewertsen\Butik\Product\Product;
 use Jonassiewertsen\Butik\Support\Country;
 use Jonassiewertsen\Butik\Support\Number;
 use Jonassiewertsen\Butik\Support\Price;
+use Jonassiewertsen\Butik\Support\Vat;
 use Livewire\Livewire;
 use Mollie\Laravel\MollieServiceProvider;
 use Statamic\Facades\CP\Nav;
@@ -146,6 +148,10 @@ class ServiceProvider extends AddonServiceProvider
 
         $this->app->bind(NumberRepository::class, function () {
             return new Number();
+        });
+
+        $this->app->bind(VatCalculator::class, function () {
+            return new Vat();
         });
 
         $this->app->singleton(CartRepository::class, function () {
