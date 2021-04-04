@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Product;
 
 use Jonassiewertsen\Butik\Exceptions\ButikProductException;
 use Jonassiewertsen\Butik\Facades\Product;
@@ -66,7 +66,7 @@ class ProductTest extends TestCase
             'price' => '50,00',
         ]);
 
-        $this->assertEquals('50,00', $this->product->fresh()->price->total);
+        $this->assertEquals('50,00', $this->product->fresh()->price->get());
     }
 
     /** @test */

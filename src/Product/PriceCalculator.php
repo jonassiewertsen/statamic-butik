@@ -5,12 +5,11 @@ namespace Jonassiewertsen\Butik\Product;
 use Jonassiewertsen\Butik\Contracts\PriceContract;
 use Jonassiewertsen\Butik\Contracts\PriceRepository;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
-use Jonassiewertsen\Butik\Contracts\PriceCalculator as PriceCalculatorContract;
 use Jonassiewertsen\Butik\Contracts\TaxCalculator as TaxCalculatorContract;
-use Jonassiewertsen\Butik\Facades;
+use Jonassiewertsen\Butik\Facades\Price;
 use Jonassiewertsen\Butik\Http\Traits\isGrossPrice;
 
-class Price implements PriceCalculatorContract
+abstract class PriceCalculator implements PriceContract
 {
     use isGrossPrice;
 
@@ -27,23 +26,18 @@ class Price implements PriceCalculatorContract
 
     public function get(): string
     {
-        return $this->isGrossPrice() ?
-            $this->gross()->total()->get() :
-            $this->net()->total()->get();
+        return $this->total()->get();
     }
 
-    public function net(): PriceContract
-    {
-        return new NetPriceCalculator($this->product, $this->quantity);
-    }
+    abstract public function single(): PriceRepository;
 
-    public function gross(): PriceContract
+    public function total(): PriceRepository
     {
-        return new GrossPriceCalculator($this->product, $this->quantity);
+        return $this->single()->multiply($this->quantity);
     }
 
     public function base(): PriceRepository
     {
-        return Facades\Price::of($this->product->entry->get('price'));
+        return Price::of($this->product->entry->get('price'));
     }
 }

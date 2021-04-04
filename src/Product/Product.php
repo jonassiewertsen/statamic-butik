@@ -2,7 +2,9 @@
 
 namespace Jonassiewertsen\Butik\Product;
 
+use Jonassiewertsen\Butik\Contracts\PriceCalculator as PriceCalculatorContract;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
+use Jonassiewertsen\Butik\Contracts\TaxCalculator as TaxCalculatorContract;
 use Jonassiewertsen\Butik\Support\ButikEntry;
 
 class Product extends ButikEntry implements ProductRepository
@@ -22,7 +24,7 @@ class Product extends ButikEntry implements ProductRepository
         return $this->data['stock_unlimited'];
     }
 
-    public function tax(): TaxCalculator
+    public function tax(): TaxCalculatorContract
     {
         return new TaxCalculator($this);
     }
@@ -32,9 +34,9 @@ class Product extends ButikEntry implements ProductRepository
         return (string) $this->data['tax'];
     }
 
-    public function price(): object
+    public function price(): PriceCalculatorContract
     {
-        return (object) $this->entry->augmentedValue('price')->value();
+        return new Price($this);
     }
 
     public function toArray(): array

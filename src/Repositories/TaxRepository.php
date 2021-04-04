@@ -23,17 +23,17 @@ class TaxRepository extends ButikEntry implements TaxRepositoryContract
         return $this->data['type'];
     }
 
-    public function for(ProductRepository $product, string|null $locale = null): TaxRepositoryContract
+    public function for(ProductRepository $product, string|null $locale = null): TaxRepositoryContract|null
     {
         return $this->filterDependingOnLocaleAndTaxType($product, $locale);
     }
 
     public function collection(): string
     {
-        return 'butik_taxes';
+        return 'butik_taxes'; // TODO: Read from config
     }
 
-    private function filterDependingOnLocaleAndTaxType(ProductRepository $product, string|null $locale = null): self
+    private function filterDependingOnLocaleAndTaxType(ProductRepository $product, string|null $locale = null): self|null
     {
         $locale = $locale ?? $this->country->iso();
 
@@ -48,8 +48,7 @@ class TaxRepository extends ButikEntry implements TaxRepositoryContract
                 return $tax->type === $product->tax_type;
             });
 
-        // TODO: Handle the case that non existing taxes will return a zero tax object or any similar.
-        return $this->find($entries->first()->id());
+        return $entries->count() > 0 ? $this->find($entries->first()->id()) : null;
     }
 
     public function toArray(): array

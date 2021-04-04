@@ -17,7 +17,7 @@ class TaxCalculator implements TaxCalculatorContract
 
     public ProductRepository $product;
     public string|int $basePrice;
-    public TaxRepository $tax;
+    public TaxRepository|null $tax;
     public int $quantity;
 
     public function __construct(ProductRepository $product, int $quantity = 1, string|null $locale = null) {

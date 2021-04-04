@@ -10,5 +10,5 @@ interface TaxRepository
 
     public function type(): string;
 
-    public function for(ProductRepository $product, string|null $locale): TaxRepository;
+    public function for(ProductRepository $product, string|null $locale): TaxRepository|null;
 }
