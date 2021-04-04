@@ -105,4 +105,29 @@ class PriceTest extends TestCase
 
         $this->assertEquals(3333, $amount);
     }
+
+    /** @test */
+    public function a_price_can_be_divided()
+    {
+        $amount = Price::of(550)->divide(55)->cents();
+
+        $this->assertEquals(10, $amount);
+    }
+
+    /** @test */
+    public function a_price_division_will_round_correctly()
+    {
+        $amount = Price::of(2000)->divide(1.19)->cents();
+
+        $this->assertEquals(1681, $amount);
+    }
+
+    /** @test */
+    public function a_price_calculate_with_priceobjects_itself()
+    {
+        $amount1 = Price::of(300);
+        $amount2 = Price::of(200);
+
+        $this->assertEquals(500, Price::of($amount1)->add($amount2)->cents());
+    }
 }

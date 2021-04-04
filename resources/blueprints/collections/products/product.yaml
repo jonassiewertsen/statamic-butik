@@ -17,21 +17,23 @@ sections:
       -
         handle: price
         field:
-          type: money
+          type: price
           display: Price
           required: true
           listable: true
           validate:
             - min:0
-          width: '25'
+          width: '50'
       -
-        handle: tax_id
+        handle: tax
         field:
-          display: Tax
+          display: Type
           type: tax
           required: true
           listable: false
           width: '25'
+          validate:
+              - required
       -
         handle: shipping_profile_slug
         field:

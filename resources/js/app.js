@@ -6,7 +6,7 @@ import ShippingOverview from "./components/shipping/Overview";
 import ProductVariants from "./components/variants/ManageProductVariants";
 
 import CountriesFieldtype from './fieldtypes/countriesFieldtype';
-import MoneyFieldtype from './fieldtypes/moneyFieldtype';
+import PriceFieldtype from './fieldtypes/priceFieldtype';
 import NumberFieldtype from './fieldtypes/numberFieldtype';
 import ShippingFieldtype from './fieldtypes/shippingFieldtype';
 import TaxFieldtype from './fieldtypes/taxFieldtype';
@@ -24,7 +24,7 @@ Statamic.booting(() => {
 
     // Fieldtypes
     Statamic.$components.register('countries-fieldtype', CountriesFieldtype);
-    Statamic.$components.register('money-fieldtype', MoneyFieldtype);
+    Statamic.$components.register('price-fieldtype', PriceFieldtype);
     Statamic.$components.register('number-fieldtype', NumberFieldtype);
     Statamic.$components.register('shipping-fieldtype', ShippingFieldtype);
     Statamic.$components.register('tax-fieldtype', TaxFieldtype);

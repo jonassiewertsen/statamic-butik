@@ -12,6 +12,8 @@ interface NumberRepository
 
     public function multiply($by): self;
 
+    public function divide($by): self;
+
     public function decimal(): float;
 
     public function int(): int;

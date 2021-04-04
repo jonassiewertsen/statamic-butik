@@ -26,9 +26,9 @@ class Item
     // - product id
     // - quantity
 
-    public function __construct(string $slug, int )
+    public function __construct(string $slug, int $quantity)
     {
-        $this->productId = $productId;
+        // $this->productId = $productId;
     }
 
     public function increase()

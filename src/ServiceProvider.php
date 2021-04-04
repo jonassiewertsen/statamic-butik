@@ -6,25 +6,28 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 use Jonassiewertsen\Butik\Cart\Cart;
 use Jonassiewertsen\Butik\Contracts\CartRepository;
+use Jonassiewertsen\Butik\Contracts\CountryRepository;
 use Jonassiewertsen\Butik\Contracts\NumberRepository;
 use Jonassiewertsen\Butik\Contracts\PriceRepository;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
+use Jonassiewertsen\Butik\Contracts\TaxRepository;
+use Jonassiewertsen\Butik\Contracts\VatCalculator;
 use Jonassiewertsen\Butik\Filters\OrderStatus;
 use Jonassiewertsen\Butik\Http\Models\Order;
 use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
 use Jonassiewertsen\Butik\Http\Models\ShippingRate;
 use Jonassiewertsen\Butik\Http\Models\ShippingZone;
-use Jonassiewertsen\Butik\Http\Models\Tax;
 use Jonassiewertsen\Butik\Http\Models\Variant;
 use Jonassiewertsen\Butik\Policies\OrderPolicy;
 use Jonassiewertsen\Butik\Policies\ShippingProfilePolicy;
 use Jonassiewertsen\Butik\Policies\ShippingRatePolicy;
 use Jonassiewertsen\Butik\Policies\ShippingZonePolicy;
-use Jonassiewertsen\Butik\Policies\TaxPolicy;
 use Jonassiewertsen\Butik\Policies\VariantPolicy;
 use Jonassiewertsen\Butik\Product\Product;
+use Jonassiewertsen\Butik\Support\Country;
 use Jonassiewertsen\Butik\Support\Number;
 use Jonassiewertsen\Butik\Support\Price;
+use Jonassiewertsen\Butik\Support\Vat;
 use Livewire\Livewire;
 use Mollie\Laravel\MollieServiceProvider;
 use Statamic\Facades\CP\Nav;
@@ -62,7 +65,6 @@ class ServiceProvider extends AddonServiceProvider
     protected $modifiers = [
         \Jonassiewertsen\Butik\Modifiers\CountryName::class,
         \Jonassiewertsen\Butik\Modifiers\Sellable::class,
-        \Jonassiewertsen\Butik\Modifiers\WithoutTax::class,
     ];
 
     protected $tags = [
@@ -73,7 +75,7 @@ class ServiceProvider extends AddonServiceProvider
 
     protected $fieldtypes = [
         \Jonassiewertsen\Butik\Fieldtypes\Countries::class,
-        \Jonassiewertsen\Butik\Fieldtypes\Money::class,
+        \Jonassiewertsen\Butik\Fieldtypes\Price::class,
         \Jonassiewertsen\Butik\Fieldtypes\Number::class,
         \Jonassiewertsen\Butik\Fieldtypes\Shipping::class,
         \Jonassiewertsen\Butik\Fieldtypes\Tax::class,
@@ -91,12 +93,12 @@ class ServiceProvider extends AddonServiceProvider
         \Jonassiewertsen\Butik\Events\OrderCompleted::class  => [],
         \Jonassiewertsen\Butik\Events\OrderExpired::class    => [],
         \Jonassiewertsen\Butik\Events\OrderCanceled::class   => [],
-//        \Statamic\Events\EntrySaving::class => [
-//            \Jonassiewertsen\Butik\Listeners\CacheOldProductSlug::class,
-//        ],
-//        \Statamic\Events\EntrySaved::class => [
-//            \Jonassiewertsen\Butik\Listeners\RenameVariants::class,
-//        ],
+        // \Statamic\Events\EntrySaving::class => [
+        //     \Jonassiewertsen\Butik\Listeners\CacheOldProductSlug::class,
+        // ],
+        // \Statamic\Events\EntrySaved::class => [
+        //     \Jonassiewertsen\Butik\Listeners\RenameVariants::class,
+        // ],
         \Statamic\Events\FormSubmitted::class => [
             \Jonassiewertsen\Butik\Listeners\CheckoutFormValidated::class,
         ],
@@ -123,7 +125,6 @@ class ServiceProvider extends AddonServiceProvider
         ShippingProfile::class => ShippingProfilePolicy::class,
         ShippingZone::class    => ShippingZonePolicy::class,
         ShippingRate::class    => ShippingRatePolicy::class,
-        Tax::class             => TaxPolicy::class,
         Variant::class         => VariantPolicy::class,
     ];
 
@@ -149,12 +150,26 @@ class ServiceProvider extends AddonServiceProvider
             return new Number();
         });
 
+        $this->app->bind(VatCalculator::class, function () {
+            return new Vat();
+        });
+
         $this->app->singleton(CartRepository::class, function () {
             return new Cart();
         });
 
         $this->app->singleton(ProductRepository::class, function () {
             return new Product();
+        });
+
+        $this->app->singleton(CountryRepository::class, function () {
+            return new Country();
+        });
+
+        $this->app->singleton(TaxRepository::class, function () {
+            return new \Jonassiewertsen\Butik\Repositories\TaxRepository(
+                app(CountryRepository::class)
+            );
         });
     }
 
@@ -263,24 +278,6 @@ class ServiceProvider extends AddonServiceProvider
                                 ]),
                         ]);
                 });
-                Permission::register('view taxes', function ($permission) {
-                    $permission
-                        ->label(__('butik::cp.permission_view_taxes'))
-                        ->description(__('butik::cp.permission_view_taxes_description'))
-                        ->children([
-                            Permission::make('edit taxes')
-                                ->label(__('butik::cp.permission_edit_taxes'))
-                                ->description(__('butik::cp.permission_edit_taxes_description'))
-                                ->children([
-                                    Permission::make('create taxes')
-                                        ->label(__('butik::cp.permission_create_taxes'))
-                                        ->description(__('butik::cp.permission_create_taxes_description')),
-                                    Permission::make('delete taxes')
-                                        ->label(__('butik::cp.permission_delete_taxes'))
-                                        ->description(__('butik::cp.permission_delete_taxes_description')),
-                                ]),
-                        ]);
-                });
             });
         });
     }
@@ -313,12 +310,12 @@ class ServiceProvider extends AddonServiceProvider
             // Settings
             $nav->create(ucfirst(__('butik::cp.setting_plural')))
                 ->section('Butik')
-                ->can(auth()->user()->can('view shippings') || auth()->user()->can('view taxes'))
+                ->can(auth()->user()->can('view shippings'))
                 ->route('butik.settings.index')
                 ->icon('settings-slider')
                 ->children([
                     $nav->item(ucfirst(__('butik::cp.shipping_singular')))->route('butik.shipping.index')->can('view shippings'),
-                    $nav->item(ucfirst(__('butik::cp.tax_plural')))->route('butik.taxes.index')->can('view taxes'),
+//                    $nav->item(ucfirst(__('butik::cp.tax_plural')))->route('butik.taxes.index')->can('view taxes'),
                 ]);
         });
     }

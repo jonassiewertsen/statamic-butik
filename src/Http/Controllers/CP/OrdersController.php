@@ -43,7 +43,6 @@ class OrdersController extends CpController
             return ! in_array($key, $defaultValues);
         })->map(function ($value, $key) {
             // Returning additional values with a converted name.
-            // tax_id will become to Tax Id
             return [
                 'name'  => (string) Str::of($key)->replace('_', ' ')->title(),
                 'value' => $value,

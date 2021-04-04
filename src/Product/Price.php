@@ -2,29 +2,50 @@
 
 namespace Jonassiewertsen\Butik\Product;
 
+use Jonassiewertsen\Butik\Contracts\PriceContract;
 use Jonassiewertsen\Butik\Contracts\PriceRepository;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
-use Jonassiewertsen\Butik\Facades\Price as PriceFacade;
+use Jonassiewertsen\Butik\Contracts\PriceCalculator as PriceCalculatorContract;
+use Jonassiewertsen\Butik\Contracts\TaxCalculator as TaxCalculatorContract;
+use Jonassiewertsen\Butik\Facades;
+use Jonassiewertsen\Butik\Http\Traits\isGrossPrice;
+use Jonassiewertsen\Butik\Product\Calculator\GrossPriceCalculator;
+use Jonassiewertsen\Butik\Product\Calculator\NetPriceCalculator;
 
-class Price
+class Price implements PriceCalculatorContract
 {
-    public function __construct(
-        public ProductRepository $product,
-        public int $quantity = 1
-    ) {}
+    use isGrossPrice;
 
-    public function total(): PriceRepository
+    public ProductRepository $product;
+    public TaxCalculatorContract $tax;
+    public int $quantity;
+
+    public function __construct(ProductRepository $product, int $quantity = 1)
     {
-        return PriceFacade::of($this->price())->multiply($this->quantity);
+        $this->product = $product;
+        $this->tax = $product->tax();
+        $this->quantity = $quantity;
     }
 
-    public function single(): PriceRepository
+    public function get(): string
     {
-        return PriceFacade::of($this->price());
+        return $this->isGrossPrice() ?
+            $this->gross()->total()->get() :
+            $this->net()->total()->get();
     }
 
-    private function price(): string
+    public function net(): PriceContract
     {
-        return $this->product->entry->get('price');
+        return new NetPriceCalculator($this->product, $this->quantity);
+    }
+
+    public function gross(): PriceContract
+    {
+        return new GrossPriceCalculator($this->product, $this->quantity);
+    }
+
+    public function base(): PriceRepository
+    {
+        return Facades\Price::of($this->product->entry->get('price'));
     }
 }

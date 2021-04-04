@@ -44,6 +44,13 @@ class Price implements PriceRepository
         return $this;
     }
 
+    public function divide($by): self
+    {
+        $this->amount = (int) round($this->amount / $by);
+
+        return $this;
+    }
+
     public function delimiter(string $delimiter): self
     {
         $this->delimiter = $delimiter;
@@ -84,15 +91,12 @@ class Price implements PriceRepository
 
     protected function convertToInt($amount): int
     {
-        switch (gettype($amount)) {
-            case 'integer':
-                return $amount;
-            case 'string':
-                return $this->convertFromStringToInt($amount);
-            case 'double':
-                return (int) (floatval($amount) * 100);
-            case 'NULL':
-                return 0;
-        }
+        return match (gettype($amount)) {
+            'integer' => $amount,
+            'string' => $this->convertFromStringToInt($amount),
+            'double' => (int) (floatval($amount) * 100),
+            'object' => $amount instanceof PriceRepository ? $amount->cents() : 0,
+            default => 0,
+        };
     }
 }

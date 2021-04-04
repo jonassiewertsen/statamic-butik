@@ -9,6 +9,7 @@ use Jonassiewertsen\Butik\Facades\Product;
 use Jonassiewertsen\Butik\Http\Models\ShippingRate;
 use Jonassiewertsen\Butik\Http\Models\ShippingZone;
 use Jonassiewertsen\Butik\Http\Models\Tax;
+use Jonassiewertsen\Butik\Facades\Tax as TaxFacade;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Statamic\Extend\Manifest;
 use Statamic\Facades\Blueprint;
@@ -57,7 +58,7 @@ class TestCase extends OrchestraTestCase
             'price'                 => $data['price'] ?? '20.00',
             'stock'                 => $data['stock'] ?? '5',
             'stock_unlimited'       => $data['stock_unlimited'] ?? false,
-            'tax_id'                => $data['tax_id'] ?? create(Tax::class)->first()->slug,
+            'tax'              => $data['tax'] ?? 'default',
             'shipping_profile_slug' => $shippingZone->profile->slug,
             'images'                => null,
         ];
@@ -70,10 +71,31 @@ class TestCase extends OrchestraTestCase
             ->slug($slug = Str::random('6'))
             ->date(now())
             ->data($entryData)
-            ->id($id = Str::random('30'))
+            ->id($id = (string) Str::uuid())
             ->save();
 
         return Product::find($id);
+    }
+
+    public function makeTax(array $data = [])
+    {
+        Collection::make('butik_taxes')->save();
+
+        Entry::make()
+            ->collection('butik_taxes')
+            ->blueprint('butik_tax')
+            ->slug($slug = Str::random('6'))
+            ->date(now())
+            ->data([
+                'title' => $data['title'] ?? 'Test Tax',
+                'rate' => $data['rate'] ?? '19',
+                'type' => $data['type'] ?? 'default',
+                'countries' => $data['countries'] ?? ['DE'],
+            ])
+            ->id($id = (string) Str::uuid())
+            ->save();
+
+        return TaxFacade::find($id);
     }
 
     /**

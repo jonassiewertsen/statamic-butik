@@ -2,19 +2,32 @@
 
 namespace Jonassiewertsen\Butik\Fieldtypes;
 
-use Jonassiewertsen\Butik\Http\Models\Tax as TaxModel;
+use Jonassiewertsen\Butik\Contracts\TaxCalculator;
+use Jonassiewertsen\Butik\Facades\Product;
 use Statamic\Fields\Fieldtype;
 
 class Tax extends Fieldtype
 {
-    protected $icon = 'tags';
+    protected $icon       = 'tags';
     protected $categories = ['butik'];
     protected $selectable = false;
 
     public function preload()
     {
         return [
-            'taxes' => $this->fetchTaxOptions(),
+            'types' => $this->types(),
+        ];
+    }
+
+    public function augment($value): array
+    {
+        $tax = $this->getTax();
+
+        return [
+            'title' => $tax->title(),          // {{ tax:title }}
+            'type' => $value,                  // {{ tax:type }}
+            'amount' => $tax->single()->get(), // {{ tax:amount }}
+            'rate' => $tax->rate(),            // {{ tax:rate }}
         ];
     }
 
@@ -28,39 +41,23 @@ class Tax extends Fieldtype
         return $data;
     }
 
-    public function augment($value): array
+    public function preProcessIndex($data)
     {
-        $tax = TaxModel::findOrFail($value);
-
-        return [
-            'name' => $tax->title,                // {{ tax:name }}
-            'slug' => $value,                     // {{ tax:slug }}
-            'amount' => $this->calculateAmount($tax->percentage), // {{ tax:amount }}
-            'rate' => $tax->percentage,     // {{ tax:percentage }} // TODO: Renamte to rate
-        ];
+        return $data;
     }
 
-    // TODO: Refactor to use \Butik\Product\Tax
-    private function calculateAmount(int $percentage): string
+    private function types(): array
     {
-        $product = $this->field->parent();
-
-        if (is_null($product)) {
-            return 0;
-        }
-
-        $calculatedTaxAmount = (float) $product->price * ($percentage / 100);
-
-        return number_format($calculatedTaxAmount, '2', config('butik.currency_delimiter'), '.');
+        return collect(config('butik.tax_types', []))
+            ->flatMap(fn ($label, $value) => [compact('label', 'value')])
+            ->toArray();
     }
 
-    private function fetchTaxOptions(): array
+    private function getTax(): TaxCalculator
     {
-        return TaxModel::pluck('title', 'slug')->map(function ($key, $value) {
-            return [
-                'value' => $value,
-                'label' => $key,
-            ];
-        })->toArray();
+        $productId = $this->field()->parent()->id();
+        $product = Product::find($productId);
+
+        return $product->tax();
     }
 }

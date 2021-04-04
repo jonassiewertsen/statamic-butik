@@ -1,11 +1,14 @@
 <template>
     <div>
-        <select-input
+        <v-select
             :handle="config.handle"
             :value="value"
-            :options="taxes"
+            :options="types"
+            :multiple="false"
+            :searchable="false"
+            :taggable="false"
             @input="update"
-        ></select-input>
+        ></v-select>
     </div>
 </template>
 
@@ -15,7 +18,7 @@
 
         data() {
             return {
-                taxes: this.meta.taxes,
+                types: this.meta.types,
             }
         },
     };

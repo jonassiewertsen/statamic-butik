@@ -3,36 +3,85 @@
 namespace Jonassiewertsen\Butik\Support;
 
 use Illuminate\Support\Collection;
-use Jonassiewertsen\Butik\Contracts\ProductRepository;
-use Statamic\Contracts\Entries\Entry;
+use Jonassiewertsen\Butik\Contracts\ButikEntryContract;
+use Jonassiewertsen\Butik\Exceptions\ButikProductException;
+use Statamic\Contracts\Entries\Entry as EntryContract;
+use Statamic\Facades\Entry;
+use Statamic\Facades\Site;
 use Statamic\Support\Str;
 
-abstract class ButikEntry implements ProductRepository
+abstract class ButikEntry implements ButikEntryContract
 {
     public string $id;
     public string $title;
     public string $slug;
     public array $data;
     public bool $published;
-    public ?Entry $entry;
+    public ?EntryContract $entry;
 
-    abstract public function all(): Collection;
+    public function all(): Collection
+    {
+        return collect($this->query()->get());
+    }
 
-    abstract public function find(string $id): ?self;
+    public function find(string $id): ?self
+    {
+        if (! $this->entry = Entry::find($id)) {
+            return null;
+        }
 
-    abstract public function findBySlug(string $slug): ?self;
+        $this->defineAttributes();
 
-    abstract public function exists(string $slug): bool;
+        return $this;
+    }
 
-    abstract public function query();
+    public function findBySlug(string $slug): ?self
+    {
+        $this->entry = $this->query()
+            ->where('site', Site::current()->handle())
+            ->where('collection', $this->collection())
+            ->where('slug', $slug)
+            ->first();
 
-    abstract public function update(array $data): bool;
+        if (! $this->entry) {
+            return null;
+        }
 
-    abstract public function delete(string $id): bool;
+        $this->defineAttributes();
 
-    abstract public function collection(): string;
+        return $this;
+    }
 
-    abstract public function toArray(): array;
+    public function exists(string $slug): bool
+    {
+        return (bool) Entry::find($slug);
+    }
+
+    public function query()
+    {
+        return Entry::query()->where('collection', $this->collection());
+    }
+
+    public function fresh(): self
+    {
+        return $this->find($this->id);
+    }
+
+    public function update(array $data): bool
+    {
+        $data = array_merge($this->data, $data);
+
+        return $this->entry->data($data)->save();
+    }
+
+    public function delete(string $id): bool
+    {
+        if (! $product = $this->find($id)) {
+            throw ButikProductException::cantDeleteNonExistingProduct($id);
+        }
+
+        return $this->find($id)->entry->delete();
+    }
 
     /*
      * A little magic for butik entries.
