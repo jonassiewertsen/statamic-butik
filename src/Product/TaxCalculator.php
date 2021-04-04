@@ -8,6 +8,7 @@ use Jonassiewertsen\Butik\Contracts\TaxRepository;
 use Jonassiewertsen\Butik\Contracts\TaxCalculator as TaxCalculatorContract;
 use Jonassiewertsen\Butik\Facades\Price as PriceFacade;
 use Jonassiewertsen\Butik\Facades\Tax;
+use Jonassiewertsen\Butik\Facades\Vat;
 use Jonassiewertsen\Butik\Http\Traits\isGrossPrice;
 
 class TaxCalculator implements TaxCalculatorContract
@@ -64,15 +65,11 @@ class TaxCalculator implements TaxCalculatorContract
     protected function taxFromGrossPrice(mixed $amount): PriceRepository
     {
         /**
-         * To calcuate the tax amount from a gross price, we need to calculate
-         * the net price first to continue.
-         * amount / 1 + taxRate
-         * fx. 119 / 1,19
+         * To calcuate the tax amount from a gross price, we need
+         * to substract the net price from the gross price.
          */
-        $netPrice = PriceFacade::of($amount)->divide($this->tax->rate / 100 + 1);
+        $netPrice = Vat::of($amount)->withRate($this->tax->rate)->toNet();
 
-        return PriceFacade::of($amount)
-            ->subtract($netPrice)
-            ->multiply($this->quantity);
+        return PriceFacade::of($amount)->subtract($netPrice)->multiply($this->quantity);
     }
 }
