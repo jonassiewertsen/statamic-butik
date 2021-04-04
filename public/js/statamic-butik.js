@@ -5564,6 +5564,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mixins: [Fieldtype],
@@ -5586,11 +5589,14 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("select-input", {
+      _c("v-select", {
         attrs: {
           handle: _vm.config.handle,
           value: _vm.value,
-          options: _vm.types
+          options: _vm.types,
+          multiple: false,
+          searchable: false,
+          taggable: false
         },
         on: { input: _vm.update }
       })

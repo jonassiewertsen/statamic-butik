@@ -75,7 +75,7 @@ class ServiceProvider extends AddonServiceProvider
 
     protected $fieldtypes = [
         \Jonassiewertsen\Butik\Fieldtypes\Countries::class,
-        \Jonassiewertsen\Butik\Fieldtypes\Money::class,
+        \Jonassiewertsen\Butik\Fieldtypes\Price::class,
         \Jonassiewertsen\Butik\Fieldtypes\Number::class,
         \Jonassiewertsen\Butik\Fieldtypes\Shipping::class,
         \Jonassiewertsen\Butik\Fieldtypes\Tax::class,

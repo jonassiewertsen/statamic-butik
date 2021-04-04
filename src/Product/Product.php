@@ -5,6 +5,7 @@ namespace Jonassiewertsen\Butik\Product;
 use Jonassiewertsen\Butik\Contracts\PriceCalculator as PriceCalculatorContract;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
 use Jonassiewertsen\Butik\Contracts\TaxCalculator as TaxCalculatorContract;
+use Jonassiewertsen\Butik\Product\Calculator\TaxCalculator;
 use Jonassiewertsen\Butik\Support\ButikEntry;
 
 class Product extends ButikEntry implements ProductRepository

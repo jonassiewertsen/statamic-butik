@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Product;
+namespace Jonassiewertsen\Butik\Product\Calculator;
 
 use Jonassiewertsen\Butik\Contracts\PriceRepository;
 use Jonassiewertsen\Butik\Facades\Price;
