@@ -17,7 +17,7 @@ sections:
       -
         handle: price
         field:
-          type: money
+          type: price
           display: Price
           required: true
           listable: true

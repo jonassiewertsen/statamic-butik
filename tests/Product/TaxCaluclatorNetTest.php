@@ -3,7 +3,7 @@
 namespace Tests\Product;
 
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
-use Jonassiewertsen\Butik\Product\TaxCalculator;
+use Jonassiewertsen\Butik\Product\Calculator\TaxCalculator;
 use Jonassiewertsen\Butik\Repositories\TaxRepository;
 use Tests\TestCase;
 

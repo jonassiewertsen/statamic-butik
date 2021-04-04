@@ -4,8 +4,8 @@ namespace Tests\Product;
 
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
 use Jonassiewertsen\Butik\Contracts\TaxCalculator;
-use Jonassiewertsen\Butik\Product\GrossPriceCalculator;
-use Jonassiewertsen\Butik\Product\NetPriceCalculator;
+use Jonassiewertsen\Butik\Product\Calculator\GrossPriceCalculator;
+use Jonassiewertsen\Butik\Product\Calculator\NetPriceCalculator;
 use Jonassiewertsen\Butik\Product\Price;
 use Tests\TestCase;
 

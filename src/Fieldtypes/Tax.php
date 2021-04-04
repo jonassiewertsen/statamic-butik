@@ -2,8 +2,8 @@
 
 namespace Jonassiewertsen\Butik\Fieldtypes;
 
+use Jonassiewertsen\Butik\Contracts\TaxCalculator;
 use Jonassiewertsen\Butik\Facades\Product;
-use Jonassiewertsen\Butik\Product\TaxCalculator;
 use Statamic\Fields\Fieldtype;
 
 class Tax extends Fieldtype
@@ -53,7 +53,7 @@ class Tax extends Fieldtype
             ->toArray();
     }
 
-    private function getTax(): TaxCalculator // TODO: Swap with Interface
+    private function getTax(): TaxCalculator
     {
         $productId = $this->field()->parent()->id();
         $product = Product::find($productId);

@@ -2,12 +2,15 @@
 
 namespace Tests\Product;
 
-use Jonassiewertsen\Butik\Product\NetPriceCalculator;
-use Jonassiewertsen\Butik\Product\TaxCalculator;
+use Jonassiewertsen\Butik\Product\Calculator\NetPriceCalculator;
+use Jonassiewertsen\Butik\Product\Calculator\TaxCalculator;
 use Tests\TestCase;
+use Tests\Utilities\Trais\SetPriceType;
 
 class NetPriceCalculatorTest extends TestCase
 {
+    use SetPriceType;
+
     public NetPriceCalculator $priceCalculator;
     public TaxCalculator $taxCalculator;
 
@@ -58,10 +61,5 @@ class NetPriceCalculatorTest extends TestCase
         $price = new NetPriceCalculator($this->product, 3);
 
         $this->assertEquals('50,43', $price->get());
-    }
-
-    private function setNetPriceAsDefault(): void
-    {
-        config()->set('butik.price', 'net');
     }
 }
