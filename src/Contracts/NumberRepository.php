@@ -16,8 +16,6 @@ interface NumberRepository
 
     public function get(): string;
 
-    public function divide($by): self;
-
     public function decimal(): float;
 
     public function int(): int;

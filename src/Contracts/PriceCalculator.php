@@ -8,6 +8,8 @@ interface PriceCalculator
 
     public function get(): string;
 
+    public function total(): PriceRepository;
+
     public function net(): PriceContract;
 
     public function gross(): PriceContract;

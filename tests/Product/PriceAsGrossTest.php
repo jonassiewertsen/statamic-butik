@@ -55,7 +55,15 @@ class PriceAsGrossTest extends TestCase
     }
 
     /** @test */
-    public function it_can_return_the_total_price_imidiatly()
+    public function it_can_return_the_total_price_as_price_repository()
+    {
+        $price = new Price($this->product);
+
+        $this->assertEquals('20,00', $price->total()->get());
+    }
+
+    /** @test */
+    public function it_can_return_the_total_price_as_string()
     {
         $price = new Price($this->product);
 

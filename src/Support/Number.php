@@ -43,13 +43,6 @@ class Number implements NumberRepository
         return $this;
     }
 
-    public function divide($by): self
-    {
-        $this->number = (int) round($this->number / $by);
-
-        return $this;
-    }
-
     public function divide(float|int $by): self
     {
         $this->number = (int) round($this->number / $by);

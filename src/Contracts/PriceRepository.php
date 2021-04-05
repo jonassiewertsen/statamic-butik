@@ -16,8 +16,6 @@ interface PriceRepository
 
     public function divide(float|int $by): self;
 
-    public function divide($by): self;
-
     public function delimiter(string $delimiter): self;
 
     public function thousands(string $thousands): self;

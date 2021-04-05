@@ -32,6 +32,8 @@ class Product extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
+        self::clearResolvedInstance(ProductRepository::class);
+
         return ProductRepository::class;
     }
 }

@@ -5,13 +5,14 @@ namespace Tests\Cart;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\Butik\Cart\Customer;
 use Jonassiewertsen\Butik\Cart\Item;
+use Jonassiewertsen\Butik\Cart\ItemCollection;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
 use Jonassiewertsen\Butik\Facades\Cart;
+use Jonassiewertsen\Butik\Facades\Country;
 use Jonassiewertsen\Butik\Facades\Price;
 use Jonassiewertsen\Butik\Http\Models\ShippingRate;
 use Jonassiewertsen\Butik\Http\Models\ShippingZone;
-use Jonassiewertsen\Butik\Http\Models\Variant;
-use Jonassiewertsen\Butik\Shipping\Country;
+use Jonassiewertsen\Butik\Http\Responses\CartResponse;
 use Tests\TestCase;
 
 class CartTest extends TestCase
@@ -28,7 +29,7 @@ class CartTest extends TestCase
     }
 
     /** @test */
-    public function a_product_can_be_added_to_the_cart()
+    public function an_added_product_will_be_saved_as_an_array()
     {
         Cart::add($this->slug);
 
@@ -42,78 +43,83 @@ class CartTest extends TestCase
     }
 
     /** @test */
-    public function the_quanitity_will_be_increased_if_the_product_already_has_been_added()
+    public function a_product_can_be_added()
     {
-        Cart::add($slug = $this->product->slug);
-        $this->assertEquals(1, Cart::raw()[$slug]['quantity']);
+        Cart::add($this->slug);
 
-        Cart::add($slug = $this->product->slug);
-        $this->assertEquals(2, Cart::raw()[$slug]['quantity']);
+        $this->assertCount(1, Cart::get());
+    }
+
+    /** @test */
+    public function if_added_correctly_an_cart_response_will_be_returned()
+    {
+        $this->assertInstanceOf(CartResponse::class, Cart::add($this->slug));
+
+        $this->assertCount(1, Cart::get());
+    }
+
+    /** @test */
+    public function it_can_return_a_item_collection()
+    {
+        Cart::add($this->slug);
+
+        $this->assertInstanceOf(ItemCollection::class, Cart::get());
     }
 
     /** @test */
     public function a_product_can_be_removed()
     {
         Cart::add($this->product->slug);
-        $this->assertTrue(Cart::get()->contains('slug', $this->product->slug));
+        $this->assertTrue(Cart::contains($this->product->slug));
 
-        Cart::reduce($this->product->slug);
-        $this->assertFalse(Cart::get()->contains('slug', $this->product->slug));
+        Cart::remove($this->product->slug);
+        $this->assertFalse(Cart::contains($this->product->slug));
     }
 
     /** @test */
-    public function an_product_with_more_then_one_items_will_only_be_decreased()
+    public function its_product_quantity_can_be_updated()
     {
-        Cart::add($this->product->slug);
-        Cart::add($this->product->slug);
-        $this->assertEquals(2, Cart::get()->first()->getQuantity());
+        Cart::add($this->product->slug, 2);
+        $this->assertEquals(2, Cart::get()->first()->quantity());
 
-        Cart::reduce($this->product->slug);
-        $this->assertEquals(1, Cart::get()->first()->getQuantity());
+        Cart::update($this->product->slug, 1);
+        $this->assertEquals(1, Cart::get()->first()->quantity());
     }
 
-//    /** @test */
-//    public function an_variant_with_more_then_one_items_will_only_be_decreased()
-//    {
-//        Cart::add($this->variant->slug);
-//        Cart::add($this->variant->slug);
-//        $this->assertEquals(2, Cart::get()->first()->getQuantity());
-//
-//        Cart::reduce($this->variant->slug);
-//        $this->assertEquals(1, Cart::get()->first()->getQuantity());
-//    }
+    /** @test */
+    public function a_products_quantity_cant_be_higher_than_its_stock_if_added_to_the_cart()
+    {
+        $response = Cart::add($this->product->slug, 99);
+        $this->assertFalse($response::$success);
+    }
+
+    /** @test */
+    public function a_products_quantity_cant_be_higher_than_its_stock_if_update_on_the_cart()
+    {
+        Cart::add($this->product->slug);
+
+        $response = Cart::update($this->product->slug, 99);
+        $this->assertFalse($response::$success);
+    }
 
     /** @test */
     public function a_product_can_be_completly_removed()
     {
         Cart::add($this->product->slug);
-        Cart::add($this->product->slug);
-        $this->assertEquals(2, Cart::get()->first()->getQuantity());
+        $this->assertCount(1, Cart::get());
 
         Cart::remove($this->product->slug);
-        $this->assertFalse(Cart::get()->contains('slug', $this->product->slug));
+        $this->assertCount(0, Cart::get());
     }
-
-//    /** @test */
-//    public function a_variant_can_be_completly_removed()
-//    {
-//        Cart::add($this->variant->slug);
-//        Cart::add($this->variant->slug);
-//        $this->assertEquals(2, Cart::get()->first()->getQuantity());
-//
-//        Cart::remove($this->variant->slug);
-//        $this->assertFalse(Cart::get()->contains('slug', $this->variant->slug));
-//    }
 
     /** @test */
     public function the_cart_can_be_cleared()
     {
         Cart::add($this->product->slug);
-        Cart::add($this->product->slug);
-        $this->assertEquals(2, Cart::get()->first()->getQuantity());
+        $this->assertCount(1, Cart::get());
 
         Cart::clear();
-        $this->assertTrue((Cart::get() == collect()));
+        $this->assertCount(0, Cart::get());
     }
 
     /** @test */
@@ -128,7 +134,7 @@ class CartTest extends TestCase
         $item1 = Cart::get()->first();
         $item2 = Cart::get()->last();
 
-        $calculatedPrice = Price::of($item1->totalPrice())->add($item2->totalPrice())->get();
+        $calculatedPrice = Price::of($item1->price()->get())->add($item2->price()->get());
 
         $this->assertEquals($calculatedPrice, Cart::totalPrice());
     }
@@ -136,6 +142,7 @@ class CartTest extends TestCase
     /** @test */
     public function the_cart_calculates_the_total_price_including_shipping_amount()
     {
+        // TODO: Calculate shipping
         // Create a new shipping zone to use a zone with taxes.
         $shippingZone = create(ShippingZone::class)->first();
 
@@ -157,7 +164,7 @@ class CartTest extends TestCase
     }
 
     /** @test */
-    public function non_sellable_items_will_not_be_counted()
+    public function non_sellable_items_will_not_get_counted()
     {
         $product1 = $this->makeProduct();
         $product2 = $this->makeProduct();
@@ -168,7 +175,7 @@ class CartTest extends TestCase
 
         $item2 = Cart::get()->last();
 
-        $this->assertEquals($item2->totalPrice(), Cart::totalPrice());
+        $this->assertEquals($item2->price()->total(), Cart::totalPrice());
     }
 
     /** @test */
@@ -202,12 +209,13 @@ class CartTest extends TestCase
     /** @test */
     public function the_cart_has_total_taxes()
     {
+        $this->makeTax();
         $product = $this->makeProduct();
 
         Cart::add($product->slug);
 
         $this->assertEquals(
-            (new Item($product->slug))->taxAmount,
+            (new Item($product->slug))->tax()->total()->get(),
             Cart::totalTaxes()->first()['amount']
         );
     }
@@ -263,6 +271,7 @@ class CartTest extends TestCase
     /** @test */
     public function the_total_taxes_will_sum_multiple_taxes_from_products()
     {
+        $this->makeTax();
         $product1 = $this->makeProduct();
         $product2 = $this->makeProduct(['tax_id' => $product1->tax_id]);
 
@@ -273,7 +282,7 @@ class CartTest extends TestCase
         $item2 = new Item($product2->slug);
 
         $this->assertEquals(
-            Price::of($item1->taxAmount)->add($item2->taxAmount)->get(),
+            Price::of($item1->tax()->total())->add($item2->tax()->total())->get(),
             Cart::totalTaxes()->first()['amount']
         );
     }
@@ -281,22 +290,21 @@ class CartTest extends TestCase
     /** @test */
     public function the_cart_returns_zero_without_any_items()
     {
-        $this->assertNotNull(Cart::count());
+        $this->assertTrue(Cart::count() === 0);
     }
 
     /** @test */
     public function the_cart_can_return_the_actual_set_country()
     {
-        $this->assertEquals(Country::get(), Cart::country());
+        $this->assertEquals(Country::iso(), Cart::country());
     }
 
     /** @test */
     public function a_new_country_can_be_set()
     {
-        // TODO: Rewrite test the Country is it's own Facade to mock the output.
+        Cart::setCountry('DK');
 
-//        $this->assertEquals(Country::get(), 'dk');
-        $this->assertTrue(true);
+        $this->assertEquals(Cart::country(), 'DK');
     }
 
     /** @test */

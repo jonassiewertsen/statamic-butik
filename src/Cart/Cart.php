@@ -6,8 +6,11 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\Butik\Contracts\CartRepository;
+use Jonassiewertsen\Butik\Contracts\PriceRepository;
+use Jonassiewertsen\Butik\Facades\Country;
 use Jonassiewertsen\Butik\Facades\Price;
-use Jonassiewertsen\Butik\Shipping\Country;
+use Jonassiewertsen\Butik\Facades\Product;
+use Jonassiewertsen\Butik\Http\Responses\CartResponse;
 use Jonassiewertsen\Butik\Shipping\Shipping;
 
 class Cart implements CartRepository
@@ -24,9 +27,9 @@ class Cart implements CartRepository
         Session::put('butik.cart', $this->cart);
     }
 
-    public function get(): Collection
+    public function get(): ItemCollection
     {
-        return $this->cart;
+        return (new ItemCollection([]))->items($this->cart);
     }
 
     public function raw(): array
@@ -37,67 +40,65 @@ class Cart implements CartRepository
     /**
      * A product can be added to the cart.
      */
-    public function add(string $slug, int $quantity = 1, string|null $locale = null): void
+    public function add(string $slug, int $quantity = 1, string|null $locale = null): CartResponse
     {
-        if (! $this->contains($slug)) {
-            $this->cart[$slug] = ['quantity' => $quantity];
-        } else {
-            $previousQuantity = $this->cart[$slug]['quantity'];
-            $this->cart[$slug] = ['quantity' => $quantity + $previousQuantity];
+        if ($this->contains($slug)) {
+            return $this->update($slug, $quantity);
         }
+
+        if (! $this->isStockAvailable($slug, $quantity)) {
+            return CartResponse::failed('The added quantity is higher then the available stock'); // TODO: Add translation
+        }
+
+        $this->cart[$slug] = ['quantity' => $quantity];
+
+        return CartResponse::success('The item has been added');
     }
 
     /**
-     * An item can be reduced or removed from the cart.
+     * The items quantity can be updated.
      */
-    public function reduce($slug): void
+    public function update(string $slug, int $quantity): CartResponse
     {
-        $this->cart = $this->cart->filter(function ($item) use ($slug) {
-            // If the quantity is <= 1 the item will be deleted from the cart
-            if ($item->slug === $slug && $item->getQuantity() <= 1) {
-                return false;
-            }
+        $item = $this->get()->firstWhere('slug', $slug);
 
-            // If the quantity is bigger than one, it will only decrease
-            if ($item->slug === $slug && $item->getQuantity() > 1) {
-                $item->decrease();
+        if (is_null($item)) {
+            return CartResponse::failed('The given product could not be found');
+        }
 
-                return true;
-            }
+        if (! $this->isStockAvailable($slug, $quantity)) {
+            return CartResponse::failed('The updated quantity is higher then the available stock');
+        }
 
-            // If the slug is not matching, we should not care and just
-            // keep the item in our cart
-            return true;
-        });
-    }
+        $this->cart[$slug]['quantity'] = $quantity;
 
-    public function update(string $slug, int $quantity): void
-    {
-        // TODO: Implement
+        return CartResponse::success('The quantity has been updated');
     }
 
     /**
      * An item can be completly removed from the cart.
      */
-    public function remove($slug): void
+    public function remove($slug): CartResponse
     {
-        $this->cart = $this->cart->filter(function ($item) use ($slug) {
-            return $item->slug !== $slug;
-        });
+        Arr::forget($this->cart, $slug);
+
+        return CartResponse::success();
     }
 
     /**
      * Clear the complete cart.
      */
-    public function clear(): void
+    public function clear(): CartResponse
     {
         $this->cart = [];
+
+        return CartResponse::success();
     }
 
     /**
      * Fetch the customer from the session.
      */
-    public function customer(): ?Customer
+    public function customer(): Customer|null
     {
         // TODO: Does this part belong here?
 
@@ -111,35 +112,34 @@ class Cart implements CartRepository
      */
     public function count(): int
     {
-        return $this->cart->map(function ($item) {
-            return $item->getQuantity();
+        return $this->get()->map(function ($item) {
+            return $item->quantity();
         })->sum();
     }
 
-    public function totalPrice(): string
+    public function totalPrice(): PriceRepository
     {
-        $productAmount = $this->cart->filter(function ($item) {
-            return $item->sellable;
-        })->sum(function ($item) {
-            return Price::of($item->totalPrice())->cents();
-        });
+        $productAmount = $this->get()
+            ->filter(fn ($item) => $item->isSellable())
+            ->map(fn ($item) => $item->price()->total()->cents())
+            ->sum();
 
-        $shippingAmount = $this->totalShipping();
+//        $shippingAmount = $this->totalShipping();
 
-        return Price::of($productAmount)->add($shippingAmount)->get();
+        return Price::of($productAmount);
     }
 
     /**
      * All shipping costs, from all shipping profiles, summed
      * up to determine the total shipping costs.
      */
-    public function totalShipping(): string
+    public function totalShipping(): PriceRepository
     {
         $shippingAmount = $this->shipping()->sum(function ($shipping) {
             return Price::of($shipping->total)->cents();
         });
 
-        return Price::of($shippingAmount)->get();
+        return Price::of($shippingAmount);
     }
 
     /**
@@ -147,52 +147,53 @@ class Cart implements CartRepository
      */
     public function totalTaxes(): Collection
     {
-        $this->totalTaxes = collect();
+        $taxes = collect();
         $taxRates = [];
 
         /**
          * Collect all item tax rates.
          */
-        foreach ($this->cart as $item) {
-            if (! in_array($item->taxRate, $taxRates)) {
-                $taxRates[] = $item->taxRate;
+        foreach ($this->get() as $item) {
+            if (! in_array($item->tax()->rate(), $taxRates)) {
+                $taxRates[] = $item->tax()->rate();
             }
         }
 
         /**
          * Collect all shipping tax rates.
          */
-        foreach ($this->shipping() as $shipping) {
-            if (! in_array($shipping->taxRate, $taxRates)) {
-                $taxRates[] = $shipping->taxRate;
-            }
-        }
+        // TODO: Add shipping taxes back to the cart
+//        foreach ($this->shipping() as $shipping) {
+//            if (! in_array($shipping->taxRate, $taxRates)) {
+//                $taxRates[] = $shipping->taxRate;
+//            }
+//        }
 
         /**
          * We will loop through all tax rates and sum the amounts.
          */
         foreach ($taxRates as $taxRate) {
-            $itemAmount = $this->cart
-                ->where('taxRate', $taxRate)
-                ->sum(function ($item) {
-                    return Price::of($item->taxAmount)->cents();
-                });
+            $taxAmount = $this->get()
+                ->filter(fn($item) =>  $item->tax()->rate() === $taxRate)
+                ->sum(fn ($item) => $item->tax()->total()->cents());
 
-            // On top of that we need to add the tax amounts from our shipping rates
-            if ($shipping = $this->shipping()->firstWhere('taxRate', $taxRate)) {
-                $shippingAmount = Price::of($shipping->taxAmount)->cents();
-            }
 
-            $totalAmount = Price::of($itemAmount)->add($shippingAmount ?? 0)->get();
+//            // On top of that we need to add the tax amounts from our shipping rates
+//            if ($shipping = $this->shipping()->firstWhere('taxRate', $taxRate)) {
+//                $shippingAmount = Price::of($shipping->taxAmount)->cents();
+//            }
+//
+//            $totalAmount = Price::of($itemAmount)->add($shippingAmount ?? 0)->get();
 
             // For better access in antlers views, the amount and rate will get converted to an array.
-            $this->totalTaxes->push([
-                'amount' => $totalAmount,
+            // TODO: Create tax objects?
+            $taxes->push([
+                'amount' => Price::of($taxAmount)->get(),
                 'rate'   => $taxRate,
             ]);
         }
 
-        return $this->totalTaxes;
+        return $taxes;
     }
 
     /**
@@ -213,21 +214,21 @@ class Cart implements CartRepository
     public function country(): string
     {
         // TODO: Should the country move to the Country Facade?
-        return Country::get();
+        return Country::iso();
     }
 
     /**
      * Set a different country to checkout to.
      */
-    public function setCountry(string $code): void
+    public function setCountry(string $isoCode): void
     {
         // TODO: Should the country move to the Country Facade?
-        Country::set($code);
+        Country::set($isoCode);
     }
 
     public function removeNonSellableItems(): void
     {
-        $this->cart = $this->cart->filter(function ($item) {
+        $this->cart = $this->get()->filter(function ($item) {
             return $item->sellable;
         });
     }
@@ -238,5 +239,10 @@ class Cart implements CartRepository
     public function contains(string $slug): bool
     {
         return Arr::exists($this->cart, $slug);
+    }
+
+    private function isStockAvailable($slug, $quantity): bool
+    {
+        return $quantity <= Product::findBySlug($slug)->stock();
     }
 }

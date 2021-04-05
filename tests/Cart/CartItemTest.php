@@ -3,36 +3,114 @@
 namespace Tests\Cart;
 
 use Jonassiewertsen\Butik\Cart\Item;
-use Jonassiewertsen\Butik\Cart\ItemCollection;
+use Jonassiewertsen\Butik\Contracts\PriceCalculator;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
-use Jonassiewertsen\Butik\Facades\Cart;
+use Jonassiewertsen\Butik\Contracts\TaxCalculator;
 use Tests\TestCase;
 
 class CartItemTest extends TestCase
 {
-    protected ProductRepository $product;
+    public ProductRepository $product;
+    public Item $item;
 
     public function setUp(): void
     {
         parent::setUp();
 
+        $this->makeTax();
         $this->product = $this->makeProduct();
-        $this->rawCart = [
-            "qy3g8b" => [
-                "quantity" => 1,
-            ]
-        ];
+        $this->item = new Item($this->product->slug, 2);
+    }
+
+    /** @test */
+    public function it_has_availability()
+    {
+        $this->assertTrue($this->item->isAvailable());
     }
 
     /** @test */
     public function it_has_a_slug()
     {
-        Cart::add($this->product->slug);
+        $this->assertEquals($this->item->slug, $this->product->slug);
+    }
 
-//        $itemCollection = (new ItemCollection());
-//
-//        $item = new Item($this->product->slug);
-//
-//        $this->assertEquals($item->slug, $this->product->slug);
+    /** @test */
+    public function it_has_a_product()
+    {
+        $this->assertInstanceOf(ProductRepository::class, $this->item->product);
+    }
+
+    /** @test */
+    public function is_has_a_default_quantity_of_one()
+    {
+        $item = new Item($this->product->slug);
+        $this->assertEquals(1, $item->quantity());
+    }
+
+    /** @test */
+    public function a_quantity_can_be_set()
+    {
+        $this->assertEquals(2, $this->item->quantity());
+    }
+
+    /** @test */
+    public function it_has_a_price()
+    {
+        $this->assertEquals('20,00', $this->item->price()->get());
+    }
+
+    /** @test */
+    public function the_price_is_a_price_calculator_instance()
+    {
+        $this->assertInstanceOf(PriceCalculator::class, $this->item->price());
+    }
+
+    /** @test */
+    public function it_has_a_tax_calculator_instance()
+    {
+        $this->assertInstanceOf(TaxCalculator::class, $this->item->tax());
+    }
+
+    /** @test */
+    public function it_has_a_tax()
+    {
+        $this->assertEquals('3,19', $this->item->tax()->total()->get());
+    }
+
+    /** @test */
+    public function it_is_sellable_by_default()
+    {
+        $this->assertTrue($this->item->isSellable());
+    }
+
+    /** @test */
+    public function it_can_change_it_sellable_status()
+    {
+        $this->assertTrue($this->item->isSellable());
+        $this->item->nonSellable();
+        $this->assertFalse($this->item->isSellable());
+        $this->item->sellable();
+        $this->assertTrue($this->item->isSellable());
+    }
+
+    /** @test */
+    public function it_has_a_available_stock()
+    {
+        $this->assertEquals(5, $this->item->stock());
+    }
+
+    /** @test */
+    public function the_stock_can_not_be_unlimited()
+    {
+        $this->assertFalse($this->item->stockUnlimited());
+    }
+
+    /** @test */
+    public function the_stock_can_be_unlimited()
+    {
+        $this->product->update(['stock_unlimited' => true]);
+        $this->product->fresh();
+
+        $this->assertTrue($this->item->stockUnlimited());
     }
 }
