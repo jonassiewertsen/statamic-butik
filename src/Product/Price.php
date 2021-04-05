@@ -29,9 +29,14 @@ class Price implements PriceCalculatorContract
 
     public function get(): string
     {
+        return $this->total()->get();
+    }
+
+    public function total(): PriceRepository
+    {
         return $this->isGrossPrice() ?
-            $this->gross()->total()->get() :
-            $this->net()->total()->get();
+            $this->gross()->total() :
+            $this->net()->total();
     }
 
     public function net(): PriceContract
