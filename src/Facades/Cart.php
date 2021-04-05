@@ -7,15 +7,15 @@ use Illuminate\Support\Facades\Facade;
 use Jonassiewertsen\Butik\Cart\Customer;
 use Jonassiewertsen\Butik\Contracts\CartRepository;
 use Jonassiewertsen\Butik\Contracts\PriceRepository;
+use Jonassiewertsen\Butik\Http\Responses\CartResponse;
 
 /**
  * @method static Collection get()
  * @method static array raw()
- * @method static void add(string $slug, int $quantity = 1, string|null $locale = null)
- * @method static void reduce(string $slug)
- * @method static void update(string $slug, int $quanityt)
- * @method static void remove(string $slug)
- * @method static void clear()
+ * @method static CartResponse add(string $slug, int $quantity = 1, string|null $locale = null)
+ * @method static CartResponse update(string $slug, int $quantity)
+ * @method static CartResponse remove(string $slug)
+ * @method static CartResponse clear()
  * @method static Customer|null customer()
  * @method static int count()
  * @method static PriceRepository totalPrice()

@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\Butik\Contracts\CartRepository;
 use Jonassiewertsen\Butik\Contracts\PriceRepository;
 use Jonassiewertsen\Butik\Facades\Price;
+use Jonassiewertsen\Butik\Facades\Product;
+use Jonassiewertsen\Butik\Http\Responses\CartResponse;
 use Jonassiewertsen\Butik\Shipping\Country;
 use Jonassiewertsen\Butik\Shipping\Shipping;
 
@@ -38,67 +40,67 @@ class Cart implements CartRepository
     /**
      * A product can be added to the cart.
      */
-    public function add(string $slug, int $quantity = 1, string|null $locale = null): void
+    public function add(string $slug, int $quantity = 1, string|null $locale = null): CartResponse
     {
-        if (! $this->contains($slug)) {
-            $this->cart[$slug] = ['quantity' => $quantity];
-        } else {
-            $previousQuantity = $this->cart[$slug]['quantity'];
-            $this->cart[$slug] = ['quantity' => $quantity + $previousQuantity];
+        if ($this->contains($slug)) {
+            $quantity = $this->cart[$slug]['quantity'] + $quantity;
+
+            return $this->update($slug, $quantity);
         }
+
+        if ($this->isStockAvailable($slug, $quantity)) {
+            return CartResponse::failed('The added quantity is higher then the available stock');
+        }
+
+        $this->cart[$slug] = ['quantity' => $quantity];
+
+        return CartResponse::success('The item has been added');
     }
 
     /**
-     * An item can be reduced or removed from the cart.
+     * The items quantity can be updated.
      */
-    public function reduce($slug): void
+    public function update(string $slug, int $quantity): CartResponse
     {
-        $this->cart = $this->get()->filter(function ($item) use ($slug) {
-            // If the quantity is <= 1 the item will be deleted from the cart
-            if ($item->slug === $slug && $item->quantity() <= 1) {
-                return false;
-            }
+        $item = $this->get()->firstWhere('slug', $slug);
 
-            // If the quantity is bigger than one, it will only decrease
-            if ($item->slug === $slug && $item->quantity() > 1) {
-                $item->decrease();
+        if (is_null($item)) {
+            return CartResponse::failed('The given product could not be found');
+        }
 
-                return true;
-            }
+        if ($this->isStockAvailable($slug, $quantity)) {
+            return CartResponse::failed('The updated quantity is higher then the available stock');
+        }
 
-            // If the slug is not matching, we should not care and just
-            // keep the item in our cart
-            return true;
-        });
-    }
+        $this->cart[$slug]['quantity'] = $quantity;
 
-    public function update(string $slug, int $quantity): void
-    {
-        // TODO: Implement
+        return CartResponse::success('The quantity has been updated');
     }
 
     /**
      * An item can be completly removed from the cart.
      */
-    public function remove($slug): void
+    public function remove($slug): CartResponse
     {
-        $this->cart = $this->get()->filter(function ($item) use ($slug) {
-            return $item->slug !== $slug;
-        });
+        Arr::forget($this->cart, $slug);
+
+        return CartResponse::success();
     }
 
     /**
      * Clear the complete cart.
      */
-    public function clear(): void
+    public function clear(): CartResponse
     {
         $this->cart = [];
+
+        return CartResponse::success();
     }
 
     /**
      * Fetch the customer from the session.
      */
-    public function customer(): ?Customer
+    public function customer(): Customer|null
     {
         // TODO: Does this part belong here?
 
@@ -239,5 +241,10 @@ class Cart implements CartRepository
     public function contains(string $slug): bool
     {
         return Arr::exists($this->cart, $slug);
+    }
+
+    private function isStockAvailable($slug, $quantity): bool
+    {
+        return $quantity > Product::findBySlug($slug)->stock();
     }
 }

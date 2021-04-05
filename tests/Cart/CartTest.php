@@ -11,8 +11,7 @@ use Jonassiewertsen\Butik\Facades\Cart;
 use Jonassiewertsen\Butik\Facades\Price;
 use Jonassiewertsen\Butik\Http\Models\ShippingRate;
 use Jonassiewertsen\Butik\Http\Models\ShippingZone;
-use Jonassiewertsen\Butik\Http\Models\Variant;
-use Jonassiewertsen\Butik\Shipping\Country;
+use Jonassiewertsen\Butik\Http\Responses\CartResponse;
 use Tests\TestCase;
 
 class CartTest extends TestCase
@@ -29,7 +28,7 @@ class CartTest extends TestCase
     }
 
     /** @test */
-    public function a_product_can_be_added_to_the_cart()
+    public function an_added_product_will_be_saved_as_an_array()
     {
         Cart::add($this->slug);
 
@@ -40,6 +39,22 @@ class CartTest extends TestCase
         ];
 
         $this->assertEquals($expected, Cart::raw());
+    }
+
+    /** @test */
+    public function a_product_can_be_added()
+    {
+        Cart::add($this->slug);
+
+        $this->assertCount(1, Cart::get());
+    }
+
+    /** @test */
+    public function if_added_correctly_an_cart_response_will_be_returned()
+    {
+        $this->assertInstanceOf(CartResponse::class, Cart::add($this->slug));
+
+        $this->assertCount(1, Cart::get());
     }
 
     /** @test */
@@ -71,57 +86,49 @@ class CartTest extends TestCase
     }
 
     /** @test */
-    public function a_product_with_more_then_one_items_will_only_be_decreased()
+    public function its_product_quantity_can_be_updated()
     {
-        Cart::add($this->product->slug);
-        Cart::add($this->product->slug);
+        Cart::add($this->product->slug, 2);
         $this->assertEquals(2, Cart::get()->first()->quantity());
 
-        Cart::reduce($this->product->slug);
+        Cart::update($this->product->slug, 1);
         $this->assertEquals(1, Cart::get()->first()->quantity());
     }
 
-//    /** @test */
-//    public function an_variant_with_more_then_one_items_will_only_be_decreased()
-//    {
-//        Cart::add($this->variant->slug);
-//        Cart::add($this->variant->slug);
-//        $this->assertEquals(2, Cart::get()->first()->getQuantity());
-//
-//        Cart::reduce($this->variant->slug);
-//        $this->assertEquals(1, Cart::get()->first()->getQuantity());
-//    }
+    /** @test */
+    public function a_products_quantity_cant_be_higher_than_its_stock_if_added_to_the_cart()
+    {
+        $response = Cart::add($this->product->slug, 99);
+        $this->assertFalse($response::$success);
+    }
+
+    /** @test */
+    public function a_products_quantity_cant_be_higher_than_its_stock_if_update_on_the_cart()
+    {
+        Cart::add($this->product->slug);
+
+        $response = Cart::update($this->product->slug, 99);
+        $this->assertFalse($response::$success);
+    }
 
     /** @test */
     public function a_product_can_be_completly_removed()
     {
         Cart::add($this->product->slug);
-        Cart::add($this->product->slug);
-        $this->assertEquals(2, Cart::get()->first()->quantity());
+        $this->assertCount(1, Cart::get());
 
         Cart::remove($this->product->slug);
-        $this->assertFalse(Cart::contains($this->product->slug));
+        $this->assertCount(0, Cart::get());
     }
-
-//    /** @test */
-//    public function a_variant_can_be_completly_removed()
-//    {
-//        Cart::add($this->variant->slug);
-//        Cart::add($this->variant->slug);
-//        $this->assertEquals(2, Cart::get()->first()->getQuantity());
-//
-//        Cart::remove($this->variant->slug);
-//        $this->assertFalse(Cart::get()->contains('slug', $this->variant->slug));
-//    }
 
     /** @test */
     public function the_cart_can_be_cleared()
     {
         Cart::add($this->product->slug);
-        $this->assertFalse(Cart::get()->count() === 0);
+        $this->assertCount(1, Cart::get());
 
         Cart::clear();
-        $this->assertTrue((Cart::get()->count() === 0));
+        $this->assertCount(0, Cart::get());
     }
 
     /** @test */
