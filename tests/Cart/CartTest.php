@@ -67,16 +67,6 @@ class CartTest extends TestCase
     }
 
     /** @test */
-    public function the_quanitity_will_be_increased_if_the_product_already_has_been_added()
-    {
-        Cart::add($slug = $this->product->slug);
-        $this->assertEquals(1, Cart::raw()[$slug]['quantity']);
-
-        Cart::add($slug = $this->product->slug);
-        $this->assertEquals(2, Cart::raw()[$slug]['quantity']);
-    }
-
-    /** @test */
     public function a_product_can_be_removed()
     {
         Cart::add($this->product->slug);

@@ -43,14 +43,11 @@ class Cart implements CartRepository
     public function add(string $slug, int $quantity = 1, string|null $locale = null): CartResponse
     {
         if ($this->contains($slug)) {
-            $quantity = $this->cart[$slug]['quantity'] + $quantity;
-
             return $this->update($slug, $quantity);
         }
 
-        if ($this->isStockAvailable($slug, $quantity)) {
-            // TODO: Add translation
-            return CartResponse::failed('The added quantity is higher then the available stock');
+        if (! $this->isStockAvailable($slug, $quantity)) {
+            return CartResponse::failed('The added quantity is higher then the available stock'); // TODO: Add translation
         }
 
         $this->cart[$slug] = ['quantity' => $quantity];
@@ -69,7 +66,7 @@ class Cart implements CartRepository
             return CartResponse::failed('The given product could not be found');
         }
 
-        if ($this->isStockAvailable($slug, $quantity)) {
+        if (! $this->isStockAvailable($slug, $quantity)) {
             return CartResponse::failed('The updated quantity is higher then the available stock');
         }
 
@@ -246,6 +243,6 @@ class Cart implements CartRepository
 
     private function isStockAvailable($slug, $quantity): bool
     {
-        return $quantity > Product::findBySlug($slug)->stock();
+        return $quantity <= Product::findBySlug($slug)->stock();
     }
 }
