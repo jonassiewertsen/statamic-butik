@@ -22,7 +22,7 @@ class Country implements CountryRepository
     /**
      * Will return the localized country name.
      */
-    public function name(?string $isoCode = null): string|null
+    public function name(string|null $isoCode = null): string|null
     {
         $isoCode = strtoupper($isoCode ?? $this->isoCode);
 
@@ -56,7 +56,7 @@ class Country implements CountryRepository
     /**
      * Returning all countries, used by any Shipping Profile.
      */
-    public function list(): array // Not defined inside the country repository interface
+    public function list(): array // TODO: Not defined inside the country repository interface. Add to Facade methods if it stays here.
     {
         // TODO: Move to ShippingFacade
         return ShippingZone::all()

@@ -15,28 +15,28 @@ class Number implements NumberRepository
         $this->multiplicator = pow(10, 10);
     }
 
-    public function of($number): self
+    public function of(mixed $number): self
     {
         $this->number = $this->convertToNumber($number);
 
         return $this;
     }
 
-    public function add($number): self
+    public function add(mixed $number): self
     {
         $this->number += $this->convertToNumber($number);
 
         return $this;
     }
 
-    public function subtract($number): self
+    public function subtract(mixed $number): self
     {
         $this->number -= $this->convertToNumber($number);
 
         return $this;
     }
 
-    public function multiply($by): self
+    public function multiply(float|int $by): self
     {
         $this->number *= $by;
 
@@ -48,6 +48,20 @@ class Number implements NumberRepository
         $this->number = (int) round($this->number / $by);
 
         return $this;
+    }
+
+    public function divide(float|int $by): self
+    {
+        $this->number = (int) round($this->number / $by);
+
+        return $this;
+    }
+
+    public function get(): string
+    {
+        $amount = floatval($this->number) / $this->multiplicator;
+
+        return (string) number_format($amount, 2, $this->delimiter, ',');
     }
 
     public function decimal(): float
@@ -72,7 +86,7 @@ class Number implements NumberRepository
         };
     }
 
-    private function fromStringToNumber($number)
+    private function fromStringToNumber($number): float|int
     {
         $number = str_replace(',', '.', $number);
 

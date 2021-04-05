@@ -24,7 +24,7 @@ class Cart implements CartRepository
         Session::put('butik.cart', $this->cart);
     }
 
-    public function get(): array
+    public function get(): Collection
     {
         return $this->cart;
     }
@@ -37,7 +37,7 @@ class Cart implements CartRepository
     /**
      * A product can be added to the cart.
      */
-    public function add(string $slug, int $quantity = 1, ?string $locale = null): void
+    public function add(string $slug, int $quantity = 1, string|null $locale = null): void
     {
         if (! $this->contains($slug)) {
             $this->cart[$slug] = ['quantity' => $quantity];
@@ -69,6 +69,11 @@ class Cart implements CartRepository
             // keep the item in our cart
             return true;
         });
+    }
+
+    public function update(string $slug, int $quantity): void
+    {
+        // TODO: Implement
     }
 
     /**
