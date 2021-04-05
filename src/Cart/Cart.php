@@ -6,6 +6,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\Butik\Contracts\CartRepository;
+use Jonassiewertsen\Butik\Contracts\PriceRepository;
 use Jonassiewertsen\Butik\Facades\Price;
 use Jonassiewertsen\Butik\Shipping\Country;
 use Jonassiewertsen\Butik\Shipping\Shipping;
@@ -26,7 +27,7 @@ class Cart implements CartRepository
 
     public function get(): Collection
     {
-        return $this->cart;
+        return collect($this->cart);
     }
 
     public function raw(): array
@@ -116,7 +117,7 @@ class Cart implements CartRepository
         })->sum();
     }
 
-    public function totalPrice(): string
+    public function totalPrice(): PriceRepository
     {
         $productAmount = $this->cart->filter(function ($item) {
             return $item->sellable;
@@ -126,20 +127,20 @@ class Cart implements CartRepository
 
         $shippingAmount = $this->totalShipping();
 
-        return Price::of($productAmount)->add($shippingAmount)->get();
+        return Price::of($productAmount)->add($shippingAmount);
     }
 
     /**
      * All shipping costs, from all shipping profiles, summed
      * up to determine the total shipping costs.
      */
-    public function totalShipping(): string
+    public function totalShipping(): PriceRepository
     {
         $shippingAmount = $this->shipping()->sum(function ($shipping) {
             return Price::of($shipping->total)->cents();
         });
 
-        return Price::of($shippingAmount)->get();
+        return Price::of($shippingAmount);
     }
 
     /**
