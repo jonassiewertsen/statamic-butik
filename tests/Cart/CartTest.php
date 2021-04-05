@@ -8,6 +8,7 @@ use Jonassiewertsen\Butik\Cart\Item;
 use Jonassiewertsen\Butik\Cart\ItemCollection;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
 use Jonassiewertsen\Butik\Facades\Cart;
+use Jonassiewertsen\Butik\Facades\Country;
 use Jonassiewertsen\Butik\Facades\Price;
 use Jonassiewertsen\Butik\Http\Models\ShippingRate;
 use Jonassiewertsen\Butik\Http\Models\ShippingZone;
@@ -81,7 +82,7 @@ class CartTest extends TestCase
         Cart::add($this->product->slug);
         $this->assertTrue(Cart::contains($this->product->slug));
 
-        Cart::reduce($this->product->slug);
+        Cart::remove($this->product->slug);
         $this->assertFalse(Cart::contains($this->product->slug));
     }
 
@@ -143,7 +144,7 @@ class CartTest extends TestCase
         $item1 = Cart::get()->first();
         $item2 = Cart::get()->last();
 
-        $calculatedPrice = Price::of($item1->totalPrice())->add($item2->totalPrice())->get();
+        $calculatedPrice = Price::of($item1->price()->get())->add($item2->price()->get());
 
         $this->assertEquals($calculatedPrice, Cart::totalPrice());
     }
@@ -151,6 +152,7 @@ class CartTest extends TestCase
     /** @test */
     public function the_cart_calculates_the_total_price_including_shipping_amount()
     {
+        // TODO: Calculate shipping
         // Create a new shipping zone to use a zone with taxes.
         $shippingZone = create(ShippingZone::class)->first();
 
@@ -172,7 +174,7 @@ class CartTest extends TestCase
     }
 
     /** @test */
-    public function non_sellable_items_will_not_be_counted()
+    public function non_sellable_items_will_not_get_counted()
     {
         $product1 = $this->makeProduct();
         $product2 = $this->makeProduct();
@@ -183,7 +185,7 @@ class CartTest extends TestCase
 
         $item2 = Cart::get()->last();
 
-        $this->assertEquals($item2->totalPrice(), Cart::totalPrice());
+        $this->assertEquals($item2->price()->total(), Cart::totalPrice());
     }
 
     /** @test */
@@ -217,12 +219,13 @@ class CartTest extends TestCase
     /** @test */
     public function the_cart_has_total_taxes()
     {
+        $this->makeTax();
         $product = $this->makeProduct();
 
         Cart::add($product->slug);
 
         $this->assertEquals(
-            (new Item($product->slug))->taxAmount,
+            (new Item($product->slug))->tax()->total()->get(),
             Cart::totalTaxes()->first()['amount']
         );
     }
@@ -278,6 +281,7 @@ class CartTest extends TestCase
     /** @test */
     public function the_total_taxes_will_sum_multiple_taxes_from_products()
     {
+        $this->makeTax();
         $product1 = $this->makeProduct();
         $product2 = $this->makeProduct(['tax_id' => $product1->tax_id]);
 
@@ -288,7 +292,7 @@ class CartTest extends TestCase
         $item2 = new Item($product2->slug);
 
         $this->assertEquals(
-            Price::of($item1->taxAmount)->add($item2->taxAmount)->get(),
+            Price::of($item1->tax()->total())->add($item2->tax()->total())->get(),
             Cart::totalTaxes()->first()['amount']
         );
     }
@@ -296,22 +300,21 @@ class CartTest extends TestCase
     /** @test */
     public function the_cart_returns_zero_without_any_items()
     {
-        $this->assertNotNull(Cart::count());
+        $this->assertTrue(Cart::count() === 0);
     }
 
     /** @test */
     public function the_cart_can_return_the_actual_set_country()
     {
-        $this->assertEquals(Country::get(), Cart::country());
+        $this->assertEquals(Country::iso(), Cart::country());
     }
 
     /** @test */
     public function a_new_country_can_be_set()
     {
-        // TODO: Rewrite test the Country is it's own Facade to mock the output.
+        Cart::setCountry('DK');
 
-//        $this->assertEquals(Country::get(), 'dk');
-        $this->assertTrue(true);
+        $this->assertEquals(Cart::country(), 'DK');
     }
 
     /** @test */

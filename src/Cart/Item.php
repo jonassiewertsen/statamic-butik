@@ -26,8 +26,6 @@ class Item
         $this->isSellableInCurrenctCountry = true;
     }
 
-
-
     public function isAvailable(): bool
     {
         return $this->available;
@@ -35,12 +33,12 @@ class Item
 
     public function price(): PriceCalculator
     {
-        return $this->product->price();
+        return $this->product->price($this->quantity);
     }
 
     public function tax(): TaxCalculator
     {
-        return $this->product->tax();
+        return $this->product->tax($this->quantity);
     }
 
     public function quantity(): int

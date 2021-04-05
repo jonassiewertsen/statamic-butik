@@ -25,9 +25,9 @@ class Product extends ButikEntry implements ProductRepository
         return $this->data['stock_unlimited'];
     }
 
-    public function tax(): TaxCalculatorContract
+    public function tax(int $quantity = 1): TaxCalculatorContract
     {
-        return new TaxCalculator($this);
+        return new TaxCalculator($this, $quantity);
     }
 
     public function taxType(): string
@@ -35,9 +35,9 @@ class Product extends ButikEntry implements ProductRepository
         return (string) $this->data['tax'];
     }
 
-    public function price(): PriceCalculatorContract
+    public function price(int $quantity = 1): PriceCalculatorContract
     {
-        return new Price($this);
+        return new Price($this, $quantity);
     }
 
     public function toArray(): array
