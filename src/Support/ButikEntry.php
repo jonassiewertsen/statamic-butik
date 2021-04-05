@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Jonassiewertsen\Butik\Contracts\ButikEntryContract;
 use Jonassiewertsen\Butik\Exceptions\ButikProductException;
 use Statamic\Contracts\Entries\Entry as EntryContract;
+use Statamic\Contracts\Entries\QueryBuilder;
 use Statamic\Facades\Entry;
 use Statamic\Facades\Site;
 use Statamic\Support\Str;
@@ -57,7 +58,7 @@ abstract class ButikEntry implements ButikEntryContract
         return (bool) Entry::find($slug);
     }
 
-    public function query()
+    public function query(): QueryBuilder
     {
         return Entry::query()->where('collection', $this->collection());
     }

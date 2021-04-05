@@ -6,13 +6,15 @@ interface PriceRepository
 {
     public function __construct(string $delimiter, string $thousands_separator);
 
-    public function of($amount): self;
+    public function of(mixed $amount): self;
 
-    public function add($amount): self;
+    public function add(mixed $amount): self;
 
-    public function subtract($amount): self;
+    public function subtract(mixed $amount): self;
 
-    public function multiply($by): self;
+    public function multiply(float|int $by): self;
+
+    public function divide(float|int $by): self;
 
     public function divide($by): self;
 

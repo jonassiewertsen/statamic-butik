@@ -16,35 +16,35 @@ class Price implements PriceRepository
         $this->thousands = $thousands_separator;
     }
 
-    public function of($amount): self
+    public function of(mixed $amount): self
     {
         $this->amount = $this->convertToInt($amount);
 
         return $this;
     }
 
-    public function add($amount): self
+    public function add(mixed $amount): self
     {
         $this->amount += $this->convertToInt($amount);
 
         return $this;
     }
 
-    public function subtract($amount): self
+    public function subtract(mixed $amount): self
     {
         $this->amount -= $this->convertToInt($amount);
 
         return $this;
     }
 
-    public function multiply($by): self
+    public function multiply(float|int $by): self
     {
         $this->amount *= $by;
 
         return $this;
     }
 
-    public function divide($by): self
+    public function divide(float|int $by): self
     {
         $this->amount = (int) round($this->amount / $by);
 

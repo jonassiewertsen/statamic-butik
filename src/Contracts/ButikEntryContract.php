@@ -3,18 +3,19 @@
 namespace Jonassiewertsen\Butik\Contracts;
 
 use Illuminate\Support\Collection;
+use Statamic\Contracts\Entries\QueryBuilder;
 
 interface ButikEntryContract
 {
     public function all(): Collection;
 
-    public function find(string $id): ?self;
+    public function find(string $id): self|null;
 
-    public function findBySlug(string $slug): ?self;
+    public function findBySlug(string $slug): self|null;
 
     public function exists(string $slug): bool;
 
-    public function query();
+    public function query(): QueryBuilder;
 
     public function update(array $data);
 

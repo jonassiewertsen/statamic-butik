@@ -13,7 +13,7 @@ class TaxRepository extends ButikEntry implements TaxRepositoryContract
         public CountryRepository $country,
     ) {}
 
-    public function rate(): float
+    public function rate(): float|int
     {
         return (float) $this->data['rate'];
     }
