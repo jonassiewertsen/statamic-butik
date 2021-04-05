@@ -158,7 +158,7 @@ class ServiceProvider extends AddonServiceProvider
             return new Cart();
         });
 
-        $this->app->singleton(ProductRepository::class, function () {
+        $this->app->bind(ProductRepository::class, function () {
             return new Product();
         });
 
