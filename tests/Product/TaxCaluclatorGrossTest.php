@@ -3,6 +3,7 @@
 namespace Tests\Product;
 
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
+use Jonassiewertsen\Butik\Facades\Country;
 use Jonassiewertsen\Butik\Product\Calculator\TaxCalculator;
 use Jonassiewertsen\Butik\Repositories\TaxRepository;
 use Tests\TestCase;
@@ -59,5 +60,15 @@ class TaxCaluclatorGrossTest extends TestCase
         $tax = new TaxCalculator($this->product);
 
         $this->assertEquals($tax->rate(), $this->tax->rate);
+    }
+
+    /** @test */
+    public function a_tax_rate_of_zero_will_be_returned_if_taxes_could_not_be_found()
+    {
+        Country::set('NL');
+
+        $tax = new TaxCalculator($this->product);
+
+        $this->assertEquals(0, $tax->rate());
     }
 }

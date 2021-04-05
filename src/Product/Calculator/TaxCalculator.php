@@ -47,9 +47,10 @@ class TaxCalculator implements TaxCalculatorContract
             $this->taxFromNetPrice($this->basePrice);
     }
 
-    public function rate(): int // TODO: What about comma taxes like in switzerland?
+    public function rate(): int
     {
-        return $this->tax->rate;
+        // TODO: What about comma taxes like in switzerland?
+        return $this->tax ? $this->tax->rate : 0;
     }
 
     protected function taxFromNetPrice(mixed $amount): PriceRepository
