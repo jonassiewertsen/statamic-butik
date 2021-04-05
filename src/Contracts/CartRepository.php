@@ -4,10 +4,11 @@ namespace Jonassiewertsen\Butik\Contracts;
 
 use Illuminate\Support\Collection;
 use Jonassiewertsen\Butik\Cart\Customer;
+use Jonassiewertsen\Butik\Cart\ItemCollection;
 
 interface CartRepository
 {
-    public function get(): Collection;
+    public function get(): ItemCollection;
 
     public function raw(): array;
 

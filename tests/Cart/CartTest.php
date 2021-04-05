@@ -5,6 +5,7 @@ namespace Tests\Cart;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\Butik\Cart\Customer;
 use Jonassiewertsen\Butik\Cart\Item;
+use Jonassiewertsen\Butik\Cart\ItemCollection;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
 use Jonassiewertsen\Butik\Facades\Cart;
 use Jonassiewertsen\Butik\Facades\Price;
@@ -42,6 +43,14 @@ class CartTest extends TestCase
     }
 
     /** @test */
+    public function it_can_return_a_item_collection()
+    {
+        Cart::add($this->slug);
+
+        $this->assertInstanceOf(ItemCollection::class, Cart::get());
+    }
+
+    /** @test */
     public function the_quanitity_will_be_increased_if_the_product_already_has_been_added()
     {
         Cart::add($slug = $this->product->slug);
@@ -55,21 +64,21 @@ class CartTest extends TestCase
     public function a_product_can_be_removed()
     {
         Cart::add($this->product->slug);
-        $this->assertTrue(Cart::get()->contains('slug', $this->product->slug));
+        $this->assertTrue(Cart::contains($this->product->slug));
 
         Cart::reduce($this->product->slug);
-        $this->assertFalse(Cart::get()->contains('slug', $this->product->slug));
+        $this->assertFalse(Cart::contains($this->product->slug));
     }
 
     /** @test */
-    public function an_product_with_more_then_one_items_will_only_be_decreased()
+    public function a_product_with_more_then_one_items_will_only_be_decreased()
     {
         Cart::add($this->product->slug);
         Cart::add($this->product->slug);
-        $this->assertEquals(2, Cart::get()->first()->getQuantity());
+        $this->assertEquals(2, Cart::get()->first()->quantity());
 
         Cart::reduce($this->product->slug);
-        $this->assertEquals(1, Cart::get()->first()->getQuantity());
+        $this->assertEquals(1, Cart::get()->first()->quantity());
     }
 
 //    /** @test */
@@ -88,10 +97,10 @@ class CartTest extends TestCase
     {
         Cart::add($this->product->slug);
         Cart::add($this->product->slug);
-        $this->assertEquals(2, Cart::get()->first()->getQuantity());
+        $this->assertEquals(2, Cart::get()->first()->quantity());
 
         Cart::remove($this->product->slug);
-        $this->assertFalse(Cart::get()->contains('slug', $this->product->slug));
+        $this->assertFalse(Cart::contains($this->product->slug));
     }
 
 //    /** @test */
@@ -109,11 +118,10 @@ class CartTest extends TestCase
     public function the_cart_can_be_cleared()
     {
         Cart::add($this->product->slug);
-        Cart::add($this->product->slug);
-        $this->assertEquals(2, Cart::get()->first()->getQuantity());
+        $this->assertFalse(Cart::get()->count() === 0);
 
         Cart::clear();
-        $this->assertTrue((Cart::get() == collect()));
+        $this->assertTrue((Cart::get()->count() === 0));
     }
 
     /** @test */

@@ -25,9 +25,9 @@ class Cart implements CartRepository
         Session::put('butik.cart', $this->cart);
     }
 
-    public function get(): Collection
+    public function get(): ItemCollection
     {
-        return collect($this->cart);
+        return new ItemCollection($this->cart);
     }
 
     public function raw(): array
@@ -53,14 +53,14 @@ class Cart implements CartRepository
      */
     public function reduce($slug): void
     {
-        $this->cart = $this->cart->filter(function ($item) use ($slug) {
+        $this->cart = $this->get()->filter(function ($item) use ($slug) {
             // If the quantity is <= 1 the item will be deleted from the cart
-            if ($item->slug === $slug && $item->getQuantity() <= 1) {
+            if ($item->slug === $slug && $item->quantity() <= 1) {
                 return false;
             }
 
             // If the quantity is bigger than one, it will only decrease
-            if ($item->slug === $slug && $item->getQuantity() > 1) {
+            if ($item->slug === $slug && $item->quantity() > 1) {
                 $item->decrease();
 
                 return true;
@@ -82,7 +82,7 @@ class Cart implements CartRepository
      */
     public function remove($slug): void
     {
-        $this->cart = $this->cart->filter(function ($item) use ($slug) {
+        $this->cart = $this->get()->filter(function ($item) use ($slug) {
             return $item->slug !== $slug;
         });
     }
