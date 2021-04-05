@@ -4,9 +4,7 @@ namespace Jonassiewertsen\Butik\Facades;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
-use Jonassiewertsen\Butik\Contracts\PriceCalculator;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
-use Jonassiewertsen\Butik\Contracts\TaxCalculator;
 use Jonassiewertsen\Butik\Contracts\TaxRepository;
 use Statamic\Contracts\Entries\QueryBuilder;
 
