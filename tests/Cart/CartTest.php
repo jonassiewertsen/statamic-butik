@@ -171,7 +171,7 @@ class CartTest extends TestCase
 
         Cart::add($product1->slug);
         Cart::add($product2->slug);
-        Cart::get()->first()->nonSellable();
+        $item = Cart::get()->first()->nonSellable();
 
         $item2 = Cart::get()->last();
 

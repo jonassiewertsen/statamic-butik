@@ -15,7 +15,8 @@ use Jonassiewertsen\Butik\Shipping\Shipping;
 
 class Cart implements CartRepository
 {
-    protected $cart;
+    protected array $cart;
+    protected ItemCollection $items;
 
     public function __construct()
     {
@@ -29,7 +30,11 @@ class Cart implements CartRepository
 
     public function get(): ItemCollection
     {
-        return (new ItemCollection([]))->items($this->cart);
+        if (! isset($this->items)) {
+            $this->items = (new ItemCollection([]))->items($this->cart);
+        }
+
+        return $this->items;
     }
 
     public function raw(): array
