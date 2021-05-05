@@ -5,7 +5,7 @@ namespace Jonassiewertsen\Butik\Cart;
 use Jonassiewertsen\Butik\Contracts\PriceCalculator;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
 use Jonassiewertsen\Butik\Contracts\TaxCalculator;
-use Jonassiewertsen\Butik\Facades\Product;
+use Jonassiewertsen\Butik\Facades;
 
 class Item
 {
@@ -13,7 +13,6 @@ class Item
     public ProductRepository $product;
     private bool $available;
     private bool $isSellableInCurrenctCountry;
-    private int $quantity;
 
     public function __construct(string $slug, int $quantity = 1)
     {
@@ -21,7 +20,7 @@ class Item
 
         $this->slug = $slug;
         $this->quantity = $quantity;
-        $this->product = Product::findBySlug($slug);
+        $this->product = Facades\Product::findBySlug($slug);
         $this->available = $this->product->published;
         $this->isSellableInCurrenctCountry = true;
     }
@@ -43,7 +42,7 @@ class Item
 
     public function quantity(): int
     {
-        return $this->quantity;
+        return Facades\Cart::quantityOf($this->slug);
     }
 
     public function isSellable(): bool

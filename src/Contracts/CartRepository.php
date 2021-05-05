@@ -18,6 +18,8 @@ interface CartRepository
 
     public function update(string $slug, int $quantity): CartResponse;
 
+    public function quantityOf(string $slug): int;
+
     public function remove(string $slug): CartResponse;
 
     public function clear(): CartResponse;

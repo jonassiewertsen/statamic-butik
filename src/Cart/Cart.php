@@ -81,11 +81,24 @@ class Cart implements CartRepository
     }
 
     /**
+     * Returns the quantity of a given product.
+     */
+    public function quantityOf(string $slug): int
+    {
+        if (! array_key_exists($slug, $this->cart)) {
+            return 0;
+        }
+
+        return $this->cart[$slug]['quantity'];
+    }
+
+    /**
      * An item can be completly removed from the cart.
      */
     public function remove($slug): CartResponse
     {
         Arr::forget($this->cart, $slug);
+        $this->items = $this->get()->reject(fn ($item) =>$item->slug === $slug);
 
         return CartResponse::success();
     }
@@ -96,6 +109,7 @@ class Cart implements CartRepository
     public function clear(): CartResponse
     {
         $this->cart = [];
+        $this->items = new ItemCollection();
 
         return CartResponse::success();
     }

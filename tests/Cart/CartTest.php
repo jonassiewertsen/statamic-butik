@@ -51,6 +51,15 @@ class CartTest extends TestCase
     }
 
     /** @test */
+    public function a_product_can_return_its_quantity()
+    {
+        Cart::add($this->slug);
+
+        $this->assertEquals(1, Cart::quantityOf($this->slug));
+        $this->assertEquals(0, Cart::quantityOf('not existing'));
+    }
+
+    /** @test */
     public function if_added_correctly_an_cart_response_will_be_returned()
     {
         $this->assertInstanceOf(CartResponse::class, Cart::add($this->slug));
