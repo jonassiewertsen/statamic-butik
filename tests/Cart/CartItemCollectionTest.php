@@ -19,13 +19,14 @@ class CartItemCollectionTest extends TestCase
 
         $this->makeTax();
         $this->product = $this->makeProduct();
-        Cart::add($this->product->slug);
     }
 
     /** @test */
     public function items_will_get_mapped_as_cart_items()
     {
-        $collection = new ItemCollection(Cart::raw());
+        Cart::add($this->product->slug);
+
+        $collection = new ItemCollection(Cart::get());
 
         $this->assertInstanceOf(Item::class, $collection->first());
     }
