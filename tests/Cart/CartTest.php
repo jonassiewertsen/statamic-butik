@@ -5,7 +5,7 @@ namespace Tests\Cart;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\Butik\Cart\Customer;
 use Jonassiewertsen\Butik\Cart\Item;
-use Jonassiewertsen\Butik\Cart\ItemCollection;
+use Jonassiewertsen\Butik\Cart\CartItemCollection;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
 use Jonassiewertsen\Butik\Facades\Cart;
 use Jonassiewertsen\Butik\Facades\Country;
@@ -29,17 +29,11 @@ class CartTest extends TestCase
     }
 
     /** @test */
-    public function an_added_product_will_be_saved_as_an_array()
+    public function it_returns_a_CartItemCollection()
     {
         Cart::add($this->slug);
 
-        $expected = [
-            $this->product->slug => [
-                'quantity' => 1,
-            ],
-        ];
-
-        $this->assertEquals($expected, Cart::raw());
+        $this->assertInstanceOf(CartItemCollection::class, Cart::get());
     }
 
     /** @test */
@@ -51,12 +45,21 @@ class CartTest extends TestCase
     }
 
     /** @test */
+    public function an_added_product_will_get_summed()
+    {
+        Cart::add($this->slug);
+        Cart::add($this->slug, 2);
+
+        $this->assertEquals(3, Cart::count());
+    }
+
+    /** @test */
     public function a_product_can_return_its_quantity()
     {
         Cart::add($this->slug);
 
-        $this->assertEquals(1, Cart::quantityOf($this->slug));
-        $this->assertEquals(0, Cart::quantityOf('not existing'));
+        $this->assertEquals(1, Cart::quantity($this->slug));
+        $this->assertEquals(0, Cart::quantity('not existing'));
     }
 
     /** @test */
@@ -65,14 +68,6 @@ class CartTest extends TestCase
         $this->assertInstanceOf(CartResponse::class, Cart::add($this->slug));
 
         $this->assertCount(1, Cart::get());
-    }
-
-    /** @test */
-    public function it_can_return_a_item_collection()
-    {
-        Cart::add($this->slug);
-
-        $this->assertInstanceOf(ItemCollection::class, Cart::get());
     }
 
     /** @test */
@@ -112,7 +107,7 @@ class CartTest extends TestCase
     }
 
     /** @test */
-    public function a_product_can_be_completly_removed()
+    public function a_product_can_be_removed_completly()
     {
         Cart::add($this->product->slug);
         $this->assertCount(1, Cart::get());
@@ -268,8 +263,8 @@ class CartTest extends TestCase
 
         Cart::add($product->slug);
 
-        $itemTaxAmount = (new Item($product->slug))->taxAmount;
-        $shippingTaxAmount = Cart::shipping()->first()->taxAmount;
+        $itemTaxAmount = (new Item($product->slug))->tax()->total();
+        $shippingTaxAmount = Cart::shipping()->first()->tax()->total();
 
         $this->assertEquals(
             Price::of($itemTaxAmount)->add($shippingTaxAmount)->get(),

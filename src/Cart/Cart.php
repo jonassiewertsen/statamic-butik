@@ -15,12 +15,11 @@ use Jonassiewertsen\Butik\Shipping\Shipping;
 
 class Cart implements CartRepository
 {
-    protected array $cart;
-    protected ItemCollection $items;
+    protected CartItemCollection $cart;
 
     public function __construct()
     {
-        $this->cart = Session::get('butik.cart') ?? [];
+        $this->cart = Session::get('butik.cart') ?? new CartItemCollection();
     }
 
     public function __desctruct()
@@ -28,16 +27,7 @@ class Cart implements CartRepository
         Session::put('butik.cart', $this->cart);
     }
 
-    public function get(): ItemCollection
-    {
-        if (! isset($this->items)) {
-            $this->items = (new ItemCollection([]))->items($this->cart);
-        }
-
-        return $this->items;
-    }
-
-    public function raw(): array
+    public function get(): CartItemCollection
     {
         return $this->cart;
     }
@@ -47,15 +37,15 @@ class Cart implements CartRepository
      */
     public function add(string $slug, int $quantity = 1, string|null $locale = null): CartResponse
     {
-        if ($this->contains($slug)) {
-            return $this->update($slug, $quantity);
-        }
+//        if ($this->contains($slug)) {
+//            return $this->update($slug, $quantity);
+//        }
 
         if (! $this->isStockAvailable($slug, $quantity)) {
             return CartResponse::failed('The added quantity is higher then the available stock'); // TODO: Add translation
         }
 
-        $this->cart[$slug] = ['quantity' => $quantity];
+        $this->cart->push(new Item($slug, $quantity));
 
         return CartResponse::success('The item has been added');
     }
@@ -75,7 +65,7 @@ class Cart implements CartRepository
             return CartResponse::failed('The updated quantity is higher then the available stock');
         }
 
-        $this->cart[$slug]['quantity'] = $quantity;
+        $item->setQuantity($quantity);
 
         return CartResponse::success('The quantity has been updated');
     }
@@ -83,24 +73,29 @@ class Cart implements CartRepository
     /**
      * Returns the quantity of a given product.
      */
-    public function quantityOf(string $slug): int
+    public function quantity(string $slug): int
     {
-        if (! array_key_exists($slug, $this->cart)) {
+        if (! $item = $this->cart->firstWhere('slug', $slug)) {
             return 0;
         }
 
-        return $this->cart[$slug]['quantity'];
+        return $item->quantity();
     }
 
     /**
      * An item can be completly removed from the cart.
      */
-    public function remove($slug): CartResponse
+    public function remove(string $slug): CartResponse
     {
-        Arr::forget($this->cart, $slug);
-        $this->items = $this->get()->reject(fn ($item) =>$item->slug === $slug);
+        $item = $this->cart->firstWhere('slug', $slug);
 
-        return CartResponse::success();
+        if (! $item) {
+            return CartResponse::failed('The item does not exist and can\'t  be removed');
+        }
+
+        $this->cart = $this->cart->reject(fn ($item) =>$item->slug === $slug);
+
+        return CartResponse::success('The item has succesfully been removed');
     }
 
     /**
@@ -108,8 +103,7 @@ class Cart implements CartRepository
      */
     public function clear(): CartResponse
     {
-        $this->cart = [];
-        $this->items = new ItemCollection();
+        $this->cart = new CartItemCollection();
 
         return CartResponse::success();
     }
@@ -131,9 +125,7 @@ class Cart implements CartRepository
      */
     public function count(): int
     {
-        return $this->get()->map(function ($item) {
-            return $item->quantity();
-        })->sum();
+        return $this->cart->sum(fn ($item) => $item->quantity());
     }
 
     public function totalPrice(): PriceRepository
@@ -172,7 +164,7 @@ class Cart implements CartRepository
         /**
          * Collect all item tax rates.
          */
-        foreach ($this->get() as $item) {
+        foreach ($this->cart as $item) {
             if (! in_array($item->tax()->rate(), $taxRates)) {
                 $taxRates[] = $item->tax()->rate();
             }
@@ -192,7 +184,7 @@ class Cart implements CartRepository
          * We will loop through all tax rates and sum the amounts.
          */
         foreach ($taxRates as $taxRate) {
-            $taxAmount = $this->get()
+            $taxAmount = $this->cart
                 ->filter(fn($item) =>  $item->tax()->rate() === $taxRate)
                 ->sum(fn ($item) => $item->tax()->total()->cents());
 
@@ -247,9 +239,7 @@ class Cart implements CartRepository
 
     public function removeNonSellableItems(): void
     {
-        $this->cart = $this->get()->filter(function ($item) {
-            return $item->sellable;
-        });
+        $this->cart = $this->cart->filter(fn ($item) => $item->isSellable());
     }
 
     /**
@@ -257,11 +247,12 @@ class Cart implements CartRepository
      */
     public function contains(string $slug): bool
     {
-        return Arr::exists($this->cart, $slug);
+        return $this->cart->contains('slug', $slug);
     }
 
     private function isStockAvailable($slug, $quantity): bool
     {
+        // TODO: Should this method be moved to the Item class?
         return $quantity <= Product::findBySlug($slug)->stock();
     }
 }

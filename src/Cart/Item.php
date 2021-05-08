@@ -11,6 +11,7 @@ class Item
 {
     public string $slug;
     public ProductRepository $product;
+    private int $quantity;
     private bool $available;
     private bool $isSellableInCurrenctCountry;
 
@@ -40,9 +41,14 @@ class Item
         return $this->product->tax($this->quantity);
     }
 
+    public function setQuantity(int $quantity): void
+    {
+        $this->quantity = $quantity;
+    }
+
     public function quantity(): int
     {
-        return Facades\Cart::quantityOf($this->slug);
+        return $this->quantity;
     }
 
     public function isSellable(): bool
