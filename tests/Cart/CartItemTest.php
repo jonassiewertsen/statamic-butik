@@ -41,22 +41,10 @@ class CartItemTest extends TestCase
     }
 
     /** @test */
-    public function is_has_a_default_quantity_of_one()
+    public function is_has_a_default_quantity_of_zero()
     {
         $item = new Item($this->product->slug);
-        $this->assertEquals(1, $item->quantity());
-    }
-
-    /** @test */
-    public function a_quantity_can_be_set()
-    {
-        $this->assertEquals(2, $this->item->quantity());
-    }
-
-    /** @test */
-    public function it_has_a_price()
-    {
-        $this->assertEquals('20,00', $this->item->price()->get());
+        $this->assertEquals(0, $item->quantity());
     }
 
     /** @test */
@@ -69,12 +57,6 @@ class CartItemTest extends TestCase
     public function it_has_a_tax_calculator_instance()
     {
         $this->assertInstanceOf(TaxCalculator::class, $this->item->tax());
-    }
-
-    /** @test */
-    public function it_has_a_tax()
-    {
-        $this->assertEquals('3,19', $this->item->tax()->total()->get());
     }
 
     /** @test */
@@ -109,8 +91,8 @@ class CartItemTest extends TestCase
     public function the_stock_can_be_unlimited()
     {
         $this->product->update(['stock_unlimited' => true]);
-        $this->product->fresh();
+        $item = new Item($this->product->slug);
 
-        $this->assertTrue($this->item->stockUnlimited());
+        $this->assertTrue($item->stockUnlimited());
     }
 }
