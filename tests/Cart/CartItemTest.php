@@ -44,7 +44,7 @@ class CartItemTest extends TestCase
     public function is_has_a_default_quantity_of_zero()
     {
         $item = new Item($this->product->slug);
-        $this->assertEquals(0, $item->quantity());
+        $this->assertEquals(1, $item->quantity());
     }
 
     /** @test */
@@ -90,8 +90,9 @@ class CartItemTest extends TestCase
     /** @test */
     public function the_stock_can_be_unlimited()
     {
-        $this->product->update(['stock_unlimited' => true]);
-        $item = new Item($this->product->slug);
+        $product = $this->makeProduct(['stock_unlimited' => true]);
+
+        $item = new Item($product);
 
         $this->assertTrue($item->stockUnlimited());
     }

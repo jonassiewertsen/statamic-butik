@@ -5,25 +5,29 @@ namespace Jonassiewertsen\Butik\Cart;
 use Jonassiewertsen\Butik\Contracts\PriceCalculator;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
 use Jonassiewertsen\Butik\Contracts\TaxCalculator;
-use Jonassiewertsen\Butik\Facades;
+use Jonassiewertsen\Butik\Support\Traits\getProduct;
 
 class Item
 {
     public string $slug;
-    public ProductRepository $product;
     private int $quantity;
     private bool $available;
     private bool $isSellableInCurrenctCountry;
 
-    public function __construct(string $slug, int $quantity = 1)
-    {
-        // TODO: Handle the case that a product does not exist.
+    use getProduct;
 
-        $this->slug = $slug;
+    public function __construct(mixed $identifier, int $quantity = 1)
+    {
+        $product = $this->getProduct($identifier);
+        $this->slug = $product->slug;
         $this->quantity = $quantity;
-        $this->product = Facades\Product::findBySlug($slug);
-        $this->available = $this->product->published;
+        $this->available = $product->published;
         $this->isSellableInCurrenctCountry = true;
+    }
+
+    public function product(): ProductRepository
+    {
+        return $this->getProduct($this->slug);
     }
 
     public function isAvailable(): bool
@@ -74,5 +78,12 @@ class Item
     public function stockUnlimited(): bool
     {
         return $this->product->stockUnlimited;
+    }
+
+    public function __get($name)
+    {
+        if ($name === 'product') {
+            return $this->product();
+        }
     }
 }

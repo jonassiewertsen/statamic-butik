@@ -8,7 +8,7 @@ use Jonassiewertsen\Butik\Contracts\ProductRepository;
 use Jonassiewertsen\Butik\Contracts\PriceCalculator as PriceCalculatorContract;
 use Jonassiewertsen\Butik\Contracts\TaxCalculator as TaxCalculatorContract;
 use Jonassiewertsen\Butik\Facades;
-use Jonassiewertsen\Butik\Http\Traits\isGrossPrice;
+use Jonassiewertsen\Butik\Support\Traits\isGrossPrice;
 use Jonassiewertsen\Butik\Product\Calculator\GrossPriceCalculator;
 use Jonassiewertsen\Butik\Product\Calculator\NetPriceCalculator;
 

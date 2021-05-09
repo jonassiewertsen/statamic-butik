@@ -25,13 +25,12 @@ class CartTest extends TestCase
         parent::setUp();
 
         $this->product = $this->makeProduct();
-        $this->slug = $this->product->slug;
     }
 
     /** @test */
     public function it_returns_a_CartItemCollection()
     {
-        Cart::add($this->slug);
+        Cart::add($this->product);
 
         $this->assertInstanceOf(CartItemCollection::class, Cart::get());
     }

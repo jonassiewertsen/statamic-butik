@@ -9,7 +9,7 @@ use Jonassiewertsen\Butik\Contracts\TaxCalculator as TaxCalculatorContract;
 use Jonassiewertsen\Butik\Facades\Price as PriceFacade;
 use Jonassiewertsen\Butik\Facades\Tax;
 use Jonassiewertsen\Butik\Facades\Vat;
-use Jonassiewertsen\Butik\Http\Traits\isGrossPrice;
+use Jonassiewertsen\Butik\Support\Traits\isGrossPrice;
 
 class TaxCalculator implements TaxCalculatorContract
 {
