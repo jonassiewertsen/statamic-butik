@@ -6,17 +6,23 @@
          colors="true"
 >
     <testsuites>
+        <testsuite name="Cart">
+            <directory suffix="Test.php">tests/Cart/</directory>
+        </testsuite>
         <testsuite name="Checkout">
             <directory suffix="Test.php">tests/Checkout/</directory>
         </testsuite>
         <testsuite name="CP">
             <directory suffix="Test.php">tests/CP/</directory>
         </testsuite>
+        <testsuite name="Fieldsets">
+            <directory suffix="Test.php">tests/Fieldsets/</directory>
+        </testsuite>
+        <testsuite name="Modifiers">
+            <directory suffix="Test.php">tests/Modifiers/</directory>
+        </testsuite>
         <testsuite name="Permissions">
             <directory suffix="Test.php">tests/Permissions/</directory>
-        </testsuite>
-        <testsuite name="Price">
-            <directory suffix="Test.php">tests/Price/</directory>
         </testsuite>
         <testsuite name="Product">
             <directory suffix="Test.php">tests/Product/</directory>
@@ -26,9 +32,6 @@
         </testsuite>
         <testsuite name="Shipping">
             <directory suffix="Test.php">tests/Shipping/</directory>
-        </testsuite>
-        <testsuite name="Shop">
-            <directory suffix="Test.php">tests/Shop/</directory>
         </testsuite>
         <testsuite name="Tags">
             <directory suffix="Test.php">tests/Tags/</directory>
