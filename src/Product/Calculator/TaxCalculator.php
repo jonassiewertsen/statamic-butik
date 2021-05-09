@@ -4,8 +4,8 @@ namespace Jonassiewertsen\Butik\Product\Calculator;
 
 use Jonassiewertsen\Butik\Contracts\PriceRepository;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
-use Jonassiewertsen\Butik\Contracts\TaxRepository;
 use Jonassiewertsen\Butik\Contracts\TaxCalculator as TaxCalculatorContract;
+use Jonassiewertsen\Butik\Contracts\TaxRepository;
 use Jonassiewertsen\Butik\Facades\Price as PriceFacade;
 use Jonassiewertsen\Butik\Facades\Tax;
 use Jonassiewertsen\Butik\Facades\Vat;
@@ -16,11 +16,12 @@ class TaxCalculator implements TaxCalculatorContract
     use isGrossPrice;
 
     public ProductRepository $product;
-    public string|int $basePrice;
-    public TaxRepository|null $tax;
+    public string | int $basePrice;
+    public TaxRepository | null $tax;
     public int $quantity;
 
-    public function __construct(ProductRepository $product, int $quantity = 1, string|null $locale = null) {
+    public function __construct(ProductRepository $product, int $quantity = 1, string | null $locale = null)
+    {
         $this->basePrice = $product->entry->get('price');
         $this->grossPrices = $this->isGrossPrice();
         $this->tax = Tax::for($product, $locale);
@@ -58,7 +59,7 @@ class TaxCalculator implements TaxCalculatorContract
         /**
          * We are doing a basic tax calculation
          * amount * ( taxRate / 100 )
-         * fx 100 * 0,19
+         * fx 100 * 0,19.
          */
         return PriceFacade::of($amount)->multiply($this->tax->rate / 100)->multiply($this->quantity);
     }

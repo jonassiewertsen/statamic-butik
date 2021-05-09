@@ -3,9 +3,9 @@
 namespace Tests\Cart;
 
 use Illuminate\Support\Facades\Session;
+use Jonassiewertsen\Butik\Cart\CartItemCollection;
 use Jonassiewertsen\Butik\Cart\Customer;
 use Jonassiewertsen\Butik\Cart\Item;
-use Jonassiewertsen\Butik\Cart\CartItemCollection;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
 use Jonassiewertsen\Butik\Facades\Cart;
 use Jonassiewertsen\Butik\Facades\Country;

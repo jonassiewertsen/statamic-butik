@@ -10,9 +10,9 @@ interface NumberRepository
 
     public function subtract(mixed $number): self;
 
-    public function multiply(float|int $by): self;
+    public function multiply(float | int $by): self;
 
-    public function divide(float|int $by): self;
+    public function divide(float | int $by): self;
 
     public function get(): string;
 
