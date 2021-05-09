@@ -19,7 +19,7 @@ class CartItemTest extends TestCase
 
         $this->makeTax();
         $this->product = $this->makeProduct();
-        $this->item = new Item($this->product->slug, 2);
+        $this->item = new Item($this->product, 2);
     }
 
     /** @test */
@@ -43,7 +43,7 @@ class CartItemTest extends TestCase
     /** @test */
     public function is_has_a_default_quantity_of_zero()
     {
-        $item = new Item($this->product->slug);
+        $item = new Item($this->product);
         $this->assertEquals(1, $item->quantity());
     }
 
