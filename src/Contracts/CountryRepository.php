@@ -4,7 +4,7 @@ namespace Jonassiewertsen\Butik\Contracts;
 
 interface CountryRepository
 {
-    public function name(?string $isoCode = null): string|null;
+    public function name(?string $isoCode = null): string | null;
 
     public function iso(): string;
 

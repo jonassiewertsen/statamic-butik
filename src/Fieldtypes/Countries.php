@@ -33,7 +33,7 @@ class Countries extends Fieldtype
 
     public function process($data)
     {
-       return collect($data)
+        return collect($data)
            ->sortBy('label')
            ->map(fn ($item) => $item['value'])
            ->flatten() // To remove the order information from the array

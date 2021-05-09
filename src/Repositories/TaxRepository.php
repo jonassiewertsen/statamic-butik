@@ -11,9 +11,10 @@ class TaxRepository extends ButikEntry implements TaxRepositoryContract
 {
     public function __construct(
         public CountryRepository $country,
-    ) {}
+    ) {
+    }
 
-    public function rate(): float|int
+    public function rate(): float | int
     {
         return (float) $this->data['rate'];
     }
@@ -23,7 +24,7 @@ class TaxRepository extends ButikEntry implements TaxRepositoryContract
         return $this->data['type'];
     }
 
-    public function for(ProductRepository $product, string|null $locale = null): TaxRepositoryContract|null
+    public function for(ProductRepository $product, string | null $locale = null): TaxRepositoryContract | null
     {
         return $this->filterDependingOnLocaleAndTaxType($product, $locale);
     }
@@ -33,7 +34,7 @@ class TaxRepository extends ButikEntry implements TaxRepositoryContract
         return 'butik_taxes'; // TODO: Read from config
     }
 
-    private function filterDependingOnLocaleAndTaxType(ProductRepository $product, string|null $locale = null): self|null
+    private function filterDependingOnLocaleAndTaxType(ProductRepository $product, string | null $locale = null): self | null
     {
         $locale = $locale ?? $this->country->iso();
 
@@ -44,7 +45,7 @@ class TaxRepository extends ButikEntry implements TaxRepositoryContract
                 return in_array($locale, $tax->get('countries'));
             })
             // FIlter for entries matching the tax type.
-            -> filter(function ($tax) use ($product) {
+            ->filter(function ($tax) use ($product) {
                 return $tax->type === $product->tax_type;
             });
 

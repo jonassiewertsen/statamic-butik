@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Jonassiewertsen\Butik\Support\Traits;
-
 
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
 use Jonassiewertsen\Butik\Exceptions\ButikProductException;
@@ -18,12 +16,11 @@ trait getProduct
         }
 
         if (gettype($identifier) === 'string') {
-            $product = Blink::once("butik.product.{$identifier}", fn() => Product::findBySlug($identifier));
+            $product = Blink::once("butik.product.{$identifier}", fn () => Product::findBySlug($identifier));
 
             throw_unless($product, new ButikProductException("The product with the Slug of '{$identifier}' does not exist."));
 
             return $product;
-
         }
 
         $type = gettype($identifier);

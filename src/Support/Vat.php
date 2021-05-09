@@ -9,7 +9,7 @@ use Jonassiewertsen\Butik\Facades;
 class Vat implements VatCalculator
 {
     public PriceRepository $amount;
-    public float|int $rate;
+    public float | int $rate;
 
     public function of(mixed $amount): self
     {
@@ -18,7 +18,7 @@ class Vat implements VatCalculator
         return $this;
     }
 
-    public function withRate(float|int $rate): self
+    public function withRate(float | int $rate): self
     {
         $this->rate = $rate;
 
@@ -30,7 +30,7 @@ class Vat implements VatCalculator
         /**
          * To calcuate the vat amount from a gross price, we will convert the raste as shown:
          * amount / taxRate + 1
-         * fx. 119 / 1,19
+         * fx. 119 / 1,19.
          */
         return $this->amount->divide($this->rate / 100 + 1);
     }
@@ -40,8 +40,8 @@ class Vat implements VatCalculator
         /**
          * We are doing a basic tax calculation
          * amount * taxRate / 100 + 1
-         * fx 100 * 1,19
+         * fx 100 * 1,19.
          */
-        return $this->amount->multiply($this->rate / 100  + 1);
+        return $this->amount->multiply($this->rate / 100 + 1);
     }
 }

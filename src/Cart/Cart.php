@@ -2,7 +2,6 @@
 
 namespace Jonassiewertsen\Butik\Cart;
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Jonassiewertsen\Butik\Contracts\CartRepository;
@@ -35,7 +34,7 @@ class Cart implements CartRepository
     /**
      * A product can be added to the cart.
      */
-    public function add(string $slug, int $quantity = 1, string|null $locale = null): CartResponse
+    public function add(string $slug, int $quantity = 1, string | null $locale = null): CartResponse
     {
 //        if ($this->contains($slug)) {
 //            return $this->update($slug, $quantity);
@@ -111,7 +110,7 @@ class Cart implements CartRepository
     /**
      * Fetch the customer from the session.
      */
-    public function customer(): Customer|null
+    public function customer(): Customer | null
     {
         // TODO: Does this part belong here?
 
@@ -185,9 +184,8 @@ class Cart implements CartRepository
          */
         foreach ($taxRates as $taxRate) {
             $taxAmount = $this->cart
-                ->filter(fn($item) =>  $item->tax()->rate() === $taxRate)
+                ->filter(fn ($item) =>  $item->tax()->rate() === $taxRate)
                 ->sum(fn ($item) => $item->tax()->total()->cents());
-
 
 //            // On top of that we need to add the tax amounts from our shipping rates
 //            if ($shipping = $this->shipping()->firstWhere('taxRate', $taxRate)) {

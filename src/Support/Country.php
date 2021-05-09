@@ -22,7 +22,7 @@ class Country implements CountryRepository
     /**
      * Will return the localized country name.
      */
-    public function name(string|null $isoCode = null): string|null
+    public function name(string | null $isoCode = null): string | null
     {
         $isoCode = strtoupper($isoCode ?? $this->isoCode);
 
@@ -90,7 +90,7 @@ class Country implements CountryRepository
         return IntlCountries::exists($isoCode);
     }
 
-    private function fromSession(): string|null
+    private function fromSession(): string | null
     {
         $isoCode = Session::get(self::SESSION, $this->defaultIso());
 
