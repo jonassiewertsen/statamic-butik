@@ -3,7 +3,7 @@
 namespace Jonassiewertsen\Butik\Tags;
 
 use Jonassiewertsen\Butik\Cart\Cart as ShoppingCart;
-use Jonassiewertsen\Butik\Http\Traits\MapCartItems;
+use Jonassiewertsen\Butik\Support\Traits\MapCartItems;
 
 class Cart extends \Statamic\Tags\Tags
 {

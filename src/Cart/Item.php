@@ -5,25 +5,29 @@ namespace Jonassiewertsen\Butik\Cart;
 use Jonassiewertsen\Butik\Contracts\PriceCalculator;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
 use Jonassiewertsen\Butik\Contracts\TaxCalculator;
-use Jonassiewertsen\Butik\Facades\Product;
+use Jonassiewertsen\Butik\Support\Traits\getProduct;
 
 class Item
 {
     public string $slug;
-    public ProductRepository $product;
+    private int $quantity;
     private bool $available;
     private bool $isSellableInCurrenctCountry;
-    private int $quantity;
 
-    public function __construct(string $slug, int $quantity = 1)
+    use getProduct;
+
+    public function __construct(mixed $identifier, int $quantity = 1)
     {
-        // TODO: Handle the case that a product does not exist.
-
-        $this->slug = $slug;
+        $product = $this->getProduct($identifier);
+        $this->slug = $product->slug;
         $this->quantity = $quantity;
-        $this->product = Product::findBySlug($slug);
-        $this->available = $this->product->published;
+        $this->available = $product->published;
         $this->isSellableInCurrenctCountry = true;
+    }
+
+    public function product(): ProductRepository
+    {
+        return $this->getProduct($this->slug);
     }
 
     public function isAvailable(): bool
@@ -39,6 +43,11 @@ class Item
     public function tax(): TaxCalculator
     {
         return $this->product->tax($this->quantity);
+    }
+
+    public function setQuantity(int $quantity): void
+    {
+        $this->quantity = $quantity;
     }
 
     public function quantity(): int
@@ -69,5 +78,12 @@ class Item
     public function stockUnlimited(): bool
     {
         return $this->product->stockUnlimited;
+    }
+
+    public function __get($name)
+    {
+        if ($name === 'product') {
+            return $this->product();
+        }
     }
 }

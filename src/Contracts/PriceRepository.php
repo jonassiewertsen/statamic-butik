@@ -12,9 +12,9 @@ interface PriceRepository
 
     public function subtract(mixed $amount): self;
 
-    public function multiply(float|int $by): self;
+    public function multiply(float | int $by): self;
 
-    public function divide(float|int $by): self;
+    public function divide(float | int $by): self;
 
     public function delimiter(string $delimiter): self;
 

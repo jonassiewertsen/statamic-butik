@@ -37,14 +37,14 @@ class Price implements PriceRepository
         return $this;
     }
 
-    public function multiply(float|int $by): self
+    public function multiply(float | int $by): self
     {
         $this->amount *= $by;
 
         return $this;
     }
 
-    public function divide(float|int $by): self
+    public function divide(float | int $by): self
     {
         $this->amount = (int) round($this->amount / $by);
 
