@@ -139,7 +139,7 @@ return [
     'payment_gateway' => Jonassiewertsen\Butik\Http\Controllers\PaymentGateways\MolliePaymentGateway::class,
 
     /**
-     * TAX TYPES
+     * TAX TYPES.
      *
      * Which tax types should be available for your products.
      */

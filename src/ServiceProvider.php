@@ -315,7 +315,7 @@ class ServiceProvider extends AddonServiceProvider
                 ->icon('settings-slider')
                 ->children([
                     $nav->item(ucfirst(__('butik::cp.shipping_singular')))->route('butik.shipping.index')->can('view shippings'),
-//                    $nav->item(ucfirst(__('butik::cp.tax_plural')))->route('butik.taxes.index')->can('view taxes'),
+                    // $nav->item(ucfirst(__('butik::cp.tax_plural')))->route('butik.taxes.index')->can('view taxes'),
                 ]);
         });
     }

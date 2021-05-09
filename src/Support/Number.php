@@ -36,14 +36,14 @@ class Number implements NumberRepository
         return $this;
     }
 
-    public function multiply(float|int $by): self
+    public function multiply(float | int $by): self
     {
         $this->number *= $by;
 
         return $this;
     }
 
-    public function divide(float|int $by): self
+    public function divide(float | int $by): self
     {
         $this->number = (int) round($this->number / $by);
 
@@ -79,7 +79,7 @@ class Number implements NumberRepository
         };
     }
 
-    private function fromStringToNumber($number): float|int
+    private function fromStringToNumber($number): float | int
     {
         $number = str_replace(',', '.', $number);
 

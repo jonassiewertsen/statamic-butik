@@ -1,6 +1,6 @@
 <?php
 
-namespace Jonassiewertsen\Butik\Http\Traits;
+namespace Jonassiewertsen\Butik\Support\Traits;
 
 use Jonassiewertsen\Butik\Cart\Cart;
 

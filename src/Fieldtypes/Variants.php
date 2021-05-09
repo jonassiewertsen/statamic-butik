@@ -3,7 +3,7 @@
 namespace Jonassiewertsen\Butik\Fieldtypes;
 
 use Jonassiewertsen\Butik\Blueprints\VariantBlueprint;
-use Jonassiewertsen\Butik\Http\Traits\FieldsetHelper;
+use Jonassiewertsen\Butik\Support\Traits\FieldsetHelper;
 use Statamic\Fields\Fieldtype;
 
 class Variants extends Fieldtype

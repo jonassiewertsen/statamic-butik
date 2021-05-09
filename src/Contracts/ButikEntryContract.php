@@ -9,9 +9,9 @@ interface ButikEntryContract
 {
     public function all(): Collection;
 
-    public function find(string $id): self|null;
+    public function find(string $id): self | null;
 
-    public function findBySlug(string $slug): self|null;
+    public function findBySlug(string $slug): self | null;
 
     public function exists(string $slug): bool;
 

@@ -7,7 +7,7 @@ use Jonassiewertsen\Butik\Contracts\PriceRepository;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
 use Jonassiewertsen\Butik\Contracts\TaxCalculator as TaxCalculatorContract;
 use Jonassiewertsen\Butik\Facades\Price;
-use Jonassiewertsen\Butik\Http\Traits\isGrossPrice;
+use Jonassiewertsen\Butik\Support\Traits\isGrossPrice;
 
 abstract class PriceCalculator implements PriceContract
 {

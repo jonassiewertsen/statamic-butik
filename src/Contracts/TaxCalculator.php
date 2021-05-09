@@ -4,7 +4,7 @@ namespace Jonassiewertsen\Butik\Contracts;
 
 interface TaxCalculator
 {
-    public function __construct(ProductRepository $product, int $quantity = 1, string|null $locale = null);
+    public function __construct(ProductRepository $product, int $quantity = 1, string | null $locale = null);
 
     public function title(): string;
 

@@ -8,7 +8,7 @@ use Statamic\Fields\Fieldtype;
 
 class Tax extends Fieldtype
 {
-    protected $icon       = 'tags';
+    protected $icon = 'tags';
     protected $categories = ['butik'];
     protected $selectable = false;
 

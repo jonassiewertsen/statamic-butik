@@ -2,7 +2,7 @@ name: Run Tests
 
 on:
   push:
-    branches-ignore: 
+    branches-ignore:
       - '3.x'
   pull_request:
   schedule:
@@ -15,7 +15,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php: [7.4, 8.0]
+                php: [8.0]
                 laravel: [8.*, 7.*]
                 dependency-version: [prefer-lowest, prefer-stable]
                 os: [ubuntu-latest]
@@ -26,9 +26,6 @@ jobs:
                       testbench: 6.*
                     - laravel: 7.*
                       testbench: 5.*
-                    - php: 7.4
-                      dependency-version: prefer-lowest
-                      additional-deps: '"mockery/mockery:>=1.2.3"'
                     - php: 8.0
                       dependency-version: prefer-lowest
                       additional-deps: '"mockery/mockery:>=1.3.3"'
