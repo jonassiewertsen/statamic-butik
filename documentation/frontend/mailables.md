@@ -24,7 +24,7 @@ Docs for more information: [https://laravel.com/docs/master/notifications\#custo
 
 ### 2. Create your own theme
 
-Duplicate the `default.css` file and rename yoru copy to for example `butik dd`  
+Duplicate the `default.css` file and rename your copy to for example `butik.css`  
 
 You'll find the css file in the themes folder:
 
