@@ -11,6 +11,24 @@ sections:
           validate:
             - required
       -
+        handle: shipping_type
+        field:
+          options:
+            shipping_per_amount: 'Shipping per Amount'
+          multiple: false
+          max_items: 1
+          clearable: false
+          searchable: false
+          taggable: false
+          push_tags: false
+          cast_booleans: false
+          display: 'Shipping Type'
+          type: select
+          icon: select
+          listable: hidden
+          validate:
+            - required
+      -
         handle: shipping_profiles
         field:
           collapse: false
@@ -26,7 +44,30 @@ sections:
                     icon: tags
                     listable: hidden
                 -
-                  handle: shipping_rate
+                  handle: rate_type
+                  field:
+                    options:
+                      single_fee: 'Single Fee'
+                      multiple_rates: 'Multiple Rates'
+                    display: 'Rate Type'
+                    type: button_group
+                    icon: button_group
+                    width: 33
+                    listable: hidden
+                    validate:
+                      - required
+                -
+                  handle: single_fee
+                  field:
+                    display: Fee
+                    type: integer
+                    icon: integer
+                    width: 66
+                    listable: hidden
+                    if:
+                      rate_type: 'equals single_fee'
+                -
+                  handle: shipping_rates
                   field:
                     fields:
                       -
@@ -53,14 +94,18 @@ sections:
                     min_rows: 1
                     add_row: 'Add a Shipping Rate'
                     reorderable: true
-                    display: 'Shipping Rate'
+                    display: 'Shipping Rates'
                     type: grid
                     icon: grid
                     listable: hidden
+                    if:
+                      rate_type: 'equals multiple_rates'
           display: 'Shipping Profiles'
           type: replicator
           icon: replicator
           listable: hidden
+          unless:
+            single_shipping_amount: 'equals true'
   sidebar:
     display: Sidebar
     fields:
