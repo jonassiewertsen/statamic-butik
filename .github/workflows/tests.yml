@@ -36,6 +36,12 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v2
 
+               - name: Cache dependencies
+                  uses: actions/cache@v2
+                  with:
+                    path: ~/.composer/cache/files
+                    key: dependencies-composer-${{ hashFiles('composer.json') }}
+
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
@@ -49,4 +55,4 @@ jobs:
                   composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
 
             - name: Run PHPUnit
-              run: php artisan test --parallel
+              run: php artisan test
