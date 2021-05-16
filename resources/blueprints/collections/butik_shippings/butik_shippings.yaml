@@ -1,0 +1,74 @@
+title: Shippings
+sections:
+  main:
+    display: Main
+    fields:
+      -
+        handle: title
+        field:
+          type: text
+          required: true
+          validate:
+            - required
+      -
+        handle: shipping_profiles
+        field:
+          collapse: false
+          sets:
+            shipping_profile:
+              display: 'Shipping Profile'
+              fields:
+                -
+                  handle: countries
+                  field:
+                    display: Countries
+                    type: countries
+                    icon: tags
+                    listable: hidden
+                -
+                  handle: shipping_rate
+                  field:
+                    fields:
+                      -
+                        handle: minimum_amount
+                        field:
+                          display: 'Minimum Amount'
+                          type: integer
+                          icon: integer
+                          width: 50
+                          listable: hidden
+                          validate:
+                            - required
+                      -
+                        handle: fee
+                        field:
+                          display: Fee
+                          type: integer
+                          icon: integer
+                          width: 50
+                          listable: hidden
+                          validate:
+                            - required
+                    mode: table
+                    min_rows: 1
+                    add_row: 'Add a Shipping Rate'
+                    reorderable: true
+                    display: 'Shipping Rate'
+                    type: grid
+                    icon: grid
+                    listable: hidden
+          display: 'Shipping Profiles'
+          type: replicator
+          icon: replicator
+          listable: hidden
+  sidebar:
+    display: Sidebar
+    fields:
+      -
+        handle: slug
+        field:
+          type: slug
+          required: true
+          localizable: true
+          validate:
+            - required
