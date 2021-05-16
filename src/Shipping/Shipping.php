@@ -3,12 +3,14 @@
 namespace Jonassiewertsen\Butik\Shipping;
 
 use Illuminate\Support\Collection;
+use Jonassiewertsen\Butik\Cart\CartItemCollection;
+use Jonassiewertsen\Butik\Contracts\CartRepository;
+use Jonassiewertsen\Butik\Contracts\CountryRepository;
+use Jonassiewertsen\Butik\Contracts\ShippingRepository;
 use Jonassiewertsen\Butik\Exceptions\ButikConfigException;
 use Jonassiewertsen\Butik\Exceptions\ButikShippingException;
-use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
-use Jonassiewertsen\Butik\Http\Models\ShippingZone;
 
-class Shipping
+class Shipping implements ShippingRepository
 {
     /**
      * Will save the total shipping amounts.
@@ -18,63 +20,62 @@ class Shipping
     /**
      * Which country should we ship to?
      */
-    public string $country;
+//    public string $country;
 
     /**
      * Which shipping profiles are used in the acutal shopping bag?
      */
-    public Collection $profiles;
+//    public Collection $profiles;
 
     /**
      * The cart including all items in the shopping cart.
      */
-    public Collection $items;
+    public CartItemCollection $items;
 
-    public function __construct(Collection $cart)
+    public function __construct(CountryRepository $country, CartRepository $cart)
     {
-        $this->items = $cart;
+        $this->items = $cart->get();
         $this->amounts = collect();
-        $this->profiles = collect();
+//        $this->profiles = collect();
+    }
+
+    public function calculate()
+    {
+        // TODO: Implement calculate() method.
+    }
+
+    public function country(): CountryRepository
+    {
+        // TODO: Implement country() method.
     }
 
     public function handle(): void
     {
-        $this->detectCountry();
-        $this->detectUsedShippingProfiles();
-
-        foreach ($this->profiles as $profile) {
-            throw_unless($profile, new ButikShippingException('One of your products contains a relationship to a non existing shipping profile. Please check your products and assign all of them a existing shipping profile.'));
-
-            $zone = $this->detectShippingZone($profile);
-            $items = $this->filterItems($profile);
-
-            // In case no zone could be detected, we will set the items to non sellable.
-            // This happens, if the items are not available in the choosen country.
-            if ($zone === null) {
-                $items->each->nonSellable();
-                break;
-            } else {
-                $items->each->sellable();
-            }
-
-            $shippingStrategy = $this->getShippingStrategy($zone);
-
-            $shippingType = new $shippingStrategy($items, $zone);
-            $shippingType->set($items, $zone);
-
-            $this->addShippingAmount($shippingType);
-        }
-    }
-
-    /**
-     * Which country is selected. It will choose the given country
-     * or the default country as defined in the config file.
-     *
-     * @throws ButikConfigException
-     */
-    protected function detectCountry()
-    {
-        $this->country = Country::get();
+//        $this->detectCountry();
+//        $this->detectUsedShippingProfiles();
+//
+//        foreach ($this->profiles as $profile) {
+//            throw_unless($profile, new ButikShippingException('One of your products contains a relationship to a non existing shipping profile. Please check your products and assign all of them a existing shipping profile.'));
+//
+//            $zone = $this->detectShippingZone($profile);
+//            $items = $this->filterItems($profile);
+//
+//            // In case no zone could be detected, we will set the items to non sellable.
+//            // This happens, if the items are not available in the choosen country.
+//            if ($zone === null) {
+//                $items->each->nonSellable();
+//                break;
+//            } else {
+//                $items->each->sellable();
+//            }
+//
+//            $shippingStrategy = $this->getShippingStrategy($zone);
+//
+//            $shippingType = new $shippingStrategy($items, $zone);
+//            $shippingType->set($items, $zone);
+//
+//            $this->addShippingAmount($shippingType);
+//        }
     }
 
     /**
@@ -82,11 +83,11 @@ class Shipping
      */
     protected function detectUsedShippingProfiles(): void
     {
-        $this->items->each(function ($item) {
-            if (! $this->profiles->contains('slug', $item->shippingProfile->slug)) {
-                $this->profiles->push($item->shippingProfile);
-            }
-        });
+//        $this->items->each(function ($item) {
+//            if (! $this->profiles->contains('slug', $item->shippingProfile->slug)) {
+//                $this->profiles->push($item->shippingProfile);
+//            }
+//        });
     }
 
     /**
@@ -94,7 +95,7 @@ class Shipping
      */
     protected function detectShippingZone(ShippingProfile $profile): ?ShippingZone
     {
-        return $profile->whereZoneFrom($this->country);
+//        return $profile->whereZoneFrom($this->country);
     }
 
     /**
@@ -103,9 +104,9 @@ class Shipping
      */
     private function filterItems(ShippingProfile $profile): Collection
     {
-        return $this->items->filter(function ($item) use ($profile) {
-            return $item->shippingProfile->slug === $profile->slug;
-        });
+//        return $this->items->filter(function ($item) use ($profile) {
+//            return $item->shippingProfile->slug === $profile->slug;
+//        });
     }
 
     /**
@@ -115,13 +116,13 @@ class Shipping
      */
     private function getShippingStrategy($zone): string
     {
-        $shippingStrategies = config('butik.shipping');
-
-        if (! key_exists($zone->type, $shippingStrategies)) {
-            throw new ButikShippingException('We could not find the "'.$zone->type.'" shipping class as defined in your butik config file.');
-        }
-
-        return $shippingStrategies[$zone->type];
+//        $shippingStrategies = config('butik.shipping');
+//
+//        if (! key_exists($zone->type, $shippingStrategies)) {
+//            throw new ButikShippingException('We could not find the "'.$zone->type.'" shipping class as defined in your butik config file.');
+//        }
+//
+//        return $shippingStrategies[$zone->type];
     }
 
     /**
@@ -129,8 +130,8 @@ class Shipping
      */
     private function addShippingAmount($shippingType): void
     {
-        $this->amounts->push(
-            $shippingType->calculate(),
-        );
+//        $this->amounts->push(
+//            $shippingType->calculate(),
+//        );
     }
 }

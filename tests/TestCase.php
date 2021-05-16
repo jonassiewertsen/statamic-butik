@@ -40,26 +40,16 @@ class TestCase extends OrchestraTestCase
         Site::setCurrent($site);
     }
 
-    public function makeProduct(array $data = null, ShippingZone $shippingZone = null, bool $withShippingRate = true)
+    public function makeProduct(array $data = null)
     {
-        $shippingZone = $shippingZone ?? create(ShippingZone::class)->first();
-
-        if ($withShippingRate) {
-            create(ShippingRate::class, [
-                'shipping_zone_id' => $shippingZone->id,
-                'minimum'          => 0,
-                'price'            => 0,
-            ]);
-        }
-
         $entryData = [
-            'title'                 => $data['title'] ?? 'Test Item Product',
-            'price'                 => $data['price'] ?? '20.00',
-            'stock'                 => $data['stock'] ?? '5',
-            'stock_unlimited'       => $data['stock_unlimited'] ?? false,
-            'tax'              => $data['tax'] ?? 'default',
-            'shipping_profile_slug' => $shippingZone->profile->slug,
-            'images'                => null,
+            'title'           => $data['title'] ?? 'Test Item Product',
+            'price'           => $data['price'] ?? '20.00',
+            'stock'           => $data['stock'] ?? '5',
+            'stock_unlimited' => $data['stock_unlimited'] ?? false,
+            'tax'             => $data['tax'] ?? 'default',
+            'shipping'        => $data['shipping'] ?? 'default',
+            'images'          => null,
         ];
 
         Collection::make('products')->save();
@@ -86,12 +76,12 @@ class TestCase extends OrchestraTestCase
             ->slug($slug = Str::random('6'))
             ->date(now())
             ->data([
-                'title' => $data['title'] ?? 'Test Tax',
-                'rate' => $data['rate'] ?? '19',
-                'type' => $data['type'] ?? 'default',
+                'title'     => $data['title'] ?? 'Test Tax',
+                'rate'      => $data['rate'] ?? '19',
+                'type'      => $data['type'] ?? 'default',
                 'countries' => $data['countries'] ?? ['DE'],
             ])
-            ->id($id = (string) Str::uuid())
+            ->id($id = (string)Str::uuid())
             ->save();
 
         return TaxFacade::find($id);
@@ -102,7 +92,7 @@ class TestCase extends OrchestraTestCase
      */
     protected function setUp(): void
     {
-        require_once __DIR__.'/ConsoleKernel.php';
+        require_once __DIR__ . '/ConsoleKernel.php';
 
         parent::setUp();
 
@@ -113,9 +103,9 @@ class TestCase extends OrchestraTestCase
             $this->addToAssertionCount(-1); // Dont want to assert this
         }
 
-        $this->withFactories(__DIR__.'/../database/factories');
+        $this->withFactories(__DIR__ . '/../database/factories');
 
-        Blueprint::setDirectory(__DIR__.'/../resources/blueprints');
+        Blueprint::setDirectory(__DIR__ . '/../resources/blueprints');
 
         $this->setCountry();
     }
@@ -219,12 +209,12 @@ class TestCase extends OrchestraTestCase
         ];
 
         foreach ($configs as $config) {
-            $app['config']->set("statamic.$config", require(__DIR__."/../vendor/statamic/cms/config/{$config}.php"));
+            $app['config']->set("statamic.$config", require(__DIR__ . "/../vendor/statamic/cms/config/{$config}.php"));
         }
 
         // Creat two site for multi site testing
         $app['config']->set('statamic.sites', [
-            'sites'   => [
+            'sites' => [
                 'default' => ['name' => 'English', 'locale' => 'en_US', 'url' => '/'],
                 'de'      => ['name' => 'Deutsch', 'locale' => 'de_DE', 'url' => '/de/'],
             ],
@@ -235,33 +225,33 @@ class TestCase extends OrchestraTestCase
         $app['config']->set('statamic.stache.watcher', false);
         $app['config']->set('statamic.stache.stores.users', [
             'class'     => UsersStore::class,
-            'directory' => __DIR__.'/__fixtures/users',
+            'directory' => __DIR__ . '/__fixtures/users',
         ]);
         // Set the path for our forms
-        $app['config']->set('statamic.forms.forms', __DIR__.'/../resources/forms/');
+        $app['config']->set('statamic.forms.forms', __DIR__ . '/../resources/forms/');
 
         // Set the path for our entries
-        $app['config']->set('statamic.stache.stores.taxonomies.directory', __DIR__.'/__fixtures__/content/taxonomies');
-        $app['config']->set('statamic.stache.stores.terms.directory', __DIR__.'/__fixtures__/content/taxonomies');
-        $app['config']->set('statamic.stache.stores.collections.directory', __DIR__.'/__fixtures__/content/collections');
-        $app['config']->set('statamic.stache.stores.entries.directory', __DIR__.'/__fixtures__/content/collections');
-        $app['config']->set('statamic.stache.stores.navigation.directory', __DIR__.'/__fixtures__/content/navigation');
-        $app['config']->set('statamic.stache.stores.globals.directory', __DIR__.'/__fixtures__/content/globals');
-        $app['config']->set('statamic.stache.stores.asset-containers.directory', __DIR__.'/__fixtures__/content/assets');
+        $app['config']->set('statamic.stache.stores.taxonomies.directory', __DIR__ . '/__fixtures__/content/taxonomies');
+        $app['config']->set('statamic.stache.stores.terms.directory', __DIR__ . '/__fixtures__/content/taxonomies');
+        $app['config']->set('statamic.stache.stores.collections.directory', __DIR__ . '/__fixtures__/content/collections');
+        $app['config']->set('statamic.stache.stores.entries.directory', __DIR__ . '/__fixtures__/content/collections');
+        $app['config']->set('statamic.stache.stores.navigation.directory', __DIR__ . '/__fixtures__/content/navigation');
+        $app['config']->set('statamic.stache.stores.globals.directory', __DIR__ . '/__fixtures__/content/globals');
+        $app['config']->set('statamic.stache.stores.asset-containers.directory', __DIR__ . '/__fixtures__/content/assets');
 
         // Assume the pro edition within tests
         $app['config']->set('statamic.editions.pro', true);
 
         Statamic::pushCpRoutes(function () {
-            return require_once realpath(__DIR__.'/../routes/cp.php');
+            return require_once realpath(__DIR__ . '/../routes/cp.php');
         });
 
         Statamic::pushWebRoutes(function () {
-            return require_once realpath(__DIR__.'/../routes/web.php');
+            return require_once realpath(__DIR__ . '/../routes/web.php');
         });
 
         // Define butik config settings for all of our tests
-        $app['config']->set('butik', require(__DIR__.'/../config/config.php'));
+        $app['config']->set('butik', require(__DIR__ . '/../config/config.php'));
 
         // Set all layouts to null to prevent an error thrown from a layout which could not be found.
         $layouts = [
@@ -275,7 +265,7 @@ class TestCase extends OrchestraTestCase
         ];
 
         foreach ($layouts as $layout) {
-            $app['config']->set('butik.'.$layout, null);
+            $app['config']->set('butik.' . $layout, null);
         }
     }
 }

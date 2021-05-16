@@ -10,6 +10,7 @@ use Jonassiewertsen\Butik\Contracts\CountryRepository;
 use Jonassiewertsen\Butik\Contracts\NumberRepository;
 use Jonassiewertsen\Butik\Contracts\PriceRepository;
 use Jonassiewertsen\Butik\Contracts\ProductRepository;
+use Jonassiewertsen\Butik\Contracts\ShippingRepository;
 use Jonassiewertsen\Butik\Contracts\TaxRepository;
 use Jonassiewertsen\Butik\Contracts\VatCalculator;
 use Jonassiewertsen\Butik\Filters\OrderStatus;
@@ -24,6 +25,7 @@ use Jonassiewertsen\Butik\Policies\ShippingRatePolicy;
 use Jonassiewertsen\Butik\Policies\ShippingZonePolicy;
 use Jonassiewertsen\Butik\Policies\VariantPolicy;
 use Jonassiewertsen\Butik\Product\Product;
+use Jonassiewertsen\Butik\Shipping\Shipping;
 use Jonassiewertsen\Butik\Support\Country;
 use Jonassiewertsen\Butik\Support\Number;
 use Jonassiewertsen\Butik\Support\Price;
@@ -170,6 +172,10 @@ class ServiceProvider extends AddonServiceProvider
             return new \Jonassiewertsen\Butik\Repositories\TaxRepository(
                 app(CountryRepository::class)
             );
+        });
+
+        $this->app->singleton(ShippingRepository::class, function () {
+            return new \Jonassiewertsen\Butik\Repositories\ShippingRepository();
         });
     }
 

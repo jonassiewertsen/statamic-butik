@@ -3,40 +3,31 @@
 namespace Tests\Shipping;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Config;
-use Jonassiewertsen\Butik\Cart\Cart;
+use Jonassiewertsen\Butik\Contracts\ShippingRepository;
+use Jonassiewertsen\Butik\Facades\Cart;
 use Jonassiewertsen\Butik\Exceptions\ButikConfigException;
-use Jonassiewertsen\Butik\Http\Models\ShippingProfile;
-use Jonassiewertsen\Butik\Http\Models\ShippingZone;
-use Jonassiewertsen\Butik\Shipping\Country;
-use Jonassiewertsen\Butik\Shipping\Shipping;
+use Jonassiewertsen\Butik\Facades\Shipping;
 use Tests\TestCase;
 
 class ShippingTest extends TestCase
 {
-    /** @test */
-    public function be_quiet_for_now()
-    {
-        // TODO: Get back to green
-        $this->assertTrue(true);
-    }
+    protected Collection $cart;
 
-//    protected Collection $cart;
-//
-//    public function setUp(): void
-//    {
-//        parent::setUp();
-//
-//        $country = Country::get();
-//        $shippingZone = create(ShippingZone::class, ['countries' => [$country]])->first();
-//
-//        $this->product = $this->makeProduct([], $shippingZone, false);
-//
-//        Config::set('butik.country', $country);
+    public function setUp(): void
+    {
+        parent::setUp();
+
+//        $this->product = $this->makeProduct();
 //
 //        Cart::add($this->product->slug);
-//    }
-//
+    }
+
+    /** @test */
+    public function a_shipping_repository_will_be_bind_into_the_container()
+    {
+        $this->assertInstanceOf('Jonassiewertsen\Butik\Contracts\ShippingRepository', app(ShippingRepository::class));
+    }
+
 //    /** @test */
 //    public function the_default_country_is_defined_in_the_config_file()
 //    {
