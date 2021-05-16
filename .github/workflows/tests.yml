@@ -49,4 +49,4 @@ jobs:
                   composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
 
             - name: Run PHPUnit
-              run: composer test
+              run: php artisan test --parallel
