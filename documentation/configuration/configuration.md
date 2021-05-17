@@ -19,7 +19,7 @@ Those information will mostly be used for view or email templates.
 ```
 
 {% hint style="info" %}
- You need to define your country via an alpha-2 iso code.  
+You need to define your country via an alpha-2 iso code.  
 [https://en.wikipedia.org/wiki/ISO\_3166-1\_alpha-2\#Officially\_assigned\_code\_elements](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements)
 {% endhint %}
 
@@ -56,7 +56,7 @@ The overview limit does only limit the number of products shown on the shop over
 Butik will send one confirmation e-mail for every sold product. You can define the address right here.
 
 {% hint style="info" %}
-You need to set up your mails with Statamic correctly, before butik can successfully notify you. 
+You need to set up your mails with Statamic correctly, before butik can successfully notify you.
 {% endhint %}
 
 See the [Statamic documentation](https://statamic.dev/email) for more information. You can easily send yourself a test mail from the control panel to confirm that you mail is working as expected.
@@ -70,7 +70,7 @@ See the [Statamic documentation](https://statamic.dev/email) for more informatio
 'currency_delimiter' => ',',
 ```
 
-Choose the currency of your default country. 
+Choose the currency of your default country.
 
 Please keep the currency\_isoCode strict to the ISO 4217 standard. That's just a fancy name for the know currency syntax:  
 [https://en.wikipedia.org/wiki/ISO\_4217](https://en.wikipedia.org/wiki/ISO_4217)
@@ -97,7 +97,7 @@ Check out the [orders documentation](orders.md) for more information.
 'widget_orders-limit' => 10,
 ```
 
-The default is set to 10 entries. If you do use the _Orders_ widget and want to regulate the number of orders shown, please do so. 
+The default is set to 10 entries. If you do use the _Orders_ widget and want to regulate the number of orders shown, please do so.
 
 ## Routing
 
@@ -149,12 +149,12 @@ We will default to the standard layout in your `resources/views/` folder. Move a
 
 We put a lot of effort into the creation of our default templates to get you started as quick as possible.
 
-The files will automatically be stored inside `resources/views/vendor/butik`.   
-You can move those files or create your own. 
+The files will automatically be stored inside `resources/views/vendor/butik`.  
+You can move those files or create your own.
 
 If you want to link to a file named cart inside your `resources/views/shop/cart.blade.php` folder, the updated path would be `shop.cart` without the prefix `butik::`
 
- [Mike Martin](https://mike-martin.ca/) created our beautiful templates.
+[Mike Martin](https://mike-martin.ca/) created our beautiful templates.
 
 ## Shipping
 
@@ -166,19 +166,15 @@ If you want to link to a file named cart inside your `resources/views/shop/cart.
 
 If you want, you can implement your own shipping methods or disable those, you don't want to use.
 
-{% page-ref page="../extending/shipping.md" %}
-
 ## Payment Gateway
 
 ```php
 'payment_gateway' => Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\MolliePaymentGateway::class,
 ```
 
-Out of the box, _butik_ does implement [Mollie](www.mollie.com/en) as our payment provider of choice, which is ready to use. 
+Out of the box, _butik_ does implement [Mollie](https://github.com/jonassiewertsen/statamic-butik/tree/150face31c86790a7dea33255a8fe278b25c8016/documentation/configuration/www.mollie.com/en/README.md) as our payment provider of choice, which is ready to use.
 
 You can easily swap our implementation with your own.
 
 {% page-ref page="../extending/payment-gateway.md" %}
-
-
 

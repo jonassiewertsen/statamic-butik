@@ -33,7 +33,7 @@ class DummyClass extends PaymentGateway implements PaymentGatewayInterface
     /**
      * We want to handle the payment process.
      *
-     * This one way of doing it:
+     * You'll find one example here:
      * Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\MolliePaymentGateway.php line 26
      */
     public function handle(Customer $customer, Collection $items, string $totalPrice, Collection $shippings)
@@ -49,8 +49,8 @@ class DummyClass extends PaymentGateway implements PaymentGatewayInterface
             $orderNumber,
             $customer,
             $totalPrice,
+            $payment->method,
             $shippings,
-            $payment->method
         );
 
         // What to do after the payment has been handled?
@@ -59,7 +59,7 @@ class DummyClass extends PaymentGateway implements PaymentGatewayInterface
     /**
      * If you want, you can use webhooks. This is optional and can be left empty.
      *
-     * This one way of doing it:
+     * You'll find one example here:
      * Jonassiewertsen\StatamicButik\Http\Controllers\PaymentGateways\MolliePaymentGateway.php line 53
      */
     public function webhook(Request $request): void

@@ -4,7 +4,7 @@ description: Customize your emails
 
 # Mailables
 
-You can adjust our sent mails just as you like them. 
+You can adjust our sent mails just as you like them.
 
 ## Adjust your template
 
@@ -24,7 +24,7 @@ Docs for more information: [https://laravel.com/docs/master/notifications\#custo
 
 ### 2. Create your own theme
 
-Duplicate the `default.css` file and rename your copy to for example `butik.css`  
+Duplicate the `default.css` file and rename your copy to for example `butik.css`
 
 You'll find the css file in the themes folder:
 
@@ -42,7 +42,7 @@ That's it!
 
 ## Templates
 
-[After publishing your views](https://www.butik.dev/installation/publishing-assets#views), you can adjust our mail templates. 
+[After publishing your views](https://www.butik.dev/installation/publishing-assets#views), you can adjust our mail templates.
 
 The following values are available inside the views:
 
