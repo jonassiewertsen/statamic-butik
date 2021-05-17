@@ -9,7 +9,7 @@ description: In case you want to implement your own Payment Gateway.
 Use our command to create a gateway boilerplate.
 
 ```bash
-php please butik:gateway
+php please butik:gateway NewGatewayName
 ```
 
 This will give you the following boilerplate.
