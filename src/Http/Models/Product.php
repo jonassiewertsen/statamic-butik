@@ -276,6 +276,10 @@ class Product
                 $product->$key = $entry->augmentedValue($key);
             }
         }
+        
+        // Remove variants from the product object, as variants will be called over the __get method.
+        // This will be solved differently in butik version 4.
+        unset($product->variants);
 
         $product->price = str_replace('.', config('butik.currency_delimiter'), $product->price);
         $product->slug = $entry->slug();
