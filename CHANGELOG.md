@@ -1,5 +1,11 @@
 # Release Notes
 
+## 3.5.7 (12. Juni 2021)
+- Fix a problem with variants, which may have led to problems if visiting the products page. (#229)
+
+## 3.5.6
+- Fix the payment provider stub, where variables have been passed wrongly into the create order method.
+
 ## 3.5.5 (14. Mar 2021)
 - Rename delete action internally to avoid permission problems with the core delete action (#197)
 - Don't gitignore the composer.lock file
