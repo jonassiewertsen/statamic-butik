@@ -16,7 +16,7 @@ $factory->define(Order::class, function (Faker $faker) {
 
     Entry::make()
         ->collection('products')
-        ->blueprint('products')
+        ->blueprint('product')
         ->slug($this->slug)
         ->date(now())
         ->data([
