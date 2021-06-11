@@ -3,7 +3,7 @@
 ## 3.5.7 (12. Juni 2021)
 - Fix a problem with variants, which may have led to problems if visiting the products page. (#229)
 
-## 3.5.6
+## 3.5.6 (17. May 2021)
 - Fix the payment provider stub, where variables have been passed wrongly into the create order method.
 
 ## 3.5.5 (14. Mar 2021)
