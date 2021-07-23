@@ -1,7 +1,7 @@
 ---
 description: >-
   ​​The short version, before explaining it in detail: Version 4 requires too
-  much time for me to finish but I do not worry, I will continue to support
+  much time for me to finish but do not worry, I will continue to support
   version 3.
 ---
 
