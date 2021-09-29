@@ -21,9 +21,10 @@ abstract class Blueprint
     /**
      * Will check if the given item is unique, but will ignore the rule on the given route.
      * This is usefull, if you need to update an existing entry.
-     * @param string $table
-     * @param string $item
-     * @param string $route
+     *
+     * @param  string  $table
+     * @param  string  $item
+     * @param  string  $route
      */
     protected function ignoreUnqiueOn($table, $item, $route)
     {
