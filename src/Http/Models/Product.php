@@ -300,10 +300,10 @@ class Product
         $product->id = $entry->id();
         $product->title = $entry->value('title');
         $product->stock = (int) $entry->value('stock');
+        $product->categories = $this->mapCategories($product);
         $product->stock_unlimited = (bool) $entry->value('stock_unlimited');
         $product->available = (bool) $entry->published();
         $product->show_url = $product->showUrl($product->slug);
-        $product->categories = $this->mapCategories($product);
 
         return $product;
     }
