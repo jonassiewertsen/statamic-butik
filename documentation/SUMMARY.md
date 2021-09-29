@@ -24,6 +24,7 @@
 ## Frontend
 
 * [Overview](frontend/overview.md)
+* [Livewire](frontend/livewire.md)
 * [Templates](frontend/templates/README.md)
   * [Shop overview](frontend/templates/shop-overview.md)
   * [Category Overview](frontend/templates/category-overview.md)
