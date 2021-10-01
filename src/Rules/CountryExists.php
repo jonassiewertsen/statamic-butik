@@ -12,8 +12,8 @@ class CountryExists implements Rule
     /**
      * Determine if the validation rule passes.
      *
-     * @param string $attributes
-     * @param mixed $values
+     * @param  string  $attributes
+     * @param  mixed  $values
      * @return bool
      */
     public function passes($attribute, $values)
