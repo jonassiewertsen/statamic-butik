@@ -100,6 +100,7 @@ class TestCase extends OrchestraTestCase
 
     /**
      * Setup up the Faker instance.
+     *
      * @return void
      */
     protected function setUpFaker()
@@ -109,7 +110,8 @@ class TestCase extends OrchestraTestCase
 
     /**
      * Sign in a Statamic user.
-     * @param array $permissions
+     *
+     * @param  array  $permissions
      * @return mixed
      */
     protected function signInUser($permissions = [])
@@ -125,6 +127,7 @@ class TestCase extends OrchestraTestCase
 
     /**
      * Sign in a Statamic user as admin.
+     *
      * @return mixed
      */
     protected function signInAdmin()
@@ -144,7 +147,8 @@ class TestCase extends OrchestraTestCase
 
     /**
      * Load package service provider.
-     * @param \Illuminate\Foundation\Application $app
+     *
+     * @param  \Illuminate\Foundation\Application  $app
      * @return array
      */
     protected function getPackageProviders($app)
@@ -158,7 +162,8 @@ class TestCase extends OrchestraTestCase
 
     /**
      * Load package alias.
-     * @param \Illuminate\Foundation\Application $app
+     *
+     * @param  \Illuminate\Foundation\Application  $app
      * @return array
      */
     protected function getPackageAliases($app)
@@ -170,7 +175,8 @@ class TestCase extends OrchestraTestCase
 
     /**
      * Load Environment.
-     * @param \Illuminate\Foundation\Application $app
+     *
+     * @param  \Illuminate\Foundation\Application  $app
      */
     protected function getEnvironmentSetUp($app)
     {
@@ -179,14 +185,15 @@ class TestCase extends OrchestraTestCase
         $app->make(Manifest::class)->manifest = [
             'jonassiewertsen/statamic-butik' => [
                 'id'        => 'jonassiewertsen/statamic-butik',
-                'namespace' => 'Jonassiewertsen\\StatamicButik\\',
+                'namespace' => 'Jonassiewertsen\\StatamicButik',
             ],
         ];
     }
 
     /**
      * Resolve the Application Configuration and set the Statamic configuration.
-     * @param \Illuminate\Foundation\Application $app
+     *
+     * @param  \Illuminate\Foundation\Application  $app
      */
     protected function resolveApplicationConfiguration($app)
     {
