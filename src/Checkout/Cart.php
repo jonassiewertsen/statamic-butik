@@ -291,7 +291,7 @@ class Cart
     /**
      * Is this product already saved in the cart?
      *
-     * @param Product $product
+     * @param  Product  $product
      * @return bool
      */
     private static function contains(string $slug): bool
