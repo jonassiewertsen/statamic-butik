@@ -185,7 +185,7 @@ class TestCase extends OrchestraTestCase
         $app->make(Manifest::class)->manifest = [
             'jonassiewertsen/statamic-butik' => [
                 'id'        => 'jonassiewertsen/statamic-butik',
-                'namespace' => 'Jonassiewertsen\\StatamicButik\\',
+                'namespace' => 'Jonassiewertsen\\StatamicButik',
             ],
         ];
     }
