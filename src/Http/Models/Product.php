@@ -155,6 +155,20 @@ class Product
     }
 
     /**
+     * Map categories to an array an only return the slug and name, as needed for the Antlers view.
+     */
+    public function mapCategories(self $product)
+    {
+        return $product->categories()
+            ->map(function ($category) {
+                return [
+                    'name' => $category->name,
+                    'slug' => $category->slug,
+                ];
+            })->all();
+    }
+
+    /**
      * A Product has a shipping relation.
      */
     public function shippingProfile()
@@ -286,6 +300,7 @@ class Product
         $product->id = $entry->id();
         $product->title = $entry->value('title');
         $product->stock = (int) $entry->value('stock');
+        $product->categories = $this->mapCategories($product);
         $product->stock_unlimited = (bool) $entry->value('stock_unlimited');
         $product->available = (bool) $entry->published();
         $product->show_url = $product->showUrl($product->slug);

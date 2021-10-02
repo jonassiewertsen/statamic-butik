@@ -106,7 +106,7 @@ class ProductTest extends TestCase
     /** @test */
     public function it_has_many_categories()
     {
-        $this->assertInstanceOf('Illuminate\Support\Collection', $this->product->categories);
+        $this->assertInstanceOf('Illuminate\Support\Collection', $this->product->categories());
     }
 
     /** @test */

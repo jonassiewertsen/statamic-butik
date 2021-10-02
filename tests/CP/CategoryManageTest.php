@@ -30,14 +30,14 @@ class CategoryManageTest extends TestCase
             'product'  => $this->product->slug,
         ]));
 
-        $this->assertCount(1, $this->product->categories);
+        $this->assertCount(1, $this->product->categories());
     }
 
     /** @test */
     public function a_product_can_be_detached_to__categoryt()
     {
         $this->category->addProduct($this->product->slug);
-        $this->assertCount(1, $this->product->categories);
+        $this->assertCount(1, $this->product->categories());
 
         $this->delete(cp_route('butik.category.attach-product', [
             'category' => $this->category,
