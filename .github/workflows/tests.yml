@@ -22,13 +22,12 @@ jobs:
                 os: [ubuntu-latest]
                 include:
                     - laravel: 8.*
-                      testbench: 6.*
-                    - php: 7.4
-                      dependency-version: prefer-lowest
-                      additional-deps: '"mockery/mockery:>=1.2.3"'
-                    - php: 8.0
-                      dependency-version: prefer-lowest
-                      additional-deps: '"mockery/mockery:>=1.3.3"'
+                      framework: ^8.48.0
+                    - laravel: 9.*
+                      framework: ^9.0
+                exclude:
+                    - laravel: 9.*
+                      php: 7.4
 
         name: P${{ matrix.php }} - L${{ matrix.laravel }} - S${{ matrix.statamic }} - ${{ matrix.dependency-version }}
 
