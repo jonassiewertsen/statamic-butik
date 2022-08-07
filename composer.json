@@ -64,6 +64,10 @@
     "config": {
         "process-timeout": 0,
         "sort-packages": true
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "pixelfear/composer-dist-plugin": true
+        }
     },
     "extra": {
         "statamic": {
