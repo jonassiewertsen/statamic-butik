@@ -23,8 +23,6 @@ jobs:
                 include:
                     - laravel: 8.*
                       testbench: 6.*
-                    - laravel: 7.*
-                      testbench: 5.*
                     - php: 7.4
                       dependency-version: prefer-lowest
                       additional-deps: '"mockery/mockery:>=1.2.3"'
