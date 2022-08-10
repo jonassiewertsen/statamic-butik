@@ -90,4 +90,12 @@ class Order extends ButikModel
     {
         $this->attributes['items'] = json_encode($value);
     }
+    
+    /**
+     * To avoid errors. See #247
+     */
+    public function jsonOptions()
+    {
+        //
+    }
 }
